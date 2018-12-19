@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
+
+import Loading from '../../../components/Loading';
+
+const Summary = lazy(() => import('../../Summary'));
 
 export const Content = () => (
   <main className="main-content">
-    Content
+    <Suspense fallback={<Loading />}>
+      <Summary />
+    </Suspense>
   </main>
 );
 

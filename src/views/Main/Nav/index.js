@@ -1,9 +1,9 @@
 import React from 'react';
 
 export const Content = () => (
-  <main className="main-content">
-    Content
-  </main>
+  <nav className="main-nav">
+    Nav
+  </nav>
 );
 
 export default Content;

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connectAuthProvider } from 'mc-tf-test/modules/Auth';
 
-export const Header = ({ authenticated, user, logoutAction }) => (
+export const Header = ({ authenticated, logoutAction }) => (
   <header className="main-header">
     <NavLink to="/">
       Admin

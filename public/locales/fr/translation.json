@@ -1,5 +1,9 @@
 {
   "opp": {
-    "title": "Observatoire Photographique des Paysages"
+    "title": "Observatoire Photographique des Paysages",
+    "nav": {
+      "foo": "A foo link",
+      "bar": "A bar link"
+    }
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connectAuthProvider, LoginForm } from 'mc-tf-test/modules/Auth';
 
 import Header from './Header';
 import Nav from './Nav';
@@ -7,15 +8,18 @@ import Footer from './Footer';
 
 import './styles.scss';
 
-export const Main = () => (
+export const Main = ({ authenticated }) => (
   <div className="main">
     <Header />
     <div className="main-container">
-      <Nav />
-      <Content />
+      {authenticated
+        ? <Content />
+        : <LoginForm />
+    }
+
     </div>
     <Footer />
   </div>
 );
 
-export default Main;
+export default connectAuthProvider('authenticated')(Main);

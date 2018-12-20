@@ -6,29 +6,17 @@ import Loading from '../../../components/Loading';
 
 const Summary = lazy(() => import('../../Summary'));
 
-const modulesRoutes = Object.values(modules)
-  .reduce((list, { default: { namespace = '', routes } }) => [...list, ...routes.map(({ path, ...route }) => ({
-    ...route,
-    path: `/${namespace}${path}`,
-  }))], [])
-  .map(({ component, import: Import, ...route }) => ({
-    ...route,
-    Component: Import
-      ? lazy(Import)
-      : component,
-  }));
+const modulesComponents = Object.values(modules).map(({ default: Component }) => Component);
 
 export const Content = () => (
   <main className="main-content">
     <Switch>
-      {modulesRoutes.map(({ Component, ...route }) => (
+      {modulesComponents.map(Component => (
         <Route
-          key={route.path}
-          {...route}
+          key={Component.config.path}
+          path={Component.config.path}
         >
-          <Suspense fallback={<Loading />}>
-            <Component />
-          </Suspense>
+          <Component />
         </Route>
       ))}
       <Route path="">

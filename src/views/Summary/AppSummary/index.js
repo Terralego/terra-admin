@@ -2,14 +2,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 
-export const AppSummary = ({ t, title, namespace = '', nav }) => (
+export const AppSummary = ({ t, title, path = '', nav }) => (
   <div>
     <h2>{t(title)}</h2>
     <nav>
       <ul>
         {nav.map(({ label, href }) => (
           <li key={`${href}${label}`}>
-            <NavLink to={`${namespace}/${href}`}>
+            <NavLink to={`${path}/${href}`}>
               {t(label)}
             </NavLink>
           </li>

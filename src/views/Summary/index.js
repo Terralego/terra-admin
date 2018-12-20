@@ -5,7 +5,7 @@ import modules from '../../modules';
 
 const summary = Object.keys(modules).map(name => ({
   name,
-  ...modules[name].default,
+  ...modules[name].default.config,
 }));
 
 export const Summary = () => (

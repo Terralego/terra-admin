@@ -1,0 +1,14 @@
+.nav-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+
+  &__nav {
+    padding: 1rem;
+  }
+
+  &__content {
+    flex: 1;
+    padding: 1rem;
+  }
+}

@@ -1,8 +1,11 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 export const Header = () => (
   <header className="main-header">
-    Header
+    <NavLink to="/">
+      Admin
+    </NavLink>
   </header>
 );
 

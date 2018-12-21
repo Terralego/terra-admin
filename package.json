@@ -8,6 +8,7 @@
     "i18next-xhr-backend": "^1.5.1",
     "mc-tf-test": "^0.4.2",
     "node-sass": "^4.11.0",
+    "querystring": "^0.2.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-i18next": "^8.4.0",

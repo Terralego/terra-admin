@@ -1,31 +1,26 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import config from './config';
 import NavLayout from '../../components/NavLayout';
+import Nav from './Nav';
 import Routing from '../../components/Routing';
 
-const Foo = () => import('./Foo');
-const Bar = () => import('./Bar');
+const FooView = () => import('./views/Foo');
+const BarView = () => import('./views/Bar');
 
 const { path } = config;
 
 export const OPP = () => (
   <NavLayout
-    nav={(
-      <ul>
-        <li><NavLink to="/opp/foo">Foo</NavLink></li>
-        <li><NavLink to="/opp/bar">Bar</NavLink></li>
-      </ul>
-    )}
+    nav={<Nav />}
   >
     <Routing
       routes={[{
         path: `${path}/foo`,
-        import: Foo,
+        import: FooView,
       }, {
         path: `${path}/bar`,
-        import: Bar,
+        import: BarView,
       }]}
     />
   </NavLayout>

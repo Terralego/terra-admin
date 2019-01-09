@@ -4,13 +4,12 @@ import {
   Navbar,
   NavbarGroup,
   NavbarHeading,
-  Alignment,
   Button,
   Classes,
   Popover,
   Menu,
   MenuItem,
-  Position
+  Position,
 } from '@blueprintjs/core';
 import { connectAuthProvider } from 'mc-tf-test/modules/Auth';
 
@@ -34,8 +33,9 @@ export const Header = ({ authenticated, user, logoutAction }) => (
               <MenuItem icon="wrench" text="Votre compte" />
             </Menu>
           )}
-          position={Position.BOTTOM_LEFT}>
-          <Button className={Classes.MINIMAL}  icon="user" text={user.email} />        
+          position={Position.BOTTOM_LEFT}
+        >
+          <Button className={Classes.MINIMAL} icon="user" text={user.email} />
         </Popover>
       </NavbarGroup>
     )}

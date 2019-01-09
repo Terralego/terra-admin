@@ -15,13 +15,13 @@ export const UserDropdown = ({ user, logoutAction }) => (
     <Popover
       content={(
         <Menu>
-          <MenuItem onClick={logoutAction} icon="log-out" text="Se déconnecter" />
+          <MenuItem className={Classes.MINIMAL} onClick={logoutAction} icon="log-out" text="Se déconnecter" />
           <MenuItem icon="wrench" text="Votre compte" />
         </Menu>
       )}
-      position={Position.BOTTOM_LEFT}
+      position={Position.BOTTOM_RIGHT}
     >
-      <Button className={Classes.MINIMAL} icon="user" text={user.email} />
+      <Button className={Classes.MINIMAL} icon="user" rightIcon="caret-down" text={user.email} />
     </Popover>
   </NavbarGroup>
 );

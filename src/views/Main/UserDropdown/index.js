@@ -21,7 +21,7 @@ export const UserDropdown = ({ user, logoutAction }) => (
       )}
       position={Position.BOTTOM_LEFT}
     >
-      <Button className={Classes.MINIMAL} icon="user" text={user.id} />
+      <Button className={Classes.MINIMAL} icon="user" text={user.email} />
     </Popover>
   </NavbarGroup>
 );

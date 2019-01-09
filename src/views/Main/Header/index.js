@@ -4,18 +4,13 @@ import {
   Navbar,
   NavbarGroup,
   NavbarHeading,
-  Button,
-  Classes,
-  Popover,
-  Menu,
-  MenuItem,
-  Position,
 } from '@blueprintjs/core';
 import { connectAuthProvider } from 'mc-tf-test/modules/Auth';
 
 import './header.scss';
+import UserDropdown from '../UserDropdown';
 
-export const Header = ({ authenticated, user, logoutAction }) => (
+export const Header = ({ authenticated }) => (
   <Navbar className="main-header bp3-dark">
     <NavbarGroup align="left">
       <NavbarHeading>
@@ -25,21 +20,9 @@ export const Header = ({ authenticated, user, logoutAction }) => (
       </NavbarHeading>
     </NavbarGroup>
     {authenticated && (
-      <NavbarGroup align="right">
-        <Popover
-          content={(
-            <Menu>
-              <MenuItem onClick={logoutAction} icon="log-out" text="Se déconnecter" />
-              <MenuItem icon="wrench" text="Votre compte" />
-            </Menu>
-          )}
-          position={Position.BOTTOM_LEFT}
-        >
-          <Button className={Classes.MINIMAL} icon="user" text={user.email} />
-        </Popover>
-      </NavbarGroup>
+      <UserDropdown />
     )}
   </Navbar>
 );
 
-export default connectAuthProvider('authenticated', 'user', 'logoutAction')(Header);
+export default connectAuthProvider('authenticated')(Header);

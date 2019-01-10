@@ -4,6 +4,7 @@ import {
   Navbar,
   NavbarGroup,
   NavbarHeading,
+  Classes,
 } from '@blueprintjs/core';
 import { connectAuthProvider } from 'mc-tf-test/modules/Auth';
 
@@ -11,18 +12,20 @@ import './header.scss';
 import UserDropdown from '../UserDropdown';
 
 export const Header = ({ authenticated }) => (
-  <Navbar className="main-header bp3-dark">
-    <NavbarGroup align="left">
-      <NavbarHeading>
-        <NavLink to="/">
-          Terralego
-        </NavLink>
-      </NavbarHeading>
-    </NavbarGroup>
-    {authenticated && (
-      <UserDropdown />
-    )}
-  </Navbar>
+  <header className="main-header">
+    <Navbar className={Classes.DARK}>
+      <NavbarGroup align="left">
+        <NavbarHeading>
+          <NavLink to="/">
+            Terralego
+          </NavLink>
+        </NavbarHeading>
+      </NavbarGroup>
+      {authenticated && (
+        <UserDropdown />
+      )}
+    </Navbar>
+  </header>
 );
 
 export default connectAuthProvider('authenticated')(Header);

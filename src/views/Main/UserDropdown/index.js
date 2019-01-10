@@ -26,4 +26,4 @@ export const UserDropdown = ({ user, logoutAction }) => (
   </NavbarGroup>
 );
 
-export default connectAuthProvider('authenticated', 'user', 'logoutAction')(UserDropdown);
+export default connectAuthProvider('user', 'logoutAction')(UserDropdown);

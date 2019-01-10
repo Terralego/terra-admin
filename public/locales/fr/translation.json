@@ -1,4 +1,9 @@
 {
+  "main": {
+    "title": "Terralego",
+    "account": "Votre compte",
+    "logout": "Se déconnecter"
+  },
   "opp": {
     "title": "Observatoire Photographique des Paysages",
     "nav": {

@@ -7,17 +7,18 @@ import {
   Classes,
 } from '@blueprintjs/core';
 import { connectAuthProvider } from 'mc-tf-test/modules/Auth';
+import { withNamespaces } from 'react-i18next';
 
 import './header.scss';
 import UserDropdown from '../UserDropdown';
 
-export const Header = ({ authenticated }) => (
+export const Header = ({ authenticated, t }) => (
   <header className="main-header">
     <Navbar className={Classes.DARK}>
       <NavbarGroup align="left">
         <NavbarHeading>
           <NavLink to="/">
-            Terralego
+            {t('main.title')}
           </NavLink>
         </NavbarHeading>
       </NavbarGroup>
@@ -28,4 +29,4 @@ export const Header = ({ authenticated }) => (
   </header>
 );
 
-export default connectAuthProvider('authenticated')(Header);
+export default connectAuthProvider('authenticated')(withNamespaces()(Header));

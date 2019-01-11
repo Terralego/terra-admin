@@ -5,7 +5,7 @@ import NavLayout from '../../components/NavLayout';
 import Nav from './Nav';
 import Routing from '../../components/Routing';
 
-const Viewpoint = () => import('./views/viewpoint');
+const Viewpoint = () => import('./views/bar');
 const ViewpointListView = () => import('./views/ViewpointList');
 
 const { path } = config;

@@ -5,6 +5,7 @@ export const Nav = () => (
   <ul>
     <li><NavLink to="/opp/foo">Foo</NavLink></li>
     <li><NavLink to="/opp/bar">Bar</NavLink></li>
+    <li><NavLink to="/opp/ViewpointList">Liste</NavLink></li>
   </ul>
 );
 

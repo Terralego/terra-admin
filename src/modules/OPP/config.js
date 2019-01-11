@@ -7,5 +7,8 @@ export default {
   }, {
     label: 'opp.nav.bar',
     href: 'bar',
+  }, {
+    label: 'opp.nav.viewpoint',
+    href: 'ViewpointList',
   }],
 };

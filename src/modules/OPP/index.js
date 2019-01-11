@@ -7,6 +7,7 @@ import Routing from '../../components/Routing';
 
 const FooView = () => import('./views/Foo');
 const BarView = () => import('./views/Bar');
+const ViewpointListView = () => import('./views/ViewpointList');
 
 const { path } = config;
 
@@ -21,6 +22,9 @@ export const OPP = () => (
       }, {
         path: `${path}/bar`,
         import: BarView,
+      }, {
+        path: `${path}/ViewpointList`,
+        import: ViewpointListView,
       }]}
     />
   </NavLayout>

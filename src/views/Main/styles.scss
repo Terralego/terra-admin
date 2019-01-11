@@ -8,10 +8,12 @@
   }
 
   &-footer {
-
+    text-align: center;
   }
 
   &-container {
     flex: 1;
+    border: 1px solid;
+    align-items: stretch;
   }
 }

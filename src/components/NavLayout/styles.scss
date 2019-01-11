@@ -5,6 +5,22 @@
 
   &__nav {
     padding: 1rem;
+    
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+
+        a {
+          color: #484848;
+          
+          &.active {
+            font-weight: bold;
+          }
+        }
+      }
+    }
   }
 
   &__content {

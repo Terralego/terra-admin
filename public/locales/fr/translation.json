@@ -8,7 +8,8 @@
     "title": "Observatoire Photographique des Paysages",
     "nav": {
       "foo": "A foo link",
-      "bar": "A bar link"
+      "bar": "A bar link",
+      "viewpoint": "Les points de vue"
     }
   }
 }

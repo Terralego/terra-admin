@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { Card } from '@blueprintjs/core';
-// import { withNamespaces } from 'react-i18next';
 
 import './viewpoint-list.scss';
 

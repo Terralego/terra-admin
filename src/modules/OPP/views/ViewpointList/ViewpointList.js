@@ -2,7 +2,6 @@ import React from 'react';
 import {
   H2,
 } from '@blueprintjs/core';
-// import { withNamespaces } from 'react-i18next';
 
 import ViewpointListItem from './viewpointListItem';
 

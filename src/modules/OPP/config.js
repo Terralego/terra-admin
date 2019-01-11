@@ -9,6 +9,6 @@ export default {
     href: 'bar',
   }, {
     label: 'opp.nav.viewpoint',
-    href: 'ViewpointList',
+    href: 'viewpoints',
   }],
 };

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 export const Nav = () => (
   <ul>
-    <li><NavLink to="/opp/viewpoints">Liste</NavLink></li>
+    <li><NavLink to="/opp/viewpoints">Les points de vue</NavLink></li>
   </ul>
 );
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Bar = () => (
-  <p>Bar</p>
+  <p>Viewpoint</p>
 );
 
 export default Bar;

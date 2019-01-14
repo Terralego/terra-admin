@@ -14,7 +14,8 @@ export const ViewpointList = ({ viewpoints = [] }) => (
     </div>
     <div className="viewpoint-list">
       {viewpoints.map(viewpoint => (
-        <ViewpointListItem key={viewpoint.id}
+        <ViewpointListItem
+          key={viewpoint.id}
           {...viewpoint}
         />
       ))}

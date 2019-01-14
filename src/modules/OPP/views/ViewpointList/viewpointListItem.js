@@ -13,7 +13,7 @@ export const ViewpointListItem = ({
   <Card interactive>
     <NavLink to={`${pathname}/${id}`}>
       <img src={src} alt="" />
-      <h5>{label}</h5>
+      <h5>{id} / {label}</h5>
     </NavLink>
   </Card>
 );

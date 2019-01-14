@@ -3,7 +3,7 @@ import {
   H2,
 } from '@blueprintjs/core';
 
-import ViewpointListItem from './viewpointListItem';
+import ViewpointListItem from './ViewpointListItem';
 
 import './viewpoint-list.scss';
 
@@ -14,7 +14,7 @@ export const ViewpointList = ({ viewpoints = [] }) => (
     </div>
     <div className="viewpoint-list">
       {viewpoints.map(viewpoint => (
-        <ViewpointListItem
+        <ViewpointListItem key={viewpoint.id}
           {...viewpoint}
         />
       ))}

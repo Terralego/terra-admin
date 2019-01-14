@@ -1,5 +1,12 @@
-.pageTitle {
+.page {
+    
+    &--title {
     padding: 1%;
+    }
+    
+    &--content {
+    padding: 1%;
+    }
 }
 .viewpoint-list {
     display: flex;

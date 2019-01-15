@@ -7,7 +7,7 @@ import ViewpointData from './ViewpointData';
 
 export const Viewpoint = ({ viewpoint }) => (
   <>
-    <div className="pageTitle">
+    <div className="page--title">
       <H2>{viewpoint.label}</H2>
     </div>
     <div className="page--content">

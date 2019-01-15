@@ -1,4 +1,5 @@
 import React from 'react';
+import { FileInput, Classes } from '@blueprintjs/core';
 
 export const ViewpointData = viewpoint => (
   <>
@@ -14,11 +15,14 @@ export const ViewpointData = viewpoint => (
     <p>
       {viewpoint.id}
     </p>
+    <p>
+      <input className={Classes.INPUT} placeholder={viewpoint.id} />
+    </p>
     <h3>
       Les images
     </h3>
     <ul>
-      <li><img src={viewpoint.picture.thumbnail} alt="" /> <br /> thumbnail : {viewpoint.picture.thumbnail}</li>
+      <li><img src={viewpoint.picture.thumbnail} alt="" /> <br /> thumbnail : {viewpoint.picture.thumbnail} </li>
       <li><img src={viewpoint.picture.list} alt="" /> <br /> list : {viewpoint.picture.list}</li>
       <li><img src={viewpoint.picture.full} alt="" /> <br /> full : {viewpoint.picture.full}</li>
       <li><img src={viewpoint.picture.original} alt="" /> <br /> original : {viewpoint.picture.original}</li>

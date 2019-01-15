@@ -15,11 +15,9 @@ export const ViewpointData = viewpoint => (
     <p>
       {viewpoint.id}
     </p>
-    <p>
-      <ControlGroup>
-        <input className={Classes.INPUT} placeholder={viewpoint.id} />
-      </ControlGroup>
-    </p>
+    <ControlGroup>
+      <input className={Classes.INPUT} placeholder={viewpoint.id} />
+    </ControlGroup>
     <h3>
       Les images
     </h3>

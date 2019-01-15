@@ -4,13 +4,13 @@ import connect from 'mc-tf-test/utils/connect';
 import { getReferrerEnv } from '../../services/referrer';
 import Loading from '../Loading';
 
-export const context = React.createContext();
+export const context = React.createContext({});
 export const connectAppProvider = connect(context);
 
 const { Provider } = context;
 
 export class AppProvider extends React.Component {
-  state = {}
+  state = {};
 
   componentDidMount () {
     this.initState();

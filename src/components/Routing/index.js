@@ -3,10 +3,12 @@ import { Switch, Route } from 'react-router-dom';
 
 import Loading from '../Loading';
 
+const Error404 = lazy(() => import('../Error404'));
+
 export class Routing extends React.Component {
   state = {
     routes: [],
-  }
+  };
 
   componentDidMount () {
     const { routes } = this.props;
@@ -31,6 +33,9 @@ export class Routing extends React.Component {
             </Suspense>
           </Route>
         ))}
+        <Suspense fallback={<Loading />}>
+          <Error404 />
+        </Suspense>
       </Switch>
     );
   }

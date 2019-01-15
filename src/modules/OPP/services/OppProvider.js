@@ -1,31 +1,87 @@
 
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
+import Api from 'mc-tf-test/modules/Api';
 
-import data from './mock.json';
-
-export const context = React.createContext();
+export const context = React.createContext({});
 export const connectOppProvider = connect(context);
 
 const { Provider } = context;
 
 export class OppProvider extends React.Component {
-  state = { viewpoints: data.results }
+  state = {
+    viewpointsList: [],
+    viewpoints : {},
+    errors: {},
+  };
 
   getViewpoint = id => {
     const { viewpoints } = this.state;
 
     return viewpoints.find(({ id: vId }) => vId === +id);
-  }
+  };
+
+  fetchViewpoints = async () => {
+    try {
+      const viewpoints = await Api.request(`viewpoints/`);
+      this.setState({viewpointsList: viewpoints.results})
+    } catch (e) {
+      return null;
+    }
+  };
+
+  fetchViewpoint = async id => {
+    try {
+      const viewpoint = await Api.request(`viewpoints/${id}`);
+      this.setState(state => ({
+        ...state,
+        viewpoints: {
+          ...state.viewpoints,
+          [id]: viewpoint,
+        }
+
+      }))
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: {...state.errors, [id]:true }
+      }));
+      return null;
+    }
+  };
+
+  fetchViewpointPut = async (id, viewpointEdit) => {
+    try {
+      const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit});
+      this.setState(state => ({
+        ...state,
+        viewpoints: {
+          ...state.viewpoints,
+          [id]: viewpointPut,
+        }
+
+      }))
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: {...state.errors, [id]:true }
+      }));
+      return null;
+    }
+  };
 
   render () {
+
     const { children } = this.props;
-    const { getViewpoint } = this;
+    const { getViewpoint, fetchViewpoints, fetchViewpoint, fetchViewpointPut } = this;
     const value = {
       ...this.state,
       getViewpoint,
+      fetchViewpoints,
+      fetchViewpoint,
+      fetchViewpointPut,
     };
-
+    console.log('provider', value);
     return (
       <Provider value={value}>
         {children}

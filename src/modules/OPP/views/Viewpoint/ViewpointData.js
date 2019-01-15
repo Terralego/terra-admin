@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileInput, Classes } from '@blueprintjs/core';
+import { ControlGroup, Classes } from '@blueprintjs/core';
 
 export const ViewpointData = viewpoint => (
   <>
@@ -16,7 +16,9 @@ export const ViewpointData = viewpoint => (
       {viewpoint.id}
     </p>
     <p>
-      <input className={Classes.INPUT} placeholder={viewpoint.id} />
+      <ControlGroup>
+        <input className={Classes.INPUT} placeholder={viewpoint.id} />
+      </ControlGroup>
     </p>
     <h3>
       Les images

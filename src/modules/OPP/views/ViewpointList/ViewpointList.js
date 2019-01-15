@@ -5,7 +5,6 @@ import {
 
 import ViewpointListItem from './ViewpointListItem';
 import ViewpointAddItem from './ViewpointAddItem';
-
 import './viewpoint-list.scss';
 
 export const ViewpointList = ({ viewpoints = [] }) => (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+// import { NavLink, withRouter } from 'react-router-dom';
 import { Card, Classes } from '@blueprintjs/core';
 
 import './viewpoint-list.scss';

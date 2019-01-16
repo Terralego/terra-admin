@@ -1,13 +1,13 @@
 import React from 'react';
-// import { NavLink, withRouter } from 'react-router-dom';
 import { Card, Classes } from '@blueprintjs/core';
+import { withNamespaces } from 'react-i18next';
 
 import './viewpoint-list.scss';
 
-export const ViewpointAddItem = () => (
+export const ViewpointAddItem = ({ t }) => (
   <Card interactive className={Classes.DARK}>
-    <p>Ajouter</p>
+    <p>{t('main.add')}</p>
   </Card>
 );
 
-export default ViewpointAddItem;
+export default withNamespaces()(ViewpointAddItem);

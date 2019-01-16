@@ -1,12 +1,10 @@
 .page {
     
-    &--title {
-    padding: 1%;
-    }
-    
+    &--title,
     &--content {
-    padding: 1%;
+        padding: 1%;
     }
+
 }
 .item--add {
     background-color: rgb(0, 0, 160);

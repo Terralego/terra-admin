@@ -25,4 +25,4 @@ export const ViewpointList = ({ t, viewpoints = [] }) => (
   </>
 );
 
-export default withNamespaces() (ViewpointList);
+export default withNamespaces()(ViewpointList);

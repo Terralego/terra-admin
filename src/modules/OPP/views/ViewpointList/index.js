@@ -1,7 +1,7 @@
-import React from 'react';
+import { connectAppProvider } from '../../../../components/AppProvider';
+import data from './mock.json';
+import ViewpointList from './ViewpointList';
 
-export const ViewpointList = () => (
-  <p>ViewpointListe</p>
-);
-
-export default ViewpointList;
+export default connectAppProvider(() => ({
+  viewpoints: data.results,
+}))(ViewpointList);

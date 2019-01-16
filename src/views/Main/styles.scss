@@ -8,10 +8,11 @@
   }
 
   &-footer {
-
+    text-align: center;
   }
 
   &-container {
     flex: 1;
+    align-items: stretch;
   }
 }

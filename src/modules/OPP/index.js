@@ -5,8 +5,8 @@ import NavLayout from '../../components/NavLayout';
 import Nav from './Nav';
 import Routing from '../../components/Routing';
 
-const FooView = () => import('./views/Foo');
-const BarView = () => import('./views/Bar');
+const Viewpoint = () => import('./views/Viewpoint');
+const ViewpointListView = () => import('./views/ViewpointList');
 
 const { path } = config;
 
@@ -16,11 +16,11 @@ export const OPP = () => (
   >
     <Routing
       routes={[{
-        path: `${path}/foo`,
-        import: FooView,
+        path: `${path}/viewpoints/:id`,
+        import: Viewpoint,
       }, {
-        path: `${path}/bar`,
-        import: BarView,
+        path: `${path}/viewpoints`,
+        import: ViewpointListView,
       }]}
     />
   </NavLayout>

@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Footer = () => (
   <footer className="main-footer">
-    Footer
+    <p>© terralego 2019</p>
   </footer>
 );
 

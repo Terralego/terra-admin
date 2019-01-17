@@ -9,14 +9,13 @@ import ViewpointAddItem from './ViewpointAddItem';
 import './viewpoint-list.scss';
 
 export class ViewpointList extends React.Component {
-
   componentDidMount () {
-    const {fetchViewpoints} = this.props;
+    const { fetchViewpoints } = this.props;
     fetchViewpoints();
   }
 
   render () {
-  const {viewpointsList, t} = this.props;
+    const { viewpointsList, t } = this.props;
     return (
       <>
         <div className="page--title">
@@ -32,7 +31,7 @@ export class ViewpointList extends React.Component {
           ))}
         </div>
       </>
-    )
+    );
   }
 }
 

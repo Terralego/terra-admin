@@ -1,4 +1,3 @@
-
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
 import Api from 'mc-tf-test/modules/Api';
@@ -11,7 +10,7 @@ const { Provider } = context;
 export class OppProvider extends React.Component {
   state = {
     viewpointsList: [],
-    viewpoints : {},
+    viewpoints: {},
     errors: {},
   };
 
@@ -23,10 +22,13 @@ export class OppProvider extends React.Component {
 
   fetchViewpoints = async () => {
     try {
-      const viewpoints = await Api.request(`viewpoints/`);
-      this.setState({viewpointsList: viewpoints.results})
+      const viewpoints = await Api.request('viewpoints/');
+      this.setState({ viewpointsList: viewpoints.results });
     } catch (e) {
-      return null;
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [state.viewpointsList.length]: true },
+      }));
     }
   };
 
@@ -38,40 +40,35 @@ export class OppProvider extends React.Component {
         viewpoints: {
           ...state.viewpoints,
           [id]: viewpoint,
-        }
-
-      }))
+        },
+      }));
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: {...state.errors, [id]:true }
+        errors: { ...state.errors, [id]: true },
       }));
-      return null;
     }
   };
 
   fetchViewpointPut = async (id, viewpointEdit) => {
     try {
-      const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit});
+      const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit });
       this.setState(state => ({
         ...state,
         viewpoints: {
           ...state.viewpoints,
           [id]: viewpointPut,
-        }
-
-      }))
+        },
+      }));
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: {...state.errors, [id]:true }
+        errors: { ...state.errors, [id]: true },
       }));
-      return null;
     }
   };
 
   render () {
-
     const { children } = this.props;
     const { getViewpoint, fetchViewpoints, fetchViewpoint, fetchViewpointPut } = this;
     const value = {
@@ -81,7 +78,6 @@ export class OppProvider extends React.Component {
       fetchViewpoint,
       fetchViewpointPut,
     };
-    console.log('provider', value);
     return (
       <Provider value={value}>
         {children}

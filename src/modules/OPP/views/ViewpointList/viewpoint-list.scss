@@ -1,6 +1,22 @@
-.pageTitle {
-    padding: 1%;
+.page {
+    
+    &--title,
+    &--content {
+        padding: 1%;
+    }
+
 }
+.item--add {
+    background-color: rgb(0, 0, 160);
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    
+    &:hover {
+        background-color: rgb(0, 104, 160);
+    }
+}
+
 .viewpoint-list {
     display: flex;
     flex-direction: row;
@@ -17,6 +33,10 @@
         border-color: transparent;
         box-shadow: none;
     
+        h3 {
+            margin: 0.5em 0;
+        }
+
         img {
             max-width: 100%;
         }

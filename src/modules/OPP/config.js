@@ -1,5 +1,5 @@
 export default {
-  title: 'opp.title',
+  title: 'opp.project',
   path: '/opp',
   nav: [{
     label: 'opp.nav.viewpoints',

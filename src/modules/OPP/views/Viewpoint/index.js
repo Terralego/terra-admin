@@ -1,12 +1,11 @@
-import React from 'react';
-import {
-  H2,
-} from '@blueprintjs/core';
+import { withRouter } from 'react-router-dom';
+import { connectOppProvider } from '../../services/OppProvider';
+import Viewpoint from './Viewpoint';
 
-export const Viewpoint = () => (
-  <div className="pageTitle">
-    <H2>Le point de vue</H2>
-  </div>
-);
-
-export default Viewpoint;
+export default withRouter(connectOppProvider(({
+  getViewpoint,
+}, {
+  match: { params: { id } },
+}) => ({
+  viewpoint: getViewpoint(id),
+}))(Viewpoint));

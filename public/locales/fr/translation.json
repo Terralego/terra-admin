@@ -2,11 +2,15 @@
   "main": {
     "title": "Terralego",
     "account": "Votre compte",
-    "logout": "Se déconnecter"
+    "logout": "Se déconnecter",
+    "add":"Ajouter"
   },
   "opp": {
-    "title": "Observatoire Photographique des Paysages",
+    "project": "Observatoire Photographique des Paysages",
     "nav": {
+      "viewpoints": "Les points de vue"
+    },
+    "title": {
       "viewpoints": "Les points de vue"
     }
   }

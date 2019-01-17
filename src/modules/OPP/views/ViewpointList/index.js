@@ -1,7 +1,4 @@
-import { connectAppProvider } from '../../../../components/AppProvider';
-import data from './mock.json';
+import { connectOppProvider } from '../../services/OppProvider';
 import ViewpointList from './ViewpointList';
 
-export default connectAppProvider(() => ({
-  viewpoints: data.results,
-}))(ViewpointList);
+export default connectOppProvider('viewpoints')(ViewpointList);

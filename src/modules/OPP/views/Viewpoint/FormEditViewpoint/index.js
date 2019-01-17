@@ -9,6 +9,7 @@ import {
 } from '@blueprintjs/core';
 
 import './formeditviewpoint.scss';
+import { withNamespaces } from 'react-i18next';
 
 export class FormEditViewpoint extends React.Component {
   state = {
@@ -23,19 +24,14 @@ export class FormEditViewpoint extends React.Component {
     e.preventDefault();
 
     const { viewpoint, fetchViewpointPut } = this.props;
-
-    try {
-      fetchViewpointPut(viewpoint.id, this.state);
-    } catch (errors) {
-      console.error(errors);
-    }
+    fetchViewpointPut(viewpoint.id, this.state);
   };
 
   render () {
-    const { viewpoint } = this.props;
+    const { viewpoint, t } = this.props;
     return (
       <>
-        <H3>Formulaire d'édition</H3>
+        <H3>{t('opp.title.editingform')}</H3>
         <form method="put" onSubmit={this.handleSubmit} className="form-edit">
           <FormGroup>
             <InputGroup
@@ -44,9 +40,9 @@ export class FormEditViewpoint extends React.Component {
               defaultValue={viewpoint.label}
             />
           </FormGroup>
-          <Button text="Envoyer" type="submit" />
+          <Button text={t('main.submit')} type="submit" />
         </form>
-        <H3>Visualisation des images</H3>
+        <H3>{t('opp.title.visualizationform')}</H3>
         <div className="visu-edit">
           {viewpoint.pictures.map(picture => (
             <Card elevation={Elevation.TWO} key={picture.date}>
@@ -60,4 +56,4 @@ export class FormEditViewpoint extends React.Component {
   }
 }
 
-export default FormEditViewpoint;
+export default withNamespaces()(FormEditViewpoint);

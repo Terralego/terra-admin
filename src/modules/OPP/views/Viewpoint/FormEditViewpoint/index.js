@@ -31,7 +31,7 @@ export class FormEditViewpoint extends React.Component {
     const { viewpoint, t } = this.props;
     return (
       <>
-        <H3>{t('opp.title.editingform')}</H3>
+        <H3>{t('opp.title.editingForm')}</H3>
         <form method="put" onSubmit={this.handleSubmit} className="form-edit">
           <FormGroup>
             <InputGroup
@@ -42,7 +42,7 @@ export class FormEditViewpoint extends React.Component {
           </FormGroup>
           <Button text={t('main.submit')} type="submit" />
         </form>
-        <H3>{t('opp.title.visualizationform')}</H3>
+        <H3>{t('opp.title.visualizationForm')}</H3>
         <div className="visu-edit">
           {viewpoint.pictures.map(picture => (
             <Card elevation={Elevation.TWO} key={picture.date}>

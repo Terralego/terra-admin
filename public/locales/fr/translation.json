@@ -12,6 +12,7 @@
     },
     "project": "Observatoire Photographique des Paysages",
     "title": {
+      "addImage": "Ajouter une image",
       "editingForm": "Formulaire d'édition",
       "viewpoints": "Les points de vue",
       "visualizationForm": "Visualisation des images"

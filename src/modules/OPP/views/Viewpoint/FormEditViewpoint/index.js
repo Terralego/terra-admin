@@ -1,66 +1,29 @@
 import React from 'react';
 import {
-  FormGroup,
-  InputGroup,
   Elevation,
-  Button,
   Card,
   H3,
 } from '@blueprintjs/core';
-import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
 import './formeditviewpoint.scss';
+import EditMetadata from './EditMetadata';
+import AddPicture from './AddPicture';
 
 export class FormEditViewpoint extends React.Component {
-  state = {
-    label: this.props.viewpoint.label,
-  };
-
-  handleChangeLabel = e => {
-    this.setState({ label: e.target.value });
-  };
-
-  onSubmit = () => {
-    const { viewpoint, fetchViewpointPut } = this.props;
-    fetchViewpointPut(viewpoint.id, this.state);
-  };
 
   render () {
-    const { onSubmit, handleChangeLabel } = this;
-    const { viewpoint, t } = this.props;
-    const required = value => (value ? undefined : 'Requis');
+    const { viewpoint, t, fetchViewpointPut } = this.props;
     return (
       <>
-        <H3>{t('opp.title.editingForm')}</H3>
-        <Form
-          onSubmit={onSubmit}
-          initialValues={this.state}
-          render={({ handleSubmit, invalid }) => (
-            <form
-              method="put"
-              onSubmit={handleSubmit}
-              className="form-edit"
-            >
-              <FormGroup>
-                <Field name="label" validate={required} placeholder="Username">
-                  {({ input, meta }) => (
-                    <>
-                      <InputGroup
-                        {...input}
-                        leftIcon="tag"
-                        onChange={handleChangeLabel}
-                      />
-                      {meta.error && meta.touched && <span>{meta.error}</span>}
-                    </>
-                  )}
-                </Field>
-              </FormGroup>
-              <Button text={t('main.submit')} intent="primary" type="submit" disabled={invalid} />
-            </form>
-          )}
+        <EditMetadata
+          viewpoint={viewpoint}
+          fetchViewpointPut={fetchViewpointPut}
         />
-
+        <AddPicture
+          viewpoint={viewpoint}
+          fetchViewpointPut={fetchViewpointPut}
+        />
         <H3>{t('opp.title.visualizationForm')}</H3>
         <div className="visu-edit">
           {viewpoint.pictures.map(picture => (

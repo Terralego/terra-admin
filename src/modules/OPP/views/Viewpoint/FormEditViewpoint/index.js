@@ -11,7 +11,6 @@ import EditMetadata from './EditMetadata';
 import AddPicture from './AddPicture';
 
 export class FormEditViewpoint extends React.Component {
-
   render () {
     const { viewpoint, t, fetchViewpointPut } = this.props;
     return (

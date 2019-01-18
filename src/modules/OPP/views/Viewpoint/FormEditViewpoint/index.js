@@ -7,41 +7,60 @@ import {
   Card,
   H3,
 } from '@blueprintjs/core';
+import { Form, Field } from 'react-final-form';
+import { withNamespaces } from 'react-i18next';
 
 import './formeditviewpoint.scss';
-import { withNamespaces } from 'react-i18next';
 
 export class FormEditViewpoint extends React.Component {
   state = {
-    label: '',
+    label: this.props.viewpoint.label,
   };
 
   handleChangeLabel = e => {
     this.setState({ label: e.target.value });
   };
 
-  handleSubmit = async e => {
-    e.preventDefault();
-
+  onSubmit = () => {
     const { viewpoint, fetchViewpointPut } = this.props;
     fetchViewpointPut(viewpoint.id, this.state);
   };
 
   render () {
+    const { onSubmit, handleChangeLabel } = this;
     const { viewpoint, t } = this.props;
+    const required = value => (value ? undefined : 'Requis');
     return (
       <>
         <H3>{t('opp.title.editingForm')}</H3>
-        <form method="put" onSubmit={this.handleSubmit} className="form-edit">
-          <FormGroup>
-            <InputGroup
-              leftIcon="tag"
-              onChange={this.handleChangeLabel}
-              defaultValue={viewpoint.label}
-            />
-          </FormGroup>
-          <Button text={t('main.submit')} type="submit" />
-        </form>
+        <Form
+          onSubmit={onSubmit}
+          initialValues={this.state}
+          render={({ handleSubmit, invalid }) => (
+            <form
+              method="put"
+              onSubmit={handleSubmit}
+              className="form-edit"
+            >
+              <FormGroup>
+                <Field name="label" validate={required} placeholder="Username">
+                  {({ input, meta }) => (
+                    <>
+                      <InputGroup
+                        {...input}
+                        leftIcon="tag"
+                        onChange={handleChangeLabel}
+                      />
+                      {meta.error && meta.touched && <span>{meta.error}</span>}
+                    </>
+                  )}
+                </Field>
+              </FormGroup>
+              <Button text={t('main.submit')} intent="primary" type="submit" disabled={invalid} />
+            </form>
+          )}
+        />
+
         <H3>{t('opp.title.visualizationForm')}</H3>
         <div className="visu-edit">
           {viewpoint.pictures.map(picture => (

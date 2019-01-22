@@ -13,6 +13,13 @@ export class Viewpoint extends React.Component {
     fetchViewpoint(id);
   }
 
+  componentDidUpdate (prevProps) {
+    const { fetchViewpoint, match: { params: { id } } } = this.props;
+    if (id !== prevProps.id) {
+      fetchViewpoint(id);
+    }
+  }
+
   render () {
     const { viewpoint, hasError } = this.props;
 

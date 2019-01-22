@@ -12,7 +12,7 @@ import AddPicture from './AddPicture';
 
 export class FormEditViewpoint extends React.Component {
   render () {
-    const { viewpoint, t, fetchViewpointPut } = this.props;
+    const { viewpoint, t, fetchViewpointPut, fetchViewpointPutFormData } = this.props;
     return (
       <>
         <EditMetadata
@@ -21,7 +21,7 @@ export class FormEditViewpoint extends React.Component {
         />
         <AddPicture
           viewpoint={viewpoint}
-          fetchViewpointPut={fetchViewpointPut}
+          fetchViewpointPutFormData={fetchViewpointPutFormData}
         />
         <H3>{t('opp.title.visualizationForm')}</H3>
         <div className="visu-edit">

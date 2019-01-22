@@ -54,6 +54,24 @@ export class OppProvider extends React.Component {
 
   fetchViewpointPut = async (id, viewpointEdit) => {
     try {
+      const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit });
+      this.setState(state => ({
+        ...state,
+        viewpoints: {
+          ...state.viewpoints,
+          [id]: viewpointPut,
+        },
+      }));
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [id]: true },
+      }));
+    }
+  };
+
+  fetchViewpointPutFormData = async (id, viewpointEdit) => {
+    try {
       const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit, headers: HEADERS });
       this.setState(state => ({
         ...state,
@@ -72,13 +90,20 @@ export class OppProvider extends React.Component {
 
   render () {
     const { children } = this.props;
-    const { getViewpoint, fetchViewpoints, fetchViewpoint, fetchViewpointPut } = this;
+    const {
+      getViewpoint,
+      fetchViewpoints,
+      fetchViewpoint,
+      fetchViewpointPut,
+      fetchViewpointPutFormData,
+    } = this;
     const value = {
       ...this.state,
       getViewpoint,
       fetchViewpoints,
       fetchViewpoint,
       fetchViewpointPut,
+      fetchViewpointPutFormData,
     };
     return (
       <Provider value={value}>

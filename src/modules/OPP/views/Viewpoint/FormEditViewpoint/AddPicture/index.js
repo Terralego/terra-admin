@@ -10,10 +10,15 @@ import { withNamespaces } from 'react-i18next';
 
 export class AddPicture extends React.Component {
   state = {
-    label: this.props.viewpoint.label,
+    label: '',
     picture: '',
     datePicture: '',
   };
+
+  componentDidMount () {
+    const { viewpoint: { label } } = this.props;
+    this.setState({ label });
+  }
 
   handleChangeFile = e => {
     this.setState({ picture: e.target.files[0] });
@@ -22,13 +27,13 @@ export class AddPicture extends React.Component {
   handleDateChange = datePicture => this.setState({ datePicture: datePicture.toISOString() });
 
   onSubmit = () => {
-    const { viewpoint, fetchViewpointPut } = this.props;
+    const { viewpoint, fetchViewpointPutFormData } = this.props;
     const { label, datePicture, picture } = this.state;
     const formData = new FormData();
     formData.append('label', label);
     formData.append('picture.date', datePicture);
     formData.append('picture.file', picture);
-    fetchViewpointPut(viewpoint.id, formData);
+    fetchViewpointPutFormData(viewpoint.id, formData);
   };
 
   render () {
@@ -38,7 +43,7 @@ export class AddPicture extends React.Component {
     const jsDateFormatter = {
       formatDate: date => date.toLocaleDateString(),
       parseDate: str => new Date(str),
-      placeholder: 'JJ/DD/YYYY',
+      placeholder: 'JJ/MM/AAAA',
     };
     return (
       <>

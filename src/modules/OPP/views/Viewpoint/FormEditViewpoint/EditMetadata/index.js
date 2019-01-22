@@ -10,8 +10,13 @@ import { withNamespaces } from 'react-i18next';
 
 export class EditMetadata extends React.Component {
   state = {
-    label: this.props.viewpoint.label,
+    label: '',
   };
+
+  componentDidMount () {
+    const { viewpoint: { label } } = this.props;
+    this.setState({ label });
+  }
 
   handleChangeLabel = e => {
     this.setState({ label: e.target.value });

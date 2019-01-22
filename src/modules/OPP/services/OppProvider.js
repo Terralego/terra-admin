@@ -7,6 +7,8 @@ export const connectOppProvider = connect(context);
 
 const { Provider } = context;
 
+const HEADERS = {};
+
 export class OppProvider extends React.Component {
   state = {
     viewpointsList: [],
@@ -52,7 +54,7 @@ export class OppProvider extends React.Component {
 
   fetchViewpointPut = async (id, viewpointEdit) => {
     try {
-      const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit });
+      const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit, headers: HEADERS });
       this.setState(state => ({
         ...state,
         viewpoints: {

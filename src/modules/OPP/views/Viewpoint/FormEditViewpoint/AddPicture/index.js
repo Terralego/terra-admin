@@ -11,19 +11,24 @@ import { withNamespaces } from 'react-i18next';
 export class AddPicture extends React.Component {
   state = {
     label: this.props.viewpoint.label,
-    thumbnail: '',
+    picture: '',
     datePicture: '',
   };
 
   handleChangeFile = e => {
-    this.setState({ thumbnail: e.target.value });
+    this.setState({ picture: e.target.files[0] });
   };
 
-  handleDateChange = datePicture => this.setState({ datePicture })
+  handleDateChange = datePicture => this.setState({ datePicture: datePicture.toISOString() });
 
   onSubmit = () => {
     const { viewpoint, fetchViewpointPut } = this.props;
-    fetchViewpointPut(viewpoint.id, this.state);
+    const { label, datePicture, picture } = this.state;
+    const formData = new FormData();
+    formData.append('label', label);
+    formData.append('picture.date', datePicture);
+    formData.append('picture.file', picture);
+    fetchViewpointPut(viewpoint.id, formData);
   };
 
   render () {
@@ -49,14 +54,14 @@ export class AddPicture extends React.Component {
                 className="form-edit"
               >
                 <FormGroup>
-                  <Field name="thumbnail" validate={required}>
+                  <Field name="picture" validate={required}>
                     {({ input, meta }) => (
                       <>
                         <label htmlFor="picture">
                           <input
                             type="file"
-                            id="thumbnail"
-                            name="thumbnail"
+                            id="picture"
+                            name="picture"
                             onChange={handleChangeFile}
                           />
                         </label>

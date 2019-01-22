@@ -2,6 +2,12 @@
   "main": {
     "account": "Votre compte",
     "add": "Ajouter",
+    "error404": {
+      "title": "Erreur 404 : Page introuvable.",
+      "paragraph": "Retourner à la page d'accueil : ",
+      "link": "Accueil"
+    },
+    "loading": "Chargement en cours ...",
     "logout": "Se déconnecter",
     "title": "Terralego",
     "submit": "Envoyer"

@@ -26,6 +26,7 @@ export class Routing extends React.Component {
       <Switch>
         {routes.map(({ Component, ...route }) => (
           <Route
+            exact
             {...route}
           >
             <Suspense fallback={<Loading />}>

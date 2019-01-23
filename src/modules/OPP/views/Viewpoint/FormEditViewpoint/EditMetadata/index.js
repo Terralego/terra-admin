@@ -24,8 +24,8 @@ export class EditMetadata extends React.Component {
 
 
   onSubmit = () => {
-    const { viewpoint, fetchViewpointPut } = this.props;
-    fetchViewpointPut(viewpoint.id, this.state);
+    const { viewpoint, editViewpoint } = this.props;
+    editViewpoint(viewpoint.id, this.state);
   };
 
   render () {
@@ -34,7 +34,7 @@ export class EditMetadata extends React.Component {
     const required = value => (value ? undefined : 'Requis');
     return (
       <>
-        <H3>{t('opp.title.editingForm')}</H3>
+        <H3>{t('opp.viewpoint.edit.title')}</H3>
         <Form
           onSubmit={onSubmit}
           initialValues={this.state}

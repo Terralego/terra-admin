@@ -18,10 +18,15 @@
     },
     "project": "Observatoire Photographique des Paysages",
     "title": {
-      "addImage": "Ajouter une image",
-      "editingForm": "Formulaire d'édition",
-      "viewpoints": "Les points de vue",
-      "visualizationForm": "Visualisation des images"
+      "viewpoints": "Les points de vue"
+    },
+    "viewpoint": {
+      "edit": {
+        "addPicture": "Ajouter une image",
+        "title": "Formulaire d'édition",
+        "viewpoints": "Les points de vue",
+        "visualization_pictures": "Visualisation des images"
+      }
     }
   }
 }

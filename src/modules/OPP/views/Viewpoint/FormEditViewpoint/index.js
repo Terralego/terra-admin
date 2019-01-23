@@ -13,19 +13,19 @@ import AddPicture from './AddPicture';
 export const FormEditViewpoint = ({
   viewpoint,
   t,
-  fetchViewpointPut,
-  fetchViewpointPutFormData,
+  editViewpoint,
+  addImageToViewpoint,
 }) => (
   <>
     <EditMetadata
       viewpoint={viewpoint}
-      fetchViewpointPut={fetchViewpointPut}
+      editViewpoint={editViewpoint}
     />
     <AddPicture
       viewpoint={viewpoint}
-      fetchViewpointPutFormData={fetchViewpointPutFormData}
+      addImageToViewpoint={addImageToViewpoint}
     />
-    <H3>{t('opp.title.visualizationForm')}</H3>
+    <H3>{t('opp.viewpoint.edit.visualization_pictures')}</H3>
     <div className="visu-edit">
       {viewpoint.pictures.map(picture => (
         <Card elevation={Elevation.TWO} key={picture.date}>

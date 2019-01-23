@@ -7,8 +7,6 @@ export const connectOppProvider = connect(context);
 
 const { Provider } = context;
 
-const HEADERS = {};
-
 export class OppProvider extends React.Component {
   state = {
     viewpointsList: [],
@@ -52,14 +50,14 @@ export class OppProvider extends React.Component {
     }
   };
 
-  fetchViewpointPut = async (id, viewpointEdit) => {
+  editViewpoint = async (id, data) => {
     try {
-      const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit });
+      const viewpointEdit = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: data });
       this.setState(state => ({
         ...state,
         viewpoints: {
           ...state.viewpoints,
-          [id]: viewpointPut,
+          [id]: viewpointEdit,
         },
       }));
     } catch (e) {
@@ -70,14 +68,14 @@ export class OppProvider extends React.Component {
     }
   };
 
-  fetchViewpointPutFormData = async (id, viewpointEdit) => {
+  addImageToViewpoint = async (id, data) => {
     try {
-      const viewpointPut = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: viewpointEdit, headers: HEADERS });
+      const viewpointEdit = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: data, headers: {} });
       this.setState(state => ({
         ...state,
         viewpoints: {
           ...state.viewpoints,
-          [id]: viewpointPut,
+          [id]: viewpointEdit,
         },
       }));
     } catch (e) {
@@ -94,16 +92,16 @@ export class OppProvider extends React.Component {
       getViewpoint,
       fetchViewpoints,
       fetchViewpoint,
-      fetchViewpointPut,
-      fetchViewpointPutFormData,
+      editViewpoint,
+      addImageToViewpoint,
     } = this;
     const value = {
       ...this.state,
       getViewpoint,
       fetchViewpoints,
       fetchViewpoint,
-      fetchViewpointPut,
-      fetchViewpointPutFormData,
+      editViewpoint,
+      addImageToViewpoint,
     };
     return (
       <Provider value={value}>

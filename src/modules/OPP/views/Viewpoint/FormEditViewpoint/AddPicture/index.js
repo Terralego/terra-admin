@@ -27,13 +27,13 @@ export class AddPicture extends React.Component {
   handleDateChange = datePicture => this.setState({ datePicture: datePicture.toISOString() });
 
   onSubmit = () => {
-    const { viewpoint, fetchViewpointPutFormData } = this.props;
+    const { viewpoint, addImageToViewpoint } = this.props;
     const { label, datePicture, picture } = this.state;
     const formData = new FormData();
     formData.append('label', label);
     formData.append('picture.date', datePicture);
     formData.append('picture.file', picture);
-    fetchViewpointPutFormData(viewpoint.id, formData);
+    addImageToViewpoint(viewpoint.id, formData);
   };
 
   render () {
@@ -47,7 +47,7 @@ export class AddPicture extends React.Component {
     };
     return (
       <>
-        <H3>{t('opp.title.addImage')}</H3>
+        <H3>{t('opp.viewpoint.edit.addPicture')}</H3>
         <div className="picture-add">
           <Form
             onSubmit={onSubmit}

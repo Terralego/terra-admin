@@ -10,22 +10,16 @@ import { withNamespaces } from 'react-i18next';
 
 export class EditMetadata extends React.Component {
   state = {
-    viewpoint: {},
+    // eslint-disable-next-line react/destructuring-assignment
+    viewpoint: { ...this.props.viewpoint },
   };
 
-  componentDidMount () {
-    const { viewpoint: { ...viewpoint } } = this.props;
-    this.setState({ viewpoint });
-  }
-
-  handleChangeLabel = ({ target: { value } }) => {
-    this.setState(prevState => ({
-      viewpoint: {
-        ...prevState.viewpoint,
-        label: value,
-      },
-    }));
-  };
+  handleChangeLabel = ({ target: { value } }) => this.setState(prevState => ({
+    viewpoint: {
+      ...prevState.viewpoint,
+      label: value,
+    },
+  }));
 
   onSubmit = () => {
     const { viewpoint: { id }, editViewpoint } = this.props;

@@ -70,7 +70,11 @@ export class OppProvider extends React.Component {
 
   addImageToViewpoint = async (id, data) => {
     try {
-      const viewpointEdit = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: data, headers: {} });
+      const formData = new FormData();
+      formData.append('label', data.label);
+      formData.append('picture.date', data.picture.date);
+      formData.append('picture.file', data.picture.file);
+      const viewpointEdit = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: formData, headers: {} });
       this.setState(state => ({
         ...state,
         viewpoints: {

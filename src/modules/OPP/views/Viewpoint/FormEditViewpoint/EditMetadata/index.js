@@ -10,34 +10,46 @@ import { withNamespaces } from 'react-i18next';
 
 export class EditMetadata extends React.Component {
   state = {
-    label: '',
+    viewpoint: {},
   };
 
   componentDidMount () {
-    const { viewpoint: { label } } = this.props;
-    this.setState({ label });
+    const { viewpoint: { ...viewpoint } } = this.props;
+    this.setState({ viewpoint });
   }
 
-  handleChangeLabel = e => {
-    this.setState({ label: e.target.value });
+  handleChangeLabel = ({ target: { value } }) => {
+    this.setState(prevState => ({
+      viewpoint: {
+        ...prevState.viewpoint,
+        label: value,
+      },
+    }));
   };
 
-
   onSubmit = () => {
-    const { viewpoint, editViewpoint } = this.props;
-    editViewpoint(viewpoint.id, this.state);
+    const { viewpoint: { id }, editViewpoint } = this.props;
+    const { viewpoint: viewpointState } = this.state;
+    editViewpoint(id, viewpointState);
   };
 
   render () {
     const { onSubmit, handleChangeLabel } = this;
+    const { viewpoint } = this.state;
     const { t } = this.props;
-    const required = value => (value ? undefined : 'Requis');
     return (
       <>
         <H3>{t('opp.viewpoint.edit.title')}</H3>
         <Form
           onSubmit={onSubmit}
-          initialValues={this.state}
+          initialValues={viewpoint}
+          validate={values => {
+            const errors = {};
+            if (!values.label) {
+              errors.label = 'Requis';
+            }
+            return errors;
+          }}
           render={({ handleSubmit, invalid }) => (
             <form
               method="put"
@@ -45,7 +57,7 @@ export class EditMetadata extends React.Component {
               className="form-edit"
             >
               <FormGroup>
-                <Field name="label" validate={required} placeholder="Username">
+                <Field name="label">
                   {({ input, meta }) => (
                     <>
                       <InputGroup

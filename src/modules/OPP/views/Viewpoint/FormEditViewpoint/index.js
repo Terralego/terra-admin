@@ -10,6 +10,7 @@ import './formeditviewpoint.scss';
 import EditMetadata from './EditMetadata';
 import AddPicture from './AddPicture';
 
+
 export const FormEditViewpoint = ({
   viewpoint,
   t,
@@ -30,7 +31,7 @@ export const FormEditViewpoint = ({
       {viewpoint.pictures.map(picture => (
         <Card elevation={Elevation.TWO} key={picture.date}>
           <img src={picture.file.thumbnail} alt={viewpoint.label} />
-          <p>{String(new Date(picture.date).toDateString())}</p>
+          <p>{new Date(picture.date).toDateString()}</p>
         </Card>
       ))}
     </div>

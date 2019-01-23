@@ -10,36 +10,31 @@ import { withNamespaces } from 'react-i18next';
 
 export class AddPicture extends React.Component {
   state = {
-    label: '',
     picture: '',
     datePicture: '',
   };
 
-  componentDidMount () {
-    const { viewpoint: { label } } = this.props;
-    this.setState({ label });
-  }
-
-  handleChangeFile = e => {
-    this.setState({ picture: e.target.files[0] });
-  };
+  handleChangeFile = ({ target: { files: [picture] } }) => this.setState({ picture });
 
   handleDateChange = datePicture => this.setState({ datePicture: datePicture.toISOString() });
 
   onSubmit = () => {
-    const { viewpoint, addImageToViewpoint } = this.props;
-    const { label, datePicture, picture } = this.state;
-    const formData = new FormData();
-    formData.append('label', label);
-    formData.append('picture.date', datePicture);
-    formData.append('picture.file', picture);
-    addImageToViewpoint(viewpoint.id, formData);
+    const { viewpoint: { label }, viewpoint: { id }, addImageToViewpoint } = this.props;
+    const { datePicture, picture } = this.state;
+    const data = {
+      label,
+      picture:
+        {
+          date: datePicture,
+          file: picture,
+        },
+    };
+    addImageToViewpoint(id, data);
   };
 
   render () {
     const { onSubmit, handleChangeFile } = this;
     const { t } = this.props;
-    const required = value => (value ? undefined : 'Requis');
     const jsDateFormatter = {
       formatDate: date => date.toLocaleDateString(),
       parseDate: str => new Date(str),
@@ -52,14 +47,23 @@ export class AddPicture extends React.Component {
           <Form
             onSubmit={onSubmit}
             initialValues={this.state}
+            validate={values => {
+              const errors = {};
+              if (!values.datePicture) {
+                errors.datePicture = 'Requis';
+              }
+              if (!values.picture) {
+                errors.picture = 'Requis';
+              }
+              return errors;
+            }}
             render={({ handleSubmit, invalid }) => (
               <form
-                method="put"
                 onSubmit={handleSubmit}
                 className="form-edit"
               >
                 <FormGroup>
-                  <Field name="picture" validate={required}>
+                  <Field name="picture">
                     {({ input, meta }) => (
                       <>
                         <label htmlFor="picture">
@@ -74,7 +78,7 @@ export class AddPicture extends React.Component {
                       </>
                     )}
                   </Field>
-                  <Field name="datePicture" validate={required}>
+                  <Field name="datePicture">
                     {({ meta }) => (
                       <>
                         <DateInput

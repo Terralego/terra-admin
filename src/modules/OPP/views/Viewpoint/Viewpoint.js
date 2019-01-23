@@ -22,16 +22,12 @@ export class Viewpoint extends React.Component {
 
     return (
       <>
-        { viewpoint &&
-          <>
-            <div className="page--title">
-              <H2>{viewpoint.label}</H2>
-            </div>
-            <div className="page--content">
-              <FormEditViewpoint {...this.props} />
-            </div>
-          </>
-        }
+        <div className="page--title">
+          <H2>{viewpoint.label}</H2>
+        </div>
+        <div className="page--content">
+          <FormEditViewpoint {...this.props} />
+        </div>
       </>
     );
   }

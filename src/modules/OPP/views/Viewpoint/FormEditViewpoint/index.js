@@ -6,10 +6,11 @@ import {
 } from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
 
-import './formeditviewpoint.scss';
 import EditMetadata from './EditMetadata';
 import AddPicture from './AddPicture';
+import { dateFormat } from '../../../../../utils/date';
 
+import './formeditviewpoint.scss';
 
 export const FormEditViewpoint = ({
   viewpoint,
@@ -31,7 +32,7 @@ export const FormEditViewpoint = ({
       {viewpoint.pictures.map(picture => (
         <Card elevation={Elevation.TWO} key={picture.date}>
           <img src={picture.file.thumbnail} alt={viewpoint.label} />
-          <p>{new Date(picture.date).toDateString()}</p>
+          <p>{dateFormat(picture.date)}</p>
         </Card>
       ))}
     </div>

@@ -5,9 +5,9 @@ import { withNamespaces } from 'react-i18next';
 
 const ErrorView = ({ t, error: { code } }) => (
   <div>
-    <H1>{t([`main.error.${code}.title`, 'main.error.unspecific.title'])}</H1>
-    <p><strong>{t([`main.error.${code}.text`, 'main.error.unspecific.text'])}</strong>
-      <Link to="/">{t([`main.error.${code}.link`, 'main.error.unspecific.link'])}</Link>
+    <H1>{t('main.error.title', { context: `${code}` })}</H1>
+    <p><strong>{t('main.error.text', { context: `${code}` })}</strong>
+      <Link to="/">{t('main.error.link', { context: `${code}` })}</Link>
     </p>
   </div>
 );

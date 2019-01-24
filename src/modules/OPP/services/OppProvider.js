@@ -1,7 +1,7 @@
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
 
-import { fetchViewpoint, fetchAllViewpoints, editViewpoint, addImageToViewpoint } from './viewpoints';
+import { fetchViewpoint, fetchAllViewpoints, saveDataInViewpoint, addImageToViewpoint } from './viewpoints';
 
 export const context = React.createContext({});
 export const connectOppProvider = connect(context);
@@ -46,36 +46,31 @@ export class OppProvider extends React.Component {
   };
 
   saveViewpoint = async data => {
-    if (!data.id) {
-      // Creation
-    } else {
-      // Editing
-      try {
-        const viewpointEdited = await editViewpoint(data);
-        this.setState(state => ({
-          ...state,
-          viewpoints: {
-            ...state.viewpoints,
-            [data.id]: viewpointEdited,
-          },
-        }));
-      } catch (e) {
-        this.setState(state => ({
-          ...state,
-          errors: { ...state.errors, [data.id]: true },
-        }));
-      }
+    try {
+      const viewpoint = await saveDataInViewpoint(data);
+      this.setState(state => ({
+        ...state,
+        viewpoints: {
+          ...state.viewpoints,
+          [data.id]: viewpoint,
+        },
+      }));
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [data.id]: true },
+      }));
     }
   };
 
   uploadPictureViewpoint = async data => {
     try {
-      const viewpointFile = await addImageToViewpoint(data);
+      const viewpoint = await addImageToViewpoint(data);
       this.setState(state => ({
         ...state,
         viewpoints: {
           ...state.viewpoints,
-          [data.id]: viewpointFile,
+          [data.id]: viewpoint,
         },
       }));
     } catch (e) {

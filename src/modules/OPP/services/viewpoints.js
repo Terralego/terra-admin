@@ -12,6 +12,17 @@ export async function editViewpoint (data) {
   return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: data });
 }
 
+export async function createViewpoint (data) {
+  return data;
+}
+
+export async function saveDataInViewpoint (data) {
+  if (data.id) {
+    return editViewpoint(data);
+  }
+  return createViewpoint(data);
+}
+
 export async function addImageToViewpoint (data) {
   const formData = new FormData();
   formData.append('label', data.label);
@@ -20,4 +31,4 @@ export async function addImageToViewpoint (data) {
   return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: formData });
 }
 
-export default { fetchAllViewpoints, fetchViewpoint, editViewpoint, addImageToViewpoint };
+export default { fetchAllViewpoints, fetchViewpoint, saveDataInViewpoint, addImageToViewpoint };

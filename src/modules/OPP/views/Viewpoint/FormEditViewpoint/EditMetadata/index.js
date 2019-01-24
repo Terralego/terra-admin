@@ -8,10 +8,18 @@ import {
 import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
+import { validateEdit } from '../../../../utils/form';
+
 export class EditMetadata extends React.Component {
   state = {
     // eslint-disable-next-line react/destructuring-assignment
     viewpoint: { ...this.props.viewpoint },
+  };
+
+  onSubmit = () => {
+    const { saveViewpoint } = this.props;
+    const { viewpoint } = this.state;
+    saveViewpoint(viewpoint);
   };
 
   handleChangeLabel = ({ target: { value } }) => this.setState(prevState => ({
@@ -20,12 +28,6 @@ export class EditMetadata extends React.Component {
       label: value,
     },
   }));
-
-  onSubmit = () => {
-    const { saveViewpoint } = this.props;
-    const { viewpoint } = this.state;
-    saveViewpoint(viewpoint);
-  };
 
   render () {
     const { onSubmit, handleChangeLabel } = this;
@@ -37,13 +39,7 @@ export class EditMetadata extends React.Component {
         <Form
           onSubmit={onSubmit}
           initialValues={viewpoint}
-          validate={values => {
-            const errors = {};
-            if (!values.label) {
-              errors.label = 'Requis';
-            }
-            return errors;
-          }}
+          validate={validateEdit}
           render={({ handleSubmit, invalid }) => (
             <form
               method="put"

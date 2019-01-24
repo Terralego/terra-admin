@@ -8,19 +8,16 @@ import { DateInput } from '@blueprintjs/datetime';
 import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
+import { validateUpload } from '../../../../utils/form';
+
 export class AddPicture extends React.Component {
   state = {
     picture: '',
     datePicture: '',
   };
 
-  handleChangeFile = ({ target: { files: [picture] } }) => this.setState({ picture });
-
-  handleDateChange = datePicture =>
-    this.setState({ datePicture: datePicture && datePicture.toISOString() });
-
   onSubmit = () => {
-    const { viewpoint: { id }, viewpoint: { label }, uploadPictureViewpoint } = this.props;
+    const { viewpoint: { id, label }, uploadPictureViewpoint } = this.props;
     const { datePicture, picture } = this.state;
     const data = {
       id,
@@ -33,6 +30,11 @@ export class AddPicture extends React.Component {
     };
     uploadPictureViewpoint(data);
   };
+
+  handleChangeFile = ({ target: { files: [picture] } }) => this.setState({ picture });
+
+  handleDateChange = datePicture =>
+    this.setState({ datePicture: datePicture && datePicture.toISOString() });
 
   render () {
     const { onSubmit, handleChangeFile } = this;
@@ -49,16 +51,7 @@ export class AddPicture extends React.Component {
           <Form
             onSubmit={onSubmit}
             initialValues={this.state}
-            validate={values => {
-              const errors = {};
-              if (!values.datePicture) {
-                errors.datePicture = 'Requis';
-              }
-              if (!values.picture) {
-                errors.picture = 'Requis';
-              }
-              return errors;
-            }}
+            validate={validateUpload}
             render={({ handleSubmit, invalid }) => (
               <form
                 onSubmit={handleSubmit}

@@ -3,16 +3,12 @@
     "account": "Votre compte",
     "add": "Ajouter",
     "error": {
-      "unspecific": {
         "title": "Un problème est survenue. ",
         "text": "Retourner à la page d'accueil : ",
-        "link": "Accueil"
-      },
-      "404": {
-        "title": "Erreur 404 : Page introuvable.",
-        "text": "Retourner à la page d'accueil : ",
-        "link": "Accueil"
-      }
+        "link": "Accueil",
+        "title_404": "Erreur 404 : Page introuvable.",
+        "text_404": "Retourner à la page d'accueil : ",
+        "link_404": "Accueil"
     },
     "loading": "Chargement en cours ...",
     "logout": "Se déconnecter",
@@ -31,7 +27,6 @@
       "edit": {
         "addPicture": "Ajouter une image",
         "title": "Formulaire d'édition",
-        "viewpoints": "Les points de vue",
         "visualization_pictures": "Visualisation des images"
       }
     }

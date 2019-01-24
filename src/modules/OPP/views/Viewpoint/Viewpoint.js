@@ -5,25 +5,25 @@ import {
 
 import FormEditViewpoint from './FormEditViewpoint';
 import Loading from '../../../../components/Loading';
-import Error404 from '../../../../components/Error404';
+import ErrorView from '../../../../components/ErrorView';
 
 export class Viewpoint extends React.Component {
   componentDidMount () {
-    const { fetchViewpoint, match: { params: { id } } } = this.props;
-    fetchViewpoint(id);
+    const { getViewpoint, match: { params: { id } } } = this.props;
+    getViewpoint(id);
   }
 
   componentDidUpdate ({ match: { params: { id: prevId } } }) {
-    const { fetchViewpoint, match: { params: { id } }, viewpoint } = this.props;
+    const { getViewpoint, match: { params: { id } }, viewpoint } = this.props;
     if (id !== prevId && (!viewpoint || viewpoint.id !== id)) {
-      fetchViewpoint(id);
+      getViewpoint(id);
     }
   }
 
   render () {
-    const { viewpoint, hasError } = this.props;
+    const { viewpoint, hasError, codeError } = this.props;
 
-    if (hasError) return <Error404 />;
+    if (hasError && codeError === 'Not Found') return <ErrorView error={{ code: 404 }} />;
 
     if (!viewpoint) return <Loading />;
 

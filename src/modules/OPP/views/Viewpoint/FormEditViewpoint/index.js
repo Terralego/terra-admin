@@ -14,17 +14,17 @@ import AddPicture from './AddPicture';
 export const FormEditViewpoint = ({
   viewpoint,
   t,
-  editViewpoint,
-  addImageToViewpoint,
+  saveViewpoint,
+  uploadPictureViewpoint,
 }) => (
   <>
     <EditMetadata
       viewpoint={viewpoint}
-      editViewpoint={editViewpoint}
+      saveViewpoint={saveViewpoint}
     />
     <AddPicture
       viewpoint={viewpoint}
-      addImageToViewpoint={addImageToViewpoint}
+      uploadPictureViewpoint={uploadPictureViewpoint}
     />
     <H3>{t('opp.viewpoint.edit.visualization_pictures')}</H3>
     <div className="visu-edit">

@@ -16,12 +16,14 @@ export class AddPicture extends React.Component {
 
   handleChangeFile = ({ target: { files: [picture] } }) => this.setState({ picture });
 
-  handleDateChange = datePicture => this.setState({ datePicture: datePicture.toISOString() });
+  handleDateChange = datePicture =>
+    this.setState({ datePicture: datePicture && datePicture.toISOString() });
 
   onSubmit = () => {
-    const { viewpoint: { label }, viewpoint: { id }, addImageToViewpoint } = this.props;
+    const { viewpoint: { id }, viewpoint: { label }, uploadPictureViewpoint } = this.props;
     const { datePicture, picture } = this.state;
     const data = {
+      id,
       label,
       picture:
         {
@@ -29,7 +31,7 @@ export class AddPicture extends React.Component {
           file: picture,
         },
     };
-    addImageToViewpoint(id, data);
+    uploadPictureViewpoint(data);
   };
 
   render () {
@@ -60,7 +62,7 @@ export class AddPicture extends React.Component {
             render={({ handleSubmit, invalid }) => (
               <form
                 onSubmit={handleSubmit}
-                className="form-edit"
+                className="form-add-image"
               >
                 <FormGroup>
                   <Field name="picture">

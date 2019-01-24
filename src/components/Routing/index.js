@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Loading from '../Loading';
 
-const Error404 = lazy(() => import('../Error404'));
+const ErrorView = lazy(() => import('../ErrorView'));
 
 export class Routing extends React.Component {
   state = {
@@ -35,7 +35,7 @@ export class Routing extends React.Component {
           </Route>
         ))}
         <Suspense fallback={<Loading />}>
-          <Error404 />
+          <ErrorView error={{ code: 404 }} />
         </Suspense>
       </Switch>
     );

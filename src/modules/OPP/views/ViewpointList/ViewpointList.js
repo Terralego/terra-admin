@@ -10,8 +10,8 @@ import './viewpoint-list.scss';
 
 export class ViewpointList extends React.Component {
   componentDidMount () {
-    const { fetchViewpoints } = this.props;
-    fetchViewpoints();
+    const { getAllViewpoints } = this.props;
+    getAllViewpoints();
   }
 
   render () {

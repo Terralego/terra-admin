@@ -1,6 +1,7 @@
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
-import Api from 'mc-tf-test/modules/Api';
+
+import { fetchViewpoint, fetchAllViewpoints, editViewpoint, addImageToViewpoint } from './viewpoints';
 
 export const context = React.createContext({});
 export const connectOppProvider = connect(context);
@@ -14,27 +15,9 @@ export class OppProvider extends React.Component {
     errors: {},
   };
 
-  getViewpoint = id => {
-    const { viewpoints } = this.state;
-
-    return viewpoints.find(({ id: vId }) => vId === +id);
-  };
-
-  fetchViewpoints = async () => {
+  getViewpoint = async id => {
     try {
-      const viewpoints = await Api.request('viewpoints/');
-      this.setState({ viewpointsList: viewpoints.results });
-    } catch (e) {
-      this.setState(state => ({
-        ...state,
-        errors: { ...state.errors, [state.viewpointsList.length]: true },
-      }));
-    }
-  };
-
-  fetchViewpoint = async id => {
-    try {
-      const viewpoint = await Api.request(`viewpoints/${id}`);
+      const viewpoint = await fetchViewpoint(id);
       this.setState(state => ({
         ...state,
         viewpoints: {
@@ -45,47 +28,60 @@ export class OppProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [id]: true },
+        errors: { ...state.errors, [id]: true, code: e.message },
       }));
     }
   };
 
-  editViewpoint = async (id, data) => {
+  getAllViewpoints = async () => {
     try {
-      const viewpointEdit = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: data });
+      const allViewpoints = await fetchAllViewpoints();
+      this.setState({ viewpointsList: allViewpoints.results });
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [state.viewpointsList.length]: true },
+      }));
+    }
+  };
+
+  saveViewpoint = async data => {
+    if (!data.id) {
+      // Creation
+    } else {
+      // Editing
+      try {
+        const viewpointEdited = await editViewpoint(data);
+        this.setState(state => ({
+          ...state,
+          viewpoints: {
+            ...state.viewpoints,
+            [data.id]: viewpointEdited,
+          },
+        }));
+      } catch (e) {
+        this.setState(state => ({
+          ...state,
+          errors: { ...state.errors, [data.id]: true },
+        }));
+      }
+    }
+  };
+
+  uploadPictureViewpoint = async data => {
+    try {
+      const viewpointFile = await addImageToViewpoint(data);
       this.setState(state => ({
         ...state,
         viewpoints: {
           ...state.viewpoints,
-          [id]: viewpointEdit,
+          [data.id]: viewpointFile,
         },
       }));
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [id]: true },
-      }));
-    }
-  };
-
-  addImageToViewpoint = async (id, data) => {
-    try {
-      const formData = new FormData();
-      formData.append('label', data.label);
-      formData.append('picture.date', data.picture.date);
-      formData.append('picture.file', data.picture.file);
-      const viewpointEdit = await Api.request(`viewpoints/${id}`, { method: 'PUT', body: formData, headers: {} });
-      this.setState(state => ({
-        ...state,
-        viewpoints: {
-          ...state.viewpoints,
-          [id]: viewpointEdit,
-        },
-      }));
-    } catch (e) {
-      this.setState(state => ({
-        ...state,
-        errors: { ...state.errors, [id]: true },
+        errors: { ...state.errors, [data.id]: true },
       }));
     }
   };
@@ -94,18 +90,16 @@ export class OppProvider extends React.Component {
     const { children } = this.props;
     const {
       getViewpoint,
-      fetchViewpoints,
-      fetchViewpoint,
-      editViewpoint,
-      addImageToViewpoint,
+      getAllViewpoints,
+      saveViewpoint,
+      uploadPictureViewpoint,
     } = this;
     const value = {
       ...this.state,
       getViewpoint,
-      fetchViewpoints,
-      fetchViewpoint,
-      editViewpoint,
-      addImageToViewpoint,
+      getAllViewpoints,
+      saveViewpoint,
+      uploadPictureViewpoint,
     };
     return (
       <Provider value={value}>

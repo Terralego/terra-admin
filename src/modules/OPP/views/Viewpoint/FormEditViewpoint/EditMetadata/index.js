@@ -22,9 +22,9 @@ export class EditMetadata extends React.Component {
   }));
 
   onSubmit = () => {
-    const { viewpoint: { id }, editViewpoint } = this.props;
-    const { viewpoint: viewpointState } = this.state;
-    editViewpoint(id, viewpointState);
+    const { saveViewpoint } = this.props;
+    const { viewpoint } = this.state;
+    saveViewpoint(viewpoint);
   };
 
   render () {

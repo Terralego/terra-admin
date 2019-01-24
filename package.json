@@ -10,7 +10,7 @@
     "i18next": "^13.0.0",
     "i18next-browser-languagedetector": "^2.2.4",
     "i18next-xhr-backend": "^1.5.1",
-    "mc-tf-test": "^0.4.2",
+    "mc-tf-test": "^0.6.1",
     "node-sass": "^4.11.0",
     "normalize.css": "^8.0.1",
     "querystring": "^0.2.0",

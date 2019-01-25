@@ -8,6 +8,7 @@ import OppProvider from './services/OppProvider';
 
 const Viewpoint = () => import('./views/Viewpoint');
 const ViewpointListView = () => import('./views/ViewpointList');
+const FormCreateViewpoint = () => import('./views/ViewpointList/AddViewpoint/FormCreateViewpoint');
 
 const { path } = config;
 
@@ -17,13 +18,22 @@ export const OPP = () => (
       nav={<Nav />}
     >
       <Routing
-        routes={[{
-          path: `${path}/viewpoints/:id`,
-          import: Viewpoint,
-        }, {
-          path: `${path}/viewpoints`,
-          import: ViewpointListView,
-        }]}
+        routes={
+          [
+            {
+              path: `${path}/viewpoints/create`,
+              import: FormCreateViewpoint,
+            },
+            {
+              path: `${path}/viewpoints/:id`,
+              import: Viewpoint,
+            },
+            {
+              path: `${path}/viewpoints`,
+              import: ViewpointListView,
+            },
+          ]
+        }
       />
     </NavLayout>
   </OppProvider>

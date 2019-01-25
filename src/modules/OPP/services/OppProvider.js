@@ -1,31 +1,101 @@
-
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
 
-import data from './mock.json';
+import { fetchViewpoint, fetchAllViewpoints, saveViewpoint, addImageToViewpoint } from './viewpoints';
 
-export const context = React.createContext();
+export const context = React.createContext({});
 export const connectOppProvider = connect(context);
 
 const { Provider } = context;
 
 export class OppProvider extends React.Component {
-  state = { viewpoints: data.results }
+  state = {
+    viewpointsList: [],
+    viewpoints: {},
+    errors: {},
+  };
 
-  getViewpoint = id => {
-    const { viewpoints } = this.state;
+  getViewpointAction = async id => {
+    try {
+      const viewpoint = await fetchViewpoint(id);
+      this.setState(state => ({
+        ...state,
+        viewpoints: {
+          ...state.viewpoints,
+          [id]: viewpoint,
+        },
+      }));
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [id]: true, code: e.message },
+      }));
+    }
+  };
 
-    return viewpoints.find(({ id: vId }) => vId === +id);
-  }
+  getAllViewpointsAction = async () => {
+    try {
+      const allViewpoints = await fetchAllViewpoints();
+      this.setState({ viewpointsList: allViewpoints.results });
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [state.viewpointsList.length]: true },
+      }));
+    }
+  };
+
+  saveViewpointAction = async data => {
+    try {
+      const viewpoint = await saveViewpoint(data);
+      this.setState(state => ({
+        ...state,
+        viewpoints: {
+          ...state.viewpoints,
+          [data.id]: viewpoint,
+        },
+      }));
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [data.id]: true },
+      }));
+    }
+  };
+
+  uploadPictureViewpointAction = async data => {
+    try {
+      const viewpoint = await addImageToViewpoint(data);
+      this.setState(state => ({
+        ...state,
+        viewpoints: {
+          ...state.viewpoints,
+          [data.id]: viewpoint,
+        },
+      }));
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [data.id]: true },
+      }));
+    }
+  };
 
   render () {
     const { children } = this.props;
-    const { getViewpoint } = this;
+    const {
+      getViewpointAction,
+      getAllViewpointsAction,
+      saveViewpointAction,
+      uploadPictureViewpointAction,
+    } = this;
     const value = {
       ...this.state,
-      getViewpoint,
+      getViewpointAction,
+      getAllViewpointsAction,
+      saveViewpointAction,
+      uploadPictureViewpointAction,
     };
-
     return (
       <Provider value={value}>
         {children}

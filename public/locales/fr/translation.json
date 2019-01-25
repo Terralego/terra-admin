@@ -1,17 +1,34 @@
 {
   "main": {
-    "title": "Terralego",
     "account": "Votre compte",
+    "add": "Ajouter",
+    "error": {
+        "title": "Un problème est survenue. ",
+        "text": "Retourner à la page d'accueil : ",
+        "link": "Accueil",
+        "title_404": "Erreur 404 : Page introuvable.",
+        "text_404": "Retourner à la page d'accueil : ",
+        "link_404": "Accueil"
+    },
+    "loading": "Chargement en cours ...",
     "logout": "Se déconnecter",
-    "add":"Ajouter"
+    "title": "Terralego",
+    "submit": "Envoyer"
   },
   "opp": {
-    "project": "Observatoire Photographique des Paysages",
     "nav": {
       "viewpoints": "Les points de vue"
     },
-    "title": {
-      "viewpoints": "Les points de vue"
+    "project": "Observatoire Photographique des Paysages",
+    "viewpoint": {
+      "edit": {
+        "addPicture": "Ajouter une image",
+        "title": "Formulaire d'édition",
+        "visualization_pictures": "Visualisation des images"
+      }
+    },
+    "viewpoints": {
+      "title": "Les points de vue"
     }
   }
 }

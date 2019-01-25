@@ -3,10 +3,12 @@ import { Switch, Route } from 'react-router-dom';
 
 import Loading from '../Loading';
 
+const ErrorView = lazy(() => import('../../views/ErrorView'));
+
 export class Routing extends React.Component {
   state = {
     routes: [],
-  }
+  };
 
   componentDidMount () {
     const { routes } = this.props;
@@ -24,6 +26,7 @@ export class Routing extends React.Component {
       <Switch>
         {routes.map(({ Component, ...route }) => (
           <Route
+            exact
             {...route}
           >
             <Suspense fallback={<Loading />}>
@@ -31,6 +34,9 @@ export class Routing extends React.Component {
             </Suspense>
           </Route>
         ))}
+        <Suspense fallback={<Loading />}>
+          <ErrorView error={{ code: 404 }} />
+        </Suspense>
       </Switch>
     );
   }

@@ -8,21 +8,31 @@ import ViewpointListItem from './ViewpointListItem';
 import ViewpointAddItem from './ViewpointAddItem';
 import './viewpoint-list.scss';
 
-export const ViewpointList = ({ t, viewpoints = [] }) => (
-  <>
-    <div className="page--title">
-      <H2>{t('opp.title.viewpoints')}</H2>
-    </div>
-    <div className="viewpoint-list">
-      <ViewpointAddItem />
-      {viewpoints.map(viewpoint => (
-        <ViewpointListItem
-          key={viewpoint.id}
-          {...viewpoint}
-        />
-      ))}
-    </div>
-  </>
-);
+export class ViewpointList extends React.Component {
+  componentDidMount () {
+    const { getAllViewpointsAction } = this.props;
+    getAllViewpointsAction();
+  }
+
+  render () {
+    const { viewpointsList, t } = this.props;
+    return (
+      <>
+        <div className="page--title">
+          <H2>{t('opp.viewpoints.title')}</H2>
+        </div>
+        <div className="viewpoint-list">
+          <ViewpointAddItem />
+          {viewpointsList.map(viewpoint => (
+            <ViewpointListItem
+              key={viewpoint.id}
+              {...viewpoint}
+            />
+          ))}
+        </div>
+      </>
+    );
+  }
+}
 
 export default withNamespaces()(ViewpointList);

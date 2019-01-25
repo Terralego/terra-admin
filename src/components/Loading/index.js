@@ -1,9 +1,10 @@
 import React from 'react';
+import { withNamespaces } from 'react-i18next';
 
-export const Loading = () => (
+export const Loading = ({ t }) => (
   <div className="loading">
-    Wait for it
+    {t('main.loading')}
   </div>
 );
 
-export default Loading;
+export default withNamespaces()(Loading);

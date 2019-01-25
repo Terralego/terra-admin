@@ -19,7 +19,7 @@ export class ViewpointList extends React.Component {
     return (
       <>
         <div className="page--title">
-          <H2>{t('opp.title.viewpoints')}</H2>
+          <H2>{t('opp.viewpoints.title')}</H2>
         </div>
         <div className="viewpoint-list">
           <ViewpointAddItem />

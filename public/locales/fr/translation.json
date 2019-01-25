@@ -20,15 +20,15 @@
       "viewpoints": "Les points de vue"
     },
     "project": "Observatoire Photographique des Paysages",
-    "title": {
-      "viewpoints": "Les points de vue"
-    },
     "viewpoint": {
       "edit": {
         "addPicture": "Ajouter une image",
         "title": "Formulaire d'édition",
         "visualization_pictures": "Visualisation des images"
       }
+    },
+    "viewpoints": {
+      "title": "Les points de vue"
     }
   }
 }

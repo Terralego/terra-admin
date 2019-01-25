@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Loading from '../Loading';
 
-const ErrorView = lazy(() => import('../ErrorView'));
+const ErrorView = lazy(() => import('../../views/ErrorView'));
 
 export class Routing extends React.Component {
   state = {

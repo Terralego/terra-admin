@@ -5,7 +5,7 @@ import {
 
 import FormEditViewpoint from './FormEditViewpoint';
 import Loading from '../../../../components/Loading';
-import ErrorView from '../../../../components/ErrorView';
+import ErrorView from '../../../../views/ErrorView';
 
 export class Viewpoint extends React.Component {
   componentDidMount () {

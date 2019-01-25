@@ -8,7 +8,7 @@ import {
 import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
-import { validateEdit } from '../validateForm';
+import { validateEdit } from '../validateEditForm';
 
 export class EditMetadata extends React.Component {
   state = {
@@ -17,9 +17,9 @@ export class EditMetadata extends React.Component {
   };
 
   onSubmit = () => {
-    const { saveViewpoint } = this.props;
+    const { saveViewpointAction } = this.props;
     const { viewpoint } = this.state;
-    saveViewpoint(viewpoint);
+    saveViewpointAction(viewpoint);
   };
 
   handleChangeLabel = ({ target: { value } }) => this.setState(prevState => ({

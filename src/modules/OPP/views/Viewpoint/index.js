@@ -3,11 +3,11 @@ import { connectOppProvider } from '../../services/OppProvider';
 import Viewpoint from './Viewpoint';
 
 export default withRouter(connectOppProvider((state, { match: { params: { id } } }) => ({
-  getAllViewpoints: state.getAllViewpoints,
-  getViewpoint: state.getViewpoint,
+  getAllViewpointsAction: state.getAllViewpointsAction,
+  getViewpointAction: state.getViewpointAction,
   viewpoint: state.viewpoints[+id],
   hasError: state.errors[id],
   codeError: state.errors.code,
-  saveViewpoint: state.saveViewpoint,
-  uploadPictureViewpoint: state.uploadPictureViewpoint,
+  saveViewpointAction: state.saveViewpointAction,
+  uploadPictureViewpointAction: state.uploadPictureViewpointAction,
 }))(Viewpoint));

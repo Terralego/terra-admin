@@ -9,14 +9,14 @@ import ErrorView from '../../../../views/ErrorView';
 
 export class Viewpoint extends React.Component {
   componentDidMount () {
-    const { getViewpoint, match: { params: { id } } } = this.props;
-    getViewpoint(id);
+    const { getViewpointAction, match: { params: { id } } } = this.props;
+    getViewpointAction(id);
   }
 
   componentDidUpdate ({ match: { params: { id: prevId } } }) {
-    const { getViewpoint, match: { params: { id } }, viewpoint } = this.props;
+    const { getViewpointAction, match: { params: { id } }, viewpoint } = this.props;
     if (id !== prevId && (!viewpoint || viewpoint.id !== id)) {
-      getViewpoint(id);
+      getViewpointAction(id);
     }
   }
 

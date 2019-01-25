@@ -15,17 +15,17 @@ import './formeditviewpoint.scss';
 export const FormEditViewpoint = ({
   viewpoint,
   t,
-  saveViewpoint,
-  uploadPictureViewpoint,
+  saveViewpointAction,
+  uploadPictureViewpointAction,
 }) => (
   <>
     <EditMetadata
       viewpoint={viewpoint}
-      saveViewpoint={saveViewpoint}
+      saveViewpointAction={saveViewpointAction}
     />
     <AddPicture
       viewpoint={viewpoint}
-      uploadPictureViewpoint={uploadPictureViewpoint}
+      uploadPictureViewpointAction={uploadPictureViewpointAction}
     />
     <H3>{t('opp.viewpoint.edit.visualization_pictures')}</H3>
     <div className="visu-edit">

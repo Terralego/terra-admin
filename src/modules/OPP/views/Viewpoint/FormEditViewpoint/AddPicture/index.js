@@ -8,7 +8,7 @@ import { DateInput } from '@blueprintjs/datetime';
 import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
-import { validateUpload } from '../validateForm';
+import { validateAddPicture } from '../validateAddPictureForm';
 
 export class AddPicture extends React.Component {
   state = {
@@ -17,7 +17,7 @@ export class AddPicture extends React.Component {
   };
 
   onSubmit = () => {
-    const { viewpoint: { id, label }, uploadPictureViewpoint } = this.props;
+    const { viewpoint: { id, label }, uploadPictureViewpointAction } = this.props;
     const { datePicture, picture } = this.state;
     const data = {
       id,
@@ -28,7 +28,7 @@ export class AddPicture extends React.Component {
           file: picture,
         },
     };
-    uploadPictureViewpoint(data);
+    uploadPictureViewpointAction(data);
   };
 
   handleChangeFile = ({ target: { files: [picture] } }) => this.setState({ picture });
@@ -51,7 +51,7 @@ export class AddPicture extends React.Component {
           <Form
             onSubmit={onSubmit}
             initialValues={this.state}
-            validate={validateUpload}
+            validate={validateAddPicture}
             render={({ handleSubmit, invalid }) => (
               <form
                 onSubmit={handleSubmit}

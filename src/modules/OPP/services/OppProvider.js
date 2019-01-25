@@ -1,7 +1,7 @@
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
 
-import { fetchViewpoint, fetchAllViewpoints, saveDataInViewpoint, addImageToViewpoint } from './viewpoints';
+import { fetchViewpoint, fetchAllViewpoints, saveViewpoint, addImageToViewpoint } from './viewpoints';
 
 export const context = React.createContext({});
 export const connectOppProvider = connect(context);
@@ -15,7 +15,7 @@ export class OppProvider extends React.Component {
     errors: {},
   };
 
-  getViewpoint = async id => {
+  getViewpointAction = async id => {
     try {
       const viewpoint = await fetchViewpoint(id);
       this.setState(state => ({
@@ -33,7 +33,7 @@ export class OppProvider extends React.Component {
     }
   };
 
-  getAllViewpoints = async () => {
+  getAllViewpointsAction = async () => {
     try {
       const allViewpoints = await fetchAllViewpoints();
       this.setState({ viewpointsList: allViewpoints.results });
@@ -45,9 +45,9 @@ export class OppProvider extends React.Component {
     }
   };
 
-  saveViewpoint = async data => {
+  saveViewpointAction = async data => {
     try {
-      const viewpoint = await saveDataInViewpoint(data);
+      const viewpoint = await saveViewpoint(data);
       this.setState(state => ({
         ...state,
         viewpoints: {
@@ -63,7 +63,7 @@ export class OppProvider extends React.Component {
     }
   };
 
-  uploadPictureViewpoint = async data => {
+  uploadPictureViewpointAction = async data => {
     try {
       const viewpoint = await addImageToViewpoint(data);
       this.setState(state => ({
@@ -84,17 +84,17 @@ export class OppProvider extends React.Component {
   render () {
     const { children } = this.props;
     const {
-      getViewpoint,
-      getAllViewpoints,
-      saveViewpoint,
-      uploadPictureViewpoint,
+      getViewpointAction,
+      getAllViewpointsAction,
+      saveViewpointAction,
+      uploadPictureViewpointAction,
     } = this;
     const value = {
       ...this.state,
-      getViewpoint,
-      getAllViewpoints,
-      saveViewpoint,
-      uploadPictureViewpoint,
+      getViewpointAction,
+      getAllViewpointsAction,
+      saveViewpointAction,
+      uploadPictureViewpointAction,
     };
     return (
       <Provider value={value}>

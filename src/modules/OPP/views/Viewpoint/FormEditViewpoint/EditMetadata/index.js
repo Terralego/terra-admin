@@ -8,7 +8,7 @@ import {
 import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
-import { validateEdit } from '../validateEditForm';
+import { validateEdit } from './validateEditForm';
 
 export class EditMetadata extends React.Component {
   state = {

@@ -8,7 +8,7 @@ import { DateInput } from '@blueprintjs/datetime';
 import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
-import { validateAddPicture } from '../validateAddPictureForm';
+import { validateAddPicture } from './validateAddPictureForm';
 
 export class AddPicture extends React.Component {
   state = {

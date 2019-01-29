@@ -1,7 +1,7 @@
 import React from 'react';
 import connect from 'react-ctx-connect';
 
-import { getReferrerEnv } from '../../services/referrer';
+import { getSettings } from '../../services/settings';
 import Loading from '../Loading';
 
 export const context = React.createContext({});
@@ -17,8 +17,8 @@ export class AppProvider extends React.Component {
   }
 
   async initState () {
-    const env = await getReferrerEnv();
-    this.setState({ env });
+    const settings = await getSettings();
+    this.setState({ env: settings });
   }
 
   render () {
@@ -32,7 +32,7 @@ export class AppProvider extends React.Component {
 
     return (
       <Provider value={value}>
-        {children(env)}
+        {children}
       </Provider>
     );
   }

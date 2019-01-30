@@ -13,7 +13,20 @@ export async function updateViewpoint (data) {
 }
 
 export async function createViewpoint (data) {
-  return data;
+  const formData = new FormData();
+  const coordinate = `{
+    "type": "Point",
+    "coordinates": [
+      ${data.longitude},
+      ${data.latitude}
+    ]
+  }`;
+  formData.append('label', data.label);
+  formData.append('point', coordinate);
+  // formData.append('picture.date', data.datePicture);
+  // formData.append('picture.file', data.pictureFile);
+  for (var p of formData.entries()) { console.log(p); }
+  return Api.request('viewpoints/', { method: 'POST', body: formData });
 }
 
 export async function saveViewpoint (data) {

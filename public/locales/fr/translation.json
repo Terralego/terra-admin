@@ -25,6 +25,10 @@
         "addPicture": "Ajouter une image",
         "title": "Formulaire d'édition",
         "visualization_pictures": "Visualisation des images"
+      },
+      "create": {
+        "addPicture": "Ajouter une image",
+        "title": "Formulaire de création d'un viewpoint"
       }
     },
     "viewpoints": {

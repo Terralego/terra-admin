@@ -3,6 +3,6 @@ import FormCreateViewpoint from './FormCreateViewpoint';
 
 export default connectOppProvider(state => ({
   getAllViewpointsAction: state.getAllViewpointsAction,
-  viewpointsList: state.viewpointsList,
+  viewpoints: state.viewpoints,
   saveViewpointAction: state.saveViewpointAction,
 }))(FormCreateViewpoint);

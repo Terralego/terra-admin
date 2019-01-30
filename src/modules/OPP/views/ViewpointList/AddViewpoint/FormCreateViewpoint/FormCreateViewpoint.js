@@ -10,8 +10,9 @@ import {
 import { DateInput } from '@blueprintjs/datetime';
 import { withNamespaces } from 'react-i18next';
 import { Field, Form } from 'react-final-form';
+import { withRouter } from 'react-router-dom';
 
-import { validateCreate } from '../../../ViewpointList/AddViewpoint/FormCreateViewpoint/validateCreateForm';
+import { validateCreate } from './validateCreateForm';
 
 export class FormCreateViewpoint extends React.Component {
   state = {
@@ -21,12 +22,13 @@ export class FormCreateViewpoint extends React.Component {
     },
   };
 
-  onSubmit = values => {
-    const { saveViewpointAction } = this.props;
+  onSubmit = async values => {
+    const { saveViewpointAction, history } = this.props;
     const { picture } = this.state;
     const data = { ...values, ...picture };
-    console.log('data', data);
-    saveViewpointAction(data);
+    await saveViewpointAction(data);
+    const { viewpoints: { newViewpoint: { id } } } = this.props;
+    history.push(`${id}`);
   };
 
   handleAddPicture = (e, input) => {
@@ -44,6 +46,7 @@ export class FormCreateViewpoint extends React.Component {
   };
 
   formatDate = date => date.toLocaleDateString();
+
   parseDate = str => new Date(str);
 
   render () {
@@ -165,4 +168,4 @@ export class FormCreateViewpoint extends React.Component {
   }
 }
 
-export default withNamespaces()(FormCreateViewpoint);
+export default withRouter(withNamespaces()(FormCreateViewpoint));

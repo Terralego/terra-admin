@@ -92,7 +92,6 @@ export class OppProvider extends React.Component {
   };
 
   render () {
-  console.log(this.state);
     const { children } = this.props;
     const {
       getViewpointAction,

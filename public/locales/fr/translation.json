@@ -13,7 +13,8 @@
     "loading": "Chargement en cours ...",
     "logout": "Se déconnecter",
     "title": "Terralego",
-    "submit": "Envoyer"
+    "submit": "Envoyer",
+    "reset": "Réinitialiser"
   },
   "opp": {
     "nav": {

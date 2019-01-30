@@ -8,18 +8,24 @@ import { DateInput } from '@blueprintjs/datetime';
 import { withNamespaces } from 'react-i18next';
 import { Field } from 'react-final-form';
 
+import './form-create.scss';
+
 export class FormCreate extends React.Component {
   state = {
     disabled: true,
   };
 
-  handlePicture = (e, input) => {
+  handlePicture = (e, input, form) => {
     const { onPicture } = this.props;
     input.onChange(e);
     onPicture(e.target.files[0]);
     this.setState(prevState => ({
       disabled: !prevState.disabled,
     }));
+
+    if (e.target.files.length === 0) {
+      form.change('datePicture', null);
+    }
   };
 
   formatDate = date => date.toLocaleDateString();
@@ -32,7 +38,7 @@ export class FormCreate extends React.Component {
       formatDate,
       parseDate,
     } = this;
-    const { t, handleSubmit, invalid, form } = this.props;
+    const { t, handleSubmit, invalid, form, submitting, pristine } = this.props;
     const { disabled } = this.state;
     return (
       <form
@@ -86,7 +92,7 @@ export class FormCreate extends React.Component {
                     id="pictureFile"
                     name="pictureFile"
                     {...input}
-                    onChange={e => handlePicture(e, input)}
+                    onChange={e => handlePicture(e, input, form)}
                   />
                 </label>
                 {meta.error && <span>{meta.error}</span>}
@@ -111,6 +117,7 @@ export class FormCreate extends React.Component {
           </Field>
         </FormGroup>
         <Button text={t('main.submit')} intent="primary" type="submit" disabled={invalid} />
+        <Button text={t('main.reset')} onClick={form.reset} disabled={submitting || pristine} />
       </form>
 
     );

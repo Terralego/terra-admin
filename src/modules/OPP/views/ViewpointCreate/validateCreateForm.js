@@ -35,8 +35,6 @@ export async function validateCreate (values) {
     errors.latitude = 'Requis';
   }
 
-  // console.log(errors);
-
   return errors;
 }
 

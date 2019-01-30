@@ -20,13 +20,12 @@ export class ViewpointCreate extends React.Component {
     const { saveViewpointAction, history } = this.props;
     const { picture } = this.state;
     const data = { ...values, ...picture };
-    console.log(data);
-    // await saveViewpointAction(data);
-    // const { viewpoints: { newViewpoint: { id } } } = this.props;
-    // history.push(`${id}`);
+    await saveViewpointAction(data);
+    const { viewpoints: { newViewpoint: { id } } } = this.props;
+    history.push(`${id}`);
   };
 
-  onPicture = (file) => {
+  onPicture = file => {
     this.setState({ picture: { pictureFile: file } });
   };
 
@@ -42,11 +41,13 @@ export class ViewpointCreate extends React.Component {
         <Form
           onSubmit={onSubmit}
           validate={validateCreate}
-          render={({ handleSubmit, invalid, form }) => (
+          render={({ handleSubmit, invalid, form, pristine, submitting }) => (
             <FormCreate
               handleSubmit={handleSubmit}
               invalid={invalid}
               form={form}
+              submitting={submitting}
+              pristine={pristine}
               onPicture={onPicture}
             />
           )}

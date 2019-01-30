@@ -5,7 +5,7 @@ import { Card } from '@blueprintjs/core';
 import './viewpoint-list.scss';
 import noPhoto from '../../images/no_photo.png';
 
-export const ViewpointListItem = ({
+export const ViewpointsListItem = ({
   id,
   label,
   picture,
@@ -23,4 +23,4 @@ export const ViewpointListItem = ({
   </Card>
 );
 
-export default withRouter(ViewpointListItem);
+export default withRouter(ViewpointsListItem);

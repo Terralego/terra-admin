@@ -5,12 +5,9 @@ export async function validateCreate (values) {
     errors.label = 'Requis';
   }
 
-  if (values.addPicture) {
+  if (values.pictureFile) {
     if (!values.datePicture) {
       errors.datePicture = 'Requis';
-    }
-    if (!values.pictureFile) {
-      errors.pictureFile = 'Requis';
     }
   }
 
@@ -37,6 +34,8 @@ export async function validateCreate (values) {
   } else {
     errors.latitude = 'Requis';
   }
+
+  // console.log(errors);
 
   return errors;
 }

@@ -7,8 +7,8 @@ import Routing from '../../components/Routing';
 import OppProvider from './services/OppProvider';
 
 const Viewpoint = () => import('./views/Viewpoint');
-const ViewpointListView = () => import('./views/ViewpointList');
-const FormCreateViewpoint = () => import('./views/ViewpointList/AddViewpoint/FormCreateViewpoint');
+const ViewpointListView = () => import('./views/ViewpointsList');
+const ViewpointCreate = () => import('./views/ViewpointCreate');
 
 const { path } = config;
 
@@ -22,7 +22,7 @@ export const OPP = () => (
           [
             {
               path: `${path}/viewpoints/create`,
-              import: FormCreateViewpoint,
+              import: ViewpointCreate,
             },
             {
               path: `${path}/viewpoints/:id`,

@@ -1,8 +1,6 @@
 import React from 'react';
 import {
   H3,
-  Checkbox,
-  Icon,
   FormGroup,
   InputGroup,
   Button,
@@ -16,7 +14,7 @@ import { validateCreate } from './validateCreateForm';
 
 export class FormCreateViewpoint extends React.Component {
   state = {
-    isEnabled: false,
+    disabled: true,
     picture: {
       pictureFile: {},
     },
@@ -26,23 +24,18 @@ export class FormCreateViewpoint extends React.Component {
     const { saveViewpointAction, history } = this.props;
     const { picture } = this.state;
     const data = { ...values, ...picture };
-    await saveViewpointAction(data);
-    const { viewpoints: { newViewpoint: { id } } } = this.props;
-    history.push(`${id}`);
-  };
-
-  handleAddPicture = (e, input) => {
-    input.onChange(e);
-    this.setState({ isEnabled: input.checked });
+    console.log(data);
+    // await saveViewpointAction(data);
+    // const { viewpoints: { newViewpoint: { id } } } = this.props;
+    // history.push(`${id}`);
   };
 
   handlePicture = (e, input) => {
     input.onChange(e);
     this.setState({ picture: { pictureFile: e.target.files[0] } });
-  };
-
-  handleDateChange = (date, input) => {
-    date ? input.onChange(date.toISOString()) : input.onChange(date);
+    this.setState(prevState => ({
+      disabled: !prevState.disabled,
+    }));
   };
 
   formatDate = date => date.toLocaleDateString();
@@ -52,15 +45,12 @@ export class FormCreateViewpoint extends React.Component {
   render () {
     const {
       onSubmit,
-      handleAddPicture,
-      handleDateChange,
       handlePicture,
       formatDate,
       parseDate,
     } = this;
-    const { isEnabled } = this.state;
     const { t } = this.props;
-
+    const { disabled } = this.state;
     return (
       <>
         <H3>{t('opp.viewpoint.create.title')}</H3>
@@ -110,21 +100,6 @@ export class FormCreateViewpoint extends React.Component {
                     </>
                   )}
                 </Field>
-                <Field
-                  name="addPicture"
-                  type="checkbox"
-                >
-                  {({ input }) => (
-                    <Checkbox
-                      inline
-                      checked={isEnabled}
-                      {...input}
-                      onChange={e => handleAddPicture(e, input)}
-                    >
-                      <Icon icon="camera" />
-                    </Checkbox>
-                  )}
-                </Field>
                 <Field name="pictureFile">
                   {({ input, meta }) => (
                     <>
@@ -149,10 +124,9 @@ export class FormCreateViewpoint extends React.Component {
                         parseDate={parseDate}
                         placeholder="JJ/MM/AAAA"
                         showActionsBar
-                        onChange={e => handleDateChange(e, input)}
-                        onBlur={input.onBlur}
-                        onFocus={input.onFocus}
-                        name={input.name}
+                        {...input}
+                        value={input.value || null}
+                        disabled={disabled}
                       />
                       {meta.error && <span>{meta.error}</span>}
                     </>

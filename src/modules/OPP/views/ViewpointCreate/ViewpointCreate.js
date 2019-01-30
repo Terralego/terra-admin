@@ -20,8 +20,8 @@ export class ViewpointCreate extends React.Component {
     const { saveViewpointAction, history } = this.props;
     const { picture } = this.state;
     const data = { ...values, ...picture };
-    await saveViewpointAction(data);
-    const { viewpoints: { newViewpoint: { id } } } = this.props;
+    const newViewpoint = await saveViewpointAction(data);
+    const { id } = newViewpoint;
     history.push(`${id}`);
   };
 

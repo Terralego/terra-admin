@@ -13,19 +13,20 @@ export async function updateViewpoint (data) {
 }
 
 export async function createViewpoint (data) {
+  const { label, longitude, latitude, pictureFile, datePicture } = data;
   const formData = new FormData();
   const coordinate = `{
     "type": "Point",
     "coordinates": [
-      ${data.longitude},
-      ${data.latitude}
+      ${longitude},
+      ${latitude}
     ]
   }`;
-  formData.append('label', data.label);
+  formData.append('label', label);
   formData.append('point', coordinate);
-  if (data.datePicture && data.pictureFile) {
-    formData.append('picture.date', data.datePicture.toISOString());
-    formData.append('picture.file', data.pictureFile);
+  if (datePicture && pictureFile) {
+    formData.append('picture.date', datePicture.toISOString());
+    formData.append('picture.file', pictureFile);
   }
   return Api.request('viewpoints/', { method: 'POST', body: formData });
 }

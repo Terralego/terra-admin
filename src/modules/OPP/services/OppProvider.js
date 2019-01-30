@@ -48,13 +48,23 @@ export class OppProvider extends React.Component {
   saveViewpointAction = async data => {
     try {
       const viewpoint = await saveViewpoint(data);
-      this.setState(state => ({
-        ...state,
-        viewpoints: {
-          ...state.viewpoints,
-          [data.id]: viewpoint,
-        },
-      }));
+      if (data.id) {
+        this.setState(state => ({
+          ...state,
+          viewpoints: {
+            ...state.viewpoints,
+            [data.id]: viewpoint,
+          },
+        }));
+      } else {
+        this.setState(state => ({
+          ...state,
+          viewpoints: {
+            ...state.viewpoints,
+            newViewpoint: viewpoint,
+          },
+        }));
+      }
     } catch (e) {
       this.setState(state => ({
         ...state,
@@ -82,6 +92,7 @@ export class OppProvider extends React.Component {
   };
 
   render () {
+  console.log(this.state);
     const { children } = this.props;
     const {
       getViewpointAction,

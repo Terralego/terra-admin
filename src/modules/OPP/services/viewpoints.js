@@ -23,9 +23,10 @@ export async function createViewpoint (data) {
   }`;
   formData.append('label', data.label);
   formData.append('point', coordinate);
-  // formData.append('picture.date', data.datePicture);
-  // formData.append('picture.file', data.pictureFile);
-  for (var p of formData.entries()) { console.log(p); }
+  if (data.datePicture && data.pictureFile) {
+    formData.append('picture.date', data.datePicture);
+    formData.append('picture.file', data.pictureFile);
+  }
   return Api.request('viewpoints/', { method: 'POST', body: formData });
 }
 

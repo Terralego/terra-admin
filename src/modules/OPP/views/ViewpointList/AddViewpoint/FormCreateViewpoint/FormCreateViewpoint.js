@@ -22,7 +22,6 @@ export class FormCreateViewpoint extends React.Component {
   };
 
   onSubmit = values => {
-    console.log(this.props)
     const { saveViewpointAction } = this.props;
     const { picture } = this.state;
     const data = { ...values, ...picture };
@@ -41,7 +40,7 @@ export class FormCreateViewpoint extends React.Component {
   };
 
   handleDateChange = (date, input) => {
-    input.onChange(date.toISOString());
+    date ? input.onChange(date.toISOString()) : input.onChange(date);
   };
 
   formatDate = date => date.toLocaleDateString();

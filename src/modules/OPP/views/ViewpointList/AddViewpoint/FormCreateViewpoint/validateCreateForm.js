@@ -9,8 +9,8 @@ export async function validateCreate (values) {
     if (!values.datePicture) {
       errors.datePicture = 'Requis';
     }
-    if (!values.picture) {
-      errors.picture = 'Requis';
+    if (!values.pictureFile) {
+      errors.pictureFile = 'Requis';
     }
   }
 

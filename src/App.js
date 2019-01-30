@@ -14,15 +14,13 @@ import 'normalize.css';
 
 const App = () => (
   <BrowserRouter>
-    <AppProvider>
-      {({ API_HOST }) => (
-        <ApiProvider host={API_HOST}>
-          <AuthProvider>
-            <Main />
-          </AuthProvider>
-        </ApiProvider>
-      )}
-    </AppProvider>
+    <ApiProvider host="/api">
+      <AppProvider>
+        <AuthProvider>
+          <Main />
+        </AuthProvider>
+      </AppProvider>
+    </ApiProvider>
   </BrowserRouter>
 );
 

@@ -15,6 +15,7 @@
     "normalize.css": "^8.0.1",
     "querystring": "^0.2.0",
     "react": "^16.7.0",
+    "react-ctx-connect": "^1.0.1",
     "react-dom": "^16.7.0",
     "react-final-form": "^4.0.2",
     "react-i18next": "^8.4.0",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
-    "eslint-config-makina": "^0.8.2"
+    "eslint-config-makina": "^0.8.2",
+    "http-proxy-middleware": "^0.19.1"
   }
 }

@@ -1,5 +1,5 @@
 import { connectOppProvider } from '../../services/OppProvider';
-import FormCreateViewpoint from './FormCreateViewpoint';
+import FormCreateViewpoint from './ViewpointCreate';
 
 export default connectOppProvider(state => ({
   getAllViewpointsAction: state.getAllViewpointsAction,

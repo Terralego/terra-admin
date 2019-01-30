@@ -30,5 +30,12 @@
     "viewpoints": {
       "title": "Les points de vue"
     }
+  },
+  "rando": {
+    "project": "Randonnées",
+    "nav": {
+      "foo": "Foo",
+      "bar": "Bar"
+    }
   }
 }

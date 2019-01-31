@@ -49,7 +49,6 @@ export class OppProvider extends React.Component {
     try {
       const viewpoint = await saveViewpoint(data);
       this.setState(state => ({
-        ...state,
         viewpoints: {
           ...state.viewpoints,
           [viewpoint.id]: viewpoint,

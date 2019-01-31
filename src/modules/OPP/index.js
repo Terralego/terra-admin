@@ -18,22 +18,16 @@ export const OPP = () => (
       nav={<Nav />}
     >
       <Routing
-        routes={
-          [
-            {
-              path: `${path}/viewpoints/create`,
-              import: ViewpointCreate,
-            },
-            {
-              path: `${path}/viewpoints/:id`,
-              import: Viewpoint,
-            },
-            {
-              path: `${path}/viewpoints`,
-              import: ViewpointListView,
-            },
-          ]
-        }
+        routes={[{
+          path: `${path}/viewpoints/create`,
+          import: ViewpointCreate,
+        }, {
+          path: `${path}/viewpoints/:id`,
+          import: Viewpoint,
+        }, {
+          path: `${path}/viewpoints`,
+          import: ViewpointListView,
+        }]}
       />
     </NavLayout>
   </OppProvider>

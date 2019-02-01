@@ -37,8 +37,14 @@ export class FormCreate extends React.Component {
       formatDate,
       parseDate,
     } = this;
-    const { t, handleSubmit, invalid, form, submitting, pristine } = this.props;
-
+    const {
+      t,
+      handleSubmit,
+      invalid,
+      form,
+      submitting,
+      pristine,
+    } = this.props;
     return (
       <form
         method="put"

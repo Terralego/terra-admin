@@ -1,0 +1,23 @@
+.bp3-portal {
+
+  .bp3-overlay {
+    display: flex;
+    justify-content: center;
+
+    .input-map {
+      position: relative;
+      bottom: 0;
+      top: 1280px;
+      width: 900px;
+      height: 300px;
+
+      &.bp3-overlay-enter-done {
+        z-index: 42;
+        top: 150px;
+      }
+
+    }
+
+  }
+
+}

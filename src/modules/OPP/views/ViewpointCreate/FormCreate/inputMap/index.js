@@ -14,6 +14,7 @@ export class InputMap extends React.Component {
   containerEl = React.createRef();
 
   componentDidMount () {
+    const { point: { longitude, latitude } } = this.props;
     this.map = new mapboxgl.Map({
       container: this.containerEl.current,
       style: 'mapbox://styles/mapbox/streets-v9',
@@ -30,9 +31,47 @@ export class InputMap extends React.Component {
         point: true,
         trash: true,
       },
+      styles: [
+        {
+          id: 'highlight-active-points',
+          type: 'circle',
+          filter: ['all',
+            ['==', '$type', 'Point'],
+            ['==', 'meta', 'feature'],
+            ['==', 'active', 'true']],
+          paint: {
+            'circle-radius': 7,
+            'circle-color': '#223947',
+          },
+        },
+        {
+          id: 'input',
+          type: 'circle',
+          filter: ['all',
+            ['==', '$type', 'Point'],
+            ['==', 'meta', 'feature'],
+            ['==', 'active', 'false']],
+          paint: {
+            'circle-radius': 5,
+            'circle-color': '#223947',
+          },
+        },
+      ],
     });
 
     this.map.addControl(Draw, 'top-left');
+
+    if (longitude && latitude) {
+      Draw.set({
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          properties: {},
+          id: 'input',
+          geometry: { type: 'Point', coordinates: [longitude, latitude] },
+        }],
+      });
+    }
 
     this.onlyOnePoint(Draw);
   }

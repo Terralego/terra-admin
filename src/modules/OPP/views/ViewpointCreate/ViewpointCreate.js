@@ -42,7 +42,6 @@ export class ViewpointCreate extends React.Component {
     const {
       onSubmit,
       onPicture,
-      onCoordinate,
     } = this;
     const { t } = this.props;
     const { point } = this.state;
@@ -57,7 +56,6 @@ export class ViewpointCreate extends React.Component {
             <FormCreate
               {...formProps}
               onPicture={onPicture}
-              onCoordinate={onCoordinate}
             />
           )}
         />

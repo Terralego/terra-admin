@@ -14,6 +14,7 @@
     "mc-tf-test": "^0.6.1",
     "node-sass": "^4.11.0",
     "normalize.css": "^8.0.1",
+    "prop-types": "^15.6.2",
     "querystring": "^0.2.0",
     "react": "^16.7.0",
     "react-ctx-connect": "^1.0.1",

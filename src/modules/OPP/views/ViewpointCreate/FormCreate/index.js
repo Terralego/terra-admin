@@ -27,6 +27,17 @@ export class FormCreate extends React.Component {
     }
   };
 
+  handleCoordinate = value => {
+    const { form } = this.props;
+    if (value) {
+      form.change('longitude', value[0]);
+      form.change('latitude', value[1]);
+    } else {
+      form.change('longitude', null);
+      form.change('latitude', null);
+    }
+  };
+
   formatDate = date => date.toLocaleDateString();
 
   parseDate = str => new Date(str);

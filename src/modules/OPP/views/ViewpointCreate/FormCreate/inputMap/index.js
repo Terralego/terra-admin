@@ -1,29 +1,41 @@
 import React from 'react';
 
-import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-
+import { Map } from 'mc-tf-test';
 
 import './input-map.scss';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ';
-
 export class InputMap extends React.Component {
-  containerEl = React.createRef();
+  onlyOnePoint = (map, Draw) => {
+    const currentComponent = this;
 
-  componentDidMount () {
-    const { point: { longitude, latitude } } = this.props;
-    this.map = new mapboxgl.Map({
-      container: this.containerEl.current,
-      style: 'mapbox://styles/mapbox/streets-v9',
-      center: [-61.0134945, 14.6376395],
-      zoom: 10,
-      minZoom: 6,
-      maxZoom: 17,
-      maxBounds: [[-62.2, 14.1], [-60.1, 15.0]],
+    map.on('draw.modechange', () => {
+      let idPointToDelete = '';
+      let currentDraw = '';
+      const allGeometry = Draw.getAll();
+      currentDraw = allGeometry.features[allGeometry.features.length - 1];
+      if (Draw.getMode() === 'draw_point') {
+        allGeometry.features.forEach(geometry => {
+          if (geometry.geometry.type === 'Point' && geometry.id !== currentDraw.id) {
+            idPointToDelete = geometry.id;
+          }
+        });
+        Draw.delete(idPointToDelete);
+      }
+      currentComponent.props.form.change('longitude', currentDraw.geometry.coordinates[0]);
+      currentComponent.props.form.change('latitude', currentDraw.geometry.coordinates[1]);
     });
+
+    map.on('draw.delete', () => {
+      Draw.trash();
+      currentComponent.props.form.change('longitude', null);
+      currentComponent.props.form.change('latitude', null);
+    });
+  };
+
+  addToolsDraw = map => {
+    const { form } = this.props;
 
     const Draw = new MapboxDraw({
       displayControlsDefault: false,
@@ -59,51 +71,40 @@ export class InputMap extends React.Component {
       ],
     });
 
-    this.map.addControl(Draw, 'top-left');
+    map.addControl(Draw, 'top-left');
 
-    if (longitude && latitude) {
+    if (form.getFieldState('longitude').value && form.getFieldState('latitude').value) {
       Draw.set({
         type: 'FeatureCollection',
         features: [{
           type: 'Feature',
           properties: {},
           id: 'input',
-          geometry: { type: 'Point', coordinates: [longitude, latitude] },
+          geometry: { type: 'Point', coordinates: [+form.getFieldState('longitude').value, +form.getFieldState('latitude').value] },
         }],
       });
     }
 
-    this.onlyOnePoint(Draw);
-  }
+    this.onlyOnePoint(map, Draw);
+  };
 
-  onlyOnePoint = Draw => {
-    const currentComponent = this;
-    this.map.on('draw.modechange', () => {
-      let idPointToDelete = '';
-      let currentDraw = '';
-      const allGeometry = Draw.getAll();
-      currentDraw = allGeometry.features[allGeometry.features.length - 1];
-      currentComponent.props.onCoordinate(currentDraw);
-      if (Draw.getMode() === 'draw_point') {
-        allGeometry.features.forEach(geometry => {
-          if (geometry.geometry.type === 'Point' && geometry.id !== currentDraw.id) {
-            idPointToDelete = geometry.id;
-          }
-        });
-        Draw.delete(idPointToDelete);
-      }
-    });
+  initMap = map => {
+    this.addToolsDraw(map);
   };
 
   render () {
     return (
       <div className="input-map">
-        <div
-          id="containerEl"
-          ref={this.containerEl}
-          style={{ width: 'auto', height: '80vh' }}
+        <Map
+          accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
+          backgroundStyle="mapbox://styles/mapbox/streets-v9"
+          center={[-61.0134945, 14.6376395]}
+          zoom={10}
+          minZoom={6}
+          maxZoom={17}
+          maxBounds={[[-62.2, 14.1], [-60.1, 15.0]]}
+          onMapLoaded={this.initMap}
         />
-
       </div>
     );
   }

@@ -27,31 +27,18 @@ export class ViewpointCreate extends React.Component {
     this.setState({ pictureFile: file });
   };
 
-  onCoordinate = point => {
-    if (point.geometry.coordinates.length > 0) {
-      this.setState({
-        point: {
-          longitude: point.geometry.coordinates[0],
-          latitude: point.geometry.coordinates[1],
-        },
-      });
-    }
-  };
-
   render () {
     const {
       onSubmit,
       onPicture,
     } = this;
     const { t } = this.props;
-    const { point } = this.state;
     return (
       <>
         <H3>{t('opp.viewpoint.create.title')}</H3>
         <Form
           onSubmit={onSubmit}
           validate={validateCreate}
-          initialValues={point}
           render={formProps => (
             <FormCreate
               {...formProps}

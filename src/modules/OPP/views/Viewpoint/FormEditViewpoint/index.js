@@ -30,7 +30,7 @@ export const FormEditViewpoint = ({
     <H3>{t('opp.viewpoint.edit.visualization_pictures')}</H3>
     <div className="visu-edit">
       {viewpoint.pictures.map(picture => (
-        <Card elevation={Elevation.TWO} key={picture.date}>
+        <Card elevation={Elevation.TWO} key={picture.id}>
           <img src={picture.file.thumbnail} alt={viewpoint.label} />
           <p>{dateFormat(picture.date)}</p>
         </Card>

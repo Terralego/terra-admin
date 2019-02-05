@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import mapboxgl from 'mc-tf-test/node_modules/mapbox-gl';
-import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import { Map } from 'mc-tf-test';
 
 export class InputMap extends React.Component {

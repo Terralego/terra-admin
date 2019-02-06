@@ -69,7 +69,7 @@ build:
     paths:
       - build/
 
-deploy:
+deploy_dev:
   tags: [shared-ci-docker]
   stage: deploy
   dependencies:
@@ -77,4 +77,37 @@ deploy:
   only:
     - master
   script:
-    - npx --package netlify-cli netlify deploy --site=$NETLIFY_SITE_ID --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod
+    - npx --package netlify-cli netlify deploy --site=terra-admin-dev.netlify.com --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod
+
+deploy_qa:
+  tags: [shared-ci-docker]
+  stage: deploy
+  dependencies:
+    - build
+  only:
+    - master
+  when: manual
+  script:
+    - npx --package netlify-cli netlify deploy --site=terra-admin-qa.netlify.com --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod
+
+deploy_staging:
+  tags: [shared-ci-docker]
+  stage: deploy
+  dependencies:
+    - build
+  only:
+    - master
+  when: manual
+  script:
+    - npx --package netlify-cli netlify deploy --site=terra-admin-staging.netlify.com --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod
+
+deploy_prod:
+  tags: [shared-ci-docker]
+  stage: deploy
+  dependencies:
+    - build
+  only:
+    - master
+  when: manual
+  script:
+    - npx --package netlify-cli netlify deploy --site=terra-admin.netlify.com --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod

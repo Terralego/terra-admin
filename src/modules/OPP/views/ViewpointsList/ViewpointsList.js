@@ -5,7 +5,8 @@ import {
 import { withNamespaces } from 'react-i18next';
 
 import ViewpointListItem from './ViewpointsListItem';
-import AddViewpoint from './AddViewpoint/AddViewpoint';
+import AddViewpoint from './AddViewpoint';
+
 import './viewpoint-list.scss';
 
 export class ViewpointsList extends React.Component {
@@ -23,14 +24,12 @@ export class ViewpointsList extends React.Component {
         </div>
         <div className="viewpoint-list">
           <AddViewpoint />
-          {
-            viewpointsList.map(viewpoint => (
-              <ViewpointListItem
-                key={viewpoint.id}
-                {...viewpoint}
-              />
-            ))
-          }
+          {viewpointsList.map(viewpoint => (
+            <ViewpointListItem
+              key={viewpoint.id}
+              {...viewpoint}
+            />
+          ))}
         </div>
       </>
     );

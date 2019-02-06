@@ -41,13 +41,9 @@ export class ViewpointCreate extends React.Component {
         <Form
           onSubmit={onSubmit}
           validate={validateCreate}
-          render={({ handleSubmit, invalid, form, pristine, submitting }) => (
+          render={formProps => (
             <FormCreate
-              handleSubmit={handleSubmit}
-              invalid={invalid}
-              form={form}
-              submitting={submitting}
-              pristine={pristine}
+              {...formProps}
               onPicture={onPicture}
             />
           )}

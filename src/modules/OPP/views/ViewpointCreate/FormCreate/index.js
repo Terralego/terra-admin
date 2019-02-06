@@ -8,22 +8,18 @@ import { DateInput } from '@blueprintjs/datetime';
 import { withNamespaces } from 'react-i18next';
 import { Field } from 'react-final-form';
 
+import RequiredItem from '../../../components/RequiredItem';
+
 import './form-create.scss';
 
 export class FormCreate extends React.Component {
-  state = {
-    disabled: true,
-  };
-
   handlePicture = (e, input, form) => {
-    const { onPicture } = this.props;
     input.onChange(e);
-    onPicture(e.target.files[0]);
-    this.setState(prevState => ({
-      disabled: !prevState.disabled,
-    }));
+    const { onPicture } = this.props;
+    const { target: { files: [file] } } = e;
+    onPicture(file);
 
-    if (e.target.files.length === 0) {
+    if (file) {
       form.change('datePicture', null);
     }
   };
@@ -39,7 +35,7 @@ export class FormCreate extends React.Component {
       parseDate,
     } = this;
     const { t, handleSubmit, invalid, form, submitting, pristine } = this.props;
-    const { disabled } = this.state;
+
     return (
       <form
         method="put"
@@ -55,7 +51,10 @@ export class FormCreate extends React.Component {
                   leftIcon="tag"
                   placeholder="Label"
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
+                <RequiredItem
+                  {...meta}
+                  name={input.name}
+                />
               </>
             )}
           </Field>
@@ -67,7 +66,10 @@ export class FormCreate extends React.Component {
                   leftIcon="map"
                   placeholder="Longitude : -61.2018"
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
+                <RequiredItem
+                  {...meta}
+                  name={input.name}
+                />
               </>
             )}
           </Field>
@@ -79,7 +81,10 @@ export class FormCreate extends React.Component {
                   leftIcon="map"
                   placeholder="Latitude : 14.7786"
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
+                <RequiredItem
+                  {...meta}
+                  name={input.name}
+                />
               </>
             )}
           </Field>
@@ -95,7 +100,10 @@ export class FormCreate extends React.Component {
                     onChange={e => handlePicture(e, input, form)}
                   />
                 </label>
-                {meta.error && <span>{meta.error}</span>}
+                <RequiredItem
+                  {...meta}
+                  name={input.name}
+                />
               </>
             )}
           </Field>
@@ -109,9 +117,13 @@ export class FormCreate extends React.Component {
                   showActionsBar
                   {...input}
                   value={input.value || null}
-                  disabled={disabled}
+                  disabled={form.getFieldState('pictureFile').pristine}
                 />
-                {meta.error && <span>{meta.error}</span>}
+                <RequiredItem
+                  {...meta}
+                  name={input.name}
+                  forceDisplayRequired
+                />
               </>
             )}
           </Field>

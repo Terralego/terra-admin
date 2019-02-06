@@ -12,16 +12,17 @@ export async function updateViewpoint (data) {
   return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: data });
 }
 
-export async function createViewpoint (data) {
-  const { label, longitude, latitude, pictureFile, datePicture } = data;
+export async function createViewpoint ({ label, longitude, latitude, pictureFile, datePicture }) {
   const formData = new FormData();
-  const coordinate = `{
-    "type": "Point",
-    "coordinates": [
-      ${longitude},
-      ${latitude}
-    ]
-  }`;
+
+  const coordinate = JSON.stringify({
+    type: 'Point',
+    coordinates: [
+      +longitude,
+      +latitude,
+    ],
+  });
+
   formData.append('label', label);
   formData.append('point', coordinate);
   if (datePicture && pictureFile) {

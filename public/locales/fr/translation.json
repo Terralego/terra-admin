@@ -3,18 +3,25 @@
     "account": "Votre compte",
     "add": "Ajouter",
     "error": {
-        "title": "Un problème est survenue. ",
-        "text": "Retourner à la page d'accueil : ",
-        "link": "Accueil",
-        "title_404": "Erreur 404 : Page introuvable.",
-        "text_404": "Retourner à la page d'accueil : ",
-        "link_404": "Accueil"
+      "title": "Un problème est survenue. ",
+      "text": "Retourner à la page d'accueil : ",
+      "link": "Accueil",
+      "title_404": "Erreur 404 : Page introuvable.",
+      "text_404": "Retourner à la page d'accueil : ",
+      "link_404": "Accueil"
     },
     "loading": "Chargement en cours ...",
     "logout": "Se déconnecter",
     "title": "Terralego",
     "submit": "Envoyer",
-    "reset": "Réinitialiser"
+    "reset": "Réinitialiser",
+    "validator-form": {
+      "required": "Ce champ est requis",
+      "number": "Ce champ doit être un nombre",
+      "range-number": "Ce champ doit être compris entre {{value}} et {{value}}.",
+      "range-number_longitude": "Ce champ doit être compris entre -180° et 180°.",
+      "range-number_latitude": "Ce champ doit être compris entre -90° et 90°."
+    }
   },
   "opp": {
     "nav": {

@@ -12,7 +12,7 @@ export async function updateViewpoint (data) {
   return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: data });
 }
 
-export async function createViewpoint ({ label, longitude, latitude, pictureFile, datePicture }) {
+export async function createViewpoint ({ label, longitude, latitude, pictureFile, date }) {
   const formData = new FormData();
 
   const coordinate = JSON.stringify({
@@ -25,8 +25,8 @@ export async function createViewpoint ({ label, longitude, latitude, pictureFile
 
   formData.append('label', label);
   formData.append('point', coordinate);
-  if (datePicture && pictureFile) {
-    formData.append('picture.date', datePicture.toISOString());
+  if (date && pictureFile) {
+    formData.append('picture.date', date.toISOString());
     formData.append('picture.file', pictureFile);
   }
   return Api.request('viewpoints/', { method: 'POST', body: formData });

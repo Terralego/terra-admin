@@ -11,22 +11,20 @@ import FormCreate from './FormCreate';
 
 export class ViewpointCreate extends React.Component {
   state = {
-    picture: {
-      pictureFile: {},
-    },
+    pictureFile: {},
   };
 
   onSubmit = async values => {
     const { saveViewpointAction, history } = this.props;
-    const { picture } = this.state;
-    const data = { ...values, ...picture };
+    const { pictureFile } = this.state;
+    const data = { ...values, pictureFile };
     const newViewpoint = await saveViewpointAction(data);
     const { id } = newViewpoint;
     history.push(`${id}`);
   };
 
   onPicture = file => {
-    this.setState({ picture: { pictureFile: file } });
+    this.setState({ pictureFile: file });
   };
 
   render () {

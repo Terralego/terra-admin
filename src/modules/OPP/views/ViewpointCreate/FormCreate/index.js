@@ -3,12 +3,11 @@ import {
   FormGroup,
   InputGroup,
   Button,
+  Intent,
 } from '@blueprintjs/core';
 import { DateInput } from '@blueprintjs/datetime';
 import { withNamespaces } from 'react-i18next';
 import { Field } from 'react-final-form';
-
-import RequiredItem from '../../../components/RequiredItem';
 
 import './form-create.scss';
 
@@ -20,7 +19,7 @@ export class FormCreate extends React.Component {
     onPicture(file);
 
     if (file) {
-      form.change('datePicture', null);
+      form.change('date', null);
     }
   };
 
@@ -42,94 +41,104 @@ export class FormCreate extends React.Component {
         onSubmit={handleSubmit}
         className="form-create"
       >
-        <FormGroup>
-          <Field name="label">
-            {({ input, meta }) => (
-              <>
-                <InputGroup
+        <Field name="label">
+          {({ input, meta: { error, touched } }) => (
+            <FormGroup
+              helperText={(!!error && touched) && t('main.form.error', { context: error, name: input.name })}
+              intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+              label="Libellé"
+              labelFor="text-input"
+              labelInfo="(*)"
+            >
+              <InputGroup
+                {...input}
+                leftIcon="tag"
+                placeholder="Libellé"
+              />
+            </FormGroup>
+          )}
+        </Field>
+        <Field name="longitude">
+          {({ input, meta: { error, touched } }) => (
+            <FormGroup
+              helperText={(!!error && touched) && t('main.form.error', { context: error, name: input.name, min: '-180°', max: '+180°' })}
+              intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+              label="Longitude"
+              labelFor="text-input"
+              labelInfo="(*)"
+            >
+              <InputGroup
+                {...input}
+                leftIcon="map"
+                placeholder="Longitude : -61.2018"
+              />
+            </FormGroup>
+          )}
+        </Field>
+        <Field name="latitude">
+          {({ input, meta: { error, touched } }) => (
+            <FormGroup
+              helperText={(!!error && touched) && t('main.form.error', { context: error, name: input.name, min: '-90°', max: '+90°' })}
+              intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+              label="Latitude"
+              labelFor="text-input"
+              labelInfo="(*)"
+            >
+              <InputGroup
+                {...input}
+                leftIcon="map"
+                placeholder="Latitude : 14.7786"
+              />
+            </FormGroup>
+          )}
+        </Field>
+        <Field name="pictureFile">
+          {({ input, meta: { error, touched } }) => (
+            <FormGroup
+              helperText={(!!error && touched) && t(`main.validator-form.${error}`, { context: input.name })}
+              intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+              label="Picture"
+              labelFor="text-input"
+            >
+              <label htmlFor="pictureFile">
+                <input
+                  type="file"
+                  id="pictureFile"
+                  name="pictureFile"
                   {...input}
-                  leftIcon="tag"
-                  placeholder="Label"
+                  onChange={e => handlePicture(e, input, form)}
                 />
-                <RequiredItem
-                  {...meta}
-                  name={input.name}
-                />
-              </>
-            )}
-          </Field>
-          <Field name="longitude">
-            {({ input, meta }) => (
-              <>
-                <InputGroup
-                  {...input}
-                  leftIcon="map"
-                  placeholder="Longitude : -61.2018"
-                />
-                <RequiredItem
-                  {...meta}
-                  name={input.name}
-                />
-              </>
-            )}
-          </Field>
-          <Field name="latitude">
-            {({ input, meta }) => (
-              <>
-                <InputGroup
-                  {...input}
-                  leftIcon="map"
-                  placeholder="Latitude : 14.7786"
-                />
-                <RequiredItem
-                  {...meta}
-                  name={input.name}
-                />
-              </>
-            )}
-          </Field>
-          <Field name="pictureFile">
-            {({ input, meta }) => (
-              <>
-                <label htmlFor="pictureFile">
-                  <input
-                    type="file"
-                    id="pictureFile"
-                    name="pictureFile"
+              </label>
+            </FormGroup>
+          )}
+        </Field>
+        <Field name="pictureFile">
+          {({ meta: { pristine: pictureFilePristine } }) => (
+            <Field type="date" name="date">
+              {({ input, meta: { error } }) => (
+                <FormGroup
+                  helperText={error && t('main.form.error', { context: error, name: input.name })}
+                  intent={(error) ? Intent.DANGER : Intent.NONE}
+                  label="Date"
+                  labelFor="text-input"
+                  labelInfo="(*)"
+                  disabled={pictureFilePristine}
+                >
+                  <DateInput
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    placeholder="JJ/MM/AAAA"
+                    showActionsBar
                     {...input}
-                    onChange={e => handlePicture(e, input, form)}
+                    value={input.value || null}
                   />
-                </label>
-                <RequiredItem
-                  {...meta}
-                  name={input.name}
-                />
-              </>
-            )}
-          </Field>
-          <Field type="date" name="datePicture">
-            {({ input, meta }) => (
-              <>
-                <DateInput
-                  formatDate={formatDate}
-                  parseDate={parseDate}
-                  placeholder="JJ/MM/AAAA"
-                  showActionsBar
-                  {...input}
-                  value={input.value || null}
-                  disabled={form.getFieldState('pictureFile').pristine}
-                />
-                <RequiredItem
-                  {...meta}
-                  name={input.name}
-                  forceDisplayRequired
-                />
-              </>
-            )}
-          </Field>
-        </FormGroup>
-        <Button text={t('main.submit')} intent="primary" type="submit" disabled={invalid} />
-        <Button text={t('main.reset')} onClick={form.reset} disabled={submitting || pristine} />
+                </FormGroup>
+              )}
+            </Field>
+          )}
+        </Field>
+        <Button text={t('main.form.submit')} intent="primary" type="submit" disabled={invalid} />
+        <Button text={t('main.form.reset')} onClick={form.reset} disabled={submitting || pristine} />
       </form>
 
     );

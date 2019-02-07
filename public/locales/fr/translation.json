@@ -13,14 +13,15 @@
     "loading": "Chargement en cours ...",
     "logout": "Se déconnecter",
     "title": "Terralego",
-    "submit": "Envoyer",
-    "reset": "Réinitialiser",
-    "validator-form": {
-      "required": "Ce champ est requis",
-      "number": "Ce champ doit être un nombre",
-      "range-number": "Ce champ doit être compris entre {{value}} et {{value}}.",
-      "range-number_longitude": "Ce champ doit être compris entre -180° et 180°.",
-      "range-number_latitude": "Ce champ doit être compris entre -90° et 90°."
+    "form": {
+      "submit": "Envoyer",
+      "reset": "Réinitialiser",
+      "error": "Erreur inconnue",
+      "error_required": "Ce champ {{name}} est requis.",
+      "error_number": "Ce champ {{name}} doit être un nombre.",
+      "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
+      "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à{{min}}.",
+      "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à{{min}}."
     }
   },
   "opp": {

@@ -1,3 +1,7 @@
 .form-create {
-  input[type="text"]:disabled { display: none}
+
+  div.bp3-disabled {
+    display: none
+  }
+
 }

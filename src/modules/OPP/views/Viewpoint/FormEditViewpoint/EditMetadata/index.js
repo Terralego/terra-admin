@@ -60,7 +60,7 @@ export class EditMetadata extends React.Component {
                   )}
                 </Field>
               </FormGroup>
-              <Button text={t('main.submit')} intent="primary" type="submit" disabled={invalid} />
+              <Button text={t('main.form.submit')} intent="primary" type="submit" disabled={invalid} />
             </form>
           )}
         />

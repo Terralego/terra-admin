@@ -22,7 +22,9 @@ export async function validateCreate (values) {
 
   if (values.longitude) {
     if (validateIsNumber(values.longitude)) {
-      if (validateMinLength(values.longitude, -180) || validateMaxLength(values.longitude, 180)) {
+      if (
+        !(validateMinLength(values.longitude, -180) && validateMaxLength(values.longitude, 180))
+      ) {
         errors.longitude = FORM_ERROR_MIN_MAX;
       }
     } else {
@@ -34,7 +36,7 @@ export async function validateCreate (values) {
 
   if (values.latitude) {
     if (validateIsNumber(values.latitude)) {
-      if (validateMinLength(values.latitude, -90) || validateMaxLength(values.latitude, 90)) {
+      if (!(validateMinLength(values.latitude, -90) && validateMaxLength(values.latitude, 90))) {
         errors.latitude = FORM_ERROR_MIN_MAX;
       }
     } else {

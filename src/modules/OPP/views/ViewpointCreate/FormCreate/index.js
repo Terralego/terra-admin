@@ -44,7 +44,7 @@ export class FormCreate extends React.Component {
         <Field name="label">
           {({ input, meta: { error, touched } }) => (
             <FormGroup
-              helperText={(!!error && touched) && t('main.form.error', { context: error, name: input.name })}
+              helperText={(!!error && touched) && t('form.error', { context: error, name: input.name })}
               intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
               label="Libellé"
               labelFor="text-input"
@@ -61,7 +61,7 @@ export class FormCreate extends React.Component {
         <Field name="longitude">
           {({ input, meta: { error, touched } }) => (
             <FormGroup
-              helperText={(!!error && touched) && t('main.form.error', { context: error, name: input.name, min: '-180°', max: '+180°' })}
+              helperText={(!!error && touched) && t('form.error', { context: error, name: input.name, min: '-180°', max: '+180°' })}
               intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
               label="Longitude"
               labelFor="text-input"
@@ -78,7 +78,7 @@ export class FormCreate extends React.Component {
         <Field name="latitude">
           {({ input, meta: { error, touched } }) => (
             <FormGroup
-              helperText={(!!error && touched) && t('main.form.error', { context: error, name: input.name, min: '-90°', max: '+90°' })}
+              helperText={(!!error && touched) && t('form.error', { context: error, name: input.name, min: '-90°', max: '+90°' })}
               intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
               label="Latitude"
               labelFor="text-input"
@@ -117,7 +117,7 @@ export class FormCreate extends React.Component {
             <Field type="date" name="date">
               {({ input, meta: { error } }) => (
                 <FormGroup
-                  helperText={error && t('main.form.error', { context: error, name: input.name })}
+                  helperText={error && t('form.error', { context: error, name: input.name })}
                   intent={(error) ? Intent.DANGER : Intent.NONE}
                   label="Date"
                   labelFor="text-input"
@@ -137,8 +137,8 @@ export class FormCreate extends React.Component {
             </Field>
           )}
         </Field>
-        <Button text={t('main.form.submit')} intent="primary" type="submit" disabled={invalid} />
-        <Button text={t('main.form.reset')} onClick={form.reset} disabled={submitting || pristine} />
+        <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
+        <Button text={t('form.reset')} onClick={form.reset} disabled={submitting || pristine} />
       </form>
 
     );

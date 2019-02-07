@@ -12,17 +12,17 @@
     },
     "loading": "Chargement en cours ...",
     "logout": "Se déconnecter",
-    "title": "Terralego",
-    "form": {
-      "submit": "Envoyer",
-      "reset": "Réinitialiser",
-      "error": "Erreur inconnue",
-      "error_required": "Ce champ {{name}} est requis.",
-      "error_number": "Ce champ {{name}} doit être un nombre.",
-      "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
-      "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à{{min}}.",
-      "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à{{min}}."
-    }
+    "title": "Terralego"
+  },
+  "form": {
+    "submit": "Envoyer",
+    "reset": "Réinitialiser",
+    "error": "Erreur inconnue",
+    "error_required": "Ce champ {{name}} est requis.",
+    "error_number": "Ce champ {{name}} doit être un nombre.",
+    "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
+    "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à{{min}}.",
+    "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à{{min}}."
   },
   "opp": {
     "nav": {

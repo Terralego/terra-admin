@@ -56,7 +56,7 @@ npm_run_build:
     paths:
       - dist
 
-# Deploy story book
+# Build admin
 
 build:
   tags: [shared-ci-docker]
@@ -69,45 +69,50 @@ build:
     paths:
       - build/
 
-deploy_dev:
+# Deploy admin
+
+.deploy: &deploy_base
   tags: [shared-ci-docker]
   stage: deploy
   dependencies:
     - build
+  when: manual
   only:
     - master
   script:
-    - npx --package netlify-cli netlify deploy --site=terra-admin-dev.netlify.com --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod
+    - mkdir ./tmp
+    - mv ./build ./tmp/admin
+    - npx netlify-cli deploy --site=$SITE_NAME --auth=$NETLIFY_ACCESS_TOKEN  --dir=./tmp --prod
+
+deploy_dev:
+  <<: *deploy_base
+  environment:
+    name: dev
+    url: https://terra-admin-dev.netlify.com/admin
+  when: on_success
+  variables:
+    SITE_NAME: "terra-admin-dev.netlify.com"
 
 deploy_qa:
-  tags: [shared-ci-docker]
-  stage: deploy
-  dependencies:
-    - build
-  only:
-    - master
-  when: manual
-  script:
-    - npx --package netlify-cli netlify deploy --site=terra-admin-qa.netlify.com --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod
+  <<: *deploy_base
+  environment:
+    name: qa
+    url: https://terra-admin-qa.netlify.com/admin
+  variables:
+    SITE_NAME: "terra-admin-qa.netlify.com"
 
 deploy_staging:
-  tags: [shared-ci-docker]
-  stage: deploy
-  dependencies:
-    - build
-  only:
-    - master
-  when: manual
-  script:
-    - npx --package netlify-cli netlify deploy --site=terra-admin-staging.netlify.com --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod
+  <<: *deploy_base
+  environment:
+    name: staging
+    url: https://terra-admin-staging.netlify.com/admin
+  variables:
+    SITE_NAME: "terra-admin-staging.netlify.com"
 
 deploy_prod:
-  tags: [shared-ci-docker]
-  stage: deploy
-  dependencies:
-    - build
-  only:
-    - master
-  when: manual
-  script:
-    - npx --package netlify-cli netlify deploy --site=terra-admin.netlify.com --auth=$NETLIFY_ACCESS_TOKEN  --dir=./build --prod
+  <<: *deploy_base
+  environment:
+    name: prod
+    url: https://terra-admins.netlify.com/admin
+  variables:
+    SITE_NAME: "terra-admin.netlify.com"

@@ -12,8 +12,10 @@ import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import 'normalize.css';
 
+const { PUBLIC_URL } = process.env;
+
 const App = () => (
-  <BrowserRouter>
+  <BrowserRouter basename={PUBLIC_URL}>
     <ApiProvider host="/api">
       <AppProvider>
         <AuthProvider>

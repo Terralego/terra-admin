@@ -35,7 +35,8 @@
       "edit": {
         "add-picture": "$t(common.add) une picture",
         "title": "Formulaire d'édition",
-        "visualization_pictures": "Visualisation des images"
+        "visualization_pictures": "Visualisation des images",
+        "show-map": "Afficher la carte"
       },
       "create": {
         "title": "Formulaire de création d'un viewpoint"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'react-final-form';
-import { Button, FormGroup, InputGroup, Overlay } from '@blueprintjs/core';
+import { Button, FormGroup, InputGroup, Intent, Overlay } from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
 
 import InputMap from '../../../../../components/InputMap';
@@ -43,42 +43,58 @@ export class FormMetadata extends React.Component {
       >
         <FormGroup>
           <Field name="label">
-            {({ input, meta }) => (
-              <>
+            {({ input, meta: { error, touched } }) => (
+              <FormGroup
+                helperText={(!!error && touched) && t('form.error', { context: error, name: input.name })}
+                intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+                label="Libellé"
+                labelFor="text-input"
+                labelInfo="(*)"
+              >
                 <InputGroup
                   {...input}
                   leftIcon="tag"
+                  placeholder="Libellé"
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
-              </>
+              </FormGroup>
             )}
           </Field>
           <Field name="geometry.coordinates[0]">
-            {({ input, meta }) => (
-              <>
+            {({ input, meta: { error, touched } }) => (
+              <FormGroup
+                helperText={(!!error && touched) && t('form.error', { context: error, name: 'longitude', min: '-180°', max: '+180°' })}
+                intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+                label="Longitude"
+                labelFor="text-input"
+                labelInfo="(*)"
+              >
                 <InputGroup
                   {...input}
                   leftIcon="map"
                   placeholder="Longitude : -61.2018"
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
-              </>
+              </FormGroup>
             )}
           </Field>
           <Field name="geometry.coordinates[1]">
-            {({ input, meta }) => (
-              <>
+            {({ input, meta: { error, touched } }) => (
+              <FormGroup
+                helperText={(!!error && touched) && t('form.error', { context: error, name: 'latitude', min: '-90°', max: '+90°' })}
+                intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+                label="Latitude"
+                labelFor="text-input"
+                labelInfo="(*)"
+              >
                 <InputGroup
                   {...input}
                   leftIcon="map"
                   placeholder="Latitude : 14.7786"
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
-              </>
+              </FormGroup>
             )}
           </Field>
           <div className="coordinate">
-            <Button text="Show overlay" onClick={toggleOpenOverlay} />
+            <Button text={t('opp.viewpoint.edit.show-map')} onClick={toggleOpenOverlay} />
             <Overlay isOpen={isOpen} onClose={toggleOpenOverlay}>
               <Field name="geometry.coordinates[0]">
                 {({ input: { value: longitude } }) => (

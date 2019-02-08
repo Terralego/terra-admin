@@ -9,9 +9,9 @@ import { validateEdit } from './validateEditForm';
 import FormMetadata from './FormMetadata';
 
 export class EditMetadata extends React.Component {
-  onSubmit = value => {
+  onSubmit = values => {
     const { saveViewpointAction } = this.props;
-    saveViewpointAction(value);
+    saveViewpointAction(values);
   };
 
   render () {
@@ -24,13 +24,9 @@ export class EditMetadata extends React.Component {
           onSubmit={onSubmit}
           initialValues={viewpoint}
           validate={validateEdit}
-          render={({ handleSubmit, invalid, form, pristine, submitting }) => (
+          render={formProps => (
             <FormMetadata
-              handleSubmit={handleSubmit}
-              invalid={invalid}
-              form={form}
-              submitting={submitting}
-              pristine={pristine}
+              {...formProps}
             />
           )}
         />

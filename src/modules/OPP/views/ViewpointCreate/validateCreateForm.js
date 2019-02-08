@@ -2,6 +2,7 @@ import {
   FORM_ERROR_REQUIRED,
   FORM_ERROR_IS_NUMBER,
   FORM_ERROR_MIN_MAX,
+  validateRequired,
   validateMinLength,
   validateMaxLength,
   validateIsNumber,
@@ -10,40 +11,32 @@ import {
 export async function validateCreate (values) {
   const errors = {};
 
-  if (!values.label) {
+  if (!validateRequired(values.label)) {
     errors.label = FORM_ERROR_REQUIRED;
   }
 
-  if (values.pictureFile) {
-    if (!values.date) {
+  if (validateRequired(values.pictureFile)) {
+    if (!validateRequired(values.date)) {
       errors.date = FORM_ERROR_REQUIRED;
     }
   }
 
-  if (values.longitude) {
-    if (validateIsNumber(values.longitude)) {
-      if (
-        !(validateMinLength(values.longitude, -180) && validateMaxLength(values.longitude, 180))
-      ) {
-        errors.longitude = FORM_ERROR_MIN_MAX;
-      }
-    } else {
-      errors.longitude = FORM_ERROR_IS_NUMBER;
-    }
-  } else {
+  if (!validateRequired(values.longitude)) {
     errors.longitude = FORM_ERROR_REQUIRED;
+  } else if (!validateIsNumber(values.longitude)) {
+    errors.longitude = FORM_ERROR_IS_NUMBER;
+  } else if (!validateMinLength(values.longitude, -180)
+    || !validateMaxLength(values.longitude, 180)) {
+    errors.longitude = FORM_ERROR_MIN_MAX;
   }
 
-  if (values.latitude) {
-    if (validateIsNumber(values.latitude)) {
-      if (!(validateMinLength(values.latitude, -90) && validateMaxLength(values.latitude, 90))) {
-        errors.latitude = FORM_ERROR_MIN_MAX;
-      }
-    } else {
-      errors.latitude = FORM_ERROR_IS_NUMBER;
-    }
-  } else {
+  if (!validateRequired(values.latitude)) {
     errors.latitude = FORM_ERROR_REQUIRED;
+  } else if (!validateIsNumber(values.latitude)) {
+    errors.latitude = FORM_ERROR_IS_NUMBER;
+  } else if (!validateMinLength(values.latitude, -90)
+    || !validateMaxLength(values.latitude, 90)) {
+    errors.latitude = FORM_ERROR_MIN_MAX;
   }
 
   return errors;

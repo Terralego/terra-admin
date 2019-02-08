@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export const AddViewpoint = ({ t }) => (
   <Card interactive className={Classes.DARK}>
-    <Link to="viewpoints/create">{t('main.add')}</Link>
+    <Link to="viewpoints/create">{t('common.add')}</Link>
   </Card>
 );
 

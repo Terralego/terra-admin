@@ -6,7 +6,6 @@
     "@blueprintjs/core": "^3.10.0",
     "@blueprintjs/datetime": "^3.6.0",
     "@blueprintjs/icons": "^3.4.0",
-    "@mapbox/mapbox-gl-draw": "^1.1.1",
     "final-form": "^4.11.0",
     "i18next": "^13.0.0",
     "i18next-browser-languagedetector": "^2.2.4",

@@ -1,11 +1,16 @@
+import { FORM_ERROR_REQUIRED } from '../../../../../../utils/form';
 
 export async function validateAddPicture (values) {
   const errors = {};
-  if (!values.datePicture) {
-    errors.datePicture = 'Requis';
+
+  if (!values.pictureFile) {
+    errors.pictureFile = FORM_ERROR_REQUIRED;
   }
-  if (!values.picture) {
-    errors.picture = 'Requis';
+
+  if (values.pictureFile) {
+    if (!values.date) {
+      errors.date = FORM_ERROR_REQUIRED;
+    }
   }
   return errors;
 }

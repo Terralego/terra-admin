@@ -110,8 +110,8 @@ export class FormMetadata extends React.Component {
             </Overlay>
           </div>
         </FormGroup>
-        <Button text={t('main.submit')} intent="primary" type="submit" disabled={invalid} />
-        <Button text={t('main.reset')} onClick={form.reset} disabled={submitting || pristine} />
+        <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
+        <Button text={t('form.reset')} onClick={form.reset} disabled={submitting || pristine} />
       </form>
     );
   }

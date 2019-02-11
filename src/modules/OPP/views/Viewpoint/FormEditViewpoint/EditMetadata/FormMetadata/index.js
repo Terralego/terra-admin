@@ -7,6 +7,8 @@ import InputMap from '../../../../../components/InputMap';
 
 import './form-metadata.scss';
 
+const displayError = meta => !!meta.error && meta.touched;
+
 export class FormMetadata extends React.Component {
   state = {
     isOpen: false,
@@ -43,12 +45,11 @@ export class FormMetadata extends React.Component {
       >
         <FormGroup>
           <Field name="label">
-            {({ input, meta: { error, touched } }) => (
+            {({ input, meta, meta: { error } }) => (
               <FormGroup
-                helperText={(!!error && touched) && t('form.error', { context: error, name: input.name })}
-                intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+                helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
+                intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
                 label="Libellé"
-                labelFor="text-input"
                 labelInfo="(*)"
               >
                 <InputGroup
@@ -60,12 +61,11 @@ export class FormMetadata extends React.Component {
             )}
           </Field>
           <Field name="geometry.coordinates[0]">
-            {({ input, meta: { error, touched } }) => (
+            {({ input, meta, meta: { error } }) => (
               <FormGroup
-                helperText={(!!error && touched) && t('form.error', { context: error, name: 'longitude', min: '-180°', max: '+180°' })}
-                intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+                helperText={displayError(meta) && t('form.error', { context: error, name: 'longitude', min: '-180°', max: '+180°' })}
+                intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
                 label="Longitude"
-                labelFor="text-input"
                 labelInfo="(*)"
               >
                 <InputGroup
@@ -77,12 +77,11 @@ export class FormMetadata extends React.Component {
             )}
           </Field>
           <Field name="geometry.coordinates[1]">
-            {({ input, meta: { error, touched } }) => (
+            {({ input, meta, meta: { error } }) => (
               <FormGroup
-                helperText={(!!error && touched) && t('form.error', { context: error, name: 'latitude', min: '-90°', max: '+90°' })}
-                intent={(!!error && touched) ? Intent.DANGER : Intent.NONE}
+                helperText={displayError(meta) && t('form.error', { context: error, name: 'latitude', min: '-90°', max: '+90°' })}
+                intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
                 label="Latitude"
-                labelFor="text-input"
                 labelInfo="(*)"
               >
                 <InputGroup
@@ -112,7 +111,7 @@ export class FormMetadata extends React.Component {
             </Overlay>
           </div>
         </FormGroup>
-        <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
+        <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid || pristine} />
         <Button text={t('form.reset')} onClick={form.reset} disabled={submitting || pristine} />
       </form>
     );

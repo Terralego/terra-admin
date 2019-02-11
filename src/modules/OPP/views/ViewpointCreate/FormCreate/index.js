@@ -56,7 +56,6 @@ export class FormCreate extends React.Component {
     } = this.props;
     return (
       <form
-        method="put"
         onSubmit={handleSubmit}
         className="form-create"
       >

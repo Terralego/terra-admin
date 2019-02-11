@@ -1,4 +1,7 @@
-import { FORM_ERROR_REQUIRED, validateRequired } from '../../../../../../utils/form';
+import {
+  FORM_ERROR_REQUIRED,
+  validateRequired,
+} from '../../../../../../utils/form';
 
 export async function validateAddPicture (values) {
   const errors = {};

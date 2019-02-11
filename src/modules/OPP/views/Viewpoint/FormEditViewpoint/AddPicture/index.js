@@ -2,7 +2,7 @@ import React from 'react';
 import {
   FormGroup,
   Button,
-  H3,
+  H3, Intent,
 } from '@blueprintjs/core';
 import { DateInput } from '@blueprintjs/datetime';
 import { Form, Field } from 'react-final-form';
@@ -10,82 +10,85 @@ import { withNamespaces } from 'react-i18next';
 
 import { validateAddPicture } from './validateAddPictureForm';
 
+const displayError = meta => !!meta.error && meta.touched;
+
 export class AddPicture extends React.Component {
   state = {
-    picture: '',
-    datePicture: '',
+    pictureFile: {},
   };
 
-  onSubmit = () => {
+  onSubmit = values => {
     const { viewpoint: { id, label }, uploadPictureViewpointAction } = this.props;
-    const { datePicture, picture } = this.state;
-    const data = {
-      id,
-      label,
-      picture:
-        {
-          date: datePicture,
-          file: picture,
-        },
-    };
+    const { pictureFile } = this.state;
+    const data = { ...values, pictureFile, id, label };
     uploadPictureViewpointAction(data);
   };
 
-  handleChangeFile = ({ target: { files: [picture] } }) => this.setState({ picture });
+  handlePicture = (e, input) => {
+    input.onChange(e);
+    const { target: { files: [file] } } = e;
+    this.setState({ pictureFile: file });
+  };
 
-  handleDateChange = datePicture =>
-    this.setState({ datePicture: datePicture && datePicture.toISOString() });
+  formatDate = date => date.toLocaleDateString();
+
+  parseDate = str => new Date(str);
 
   render () {
-    const { onSubmit, handleChangeFile } = this;
+    const { onSubmit, handlePicture, formatDate, parseDate } = this;
     const { t } = this.props;
-    const jsDateFormatter = {
-      formatDate: date => date.toLocaleDateString(),
-      parseDate: str => new Date(str),
-      placeholder: 'JJ/MM/AAAA',
-    };
     return (
       <>
-        <H3>{t('opp.viewpoint.edit.addPicture')}</H3>
+        <H3>{t('opp.viewpoint.edit.add-picture')}</H3>
         <div className="picture-add">
           <Form
             onSubmit={onSubmit}
-            initialValues={this.state}
             validate={validateAddPicture}
             render={({ handleSubmit, invalid }) => (
               <form
                 onSubmit={handleSubmit}
                 className="form-add-image"
               >
-                <FormGroup>
-                  <Field name="picture">
-                    {({ input, meta }) => (
-                      <>
-                        <label htmlFor="picture">
-                          <input
-                            type="file"
-                            id="picture"
-                            name="picture"
-                            onChange={handleChangeFile}
-                          />
-                        </label>
-                        {meta.error && meta.touched && <span>{meta.error}</span>}
-                      </>
-                    )}
-                  </Field>
-                  <Field name="datePicture">
-                    {({ meta }) => (
-                      <>
-                        <DateInput
-                          {...jsDateFormatter}
-                          showActionsBar
-                          onChange={this.handleDateChange}
+                <Field name="pictureFile">
+                  {({ input, meta, meta: { error } }) => (
+                    <FormGroup
+                      helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
+                      intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
+                      label="Image"
+                      labelInfo="(*)"
+                    >
+                      <label htmlFor="picture">
+                        <input
+                          type="file"
+                          id="picture"
+                          name="picture"
+                          {...input}
+                          onChange={e => handlePicture(e, input)}
                         />
-                        {meta.error && meta.touched && <span>{meta.error}</span>}
-                      </>
-                    )}
-                  </Field>
-                </FormGroup>
+                      </label>
+                    </FormGroup>
+                  )}
+                </Field>
+                <Field type="date" name="date">
+                  {({ input, meta }) => (
+                    <FormGroup
+                      helperText={displayError(meta) && t('form.error', { context: meta.error, name: input.name })}
+                      intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
+                      label="Date"
+                      labelInfo="(*)"
+                    >
+                      <DateInput
+                        formatDate={formatDate}
+                        parseDate={parseDate}
+                        placeholder="JJ/MM/AAAA"
+                        showActionsBar
+                        {...input}
+                        value={input.value || null}
+                        inputProps={{ onBlur: () => input.onBlur() }}
+                      />
+                    </FormGroup>
+                  )}
+                </Field>
                 <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
               </form>
             )}

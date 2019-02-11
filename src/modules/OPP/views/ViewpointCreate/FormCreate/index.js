@@ -11,9 +11,9 @@ import { Field } from 'react-final-form';
 
 import './form-create.scss';
 
-const displayErrorAndTouched = (error, touched) => !!error && touched;
+const displayError = meta => !!meta.error && meta.touched;
 
-const displayError = error => !!error;
+const displayDateError = meta => !!meta.error;
 
 export class FormCreate extends React.Component {
   handlePicture = (e, input, form) => {
@@ -46,10 +46,10 @@ export class FormCreate extends React.Component {
         className="form-create"
       >
         <Field name="label">
-          {({ input, meta: { error, touched } }) => (
+          {({ input, meta, meta: { error } }) => (
             <FormGroup
-              helperText={displayErrorAndTouched(error, touched) && t('form.error', { context: error, name: input.name })}
-              intent={displayErrorAndTouched(error, touched) ? Intent.DANGER : Intent.NONE}
+              helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
+              intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
               label="Libellé"
               labelFor="text-input"
               labelInfo="(*)"
@@ -63,10 +63,10 @@ export class FormCreate extends React.Component {
           )}
         </Field>
         <Field name="longitude">
-          {({ input, meta: { error, touched } }) => (
+          {({ input, meta, meta: { error } }) => (
             <FormGroup
-              helperText={displayErrorAndTouched(error, touched) && t('form.error', { context: error, name: input.name, min: '-180°', max: '+180°' })}
-              intent={displayErrorAndTouched(error, touched) ? Intent.DANGER : Intent.NONE}
+              helperText={displayError(meta) && t('form.error', { context: error, name: input.name, min: '-180°', max: '+180°' })}
+              intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
               label="Longitude"
               labelFor="text-input"
               labelInfo="(*)"
@@ -80,10 +80,10 @@ export class FormCreate extends React.Component {
           )}
         </Field>
         <Field name="latitude">
-          {({ input, meta: { error, touched } }) => (
+          {({ input, meta, meta: { error } }) => (
             <FormGroup
-              helperText={displayErrorAndTouched(error, touched) && t('form.error', { context: error, name: input.name, min: '-90°', max: '+90°' })}
-              intent={displayErrorAndTouched(error, touched) ? Intent.DANGER : Intent.NONE}
+              helperText={displayError(meta) && t('form.error', { context: error, name: input.name, min: '-90°', max: '+90°' })}
+              intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
               label="Latitude"
               labelFor="text-input"
               labelInfo="(*)"
@@ -117,10 +117,10 @@ export class FormCreate extends React.Component {
         <Field name="pictureFile">
           {({ meta: { pristine: pictureFilePristine } }) => (
             <Field type="date" name="date">
-              {({ input, meta: { error } }) => (
+              {({ input, meta, meta: { error } }) => (
                 <FormGroup
-                  helperText={displayError(error) && t('form.error', { context: error, name: input.name })}
-                  intent={displayError(error) ? Intent.DANGER : Intent.NONE}
+                  helperText={displayDateError(meta) && t('form.error', { context: error, name: input.name })}
+                  intent={displayDateError(meta) ? Intent.DANGER : Intent.NONE}
                   label="Date"
                   labelFor="text-input"
                   labelInfo="(*)"

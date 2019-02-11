@@ -15,10 +15,8 @@ export async function validateCreate (values) {
     errors.label = FORM_ERROR_REQUIRED;
   }
 
-  if (validateRequired(values.pictureFile)) {
-    if (!validateRequired(values.date)) {
-      errors.date = FORM_ERROR_REQUIRED;
-    }
+  if (values.pictureFile && !validateRequired(values.date)) {
+    errors.date = FORM_ERROR_REQUIRED;
   }
 
   if (!validateRequired(values.longitude)) {

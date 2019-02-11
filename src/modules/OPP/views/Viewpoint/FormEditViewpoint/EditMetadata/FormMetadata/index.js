@@ -11,7 +11,7 @@ const configMap = {
   accessToken: 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ',
   backgroundStyle: 'mapbox://styles/mapbox/streets-v9',
   center: [-61.0134945, 14.6376395],
-  zoom: 10,
+  zoom: 9,
   maxBounds: [[-62.2, 14.1], [-60.1, 15.0]],
 };
 

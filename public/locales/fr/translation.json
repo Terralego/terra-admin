@@ -1,19 +1,30 @@
 {
-  "main": {
+  "common": {
     "account": "Votre compte",
     "add": "Ajouter",
     "error": {
-        "title": "Un problème est survenue. ",
-        "text": "Retourner à la page d'accueil : ",
-        "link": "Accueil",
-        "title_404": "Erreur 404 : Page introuvable.",
-        "text_404": "Retourner à la page d'accueil : ",
-        "link_404": "Accueil"
+      "title": "Un problème est survenue. ",
+      "text": "Retourner à la page d'accueil : ",
+      "link": "Accueil",
+      "title_404": "Erreur 404 : Page introuvable.",
+      "text_404": "Retourner à la page d'accueil : ",
+      "link_404": "Accueil"
     },
     "loading": "Chargement en cours ...",
-    "logout": "Se déconnecter",
-    "title": "Terralego",
-    "submit": "Envoyer"
+    "logout": "Se déconnecter"
+  },
+  "main": {
+    "title": "Terralego"
+  },
+  "form": {
+    "submit": "Envoyer",
+    "reset": "Réinitialiser",
+    "error": "Erreur inconnue",
+    "error_required": "Ce champ {{name}} est requis.",
+    "error_number": "Ce champ {{name}} doit être un nombre.",
+    "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
+    "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à{{min}}.",
+    "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à{{min}}."
   },
   "opp": {
     "nav": {
@@ -22,9 +33,12 @@
     "project": "Observatoire Photographique des Paysages",
     "viewpoint": {
       "edit": {
-        "addPicture": "Ajouter une image",
+        "add-picture": "$t(common.add) une picture",
         "title": "Formulaire d'édition",
         "visualization_pictures": "Visualisation des images"
+      },
+      "create": {
+        "title": "Formulaire de création d'un viewpoint"
       }
     },
     "viewpoints": {

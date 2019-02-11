@@ -3,19 +3,20 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { Card } from '@blueprintjs/core';
 
 import './viewpoint-list.scss';
+import noPhoto from '../../images/no_photo.png';
 
-export const ViewpointListItem = ({
+export const ViewpointsListItem = ({
   id,
   label,
-  picture: { list: src },
+  picture,
   location: { pathname },
 }) => (
   <Card interactive>
     <NavLink to={`${pathname}/${id}`}>
-      <img src={src} alt="" />
+      <img src={(picture && picture.list) || noPhoto} alt="" />
       <h3>{id} / {label}</h3>
     </NavLink>
   </Card>
 );
 
-export default withRouter(ViewpointListItem);
+export default withRouter(ViewpointsListItem);

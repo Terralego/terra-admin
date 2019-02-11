@@ -4,11 +4,12 @@ import {
 } from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
 
-import ViewpointListItem from './ViewpointListItem';
-import ViewpointAddItem from './ViewpointAddItem';
+import ViewpointListItem from './ViewpointsListItem';
+import AddViewpoint from './AddViewpoint';
+
 import './viewpoint-list.scss';
 
-export class ViewpointList extends React.Component {
+export class ViewpointsList extends React.Component {
   componentDidMount () {
     const { getAllViewpointsAction } = this.props;
     getAllViewpointsAction();
@@ -22,7 +23,7 @@ export class ViewpointList extends React.Component {
           <H2>{t('opp.viewpoints.title')}</H2>
         </div>
         <div className="viewpoint-list">
-          <ViewpointAddItem />
+          <AddViewpoint />
           {viewpointsList.map(viewpoint => (
             <ViewpointListItem
               key={viewpoint.id}
@@ -35,4 +36,4 @@ export class ViewpointList extends React.Component {
   }
 }
 
-export default withNamespaces()(ViewpointList);
+export default withNamespaces()(ViewpointsList);

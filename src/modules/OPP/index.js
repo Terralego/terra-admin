@@ -7,7 +7,8 @@ import Routing from '../../components/Routing';
 import OppProvider from './services/OppProvider';
 
 const Viewpoint = () => import('./views/Viewpoint');
-const ViewpointListView = () => import('./views/ViewpointList');
+const ViewpointListView = () => import('./views/ViewpointsList');
+const ViewpointCreate = () => import('./views/ViewpointCreate');
 
 const { path } = config;
 
@@ -18,6 +19,9 @@ export const OPP = () => (
     >
       <Routing
         routes={[{
+          path: `${path}/viewpoints/create`,
+          import: ViewpointCreate,
+        }, {
           path: `${path}/viewpoints/:id`,
           import: Viewpoint,
         }, {

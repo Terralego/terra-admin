@@ -2,7 +2,8 @@ import React from 'react';
 import {
   FormGroup,
   Button,
-  H3, Intent,
+  H3,
+  Intent,
 } from '@blueprintjs/core';
 import { DateInput } from '@blueprintjs/datetime';
 import { Form, Field } from 'react-final-form';

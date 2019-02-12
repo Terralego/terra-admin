@@ -44,6 +44,13 @@
     },
     "viewpoints": {
       "title": "Les points de vue"
+    },
+    "form": {
+      "label": "Libellé",
+      "longitude": "Longitude",
+      "latitude": "Latitude",
+      "picture": "Image",
+      "date": "Date"
     }
   },
   "rando": {

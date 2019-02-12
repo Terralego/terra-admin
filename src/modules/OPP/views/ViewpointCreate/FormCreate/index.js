@@ -64,14 +64,13 @@ export class FormCreate extends React.Component {
             <FormGroup
               helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
               intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-              label="Libellé"
-              labelFor="text-input"
+              label={t('opp.form.label')}
               labelInfo="(*)"
             >
               <InputGroup
                 {...input}
                 leftIcon="tag"
-                placeholder="Libellé"
+                placeholder={t('opp.form.label')}
               />
             </FormGroup>
           )}
@@ -81,14 +80,13 @@ export class FormCreate extends React.Component {
             <FormGroup
               helperText={displayError(meta) && t('form.error', { context: error, name: input.name, min: '-180°', max: '+180°' })}
               intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-              label="Longitude"
-              labelFor="text-input"
+              label={t('opp.form.longitude')}
               labelInfo="(*)"
             >
               <InputGroup
                 {...input}
                 leftIcon="map"
-                placeholder="Longitude : -61.2018"
+                placeholder="-61.2018"
               />
             </FormGroup>
           )}
@@ -98,14 +96,13 @@ export class FormCreate extends React.Component {
             <FormGroup
               helperText={displayError(meta) && t('form.error', { context: error, name: input.name, min: '-90°', max: '+90°' })}
               intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-              label="Latitude"
-              labelFor="text-input"
+              label={t('opp.form.latitude')}
               labelInfo="(*)"
             >
               <InputGroup
                 {...input}
                 leftIcon="map"
-                placeholder="Latitude : 14.7786"
+                placeholder="14.7786"
               />
             </FormGroup>
           )}
@@ -127,7 +124,7 @@ export class FormCreate extends React.Component {
         <Field name="pictureFile">
           {({ input }) => (
             <FormGroup
-              label="Picture"
+              label={t('opp.form.picture')}
               labelFor="text-input"
             >
               <label htmlFor="pictureFile">
@@ -149,7 +146,7 @@ export class FormCreate extends React.Component {
                 <FormGroup
                   helperText={displayDateError(meta) && t('form.error', { context: error, name: input.name })}
                   intent={displayDateError(meta) ? Intent.DANGER : Intent.NONE}
-                  label="Date"
+                  label={t('opp.form.date')}
                   labelFor="text-input"
                   labelInfo="(*)"
                   disabled={pictureFilePristine}

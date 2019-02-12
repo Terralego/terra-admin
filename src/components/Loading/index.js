@@ -3,7 +3,7 @@ import { withNamespaces } from 'react-i18next';
 
 export const Loading = ({ t }) => (
   <div className="loading">
-    {t('main.loading')}
+    {t('common.loading')}
   </div>
 );
 

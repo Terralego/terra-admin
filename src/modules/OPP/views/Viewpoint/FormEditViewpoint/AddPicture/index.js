@@ -54,7 +54,7 @@ export class AddPicture extends React.Component {
                     <FormGroup
                       helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
                       intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                      label="Image"
+                      label={t('opp.form.picture')}
                       labelInfo="(*)"
                     >
                       <label htmlFor="picture">
@@ -74,7 +74,7 @@ export class AddPicture extends React.Component {
                     <FormGroup
                       helperText={displayError(meta) && t('form.error', { context: meta.error, name: input.name })}
                       intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                      label="Date"
+                      label={t('opp.form.date')}
                       labelInfo="(*)"
                     >
                       <DateInput

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import mapboxgl from 'mc-tf-test/node_modules/mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import { Map } from 'mc-tf-test';
 
 export class InputMap extends React.Component {
@@ -23,30 +23,21 @@ export class InputMap extends React.Component {
     },
   };
 
-  state = {
-    marker: null,
-  };
-
-  componentDidUpdate () {
-    const { marker } = this.state;
-    if (marker) {
-      const { value } = this.props;
-      marker.setLngLat(value);
-    }
-  }
+  marker = new mapboxgl.Marker();
 
   initMap = map => {
-    this.setState({ marker: new mapboxgl.Marker() });
+    const { onChange, value } = this.props;
 
-    const { marker } = this.state;
-    const { onChange } = this.props;
+    if (value) {
+      this.marker.setLngLat({ lng: value[0], lat: value[1] });
+    }
 
-    marker.addTo(map);
-
-    map.on('click', e => {
-      onChange([e.lngLat.lng, e.lngLat.lat]);
-      marker.setLngLat(e.lngLat);
+    map.on('click', ({ lngLat: { lng, lat } = {} }) => {
+      onChange([lng, lat]);
+      this.marker.setLngLat({ lng, lat });
     });
+
+    this.marker.addTo(map);
   };
 
   render () {

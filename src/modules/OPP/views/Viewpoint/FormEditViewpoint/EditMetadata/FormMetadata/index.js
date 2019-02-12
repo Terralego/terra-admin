@@ -22,18 +22,11 @@ export class FormMetadata extends React.Component {
 
   handleCoordinate = value => {
     const { form } = this.props;
-    if (value) {
-      form.change('geometry.coordinates[0]', value[0]);
-      form.change('geometry.coordinates[1]', value[1]);
-    } else {
-      form.change('geometry.coordinates[0]', null);
-      form.change('geometry.coordinates[1]', null);
-    }
+    form.change('geometry.coordinates[0]', value ? value[0] : null);
+    form.change('geometry.coordinates[1]', value ? value[1] : null);
   };
 
-  toggleOpenOverlay = () => this.setState(prevState => ({
-    isOpen: !prevState.isOpen,
-  }));
+  toggleOpenOverlay = () => this.setState(({ isOpen: prevIsOpen }) => ({ isOpen: !prevIsOpen }));
 
   render () {
     const {

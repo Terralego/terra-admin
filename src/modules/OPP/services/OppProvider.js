@@ -67,17 +67,17 @@ export class OppProvider extends React.Component {
     try {
       const viewpoint = await addImageToViewpoint(data);
       this.setState(state => ({
-        ...state,
         viewpoints: {
           ...state.viewpoints,
           [data.id]: viewpoint,
         },
       }));
+      return viewpoint;
     } catch (e) {
       this.setState(state => ({
-        ...state,
         errors: { ...state.errors, [data.id]: true },
       }));
+      return e;
     }
   };
 

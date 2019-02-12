@@ -83,9 +83,14 @@
       },
       "picture": "Image",
       "date": "Date",
-      "date-format": "JJ/MM/AAAA"
-      "toast-error": "Le serveur a rencontré un problème.",
-      "toast-success": "Le point de vue {{name}} a bien été modifié."
+      "date-format": "JJ/MM/AAAA",
+      "toast-error": "Le service est indisponible.",
+      "toast-error_400": "Les données  envoyées sont incorrecte.",
+      "toast-error_500": "Le serveur a rencontré un problème.",
+      "toast-success": "L'action executée s'est déroulée correctement.",
+      "toast-success_edit": "Le point de vue {{name, uppercase}} a été modifié.",
+      "toast-success_create": "Le point de vue {{name}} a été crée.",
+      "toast-success_add-picture": "Une image a été ajouté au point de vue : {{name}}."
     }
   },
   "rando": {

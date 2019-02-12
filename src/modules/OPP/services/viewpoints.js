@@ -51,9 +51,18 @@ export async function saveViewpoint (data) {
 
 export async function addImageToViewpoint (data) {
   const formData = new FormData();
+  const point = JSON.stringify({
+    type: 'Point',
+    coordinates: [
+      +data.geometry.coordinates[0],
+      +data.geometry.coordinates[1],
+    ],
+  });
+
   formData.append('label', data.label);
-  formData.append('picture.date', data.picture.date.toISOString());
-  formData.append('picture.file', data.picture.file);
+  formData.append('point', point);
+  formData.append('picture.date', data.date.toISOString());
+  formData.append('picture.file', data.pictureFile);
   return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: formData });
 }
 

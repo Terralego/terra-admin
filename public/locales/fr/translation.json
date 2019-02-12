@@ -25,8 +25,8 @@
     "error_required-picture": "Ce champ image est requis.",
     "error_number": "Ce champ {{name}} doit être un nombre.",
     "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
-    "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à{{min}}.",
-    "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à{{min}}."
+    "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à {{min}}.",
+    "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à {{min}}."
   },
   "opp": {
     "nav": {
@@ -84,6 +84,8 @@
       "picture": "Image",
       "date": "Date",
       "date-format": "JJ/MM/AAAA"
+      "toast-error": "Le serveur a rencontré un problème.",
+      "toast-success": "Le point de vue {{name}} a bien été modifié."
     }
   },
   "rando": {

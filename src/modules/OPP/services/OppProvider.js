@@ -59,7 +59,7 @@ export class OppProvider extends React.Component {
       this.setState(state => ({
         errors: { ...state.errors, [data.id]: true },
       }));
-      return 'errors';
+      return e;
     }
   };
 

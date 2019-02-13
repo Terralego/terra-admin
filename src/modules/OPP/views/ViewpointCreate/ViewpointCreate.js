@@ -1,13 +1,15 @@
 import React from 'react';
 import {
   H3,
+  Intent,
 } from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
-import {  Form } from 'react-final-form';
+import { Form } from 'react-final-form';
 import { withRouter } from 'react-router-dom';
 
 import { validateCreate } from './validateCreateForm';
 import FormCreate from './FormCreate';
+import { submitToaster } from '../../../../utils/form';
 
 export class ViewpointCreate extends React.Component {
   state = {
@@ -15,12 +17,16 @@ export class ViewpointCreate extends React.Component {
   };
 
   onSubmit = async values => {
-    const { saveViewpointAction, history } = this.props;
+    const { saveViewpointAction, history, t } = this.props;
     const { pictureFile } = this.state;
     const data = { ...values, pictureFile };
     const newViewpoint = await saveViewpointAction(data);
     const { id } = newViewpoint;
-    history.push(`${id}`);
+    await history.push(`${id}`);
+    submitToaster.show({
+      message: newViewpoint.id ? t('opp.form.toast-success', { context: 'create', name: newViewpoint.label }) : t('opp.form.toast-error'),
+      intent: newViewpoint.id ? Intent.SUCCESS : Intent.DANGER,
+    });
   };
 
   onPicture = file => {

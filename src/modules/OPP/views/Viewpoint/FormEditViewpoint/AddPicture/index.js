@@ -50,10 +50,12 @@ export class AddPicture extends React.Component {
           <Form
             onSubmit={onSubmit}
             validate={validateAddPicture}
-            render={({ handleSubmit, invalid }) => (
+            render={({ handleSubmit, form: { reset }, invalid, submitting }) => (
               <form
-                onSubmit={handleSubmit}
                 className="form-add-image"
+                onSubmit={event => {
+                  handleSubmit(event).then(reset);
+                }}
               >
                 <Field name="pictureFile">
                   {({ input, meta, meta: { error } }) => (
@@ -95,7 +97,7 @@ export class AddPicture extends React.Component {
                     </FormGroup>
                   )}
                 </Field>
-                <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
+                <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid || submitting} />
               </form>
             )}
           />

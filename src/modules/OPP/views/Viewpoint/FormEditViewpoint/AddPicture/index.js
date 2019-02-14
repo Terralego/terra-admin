@@ -10,7 +10,7 @@ import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
 import { validateAddPicture } from './validateAddPictureForm';
-import { submitToaster } from '../../../../../../utils/form';
+import { toast } from '../../../../utils/toast';
 
 const displayError = ({ error, touched }) => !!(error && touched);
 
@@ -24,10 +24,11 @@ export class AddPicture extends React.Component {
     const { pictureFile } = this.state;
     const data = { ...values, ...viewpoint, pictureFile };
     const editViewpoint = await uploadPictureViewpointAction(data);
-    submitToaster.show({
-      message: editViewpoint.id ? t('opp.form.toast-success', { context: 'add-picture', name: editViewpoint.label }) : t('opp.form.toast-error'),
-      intent: editViewpoint.id ? Intent.SUCCESS : Intent.DANGER,
-    });
+    toast.displayToaster(
+      editViewpoint,
+      t('opp.form.toast-success', { context: 'add-picture', name: editViewpoint.label }),
+      t('opp.form.toast-error'),
+    );
   };
 
   handlePicture = (e, input) => {

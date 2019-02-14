@@ -85,8 +85,6 @@
       "date": "Date",
       "date-format": "JJ/MM/AAAA",
       "toast-error": "Le service est indisponible.",
-      "toast-error_400": "Les données  envoyées sont incorrecte.",
-      "toast-error_500": "Le serveur a rencontré un problème.",
       "toast-success": "L'action executée s'est déroulée correctement.",
       "toast-success_edit": "Le point de vue {{name, uppercase}} a été modifié.",
       "toast-success_create": "Le point de vue {{name}} a été crée.",

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   H3,
-  Intent,
 } from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
 import { Form } from 'react-final-form';
@@ -9,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 
 import { validateCreate } from './validateCreateForm';
 import FormCreate from './FormCreate';
-import { submitToaster } from '../../../../utils/form';
+import { toast } from '../../utils/toast';
 
 export class ViewpointCreate extends React.Component {
   state = {
@@ -23,10 +22,11 @@ export class ViewpointCreate extends React.Component {
     const newViewpoint = await saveViewpointAction(data);
     const { id } = newViewpoint;
     await history.push(`${id}`);
-    submitToaster.show({
-      message: newViewpoint.id ? t('opp.form.toast-success', { context: 'create', name: newViewpoint.label }) : t('opp.form.toast-error'),
-      intent: newViewpoint.id ? Intent.SUCCESS : Intent.DANGER,
-    });
+    toast.displayToaster(
+      newViewpoint,
+      t('opp.form.toast-success', { context: 'create', name: newViewpoint.label }),
+      t('opp.form.toast-error'),
+    );
   };
 
   onPicture = file => {

@@ -57,7 +57,7 @@ export class OppProvider extends React.Component {
       return viewpoint;
     } catch (e) {
       this.setState(state => ({
-        errors: { ...state.errors, [data.id]: true },
+        errors: { ...state.errors, [data.id]: e },
       }));
       return e;
     }
@@ -75,7 +75,7 @@ export class OppProvider extends React.Component {
       return viewpoint;
     } catch (e) {
       this.setState(state => ({
-        errors: { ...state.errors, [data.id]: true },
+        errors: { ...state.errors, [data.id]: e },
       }));
       return e;
     }

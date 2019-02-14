@@ -23,20 +23,30 @@ export class InputMap extends React.Component {
     },
   };
 
+  marker = new mapboxgl.Marker();
+
+  componentDidUpdate ({ value: prevValue }) {
+    const { value } = this.props;
+    if (value !== prevValue) {
+      if (value[0] && value[1]) {
+        this.marker.setLngLat({ lng: value[0], lat: value[1] });
+      }
+    }
+  }
+
   initMap = map => {
     const { onChange, value } = this.props;
-    const marker = new mapboxgl.Marker();
 
     if (value) {
-      marker.setLngLat({ lng: value[0], lat: value[1] });
+      this.marker.setLngLat({ lng: value[0], lat: value[1] });
     }
 
     map.on('click', ({ lngLat: { lng, lat } = {} }) => {
       onChange([lng, lat]);
-      marker.setLngLat({ lng, lat });
+      this.marker.setLngLat({ lng, lat });
     });
 
-    marker.addTo(map);
+    this.marker.addTo(map);
   };
 
   render () {

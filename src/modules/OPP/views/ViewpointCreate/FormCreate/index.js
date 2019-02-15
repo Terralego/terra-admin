@@ -12,7 +12,6 @@ import { Field } from 'react-final-form';
 import InputMap from '../../../components/InputMap';
 
 import './form-create.scss';
-import { connectAppProvider } from '../../../../../components/AppProvider';
 
 const displayError = meta => !!meta.error && meta.touched;
 
@@ -49,7 +48,6 @@ export class FormCreate extends React.Component {
     } = this;
     const {
       t,
-      mapSettings,
       handleSubmit,
       invalid,
       form,
@@ -119,7 +117,6 @@ export class FormCreate extends React.Component {
               <Field name="latitude">
                 {({ input: { value: latitude } }) => (
                   <InputMap
-                    configMap={mapSettings}
                     value={[+longitude, +latitude]}
                     onChange={value => handleCoordinate(value)}
                   />
@@ -178,6 +175,4 @@ export class FormCreate extends React.Component {
   }
 }
 
-export default connectAppProvider(({ env: { configMap } }) => ({
-  mapSettings: configMap,
-}))(withNamespaces()(FormCreate));
+export default withNamespaces()(FormCreate);

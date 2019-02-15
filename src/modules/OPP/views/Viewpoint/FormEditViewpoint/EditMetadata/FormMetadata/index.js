@@ -6,7 +6,6 @@ import { withNamespaces } from 'react-i18next';
 import InputMap from '../../../../../components/InputMap';
 
 import './form-metadata.scss';
-import { connectAppProvider } from '../../../../../../../components/AppProvider';
 
 export class FormMetadata extends React.Component {
   state = {
@@ -104,6 +103,4 @@ export class FormMetadata extends React.Component {
   }
 }
 
-export default connectAppProvider(({ env: { configMap } }) => ({
-  mapSettings: configMap,
-}))(withNamespaces()(FormMetadata));
+export default withNamespaces()(FormMetadata);

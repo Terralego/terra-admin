@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import mapboxgl from 'mapbox-gl';
 import { Map } from 'mc-tf-test';
+import { withNamespaces } from 'react-i18next';
+
+import { connectAppProvider } from '../../../../components/AppProvider';
 
 export class InputMap extends React.Component {
   static propTypes = {
@@ -50,11 +53,11 @@ export class InputMap extends React.Component {
   };
 
   render () {
-    const { configMap } = this.props;
+    const { mapSettings } = this.props;
     return (
       <div className="input-map">
         <Map
-          {...configMap}
+          {...mapSettings}
           onMapLoaded={this.initMap}
         />
       </div>
@@ -62,4 +65,6 @@ export class InputMap extends React.Component {
   }
 }
 
-export default (InputMap);
+export default connectAppProvider(({ env: { configMap } }) => ({
+  mapSettings: configMap,
+}))(withNamespaces()(InputMap));

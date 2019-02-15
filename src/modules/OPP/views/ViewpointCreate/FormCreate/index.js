@@ -12,18 +12,11 @@ import { Field } from 'react-final-form';
 import InputMap from '../../../components/InputMap';
 
 import './form-create.scss';
+import { connectAppProvider } from '../../../../../components/AppProvider';
 
 const displayError = meta => !!meta.error && meta.touched;
 
 const displayDateError = meta => !!meta.error;
-
-const configMap = {
-  accessToken: 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ',
-  backgroundStyle: 'mapbox://styles/mapbox/streets-v9',
-  center: [-61.0134945, 14.6376395],
-  zoom: 9,
-  maxBounds: [[-62.2, 14.1], [-60.1, 15.0]],
-};
 
 export class FormCreate extends React.Component {
   handlePicture = (e, input, form) => {
@@ -56,6 +49,7 @@ export class FormCreate extends React.Component {
     } = this;
     const {
       t,
+      mapSettings,
       handleSubmit,
       invalid,
       form,
@@ -125,7 +119,7 @@ export class FormCreate extends React.Component {
               <Field name="latitude">
                 {({ input: { value: latitude } }) => (
                   <InputMap
-                    configMap={configMap}
+                    configMap={mapSettings}
                     value={[+longitude, +latitude]}
                     onChange={value => handleCoordinate(value)}
                   />
@@ -184,4 +178,6 @@ export class FormCreate extends React.Component {
   }
 }
 
-export default withNamespaces()(FormCreate);
+export default connectAppProvider(({ env: { configMap } }) => ({
+  mapSettings: configMap,
+}))(withNamespaces()(FormCreate));

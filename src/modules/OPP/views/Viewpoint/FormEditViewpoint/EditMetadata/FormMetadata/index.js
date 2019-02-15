@@ -6,14 +6,7 @@ import { withNamespaces } from 'react-i18next';
 import InputMap from '../../../../../components/InputMap';
 
 import './form-metadata.scss';
-
-const configMap = {
-  accessToken: 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ',
-  backgroundStyle: 'mapbox://styles/mapbox/streets-v9',
-  center: [-61.0134945, 14.6376395],
-  zoom: 9,
-  maxBounds: [[-62.2, 14.1], [-60.1, 15.0]],
-};
+import { connectAppProvider } from '../../../../../../../components/AppProvider';
 
 export class FormMetadata extends React.Component {
   state = {
@@ -35,6 +28,7 @@ export class FormMetadata extends React.Component {
     } = this;
     const {
       t,
+      mapSettings,
       handleSubmit,
       invalid,
       form,
@@ -92,7 +86,7 @@ export class FormMetadata extends React.Component {
                   <Field name="geometry.coordinates[1]">
                     {({ input: { value: latitude } }) => (
                       <InputMap
-                        configMap={configMap}
+                        configMap={mapSettings}
                         value={[+longitude, +latitude]}
                         onChange={value => handleCoordinate(value)}
                       />
@@ -110,4 +104,6 @@ export class FormMetadata extends React.Component {
   }
 }
 
-export default withNamespaces()(FormMetadata);
+export default connectAppProvider(({ env: { configMap } }) => ({
+  mapSettings: configMap,
+}))(withNamespaces()(FormMetadata));

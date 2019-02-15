@@ -84,11 +84,15 @@
       "picture": "Image",
       "date": "Date",
       "date-format": "JJ/MM/AAAA",
-      "toast-error": "Le service est indisponible.",
-      "toast-success": "L'action executée s'est déroulée correctement.",
-      "toast-success_edit": "Le point de vue {{name, uppercase}} a été modifié.",
-      "toast-success_create": "Le point de vue {{name}} a été crée.",
-      "toast-success_add-picture": "Une image a été ajouté au point de vue : {{name}}."
+      "error": {
+        "server": "Le service est indisponible."
+      },
+      "success": {
+        "notification": "L'action executée s'est déroulée correctement.",
+        "notification_edit": "Le point de vue {{name, uppercase}} a été modifié.",
+        "notification_create": "Le point de vue {{name}} a été crée.",
+        "notification_add-picture": "Une image a été ajouté au point de vue : {{name}}."
+      }
     }
   },
   "rando": {

@@ -15,8 +15,8 @@ export class EditMetadata extends React.Component {
     const editViewpoint = await saveViewpointAction(values);
     toast.displayToaster(
       editViewpoint,
-      t('opp.form.toast-success', { context: 'edit', name: editViewpoint.label }),
-      t('opp.form.toast-error'),
+      t('opp.form.success.notification', { context: 'edit', name: editViewpoint.label }),
+      t('opp.form.error.server'),
     );
   };
 

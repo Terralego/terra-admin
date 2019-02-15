@@ -24,8 +24,8 @@ export class ViewpointCreate extends React.Component {
     await history.push(`${id}`);
     toast.displayToaster(
       newViewpoint,
-      t('opp.form.toast-success', { context: 'create', name: newViewpoint.label }),
-      t('opp.form.toast-error'),
+      t('opp.form.success.notification', { context: 'create', name: newViewpoint.label }),
+      t('opp.form.error.server'),
     );
   };
 

@@ -86,7 +86,7 @@ export class AddPicture extends React.Component {
                     )}
                   </Field>
                 </FormGroup>
-                <Button text={t('main.form.submit')} intent="primary" type="submit" disabled={invalid} />
+                <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
               </form>
             )}
           />

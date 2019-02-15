@@ -9,6 +9,8 @@ import { DateInput } from '@blueprintjs/datetime';
 import { withNamespaces } from 'react-i18next';
 import { Field } from 'react-final-form';
 
+import InputMap from '../../../components/InputMap';
+
 import './form-create.scss';
 
 const displayError = meta => !!meta.error && meta.touched;
@@ -27,6 +29,12 @@ export class FormCreate extends React.Component {
     }
   };
 
+  handleCoordinate = value => {
+    const { form } = this.props;
+    form.change('longitude', value ? value[0] : null);
+    form.change('latitude', value ? value[1] : null);
+  };
+
   formatDate = date => date.toLocaleDateString();
 
   parseDate = str => new Date(str);
@@ -34,11 +42,18 @@ export class FormCreate extends React.Component {
   render () {
     const {
       handlePicture,
+      handleCoordinate,
       formatDate,
       parseDate,
     } = this;
-    const { t, handleSubmit, invalid, form, submitting, pristine } = this.props;
-
+    const {
+      t,
+      handleSubmit,
+      invalid,
+      form,
+      submitting,
+      pristine,
+    } = this.props;
     return (
       <form
         method="put"
@@ -96,6 +111,20 @@ export class FormCreate extends React.Component {
             </FormGroup>
           )}
         </Field>
+        <div className="coordinate">
+          <Field name="longitude">
+            {({ input: { value: longitude } }) => (
+              <Field name="latitude">
+                {({ input: { value: latitude } }) => (
+                  <InputMap
+                    value={[+longitude, +latitude]}
+                    onChange={value => handleCoordinate(value)}
+                  />
+                )}
+              </Field>
+            )}
+          </Field>
+        </div>
         <Field name="pictureFile">
           {({ input }) => (
             <FormGroup
@@ -142,7 +171,6 @@ export class FormCreate extends React.Component {
         <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
         <Button text={t('form.reset')} onClick={form.reset} disabled={submitting || pristine} />
       </form>
-
     );
   }
 }

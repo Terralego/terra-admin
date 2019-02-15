@@ -11,12 +11,12 @@ export const ViewpointsListItem = ({
   picture,
   location: { pathname },
 }) => (
-  <Card interactive>
-    <NavLink to={`${pathname}/${id}`}>
+  <NavLink className="card-link" to={`${pathname}/${id}`}>
+    <Card interactive>
       <img src={(picture && picture.list) || noPhoto} alt="" />
       <h3>{id} / {label}</h3>
-    </NavLink>
-  </Card>
+    </Card>
+  </NavLink>
 );
 
 export default withRouter(ViewpointsListItem);

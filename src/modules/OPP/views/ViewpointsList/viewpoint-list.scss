@@ -7,16 +7,25 @@
 
 }
 
-.item--add {
-  background-color: rgb(0, 0, 160);
-  text-align: center;
-  color: #fff;
-  font-weight: bold;
+.card-link--add {
+  background-color: #30404d;
+  padding: 20px;
+  width: 18%;
+  margin: 1%;
 
-  &:hover {
-    background-color: rgb(0, 104, 160);
+  .item--add {
+    box-shadow: unset;
+    background-color: #30404d;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+
+    &:hover {
+      box-shadow: unset;
+    }
   }
 }
+
 
 .viewpoint-list {
   display: flex;
@@ -25,18 +34,21 @@
   align-content: flex-start;
   flex-wrap: wrap;
 
-  .bp3-card {
+  .card-link {
     width: 18%;
-    margin: 1%;
-    border-color: transparent;
-    box-shadow: none;
 
-    h3 {
-      margin: 0.5em 0;
-    }
+    .bp3-card {
+      margin: 1%;
+      border-color: transparent;
+      box-shadow: none;
 
-    img {
-      max-width: 100%;
+      h3 {
+        margin: 0.5em 0;
+      }
+
+      img {
+        max-width: 100%;
+      }
     }
   }
 }

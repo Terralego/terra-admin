@@ -1,11 +1,13 @@
 import React from 'react';
 import { Field } from 'react-final-form';
-import { Button, FormGroup, InputGroup, Overlay } from '@blueprintjs/core';
+import { Button, FormGroup, InputGroup, Intent, Overlay } from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
 
 import InputMap from '../../../../../components/InputMap';
 
 import './form-metadata.scss';
+
+const displayError = meta => !!meta.error && meta.touched;
 
 export class FormMetadata extends React.Component {
   state = {
@@ -43,42 +45,55 @@ export class FormMetadata extends React.Component {
       >
         <FormGroup>
           <Field name="label">
-            {({ input, meta }) => (
-              <>
+            {({ input, meta, meta: { error } }) => (
+              <FormGroup
+                helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
+                intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
+                label={t('opp.viewpoint.edit.label')}
+                labelInfo={t('form.required')}
+              >
                 <InputGroup
                   {...input}
                   leftIcon="tag"
+                  placeholder={t('opp.viewpoint.edit.label')}
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
-              </>
+              </FormGroup>
             )}
           </Field>
           <Field name="geometry.coordinates[0]">
-            {({ input, meta }) => (
-              <>
+            {({ input, meta, meta: { error } }) => (
+              <FormGroup
+                helperText={displayError(meta) && t('form.error', { context: error, name: 'longitude', min: '-180°', max: '+180°' })}
+                intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
+                label={t('opp.viewpoint.edit.longitude.label')}
+                labelInfo={t('form.required')}
+              >
                 <InputGroup
                   {...input}
                   leftIcon="map"
-                  placeholder="Longitude : -61.2018"
+                  placeholder={t('opp.viewpoint.create.longitude.placeholder')}
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
-              </>
+              </FormGroup>
             )}
           </Field>
           <Field name="geometry.coordinates[1]">
-            {({ input, meta }) => (
-              <>
+            {({ input, meta, meta: { error } }) => (
+              <FormGroup
+                helperText={displayError(meta) && t('form.error', { context: error, name: 'latitude', min: '-90°', max: '+90°' })}
+                intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
+                label={t('opp.viewpoint.edit.latitude.label')}
+                labelInfo={t('form.required')}
+              >
                 <InputGroup
                   {...input}
                   leftIcon="map"
-                  placeholder="Latitude : 14.7786"
+                  placeholder={t('opp.viewpoint.create.latitude.placeholder')}
                 />
-                {meta.error && meta.touched && <span>{meta.error}</span>}
-              </>
+              </FormGroup>
             )}
           </Field>
           <div className="coordinate">
-            <Button text="Show overlay" onClick={toggleOpenOverlay} />
+            <Button text={t('opp.viewpoint.edit.show-map')} onClick={toggleOpenOverlay} />
             <Overlay isOpen={isOpen} onClose={toggleOpenOverlay}>
               <Field name="geometry.coordinates[0]">
                 {({ input: { value: longitude } }) => (
@@ -96,7 +111,7 @@ export class FormMetadata extends React.Component {
             </Overlay>
           </div>
         </FormGroup>
-        <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
+        <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid || pristine} />
         <Button text={t('form.reset')} onClick={form.reset} disabled={submitting || pristine} />
       </form>
     );

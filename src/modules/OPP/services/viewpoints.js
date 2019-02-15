@@ -9,7 +9,15 @@ export async function fetchViewpoint (id) {
 }
 
 export async function updateViewpoint (data) {
-  return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: data });
+  const point = {
+    type: 'Point',
+    coordinates: [
+      +data.geometry.coordinates[0],
+      +data.geometry.coordinates[1],
+    ],
+  };
+
+  return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: { ...data, point } });
 }
 
 export async function createViewpoint ({ label, longitude, latitude, pictureFile, date }) {
@@ -25,10 +33,12 @@ export async function createViewpoint ({ label, longitude, latitude, pictureFile
 
   formData.append('label', label);
   formData.append('point', coordinate);
+
   if (date && pictureFile) {
     formData.append('picture.date', date.toISOString());
     formData.append('picture.file', pictureFile);
   }
+
   return Api.request('viewpoints/', { method: 'POST', body: formData });
 }
 
@@ -42,7 +52,7 @@ export async function saveViewpoint (data) {
 export async function addImageToViewpoint (data) {
   const formData = new FormData();
   formData.append('label', data.label);
-  formData.append('picture.date', data.picture.date);
+  formData.append('picture.date', data.picture.date.toISOString());
   formData.append('picture.file', data.picture.file);
   return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: formData });
 }

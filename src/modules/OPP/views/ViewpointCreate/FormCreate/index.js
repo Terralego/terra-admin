@@ -56,7 +56,6 @@ export class FormCreate extends React.Component {
     } = this.props;
     return (
       <form
-        method="put"
         onSubmit={handleSubmit}
         className="form-create"
       >
@@ -65,14 +64,13 @@ export class FormCreate extends React.Component {
             <FormGroup
               helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
               intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-              label="Libellé"
-              labelFor="text-input"
-              labelInfo="(*)"
+              label={t('opp.viewpoint.create.label')}
+              labelInfo={t('form.required')}
             >
               <InputGroup
                 {...input}
                 leftIcon="tag"
-                placeholder="Libellé"
+                placeholder={t('opp.form.label')}
               />
             </FormGroup>
           )}
@@ -82,14 +80,13 @@ export class FormCreate extends React.Component {
             <FormGroup
               helperText={displayError(meta) && t('form.error', { context: error, name: input.name, min: '-180°', max: '+180°' })}
               intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-              label="Longitude"
-              labelFor="text-input"
-              labelInfo="(*)"
+              label={t('opp.viewpoint.create.longitude.label')}
+              labelInfo={t('form.required')}
             >
               <InputGroup
                 {...input}
                 leftIcon="map"
-                placeholder="Longitude : -61.2018"
+                placeholder={t('opp.viewpoint.create.longitude.placeholder')}
               />
             </FormGroup>
           )}
@@ -99,14 +96,13 @@ export class FormCreate extends React.Component {
             <FormGroup
               helperText={displayError(meta) && t('form.error', { context: error, name: input.name, min: '-90°', max: '+90°' })}
               intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-              label="Latitude"
-              labelFor="text-input"
-              labelInfo="(*)"
+              label={t('opp.viewpoint.create.latitude.label')}
+              labelInfo={t('form.required')}
             >
               <InputGroup
                 {...input}
                 leftIcon="map"
-                placeholder="Latitude : 14.7786"
+                placeholder={t('opp.viewpoint.create.latitude.placeholder')}
               />
             </FormGroup>
           )}
@@ -128,7 +124,7 @@ export class FormCreate extends React.Component {
         <Field name="pictureFile">
           {({ input }) => (
             <FormGroup
-              label="Picture"
+              label={t('opp.viewpoint.create.picture')}
               labelFor="text-input"
             >
               <label htmlFor="pictureFile">
@@ -150,15 +146,15 @@ export class FormCreate extends React.Component {
                 <FormGroup
                   helperText={displayDateError(meta) && t('form.error', { context: error, name: input.name })}
                   intent={displayDateError(meta) ? Intent.DANGER : Intent.NONE}
-                  label="Date"
+                  label={t('opp.viewpoint.create.date')}
                   labelFor="text-input"
-                  labelInfo="(*)"
+                  labelInfo={t('form.required')}
                   disabled={pictureFilePristine}
                 >
                   <DateInput
                     formatDate={formatDate}
                     parseDate={parseDate}
-                    placeholder="JJ/MM/AAAA"
+                    placeholder={t('opp.viewpoint.create.date-format')}
                     showActionsBar
                     {...input}
                     value={input.value || null}

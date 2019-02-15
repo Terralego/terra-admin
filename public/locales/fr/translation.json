@@ -18,9 +18,11 @@
   },
   "form": {
     "submit": "Envoyer",
+    "required": "(*)",
     "reset": "Réinitialiser",
     "error": "Erreur inconnue",
     "error_required": "Ce champ {{name}} est requis.",
+    "error_required-picture": "Ce champ image est requis.",
     "error_number": "Ce champ {{name}} doit être un nombre.",
     "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
     "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à{{min}}.",
@@ -35,14 +37,53 @@
       "edit": {
         "add-picture": "$t(common.add) une picture",
         "title": "Formulaire d'édition",
-        "visualization_pictures": "Visualisation des images"
+        "visualization-pictures": "Visualisation des images",
+        "show-map": "Afficher la carte",
+        "label": "$t(opp.form.label)",
+        "longitude":{
+          "label": "$t(opp.form.longitude.label)",
+          "placeholder": "$t(opp.form.longitude.placeholder)"
+        },
+        "latitude":{
+          "label": "$t(opp.form.latitude.label)",
+          "placeholder": "$t(opp.form.latitude.placeholder)"
+        },
+        "picture": "$t(opp.form.picture)",
+        "date": "$t(opp.form.date)",
+        "date-format": "$t(opp.form.date-format)"
       },
       "create": {
-        "title": "Formulaire de création d'un viewpoint"
+        "title": "Formulaire de création d'un viewpoint",
+        "label": "$t(opp.form.label)",
+        "longitude":{
+          "label": "$t(opp.form.longitude.label)",
+          "placeholder": "$t(opp.form.longitude.placeholder)"
+        },
+        "latitude":{
+          "label": "$t(opp.form.latitude.label)",
+          "placeholder": "$t(opp.form.latitude.placeholder)"
+        },
+        "picture": "$t(opp.form.picture)",
+        "date": "$t(opp.form.date)",
+        "date-format": "$t(opp.form.date-format)"
       }
     },
     "viewpoints": {
       "title": "Les points de vue"
+    },
+    "form": {
+      "label": "Libellé",
+      "longitude":{
+        "label": "Longitude",
+        "placeholder": "61.2018"
+      },
+      "latitude":{
+        "label": "Latitude",
+        "placeholder": "14.7786"
+      },
+      "picture": "Image",
+      "date": "Date",
+      "date-format": "JJ/MM/AAAA"
     }
   },
   "rando": {

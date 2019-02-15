@@ -20,11 +20,11 @@ export const UserDropdown = ({ user, logoutAction, t }) => (
             className={Classes.MINIMAL}
             onClick={logoutAction}
             icon="log-out"
-            text={t('main.logout')}
+            text={t('common.logout')}
           />
           <MenuItem
             icon="wrench"
-            text={t('main.account')}
+            text={t('common.account')}
           />
         </Menu>
       )}

@@ -7,11 +7,17 @@ import { withNamespaces } from 'react-i18next';
 
 import { validateEdit } from './validateFormMetadata';
 import FormMetadata from './FormMetadata';
+import { toast } from '../../../../utils/toast';
 
 export class EditMetadata extends React.Component {
-  onSubmit = values => {
-    const { saveViewpointAction } = this.props;
-    saveViewpointAction(values);
+  onSubmit = async values => {
+    const { saveViewpointAction, t } = this.props;
+    const editViewpoint = await saveViewpointAction(values);
+    toast.displayToaster(
+      editViewpoint,
+      t('opp.form.success.notification', { context: 'edit', name: editViewpoint.label }),
+      t('opp.form.error.server'),
+    );
   };
 
   render () {

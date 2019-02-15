@@ -10,6 +10,7 @@ import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
 import { validateAddPicture } from './validateAddPictureForm';
+import { toast } from '../../../../utils/toast';
 
 const displayError = ({ error, touched }) => !!(error && touched);
 
@@ -18,11 +19,16 @@ export class AddPicture extends React.Component {
     pictureFile: {},
   };
 
-  onSubmit = values => {
-    const { viewpoint: { id, label }, uploadPictureViewpointAction } = this.props;
+  onSubmit = async values => {
+    const { viewpoint, uploadPictureViewpointAction, t } = this.props;
     const { pictureFile } = this.state;
-    const data = { ...values, pictureFile, id, label };
-    uploadPictureViewpointAction(data);
+    const data = { ...values, ...viewpoint, pictureFile };
+    const editViewpoint = await uploadPictureViewpointAction(data);
+    toast.displayToaster(
+      editViewpoint,
+      t('opp.form.success.notification', { context: 'add-picture', name: editViewpoint.label }),
+      t('opp.form.error.server'),
+    );
   };
 
   handlePicture = (e, input) => {
@@ -45,10 +51,12 @@ export class AddPicture extends React.Component {
           <Form
             onSubmit={onSubmit}
             validate={validateAddPicture}
-            render={({ handleSubmit, invalid }) => (
+            render={({ handleSubmit, form: { reset }, invalid, submitting }) => (
               <form
-                onSubmit={handleSubmit}
                 className="form-add-image"
+                onSubmit={event => {
+                  handleSubmit(event).then(reset);
+                }}
               >
                 <Field name="pictureFile">
                   {({ input, meta, meta: { error } }) => (
@@ -90,7 +98,7 @@ export class AddPicture extends React.Component {
                     </FormGroup>
                   )}
                 </Field>
-                <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid} />
+                <Button text={t('form.submit')} intent="primary" type="submit" disabled={invalid || submitting} />
               </form>
             )}
           />

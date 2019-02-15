@@ -9,6 +9,7 @@ export const validateMinLength = (value, min) => +value >= min;
 export const validateMaxLength = (value, max) => +value <= max;
 export const validateIsNumber = value => !!(+value);
 
+
 export default {
   FORM_ERROR_REQUIRED,
   FORM_ERROR_IS_NUMBER,

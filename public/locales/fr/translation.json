@@ -25,8 +25,8 @@
     "error_required-picture": "Ce champ image est requis.",
     "error_number": "Ce champ {{name}} doit être un nombre.",
     "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
-    "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à{{min}}.",
-    "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à{{min}}."
+    "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à {{min}}.",
+    "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à {{min}}."
   },
   "opp": {
     "nav": {
@@ -83,7 +83,16 @@
       },
       "picture": "Image",
       "date": "Date",
-      "date-format": "JJ/MM/AAAA"
+      "date-format": "JJ/MM/AAAA",
+      "error": {
+        "server": "Le service est indisponible."
+      },
+      "success": {
+        "notification": "L'action executée s'est déroulée correctement.",
+        "notification_edit": "Le point de vue {{name, uppercase}} a été modifié.",
+        "notification_create": "Le point de vue {{name}} a été crée.",
+        "notification_add-picture": "Une image a été ajouté au point de vue : {{name}}."
+      }
     }
   },
   "rando": {

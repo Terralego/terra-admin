@@ -65,13 +65,13 @@ export class FormMetadata extends React.Component {
               <FormGroup
                 helperText={displayError(meta) && t('form.error', { context: error, name: 'longitude', min: '-180°', max: '+180°' })}
                 intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                label={t('opp.viewpoint.edit.longitude')}
+                label={t('opp.viewpoint.edit.longitude.label')}
                 labelInfo={t('form.required')}
               >
                 <InputGroup
                   {...input}
                   leftIcon="map"
-                  placeholder={t('opp.viewpoint.create.longitude-example')}
+                  placeholder={t('opp.viewpoint.create.longitude.placeholder')}
                 />
               </FormGroup>
             )}
@@ -81,13 +81,13 @@ export class FormMetadata extends React.Component {
               <FormGroup
                 helperText={displayError(meta) && t('form.error', { context: error, name: 'latitude', min: '-90°', max: '+90°' })}
                 intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                label={t('opp.viewpoint.edit.latitude')}
+                label={t('opp.viewpoint.edit.latitude.label')}
                 labelInfo={t('form.required')}
               >
                 <InputGroup
                   {...input}
                   leftIcon="map"
-                  placeholder={t('opp.viewpoint.create.latitude-example')}
+                  placeholder={t('opp.viewpoint.create.latitude.placeholder')}
                 />
               </FormGroup>
             )}

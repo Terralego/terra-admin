@@ -53,7 +53,7 @@ export class AddPicture extends React.Component {
                 <Field name="pictureFile">
                   {({ input, meta, meta: { error } }) => (
                     <FormGroup
-                      helperText={displayError(meta) && t('form.error', { context: error, name: t('opp.viewpoint.edit.picture') })}
+                      helperText={displayError(meta) && t('form.error', { context: `${error}-picture` })}
                       intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
                       label={t('opp.viewpoint.edit.picture')}
                       labelInfo={t('form.required')}

@@ -22,6 +22,7 @@
     "reset": "Réinitialiser",
     "error": "Erreur inconnue",
     "error_required": "Ce champ {{name}} est requis.",
+    "error_required-picture": "Ce champ image est requis.",
     "error_number": "Ce champ {{name}} doit être un nombre.",
     "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
     "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à{{min}}.",
@@ -39,10 +40,14 @@
         "visualization-pictures": "Visualisation des images",
         "show-map": "Afficher la carte",
         "label": "$t(opp.form.label)",
-        "longitude": "$t(opp.form.longitude)",
-        "longitude-example": "$t(opp.form.longitude-example)",
-        "latitude": "$t(opp.form.latitude)",
-        "latitude-example": "$t(opp.form.latitude-example)",
+        "longitude":{
+          "label": "$t(opp.form.longitude.label)",
+          "placeholder": "$t(opp.form.longitude.placeholder)"
+        },
+        "latitude":{
+          "label": "$t(opp.form.latitude.label)",
+          "placeholder": "$t(opp.form.latitude.placeholder)"
+        },
         "picture": "$t(opp.form.picture)",
         "date": "$t(opp.form.date)",
         "date-format": "$t(opp.form.date-format)"
@@ -50,10 +55,14 @@
       "create": {
         "title": "Formulaire de création d'un viewpoint",
         "label": "$t(opp.form.label)",
-        "longitude": "$t(opp.form.longitude)",
-        "longitude-example": "$t(opp.form.longitude-example)",
-        "latitude": "$t(opp.form.latitude)",
-        "latitude-example": "$t(opp.form.latitude-example)",
+        "longitude":{
+          "label": "$t(opp.form.longitude.label)",
+          "placeholder": "$t(opp.form.longitude.placeholder)"
+        },
+        "latitude":{
+          "label": "$t(opp.form.latitude.label)",
+          "placeholder": "$t(opp.form.latitude.placeholder)"
+        },
         "picture": "$t(opp.form.picture)",
         "date": "$t(opp.form.date)",
         "date-format": "$t(opp.form.date-format)"
@@ -64,10 +73,14 @@
     },
     "form": {
       "label": "Libellé",
-      "longitude": "Longitude",
-      "longitude-example": "-61.2018",
-      "latitude": "Latitude",
-      "latitude-example": "14.7786",
+      "longitude":{
+        "label": "Longitude",
+        "placeholder": "61.2018"
+      },
+      "latitude":{
+        "label": "Latitude",
+        "placeholder": "14.7786"
+      },
       "picture": "Image",
       "date": "Date",
       "date-format": "JJ/MM/AAAA"

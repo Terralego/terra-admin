@@ -27,7 +27,7 @@ export const FormEditViewpoint = ({
       viewpoint={viewpoint}
       uploadPictureViewpointAction={uploadPictureViewpointAction}
     />
-    <H3>{t('opp.viewpoint.edit.visualization_pictures')}</H3>
+    <H3>{t('opp.viewpoint.edit.visualization-pictures')}</H3>
     <div className="visu-edit">
       {viewpoint.pictures.map(picture => (
         <Card elevation={Elevation.TWO} key={picture.id}>

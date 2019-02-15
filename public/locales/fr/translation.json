@@ -36,7 +36,7 @@
       "edit": {
         "add-picture": "$t(common.add) une picture",
         "title": "Formulaire d'édition",
-        "visualization_pictures": "Visualisation des images",
+        "visualization-pictures": "Visualisation des images",
         "show-map": "Afficher la carte",
         "label": "$t(opp.form.label)",
         "longitude": "$t(opp.form.longitude)",

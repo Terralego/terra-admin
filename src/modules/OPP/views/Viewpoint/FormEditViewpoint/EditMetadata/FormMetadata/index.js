@@ -49,13 +49,13 @@ export class FormMetadata extends React.Component {
               <FormGroup
                 helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
                 intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                label={t('opp.form.label')}
-                labelInfo="(*)"
+                label={t('opp.viewpoint.edit.label')}
+                labelInfo={t('form.required')}
               >
                 <InputGroup
                   {...input}
                   leftIcon="tag"
-                  placeholder={t('opp.form.label')}
+                  placeholder={t('opp.viewpoint.edit.label')}
                 />
               </FormGroup>
             )}
@@ -65,13 +65,13 @@ export class FormMetadata extends React.Component {
               <FormGroup
                 helperText={displayError(meta) && t('form.error', { context: error, name: 'longitude', min: '-180°', max: '+180°' })}
                 intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                label={t('opp.form.longitude')}
-                labelInfo="(*)"
+                label={t('opp.viewpoint.edit.longitude')}
+                labelInfo={t('form.required')}
               >
                 <InputGroup
                   {...input}
                   leftIcon="map"
-                  placeholder="-61.2018"
+                  placeholder={t('opp.viewpoint.create.longitude-example')}
                 />
               </FormGroup>
             )}
@@ -81,13 +81,13 @@ export class FormMetadata extends React.Component {
               <FormGroup
                 helperText={displayError(meta) && t('form.error', { context: error, name: 'latitude', min: '-90°', max: '+90°' })}
                 intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                label={t('opp.form.latitude')}
-                labelInfo="(*)"
+                label={t('opp.viewpoint.edit.latitude')}
+                labelInfo={t('form.required')}
               >
                 <InputGroup
                   {...input}
                   leftIcon="map"
-                  placeholder="14.7786"
+                  placeholder={t('opp.viewpoint.create.latitude-example')}
                 />
               </FormGroup>
             )}

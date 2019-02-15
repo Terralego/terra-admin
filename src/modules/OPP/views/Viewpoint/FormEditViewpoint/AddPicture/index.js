@@ -11,7 +11,7 @@ import { withNamespaces } from 'react-i18next';
 
 import { validateAddPicture } from './validateAddPictureForm';
 
-const displayError = meta => !!meta.error && meta.touched;
+const displayError = ({ error, touched }) => !!(error && touched);
 
 export class AddPicture extends React.Component {
   state = {
@@ -53,10 +53,10 @@ export class AddPicture extends React.Component {
                 <Field name="pictureFile">
                   {({ input, meta, meta: { error } }) => (
                     <FormGroup
-                      helperText={displayError(meta) && t('form.error', { context: error, name: input.name })}
+                      helperText={displayError(meta) && t('form.error', { context: error, name: t('opp.viewpoint.edit.picture') })}
                       intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                      label={t('opp.form.picture')}
-                      labelInfo="(*)"
+                      label={t('opp.viewpoint.edit.picture')}
+                      labelInfo={t('form.required')}
                     >
                       <label htmlFor="picture">
                         <input
@@ -75,17 +75,17 @@ export class AddPicture extends React.Component {
                     <FormGroup
                       helperText={displayError(meta) && t('form.error', { context: meta.error, name: input.name })}
                       intent={displayError(meta) ? Intent.DANGER : Intent.NONE}
-                      label={t('opp.form.date')}
-                      labelInfo="(*)"
+                      label={t('opp.viewpoint.edit.date')}
+                      labelInfo={t('form.required')}
                     >
                       <DateInput
                         formatDate={formatDate}
                         parseDate={parseDate}
-                        placeholder="JJ/MM/AAAA"
+                        placeholder={t('opp.viewpoint.edit.date-format')}
                         showActionsBar
                         {...input}
                         value={input.value || null}
-                        inputProps={{ onBlur: () => input.onBlur() }}
+                        inputProps={{ onBlur: input.onBlur }}
                       />
                     </FormGroup>
                   )}

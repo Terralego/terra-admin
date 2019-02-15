@@ -9,13 +9,13 @@ export async function fetchViewpoint (id) {
 }
 
 export async function updateViewpoint (data) {
-  const point = JSON.stringify({
+  const point = {
     type: 'Point',
     coordinates: [
       +data.geometry.coordinates[0],
       +data.geometry.coordinates[1],
     ],
-  });
+  };
 
   return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: { ...data, point } });
 }

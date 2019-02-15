@@ -18,6 +18,7 @@
   },
   "form": {
     "submit": "Envoyer",
+    "required": "(*)",
     "reset": "Réinitialiser",
     "error": "Erreur inconnue",
     "error_required": "Ce champ {{name}} est requis.",
@@ -36,10 +37,26 @@
         "add-picture": "$t(common.add) une picture",
         "title": "Formulaire d'édition",
         "visualization_pictures": "Visualisation des images",
-        "show-map": "Afficher la carte"
+        "show-map": "Afficher la carte",
+        "label": "$t(opp.form.label)",
+        "longitude": "$t(opp.form.longitude)",
+        "longitude-example": "$t(opp.form.longitude-example)",
+        "latitude": "$t(opp.form.latitude)",
+        "latitude-example": "$t(opp.form.latitude-example)",
+        "picture": "$t(opp.form.picture)",
+        "date": "$t(opp.form.date)",
+        "date-format": "$t(opp.form.date-format)"
       },
       "create": {
-        "title": "Formulaire de création d'un viewpoint"
+        "title": "Formulaire de création d'un viewpoint",
+        "label": "$t(opp.form.label)",
+        "longitude": "$t(opp.form.longitude)",
+        "longitude-example": "$t(opp.form.longitude-example)",
+        "latitude": "$t(opp.form.latitude)",
+        "latitude-example": "$t(opp.form.latitude-example)",
+        "picture": "$t(opp.form.picture)",
+        "date": "$t(opp.form.date)",
+        "date-format": "$t(opp.form.date-format)"
       }
     },
     "viewpoints": {
@@ -48,9 +65,12 @@
     "form": {
       "label": "Libellé",
       "longitude": "Longitude",
+      "longitude-example": "-61.2018",
       "latitude": "Latitude",
+      "latitude-example": "14.7786",
       "picture": "Image",
-      "date": "Date"
+      "date": "Date",
+      "date-format": "JJ/MM/AAAA"
     }
   },
   "rando": {

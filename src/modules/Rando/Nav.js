@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { withNamespaces } from 'react-i18next';
+
+import { connectRandoProvider } from './services/RandoProvider';
 import config from './config';
 
-export const Nav = ({ t }) => (
-  <ul>
-    <li>
-      <NavLink to={`${config.path}/foo`}>
-        {t('opp.nav.foo')}
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to={`${config.path}/bar`}>
-        {t('opp.nav.bar')}
-      </NavLink>
-    </li>
-  </ul>
-);
 
-export default withNamespaces()(Nav);
+export const Nav = ({ getAllLayersAction, layersList }) => {
+  useEffect(() => {
+    getAllLayersAction();
+  }, []);
+  return (
+    <ul>
+      {layersList.map(({ name }) => (
+        <li key={name}>
+          <NavLink
+            to={`${config.path}/map/layer/${name}`}
+          >
+            {name}
+          </NavLink>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default connectRandoProvider('getAllLayersAction', 'layersList')(Nav);

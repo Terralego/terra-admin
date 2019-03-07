@@ -1,38 +1,86 @@
 import React from 'react';
 import InteractiveMap from 'mc-tf-test/modules/Map/InteractiveMap';
+import { connectRandoProvider } from '../../services/RandoProvider';
 
 export class Map extends React.Component {
-  componentDidUpdate ({ match: { params: { id: prevId } } }) {
-    const { match: { params: { id } } } = this.props;
-    if (id !== prevId) {
-      // TODO display Style related to layerID
+  state = {
+    map: {},
+    customStyle: undefined,
+  }
+
+  componentDidMount () {
+    const { getMapConfig } = this.props;
+    getMapConfig();
+    this.generateLayersToMap();
+  }
+
+  componentDidUpdate (
+    { layersList: prevLayersList, match: { params: { id: prevId } } },
+    { map: prevMap },
+  ) {
+    const {
+      layersList,
+      match: { params: { id } },
+    } = this.props;
+    const { map } = this.state;
+    if (layersList !== prevLayersList) {
+      this.generateLayersToMap();
+    }
+    if (id !== prevId || map !== prevMap) {
+      this.displayCurrentLayer(id);
     }
   }
 
   setMap = map => {
     map.resize();
+    this.setState({ map });
+  }
+
+  displayCurrentLayer = currentId => {
+    const { map, customStyle: { layers = [] } = {} } = this.state;
+    layers.forEach(({ id, relatedId }) => {
+      if (!map.getLayer(id)) return;
+      map.setLayoutProperty(id, 'visibility', relatedId === Number(currentId) ? 'visible' : 'none');
+    });
+  }
+
+  generateLayersToMap () {
+    const { layersList } = this.props;
+    const layers = layersList.map(({ id, name }) => ({
+      id: `terralego-${name}`,
+      type: 'fill',
+      source: 'terralego',
+      relatedId: id,
+      paint: { 'fill-color': '#41b6c4', 'fill-opacity': 0.4, 'fill-outline-color': 'lightblue' },
+      'source-layer': name,
+    }));
+    this.setState({
+      customStyle: {
+        sources: [{
+          id: 'terralego',
+          type: 'vector',
+          url: 'https://dev-terralego-paca.makina-corpus.net/api/layer/reference/tilejson',
+        }],
+        layers,
+      },
+    });
   }
 
   render () {
-    const map = {
-      accessToken: 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ',
-      backgroundStyle: [
-        { label: 'clair', url: 'mapbox://styles/makinacorpus/cjpdvdqdj0b7a2slajmjqy3py' },
-      ],
-      center: [5.386195159396806, 43.30072210972415],
-      zoom: 9,
-      maxZoom: 16,
-      minZoom: 7,
-      fitBounds: [[4.2301364, 42.9822468], [7.7184776, 45.1266002]],
-    };
+    const { customStyle } = this.state;
+    const { mapConfig } = this.props;
+    const isConfigLoaded = Object.keys(mapConfig).length > 1;
+
+    if (!isConfigLoaded) return <div>Loading...</div>;
 
     return (
       <InteractiveMap
         onMapLoaded={this.setMap}
-        {...map}
+        {...mapConfig}
+        customStyle={customStyle}
       />
     );
   }
 }
 
-export default Map;
+export default connectRandoProvider('getMapConfig', 'mapConfig', 'layersList')(Map);

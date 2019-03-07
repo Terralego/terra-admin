@@ -1,7 +1,15 @@
 import Api from 'mc-tf-test/modules/Api';
+import config from './mock-config.json';
+
+export async function fetchMapConfig () {
+  // Mock api the config return
+  return {
+    results: { ...config },
+  };
+}
 
 export async function fetchAllLayers () {
   return Api.request('layer/');
 }
 
-export default { fetchAllLayers };
+export default { fetchMapConfig, fetchAllLayers };

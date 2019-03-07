@@ -1,6 +1,6 @@
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
-import { fetchAllLayers } from './map';
+import { fetchMapConfig, fetchAllLayers } from './map';
 
 export const context = React.createContext({});
 export const connectRandoProvider = connect(context);
@@ -10,6 +10,21 @@ const { Provider } = context;
 export class RandoProvider extends React.Component {
   state = {
     layersList: [],
+    mapConfig: {},
+  };
+
+  getMapConfig = async () => {
+    try {
+      const mapConfig = await fetchMapConfig();
+      this.setState({ mapConfig: {
+        ...mapConfig.results,
+      } });
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [state.mapConfig.length]: true },
+      }));
+    }
   };
 
   getAllLayersAction = async () => {
@@ -27,10 +42,12 @@ export class RandoProvider extends React.Component {
   render () {
     const { children } = this.props;
     const {
+      getMapConfig,
       getAllLayersAction,
     } = this;
     const value = {
       ...this.state,
+      getMapConfig,
       getAllLayersAction,
     };
     return (

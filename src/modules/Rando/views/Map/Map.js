@@ -36,21 +36,20 @@ export class Map extends React.Component {
     this.setState({ map });
   }
 
-  displayCurrentLayer = currentId => {
+  displayCurrentLayer = currentPath => {
     const { map, customStyle: { layers = [] } = {} } = this.state;
-    layers.forEach(({ id, relatedId }) => {
+    layers.forEach(({ id, 'source-layer': sourceLayer }) => {
       if (!map.getLayer(id)) return;
-      map.setLayoutProperty(id, 'visibility', relatedId === Number(currentId) ? 'visible' : 'none');
+      map.setLayoutProperty(id, 'visibility', sourceLayer === currentPath ? 'visible' : 'none');
     });
   }
 
   generateLayersToMap () {
     const { layersList } = this.props;
-    const layers = layersList.map(({ id, name }) => ({
+    const layers = layersList.map(({ name }) => ({
       id: `terralego-${name}`,
       type: 'fill',
       source: 'terralego',
-      relatedId: id,
       paint: { 'fill-color': '#41b6c4', 'fill-opacity': 0.4, 'fill-outline-color': 'lightblue' },
       'source-layer': name,
     }));

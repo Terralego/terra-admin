@@ -6,9 +6,8 @@
       "url": "mapbox://styles/makinacorpus/cjpdvdqdj0b7a2slajmjqy3py"
     }
   ],
-  "center": [5.386195159396806, 43.30072210972415],
-  "zoom": 9,
+  "center": [1.833030276914542,43.245668552207206],
+  "zoom": 7,
   "maxZoom": 16,
-  "minZoom": 7,
-  "fitBounds": [[4.2301364, 42.9822468], [7.7184776, 45.1266002]]
+  "minZoom": 5
 }

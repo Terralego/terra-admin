@@ -30,7 +30,7 @@ export class RandoProvider extends React.Component {
   getAllLayersAction = async () => {
     try {
       const allLayers = await fetchAllLayers();
-      this.setState({ layersList: allLayers.results });
+      this.setState({ layersList: allLayers });
     } catch (e) {
       this.setState(state => ({
         ...state,

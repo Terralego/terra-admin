@@ -1,6 +1,7 @@
 import React from 'react';
 import InteractiveMap from 'mc-tf-test/modules/Map/InteractiveMap';
 import { connectRandoProvider } from '../../services/RandoProvider';
+import mockedCustomStyle from './mockedCustomStyle';
 
 export class Map extends React.Component {
   state = {
@@ -45,22 +46,9 @@ export class Map extends React.Component {
   }
 
   generateLayersToMap () {
-    const { layersList } = this.props;
-    const layers = layersList.map(({ name }) => ({
-      id: `terralego-${name}`,
-      type: 'fill',
-      source: 'terralego',
-      paint: { 'fill-color': '#41b6c4', 'fill-opacity': 0.4, 'fill-outline-color': 'lightblue' },
-      'source-layer': name,
-    }));
     this.setState({
       customStyle: {
-        sources: [{
-          id: 'terralego',
-          type: 'vector',
-          url: 'https://dev-terralego-paca.makina-corpus.net/api/layer/reference/tilejson',
-        }],
-        layers,
+        ...mockedCustomStyle,
       },
     });
   }

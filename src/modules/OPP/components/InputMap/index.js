@@ -11,7 +11,7 @@ export class InputMap extends React.Component {
   static propTypes = {
     configMap: PropTypes.shape({
       accessToken: PropTypes.string,
-      backgroundStyle: PropTypes.string,
+      backgroundDefault: PropTypes.string,
       center: PropTypes.arrayOf(PropTypes.number),
       maxBounds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.array), PropTypes.bool]),
     }),
@@ -53,7 +53,11 @@ export class InputMap extends React.Component {
   };
 
   render () {
-    const { mapSettings } = this.props;
+    const { configMap } = this.props;
+    const mapSettings = {
+      ...configMap,
+      backgroundStyle: configMap.backgroundDefault,
+    };
     return (
       <div className="input-map">
         <Map
@@ -66,5 +70,5 @@ export class InputMap extends React.Component {
 }
 
 export default connectAppProvider(({ env: { configMap } }) => ({
-  mapSettings: configMap,
+  configMap,
 }))(withNamespaces()(InputMap));

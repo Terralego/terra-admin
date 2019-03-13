@@ -29,7 +29,6 @@ export class FormMetadata extends React.Component {
     } = this;
     const {
       t,
-      mapSettings,
       handleSubmit,
       invalid,
       form,
@@ -100,7 +99,6 @@ export class FormMetadata extends React.Component {
                   <Field name="geometry.coordinates[1]">
                     {({ input: { value: latitude } }) => (
                       <InputMap
-                        configMap={mapSettings}
                         value={[+longitude, +latitude]}
                         onChange={value => handleCoordinate(value)}
                       />

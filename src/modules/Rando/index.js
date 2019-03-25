@@ -6,20 +6,28 @@ import Nav from './Nav';
 import Routing from '../../components/Routing';
 import RandoProvider from './services/RandoProvider';
 
+import Search from './Search';
+import './styles.scss';
+
 const Map = () => import('./views/Map');
 
 const { path } = config;
 
 export const Rando = () => (
   <RandoProvider>
-    <NavLayout nav={<Nav />}>
-      <Routing
-        routes={[{
-          path: `${path}/map/layer/:id?`,
-          import: Map,
-        }]}
-      />
-    </NavLayout>
+    <div className="rando">
+      <NavLayout nav={<Nav />}>
+        <div className="rando-main">
+          <Search />
+          <Routing
+            routes={[{
+              path: `${path}/map/layer/:id?`,
+              import: Map,
+            }]}
+          />
+        </div>
+      </NavLayout>
+    </div>
   </RandoProvider>
 );
 

@@ -6,8 +6,7 @@ import Nav from './Nav';
 import Routing from '../../components/Routing';
 import RandoProvider from './services/RandoProvider';
 
-const Foo = () => import('./views/Foo');
-const Bar = () => import('./views/Bar');
+const Map = () => import('./views/Map');
 
 const { path } = config;
 
@@ -16,11 +15,8 @@ export const Rando = () => (
     <NavLayout nav={<Nav />}>
       <Routing
         routes={[{
-          path: `${path}/foo`,
-          import: Foo,
-        }, {
-          path: `${path}/bar`,
-          import: Bar,
+          path: `${path}/map/layer/:id?`,
+          import: Map,
         }]}
       />
     </NavLayout>

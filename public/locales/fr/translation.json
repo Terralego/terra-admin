@@ -98,8 +98,7 @@
   "rando": {
     "project": "Randonnées",
     "nav": {
-      "foo": "Foo",
-      "bar": "Bar"
+      "map": "Carte"
     }
   }
 }

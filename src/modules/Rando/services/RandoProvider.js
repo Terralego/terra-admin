@@ -13,6 +13,12 @@ export class RandoProvider extends React.Component {
     mapConfig: {},
   };
 
+  componentWillUnmount () {
+    this.isUnmount = true;
+  }
+
+  setMap = map => !this.isUnmount && this.setState({ map });
+
   getMapConfig = async () => {
     try {
       const mapConfig = await fetchMapConfig();
@@ -39,16 +45,33 @@ export class RandoProvider extends React.Component {
     }
   };
 
+  resizingMap = () => {
+    const { map } = this.state;
+    if (!map) return;
+    this.setState({ mapIsResizing: true });
+    setTimeout(() => {
+      map.resize();
+      if (this.isUnmount) return;
+
+      this.setState({ mapIsResizing: false });
+    }, 800);
+  }
+
   render () {
     const { children } = this.props;
+
     const {
       getMapConfig,
       getAllLayersAction,
+      setMap,
+      resizingMap,
     } = this;
     const value = {
       ...this.state,
       getMapConfig,
       getAllLayersAction,
+      setMap,
+      resizingMap,
     };
     return (
       <Provider value={value}>

@@ -1,0 +1,20 @@
+.rando-nav {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  margin-left: -200px;
+  transition: margin-left 0.2s ease-in;
+  &--active {
+    margin-left: 0;
+  }
+  &__button {
+    padding: 1rem;
+    text-align: right;
+    border-bottom: 1px solid #f8f8f8;
+  }
+  &__menu {
+    &#{&} {
+      padding: 1rem;
+    }
+  }
+}

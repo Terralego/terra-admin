@@ -1,0 +1,14 @@
+.rando-map {
+  height: 100%;
+  .mapboxgl-canvas {
+    opacity: 1;
+    transition: opacity 0.2s ease-in;
+  }
+  &--is-resizing {
+    .mapboxgl-canvas {
+      width: 100% !important;
+      opacity: 0;
+      filter: blur(1rem);
+    }
+  }
+}

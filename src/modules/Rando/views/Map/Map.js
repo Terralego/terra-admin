@@ -1,7 +1,10 @@
 import React from 'react';
+import classnames from 'classnames';
+
 import InteractiveMap from 'mc-tf-test/modules/Map/InteractiveMap';
 import { connectRandoProvider } from '../../services/RandoProvider';
 import mockedCustomStyle from './mockedCustomStyle';
+import './styles.scss';
 
 export class Map extends React.Component {
   state = {
@@ -32,7 +35,9 @@ export class Map extends React.Component {
     }
   }
 
-  setMap = map => {
+  resetMap = map => {
+    const { setMap } = this.props;
+    setMap(map);
     map.resize();
     this.setState({ map });
   }
@@ -55,19 +60,27 @@ export class Map extends React.Component {
 
   render () {
     const { customStyle } = this.state;
-    const { mapConfig } = this.props;
+    const { mapConfig, mapIsResizing } = this.props;
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
 
     if (!isConfigLoaded) return <div>Loading...</div>;
 
     return (
-      <InteractiveMap
-        onMapLoaded={this.setMap}
-        {...mapConfig}
-        customStyle={customStyle}
-      />
+      <div
+        className={classnames(
+          'rando-map',
+          { 'rando-map--is-resizing': mapIsResizing },
+        )}
+
+      >
+        <InteractiveMap
+          onMapLoaded={this.resetMap}
+          {...mapConfig}
+          customStyle={customStyle}
+        />
+      </div>
     );
   }
 }
 
-export default connectRandoProvider('getMapConfig', 'mapConfig', 'layersList')(Map);
+export default connectRandoProvider('getMapConfig', 'mapConfig', 'layersList', 'setMap', 'mapIsResizing')(Map);

@@ -1,6 +1,5 @@
 import React from 'react';
 import classnames from 'classnames';
-
 import InteractiveMap from 'mc-tf-test/modules/Map/InteractiveMap';
 import { connectRandoProvider } from '../../services/RandoProvider';
 import mockedCustomStyle from './mockedCustomStyle';

@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
 import classnames from 'classnames';
 
-import { connectRandoProvider } from '../services/RandoProvider';
-import config from '../config';
+import { connectRandoProvider } from '../../services/RandoProvider';
+import config from '../../config';
 
 import './styles.scss';
 

@@ -2,11 +2,11 @@ import React from 'react';
 
 import config from './config';
 import NavLayout from '../../components/NavLayout';
-import Nav from './Nav';
+import Nav from './components/Nav';
 import Routing from '../../components/Routing';
 import RandoProvider from './services/RandoProvider';
 
-import Search from './Search';
+import Search from './components/Search';
 import './styles.scss';
 
 const Map = () => import('./views/Map');

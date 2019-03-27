@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import InteractiveMap from 'mc-tf-test/modules/Map/InteractiveMap';
 import { connectRandoProvider } from '../../services/RandoProvider';
 import mockedCustomStyle from './mockedCustomStyle';
+
 import './styles.scss';
 
 export class Map extends React.Component {

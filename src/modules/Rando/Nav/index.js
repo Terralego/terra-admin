@@ -11,8 +11,12 @@ import './styles.scss';
 
 export const Nav = ({ getAllLayersAction, resizingMap, layersList }) => {
   const [menuOpen, setMenuOpen] = useState(true);
-  useEffect(getAllLayersAction, []);
-  useEffect(resizingMap, [menuOpen]);
+  useEffect(() => {
+    getAllLayersAction();
+  }, []);
+  useEffect(() => {
+    resizingMap();
+  }, [menuOpen]);
   return (
     <div
       className={classnames(

@@ -1,6 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import InteractiveMap from 'mc-tf-test/modules/Map/InteractiveMap';
+
+import DataTable from '../../components/DataTable';
 import { connectRandoProvider } from '../../services/RandoProvider';
 import mockedCustomStyle from './mockedCustomStyle';
 
@@ -60,7 +62,7 @@ export class Map extends React.Component {
 
   render () {
     const { customStyle } = this.state;
-    const { mapConfig, mapIsResizing } = this.props;
+    const { mapConfig, mapIsResizing, match: { params: { id = false } } } = this.props;
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
 
     if (!isConfigLoaded) return <div>Loading...</div>;
@@ -73,11 +75,23 @@ export class Map extends React.Component {
         )}
 
       >
-        <InteractiveMap
-          onMapLoaded={this.resetMap}
-          {...mapConfig}
-          customStyle={customStyle}
-        />
+        <div className="rando-map__map">
+          <InteractiveMap
+            onMapLoaded={this.resetMap}
+            {...mapConfig}
+            customStyle={customStyle}
+          />
+        </div>
+        <div
+          className={classnames(
+            'rando-map__table',
+            { 'rando-map__table--active': id },
+          )}
+        >
+          <DataTable
+            source={id}
+          />
+        </div>
       </div>
     );
   }

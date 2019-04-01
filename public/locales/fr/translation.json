@@ -99,6 +99,13 @@
     "project": "Randonnées",
     "nav": {
       "map": "Carte"
+    },
+    "table": {
+      "title":  "Liste de la couche :",
+      "sortAsc":  "Tri croissant",
+      "sortDesc":  "Tri décroissant",
+      "minimize": "Réduire",
+      "maximize": "Agrandir"
     }
   }
 }

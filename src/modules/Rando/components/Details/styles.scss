@@ -1,0 +1,64 @@
+.rando-details {
+  position: relative;
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  margin-right: -20rem;
+  &--visible {
+    transition: margin 0.2s ease-in;
+    margin-right: 0; 
+  }
+  
+  &__close {
+    text-align: right;
+  }
+
+  &__content {
+    padding: 1rem;
+    flex: auto;
+    overflow-y: auto;
+  }
+
+  .details {
+    &__title {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    &__subtitle {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #ccc;
+    }
+
+    &__list {
+      padding: 0;
+      display: table;
+      border-collapse: collapse;
+    }
+
+    &__list-item {
+      display: table-row;
+
+      &:nth-child(odd) {
+        background: #efefef;
+      }
+
+      > * {
+        display: table-cell;
+        padding: 0.3rem;
+        border: 1px solid #ccc;
+      }
+    }
+
+    &__list-value {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      
+      &--empty {
+        opacity: 0.6;
+      }
+    }
+  }
+}

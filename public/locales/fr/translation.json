@@ -10,6 +10,10 @@
       "text_404": "Retourner à la page d'accueil : ",
       "link_404": "Accueil"
     },
+    "pagination": {
+      "previous": "Précedent",
+      "next": "Suivant"
+    },
     "loading": "Chargement en cours ...",
     "logout": "Se déconnecter"
   },

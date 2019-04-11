@@ -1,10 +1,8 @@
 .page {
-
   &--title,
   &--content {
     padding: 1%;
   }
-
 }
 
 .card-link--add {
@@ -20,12 +18,29 @@
     color: #fff;
     font-weight: bold;
 
+    &::before {
+      background-color: #fff;
+      content: "+";
+      color: #30404d;
+      font-size: 4em;
+      line-height: 1em;
+      border-radius: 50%;
+      height: 1.25em;
+      width: 1.25em;
+      margin: 0.25em auto;
+      display: block;
+    }
+
     &:hover {
+      background-color: #30404d;
       box-shadow: unset;
     }
   }
-}
 
+  &:hover {
+    text-decoration: none;
+  }
+}
 
 .viewpoint-list {
   display: flex;
@@ -48,6 +63,37 @@
 
       img {
         max-width: 100%;
+      }
+    }
+  }
+}
+
+.pagination {
+  width: 100%;
+  text-align: center;
+
+  li {
+    display: inline-flex;
+    padding: 0.2em 1em;
+
+    &.previous,
+    &.next {
+
+      &.disabled {
+        opacity: 0.2;
+
+        a {
+          cursor: not-allowed;
+          text-decoration: none;
+        }
+      }
+    }
+
+    &.active {
+      background-color: #ebebeb;
+
+      a  {
+        font-weight: 600;
       }
     }
   }

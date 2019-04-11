@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 
+import './nav.scss';
+
 export const Nav = ({ t }) => (
   <ul>
     <li><NavLink to="/opp/viewpoints">{t('opp.nav.viewpoints')}</NavLink></li>

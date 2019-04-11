@@ -1,7 +1,7 @@
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
 
-import { fetchViewpoint, fetchAllViewpoints, saveViewpoint, addImageToViewpoint } from './viewpoints';
+import { fetchViewpoint, fetchViewpoints, saveViewpoint, addImageToViewpoint } from './viewpoints';
 
 export const context = React.createContext({});
 export const connectOppProvider = connect(context);
@@ -10,7 +10,9 @@ const { Provider } = context;
 
 export class OppProvider extends React.Component {
   state = {
-    viewpointsList: [],
+    viewpointsList: {
+      current: {},
+    },
     viewpoints: {},
     errors: {},
   };
@@ -33,15 +35,31 @@ export class OppProvider extends React.Component {
     }
   };
 
-  getAllViewpointsAction = async () => {
-    try {
-      const allViewpoints = await fetchAllViewpoints();
-      this.setState({ viewpointsList: allViewpoints.results });
-    } catch (e) {
-      this.setState(state => ({
-        ...state,
-        errors: { ...state.errors, [state.viewpointsList.length]: true },
+  getPaginatedViewpointsAction = async (itemsPerPage, page) => {
+    const { viewpointsList: { [page]: existingViewpoints } } = this.state;
+    if (existingViewpoints) {
+      this.setState(prevState => ({
+        viewpointsList: {
+          ...prevState.viewpointsList,
+          current: existingViewpoints,
+        },
       }));
+    } else {
+      try {
+        const currentPageViewpoints = await fetchViewpoints({ itemsPerPage, page });
+        this.setState(prevState => ({
+          viewpointsList: {
+            ...prevState.viewpointsList,
+            current: currentPageViewpoints,
+            [page]: currentPageViewpoints,
+          },
+        }));
+      } catch (e) {
+        this.setState(state => ({
+          ...state,
+          errors: { ...state.errors, [state.viewpointsList.length]: true },
+        }));
+      }
     }
   };
 
@@ -86,6 +104,7 @@ export class OppProvider extends React.Component {
     const {
       getViewpointAction,
       getAllViewpointsAction,
+      getPaginatedViewpointsAction,
       saveViewpointAction,
       uploadPictureViewpointAction,
     } = this;
@@ -93,6 +112,7 @@ export class OppProvider extends React.Component {
       ...this.state,
       getViewpointAction,
       getAllViewpointsAction,
+      getPaginatedViewpointsAction,
       saveViewpointAction,
       uploadPictureViewpointAction,
     };

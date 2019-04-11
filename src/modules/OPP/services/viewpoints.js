@@ -1,7 +1,7 @@
 import Api from 'mc-tf-test/modules/Api';
 
-export async function fetchAllViewpoints () {
-  return Api.request('viewpoints/');
+export async function fetchViewpoints ({ itemsPerPage = 10, page = 1 }) {
+  return Api.request('viewpoints/', { querystring: { page_size: itemsPerPage, page } });
 }
 
 export async function fetchViewpoint (id) {
@@ -66,4 +66,9 @@ export async function addImageToViewpoint (data) {
   return Api.request(`viewpoints/${data.id}`, { method: 'PUT', body: formData });
 }
 
-export default { fetchAllViewpoints, fetchViewpoint, saveViewpoint, addImageToViewpoint };
+export default {
+  fetchViewpoints,
+  fetchViewpoint,
+  saveViewpoint,
+  addImageToViewpoint,
+};

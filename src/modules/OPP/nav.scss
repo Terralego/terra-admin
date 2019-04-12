@@ -1,6 +1,29 @@
 .nav-layout__nav {
-  background-color: #30404d;
-  ul li  a {
-    color: #fff;
+  background-color: #394b59;
+
+  .navbar__mainMenu {
+
+    .active {
+      button {
+        background-color: #253748;
+      }
+    }
+
+    button {
+      background-color: #394b59;
+      background-image: none;
+      margin-bottom: 10px;
+
+      &:hover {
+        text-decoration: none;
+        background-color: #35729f;
+        color: #ffffff;
+      }
+    }
+
+    img {
+      width: 22px;
+      height: auto;
+    }
   }
 }

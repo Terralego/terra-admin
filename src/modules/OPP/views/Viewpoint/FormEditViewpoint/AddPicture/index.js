@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   FormGroup,
   Button,
@@ -9,6 +10,9 @@ import { DateInput } from '@blueprintjs/datetime';
 import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
+import localeUtils from 'mc-tf-test/utils/localeUtils';
+
+import { locale, localErrorMessages } from '../../../../../../utils/date';
 import { validateAddPicture } from './validateAddPictureForm';
 import { toast } from '../../../../utils/toast';
 
@@ -91,6 +95,11 @@ export class AddPicture extends React.Component {
                         parseDate={parseDate}
                         placeholder={t('opp.viewpoint.edit.date-format')}
                         showActionsBar
+                        invalidDateMessage={localErrorMessages.invalidDateMessage}
+                        localeUtils={localeUtils}
+                        locale={locale}
+                        todayButtonText={t('date.today')}
+                        clearButtonText={t('date.clear')}
                         {...input}
                         value={input.value || null}
                         inputProps={{ onBlur: input.onBlur }}

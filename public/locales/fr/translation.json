@@ -32,6 +32,18 @@
     "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à {{min}}.",
     "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à {{min}}."
   },
+  "date": {
+    "today": "Aujourd'hui",
+    "clear": "Effacer",
+    "error": {
+      "overlapping-date": "Date chevauchante",
+      "invalid-date": "Date invalide"
+    },
+    "range": {
+      "placeholder-start-date": "JJ/MM/AAAA",
+      "placeholder-end-date": "JJ/MM/AAAA"
+    }
+  },
   "opp": {
     "nav": {
       "viewpoints": "Les points de vue"
@@ -44,11 +56,11 @@
         "visualization-pictures": "Visualisation des images",
         "show-map": "Afficher la carte",
         "label": "$t(opp.form.label)",
-        "longitude":{
+        "longitude": {
           "label": "$t(opp.form.longitude.label)",
           "placeholder": "$t(opp.form.longitude.placeholder)"
         },
-        "latitude":{
+        "latitude": {
           "label": "$t(opp.form.latitude.label)",
           "placeholder": "$t(opp.form.latitude.placeholder)"
         },
@@ -59,11 +71,11 @@
       "create": {
         "title": "Formulaire de création d'un viewpoint",
         "label": "$t(opp.form.label)",
-        "longitude":{
+        "longitude": {
           "label": "$t(opp.form.longitude.label)",
           "placeholder": "$t(opp.form.longitude.placeholder)"
         },
-        "latitude":{
+        "latitude": {
           "label": "$t(opp.form.latitude.label)",
           "placeholder": "$t(opp.form.latitude.placeholder)"
         },
@@ -77,11 +89,11 @@
     },
     "form": {
       "label": "Libellé",
-      "longitude":{
+      "longitude": {
         "label": "Longitude",
         "placeholder": "61.2018"
       },
-      "latitude":{
+      "latitude": {
         "label": "Latitude",
         "placeholder": "14.7786"
       },
@@ -105,9 +117,9 @@
       "map": "Carte"
     },
     "table": {
-      "title":  "Liste de la couche :",
-      "sortAsc":  "Tri croissant",
-      "sortDesc":  "Tri décroissant",
+      "title": "Liste de la couche :",
+      "sortAsc": "Tri croissant",
+      "sortDesc": "Tri décroissant",
       "minimize": "Réduire",
       "maximize": "Agrandir"
     }

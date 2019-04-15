@@ -8,8 +8,8 @@ import {
 import { NavLink } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 
-import iconPoi from './images/icon_poi.svg';
-import logo from './images/logo_DEAL.png';
+import iconPoi from '../../images/icon_poi.svg';
+import logo from '../../images/logo_DEAL.png';
 
 import './nav.scss';
 

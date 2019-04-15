@@ -2,7 +2,7 @@ import React from 'react';
 
 import config from './config';
 import NavLayout from '../../components/NavLayout';
-import Nav from './Nav';
+import Nav from './components/Nav/Nav';
 import Routing from '../../components/Routing';
 import OppProvider from './services/OppProvider';
 

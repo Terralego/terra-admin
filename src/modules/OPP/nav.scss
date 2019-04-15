@@ -1,4 +1,8 @@
 .nav-layout__nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   background-color: #394b59;
 
   .navbar__mainMenu {
@@ -24,6 +28,12 @@
     img {
       width: 22px;
       height: auto;
+    }
+  }
+
+  .navbar__logo {
+    img {
+      width: 80px;
     }
   }
 }

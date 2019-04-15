@@ -1,23 +1,7 @@
-import React from 'react';
+import { connectAppProvider } from '../../components/AppProvider';
+import { Summary } from './Summary';
 
-import AppSummary from './AppSummary';
-import modules from '../../modules';
 
-const summary = Object.keys(modules).map(name => ({
-  name,
-  ...modules[name].default.config,
-}));
-
-export const Summary = () => (
-  <div className="summary">
-    {summary.map(({ name, ...config }) => (
-      <AppSummary
-        key={name}
-        name={name}
-        {...config}
-      />
-    ))}
-  </div>
-);
-
-export default Summary;
+export default connectAppProvider(({ env: { permissions } }) => ({
+  permissions,
+}))(Summary);

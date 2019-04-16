@@ -22,6 +22,7 @@ deploy_dev:
     # add files to deploy
     - git add .
     - git commit -am "add terra-admin files"
+    - export CI_COMMIT_SHA=$(git rev-parse --verify HEAD)
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-dev
 
 deploy_staging:
@@ -48,5 +49,6 @@ deploy_staging:
     # add files to deploy
     - git add .
     - git commit -am "add terra-admin files"
+    - export CI_COMMIT_SHA=$(git rev-parse --verify HEAD)
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-staging
   when: manual

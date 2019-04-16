@@ -14,7 +14,7 @@ deploy_dev:
     - git submodule update --init --recursive
   script:
     # get terra-admin submodules code
-    - ls -als
+    - ls -als ./terra-admin
     - mv ./terra-admin/* ./
     # dokku doesn't like this unused file
     - rm ./yarn.lock

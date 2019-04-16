@@ -7,6 +7,9 @@ deploy_dev:
     url: http://acir-front-dev.geo.paas.corp-cluster.com
   only:
     - master
+  before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
   script:
     # get terra-admin submodules code
     - mv terra-admin/* ./

@@ -17,6 +17,11 @@ export class OppProvider extends React.Component {
     errors: {},
   };
 
+  /**
+   * Get a viewpoint according to id
+   * @param id
+   * @returns {Promise<void>}
+   */
   getViewpointAction = async id => {
     try {
       const viewpoint = await fetchViewpoint(id);
@@ -67,6 +72,12 @@ export class OppProvider extends React.Component {
     }
   };
 
+  /**
+   * Get viewpoints per page
+   * @param itemsPerPage
+   * @param page
+   * @returns {Promise<void>}
+   */
   getPaginatedViewpointsAction = async (itemsPerPage, page) => {
     const { viewpointsList: { [page]: existingViewpoints } } = this.state;
     if (existingViewpoints) {
@@ -95,6 +106,11 @@ export class OppProvider extends React.Component {
     }
   };
 
+  /**
+   * Save a viewpoint
+   * @param data
+   * @returns {Promise<*|Promise<*>|Promise<*>>}
+   */
   saveViewpointAction = async data => {
     try {
       const viewpoint = await saveViewpoint(data);
@@ -113,6 +129,11 @@ export class OppProvider extends React.Component {
     }
   };
 
+  /**
+   * Upload a picture of a viewpoint
+   * @param data
+   * @returns {Promise<*>}
+   */
   uploadPictureViewpointAction = async data => {
     try {
       const viewpoint = await addImageToViewpoint(data);

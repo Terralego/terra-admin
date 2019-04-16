@@ -25,6 +25,7 @@ export class AdvancedSearch extends React.Component {
 
   onSubmit = async e => {
     e.preventDefault();
+    const { t } = this.props;
     this.setState({ formValidation: 1 });
     const { properties } = this.state;
     const {
@@ -33,20 +34,17 @@ export class AdvancedSearch extends React.Component {
     } = this.props;
     const filters = properties ? parsePropertiesToData(properties) : {};
     const res = await getFirstPageFilteredViewpointsAction(filters, itemsPerPage, 1);
-    !res && toast.displayError('Le serveur est indisponible.');
+    !res && toast.displayError(t('opp.form.error'));
     this.setState({ formValidation: 0 });
   };
 
   render () {
     const { properties, formValidation } = this.state;
-    const { filters } = this.props;
-
-    const locales = {
-      noResults: 'Aucun résultat',
-      overlappingDatesMessage: 'Date chevauchante',
-      invalidDateMessage: 'Date invalide',
-      emptySelectItem: 'Tous',
-    };
+    const {
+      filters,
+      locales,
+      t,
+    } = this.props;
 
     const isDateInvalid = properties.viewpointDate
       && !properties.viewpointDate.every(date => isDate(date));
@@ -63,11 +61,11 @@ export class AdvancedSearch extends React.Component {
         />
         <div className="action-search">
           <Button
-            text="Réinitialiser"
+            text={t('form.reset')}
             onClick={this.onReset}
           />
           <Button
-            text="Rechercher"
+            text={t('form.search')}
             type="submit"
             loading={isDisabled}
             disabled={isDateInvalid || isDisabled}

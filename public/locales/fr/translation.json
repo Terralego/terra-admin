@@ -21,6 +21,7 @@
     "title": "Terralego"
   },
   "form": {
+    "search": "Rechercher",
     "submit": "Envoyer",
     "required": "(*)",
     "reset": "Réinitialiser",
@@ -83,6 +84,12 @@
         "picture": "$t(opp.form.picture)",
         "date": "$t(opp.form.date)",
         "date-format": "$t(opp.form.date-format)"
+      },
+      "filter": {
+        "simple-search": "Recherche Simple",
+        "advanced-search": "Recherche Avancée",
+        "no-result": "Aucun résultat",
+        "empty-selected-input": "Tous"
       }
     },
     "viewpoints": {

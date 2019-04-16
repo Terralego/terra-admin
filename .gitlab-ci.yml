@@ -22,6 +22,7 @@ deploy_dev:
     - rm ./yarn.lock
     - rm .gitmodules
     - rm -r ./terra-admin
+    - git submodule deinit terra-admin
     # add files to deploy
     - git add .
     - git commit -am "add terra-admin files"

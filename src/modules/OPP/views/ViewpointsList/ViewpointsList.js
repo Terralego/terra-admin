@@ -8,6 +8,7 @@ import ReactPaginate from 'react-paginate';
 
 import ViewpointsListItem from './ViewpointsListItem';
 import ViewpointAddItem from './AddViewpoint';
+import { Search } from './Search/Search';
 import noResult from '../../images/no_result.png';
 
 import './viewpoint-list.scss';
@@ -33,9 +34,9 @@ export class ViewpointList extends React.Component {
     } = this.props;
     return (
       <>
-        <div className="page--title">
-          <H2>{t('opp.viewpoints.title')}</H2>
-        </div>
+        <Search
+          itemsPerPage={itemsPerPage}
+        />
         <div className="viewpoint-list">
           <div className="page--title">
             <H2>{t('opp.viewpoints.title')}</H2>

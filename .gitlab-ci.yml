@@ -39,6 +39,8 @@ deploy_staging:
     - mv ./terra-admin/* ./
     # dokku doesn't like this unused file
     - rm yarn.lock
+    - rm .gitmodules
+    - rm -r ./terra-admin
     # add files to deploy
     - git commit -am "add terra-admin files"
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-staging

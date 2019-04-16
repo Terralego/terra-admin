@@ -8,6 +8,8 @@ deploy_dev:
   only:
     - master
   before_script:
+    - git config --global user.email "gitlab@gitlab.makina-corpus.net"
+    - git config --global user.name "gitlab"
     - git submodule sync --recursive
     - git submodule update --init --recursive
   script:

@@ -1,0 +1,3 @@
+[submodule "terra-admin"]
+	path = terra-admin
+	url = git@gitlab.makina-corpus.net:Terralego/Core/terra-admin.git

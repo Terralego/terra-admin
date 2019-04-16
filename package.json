@@ -1,0 +1,19 @@
+{
+  "name": "acir-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd ./node_modules/terra-admin && npm run build",
+    "start": "cd ./node_modules/terra-admin && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.makina-corpus.net:geomak/admin-frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "terra-admin": "git+https://gitlab+deploy-token-4:YtnjZtNkAsEkC6ofVupZ@gitlab.makina-corpus.net/Terralego/Core/terra-admin.git"
+  }
+}

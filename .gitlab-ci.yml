@@ -1,3 +1,7 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+
 deploy_dev:
   tags: [shared-ci-docker]
   image: ilyasemenov/gitlab-ci-git-push
@@ -7,22 +11,7 @@ deploy_dev:
     url: https://acir-front-dev.geo.paas.corp-cluster.com
   only:
     - master
-  before_script:
-    - git config --global user.email "gitlab@gitlab.makina-corpus.net"
-    - git config --global user.name "gitlab"
-    - git clone https://gitlab+deploy-token-4:YtnjZtNkAsEkC6ofVupZ@gitlab.makina-corpus.net/Terralego/Core/terra-admin.git
-
   script:
-    # get terra-admin submodules code
-    - ls -als ./terra-admin
-    - cp -r ./terra-admin/* ./
-    # dokku doesn't like this unused file
-    - rm ./yarn.lock
-    - rm -r ./terra-admin
-    # add files to deploy
-    - git add .
-    - git commit -am "add terra-admin files"
-    - export CI_COMMIT_SHA=$(git rev-parse --verify HEAD)
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-dev
 
 deploy_staging:
@@ -34,21 +23,18 @@ deploy_staging:
     url: https://acir-front-staging.geo.paas.corp-cluster.com
   only:
     - master
-  before_script:
-    - git config --global user.email "gitlab@gitlab.makina-corpus.net"
-    - git config --global user.name "gitlab"
-    - git clone https://gitlab+deploy-token-4:YtnjZtNkAsEkC6ofVupZ@gitlab.makina-corpus.net/Terralego/Core/terra-admin.git
-
   script:
-    # get terra-admin submodules code
-    - ls -als ./terra-admin
-    - cp -r ./terra-admin/* ./
-    # dokku doesn't like this unused file
-    - rm ./yarn.lock
-    - rm -r ./terra-admin
-    # add files to deploy
-    - git add .
-    - git commit -am "add terra-admin files"
-    - export CI_COMMIT_SHA=$(git rev-parse --verify HEAD)
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-staging
   when: manual
+
+deploy_test:
+  tags: [shared-ci-docker]
+  image: ilyasemenov/gitlab-ci-git-push
+  stage: deploy
+  environment:
+    name: dev
+    url: https://acir-front-dev.geo.paas.corp-cluster.com
+  only:
+    - test
+  script:
+    - git-push ssh://dokku@geo.paas.corp-cluster.com/test-front

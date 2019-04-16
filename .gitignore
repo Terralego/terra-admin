@@ -1,0 +1,2 @@
+# don't commit package-lock because terra-admin requirements are resolved
+/package-lock.json

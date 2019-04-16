@@ -20,9 +20,6 @@ deploy_dev:
     - mv ./terra-admin/* ./
     # dokku doesn't like this unused file
     - rm ./yarn.lock
-    - rm .gitmodules
-    - rm -r ./terra-admin
-    - git submodule deinit terra-admin
     # add files to deploy
     - git add .
     - git commit -am "add terra-admin files"

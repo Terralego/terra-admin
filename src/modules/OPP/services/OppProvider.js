@@ -35,6 +35,38 @@ export class OppProvider extends React.Component {
     }
   };
 
+  /**
+   * Get the first page of filtered viewpoints
+   * Prevent page conflict when updating filters
+   * @param data
+   * @param page
+   * @param itemsPerPage
+   * @returns {Promise<boolean>}
+   */
+  getFirstPageFilteredViewpointsAction = async (data, itemsPerPage, page) => {
+    try {
+      const filteredViewpoints = await fetchViewpoints({
+        data,
+        page,
+        itemsPerPage,
+      });
+      this.setState({
+        viewpointsList: {
+          current: filteredViewpoints,
+          [page]: filteredViewpoints,
+        },
+        filters: data,
+      });
+      return true;
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [state.viewpointsList.length]: true },
+      }));
+      return false;
+    }
+  };
+
   getPaginatedViewpointsAction = async (itemsPerPage, page) => {
     const { viewpointsList: { [page]: existingViewpoints } } = this.state;
     if (existingViewpoints) {
@@ -105,6 +137,7 @@ export class OppProvider extends React.Component {
       getViewpointAction,
       getAllViewpointsAction,
       getPaginatedViewpointsAction,
+      getFirstPageFilteredViewpointsAction,
       saveViewpointAction,
       uploadPictureViewpointAction,
     } = this;
@@ -113,6 +146,7 @@ export class OppProvider extends React.Component {
       getViewpointAction,
       getAllViewpointsAction,
       getPaginatedViewpointsAction,
+      getFirstPageFilteredViewpointsAction,
       saveViewpointAction,
       uploadPictureViewpointAction,
     };

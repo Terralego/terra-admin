@@ -21,6 +21,7 @@ deploy_dev:
     # dokku doesn't like this unused file
     - rm ./yarn.lock
     # add files to deploy
+    - git add .
     - git commit -am "add terra-admin files"
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-dev
 

@@ -1,3 +1,7 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+
 deploy_dev:
   tags: [shared-ci-docker]
   image: ilyasemenov/gitlab-ci-git-push
@@ -10,7 +14,6 @@ deploy_dev:
   before_script:
     - git config --global user.email "gitlab@gitlab.makina-corpus.net"
     - git config --global user.name "gitlab"
-    - git clone https://gitlab+deploy-token-4:YtnjZtNkAsEkC6ofVupZ@gitlab.makina-corpus.net/Terralego/Core/terra-admin.git
 
   script:
     # get terra-admin submodules code
@@ -18,7 +21,6 @@ deploy_dev:
     - cp -r ./terra-admin/* ./
     # dokku doesn't like this unused file
     - rm ./yarn.lock
-    - rm -r ./terra-admin
     # add files to deploy
     - git add .
     - git commit -am "add terra-admin files"
@@ -37,7 +39,6 @@ deploy_staging:
   before_script:
     - git config --global user.email "gitlab@gitlab.makina-corpus.net"
     - git config --global user.name "gitlab"
-    - git clone https://gitlab+deploy-token-4:YtnjZtNkAsEkC6ofVupZ@gitlab.makina-corpus.net/Terralego/Core/terra-admin.git
 
   script:
     # get terra-admin submodules code
@@ -45,7 +46,6 @@ deploy_staging:
     - cp -r ./terra-admin/* ./
     # dokku doesn't like this unused file
     - rm ./yarn.lock
-    - rm -r ./terra-admin
     # add files to deploy
     - git add .
     - git commit -am "add terra-admin files"

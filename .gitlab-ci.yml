@@ -17,7 +17,7 @@ deploy_dev:
   script:
     # get terra-admin submodules code
     - ls -als ./terra-admin
-    - mv ./terra-admin/* ./
+    - cp -r ./terra-admin/* ./
     - git submodule deinit --all
     # dokku doesn't like this unused file
     - rm ./yarn.lock

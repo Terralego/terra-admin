@@ -1,3 +1,7 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+
 deploy_dev:
   tags: [shared-ci-docker]
   image: ilyasemenov/gitlab-ci-git-push
@@ -10,8 +14,6 @@ deploy_dev:
   before_script:
     - git config --global user.email "gitlab@gitlab.makina-corpus.net"
     - git config --global user.name "gitlab"
-    - git submodule init
-    - git submodule update
   script:
     # get terra-admin submodules code
     - ls -als ./terra-admin

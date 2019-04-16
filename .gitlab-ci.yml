@@ -26,15 +26,3 @@ deploy_staging:
   script:
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-staging
   when: manual
-
-deploy_test:
-  tags: [shared-ci-docker]
-  image: ilyasemenov/gitlab-ci-git-push
-  stage: deploy
-  environment:
-    name: dev
-    url: https://acir-front-dev.geo.paas.corp-cluster.com
-  only:
-    - test
-  script:
-    - git-push ssh://dokku@geo.paas.corp-cluster.com/test-front

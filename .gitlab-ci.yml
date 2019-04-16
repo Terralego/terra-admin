@@ -14,14 +14,14 @@ deploy_dev:
   before_script:
     - git config --global user.email "gitlab@gitlab.makina-corpus.net"
     - git config --global user.name "gitlab"
+    - git clone https://gitlab+deploy-token-4:YtnjZtNkAsEkC6ofVupZ@gitlab.makina-corpus.net/Terralego/Core/terra-admin.git
+
   script:
     # get terra-admin submodules code
     - ls -als ./terra-admin
     - cp -r ./terra-admin/* ./
-    - git submodule deinit --all
     # dokku doesn't like this unused file
     - rm ./yarn.lock
-    - rm ./.gitmodules
     - rm -r ./terra-admin
     # add files to deploy
     - git add .

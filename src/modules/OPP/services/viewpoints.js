@@ -1,6 +1,15 @@
 import Api from 'mc-tf-test/modules/Api';
 
-export async function fetchViewpoints ({ itemsPerPage = 10, page = 1 }) {
+export async function fetchViewpoints ({ data = {}, itemsPerPage = 10, page = 1 }) {
+  if (data) {
+    return Api.request('viewpoints/', {
+      querystring: {
+        ...data,
+        page_size: itemsPerPage,
+        page,
+      },
+    });
+  }
   return Api.request('viewpoints/', { querystring: { page_size: itemsPerPage, page } });
 }
 

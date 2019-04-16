@@ -4,19 +4,16 @@ import InteractiveMap, { INTERACTION_FN } from 'mc-tf-test/modules/Map/Interacti
 
 import DataTable from '../../components/DataTable';
 import Details from '../../components/Details';
-import { connectRandoProvider } from '../../services/RandoProvider';
 import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
 
 import './styles.scss';
 
-export const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
+export const INTERACTION_VIEW_FEATURE = 'viewFeature';
 export class Map extends React.Component {
   state = {
-    map: {},
     interactions: [],
     customStyle: undefined,
-    details: undefined,
   }
 
   componentDidMount () {
@@ -27,31 +24,41 @@ export class Map extends React.Component {
   }
 
   componentDidUpdate (
-    { layersList: prevLayersList, match: { params: { id: prevId } } },
-    { map: prevMap },
+    {
+      map: prevMap,
+      layersList: prevLayersList,
+      match: { params: { layer: prevLayer, action: prevAction } },
+    },
   ) {
     const {
       layersList,
-      match: { params: { id } },
+      match: { params: { layer, action } },
+      resizingMap,
+      map,
     } = this.props;
-    const { map } = this.state;
     if (layersList !== prevLayersList) {
       this.generateLayersToMap();
     }
-    if (id !== prevId || map !== prevMap) {
-      this.displayCurrentLayer(id);
+    if (layer !== prevLayer || map !== prevMap) {
+      this.displayCurrentLayer(layer);
+    }
+    if (action !== prevAction) {
+      resizingMap();
     }
   }
 
-  setInteractions () {
+  setInteractions = () => {
+    const { history: { push } } = this.props;
     const { interactions = [] } = mockedInteraction;
     const newInteractions = interactions.map(interaction => {
-      if (interaction.interaction === INTERACTION_DISPLAY_DETAILS) {
+      if (interaction.interaction === INTERACTION_VIEW_FEATURE) {
         return {
           ...interaction,
           interaction: INTERACTION_FN,
-          fn: ({ feature }) => {
-            this.displayDetails(feature, interaction);
+          fn: ({
+            feature: { sourceLayer, properties: { _id: id } },
+          }) => {
+            push(`/rando/map/layer/${sourceLayer}/read/${id}`);
           },
         };
       }
@@ -66,27 +73,14 @@ export class Map extends React.Component {
     const { setMap } = this.props;
     setMap(map);
     map.resize();
-    this.setState({ map });
   }
 
   displayCurrentLayer = currentPath => {
-    const { map, customStyle: { layers = [] } = {} } = this.state;
+    const { customStyle: { layers = [] } = {} } = this.state;
+    const { map } = this.props;
     layers.forEach(({ id, 'source-layer': sourceLayer }) => {
       if (!map.getLayer(id)) return;
       map.setLayoutProperty(id, 'visibility', sourceLayer === currentPath ? 'visible' : 'none');
-    });
-  }
-
-  hideDetails = () => {
-    this.setState({ details: undefined });
-  }
-
-  displayDetails (feature, interaction) {
-    this.setState({
-      details: {
-        feature,
-        interaction,
-      },
     });
   }
 
@@ -98,12 +92,16 @@ export class Map extends React.Component {
     });
   }
 
-
   render () {
-    const { customStyle, details, interactions } = this.state;
-    const { mapConfig, mapIsResizing, match: { params: { id = false } } } = this.props;
+    const { customStyle, interactions } = this.state;
+    const {
+      map,
+      mapConfig,
+      mapIsResizing,
+      match: { params: { layer = false, action = false } },
+    } = this.props;
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
-    const isDetailsVisible = !!details;
+    const isDetailsVisible = action;
 
     if (!isConfigLoaded) return <div>Loading...</div>;
 
@@ -113,7 +111,6 @@ export class Map extends React.Component {
           'rando-map',
           { 'rando-map--is-resizing': mapIsResizing },
         )}
-
       >
         <div className="rando-map__map">
           <InteractiveMap
@@ -122,20 +119,21 @@ export class Map extends React.Component {
             customStyle={customStyle}
             interactions={interactions}
           />
-          <Details
-            visible={isDetailsVisible}
-            {...details}
-            onClose={this.hideDetails}
-          />
+          {map && (
+            <Details
+              visible={isDetailsVisible}
+              interactions={interactions}
+            />
+          )}
         </div>
         <div
           className={classnames(
             'rando-map__table',
-            { 'rando-map__table--active': id },
+            { 'rando-map__table--active': layer && !action },
           )}
         >
           <DataTable
-            source={id}
+            source={layer}
           />
         </div>
       </div>
@@ -143,4 +141,4 @@ export class Map extends React.Component {
   }
 }
 
-export default connectRandoProvider('getMapConfig', 'mapConfig', 'layersList', 'setMap', 'mapIsResizing')(Map);
+export default Map;

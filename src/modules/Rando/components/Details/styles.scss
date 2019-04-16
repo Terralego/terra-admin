@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   margin-right: -20rem;
+  transition: margin 0.2s ease-in;
   &--visible {
-    transition: margin 0.2s ease-in;
     margin-right: 0; 
   }
   
@@ -33,6 +33,7 @@
     }
 
     &__list {
+      width: 100%;
       padding: 0;
       display: table;
       border-collapse: collapse;

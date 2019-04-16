@@ -123,6 +123,10 @@
       "sortDesc": "Tri décroissant",
       "minimize": "Réduire",
       "maximize": "Agrandir"
+    },
+    "details": {
+      "noFeature": "Non renseigné",
+      "informations": "Informations"
     }
   }
 }

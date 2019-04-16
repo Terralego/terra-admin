@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   FormGroup,
   InputGroup,
@@ -9,6 +10,9 @@ import { DateInput } from '@blueprintjs/datetime';
 import { withNamespaces } from 'react-i18next';
 import { Field } from 'react-final-form';
 
+import localeUtils from 'mc-tf-test/utils/localeUtils';
+
+import { locale, localErrorMessages } from '../../../../../utils/date';
 import InputMap from '../../../components/InputMap';
 
 import './form-create.scss';
@@ -156,6 +160,11 @@ export class FormCreate extends React.Component {
                     parseDate={parseDate}
                     placeholder={t('opp.viewpoint.create.date-format')}
                     showActionsBar
+                    invalidDateMessage={localErrorMessages.invalidDateMessage}
+                    localeUtils={localeUtils}
+                    locale={locale}
+                    todayButtonText={t('date.today')}
+                    clearButtonText={t('date.clear')}
                     {...input}
                     value={input.value || null}
                   />

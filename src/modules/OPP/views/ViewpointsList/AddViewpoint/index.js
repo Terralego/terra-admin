@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 export const AddViewpoint = ({ t }) => (
   <Link className="card-link--add" to="viewpoints/create">
     <Card interactive className="item--add">
-      <p>{t('common.add')}</p>
+      <div>
+        <p>{t('common.add')}</p>
+      </div>
     </Card>
   </Link>
 );

@@ -1,61 +1,33 @@
-.page {
-  &--title,
-  &--content {
-    padding: 1%;
-  }
-}
+.nav-layout__content {
+  display: flex;
+  flex-direction: row;
 
-.card-link--add {
-  background-color: #30404d;
-  padding: 20px;
-  width: 18%;
-  margin: 1%;
-
-  .item--add {
-    box-shadow: unset;
-    background-color: #30404d;
-    text-align: center;
-    color: #fff;
-    font-weight: bold;
-
-    &::before {
-      background-color: #fff;
-      content: "+";
-      color: #30404d;
-      font-size: 4em;
-      line-height: 1em;
-      border-radius: 50%;
-      height: 1.25em;
-      width: 1.25em;
-      margin: 0.25em auto;
-      display: block;
+  .page {
+    &--title,
+    &--content {
+      padding: 1%;
     }
-
-    &:hover {
-      background-color: #30404d;
-      box-shadow: unset;
-    }
-  }
-
-  &:hover {
-    text-decoration: none;
   }
 }
 
 .viewpoint-list {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  align-content: flex-start;
-  flex-wrap: wrap;
+  width: 100%;
 
-  .card-link {
-    width: 18%;
+  .page--content {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: flex-start;
+    flex-wrap: wrap;
 
     .bp3-card {
-      margin: 1%;
+      display: flex;
+      flex-direction: column;
+      margin: 4%;
+      padding: 0;
       border-color: transparent;
       box-shadow: none;
+      align-items: center;
 
       h3 {
         margin: 0.5em 0;

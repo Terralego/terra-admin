@@ -25,13 +25,13 @@ export class SimpleSearch extends React.Component {
 
   onSubmit = async e => {
     e.preventDefault();
-    const { t } = this.props;
-    this.setState({ formValidation: 1 });
-    const { properties } = this.state;
     const {
+      t,
       getFirstPageFilteredViewpointsAction,
       itemsPerPage,
     } = this.props;
+    this.setState({ formValidation: 1 });
+    const { properties } = this.state;
     const data = properties ? parsePropertiesToData(properties) : {};
     const res = await getFirstPageFilteredViewpointsAction(data, itemsPerPage, 1);
     !res && toast.displayError(t('opp.form.error'));

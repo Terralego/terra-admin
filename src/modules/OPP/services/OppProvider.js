@@ -34,7 +34,6 @@ export class OppProvider extends React.Component {
       }));
     } catch (e) {
       this.setState(state => ({
-        ...state,
         errors: { ...state.errors, [id]: true, code: e.message },
       }));
     }
@@ -62,13 +61,10 @@ export class OppProvider extends React.Component {
         },
         filters: data,
       });
-      return true;
     } catch (e) {
       this.setState(state => ({
-        ...state,
-        errors: { ...state.errors, [state.viewpointsList.length]: true },
+        errors: { ...state.errors, code: e.message },
       }));
-      return false;
     }
   };
 
@@ -99,8 +95,7 @@ export class OppProvider extends React.Component {
         }));
       } catch (e) {
         this.setState(state => ({
-          ...state,
-          errors: { ...state.errors, [state.viewpointsList.length]: true },
+          errors: { ...state.errors, code: e.message },
         }));
       }
     }

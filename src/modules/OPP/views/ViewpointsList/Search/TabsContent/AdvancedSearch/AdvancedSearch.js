@@ -33,8 +33,10 @@ export class AdvancedSearch extends React.Component {
     this.setState({ formValidation: 1 });
     const { properties } = this.state;
     const filters = properties ? parsePropertiesToData(properties) : {};
-    const res = await getFirstPageFilteredViewpointsAction(filters, itemsPerPage, 1);
-    !res && toast.displayError(t('opp.form.error'));
+    await getFirstPageFilteredViewpointsAction(filters, itemsPerPage, 1);
+    // Get error if fetch failed
+    const { codeError } = this.props;
+    codeError && toast.displayError(t('opp.form.error.server'));
     this.setState({ formValidation: 0 });
   };
 

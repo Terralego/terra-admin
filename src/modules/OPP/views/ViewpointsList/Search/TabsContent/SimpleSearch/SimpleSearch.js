@@ -23,8 +23,8 @@ export class SimpleSearch extends React.Component {
     this.setState({ properties: {} });
   };
 
-  onSubmit = async e => {
-    e.preventDefault();
+  onSubmit = async event => {
+    event.preventDefault();
     const {
       t,
       getFirstPageFilteredViewpointsAction,

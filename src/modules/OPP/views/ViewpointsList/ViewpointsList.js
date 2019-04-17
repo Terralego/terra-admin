@@ -28,7 +28,7 @@ export class ViewpointList extends React.Component {
 
   render () {
     const {
-      viewpointsList: { results, count, num_pages: numPages } = {},
+      viewpointsList: { results = [], count, num_pages: numPages } = {},
       t,
     } = this.props;
     return (
@@ -42,7 +42,7 @@ export class ViewpointList extends React.Component {
           </div>
           <div className="page--content">
             <ViewpointAddItem />
-            {results && results.map(viewpoint => (
+            {results.map(viewpoint => (
               <ViewpointsListItem
                 key={viewpoint.id}
                 {...viewpoint}

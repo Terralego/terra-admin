@@ -126,16 +126,18 @@ export class Map extends React.Component {
             />
           )}
         </div>
-        <div
-          className={classnames(
-            'rando-map__table',
-            { 'rando-map__table--active': layer && !action },
-          )}
-        >
-          <DataTable
-            source={layer}
-          />
-        </div>
+        {map && (
+          <div
+            className={classnames(
+              'rando-map__table',
+              { 'rando-map__table--active': layer && !action },
+            )}
+          >
+            <DataTable
+              source={layer}
+            />
+          </div>
+        )}
       </div>
     );
   }

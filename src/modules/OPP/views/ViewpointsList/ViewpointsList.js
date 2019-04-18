@@ -25,6 +25,7 @@ export class ViewpointList extends React.Component {
     const { getPaginatedViewpointsAction } = this.props;
     const { selected } = data;
     getPaginatedViewpointsAction(itemsPerPage, selected + 1);
+    window.scrollTo(0, 0);
   };
 
   render () {

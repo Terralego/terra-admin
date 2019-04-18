@@ -80,7 +80,7 @@ export class OppProvider extends React.Component {
    */
   getPaginatedViewpointsAction = async (itemsPerPage, page) => {
     this.setState({ loading: true });
-    const { viewpointsList: { [page]: existingViewpoints } } = this.state;
+    const { viewpointsList: { [page]: existingViewpoints }, filters } = this.state;
     if (existingViewpoints) {
       this.setState(prevState => ({
         viewpointsList: {
@@ -91,7 +91,7 @@ export class OppProvider extends React.Component {
       }));
     } else {
       try {
-        const currentPageViewpoints = await fetchViewpoints({ itemsPerPage, page });
+        const currentPageViewpoints = await fetchViewpoints({ filters, itemsPerPage, page });
         this.setState(prevState => ({
           viewpointsList: {
             ...prevState.viewpointsList,

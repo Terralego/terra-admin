@@ -16,19 +16,26 @@ import './viewpoint-list.scss';
 const itemsPerPage = 14;
 
 export class ViewpointList extends React.Component {
+  state = {
+    page: 0,
+  };
+
   async componentDidMount () {
-    const { getPaginatedViewpointsAction } = this.props;
-    await getPaginatedViewpointsAction(itemsPerPage, 1);
+    const { getFirstPageFilteredViewpointsAction } = this.props;
+    await getFirstPageFilteredViewpointsAction({}, itemsPerPage, 1);
   }
 
-  handlePageClick = data => {
+  handleResetPageFromSearch = () => this.setState({ page: 0 });
+
+  handlePageClick = ({ selected }) => {
     const { getPaginatedViewpointsAction } = this.props;
-    const { selected } = data;
     getPaginatedViewpointsAction(itemsPerPage, selected + 1);
+    this.setState({ page: selected });
     window.scrollTo(0, 0);
   };
 
   render () {
+    const { page } = this.state;
     const {
       viewpointsList: { results = [], count, num_pages: numPages } = {},
       t,
@@ -38,6 +45,7 @@ export class ViewpointList extends React.Component {
       <>
         <Search
           itemsPerPage={itemsPerPage}
+          handleResetPage={this.handleResetPageFromSearch}
         />
         <div className="viewpoint-list">
           <div className="page--title">
@@ -47,26 +55,29 @@ export class ViewpointList extends React.Component {
             <ViewpointAddItem />
             {!isLoading ? (
               <>
-              {results.map(viewpoint => (
-                <ViewpointsListItem
-                  key={viewpoint.id}
-                  {...viewpoint}
-                />
+                {results.map(viewpoint => (
+                  <ViewpointsListItem
+                    key={viewpoint.id}
+                    {...viewpoint}
+                  />
                 ))}
                 {count > itemsPerPage && (
-                  <ReactPaginate
-                    previousLabel={t('common.pagination.previous')}
-                    nextLabel={t('common.pagination.next')}
-                    breakLabel="..."
-                    breakClassName="break-me"
-                    pageCount={numPages}
-                    marginPagesDisplayed={1}
-                    pageRangeDisplayed={2}
-                    onPageChange={this.handlePageClick}
-                    containerClassName="pagination"
-                    subContainerClassName="pages pagination"
-                    activeClassName="active"
-                  />
+                  <>
+                    <ReactPaginate
+                      previousLabel={t('common.pagination.previous')}
+                      nextLabel={t('common.pagination.next')}
+                      breakLabel="..."
+                      breakClassName="break-me"
+                      pageCount={numPages}
+                      marginPagesDisplayed={1}
+                      pageRangeDisplayed={2}
+                      onPageChange={this.handlePageClick}
+                      containerClassName="pagination"
+                      subContainerClassName="pages pagination"
+                      activeClassName="active"
+                      forcePage={page}
+                    />
+                  </>
                 )}
                 {count === 0 && (
                   <div>

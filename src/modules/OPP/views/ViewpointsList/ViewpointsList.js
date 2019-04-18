@@ -11,6 +11,7 @@ import Search from './Search';
 import noResult from '../../images/no_result.png';
 
 import './viewpoint-list.scss';
+import Loading from '../../../../components/Loading';
 
 const itemsPerPage = 14;
 
@@ -30,6 +31,7 @@ export class ViewpointList extends React.Component {
     const {
       viewpointsList: { results = [], count, num_pages: numPages } = {},
       t,
+      isLoading,
     } = this.props;
     return (
       <>
@@ -42,12 +44,14 @@ export class ViewpointList extends React.Component {
           </div>
           <div className="page--content">
             <ViewpointAddItem />
-            {results.map(viewpoint => (
+            {!isLoading ? results.map(viewpoint => (
               <ViewpointsListItem
                 key={viewpoint.id}
                 {...viewpoint}
               />
-            ))}
+            )) : (
+              <Loading />
+            )}
             {count > itemsPerPage && (
               <ReactPaginate
                 previousLabel={t('common.pagination.previous')}

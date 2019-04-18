@@ -27,13 +27,14 @@
       padding: 0;
       border-color: transparent;
       box-shadow: none;
-      align-items: center;
 
       h3 {
+        max-width: 300px;
         margin: 0.5em 0;
       }
 
       img {
+        align-self: center;
         max-width: 100%;
       }
     }

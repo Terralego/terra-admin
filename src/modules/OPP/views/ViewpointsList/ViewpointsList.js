@@ -1,12 +1,15 @@
 import React from 'react';
 import {
+  Card,
   H2,
 } from '@blueprintjs/core';
-import { withNamespaces } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 
 import ViewpointsListItem from './ViewpointsListItem';
 import ViewpointAddItem from './AddViewpoint';
+import Search from './Search';
+import noResult from '../../images/no_result.png';
+
 import './viewpoint-list.scss';
 
 const itemsPerPage = 14;
@@ -24,39 +27,56 @@ export class ViewpointList extends React.Component {
   };
 
   render () {
-    const { viewpointsList, t } = this.props;
+    const {
+      viewpointsList: { results = [], count, num_pages: numPages } = {},
+      t,
+    } = this.props;
     return (
       <>
-        <div className="page--title">
-          <H2>{t('opp.viewpoints.title')}</H2>
-        </div>
+        <Search
+          itemsPerPage={itemsPerPage}
+        />
         <div className="viewpoint-list">
-          <ViewpointAddItem />
-          {viewpointsList.results &&
-            viewpointsList.results.map(viewpoint => (
+          <div className="page--title">
+            <H2>{t('opp.viewpoints.title')}</H2>
+          </div>
+          <div className="page--content">
+            <ViewpointAddItem />
+            {results.map(viewpoint => (
               <ViewpointsListItem
                 key={viewpoint.id}
                 {...viewpoint}
               />
-            ))
-          }
-          <ReactPaginate
-            previousLabel={t('common.pagination.previous')}
-            nextLabel={t('common.pagination.next')}
-            breakLabel="..."
-            breakClassName="break-me"
-            pageCount={viewpointsList.num_pages}
-            marginPagesDisplayed={1}
-            pageRangeDisplayed={2}
-            onPageChange={this.handlePageClick}
-            containerClassName="pagination"
-            subContainerClassName="pages pagination"
-            activeClassName="active"
-          />
+            ))}
+            {count > itemsPerPage && (
+              <ReactPaginate
+                previousLabel={t('common.pagination.previous')}
+                nextLabel={t('common.pagination.next')}
+                breakLabel="..."
+                breakClassName="break-me"
+                pageCount={numPages}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={2}
+                onPageChange={this.handlePageClick}
+                containerClassName="pagination"
+                subContainerClassName="pages pagination"
+                activeClassName="active"
+              />
+            )}
+            {!count && (
+              <div>
+                <Card>
+                  <img src={noResult} alt="No result" />
+                  <h3> Oups, il n'y a pas de résultats à votre recherche.</h3>
+                </Card>
+              </div>
+            )}
+
+          </div>
         </div>
       </>
     );
   }
 }
 
-export default withNamespaces()(ViewpointList);
+export default ViewpointList;

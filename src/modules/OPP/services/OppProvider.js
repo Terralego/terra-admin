@@ -17,6 +17,11 @@ export class OppProvider extends React.Component {
     errors: {},
   };
 
+  /**
+   * Get a viewpoint according to id
+   * @param id
+   * @returns {Promise<void>}
+   */
   getViewpointAction = async id => {
     try {
       const viewpoint = await fetchViewpoint(id);
@@ -29,12 +34,46 @@ export class OppProvider extends React.Component {
       }));
     } catch (e) {
       this.setState(state => ({
-        ...state,
         errors: { ...state.errors, [id]: true, code: e.message },
       }));
     }
   };
 
+  /**
+   * Get the first page of filtered viewpoints
+   * Prevent page conflict when updating filters
+   * @param data
+   * @param page
+   * @param itemsPerPage
+   * @returns {Promise<boolean>}
+   */
+  getFirstPageFilteredViewpointsAction = async (data, itemsPerPage, page) => {
+    try {
+      const filteredViewpoints = await fetchViewpoints({
+        data,
+        page,
+        itemsPerPage,
+      });
+      this.setState({
+        viewpointsList: {
+          current: filteredViewpoints,
+          [page]: filteredViewpoints,
+        },
+        filters: data,
+      });
+    } catch (e) {
+      this.setState(state => ({
+        errors: { ...state.errors, code: e.message },
+      }));
+    }
+  };
+
+  /**
+   * Get viewpoints per page
+   * @param itemsPerPage
+   * @param page
+   * @returns {Promise<void>}
+   */
   getPaginatedViewpointsAction = async (itemsPerPage, page) => {
     const { viewpointsList: { [page]: existingViewpoints } } = this.state;
     if (existingViewpoints) {
@@ -56,13 +95,17 @@ export class OppProvider extends React.Component {
         }));
       } catch (e) {
         this.setState(state => ({
-          ...state,
-          errors: { ...state.errors, [state.viewpointsList.length]: true },
+          errors: { ...state.errors, code: e.message },
         }));
       }
     }
   };
 
+  /**
+   * Save a viewpoint
+   * @param data
+   * @returns {Promise<*|Promise<*>|Promise<*>>}
+   */
   saveViewpointAction = async data => {
     try {
       const viewpoint = await saveViewpoint(data);
@@ -81,6 +124,11 @@ export class OppProvider extends React.Component {
     }
   };
 
+  /**
+   * Upload a picture of a viewpoint
+   * @param data
+   * @returns {Promise<*>}
+   */
   uploadPictureViewpointAction = async data => {
     try {
       const viewpoint = await addImageToViewpoint(data);
@@ -105,6 +153,7 @@ export class OppProvider extends React.Component {
       getViewpointAction,
       getAllViewpointsAction,
       getPaginatedViewpointsAction,
+      getFirstPageFilteredViewpointsAction,
       saveViewpointAction,
       uploadPictureViewpointAction,
     } = this;
@@ -113,6 +162,7 @@ export class OppProvider extends React.Component {
       getViewpointAction,
       getAllViewpointsAction,
       getPaginatedViewpointsAction,
+      getFirstPageFilteredViewpointsAction,
       saveViewpointAction,
       uploadPictureViewpointAction,
     };

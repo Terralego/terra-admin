@@ -9,9 +9,17 @@ function displayToaster (viewpoint, translationSucess, translationError) {
   });
 }
 
+function displayError (translationError) {
+  submitToaster.show({
+    message: translationError,
+    intent: Intent.DANGER,
+  });
+}
+
 export const toast = {
   submitToaster,
   displayToaster,
+  displayError,
 };
 
 export default { toast };

@@ -9,6 +9,11 @@ export const fetchViewpoints = async ({ data = {}, itemsPerPage = 10, page = 1 }
     },
   });
 
+export const fetchValuesToFiltering = () =>
+  Api.request('viewpoints/', {
+    method: 'OPTIONS',
+  });
+
 
 export async function fetchViewpoint (id) {
   return Api.request(`viewpoints/${id}`);
@@ -77,4 +82,5 @@ export default {
   fetchViewpoint,
   saveViewpoint,
   addImageToViewpoint,
+  fetchValuesToFiltering,
 };

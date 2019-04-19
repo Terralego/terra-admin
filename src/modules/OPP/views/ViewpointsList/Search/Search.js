@@ -7,6 +7,7 @@ import { schemaSimpleSearch, schemaAdvancedSearch } from './schemaForm';
 import SearchForm from './SearchForm';
 
 import './search.scss';
+import { fetchValuesToFiltering } from '../../../services/viewpoints';
 
 const ID_SEARCH_PANEL = 'search';
 const ID_SEARCH_SIMPLE = 'searchSimple_tab';
@@ -22,17 +23,52 @@ const locales = {
 export class Search extends React.Component {
   state = {
     navTabId: ID_SEARCH_SIMPLE,
+    filtersOfSimpleSearch: [],
+    filtersOfAdvancedSearch: [],
   };
+
+  componentDidMount () {
+    this.getFilters();
+  }
 
   handleNavSearchTabChange = navTabId => this.setState({ navTabId });
 
+  getValuesFilters = (schemaForm, data) => {
+    const keys = Object.keys(data);
+
+    return schemaForm.map(filter => {
+      if (keys.indexOf(filter.name) > -1) {
+        return { ...filter, ...{ values: data[filter.name] } };
+      }
+      return { ...filter };
+    });
+  };
+
+  getFilters = async () => {
+    try {
+      const data = await fetchValuesToFiltering();
+      const filtersOfSimpleSearch = this.getValuesFilters(schemaSimpleSearch, data);
+      const filtersOfAdvancedSearch = this.getValuesFilters(schemaAdvancedSearch, data);
+
+      this.setState({ filtersOfSimpleSearch, filtersOfAdvancedSearch });
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
+  };
+
   render () {
-    const { navTabId } = this.state;
+    const {
+      navTabId,
+      filtersOfSimpleSearch,
+      filtersOfAdvancedSearch,
+    } = this.state;
     const {
       itemsPerPage,
       t,
       handleResetPage,
     } = this.props;
+
     return (
       <Tabs
         id={ID_SEARCH_PANEL}
@@ -47,7 +83,7 @@ export class Search extends React.Component {
           panel={(
             <SearchForm
               itemsPerPage={itemsPerPage}
-              filters={schemaSimpleSearch}
+              filters={filtersOfSimpleSearch}
               locales={locales}
               handleResetPage={handleResetPage}
             />
@@ -61,7 +97,7 @@ export class Search extends React.Component {
           panel={(
             <SearchForm
               itemsPerPage={itemsPerPage}
-              filters={schemaAdvancedSearch}
+              filters={filtersOfAdvancedSearch}
               locales={locales}
               handleResetPage={handleResetPage}
             />

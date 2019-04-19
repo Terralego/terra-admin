@@ -8,11 +8,13 @@ import {
 
 export const schemaSimpleSearch = [
   {
+    name: 'cities',
     property: 'communes',
     label: i18n.t('opp.form.municipalities'),
     type: TYPE_SINGLE,
     values: ['Le lamentin', 'Case-Pilote'],
   }, {
+    name: 'themes',
     property: 'themes[]',
     label: i18n.t('opp.form.themes'),
     type: TYPE_MANY,
@@ -41,12 +43,13 @@ export const schemaSimpleSearch = [
 
 export const schemaAdvancedSearch = [
   {
+    name: 'cities',
     property: 'communes',
     label: i18n.t('opp.form.municipalities'),
     type: TYPE_SINGLE,
     values: ['Le lamentin', 'Case-Pilote'],
-
   }, {
+    name: 'themes',
     property: 'themes[]',
     label: i18n.t('opp.form.themes'),
     type: TYPE_MANY,

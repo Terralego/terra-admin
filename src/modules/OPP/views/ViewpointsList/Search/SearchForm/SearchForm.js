@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { Button } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core/lib/esm/index';
 
 import Filters from 'mc-tf-test/modules/Forms/Filters';
-import { toast } from '../../../../../utils/toast';
-import { isDate, parsePropertiesToData } from '../../../../../utils/validateFilters';
+import { toast } from '../../../../utils/toast';
+import { isDate, parsePropertiesToData } from '../../../../utils/validateFilters';
 
-import '../tabs-content.scss';
+import './search-form.scss';
 
-export class SimpleSearch extends React.Component {
+export class SearchForm extends React.Component {
   state = {
     properties: {},
     // Inform user of state of form : 0 = clickable, 1 = disabled
@@ -80,4 +80,4 @@ export class SimpleSearch extends React.Component {
   }
 }
 
-export default SimpleSearch;
+export default SearchForm;

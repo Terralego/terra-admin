@@ -7,6 +7,23 @@
 .search {
 
   // Override Blueprintjs
+  .bp3-select-popover {
+    .bp3-menu {
+      max-width: 270px;
+      max-height: 300px;
+      overflow: auto;
+
+      &-item {
+        text-transform: lowercase;
+
+        > div::first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  // Override Blueprintjs
   .bp3-form-group {
     margin: 10px;
     padding-top: 5px;
@@ -16,6 +33,7 @@
 
       .bp3-input {
         background-color: $input-grey-blue;
+        text-transform: capitalize;
 
         .bp3-input-ghost {
           color: #fff;
@@ -39,6 +57,11 @@
         background-color: $input-grey-blue;
         background-image: none;
         color: #fff;
+        text-transform: lowercase;
+
+        > span::first-letter {
+          text-transform: uppercase;
+        }
 
         &:hover {
           text-decoration: none;
@@ -126,4 +149,17 @@
     }
   }
 
+}
+
+// Override blueprintjs
+.bp3-multi-select-popover {
+  .bp3-menu {
+    max-width: 270px;
+    max-height: 300px;
+    overflow: auto;
+
+    &-item {
+      text-transform: capitalize;
+    }
+  }
 }

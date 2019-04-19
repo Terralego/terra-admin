@@ -20,10 +20,12 @@ export const Rando = () => (
         <div className="rando-main">
           <Search />
           <Routing
-            routes={[{
-              path: `${path}/map/layer/:id?`,
-              import: Map,
-            }]}
+            routes={[
+              {
+                path: `${path}/map/layer/:layer?/:action?/:id?`,
+                import: Map,
+              },
+            ]}
           />
         </div>
       </NavLayout>

@@ -11,42 +11,64 @@ class DataTable extends React.Component {
     columns: [],
     full: false,
     isResizing: false,
+    loading: false,
   }
 
   componentDidMount () {
-    this.dataLoaded();
+    this.loadData();
   }
 
-  componentDidUpdate ({ source: prevSource }) {
-    const { source } = this.props;
+  componentDidUpdate ({ source: prevSource, featuresList: prevFeaturesList }) {
+    const { source, featuresList } = this.props;
     if (prevSource !== source) {
-      this.dataLoaded();
+      this.cleanData();
+      this.loadData();
+    }
+    if (featuresList && prevFeaturesList !== featuresList) {
+      this.setData();
     }
   }
 
-  dataLoaded = () => {
-    const { map, source } = this.props;
-    if (!map) {
-      setTimeout(() => this.dataLoaded(), 500);
-      return;
-    }
-    const listener = ({ isSourceLoaded }) => {
-      if (isSourceLoaded) {
-        this.setState(() => {
-          const readerFeatures = map.queryRenderedFeatures();
-          const features = readerFeatures.filter(({ sourceLayer }) => sourceLayer === source);
-          const { data, columns } = features.reduce((list, feature, index) => (
-            {
-              data: [...list.data, Object.values(feature.properties)],
-              columns: !index ? list.columns : Object.keys(feature.properties),
-            }
-          ), { data: [], columns: [] });
-          return { data, columns };
-        });
-        map.off('sourcedata', listener);
-      }
-    };
-    map.on('sourcedata', listener);
+  getLayerBySource () {
+    const { source, layersList } = this.props;
+    return layersList.find(({ name }) => name === source);
+  }
+
+  loadData = () => {
+    const { getFeaturesList } = this.props;
+    const layer = this.getLayerBySource();
+    if (!layer) return;
+    this.setState({
+      loading: true,
+    });
+    getFeaturesList(layer.id);
+  }
+
+  setData = () => {
+    const { featuresList } = this.props;
+    const { schema: { properties } } = this.getLayerBySource();
+    const columns = Object.keys(properties).map(value => ({
+      sortable: true,
+      ...properties[value],
+      value,
+      label: properties[value].title,
+      format: {
+        type: properties[value].type,
+      },
+    }));
+
+    const data = featuresList.map(({ properties: props }) => columns.map(({ value }) => `${props[value] || ''}`));
+    this.setState({
+      columns,
+      data,
+      loading: false,
+    });
+  }
+
+  cleanData = () => {
+    this.setState({
+      data: [],
+    });
   }
 
   resize = () => this.setState(({ full }) => {
@@ -57,11 +79,8 @@ class DataTable extends React.Component {
   })
 
   render () {
-    const { map, source, t } = this.props;
-    const { data, columns, isResizing, full } = this.state;
-    const hasData = data.length;
-
-    if (!map) return null;
+    const { source, t } = this.props;
+    const { data, columns, isResizing, full, loading } = this.state;
 
     return (
       <div
@@ -81,7 +100,7 @@ class DataTable extends React.Component {
             sortAsc: t('rando.table.sortAsc'),
             sortDesc: t('rando.table.sortDesc'),
           }}
-          loading={!hasData}
+          loading={loading}
         />
       </div>
     );

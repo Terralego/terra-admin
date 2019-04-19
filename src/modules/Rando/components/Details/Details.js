@@ -1,33 +1,29 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import classnames from 'classnames';
 import { Button } from '@blueprintjs/core';
-import MarkdownRenderer from 'mc-tf-test/modules/Template/MarkdownRenderer';
 
+import Read from './Read';
 import './styles.scss';
 
 const Details = ({
-  feature: { properties } = {},
   visible,
-  interaction: { template } = {},
-  onClose = () => null,
+  history: { push }, match: { params: { layer, id } },
 }) => (
   <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
     <div className="rando-details__close">
       <Button
         type="button"
         className="rando-details__close-button"
-        onClick={onClose}
+        onClick={() => push(`/rando/map/layer/${layer}`)}
         icon="cross"
         minimal
       />
     </div>
     <div className="rando-details__content">
-      <MarkdownRenderer
-        template={template}
-        {...properties}
-      />
+      <Read layer={layer} id={id} />
     </div>
   </div>
 );
 
-export default Details;
+export default withRouter(Details);

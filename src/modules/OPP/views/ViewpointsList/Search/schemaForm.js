@@ -1,3 +1,5 @@
+import i18n from 'i18next';
+
 import {
   TYPE_MANY,
   TYPE_RANGE,
@@ -7,20 +9,19 @@ import {
 export const schemaSimpleSearch = [
   {
     property: 'communes',
-    label: 'Commune',
+    label: i18n.t('opp.form.municipalities'),
     type: TYPE_SINGLE,
-    placeholder: 'Le lamentin...',
     values: ['Le lamentin', 'Case-Pilote'],
   }, {
     property: 'themes[]',
-    label: 'Thèmes',
+    label: i18n.t('opp.form.themes'),
     type: TYPE_MANY,
-    placeholder: 'Montagnes...',
+    placeholder: i18n.t('opp.form.filters'),
     display: 'select',
     values: ['Montagnes', 'Éolienne'],
   }, {
     property: 'viewpointDate',
-    label: 'Date',
+    label: i18n.t('opp.form.date'),
     format: 'date',
     className: 'date_range',
     shortcuts: false,
@@ -41,66 +42,65 @@ export const schemaSimpleSearch = [
 export const schemaAdvancedSearch = [
   {
     property: 'communes',
-    label: 'Commune',
+    label: i18n.t('opp.form.municipalities'),
     type: TYPE_SINGLE,
-    placeholder: 'Le lamentin...',
     values: ['Le lamentin', 'Case-Pilote'],
 
   }, {
     property: 'themes[]',
-    label: 'Thèmes',
+    label: i18n.t('opp.form.themes'),
     type: TYPE_MANY,
-    placeholder: 'Montagnes...',
+    placeholder: i18n.t('opp.form.filters'),
     display: 'select',
     values: ['Montagnes', 'Éolienne'],
   }, {
     property: 'viewpointDate',
-    label: 'Date',
+    label: i18n.t('opp.form.date'),
     format: 'date',
     className: 'date_range',
     shortcuts: false,
     contiguousCalendarMonths: false,
     allowSingleDayRange: true,
     startInputProps: {
-      placeholder: 'JJ/MM/AAAA',
+      placeholder: i18n.t('opp.form.date-format'),
       className: 'input-range input-range--start',
     },
     endInputProps: {
-      placeholder: 'JJ/MM/AAAA',
+      placeholder: i18n.t('opp.form.date-format'),
       className: 'input-range input-range--end',
     },
     type: TYPE_RANGE,
   }, {
     property: 'keywords[]',
-    label: 'Mots clés',
+    label: i18n.t('opp.form.keywords'),
     type: TYPE_MANY,
-    placeholder: 'Filtres...',
+    placeholder: i18n.t('opp.form.filters'),
     display: 'select',
     values: ['Montagnes', 'Éolienne'],
   },
   {
     property: 'typology[]',
-    label: 'Typologie des paysages',
+    label: i18n.t('opp.form.typology'),
     type: TYPE_MANY,
-    placeholder: 'Filtres...',
+    placeholder: i18n.t('opp.form.filters'),
     display: 'select',
     values: ['Montagnes', 'Éolienne'],
   },
   {
     property: 'photographer',
-    label: 'Photographe',
+    label: i18n.t('opp.form.photographer'),
     type: TYPE_SINGLE,
     values: ['Montagnes', 'Éolienne'],
   },
   {
     property: 'label',
-    label: 'Nom du point de vue',
+    label: i18n.t('opp.form.viewpoint-name'),
     type: TYPE_SINGLE,
     values: ['Montagnes', 'Éolienne'],
   },
   {
     property: 'pictures__id',
-    label: 'Id de la Photographie',
+    label: i18n.t('opp.form.picture-id'),
     type: TYPE_SINGLE,
     values: ['148', '59', '9992'],
   },

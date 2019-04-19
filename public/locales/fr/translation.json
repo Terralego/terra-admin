@@ -106,8 +106,16 @@
         "placeholder": "14.7786"
       },
       "picture": "Image",
+      "picture-id": "Id de la photographie",
       "date": "Date",
       "date-format": "JJ/MM/AAAA",
+      "municipalities":"Communes",
+      "themes": "Thèmes",
+      "keywords": "Mots clés",
+      "filters": "Filtres",
+      "typology": "Typologie des paysages",
+      "photographer": "Photographe",
+      "viewpoint-name": "Nom du point de vue",
       "error": {
         "server": "Le service est indisponible."
       },

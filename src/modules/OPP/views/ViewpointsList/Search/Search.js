@@ -29,7 +29,11 @@ export class Search extends React.Component {
 
   render () {
     const { navTabId } = this.state;
-    const { itemsPerPage, t } = this.props;
+    const {
+      itemsPerPage,
+      t,
+      handleResetPage,
+    } = this.props;
     return (
       <Tabs
         id={ID_SEARCH_PANEL}
@@ -46,6 +50,7 @@ export class Search extends React.Component {
               itemsPerPage={itemsPerPage}
               filters={schemaSimpleSearch}
               locales={locales}
+              handleResetPage={handleResetPage}
             />
           )}
         />
@@ -59,6 +64,7 @@ export class Search extends React.Component {
               itemsPerPage={itemsPerPage}
               filters={schemaAdvancedSearch}
               locales={locales}
+              handleResetPage={handleResetPage}
             />
           )}
         />

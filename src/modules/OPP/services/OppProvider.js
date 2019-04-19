@@ -23,6 +23,7 @@ export class OppProvider extends React.Component {
    * @returns {Promise<void>}
    */
   getViewpointAction = async id => {
+    this.setState({ loading: true });
     try {
       const viewpoint = await fetchViewpoint(id);
       this.setState(state => ({
@@ -31,6 +32,7 @@ export class OppProvider extends React.Component {
           ...state.viewpoints,
           [id]: viewpoint,
         },
+        loading: false,
       }));
     } catch (e) {
       this.setState(state => ({
@@ -48,6 +50,7 @@ export class OppProvider extends React.Component {
    * @returns {Promise<boolean>}
    */
   getFirstPageFilteredViewpointsAction = async (data, itemsPerPage, page) => {
+    this.setState({ loading: true });
     try {
       const filteredViewpoints = await fetchViewpoints({
         data,
@@ -60,6 +63,7 @@ export class OppProvider extends React.Component {
           [page]: filteredViewpoints,
         },
         filters: data,
+        loading: false,
       });
     } catch (e) {
       this.setState(state => ({
@@ -75,23 +79,26 @@ export class OppProvider extends React.Component {
    * @returns {Promise<void>}
    */
   getPaginatedViewpointsAction = async (itemsPerPage, page) => {
-    const { viewpointsList: { [page]: existingViewpoints } } = this.state;
+    this.setState({ loading: true });
+    const { viewpointsList: { [page]: existingViewpoints }, filters } = this.state;
     if (existingViewpoints) {
       this.setState(prevState => ({
         viewpointsList: {
           ...prevState.viewpointsList,
           current: existingViewpoints,
         },
+        loading: false,
       }));
     } else {
       try {
-        const currentPageViewpoints = await fetchViewpoints({ itemsPerPage, page });
+        const currentPageViewpoints = await fetchViewpoints({ filters, itemsPerPage, page });
         this.setState(prevState => ({
           viewpointsList: {
             ...prevState.viewpointsList,
             current: currentPageViewpoints,
             [page]: currentPageViewpoints,
           },
+          loading: false,
         }));
       } catch (e) {
         this.setState(state => ({

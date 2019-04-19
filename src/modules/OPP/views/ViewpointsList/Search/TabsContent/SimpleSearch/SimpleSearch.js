@@ -29,6 +29,7 @@ export class SimpleSearch extends React.Component {
       t,
       getFirstPageFilteredViewpointsAction,
       itemsPerPage,
+      handleResetPage,
     } = this.props;
     this.setState({ formValidation: 1 });
     const { properties } = this.state;
@@ -38,6 +39,7 @@ export class SimpleSearch extends React.Component {
     const { codeError } = this.props;
     codeError && toast.displayError(t('opp.form.error.server'));
     this.setState({ formValidation: 0 });
+    handleResetPage();
   };
 
   render () {

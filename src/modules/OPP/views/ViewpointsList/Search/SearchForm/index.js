@@ -1,9 +1,9 @@
 import { withNamespaces } from 'react-i18next';
 
-import { connectOppProvider } from '../../../../../services/OppProvider';
-import { SimpleSearch } from './SimpleSearch';
+import { connectOppProvider } from '../../../../services/OppProvider';
+import { SearchForm } from './SearchForm';
 
 export default connectOppProvider({
   codeError: 'errors.code',
   getFirstPageFilteredViewpointsAction: 'getFirstPageFilteredViewpointsAction',
-})(withNamespaces()(SimpleSearch));
+})(withNamespaces()(SearchForm));

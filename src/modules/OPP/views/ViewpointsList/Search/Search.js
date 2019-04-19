@@ -4,9 +4,8 @@ import { Tab, Tabs } from '@blueprintjs/core';
 import i18n from 'i18next';
 
 import { schemaSimpleSearch, schemaAdvancedSearch } from './schemaForm';
-import SimpleSearch from './TabsContent/SimpleSearch';
+import SearchForm from './SearchForm';
 
-import AdvancedSearch from './TabsContent/AdvancedSearch';
 import './search.scss';
 
 const ID_SEARCH_PANEL = 'search';
@@ -46,7 +45,7 @@ export class Search extends React.Component {
           className="search-filters search-simple-content"
           title={t('opp.viewpoint.filter.simple-search')}
           panel={(
-            <SimpleSearch
+            <SearchForm
               itemsPerPage={itemsPerPage}
               filters={schemaSimpleSearch}
               locales={locales}
@@ -60,7 +59,7 @@ export class Search extends React.Component {
           className="search-filters search-advanced-content"
           title={t('opp.viewpoint.filter.advanced-search')}
           panel={(
-            <AdvancedSearch
+            <SearchForm
               itemsPerPage={itemsPerPage}
               filters={schemaAdvancedSearch}
               locales={locales}

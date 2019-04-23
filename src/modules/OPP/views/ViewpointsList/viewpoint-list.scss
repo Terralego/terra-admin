@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 .nav-layout__content {
   display: flex;
   flex-direction: row;
@@ -63,7 +65,7 @@
     }
 
     &.active {
-      background-color: #ebebeb;
+      background-color: $grey-light;
 
       a  {
         font-weight: 600;

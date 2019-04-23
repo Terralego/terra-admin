@@ -1,57 +1,14 @@
+@import "../../../variables.scss";
+
 .search {
   width: 300px;
   flex: none;
-  color: #FFF;
+  color: #fff;
   font-size: 0.9em;
-  background-color: #293742;
+  background-color: $secondary-color;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 1);
 
   // Override Blueprintjs Tabs
-  &.bp3-tabs {
-    background-color: #293742;
-    color: #FFF;
-
-    .bp3-tab {
-      text-align: center;
-      color: #FFF;
-      font-family: 'Roboto', sans-serif;
-      text-transform: uppercase;
-      font-size: 12px;
-      width: 50%;
-      margin: 0;
-      height: 45px;
-      padding-top: 10px;
-      align-items: baseline;
-
-      &-list {
-        background: rgba(255, 255, 255, 0.1);
-        justify-content: space-around;
-      }
-
-      &-panel {
-        margin-top: 0;
-      }
-
-      &:hover {
-        color: #FFF;
-      }
-
-      &-indicator-wrapper {
-        width: 50% !important;
-        height: 45px !important;
-        z-index: 2;
-
-        .bp3-tab-indicator {
-          background-color: #FFF;
-          width: 50%;
-          margin-left: 25%;
-        }
-      }
-
-      &[aria-selected="true"] {
-        transition: all 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
-      }
-    }
-  }
+  @extend .override-tabs-bp3;
 }
 

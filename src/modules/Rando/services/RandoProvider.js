@@ -11,6 +11,7 @@ const { Provider } = context;
 export class RandoProvider extends React.Component {
   state = {
     layersList: [],
+    featuresList: [],
     mapConfig: {},
   };
 
@@ -53,7 +54,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.features.length]: true },
+        errors: { ...state.errors, [state.featuresList.length]: true },
       }));
     }
   }
@@ -65,7 +66,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.features.length]: true },
+        errors: { ...state.errors, [state.feature.length]: true },
       }));
     }
   }

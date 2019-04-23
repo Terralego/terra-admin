@@ -6,6 +6,7 @@ import DataTable from '../../components/DataTable';
 import Details from '../../components/Details';
 import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
+import { getBounds } from '../../services/features';
 
 import './styles.scss';
 
@@ -28,6 +29,7 @@ export class Map extends React.Component {
       map: prevMap,
       layersList: prevLayersList,
       match: { params: { layer: prevLayer, action: prevAction } },
+      featuresList: prevFeaturesList,
     },
   ) {
     const {
@@ -35,6 +37,7 @@ export class Map extends React.Component {
       match: { params: { layer, action } },
       resizingMap,
       map,
+      featuresList,
     } = this.props;
     if (layersList !== prevLayersList) {
       this.generateLayersToMap();
@@ -44,6 +47,10 @@ export class Map extends React.Component {
     }
     if (action !== prevAction) {
       resizingMap();
+    }
+    if (featuresList && featuresList !== prevFeaturesList) {
+      map.resize();
+      this.setFitBounds();
     }
   }
 
@@ -75,6 +82,13 @@ export class Map extends React.Component {
     map.resize();
   }
 
+  setFitBounds = () => {
+    const { featuresList, map } = this.props;
+    const coordinates = featuresList.map(feature => feature.geom.coordinates);
+    const bounds = getBounds(coordinates);
+    map.fitBounds(bounds, { padding: 20 });
+  }
+
   displayCurrentLayer = currentPath => {
     const { customStyle: { layers = [] } = {} } = this.state;
     const { map } = this.props;
@@ -100,6 +114,7 @@ export class Map extends React.Component {
       mapIsResizing,
       match: { params: { layer = false, action = false } },
     } = this.props;
+
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
     const isDetailsVisible = action;
 

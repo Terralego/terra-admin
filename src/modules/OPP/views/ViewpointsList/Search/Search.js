@@ -20,6 +20,15 @@ const locales = {
   emptySelectItem: i18n.t('opp.viewpoint.filter.empty-selected-input'),
 };
 
+function getValuesFilters (schemaForm, data) {
+  return schemaForm.map(filter => {
+    const values = typeof data[filter.name] !== 'undefined'
+      ? { values: data[filter.name] }
+      : {};
+    return { ...filter, ...values };
+  });
+}
+
 export class Search extends React.Component {
   state = {
     navTabId: ID_SEARCH_SIMPLE,
@@ -33,23 +42,11 @@ export class Search extends React.Component {
 
   handleNavSearchTabChange = navTabId => this.setState({ navTabId });
 
-  getValuesFilters = (schemaForm, data) => {
-    const keys = Object.keys(data);
-
-    return schemaForm.map(filter => {
-      if (keys.indexOf(filter.name) > -1) {
-        return { ...filter, ...{ values: data[filter.name] } };
-      }
-      return { ...filter };
-    });
-  };
-
   getFilters = async () => {
     try {
       const data = await fetchValuesToFiltering();
-      const filtersOfSimpleSearch = this.getValuesFilters(schemaSimpleSearch, data);
-      const filtersOfAdvancedSearch = this.getValuesFilters(schemaAdvancedSearch, data);
-
+      const filtersOfSimpleSearch = getValuesFilters(schemaSimpleSearch, data);
+      const filtersOfAdvancedSearch = getValuesFilters(schemaAdvancedSearch, data);
       this.setState({ filtersOfSimpleSearch, filtersOfAdvancedSearch });
     } catch (e) {
       // eslint-disable-next-line no-console

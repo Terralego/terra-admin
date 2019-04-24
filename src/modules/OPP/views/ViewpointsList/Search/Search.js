@@ -3,11 +3,13 @@ import React from 'react';
 import { Tab, Tabs } from '@blueprintjs/core';
 import i18n from 'i18next';
 
-import { schemaSimpleSearch, schemaAdvancedSearch } from './schemaForm';
+import { fetchFilterOptions } from '../../../services/viewpoints';
+import { configSimplesSearch, configAdvancedSearch } from './utils/configForm';
+import { schema } from './utils/schemaForm';
+
 import SearchForm from './SearchForm';
 
 import './search.scss';
-import { fetchValuesToFiltering } from '../../../services/viewpoints';
 
 const ID_SEARCH_PANEL = 'search';
 const ID_SEARCH_SIMPLE = 'searchSimple_tab';
@@ -29,11 +31,18 @@ function getValuesFilters (schemaForm, data) {
   });
 }
 
+function getFilterBySearch (schemaForm, config) {
+  return config.map(name => {
+    const index = schemaForm.findIndex(filter => filter.name === name);
+    return { ...schemaForm[index] };
+  });
+}
+
 export class Search extends React.Component {
   state = {
     navTabId: ID_SEARCH_SIMPLE,
-    filtersOfSimpleSearch: [],
-    filtersOfAdvancedSearch: [],
+    simplesSearchFilters: [],
+    advancedSearchFilters: [],
   };
 
   componentDidMount () {
@@ -44,10 +53,11 @@ export class Search extends React.Component {
 
   getFilters = async () => {
     try {
-      const data = await fetchValuesToFiltering();
-      const filtersOfSimpleSearch = getValuesFilters(schemaSimpleSearch, data);
-      const filtersOfAdvancedSearch = getValuesFilters(schemaAdvancedSearch, data);
-      this.setState({ filtersOfSimpleSearch, filtersOfAdvancedSearch });
+      const data = await fetchFilterOptions();
+      const filters = getValuesFilters(schema, data);
+      const simplesSearchFilters = getFilterBySearch(filters, configSimplesSearch);
+      const advancedSearchFilters = getFilterBySearch(filters, configAdvancedSearch);
+      this.setState({ simplesSearchFilters, advancedSearchFilters });
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
@@ -57,8 +67,8 @@ export class Search extends React.Component {
   render () {
     const {
       navTabId,
-      filtersOfSimpleSearch,
-      filtersOfAdvancedSearch,
+      simplesSearchFilters,
+      advancedSearchFilters,
     } = this.state;
     const {
       itemsPerPage,
@@ -80,7 +90,7 @@ export class Search extends React.Component {
           panel={(
             <SearchForm
               itemsPerPage={itemsPerPage}
-              filters={filtersOfSimpleSearch}
+              filters={simplesSearchFilters}
               locales={locales}
               handleResetPage={handleResetPage}
             />
@@ -94,7 +104,7 @@ export class Search extends React.Component {
           panel={(
             <SearchForm
               itemsPerPage={itemsPerPage}
-              filters={filtersOfAdvancedSearch}
+              filters={advancedSearchFilters}
               locales={locales}
               handleResetPage={handleResetPage}
             />

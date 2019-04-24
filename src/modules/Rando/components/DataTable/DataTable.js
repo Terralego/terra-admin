@@ -29,24 +29,15 @@ class DataTable extends React.Component {
     }
   }
 
-  getLayerBySource () {
-    const { source, layersList } = this.props;
-    return layersList.find(({ name }) => name === source);
-  }
-
   loadData = () => {
-    const { getFeaturesList } = this.props;
-    const layer = this.getLayerBySource();
-    if (!layer) return;
     this.setState({
       loading: true,
     });
-    getFeaturesList(layer.id);
   }
 
   setData = () => {
-    const { featuresList } = this.props;
-    const { schema: { properties } } = this.getLayerBySource();
+    const { featuresList, layer } = this.props;
+    const { schema: { properties } } = layer;
     const columns = Object.keys(properties).map(value => ({
       sortable: true,
       ...properties[value],

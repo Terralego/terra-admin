@@ -18,23 +18,24 @@ export class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { getMapConfig } = this.props;
+    const { getMapConfig, match: { params: { layer } } } = this.props;
     getMapConfig();
     this.generateLayersToMap();
     this.setInteractions();
+    if (layer) {
+      this.loadFeatures();
+    }
   }
 
-  componentDidUpdate (
-    {
-      map: prevMap,
-      layersList: prevLayersList,
-      match: { params: { layer: prevLayer, action: prevAction } },
-      featuresList: prevFeaturesList,
-    },
-  ) {
+  componentDidUpdate ({
+    map: prevMap,
+    layersList: prevLayersList,
+    match: { params: { layer: prevLayer, action: prevAction, id: prevId } },
+    featuresList: prevFeaturesList,
+  }) {
     const {
       layersList,
-      match: { params: { layer, action } },
+      match: { params: { layer, action, id } },
       resizingMap,
       map,
       featuresList,
@@ -45,11 +46,13 @@ export class Map extends React.Component {
     if (layer !== prevLayer || map !== prevMap) {
       this.displayCurrentLayer(layer);
     }
+    if (layersList !== prevLayersList || layer !== prevLayer || map !== prevMap) {
+      this.loadFeatures();
+    }
     if (action !== prevAction) {
       resizingMap();
     }
-    if (featuresList && featuresList !== prevFeaturesList) {
-      map.resize();
+    if (!id && featuresList && (prevId !== id || featuresList !== prevFeaturesList)) {
       this.setFitBounds();
     }
   }
@@ -76,17 +79,30 @@ export class Map extends React.Component {
     });
   }
 
+  setFitBounds = () => {
+    const { featuresList, map } = this.props;
+    const coordinates = featuresList.map(feature => feature.geom.coordinates);
+    const bounds = getBounds(coordinates);
+    map.resize();
+    map.fitBounds(bounds, { padding: 20 });
+  }
+
+  getLayerFromList () {
+    const { layersList, match: { params: { layer } } } = this.props;
+    return layersList.find(({ name }) => name === layer);
+  }
+
   resetMap = map => {
     const { setMap } = this.props;
     setMap(map);
     map.resize();
   }
 
-  setFitBounds = () => {
-    const { featuresList, map } = this.props;
-    const coordinates = featuresList.map(feature => feature.geom.coordinates);
-    const bounds = getBounds(coordinates);
-    map.fitBounds(bounds, { padding: 20 });
+  loadFeatures = () => {
+    const { getFeaturesList } = this.props;
+    const layer = this.getLayerFromList();
+    if (!layer) return;
+    getFeaturesList(layer.id);
   }
 
   displayCurrentLayer = currentPath => {

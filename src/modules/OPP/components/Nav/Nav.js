@@ -24,7 +24,6 @@ export const Nav = ({ t }) => (
             usePortal={false}
           >
             <NavLink
-              exact
               to="/opp/viewpoints"
             >
               <Button>
@@ -40,7 +39,6 @@ export const Nav = ({ t }) => (
             usePortal={false}
           >
             <NavLink
-              exact
               to="/opp/compaign"
             >
               <Button>

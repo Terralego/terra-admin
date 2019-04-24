@@ -1,3 +1,5 @@
+@import "../../../../variables.scss";
+
 .search-filters {
   padding-top: 10px;
 }
@@ -13,10 +15,10 @@
       width: 100%;
 
       .bp3-input {
-        background-color: #212D36;
+        background-color: $input-grey-blue;
 
         .bp3-input-ghost {
-          color: #FFF;
+          color: #fff;
         }
       }
     }
@@ -34,9 +36,9 @@
         width: 100%;
         text-align: left;
         justify-content: space-between;
-        background-color: #212D36;
+        background-color: $input-grey-blue;
         background-image: none;
-        color: #FFF;
+        color: #fff;
 
         &:hover {
           text-decoration: none;
@@ -51,11 +53,11 @@
   }
 
   .date_range {
-    color: #000000;
+    color: #000;
 
     // Override Blueprintjs
     .bp3-popover-target {
-      background-color: #394B59;
+      background-color: $main-color;
       padding: 5px;
       box-shadow: 0 0 3px rgba(255, 255, 255, .2) inset;
 
@@ -72,11 +74,11 @@
 
     .input-range {
       display: flex;
-      color: #FFF;
+      color: #fff;
 
       // Override Blueprintjs
       .bp3-input {
-        color: #FFF;
+        color: #fff;
       }
 
       &:before {
@@ -108,14 +110,14 @@
     padding: 10px;
 
     > button {
-      background-color: #425360;
+      background-color: $button-action;
       background-image: none;
       margin-left: 5px;
-      color: #FFF;
+      color: #fff;
 
       &:hover {
         text-decoration: none;
-        background-color: #35729f;
+        background-color: $main-color-hover;
       }
 
       &.bp3-disabled {

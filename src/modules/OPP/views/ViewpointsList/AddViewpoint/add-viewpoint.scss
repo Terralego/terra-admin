@@ -1,5 +1,6 @@
-.card-link--add {
+@import "../../../variables.scss";
 
+.card-link--add {
   .item--add {
     display: flex;
     flex-direction: column;
@@ -10,7 +11,7 @@
     font-weight: bold;
     box-shadow: none;
     align-items: center;
-    background-color: #30404d;
+    background-color: $secondary-color;
 
     > div {
       width: 300px;
@@ -19,7 +20,7 @@
       &::before {
         background-color: #fff;
         content: "+";
-        color: #30404d;
+        color: $secondary-color;
         font-size: 4em;
         line-height: 1em;
         border-radius: 50%;

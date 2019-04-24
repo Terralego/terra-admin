@@ -1,29 +1,30 @@
-.oppm {
+@import "../../variables.scss";
 
+.oppm {
   .nav-layout__nav {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: #394b59;
+    background-color: $main-color;
 
     .navbar__mainMenu {
 
       .active {
         button {
-          background-color: #253748;
+          background-color: $main-color-active;
         }
       }
 
       button {
-        background-color: #394b59;
+        background-color: $main-color;
         background-image: none;
         margin-bottom: 10px;
 
         &:hover {
           text-decoration: none;
-          background-color: #35729f;
-          color: #ffffff;
+          background-color: $main-color-hover;
+          color: #fff;
         }
       }
 

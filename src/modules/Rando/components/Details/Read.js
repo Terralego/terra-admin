@@ -3,23 +3,37 @@ import classnames from 'classnames';
 import { withNamespaces } from 'react-i18next';
 
 import { connectRandoProvider } from '../../services/RandoProvider';
+import { getBounds } from '../../services/features';
 
 export class Read extends React.Component {
   componentDidMount () {
     this.getData();
   }
 
-  componentDidUpdate ({ layer: prevLayer, id: prevId }) {
-    const { layer, id } = this.props;
+  componentDidUpdate ({
+    layer: prevLayer,
+    id: prevId,
+    feature: { geom: { coordinates: prevCoordinates = [] } = {} } = {},
+  }) {
+    const {
+      layer,
+      id,
+      feature: { geom: { coordinates = [] } = {} } = {},
+      map,
+    } = this.props;
     if (prevLayer !== layer || prevId !== id) {
       this.getData();
+    }
+    if (prevCoordinates.join() !== coordinates.join()) {
+      const bounds = getBounds(coordinates);
+      map.fitBounds(bounds, { padding: 20 });
     }
   }
 
   getData () {
     const { layersList, layer, id, getFeature } = this.props;
-    if (layersList && layer && id) {
-      const [{ id: layerId }] = layersList.filter(({ name }) => name === layer);
+    if (layersList.length && layer && id) {
+      const { id: layerId } = layersList.find(({ name }) => name === layer);
       getFeature(layerId, id);
     }
   }

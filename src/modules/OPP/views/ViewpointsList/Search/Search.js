@@ -22,21 +22,22 @@ const locales = {
   emptySelectItem: i18n.t('opp.viewpoint.filter.empty-selected-input'),
 };
 
-function getValuesFilters (schemaForm, data) {
-  return schemaForm.map(filter => {
+const getValuesFilters = (schemaForm, data) => (
+  schemaForm.map(filter => {
     const values = typeof data[filter.name] !== 'undefined'
       ? { values: data[filter.name] }
       : {};
     return { ...filter, ...values };
-  });
-}
+  })
+);
 
-function getFilterBySearch (schemaForm, config) {
-  return config.map(name => {
+
+const getFiltersBySearch = (schemaForm, config) => (
+  config.map(name => {
     const index = schemaForm.findIndex(filter => filter.name === name);
     return { ...schemaForm[index] };
-  });
-}
+  })
+);
 
 export class Search extends React.Component {
   state = {
@@ -54,9 +55,9 @@ export class Search extends React.Component {
   getFilters = async () => {
     try {
       const data = await fetchFilterOptions();
-      const filters = getValuesFilters(schema, data);
-      const simplesSearchFilters = getFilterBySearch(filters, configSimplesSearch);
-      const advancedSearchFilters = getFilterBySearch(filters, configAdvancedSearch);
+      const filters = await getValuesFilters(schema, data);
+      const simplesSearchFilters = getFiltersBySearch(filters, configSimplesSearch);
+      const advancedSearchFilters = getFiltersBySearch(filters, configAdvancedSearch);
       this.setState({ simplesSearchFilters, advancedSearchFilters });
     } catch (e) {
       // eslint-disable-next-line no-console

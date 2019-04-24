@@ -90,7 +90,7 @@ export class ViewpointList extends React.PureComponent {
                       <div>
                         <Card>
                           <img src={noResult} alt="No result" />
-                          <h3> Oups, il n'y a pas de résultats à votre recherche.</h3>
+                          <h3>{t('opp.form.no-result')}</h3>
                         </Card>
                       </div>
                     )}

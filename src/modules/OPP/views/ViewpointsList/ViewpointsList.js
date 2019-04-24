@@ -43,6 +43,7 @@ export class ViewpointList extends React.PureComponent {
       isLoading,
       codeError,
     } = this.props;
+
     return (
       <>
         {codeError && toast.displayError(t('opp.form.error.server'))}
@@ -55,12 +56,16 @@ export class ViewpointList extends React.PureComponent {
             <H2>{t('opp.viewpoints.title')}</H2>
           </div>
           <div className="page--content">
-            {codeError ? (
-              <p>Error server</p>
-            ) : (
+            {codeError && (
+              <p>Server error</p>
+            )}
+            {!codeError && (
               <>
                 <ViewpointAddItem />
-                {!isLoading ? (
+                {isLoading && (
+                  <Loading />
+                )}
+                {!isLoading && (
                   <>
                     {results.map(viewpoint => (
                       <ViewpointsListItem
@@ -95,8 +100,6 @@ export class ViewpointList extends React.PureComponent {
                       </div>
                     )}
                   </>
-                ) : (
-                  <Loading />
                 )}
               </>
             )}

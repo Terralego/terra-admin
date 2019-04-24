@@ -6,6 +6,7 @@ import ViewpointsList from './ViewpointsList';
 export default connectOppProvider({
   viewpointsList: 'viewpointsList.current',
   isLoading: 'loading',
+  codeError: 'errors.code',
   getPaginatedViewpointsAction: 'getPaginatedViewpointsAction',
   getFirstPageFilteredViewpointsAction: 'getFirstPageFilteredViewpointsAction',
 })(withNamespaces()(ViewpointsList));

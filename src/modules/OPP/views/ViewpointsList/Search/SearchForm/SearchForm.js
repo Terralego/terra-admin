@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from '@blueprintjs/core/lib/esm/index';
 
 import Filters from 'mc-tf-test/modules/Forms/Filters';
-import { toast } from '../../../../utils/toast';
 import { isDate, parsePropertiesToData } from '../../../../utils/validateFilters';
 
 import './search-form.scss';
@@ -33,7 +32,6 @@ export class SearchForm extends React.Component {
   onSubmit = async event => {
     event.preventDefault();
     const {
-      t,
       getFirstPageFilteredViewpointsAction,
       itemsPerPage,
       handleResetPage,
@@ -42,9 +40,6 @@ export class SearchForm extends React.Component {
     const { properties } = this.state;
     const data = properties ? parsePropertiesToData(properties) : {};
     await getFirstPageFilteredViewpointsAction(data, itemsPerPage, 1);
-    // Get error if fetch failed
-    const { codeError } = this.props;
-    codeError && toast.displayError(t('opp.form.error.server'));
     this.setState({ formValidation: 0 });
     handleResetPage();
   };

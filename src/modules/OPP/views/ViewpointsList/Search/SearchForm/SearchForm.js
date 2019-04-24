@@ -8,6 +8,13 @@ import { isDate, parsePropertiesToData } from '../../../../utils/validateFilters
 
 import './search-form.scss';
 
+// Prevent trigger onSubmit when press enter into input
+function onKeyPress (event) {
+  if (event.which === 13 /* Enter */) {
+    event.preventDefault();
+  }
+}
+
 export class SearchForm extends React.Component {
   state = {
     properties: {},
@@ -56,7 +63,7 @@ export class SearchForm extends React.Component {
     const isDisabled = formValidation === 1;
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} onKeyPress={onKeyPress} role="presentation">
         <Filters
           locales={locales}
           onChange={this.onChange}

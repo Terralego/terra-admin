@@ -3,7 +3,7 @@
     "account": "Votre compte",
     "add": "Ajouter",
     "error": {
-      "title": "Un problème est survenue. ",
+      "title": "Un problème est survenu. ",
       "text": "Retourner à la page d'accueil : ",
       "link": "Accueil",
       "title_404": "Erreur 404 : Page introuvable.",
@@ -14,7 +14,7 @@
       "previous": "Précedent",
       "next": "Suivant"
     },
-    "loading": "Chargement en cours ...",
+    "loading": "Chargement en cours…",
     "logout": "Se déconnecter"
   },
   "main": {
@@ -54,7 +54,7 @@
     "viewpoint": {
       "edit": {
         "add-picture": "$t(common.add) une picture",
-        "title": "Formulaire d'édition",
+        "title": "Formulaire d'édition du point de vue",
         "visualization-pictures": "Visualisation des images",
         "show-map": "Afficher la carte",
         "label": "$t(opp.form.label)",
@@ -71,7 +71,7 @@
         "date-format": "$t(opp.form.date-format)"
       },
       "create": {
-        "title": "Formulaire de création d'un viewpoint",
+        "title": "Formulaire de création d'un point de vue",
         "label": "$t(opp.form.label)",
         "longitude": {
           "label": "$t(opp.form.longitude.label)",
@@ -106,10 +106,10 @@
         "placeholder": "14.7786"
       },
       "picture": "Image",
-      "picture-id": "Id de la photographie",
+      "picture-id": "ID de la photographie",
       "date": "Date",
       "date-format": "JJ/MM/AAAA",
-      "municipalities":"Communes",
+      "municipalities": "Communes",
       "themes": "Thèmes",
       "keywords": "Mots clés",
       "filters": "Filtres",
@@ -120,10 +120,10 @@
         "server": "Le service est indisponible."
       },
       "success": {
-        "notification": "L'action executée s'est déroulée correctement.",
+        "notification": "L'action s'est executée correctement.",
         "notification_edit": "Le point de vue {{name, uppercase}} a été modifié.",
-        "notification_create": "Le point de vue {{name}} a été crée.",
-        "notification_add-picture": "Une image a été ajouté au point de vue : {{name}}."
+        "notification_create": "Le point de vue {{name}} a été créé.",
+        "notification_add-picture": "Une image a été ajoutée au point de vue : {{name}}."
       }
     }
   },

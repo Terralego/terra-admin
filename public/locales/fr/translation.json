@@ -116,6 +116,7 @@
       "typology": "Typologie des paysages",
       "photographer": "Photographe",
       "viewpoint-name": "Nom du point de vue",
+      "no-result": "Oups, il n'y a pas de résultats à votre recherche.",
       "error": {
         "server": "Le service est indisponible."
       },

@@ -4,6 +4,5 @@ import { connectOppProvider } from '../../../../services/OppProvider';
 import { SearchForm } from './SearchForm';
 
 export default connectOppProvider({
-  codeError: 'errors.code',
   getFirstPageFilteredViewpointsAction: 'getFirstPageFilteredViewpointsAction',
 })(withNamespaces()(SearchForm));

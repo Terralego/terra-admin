@@ -32,6 +32,7 @@ export class OppProvider extends React.Component {
           ...state.viewpoints,
           [id]: viewpoint,
         },
+        errors: {},
         loading: false,
       }));
     } catch (e) {
@@ -63,6 +64,7 @@ export class OppProvider extends React.Component {
           [page]: filteredViewpoints,
         },
         filters: data,
+        errors: {},
         loading: false,
       });
     } catch (e) {
@@ -87,6 +89,7 @@ export class OppProvider extends React.Component {
           ...prevState.viewpointsList,
           current: existingViewpoints,
         },
+        errors: {},
         loading: false,
       }));
     } else {
@@ -98,6 +101,7 @@ export class OppProvider extends React.Component {
             current: currentPageViewpoints,
             [page]: currentPageViewpoints,
           },
+          errors: {},
           loading: false,
         }));
       } catch (e) {
@@ -121,6 +125,7 @@ export class OppProvider extends React.Component {
           ...state.viewpoints,
           [viewpoint.id]: viewpoint,
         },
+        error: {},
       }));
       return viewpoint;
     } catch (e) {
@@ -144,6 +149,7 @@ export class OppProvider extends React.Component {
           ...state.viewpoints,
           [data.id]: viewpoint,
         },
+        error: {},
       }));
       return viewpoint;
     } catch (e) {

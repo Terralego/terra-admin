@@ -41,12 +41,12 @@ export class ViewpointList extends React.PureComponent {
       viewpointsList: { results = [], count, num_pages: numPages } = {},
       t,
       isLoading,
-      codeError,
+      errorCode,
     } = this.props;
 
     return (
       <>
-        {codeError && toast.displayError(t('opp.form.error.server'))}
+        {errorCode && toast.displayError(t('opp.form.error.server'))}
         <Search
           itemsPerPage={itemsPerPage}
           handleResetPage={this.handleResetPageFromSearch}
@@ -56,15 +56,11 @@ export class ViewpointList extends React.PureComponent {
             <H2>{t('opp.viewpoints.title')}</H2>
           </div>
           <div className="page--content">
-            {codeError && (
-              <p>Server error</p>
-            )}
-            {!codeError && (
+            {errorCode && <p>Server error</p>}
+            {!errorCode && (
               <>
                 <ViewpointAddItem />
-                {isLoading && (
-                  <Loading />
-                )}
+                {isLoading && <Loading />}
                 {!isLoading && (
                   <>
                     {results.map(viewpoint => (

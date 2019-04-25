@@ -7,7 +7,7 @@ export default withRouter(connectOppProvider((state, { match: { params: { id } }
   getViewpointAction: state.getViewpointAction,
   viewpoint: state.viewpoints[+id],
   hasError: state.errors[id],
-  codeError: state.errors.code,
+  errorCode: state.errors.code,
   saveViewpointAction: state.saveViewpointAction,
   uploadPictureViewpointAction: state.uploadPictureViewpointAction,
 }))(Viewpoint));

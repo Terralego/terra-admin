@@ -21,9 +21,9 @@ export class Viewpoint extends React.Component {
   }
 
   render () {
-    const { viewpoint, hasError, codeError } = this.props;
+    const { viewpoint, hasError, errorCode } = this.props;
 
-    if (hasError && codeError === 'Not Found') return <ErrorView error={{ code: 404 }} />;
+    if (hasError && errorCode === 'Not Found') return <ErrorView error={{ code: 404 }} />;
 
     if (!viewpoint) return <Loading />;
 

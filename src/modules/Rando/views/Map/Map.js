@@ -153,7 +153,6 @@ export class Map extends React.Component {
           {map && (
             <Details
               visible={isDetailsVisible}
-              interactions={interactions}
             />
           )}
         </div>

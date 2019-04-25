@@ -3,4 +3,14 @@ import { connectRandoProvider } from '../../services/RandoProvider';
 
 import Map from './Map';
 
-export default connectRandoProvider('getMapConfig', 'mapConfig', 'layersList', 'setMap', 'map', 'resizingMap', 'mapIsResizing')(withRouter(Map));
+export default connectRandoProvider(
+  'getMapConfig',
+  'mapConfig',
+  'layersList',
+  'setMap',
+  'map',
+  'resizingMap',
+  'mapIsResizing',
+  'getFeaturesList',
+  'featuresList',
+)(withRouter(Map));

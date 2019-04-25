@@ -6,6 +6,7 @@ import DataTable from '../../components/DataTable';
 import Details from '../../components/Details';
 import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
+import { getBounds } from '../../services/features';
 
 import './styles.scss';
 
@@ -17,24 +18,27 @@ export class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { getMapConfig } = this.props;
+    const { getMapConfig, match: { params: { layer } } } = this.props;
     getMapConfig();
     this.generateLayersToMap();
     this.setInteractions();
+    if (layer) {
+      this.loadFeatures();
+    }
   }
 
-  componentDidUpdate (
-    {
-      map: prevMap,
-      layersList: prevLayersList,
-      match: { params: { layer: prevLayer, action: prevAction } },
-    },
-  ) {
+  componentDidUpdate ({
+    map: prevMap,
+    layersList: prevLayersList,
+    match: { params: { layer: prevLayer, action: prevAction, id: prevId } },
+    featuresList: prevFeaturesList,
+  }) {
     const {
       layersList,
-      match: { params: { layer, action } },
+      match: { params: { layer, action, id } },
       resizingMap,
       map,
+      featuresList,
     } = this.props;
     if (layersList !== prevLayersList) {
       this.generateLayersToMap();
@@ -42,8 +46,14 @@ export class Map extends React.Component {
     if (layer !== prevLayer || map !== prevMap) {
       this.displayCurrentLayer(layer);
     }
+    if (layersList !== prevLayersList || layer !== prevLayer || map !== prevMap) {
+      this.loadFeatures();
+    }
     if (action !== prevAction) {
       resizingMap();
+    }
+    if (!id && featuresList && (prevId !== id || featuresList !== prevFeaturesList)) {
+      this.setFitBounds();
     }
   }
 
@@ -69,10 +79,30 @@ export class Map extends React.Component {
     });
   }
 
+  setFitBounds = () => {
+    const { featuresList, map } = this.props;
+    const coordinates = featuresList.map(feature => feature.geom.coordinates);
+    const bounds = getBounds(coordinates);
+    map.resize();
+    map.fitBounds(bounds, { padding: 20 });
+  }
+
+  getLayerFromList () {
+    const { layersList, match: { params: { layer } } } = this.props;
+    return layersList.find(({ name }) => name === layer);
+  }
+
   resetMap = map => {
     const { setMap } = this.props;
     setMap(map);
     map.resize();
+  }
+
+  loadFeatures = () => {
+    const { getFeaturesList } = this.props;
+    const layer = this.getLayerFromList();
+    if (!layer) return;
+    getFeaturesList(layer.id);
   }
 
   displayCurrentLayer = currentPath => {
@@ -100,6 +130,7 @@ export class Map extends React.Component {
       mapIsResizing,
       match: { params: { layer = false, action = false } },
     } = this.props;
+
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
     const isDetailsVisible = action;
 

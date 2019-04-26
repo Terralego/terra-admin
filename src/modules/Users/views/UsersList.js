@@ -7,7 +7,7 @@ import {
   BooleanField,
 } from 'react-admin';
 
-import ArrayCountField from '../components/ArrayCountField';
+import ArrayCountField from '../../../components/react-admin/ArrayCountField';
 
 export const UsersList = props => (
   <List {...props}>

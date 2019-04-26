@@ -8,7 +8,7 @@ import { withLocale } from '../../components/Locale';
 import dataProvider from './services/dataProvider';
 import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
-import RALayout from '../../components/RALayout';
+import RALayout from '../../components/react-admin/Layout';
 import UsersList from './views/UsersList';
 import UserEdit from './views/UserEdit';
 import UserCreate from './views/UserCreate';

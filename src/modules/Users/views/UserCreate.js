@@ -6,7 +6,7 @@ import {
   BooleanInput,
 } from 'react-admin';
 
-import JSONArea from '../components/JSONArea';
+import JSONArea from '../../../components/react-admin/JSONArea';
 
 export const UserCreate = props => (
   <Create {...props}>

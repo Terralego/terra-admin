@@ -7,8 +7,8 @@ import {
   BooleanInput,
 } from 'react-admin';
 
-import JSONArea from '../components/JSONArea';
-import TermListInput from '../components/TermListInput';
+import JSONArea from '../../../components/react-admin/JSONArea';
+import TermListInput from '../../../components/react-admin/TermListInput';
 
 const UserTitle = ({ record }) => <span>User {record ? `"${record.email}"` : ''}</span>;
 

@@ -1,30 +1,49 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
+import { withNamespaces } from 'react-i18next';
 
+import config from './config';
+import NavLayout from '../../components/NavLayout';
 import { withLocale } from '../../components/Locale';
 import dataProvider from './services/dataProvider';
 import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
+import RALayout from '../../components/RALayout';
 import UsersList from './views/UsersList';
 import UserEdit from './views/UserEdit';
 import UserCreate from './views/UserCreate';
 
 import './styles.scss';
 
-export const Users = withLocale(({ locale }) => (
-  <Admin
-    dataProvider={dataProvider}
-    authProvider={authProvider}
-    i18nProvider={i18nProvider}
-    locale={`${locale}`.substr(0, 2)}
+export const Users = ({ locale, t }) => (
+  <NavLayout
+    nav={(
+      <ul>
+        {config.nav.map(({ label, href }) => (
+          <li key={label}>
+            <a href={href}>
+              {t(label)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
   >
-    <Resource
-      name="user"
-      list={UsersList}
-      edit={UserEdit}
-      create={UserCreate}
-    />
-  </Admin>
-));
+    <Admin
+      appLayout={RALayout}
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+      i18nProvider={i18nProvider}
+      locale={`${locale}`.substr(0, 2)}
+    >
+      <Resource
+        name="user"
+        list={UsersList}
+        edit={UserEdit}
+        create={UserCreate}
+      />
+    </Admin>
+  </NavLayout>
+);
 
-export default Users;
+export default withNamespaces()(withLocale(Users));

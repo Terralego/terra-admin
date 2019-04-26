@@ -4,7 +4,7 @@ export default {
   permission: 'admin.users',
   nav: [{
     label: 'users.nav.list',
-    href: '',
+    href: '#user',
   }, {
     label: 'users.nav.create',
     href: '#user/create',

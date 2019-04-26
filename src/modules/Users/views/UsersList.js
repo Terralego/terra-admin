@@ -4,7 +4,7 @@ import {
   List, Datagrid,
   TextField,
   EditButton,
-  BooleanField, EmailField,
+  BooleanField,
 } from 'react-admin';
 
 import ArrayCountField from '../components/ArrayCountField';

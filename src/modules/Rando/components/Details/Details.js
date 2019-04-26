@@ -7,6 +7,10 @@ import Read from './Read';
 import './styles.scss';
 
 class Details extends React.Component {
+  actionComponents = {
+    read: Read,
+  };
+
   componentDidMount () {
     this.getData();
   }
@@ -43,9 +47,15 @@ class Details extends React.Component {
       visible,
       historyPush,
       paramLayer,
+      paramAction,
       paramId,
+      layer,
     } = this.props;
 
+    const ComponentAction = this.actionComponents[paramAction] || false;
+    if (!ComponentAction) {
+      return null;
+    }
     return (
       <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
         <div className="rando-details__close">
@@ -61,7 +71,7 @@ class Details extends React.Component {
           {!feature ? (
             <div>Loading...</div>
           ) : (
-            <Read layer={paramLayer} id={paramId} feature={feature} />
+            <ComponentAction paramLayer={paramLayer} paramId={paramId} layer={layer} feature={feature} historyPush={historyPush} />
           )}
         </div>
       </div>

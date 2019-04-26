@@ -20,6 +20,12 @@
   }
 
   .details {
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     &__title {
       font-size: 1.1rem;
       text-transform: uppercase;

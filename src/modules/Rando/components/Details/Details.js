@@ -4,11 +4,13 @@ import { Button } from '@blueprintjs/core';
 import { getBounds } from '../../services/features';
 
 import Read from './Read';
+import Update from './Update';
 import './styles.scss';
 
 class Details extends React.Component {
   actionComponents = {
     read: Read,
+    update: Update,
   };
 
   componentDidMount () {

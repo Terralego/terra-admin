@@ -7,7 +7,7 @@ import modules from '../modules';
  */
 export const getModulesComponentsByPermissions = (permissions = []) =>
   Object.values(modules)
-    // .filter(({ default: { config: { permission } } }) => permissions.includes(permission))
+    .filter(({ default: { config: { permission } } }) => permissions.includes(permission))
     .map(({ default: Component }) => Component);
 
 export default {

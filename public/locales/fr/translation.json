@@ -144,5 +144,11 @@
       "noFeature": "Non renseigné",
       "informations": "Informations"
     }
+  },
+  "ra": {
+    "action": {
+      "delete": "Supprimer",
+      "save": "Enregistrer"
+    }
   }
 }

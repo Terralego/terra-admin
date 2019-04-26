@@ -1,7 +1,7 @@
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
 import { fetchMapConfig, fetchAllLayers } from './map';
-import { fetchFeaturesList, fetchFeature } from './features';
+import { fetchFeaturesList, fetchFeature, saveFeature } from './features';
 
 export const context = React.createContext({});
 export const connectRandoProvider = connect(context);
@@ -71,6 +71,23 @@ export class RandoProvider extends React.Component {
     }
   }
 
+  saveFeatureAction = async (layerId, featureId, data) => {
+    try {
+      const feature = await saveFeature(layerId, featureId, data);
+      this.setState({
+        feature,
+        error: {},
+      });
+      return feature;
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [data.id]: true },
+      }));
+      return e;
+    }
+  }
+
   resizingMap = () => {
     const { map } = this.state;
     if (!map) return;
@@ -91,6 +108,7 @@ export class RandoProvider extends React.Component {
       getAllLayersAction,
       getFeaturesList,
       getFeature,
+      saveFeatureAction,
       setMap,
       resizingMap,
     } = this;
@@ -100,6 +118,7 @@ export class RandoProvider extends React.Component {
       getAllLayersAction,
       getFeaturesList,
       getFeature,
+      saveFeatureAction,
       setMap,
       resizingMap,
     };

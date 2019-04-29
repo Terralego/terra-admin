@@ -8,17 +8,13 @@ export default withRouter(connectRandoProvider(({
   getFeature,
   feature,
 }, {
-  history: { push },
   match: { params: { layer, action, id } },
-  visible,
 }) => ({
   map,
   getFeature,
   feature,
   layer: layersList.find(({ name }) => name === layer),
-  historyPush: push,
   paramLayer: layer,
   paramAction: action,
   paramId: id,
-  visible,
 }))(Details));

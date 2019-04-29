@@ -1,20 +1,28 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import classnames from 'classnames';
 import { Button } from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
 
-const Read = ({ t, feature: { properties }, historyPush, paramLayer, paramId }) => {
-  if (!Object.keys(properties).length) return null;
-  const noFeature = t('rando.details.noFeature');
+const Read = ({
+  t,
+  history: { push },
+  match: { params: { layer, id } },
+  schema: { properties },
+}) => {
+  if (!properties) return null;
+  const defaultTitle = t('rando.details.noFeature');
+  const { name: { default: title } } = properties;
+
   return (
     <div className="details">
       <div className="details__header">
-        <h2 className="details__title">{properties.name || noFeature}</h2>
+        <h2 className="details__title">{title || defaultTitle}</h2>
         <Button
-          onClick={() => historyPush(`/rando/map/layer/${paramLayer}/update/${paramId}`)}
+          onClick={() => push(`/rando/map/layer/${layer}/update/${id}`)}
           icon="edit"
         >
-          Modifier
+          {t('rando.details.edit')}
         </Button>
       </div>
       <div className="details_content">
@@ -22,9 +30,9 @@ const Read = ({ t, feature: { properties }, historyPush, paramLayer, paramId }) 
         <ul className="details__list">
           {Object.keys(properties).map(prop => (
             <li key={prop} className="details__list-item">
-              <strong className="details__list-label">{prop}</strong>
-              <span className={classnames('details__list-value', { 'details__list-value--empty': !properties[prop] })}>
-                {properties[prop] || noFeature}
+              <strong className="details__list-label">{properties[prop].title || prop}</strong>
+              <span className={classnames('details__list-value', { 'details__list-value--empty': !properties[prop].default })}>
+                {properties[prop].default || defaultTitle}
               </span>
             </li>
           ))}
@@ -33,4 +41,4 @@ const Read = ({ t, feature: { properties }, historyPush, paramLayer, paramId }) 
     </div>
   );
 };
-export default withNamespaces()(Read);
+export default withRouter(withNamespaces()(Read));

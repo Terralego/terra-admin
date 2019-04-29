@@ -141,6 +141,7 @@
       "maximize": "Agrandir"
     },
     "details": {
+      "edit": "Modifier",
       "noFeature": "Non renseigné",
       "informations": "Informations"
     }

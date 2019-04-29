@@ -8,6 +8,10 @@ import Update from './Update';
 import './styles.scss';
 
 class Details extends React.Component {
+  state = {
+    schema: {},
+  }
+
   actionComponents = {
     read: Read,
     update: Update,
@@ -15,19 +19,24 @@ class Details extends React.Component {
 
   componentDidMount () {
     this.getData();
+    this.setSchema();
   }
 
   componentDidUpdate ({
     paramLayer: prevParamlayer, paramId: prevParamId,
-    feature: { geom: { coordinates: prevCoordinates = [] } = {} } = {},
+    feature: { geom: { coordinates: prevCoordinates = [] } = {}, properties: prevProperties } = {},
   }) {
     const {
       paramLayer, paramId,
-      feature: { geom: { coordinates = [] } = {} } = {},
+      feature: { geom: { coordinates = [] } = {}, properties } = {},
       map,
     } = this.props;
     if (prevParamlayer !== paramLayer || prevParamId !== paramId) {
       this.getData();
+    }
+
+    if (properties !== prevProperties) {
+      this.setSchema();
     }
     if (prevCoordinates.join() !== coordinates.join()) {
       const bounds = getBounds(coordinates);
@@ -43,17 +52,37 @@ class Details extends React.Component {
     }
   }
 
+  setSchema = () => {
+    const {
+      feature: { properties } = {},
+      layer: { schema } = {},
+    } = this.props;
+    if (properties && schema) {
+      this.setState({
+        schema: {
+          type: 'object',
+          ...schema,
+          properties: Object.keys(schema.properties).reduce((list, prop) => ({
+            ...list,
+            [prop]: {
+              ...schema.properties[prop],
+              default: properties[prop] || '',
+            },
+          }), {}),
+        },
+      });
+    }
+  }
+
   render () {
     const {
       feature,
       visible,
-      historyPush,
+      history: { push },
       paramLayer,
       paramAction,
-      paramId,
-      layer,
     } = this.props;
-
+    const { schema } = this.state;
     const ComponentAction = this.actionComponents[paramAction] || false;
     if (!ComponentAction) {
       return null;
@@ -64,7 +93,7 @@ class Details extends React.Component {
           <Button
             type="button"
             className="rando-details__close-button"
-            onClick={() => historyPush(`/rando/map/layer/${paramLayer}`)}
+            onClick={() => push(`/rando/map/layer/${paramLayer}`)}
             icon="cross"
             minimal
           />
@@ -73,7 +102,7 @@ class Details extends React.Component {
           {!feature ? (
             <div>Loading...</div>
           ) : (
-            <ComponentAction paramLayer={paramLayer} paramId={paramId} layer={layer} feature={feature} historyPush={historyPush} />
+            <ComponentAction schema={schema} />
           )}
         </div>
       </div>

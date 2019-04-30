@@ -155,6 +155,13 @@
       "create": "Créer un nouvel utilisateur"
     }
   },
+  "datasources": {
+    "project": "Sources de données",
+    "nav": {
+      "list": "Toutes les sources de données",
+      "create": "Ajouter une sources de données"
+    }
+  },
   "ra": {
     "action": {
       "add_filter": "Ajouter un filtre",

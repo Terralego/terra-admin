@@ -5,7 +5,7 @@ import get from 'lodash.get';
 export const TermListInput = ({ source, record = {} }) => (
   <Labeled label={source}>
     <ul>
-      {get(record, source).map(
+      {(get(record, source) || []).map(
         item => (<li key={item}>{item}</li>),
       )}
     </ul>

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
 import { withNamespaces } from 'react-i18next';
+import drfProvider from 'ra-data-drf';
+import Api from 'mc-tf-test/modules/Api';
 
 import config from './config';
 import NavLayout from '../../components/NavLayout';
 import { withLocale } from '../../components/Locale';
-import dataProvider from './services/dataProvider';
 import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
 import RALayout from '../../components/react-admin/Layout';
@@ -31,7 +32,7 @@ export const Users = ({ locale, t }) => (
   >
     <Admin
       appLayout={RALayout}
-      dataProvider={dataProvider}
+      dataProvider={drfProvider(Api.host)}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
       locale={`${locale}`.substr(0, 2)}

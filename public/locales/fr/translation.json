@@ -162,6 +162,13 @@
       "create": "Ajouter une sources de données"
     }
   },
+  "datalayers": {
+    "project": "Arbre des couches",
+    "nav": {
+      "list": "Toutes les couches de données",
+      "create": "Ajouter une couche de données"
+    }
+  },
   "ra": {
     "action": {
       "add_filter": "Ajouter un filtre",

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Create,
   Edit,
   TabbedForm,
   TextInput, LongTextInput,
@@ -12,11 +13,8 @@ import {
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
-export const DataLayerEdit = props => (
-  <Edit
-    undoable={false}
-    {...props}
-  >
+export const DataLayerForm = (FormMode = Create) => props => (
+  <FormMode undoable={false} {...props}>
     <TabbedForm>
       <FormTab label="Definition">
         <ReferenceInput source="source_id" reference="source" label="Data source">
@@ -51,14 +49,28 @@ export const DataLayerEdit = props => (
       </FormTab>
 
       <FormTab label="Interactions">
+        <BooleanInput source="enable_table" label="Allow displaying data table" />
+
+        <BooleanInput source="enable_export" label="Allow displaying data table" />
+
         <BooleanInput source="enable_popup" label="Display popup on hover" />
         <LongTextInput source="popup_template" label="Popup template" />
 
         <BooleanInput source="enable_minifiche" label="Display minifiche on click" />
         <LongTextInput source="minifiche_template" label="Minifiche template" />
       </FormTab>
+
+      <FormTab label="Filtering">
+        <BooleanInput source="enable_filtering" label="Allow filtering by field" />
+      </FormTab>
     </TabbedForm>
-  </Edit>
+  </FormMode>
 );
 
-export default DataLayerEdit;
+export const DataLayerCreate = DataLayerForm(Create);
+export const DataLayerEdit = DataLayerForm(Edit);
+
+export default {
+  DataLayerCreate,
+  DataLayerEdit,
+};

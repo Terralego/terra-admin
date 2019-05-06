@@ -10,8 +10,10 @@ import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
 import RALayout from '../../components/react-admin/Layout';
 import DataLayersList from './views/DataLayersList';
-import DataLayerEdit from './views/DataLayerEdit';
-import DataLayerCreate from './views/DataLayerCreate';
+import {
+  DataLayerCreate,
+  DataLayerEdit,
+} from './views/DataLayerForm';
 
 import './styles.scss';
 

@@ -42,6 +42,9 @@ export const DataSources = ({ locale, t }) => (
         edit={DataSourceEdit}
         create={DataSourceCreate}
       />
+      <Resource
+        name="layer"
+      />
     </Admin>
   </NavLayout>
 );

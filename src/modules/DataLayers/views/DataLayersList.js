@@ -33,7 +33,7 @@ export const DataLayersList = props => (
   >
     <Datagrid rowClick="edit">
       <TextField source="name" />
-      <ReferenceField source="source_id" reference="source" label="Data source">
+      <ReferenceField source="source_id" reference="source" label="Data source" linkType={false}>
         <TextField source="name" />
       </ReferenceField>
       <EditButton />

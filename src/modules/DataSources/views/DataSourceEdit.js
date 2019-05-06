@@ -11,6 +11,9 @@ import {
   SimpleFormIterator,
   FormTab,
   DisabledInput,
+  ReferenceManyField,
+  Datagrid,
+  TextField,
 } from 'react-admin';
 
 import Card from '@material-ui/core/Card';
@@ -75,6 +78,18 @@ export const DataSourceEdit = props => (
             { id: 'monthly', name: 'Monthly' },
           ]}
         />
+
+        {/* List of dataLayers referencing this */}
+        <ReferenceManyField
+          label="Already used by"
+          reference="layer"
+          target="source_id"
+        >
+          <Datagrid>
+            <TextField source="type" />
+            <TextField source="name" />
+          </Datagrid>
+        </ReferenceManyField>
       </FormTab>
 
       {/* Fields */}

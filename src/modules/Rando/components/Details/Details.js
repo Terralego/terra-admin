@@ -41,6 +41,7 @@ class Details extends React.Component {
     if (properties !== prevProperties) {
       this.setSchema();
     }
+
     if (prevCoordinates.join() !== coordinates.join()) {
       const bounds = getBounds(coordinates);
       map.fitBounds(bounds, { padding: 20 });

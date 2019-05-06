@@ -6,13 +6,13 @@ export default withRouter(connectRandoProvider(({
   layersList,
   map,
   getFeature,
-  feature,
+  currentFeature,
 }, {
   match: { params: { layer, action, id } },
 }) => ({
   map,
   getFeature,
-  feature,
+  currentFeature,
   layer: layersList.find(({ name }) => name === layer),
   paramLayer: layer,
   paramAction: action,

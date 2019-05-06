@@ -24,11 +24,14 @@ class Details extends React.Component {
 
   componentDidUpdate ({
     paramLayer: prevParamlayer, paramId: prevParamId,
-    feature: { geom: { coordinates: prevCoordinates = [] } = {}, properties: prevProperties } = {},
+    currentFeature: {
+      geom: { coordinates: prevCoordinates = [] } = {},
+      properties: prevProperties,
+    } = {},
   }) {
     const {
       paramLayer, paramId,
-      feature: { geom: { coordinates = [] } = {}, properties } = {},
+      currentFeature: { geom: { coordinates = [] } = {}, properties } = {},
       map,
     } = this.props;
     if (prevParamlayer !== paramLayer || prevParamId !== paramId) {
@@ -54,7 +57,7 @@ class Details extends React.Component {
 
   setSchema = () => {
     const {
-      feature: { properties } = {},
+      currentFeature: { properties } = {},
       layer: { schema } = {},
     } = this.props;
     if (properties && schema) {
@@ -76,7 +79,7 @@ class Details extends React.Component {
 
   render () {
     const {
-      feature,
+      currentFeature,
       visible,
       history: { push },
       paramLayer,
@@ -99,7 +102,7 @@ class Details extends React.Component {
           />
         </div>
         <div className="rando-details__content">
-          {!feature ? (
+          {!currentFeature ? (
             <div>Loading...</div>
           ) : (
             <ComponentAction schema={schema} />

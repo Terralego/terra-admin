@@ -61,28 +61,28 @@ export class RandoProvider extends React.Component {
 
   getFeature = async (layerId, featureId) => {
     try {
-      const feature = await fetchFeature(layerId, featureId);
-      this.setState({ feature });
+      const currentFeature = await fetchFeature(layerId, featureId);
+      this.setState({ currentFeature });
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.feature.length]: true },
+        errors: { ...state.errors, [state.currentFeature.length]: true },
       }));
     }
   }
 
   saveFeatureAction = async (layerId, featureId, data) => {
     try {
-      const feature = await saveFeature(layerId, featureId, data);
+      const currentFeature = await saveFeature(layerId, featureId, data);
       this.setState({
-        feature,
+        currentFeature,
         error: {},
       });
-      return feature;
+      return currentFeature;
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [data.id]: true },
+        errors: { ...state.errors, [state.currentFeature.length]: true },
       }));
       return e;
     }

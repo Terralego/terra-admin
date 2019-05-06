@@ -11,7 +11,7 @@ const Update = ({
   schema,
   schema: { properties },
   match: { params: { layer, id } },
-  feature: { geom },
+  currentFeature: { geom },
   saveFeatureAction,
 }) => {
   if (!properties) return null;
@@ -33,4 +33,4 @@ const Update = ({
   );
 };
 
-export default connectRandoProvider('feature', 'saveFeatureAction')(withRouter(withNamespaces()(Update)));
+export default connectRandoProvider('currentFeature', 'saveFeatureAction')(withRouter(withNamespaces()(Update)));

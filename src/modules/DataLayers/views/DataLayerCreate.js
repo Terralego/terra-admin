@@ -19,6 +19,17 @@ export const DataLayerCreate = props => (
         <ReferenceInput source="source_id" reference="source" label="Data source">
           <SelectInput />
         </ReferenceInput>
+
+        <SelectInput
+          source="type"
+          label="Vue"
+          choices={[
+            { id: 'Visualiser', name: 'Visualiser' },
+            { id: 'Analyser', name: 'Analyser' },
+            { id: 'Story', name: 'Story' },
+          ]}
+        />
+
         <TextInput
           source="name"
           validate={required()}

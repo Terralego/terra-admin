@@ -14,9 +14,11 @@ import {
   ReferenceManyField,
   Datagrid,
   TextField,
+  CardActions,
 } from 'react-admin';
 
 import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
@@ -31,9 +33,16 @@ const FieldSample = ({ record: { sample } }) => (sample ? (
   <div />
 ));
 
+const SourceEditActions = () => (
+  <CardActions>
+    <Button color="primary" variant="raised" onClick={() => {}}>Refresh data</Button>
+  </CardActions>
+);
+
 export const DataSourceEdit = props => (
   <Edit
     undoable={false}
+    actions={<SourceEditActions />}
     {...props}
   >
     <TabbedForm>

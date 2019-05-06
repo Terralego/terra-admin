@@ -42,6 +42,8 @@ export const DataLayerCreate = props => (
 
       <FormTab label="Style">
         <LongTextInput source="style" label="Layer style" />
+
+        <BooleanInput source="enable_legend" label="Display legend" />
         <LongTextInput source="legend_template" label="Legend template" />
       </FormTab>
 

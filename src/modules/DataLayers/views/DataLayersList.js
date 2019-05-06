@@ -5,6 +5,7 @@ import {
   TextField,
   TextInput,
   EditButton,
+  ReferenceInput,
   SelectInput,
   Filter,
   ReferenceField,
@@ -13,14 +14,10 @@ import {
 const ListFilters = props => (
   <Filter {...props}>
     <TextInput label="Search" source="q" alwaysOn />
-    <SelectInput
-      source="type"
-      label="Source type"
-      choices={[
-        { id: 'file', name: 'Import file' },
-        { id: 'sql_query', name: 'SQL query' },
-      ]}
-    />
+
+    <ReferenceInput source="source_id" reference="source" label="Data source">
+      <SelectInput />
+    </ReferenceInput>
   </Filter>
 );
 

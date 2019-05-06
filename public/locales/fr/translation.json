@@ -156,14 +156,14 @@
     }
   },
   "datasources": {
-    "project": "Sources de données",
+    "project": "Entrepôt de données",
     "nav": {
       "list": "Toutes les sources de données",
       "create": "Ajouter une sources de données"
     }
   },
   "datalayers": {
-    "project": "Arbre des couches",
+    "project": "Visualiseur",
     "nav": {
       "list": "Toutes les couches de données",
       "create": "Ajouter une couche de données"

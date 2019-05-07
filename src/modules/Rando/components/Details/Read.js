@@ -12,7 +12,7 @@ const Read = ({
 }) => {
   if (!properties) return null;
   const defaultTitle = t('rando.details.noFeature');
-  const { name: { default: title } } = properties;
+  const { name: { default: title } = {} } = properties;
 
   return (
     <div className="details">

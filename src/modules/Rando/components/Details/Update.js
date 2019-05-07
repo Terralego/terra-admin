@@ -76,7 +76,7 @@ class Update extends React.Component {
     const { loading, schema, schema: { properties } } = this.state;
     const { t } = this.props;
     if (!properties) return null;
-    const { name: { default: title } } = properties;
+    const { name: { default: title } = {} } = properties;
     return (
       <div className="details ">
         <div className="details__header">

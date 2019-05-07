@@ -28,13 +28,15 @@ class Details extends React.Component {
       geom: { coordinates: prevCoordinates = [] } = {},
       properties: prevProperties,
     } = {},
+    layer: prevLayer,
   }) {
     const {
       paramLayer, paramId,
       currentFeature: { geom: { coordinates = [] } = {}, properties } = {},
       map,
+      layer,
     } = this.props;
-    if (prevParamlayer !== paramLayer || prevParamId !== paramId) {
+    if (prevParamlayer !== paramLayer || prevParamId !== paramId || prevLayer !== layer) {
       this.getData();
     }
 
@@ -42,7 +44,7 @@ class Details extends React.Component {
       this.setSchema();
     }
 
-    if (prevCoordinates.join() !== coordinates.join()) {
+    if (prevCoordinates.join() !== coordinates.join() || prevParamId !== paramId) {
       const bounds = getBounds(coordinates);
       map.fitBounds(bounds, { padding: 20 });
     }

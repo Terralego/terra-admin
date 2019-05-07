@@ -7,15 +7,15 @@ import Read from './Read';
 import Update from './Update';
 import './styles.scss';
 
+const ACTIONS = {
+  read: Read,
+  update: Update,
+};
+
 class Details extends React.Component {
   state = {
     schema: {},
   }
-
-  actionComponents = {
-    read: Read,
-    update: Update,
-  };
 
   componentDidMount () {
     this.getData();
@@ -89,7 +89,7 @@ class Details extends React.Component {
       paramAction,
     } = this.props;
     const { schema } = this.state;
-    const ComponentAction = this.actionComponents[paramAction] || false;
+    const ComponentAction = ACTIONS[paramAction];
     if (!ComponentAction) {
       return null;
     }

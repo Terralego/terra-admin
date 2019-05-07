@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Button } from '@blueprintjs/core';
+import { NavLink } from 'react-router-dom';
+import { Icon } from '@blueprintjs/core';
 import { getBounds } from '../../services/features';
 
 import Read from './Read';
@@ -84,9 +85,9 @@ class Details extends React.Component {
     const {
       currentFeature,
       visible,
-      history: { push },
       paramLayer,
       paramAction,
+      t,
     } = this.props;
     const { schema } = this.state;
     const ComponentAction = ACTIONS[paramAction];
@@ -96,13 +97,11 @@ class Details extends React.Component {
     return (
       <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
         <div className="rando-details__close">
-          <Button
-            type="button"
-            className="rando-details__close-button"
-            onClick={() => push(`/rando/map/layer/${paramLayer}`)}
-            icon="cross"
-            minimal
-          />
+          <NavLink to={`/rando/map/layer/${paramLayer}`}>
+            <span className="bp3-button bp3-minimal">
+              <Icon icon="cross" title={t('rando.details.close')} />
+            </span>
+          </NavLink>
         </div>
         <div className="rando-details__content">
           {!currentFeature ? (

@@ -34,6 +34,15 @@ const mockedInteraction = {
     }, {
       id: 'terralego-biens',
       interaction: 'viewFeature',
+    }, {
+      id: 'terralego-tampon',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-biens_polygon',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-composantes',
+      interaction: 'viewFeature',
     },
   ],
 };

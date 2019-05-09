@@ -46,6 +46,16 @@ const mockedCustomStyle = {
       },
       'source-layer': 'biens_polygon',
     },
+    {
+      id: 'terralego-composantes',
+      type: 'circle',
+      source: 'terralego',
+      paint: {
+        'circle-color': 'crimson',
+        'circle-radius': 8,
+      },
+      'source-layer': 'Composantes',
+    },
   ],
 };
 

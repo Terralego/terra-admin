@@ -10,6 +10,7 @@ import {
   NumberInput,
   ArrayInput,
   FormDataConsumer,
+  DisabledInput,
 } from 'react-admin';
 
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
@@ -52,13 +53,13 @@ export const DataLayerForm = (FormMode = Create) => props => (
 
       <FormTab label="Interactions">
         <BooleanInput source="enable_table" label="Allow displaying data table" />
-        <BooleanInput source="enable_export" label="Allow displaying data table" />
+        <BooleanInput source="enable_export" label="Allow exporting data as a file" />
 
-        <FormDataConsumer>
+        <FormDataConsumer className="table_field-content">
           {({ formData, dispatch, ...rest }) => (
-            <ArrayInput source="table_fields" {...rest}>
-              <CustomFormIterator disableAdd disableRemove>
-                <TextInput source="name" />
+            <ArrayInput source="table_fields" label="All available fields" {...rest}>
+              <CustomFormIterator disableAdd disableRemove classes={{ form: 'table_field-content-row' }}>
+                <DisabledInput source="name" />
                 <BooleanInput source="shown" />
                 <BooleanInput source="exportable" />
               </CustomFormIterator>

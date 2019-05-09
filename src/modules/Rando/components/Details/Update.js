@@ -14,40 +14,27 @@ class Update extends React.Component {
 
   componentDidMount () {
     const { schema } = this.props;
-    this.setSchema(schema);
-  }
-
-  componentDidUpdate ({
-    currentFeature: prevCurrentFeature,
-    schema: prevSchema,
-  }) {
-    const { currentFeature, schema } = this.props;
-    if (currentFeature !== prevCurrentFeature) {
-      this.setLoading(false);
-    }
-    if (schema !== prevSchema) {
-      this.setSchema(schema);
-    }
-  }
-
-  setLoading (loading) {
-    this.setState({
-      loading,
-    });
-  }
-
-  setSchema (schema) {
     this.setState({
       schema,
     });
   }
 
-  saveFeature = formData => {
+  static getDerivedStateFromProps ({ schema }, { schema: stateSchema }) {
+    if (!Object.keys(stateSchema).length && stateSchema !== schema) {
+      return {
+        schema,
+      };
+    }
+    return null;
+  }
+
+
+  submitFeature = async formData => {
     const { schema } = this.state;
     const {
       match: { params: { layer, id } },
-      currentFeature: { geom },
-      saveFeatureAction,
+      feature: { [id]: { geom } },
+      saveFeature,
     } = this.props;
 
 
@@ -56,6 +43,7 @@ class Update extends React.Component {
     if (!formHasChanged) {
       return;
     }
+
     this.setState({
       loading: true,
       schema: {
@@ -69,7 +57,11 @@ class Update extends React.Component {
         }), {}),
       },
     });
-    saveFeatureAction(layer, id, { geom, properties: formData });
+
+    await saveFeature(layer, id, { geom, properties: formData });
+    this.setState({
+      loading: false,
+    });
   }
 
   render () {
@@ -85,7 +77,7 @@ class Update extends React.Component {
         <div className="details_content">
           <Form
             schema={schema}
-            onSubmit={({ formData }) => this.saveFeature(formData)}
+            onSubmit={({ formData }) => this.submitFeature(formData)}
           >
             <Button intent="primary" loading={loading} type="submit"> {t('rando.details.save')}</Button>
           </Form>
@@ -95,4 +87,4 @@ class Update extends React.Component {
   }
 }
 
-export default connectRandoProvider('currentFeature', 'saveFeatureAction')(withRouter(withNamespaces()(Update)));
+export default connectRandoProvider('feature', 'saveFeature')(withRouter(withNamespaces()(Update)));

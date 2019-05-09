@@ -25,18 +25,21 @@ class Details extends React.Component {
 
   componentDidUpdate ({
     paramLayer: prevParamlayer, paramId: prevParamId,
-    currentFeature: {
-      geom: { coordinates: prevCoordinates = [] } = {},
-      properties: prevProperties,
+    feature: {
+      [prevParamId]: {
+        geom: { coordinates: prevCoordinates = [] } = {},
+        properties: prevProperties,
+      } = {},
     } = {},
     layer: prevLayer,
   }) {
     const {
       paramLayer, paramId,
-      currentFeature: { geom: { coordinates = [] } = {}, properties } = {},
+      feature: { [paramId]: { geom: { coordinates = [] } = {}, properties } = {} } = {},
       map,
       layer,
     } = this.props;
+
     if (prevParamlayer !== paramLayer || prevParamId !== paramId || prevLayer !== layer) {
       this.getData();
     }
@@ -46,22 +49,24 @@ class Details extends React.Component {
     }
 
     if (prevCoordinates.join() !== coordinates.join() || prevParamId !== paramId) {
+      if (!coordinates.length) return;
       const bounds = getBounds(coordinates);
       map.fitBounds(bounds, { padding: 20 });
     }
   }
 
   getData () {
-    const { layer, paramId, getFeature } = this.props;
+    const { layer, paramId, fetchFeature } = this.props;
     if (layer && paramId) {
       const { id: layerId } = layer;
-      getFeature(layerId, paramId);
+      fetchFeature(layerId, paramId);
     }
   }
 
   setSchema = () => {
     const {
-      currentFeature: { properties } = {},
+      paramId,
+      feature: { [paramId]: { properties } = {} } = {},
       layer: { schema } = {},
     } = this.props;
     if (properties && schema) {
@@ -83,7 +88,7 @@ class Details extends React.Component {
 
   render () {
     const {
-      currentFeature,
+      feature,
       visible,
       paramLayer,
       paramAction,
@@ -104,7 +109,7 @@ class Details extends React.Component {
           </NavLink>
         </div>
         <div className="rando-details__content">
-          {!currentFeature ? (
+          {!feature ? (
             <div>Loading...</div>
           ) : (
             <ComponentAction schema={schema} />

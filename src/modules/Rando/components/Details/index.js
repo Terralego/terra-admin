@@ -6,14 +6,14 @@ import Details from './Details';
 export default withRouter(connectRandoProvider(({
   layersList,
   map,
-  getFeature,
-  currentFeature,
+  fetchFeature,
+  feature,
 }, {
   match: { params: { layer, action, id } },
 }) => ({
   map,
-  getFeature,
-  currentFeature,
+  fetchFeature,
+  feature,
   layer: layersList.find(({ name }) => name === layer),
   paramLayer: layer,
   paramAction: action,

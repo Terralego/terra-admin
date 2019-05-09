@@ -35,6 +35,8 @@ export const DataSourcesList = props => (
   >
     <Datagrid rowClick="edit">
       <TextField source="name" />
+      <TextField source="type" />
+      <TextField source="geom_type" />
       <EditButton />
     </Datagrid>
   </List>

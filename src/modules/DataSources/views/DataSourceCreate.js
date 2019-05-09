@@ -19,6 +19,17 @@ export const DataSourceCreate = props => (
         type="text"
       />
       <LongTextInput source="description" defaultValue="" />
+
+      <RadioButtonGroupInput
+        source="geom_type"
+        validate={required()}
+        choices={[
+          { id: 'point', name: 'Point' },
+          { id: 'line', name: 'Line' },
+          { id: 'polygon', name: 'Polygon' },
+        ]}
+      />
+
       <RadioButtonGroupInput
         source="type"
         validate={required()}

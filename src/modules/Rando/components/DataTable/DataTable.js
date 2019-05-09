@@ -36,9 +36,15 @@ class DataTable extends React.Component {
   }
 
   setData = () => {
-    const { featuresList, layer } = this.props;
-    const { schema: { properties } } = layer;
+    const {
+      featuresList,
+      layer: {
+        schema: { properties },
+        settings: { properties: { default_list: defaultList = false } = {} },
+      },
+    } = this.props;
     const columns = Object.keys(properties).map(value => ({
+      display: !defaultList || defaultList.includes(value),
       sortable: true,
       ...properties[value],
       value,
@@ -84,8 +90,8 @@ class DataTable extends React.Component {
         <Table
           columns={columns}
           data={data}
-          Header={() => (
-            <Header source={source} full={full} resize={this.resize} />
+          Header={props => (
+            <Header {...props} source={source} full={full} resize={this.resize} />
           )}
           locales={{
             sortAsc: t('rando.table.sortAsc'),

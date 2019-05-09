@@ -138,7 +138,9 @@
       "sortAsc": "Tri croissant",
       "sortDesc": "Tri décroissant",
       "minimize": "Réduire",
-      "maximize": "Agrandir"
+      "maximize": "Agrandir",
+      "columnsDisplay": "Afficher toutes les colonnes",
+      "columnsHide": "Cacher toutes les colonnes"
     },
     "details": {
       "edit": "Modifier",

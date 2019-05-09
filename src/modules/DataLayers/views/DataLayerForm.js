@@ -6,10 +6,14 @@ import {
   TextInput, LongTextInput,
   BooleanInput,
   FormTab,
-  ReferenceInput,
   SelectInput,
   NumberInput,
+  ArrayInput,
+  FormDataConsumer,
 } from 'react-admin';
+
+import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
+import SourceSelector from '../components/SourceSelector';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
@@ -17,9 +21,7 @@ export const DataLayerForm = (FormMode = Create) => props => (
   <FormMode undoable={false} {...props}>
     <TabbedForm>
       <FormTab label="Definition">
-        <ReferenceInput source="source_id" reference="source" label="Data source">
-          <SelectInput />
-        </ReferenceInput>
+        <SourceSelector />
 
         <SelectInput
           source="type"
@@ -50,8 +52,19 @@ export const DataLayerForm = (FormMode = Create) => props => (
 
       <FormTab label="Interactions">
         <BooleanInput source="enable_table" label="Allow displaying data table" />
-
         <BooleanInput source="enable_export" label="Allow displaying data table" />
+
+        <FormDataConsumer>
+          {({ formData, dispatch, ...rest }) => (
+            <ArrayInput source="table_fields" {...rest}>
+              <CustomFormIterator disableAdd disableRemove>
+                <TextInput source="name" />
+                <BooleanInput source="shown" />
+                <BooleanInput source="exportable" />
+              </CustomFormIterator>
+            </ArrayInput>
+          )}
+        </FormDataConsumer>
 
         <BooleanInput source="enable_popup" label="Display popup on hover" />
         <LongTextInput source="popup_template" label="Popup template" />

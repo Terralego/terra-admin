@@ -20,7 +20,10 @@ import FieldSummary from '../../../components/react-admin/FieldSummary';
 const required = (message = 'Required') => value => (value ? undefined : message);
 
 export const DataLayerForm = (FormMode = Create) => props => (
-  <FormMode undoable={false} {...props}>
+  <FormMode
+    {...(FormMode === Edit ? { undoable: false } : {})}
+    {...props}
+  >
     <TabbedForm>
       <FormTab label="Definition">
         <SourceSelector />

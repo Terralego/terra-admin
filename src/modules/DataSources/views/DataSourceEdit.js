@@ -17,21 +17,10 @@ import {
   CardActions,
 } from 'react-admin';
 
-import Card from '@material-ui/core/Card';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import Button from '@material-ui/core/Button';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 
-const FieldSample = ({ record: { sample } }) => (sample ? (
-  <Card>
-    <CardContent>
-      <Typography color="textSecondary" gutterBottom>Data sample</Typography>
-      {sample}
-    </CardContent>
-  </Card>
-) : (
-  <div />
-));
+import FieldSample from '../../../components/react-admin/FieldSample';
 
 const SourceEditActions = () => (
   <CardActions>

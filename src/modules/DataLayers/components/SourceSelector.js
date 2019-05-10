@@ -19,7 +19,7 @@ const SourceSelector = connect()(({ dispatch, ...props }) => (
     onChange={async (event, toId) => {
       const dataProvider = jsonServerProvider('http://localhost:3333');
       const { data: { fields } } = await dataProvider(GET_ONE, 'source', { id: toId });
-      dispatch(change(REDUX_FORM_NAME, 'table_fields', fields || null));
+      dispatch(change(REDUX_FORM_NAME, 'fields', fields || null));
     }}
     {...props}
   >

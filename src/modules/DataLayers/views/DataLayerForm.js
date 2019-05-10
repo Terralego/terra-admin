@@ -15,6 +15,7 @@ import {
 
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
 import SourceSelector from '../components/SourceSelector';
+import FieldSummary from '../../../components/react-admin/FieldSummary';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
@@ -57,7 +58,7 @@ export const DataLayerForm = (FormMode = Create) => props => (
 
         <FormDataConsumer className="table_field-content">
           {({ formData, dispatch, ...rest }) => (
-            <ArrayInput source="table_fields" label="All available fields" {...rest}>
+            <ArrayInput source="fields" label="All available fields" {...rest}>
               <CustomFormIterator disableAdd disableRemove classes={{ form: 'table_field-content-row' }}>
                 <DisabledInput source="name" />
                 <BooleanInput source="shown" />
@@ -76,6 +77,26 @@ export const DataLayerForm = (FormMode = Create) => props => (
 
       <FormTab label="Filtering">
         <BooleanInput source="enable_filtering" label="Allow filtering by field" />
+
+        <FormDataConsumer>
+          {({ formData, dispatch, ...rest }) => (
+            <ArrayInput source="fields" label="All available fields" {...rest}>
+              <CustomFormIterator disableAdd disableRemove>
+                <FieldSummary />
+                <SelectInput
+                  source="filter_type"
+                  choices={[
+                    { id: 'text', name: 'Text' },
+                    { id: 'number', name: 'Number' },
+                    { id: 'number_range', name: 'Number range' },
+                    { id: 'date_range', name: 'Date range' },
+                    { id: 'enum', name: 'Enum' },
+                  ]}
+                />
+              </CustomFormIterator>
+            </ArrayInput>
+          )}
+        </FormDataConsumer>
       </FormTab>
     </TabbedForm>
   </FormMode>

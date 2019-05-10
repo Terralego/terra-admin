@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { Icon } from '@blueprintjs/core';
 import { getBounds } from '../../services/features';
+import Loading from '../../../../components/Loading';
 
 import Read from './Read';
 import Update from './Update';
@@ -110,7 +111,7 @@ class Details extends React.Component {
         </div>
         <div className="rando-details__content">
           {!feature ? (
-            <div>Loading...</div>
+            <Loading spinner />
           ) : (
             <ComponentAction schema={schema} />
           )}

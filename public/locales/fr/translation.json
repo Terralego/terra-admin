@@ -159,7 +159,7 @@
     "project": "Entrepôt de données",
     "nav": {
       "list": "Toutes les sources de données",
-      "create": "Ajouter une sources de données"
+      "create": "Ajouter une source de données"
     }
   },
   "datalayers": {

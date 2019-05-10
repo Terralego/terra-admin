@@ -6,7 +6,6 @@ import Nav from './components/Nav';
 import Routing from '../../components/Routing';
 import RandoProvider from './services/RandoProvider';
 
-import Search from './components/Search';
 import './styles.scss';
 
 const Map = () => import('./views/Map');
@@ -18,7 +17,6 @@ export const Rando = () => (
     <div className="rando">
       <NavLayout nav={<Nav />}>
         <div className="rando-main">
-          <Search />
           <Routing
             routes={[
               {

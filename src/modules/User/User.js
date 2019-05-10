@@ -10,9 +10,7 @@ import { withLocale } from '../../components/Locale';
 import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
 import RALayout from '../../components/react-admin/Layout';
-import UserList from './views/UserList';
-import UserEdit from './views/UserEdit';
-import UserCreate from './views/UserCreate';
+import userViews from './views';
 
 import './styles.scss';
 
@@ -39,9 +37,7 @@ export const User = ({ locale, t }) => (
     >
       <Resource
         name="user"
-        list={UserList}
-        edit={UserEdit}
-        create={UserCreate}
+        {...userViews}
       />
     </Admin>
   </NavLayout>

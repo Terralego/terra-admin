@@ -2,7 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { change } from 'redux-form';
-import jsonServerProvider from 'ra-data-json-server';
+import drfProvider from 'ra-data-drf';
+import Api from 'mc-tf-test/modules/Api';
 
 import {
   SelectInput,
@@ -17,7 +18,7 @@ const SourceSelector = connect()(({ dispatch, ...props }) => (
     reference="source"
     label="Data source"
     onChange={async (event, toId) => {
-      const dataProvider = jsonServerProvider('http://localhost:3333');
+      const dataProvider = drfProvider(Api.host);
       const { data: { fields } } = await dataProvider(GET_ONE, 'source', { id: toId });
       dispatch(change(REDUX_FORM_NAME, 'fields', fields || null));
     }}

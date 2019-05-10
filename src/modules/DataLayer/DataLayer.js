@@ -1,7 +1,8 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
 import { withNamespaces } from 'react-i18next';
-import jsonServerProvider from 'ra-data-json-server';
+import drfProvider from 'ra-data-drf';
+import Api from 'mc-tf-test/modules/Api';
 
 import config from './config';
 import NavLayout from '../../components/NavLayout';
@@ -29,7 +30,7 @@ export const DataLayer = ({ locale, t }) => (
   >
     <Admin
       appLayout={RALayout}
-      dataProvider={jsonServerProvider('http://localhost:3333')}
+      dataProvider={drfProvider(Api.host)}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
       locale={`${locale}`.substr(0, 2)}

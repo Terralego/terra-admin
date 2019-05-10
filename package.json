@@ -20,7 +20,6 @@
     "prop-types": "^15.6.2",
     "querystring": "^0.2.0",
     "ra-data-drf": "~2.0.0",
-    "ra-data-json-server": "~2.9.0",
     "react": "^16.8.6",
     "react-admin": "^2.9.0",
     "react-ctx-connect": "^1.0.1",

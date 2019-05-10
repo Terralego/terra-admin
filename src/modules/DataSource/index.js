@@ -3,13 +3,13 @@ import React, { lazy, Suspense } from 'react';
 import config from './config';
 import Loading from '../../components/Loading';
 
-const DataSourcesMain = lazy(() => import('./DataSources'));
+const DataSourceMain = lazy(() => import('./DataSource'));
 
-const DataSources = () => (
+const DataSource = () => (
   <Suspense fallback={<Loading />}>
-    <DataSourcesMain />
+    <DataSourceMain />
   </Suspense>
 );
-DataSources.config = config;
+DataSource.config = config;
 
-export default DataSources;
+export default DataSource;

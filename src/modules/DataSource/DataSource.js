@@ -13,7 +13,7 @@ import dataSourceViews from './views';
 
 import './styles.scss';
 
-export const DataSources = ({ locale, t }) => (
+export const DataSource = ({ locale, t }) => (
   <NavLayout
     nav={(
       <ul>
@@ -45,4 +45,4 @@ export const DataSources = ({ locale, t }) => (
   </NavLayout>
 );
 
-export default withNamespaces()(withLocale(DataSources));
+export default withNamespaces()(withLocale(DataSource));

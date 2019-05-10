@@ -23,7 +23,7 @@ const ListFilters = props => (
   </Filter>
 );
 
-export const DataSourcesList = props => (
+export const DataSourceList = props => (
   <List
     sort={{
       field: 'name',
@@ -42,4 +42,4 @@ export const DataSourcesList = props => (
   </List>
 );
 
-export default DataSourcesList;
+export default DataSourceList;

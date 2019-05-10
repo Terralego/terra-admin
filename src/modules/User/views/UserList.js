@@ -16,7 +16,7 @@ const UserBulkActionButtons = props => (
   </>
 );
 
-export const UsersList = props => (
+export const UserList = props => (
   <List {...props} bulkActionButtons={<UserBulkActionButtons />}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
@@ -30,4 +30,4 @@ export const UsersList = props => (
   </List>
 );
 
-export default UsersList;
+export default UserList;

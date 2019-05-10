@@ -21,6 +21,7 @@ import {
 import Button from '@material-ui/core/Button';
 
 import FieldSample from '../../../components/react-admin/FieldSample';
+import DbFields from '../components/DbFields';
 
 const SourceEditActions = () => (
   <CardActions>
@@ -59,23 +60,7 @@ export const DataSourceEdit = props => (
         </FileInput>
 
         {/* SQL source */}
-        <TextInput source="db_host" type="text" label="Host server" />
-        <TextInput source="db_name" type="text" label="Database name" />
-        <TextInput source="db_user" type="text" label="User name" />
-        <TextInput source="db_pwd" type="password" label="User password" />
-        <LongTextInput source="query" type="text" />
-        <TextInput source="geom_field" type="text" label="Geometry field name" />
-        <SelectInput
-          source="refresh_rate"
-          choices={[
-            { id: 'never', name: 'Never update' },
-            { id: 'manual', name: 'Manually' },
-            { id: 'hourly', name: 'Hourly' },
-            { id: 'daily', name: 'Daily' },
-            { id: 'weekly', name: 'Weekly' },
-            { id: 'monthly', name: 'Monthly' },
-          ]}
-        />
+        <DbFields />
 
         {/* List of dataLayers referencing this */}
         <ReferenceManyField

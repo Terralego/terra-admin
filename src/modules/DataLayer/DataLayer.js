@@ -13,7 +13,7 @@ import dataLayerViews from './views';
 
 import './styles.scss';
 
-export const DataLayers = ({ locale, t }) => (
+export const DataLayer = ({ locale, t }) => (
   <NavLayout
     nav={(
       <ul>
@@ -43,4 +43,4 @@ export const DataLayers = ({ locale, t }) => (
   </NavLayout>
 );
 
-export default withNamespaces()(withLocale(DataLayers));
+export default withNamespaces()(withLocale(DataLayer));

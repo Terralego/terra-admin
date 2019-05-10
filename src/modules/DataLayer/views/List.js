@@ -21,7 +21,7 @@ const ListFilters = props => (
   </Filter>
 );
 
-export const DataLayersList = props => (
+export const DataLayerList = props => (
   <List
     sort={{
       field: 'name',
@@ -41,4 +41,4 @@ export const DataLayersList = props => (
   </List>
 );
 
-export default DataLayersList;
+export default DataLayerList;

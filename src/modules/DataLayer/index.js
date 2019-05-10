@@ -3,11 +3,11 @@ import React, { lazy, Suspense } from 'react';
 import config from './config';
 import Loading from '../../components/Loading';
 
-const DataLayersMain = lazy(() => import('./DataLayers'));
+const DataLayerMain = lazy(() => import('./DataLayer'));
 
 const DataLayer = () => (
   <Suspense fallback={<Loading />}>
-    <DataLayersMain />
+    <DataLayerMain />
   </Suspense>
 );
 DataLayer.config = config;

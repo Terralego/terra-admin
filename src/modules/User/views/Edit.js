@@ -1,4 +1,3 @@
-// in src/users.js
 import React from 'react';
 import {
   Edit, SimpleForm,

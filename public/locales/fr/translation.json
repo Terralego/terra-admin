@@ -141,8 +141,11 @@
       "maximize": "Agrandir"
     },
     "details": {
+      "edit": "Modifier",
       "noFeature": "Non renseigné",
-      "informations": "Informations"
+      "informations": "Informations",
+      "save": "Sauvegarder",
+      "close": "Fermer"
     }
   },
   "users": {

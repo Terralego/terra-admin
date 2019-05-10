@@ -8,6 +8,21 @@ export async function fetchFeature (layerId, featureId) {
   return Api.request(`layer/${layerId}/feature/${featureId}/`);
 }
 
+export async function createFeature (layerId, body) {
+  return Api.request(`layer/${layerId}/feature/`, { method: 'POST', body });
+}
+
+export async function updateFeature (layerId, featureId, body) {
+  return Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'PUT', body });
+}
+
+export async function saveFeature (layerId, featureId = false, body) {
+  if (featureId) {
+    return updateFeature(layerId, featureId, body);
+  }
+  return createFeature(layerId, featureId, body);
+}
+
 function getBoundingBox (list, item) {
   const [lng, lat] = item;
   const [

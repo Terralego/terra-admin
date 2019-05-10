@@ -1,7 +1,11 @@
 import React from 'react';
 import connect from 'mc-tf-test/utils/connect';
 import { fetchMapConfig, fetchAllLayers } from './map';
-import { fetchFeaturesList, fetchFeature } from './features';
+import {
+  fetchFeaturesList,
+  fetchFeature as fetchFeatureAction,
+  saveFeature as saveFeatureAction,
+} from './features';
 
 export const context = React.createContext({});
 export const connectRandoProvider = connect(context);
@@ -59,14 +63,36 @@ export class RandoProvider extends React.Component {
     }
   }
 
-  getFeature = async (layerId, featureId) => {
+  fetchFeature = async (layerId, featureId) => {
     try {
-      const feature = await fetchFeature(layerId, featureId);
-      this.setState({ feature });
+      const feature = await fetchFeatureAction(layerId, featureId);
+      this.setState(state => ({
+        feature: {
+          ...state.feature,
+          [feature.identifier]: feature,
+        },
+      }));
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.feature.length]: true },
+        errors: { ...state.errors, [state[layerId].length]: true },
+      }));
+    }
+  }
+
+  saveFeature = async (layerId, featureId, data) => {
+    try {
+      const feature = await saveFeatureAction(layerId, featureId, data);
+      this.setState(state => ({
+        feature: {
+          ...state.feature,
+          [feature.identifier]: feature,
+        },
+      }));
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, [state[layerId].length]: true },
       }));
     }
   }
@@ -90,7 +116,8 @@ export class RandoProvider extends React.Component {
       getMapConfig,
       getAllLayersAction,
       getFeaturesList,
-      getFeature,
+      fetchFeature,
+      saveFeature,
       setMap,
       resizingMap,
     } = this;
@@ -99,7 +126,8 @@ export class RandoProvider extends React.Component {
       getMapConfig,
       getAllLayersAction,
       getFeaturesList,
-      getFeature,
+      fetchFeature,
+      saveFeature,
       setMap,
       resizingMap,
     };

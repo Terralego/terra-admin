@@ -1,9 +1,13 @@
 import React from 'react';
 import { withNamespaces } from 'react-i18next';
+import { Spinner } from '@blueprintjs/core';
 
-export const Loading = ({ t }) => (
+export const Loading = ({ t, spinner }) => (
   <div className="loading">
-    {t('common.loading')}
+    {!spinner
+      ? <span>{t('common.loading')}</span>
+      : <Spinner />
+    }
   </div>
 );
 

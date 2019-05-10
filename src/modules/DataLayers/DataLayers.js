@@ -9,11 +9,7 @@ import { withLocale } from '../../components/Locale';
 import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
 import RALayout from '../../components/react-admin/Layout';
-import DataLayersList from './views/DataLayersList';
-import {
-  DataLayerCreate,
-  DataLayerEdit,
-} from './views/DataLayerForm';
+import dataLayerViews from './views';
 
 import './styles.scss';
 
@@ -40,9 +36,7 @@ export const DataLayers = ({ locale, t }) => (
     >
       <Resource
         name="layer"
-        list={DataLayersList}
-        edit={DataLayerEdit}
-        create={DataLayerCreate}
+        {...dataLayerViews}
       />
       <Resource name="source" />
     </Admin>

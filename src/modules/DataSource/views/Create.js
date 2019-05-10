@@ -5,6 +5,7 @@ import {
   FileInput, FileField,
   RadioButtonGroupInput,
   SimpleForm,
+  FormDataConsumer,
 } from 'react-admin';
 
 import DbFields from '../components/DbFields';
@@ -40,17 +41,24 @@ export const DataSourceCreate = props => (
         ]}
       />
 
-      <FileInput
-        source="files"
-        label="Related files"
-        multiple={false}
-        placeholder={<p>Drop your file here (geoJson or SHP)</p>}
-      >
-        <FileField source="file_data" title="title" />
-      </FileInput>
+      <FormDataConsumer>
+        {({ formData = {}, ...rest }) =>
+          formData.type === 'file' && (
+            <FileInput
+              source="files"
+              label="Related files"
+              multiple={false}
+              placeholder={<p>Drop your file here (geoJson or SHP)</p>}
+              {...rest}
+            >
+              <FileField source="file_data" title="title" />
+            </FileInput>
+          )}
+      </FormDataConsumer>
 
-      <DbFields />
-
+      <FormDataConsumer>
+        {({ formData = {}, ...rest }) => formData.type === 'sql_query' && <DbFields {...rest} />}
+      </FormDataConsumer>
     </SimpleForm>
   </Create>
 );

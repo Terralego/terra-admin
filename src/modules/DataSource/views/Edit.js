@@ -15,6 +15,7 @@ import {
   Datagrid,
   TextField,
   CardActions,
+  FormDataConsumer,
 } from 'react-admin';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -49,18 +50,24 @@ export const DataSourceEdit = props => (
           ]}
         />
 
-        {/* File source */}
-        <FileInput
-          source="files"
-          label="Related files"
-          multiple={false}
-          placeholder={<p>Drop your file here (geoJson or SHP)</p>}
-        >
-          <FileField source="file_data" title="title" />
-        </FileInput>
+        <FormDataConsumer>
+          {({ formData = {}, ...rest }) =>
+            formData.type === 'file' && (
+              <FileInput
+                source="files"
+                label="Related files"
+                multiple={false}
+                placeholder={<p>Drop your file here (geoJson or SHP)</p>}
+                {...rest}
+              >
+                <FileField source="file_data" title="title" />
+              </FileInput>
+            )}
+        </FormDataConsumer>
 
-        {/* SQL source */}
-        <DbFields />
+        <FormDataConsumer>
+          {({ formData = {}, ...rest }) => formData.type === 'sql_query' && <DbFields {...rest} />}
+        </FormDataConsumer>
 
         {/* List of dataLayers referencing this */}
         <ReferenceManyField

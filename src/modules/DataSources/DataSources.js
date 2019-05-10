@@ -9,9 +9,7 @@ import { withLocale } from '../../components/Locale';
 import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
 import RALayout from '../../components/react-admin/Layout';
-import DataSourcesList from './views/DataSourcesList';
-import DataSourceEdit from './views/DataSourceEdit';
-import DataSourceCreate from './views/DataSourceCreate';
+import dataSourceViews from './views';
 
 import './styles.scss';
 
@@ -38,9 +36,7 @@ export const DataSources = ({ locale, t }) => (
     >
       <Resource
         name="source"
-        list={DataSourcesList}
-        edit={DataSourceEdit}
-        create={DataSourceCreate}
+        {...dataSourceViews}
       />
       <Resource
         name="layer"

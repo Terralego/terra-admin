@@ -5,6 +5,7 @@ $table_height: '1 / 3'; // = 33%
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  justify-content: center;
 
   .mapboxgl-canvas {
     opacity: 1;

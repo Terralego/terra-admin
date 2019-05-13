@@ -7,6 +7,7 @@ import Details from '../../components/Details';
 import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
 import { getBounds } from '../../services/features';
+import Loading from '../../../../components/Loading';
 
 import './styles.scss';
 
@@ -134,8 +135,6 @@ export class Map extends React.Component {
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
     const isDetailsVisible = action;
 
-    if (!isConfigLoaded) return <div>Loading...</div>;
-
     return (
       <div
         className={classnames(
@@ -143,31 +142,37 @@ export class Map extends React.Component {
           { 'rando-map--is-resizing': mapIsResizing },
         )}
       >
-        <div className="rando-map__map">
-          <InteractiveMap
-            onMapLoaded={this.resetMap}
-            {...mapConfig}
-            customStyle={customStyle}
-            interactions={interactions}
-          />
-          {map && (
-            <Details
-              visible={isDetailsVisible}
-            />
+        {!isConfigLoaded
+          ? <Loading spinner />
+          : (
+            <>
+              <div className="rando-map__map">
+                <InteractiveMap
+                  onMapLoaded={this.resetMap}
+                  {...mapConfig}
+                  customStyle={customStyle}
+                  interactions={interactions}
+                />
+                {map && (
+                <Details
+                  visible={isDetailsVisible}
+                />
+                )}
+              </div>
+              {map && (
+              <div
+                className={classnames(
+                  'rando-map__table',
+                  { 'rando-map__table--active': layer && !action },
+                )}
+              >
+                <DataTable
+                  source={layer}
+                />
+              </div>
+              )}
+            </>
           )}
-        </div>
-        {map && (
-          <div
-            className={classnames(
-              'rando-map__table',
-              { 'rando-map__table--active': layer && !action },
-            )}
-          >
-            <DataTable
-              source={layer}
-            />
-          </div>
-        )}
       </div>
     );
   }

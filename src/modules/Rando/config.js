@@ -4,6 +4,6 @@ export default {
   permission: 'admin.rando',
   nav: [{
     label: 'rando.nav.map',
-    href: 'map/layer',
+    href: 'map',
   }],
 };

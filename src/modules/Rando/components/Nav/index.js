@@ -43,7 +43,7 @@ export const Nav = ({ getAllLayersAction, resizingMap, layersList }) => {
         {layersList.map(({ name }) => (
           <li key={name}>
             <NavLink
-              to={`${config.path}/map/layer/${name}`}
+              to={`${config.path}/map/${name}`}
             >
               {name}
             </NavLink>

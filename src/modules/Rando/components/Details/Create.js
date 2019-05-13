@@ -12,7 +12,7 @@ class Create extends React.Component {
     loading: false,
   }
 
-  submitFeature = async formData => {
+  submitFeature = async ({ formData }) => {
     const { schema, history: { push } } = this.props;
     const {
       match: { params: { layer } },
@@ -38,7 +38,7 @@ class Create extends React.Component {
     );
 
     if (savedFeature !== null) {
-      push(`/rando/map/layer/${layer}/update/${savedFeature.identifier}`);
+      push(`/rando/map/${layer}/${savedFeature.identifier}/update`);
       return;
     }
 
@@ -59,7 +59,7 @@ class Create extends React.Component {
         <div className="details_content">
           <Form
             schema={schema}
-            onSubmit={({ formData }) => this.submitFeature(formData)}
+            onSubmit={this.submitFeature}
           >
             <Button intent="primary" loading={loading} type="submit"> {t('rando.details.create')}</Button>
           </Form>

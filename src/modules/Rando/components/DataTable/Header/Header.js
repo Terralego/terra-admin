@@ -9,7 +9,7 @@ const Header = ({ source, full, resize, t, columns, onChange, match: { params: {
   <div className="table-header">
     <div className="table-header__title">
       {t('rando.table.title')} {source}
-      <NavLink className="table-header__create" to={`/rando/map/layer/${layer}/create`}>
+      <NavLink className="table-header__create" to={`/rando/map/${layer}/create`}>
         <span className="bp3-button">
           <Icon icon="plus" />
           <span className="bp3-button-text"> {t('rando.details.create')}</span>

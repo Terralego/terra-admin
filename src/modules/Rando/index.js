@@ -20,7 +20,7 @@ export const Rando = () => (
           <Routing
             routes={[
               {
-                path: `${path}/map/:layer?/:action?/:id?`,
+                path: `${path}/map/:layer?/:id?/:action?`,
                 import: Map,
               },
               {

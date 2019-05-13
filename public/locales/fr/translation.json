@@ -10,6 +10,7 @@
       "text_404": "Retourner à la page d'accueil : ",
       "link_404": "Accueil"
     },
+    "modules": "Modules",
     "pagination": {
       "previous": "Précedent",
       "next": "Suivant"

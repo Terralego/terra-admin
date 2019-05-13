@@ -1,4 +1,3 @@
-// in src/users.js
 import React from 'react';
 import {
   Edit, SimpleForm,
@@ -13,7 +12,7 @@ import TermListInput from '../../../components/react-admin/TermListInput';
 const UserTitle = ({ record }) => <span>User {record ? `"${record.email}"` : ''}</span>;
 
 export const UserEdit = props => (
-  <Edit title={<UserTitle />} {...props}>
+  <Edit title={<UserTitle />} undoable={false} {...props}>
     <SimpleForm>
       <DisabledInput source="id" />
       <DisabledInput source="uuid" />

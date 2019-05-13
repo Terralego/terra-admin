@@ -1,16 +1,22 @@
-// in src/users.js
 import React from 'react';
 import {
   List, Datagrid,
   TextField,
   EditButton,
   BooleanField,
+  BulkDeleteButton,
 } from 'react-admin';
 
 import ArrayCountField from '../../../components/react-admin/ArrayCountField';
 
-export const UsersList = props => (
-  <List {...props}>
+const UserBulkActionButtons = props => (
+  <>
+    <BulkDeleteButton undoable={false} {...props} />
+  </>
+);
+
+export const UserList = props => (
+  <List {...props} bulkActionButtons={<UserBulkActionButtons />}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="email" />
@@ -23,4 +29,4 @@ export const UsersList = props => (
   </List>
 );
 
-export default UsersList;
+export default UserList;

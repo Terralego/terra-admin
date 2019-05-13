@@ -155,6 +155,20 @@
       "create": "Créer un nouvel utilisateur"
     }
   },
+  "datasources": {
+    "project": "Entrepôt de données",
+    "nav": {
+      "list": "Toutes les sources de données",
+      "create": "Ajouter une source de données"
+    }
+  },
+  "datalayers": {
+    "project": "Visualiseur",
+    "nav": {
+      "list": "Toutes les couches de données",
+      "create": "Ajouter une couche de données"
+    }
+  },
   "ra": {
     "action": {
       "add_filter": "Ajouter un filtre",

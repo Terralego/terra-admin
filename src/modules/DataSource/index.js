@@ -3,13 +3,13 @@ import React, { lazy, Suspense } from 'react';
 import config from './config';
 import Loading from '../../components/Loading';
 
-const UsersMain = lazy(() => import('./Users'));
+const DataSourceMain = lazy(() => import('./DataSource'));
 
-const Users = () => (
+const DataSource = () => (
   <Suspense fallback={<Loading />}>
-    <UsersMain />
+    <DataSourceMain />
   </Suspense>
 );
-Users.config = config;
+DataSource.config = config;
 
-export default Users;
+export default DataSource;

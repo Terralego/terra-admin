@@ -1,0 +1,12 @@
+.ra-input .table_field-content {
+  width: auto;
+
+  &-row {
+    display: flex;
+
+    > .ra-input {
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+}

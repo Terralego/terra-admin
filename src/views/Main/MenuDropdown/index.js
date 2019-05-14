@@ -1,49 +1,9 @@
-import React from 'react';
-import {
-  Button,
-  Classes,
-  Popover,
-  Menu,
-  MenuItem,
-  Position,
-} from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { connectAppProvider } from '../../../components/AppProvider';
 import { getComponentsByEnabledModules } from '../../../services/modules';
-
-export const MenuDropdown = ({ t, permissions, history: { push } }) => (
-  <Popover
-    content={(
-      <Menu>
-        {getComponentsByEnabledModules(permissions).map(Component => (
-          <MenuItem
-            key={Component.name}
-            className={Classes.MINIMAL}
-            text={t(Component.config.title)}
-          >
-            {Component.config.nav.map(item => (
-              <MenuItem
-                key={item.href}
-                text={t(item.label)}
-                onClick={() => push(`${Component.config.path}/${item.href}`)}
-              />
-            ))}
-          </MenuItem>
-        ))}
-      </Menu>
-      )}
-    position={Position.BOTTOM_RIGHT}
-  >
-    <Button
-      className={Classes.MINIMAL}
-      icon="menu"
-      rightIcon="caret-down"
-      text={t('common.modules')}
-    />
-  </Popover>
-);
+import { MenuDropdown } from './MenuDropdown';
 
 export default connectAppProvider(
-  ({ env: { permissions } }) => ({ permissions }),
+  ({ env: { enabled_modules: modules } }) => ({ modules: getComponentsByEnabledModules(modules) }),
 )(withNamespaces()(withRouter(MenuDropdown)));

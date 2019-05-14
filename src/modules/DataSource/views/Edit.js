@@ -23,6 +23,7 @@ import Button from '@material-ui/core/Button';
 
 import FieldSample from '../../../components/react-admin/FieldSample';
 import DbFields from '../components/DbFields';
+import AttributeMessage from '../components/AttributeMessage';
 
 const SourceEditActions = () => (
   <CardActions>
@@ -84,6 +85,8 @@ export const DataSourceEdit = props => (
 
       {/* Fields */}
       <FormTab label="Attribute data">
+        <AttributeMessage />
+
         <ArrayInput source="fields">
           <SimpleFormIterator disableRemove disableAdd>
             <DisabledInput source="name" />

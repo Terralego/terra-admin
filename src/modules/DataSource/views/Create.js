@@ -1,64 +1,15 @@
 import React from 'react';
 import {
   Create,
-  TextInput, LongTextInput,
-  FileInput, FileField,
-  RadioButtonGroupInput,
   SimpleForm,
-  FormDataConsumer,
 } from 'react-admin';
 
-import DbFields from '../components/DbFields';
-
-const required = (message = 'Required') => value => (value ? undefined : message);
+import DataSourceMainFields from '../components/DataSourceMainFields';
 
 export const DataSourceCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <TextInput
-        source="name"
-        validate={required()}
-        type="text"
-      />
-      <LongTextInput source="description" defaultValue="" />
-
-      <RadioButtonGroupInput
-        source="geom_type"
-        validate={required()}
-        choices={[
-          { id: 'point', name: 'Point' },
-          { id: 'line', name: 'Line' },
-          { id: 'polygon', name: 'Polygon' },
-        ]}
-      />
-
-      <RadioButtonGroupInput
-        source="type"
-        validate={required()}
-        choices={[
-          { id: 'file', name: 'Import file' },
-          { id: 'sql_query', name: 'SQL query' },
-        ]}
-      />
-
-      <FormDataConsumer>
-        {({ formData = {}, ...rest }) =>
-          formData.type === 'file' && (
-            <FileInput
-              source="files"
-              label="Related files"
-              multiple={false}
-              placeholder={<p>Drop your file here (geoJson or SHP)</p>}
-              {...rest}
-            >
-              <FileField source="file_data" title="title" />
-            </FileInput>
-          )}
-      </FormDataConsumer>
-
-      <FormDataConsumer>
-        {({ formData = {}, ...rest }) => formData.type === 'sql_query' && <DbFields {...rest} />}
-      </FormDataConsumer>
+      <DataSourceMainFields />
     </SimpleForm>
   </Create>
 );

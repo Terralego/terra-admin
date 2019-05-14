@@ -10,13 +10,13 @@ import {
 import { withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { connectAppProvider } from '../../../components/AppProvider';
-import { getModulesComponentsByPermissions } from '../../../services/modules';
+import { getComponentsByEnabledModules } from '../../../services/modules';
 
 export const MenuDropdown = ({ t, permissions, history: { push } }) => (
   <Popover
     content={(
       <Menu>
-        {getModulesComponentsByPermissions(permissions).map(Component => (
+        {getComponentsByEnabledModules(permissions).map(Component => (
           <MenuItem
             key={Component.name}
             className={Classes.MINIMAL}

@@ -1,15 +1,17 @@
 import modules from '../modules';
 
 /**
- * getModulesComponentsByPermissions
- * @param {Array} permissions list of permissions
- * @returns {Array} modules components filter by permissions
+ * getComponentsByEnabledModules
+ * @param {Array} selectedModules list of selectedModules
+ * @returns {Array} modules components driven by the config enabled_modules
  */
-export const getModulesComponentsByPermissions = (permissions = []) =>
-  Object.values(modules)
-    .filter(({ default: { config: { permission } } }) => permissions.includes(permission))
-    .map(({ default: Component }) => Component);
+export const getComponentsByEnabledModules = (selectedModules = []) =>
+  Object.values(modules).reduce((list, { default: module }) => (
+    selectedModules.includes(module.name)
+      ? [...list, module]
+      : list
+  ), []);
 
 export default {
-  getModulesComponentsByPermissions,
+  getComponentsByEnabledModules,
 };

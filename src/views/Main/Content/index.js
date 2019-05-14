@@ -1,18 +1,20 @@
 import { connectAppProvider } from '../../../components/AppProvider';
 import { Content } from './Content';
-import { getModulesComponentsByPermissions } from '../../../services/modules';
+import { getComponentsByEnabledModules } from '../../../services/modules';
 
 
 const getDefaultRoute = landingModule => {
   if (!landingModule) {
     return '';
   }
-  const [{ config: { path } }] = getModulesComponentsByPermissions([landingModule]);
+  const [{ config: { path } }] = getComponentsByEnabledModules([landingModule]);
   return path;
 };
 
-export default connectAppProvider(({ env: { permissions, landing_module: landingModule } }) => ({
-  modules: getModulesComponentsByPermissions(permissions),
+export default connectAppProvider(({
+  env: { enabled_modules: enabledModules, landing_module: landingModule },
+}) => ({
+  modules: getComponentsByEnabledModules(enabledModules),
   defaultRoute: getDefaultRoute(landingModule),
   landingModule,
 }))(Content);

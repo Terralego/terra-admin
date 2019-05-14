@@ -12,12 +12,10 @@ jest.mock('../../../components/Loading', () => () => <div>Loading</div>);
 
 function Foo () { return <p>Module Foo</p>; }
 Foo.config = {
-  permissions: 'admin.foo',
   path: '/foo',
 };
 function Bar () { return <p>Module Bar</p>; }
 Bar.config = {
-  permissions: 'admin.bar',
   path: '/bar',
 };
 it('should render correctly', () => {

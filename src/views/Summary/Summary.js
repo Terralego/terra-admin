@@ -1,16 +1,13 @@
 import React from 'react';
-
-import { getModulesComponentsByPermissions } from '../../services/modules';
 import AppSummary from './AppSummary';
 
-
-export const Summary = ({ permissions }) => (
+export const Summary = ({ modules }) => (
   <div className="summary">
-    {getModulesComponentsByPermissions(permissions).map(Component => (
+    {modules.map(({ name, config }) => (
       <AppSummary
-        key={Component.name}
-        name={Component.name}
-        {...Component.config}
+        key={name}
+        name={name}
+        {...config}
       />
     ))}
   </div>

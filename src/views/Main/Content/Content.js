@@ -1,15 +1,14 @@
 import React, { lazy, Suspense } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { getModulesComponentsByPermissions } from '../../../services/modules';
 import Loading from '../../../components/Loading';
 
 const Summary = lazy(() => import('../../Summary'));
 
-export const Content = ({ permissions }) => (
+export const Content = ({ modules, defaultRoute }) => (
   <main className="main-content">
     <Switch>
-      {getModulesComponentsByPermissions(permissions).map(Component => (
+      {modules.map(Component => (
         <Route
           key={Component.config.path}
           path={Component.config.path}
@@ -17,6 +16,7 @@ export const Content = ({ permissions }) => (
           <Component />
         </Route>
       ))}
+      {defaultRoute && <Redirect exact from="/" to={defaultRoute} />}
       <Route path="">
         <Suspense fallback={<Loading />}>
           <Summary />

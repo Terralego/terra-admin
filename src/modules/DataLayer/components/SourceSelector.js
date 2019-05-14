@@ -2,9 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { change } from 'redux-form';
-import drfProvider from 'ra-data-drf';
-import Api from 'mc-tf-test/modules/Api';
-
 import {
   SelectInput,
   ReferenceInput,
@@ -12,13 +9,14 @@ import {
   REDUX_FORM_NAME,
 } from 'react-admin';
 
+import dataProvider from '../../../services/react-admin/dataProvider';
+
 const SourceSelector = connect()(({ dispatch, ...props }) => (
   <ReferenceInput
     source="source_id"
     reference="geosource"
     label="Data source"
     onChange={async (event, toId) => {
-      const dataProvider = drfProvider(Api.host);
       const { data: { fields } } = await dataProvider(GET_ONE, 'geosource', { id: toId });
       dispatch(change(REDUX_FORM_NAME, 'fields', fields || null));
     }}

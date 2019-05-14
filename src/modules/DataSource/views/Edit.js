@@ -2,9 +2,7 @@ import React from 'react';
 import {
   Edit,
   TabbedForm,
-  TextInput, LongTextInput,
-  FileInput, FileField,
-  RadioButtonGroupInput,
+  TextInput,
   BooleanInput,
   SelectInput,
   ArrayInput,
@@ -15,17 +13,16 @@ import {
   Datagrid,
   TextField,
   CardActions,
-  FormDataConsumer,
 } from 'react-admin';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Button from '@material-ui/core/Button';
 
+import DataSourceMainFields from '../components/DataSourceMainFields';
 import FieldSample from '../../../components/react-admin/FieldSample';
-import DbFields from '../components/DbFields';
 import AttributeMessage from '../components/AttributeMessage';
 
-const SourceEditActions = () => (
+const DataSourceEditActions = () => (
   <CardActions>
     <Button color="primary" variant="raised" onClick={() => {}}>Refresh data</Button>
   </CardActions>
@@ -34,41 +31,12 @@ const SourceEditActions = () => (
 export const DataSourceEdit = props => (
   <Edit
     undoable={false}
-    actions={<SourceEditActions />}
+    actions={<DataSourceEditActions />}
     {...props}
   >
     <TabbedForm>
       <FormTab label="Definition">
-        {/* Main */}
-        <TextInput source="name" type="text" />
-        <LongTextInput source="description" defaultValue="" />
-
-        <RadioButtonGroupInput
-          source="type"
-          choices={[
-            { id: 'file', name: 'Import file' },
-            { id: 'sql_query', name: 'SQL query' },
-          ]}
-        />
-
-        <FormDataConsumer>
-          {({ formData = {}, ...rest }) =>
-            formData.type === 'file' && (
-              <FileInput
-                source="files"
-                label="Related files"
-                multiple={false}
-                placeholder={<p>Drop your file here (geoJson or SHP)</p>}
-                {...rest}
-              >
-                <FileField source="file_data" title="title" />
-              </FileInput>
-            )}
-        </FormDataConsumer>
-
-        <FormDataConsumer>
-          {({ formData = {}, ...rest }) => formData.type === 'sql_query' && <DbFields {...rest} />}
-        </FormDataConsumer>
+        <DataSourceMainFields />
 
         {/* List of dataLayers referencing this */}
         <ReferenceManyField
@@ -95,7 +63,7 @@ export const DataSourceEdit = props => (
               source="type"
               choices={[
                 { id: 'string', name: 'String' },
-                { id: 'integer', name: 'Integer' },
+                { id: 'number', name: 'Number' },
                 { id: 'float', name: 'Float' },
               ]}
             />

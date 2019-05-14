@@ -36,7 +36,7 @@ export const DataSource = ({ locale, t }) => (
       locale={`${locale}`.substr(0, 2)}
     >
       <Resource
-        name="source"
+        name="geosource"
         {...dataSourceViews}
       />
       <Resource

@@ -39,7 +39,7 @@ export const DataLayer = ({ locale, t }) => (
         name="layer"
         {...dataLayerViews}
       />
-      <Resource name="source" />
+      <Resource name="geosource" />
     </Admin>
   </NavLayout>
 );

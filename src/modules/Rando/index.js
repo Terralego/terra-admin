@@ -23,6 +23,10 @@ export const Rando = () => (
                 path: `${path}/map/:layer?/:action?/:id?`,
                 import: Map,
               },
+              {
+                path,
+                redirect: `${path}/map`,
+              },
             ]}
           />
         </div>

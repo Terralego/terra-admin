@@ -15,12 +15,15 @@ import {
   Datagrid,
   TextField,
   CardActions,
+  FormDataConsumer,
 } from 'react-admin';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Button from '@material-ui/core/Button';
 
 import FieldSample from '../../../components/react-admin/FieldSample';
+import DbFields from '../components/DbFields';
+import AttributeMessage from '../components/AttributeMessage';
 
 const SourceEditActions = () => (
   <CardActions>
@@ -48,34 +51,24 @@ export const DataSourceEdit = props => (
           ]}
         />
 
-        {/* File source */}
-        <FileInput
-          source="files"
-          label="Related files"
-          multiple={false}
-          placeholder={<p>Drop your file here (geoJson or SHP)</p>}
-        >
-          <FileField source="file_data" title="title" />
-        </FileInput>
+        <FormDataConsumer>
+          {({ formData = {}, ...rest }) =>
+            formData.type === 'file' && (
+              <FileInput
+                source="files"
+                label="Related files"
+                multiple={false}
+                placeholder={<p>Drop your file here (geoJson or SHP)</p>}
+                {...rest}
+              >
+                <FileField source="file_data" title="title" />
+              </FileInput>
+            )}
+        </FormDataConsumer>
 
-        {/* SQL source */}
-        <TextInput source="db_host" type="text" label="Host server" />
-        <TextInput source="db_name" type="text" label="Database name" />
-        <TextInput source="db_user" type="text" label="User name" />
-        <TextInput source="db_pwd" type="password" label="User password" />
-        <LongTextInput source="query" type="text" />
-        <TextInput source="geom_field" type="text" label="Geometry field name" />
-        <SelectInput
-          source="refresh_rate"
-          choices={[
-            { id: 'never', name: 'Never update' },
-            { id: 'manual', name: 'Manually' },
-            { id: 'hourly', name: 'Hourly' },
-            { id: 'daily', name: 'Daily' },
-            { id: 'weekly', name: 'Weekly' },
-            { id: 'monthly', name: 'Monthly' },
-          ]}
-        />
+        <FormDataConsumer>
+          {({ formData = {}, ...rest }) => formData.type === 'sql_query' && <DbFields {...rest} />}
+        </FormDataConsumer>
 
         {/* List of dataLayers referencing this */}
         <ReferenceManyField
@@ -92,6 +85,8 @@ export const DataSourceEdit = props => (
 
       {/* Fields */}
       <FormTab label="Attribute data">
+        <AttributeMessage />
+
         <ArrayInput source="fields">
           <SimpleFormIterator disableRemove disableAdd>
             <DisabledInput source="name" />

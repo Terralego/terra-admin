@@ -14,19 +14,23 @@ import {
 } from 'react-admin';
 
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
+import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceSelector from '../components/SourceSelector';
 import FieldSummary from '../../../components/react-admin/FieldSummary';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
 export const DataLayerForm = (FormMode = Create) => props => (
-  <FormMode undoable={false} {...props}>
+  <FormMode
+    {...(FormMode === Edit ? { undoable: false } : {})}
+    {...props}
+  >
     <TabbedForm>
       <FormTab label="Definition">
         <SourceSelector />
 
         <SelectInput
-          source="type"
+          source="view"
           label="Vue"
           choices={[
             { id: 'Visualiser', name: 'Visualiser' },
@@ -54,45 +58,85 @@ export const DataLayerForm = (FormMode = Create) => props => (
 
       <FormTab label="Interactions">
         <BooleanInput source="enable_table" label="Allow displaying data table" />
-        <BooleanInput source="enable_export" label="Allow exporting data as a file" />
 
         <FormDataConsumer className="table_field-content">
-          {({ formData, dispatch, ...rest }) => (
-            <ArrayInput source="fields" label="All available fields" {...rest}>
-              <CustomFormIterator disableAdd disableRemove classes={{ form: 'table_field-content-row' }}>
-                <DisabledInput source="name" />
-                <BooleanInput source="shown" />
-                <BooleanInput source="exportable" />
-              </CustomFormIterator>
-            </ArrayInput>
-          )}
+          {({ formData, dispatch, ...rest }) => (formData.enable_table && (
+            <FieldGroup>
+              <BooleanInput source="enable_export" label="Allow exporting data as a file" />
+              <ArrayInput source="fields" label="All available fields" {...rest}>
+                <CustomFormIterator disableAdd disableRemove classes={{ form: 'table_field-content-row' }}>
+                  <DisabledInput source="name" />
+                  <BooleanInput source="shown" />
+                  {formData.enable_export ? <BooleanInput source="exportable" /> : <React.Fragment />}
+                </CustomFormIterator>
+              </ArrayInput>
+            </FieldGroup>
+          ))}
         </FormDataConsumer>
 
         <BooleanInput source="enable_popup" label="Display popup on hover" />
-        <LongTextInput source="popup_template" label="Popup template" />
+        <FormDataConsumer>
+          {({ formData, dispatch, ...rest }) => formData.enable_popup && (
+            <FieldGroup>
+              <NumberInput source="popup_minzoom" defaultValue={10} step={1} />
+              <NumberInput source="popup_maxzoom" defaultValue={15} step={1} />
+              <LongTextInput source="popup_template" label="Popup template" {...rest} />
+            </FieldGroup>
+          )}
+        </FormDataConsumer>
 
         <BooleanInput source="enable_minifiche" label="Display minifiche on click" />
-        <LongTextInput source="minifiche_template" label="Minifiche template" />
+        <FormDataConsumer>
+          {({ formData, dispatch, ...rest }) => formData.enable_minifiche &&
+            <LongTextInput source="minifiche_template" label="Minifiche template" {...rest} />}
+        </FormDataConsumer>
       </FormTab>
 
       <FormTab label="Filtering">
         <BooleanInput source="enable_filtering" label="Allow filtering by field" />
 
         <FormDataConsumer>
-          {({ formData, dispatch, ...rest }) => (
+          {({ formData, dispatch, ...rest }) => formData.enable_filtering && (
             <ArrayInput source="fields" label="All available fields" {...rest}>
               <CustomFormIterator disableAdd disableRemove>
                 <FieldSummary />
-                <SelectInput
-                  source="filter_type"
-                  choices={[
-                    { id: 'text', name: 'Text' },
-                    { id: 'number', name: 'Number' },
-                    { id: 'number_range', name: 'Number range' },
-                    { id: 'date_range', name: 'Date range' },
-                    { id: 'enum', name: 'Enum' },
-                  ]}
-                />
+
+                <FormDataConsumer>
+                  {({ formData: _, scopedFormData, getSource, record, ...rest2 }) => {
+                    const choices = [];
+
+                    switch (record.type) {
+                      case 'number':
+                      case 'float':
+                        choices.push(
+                          { id: 'number', name: 'Number' },
+                          { id: 'number_range', name: 'Number range' },
+                          { id: 'enum', name: 'Enum' },
+                        );
+                        break;
+                      case 'string':
+                        choices.push(
+                          { id: 'text', name: 'Text' },
+                          { id: 'number_range', name: 'Text from values' },
+                          { id: 'enum', name: 'Enum' },
+                        );
+                        break;
+                      default:
+                    }
+
+                    return (
+                      <FieldGroup>
+                        <SelectInput
+                          source={getSource('filter_type')}
+                          choices={choices}
+                          {...rest2}
+                          label="Type"
+                        />
+                        <LongTextInput source="values" {...rest2} label="Values (for enum)" />
+                      </FieldGroup>
+                    );
+                  }}
+                </FormDataConsumer>
               </CustomFormIterator>
             </ArrayInput>
           )}

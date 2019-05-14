@@ -4,9 +4,11 @@ import {
   TextInput, LongTextInput,
   FileInput, FileField,
   RadioButtonGroupInput,
-  SelectInput,
   SimpleForm,
+  FormDataConsumer,
 } from 'react-admin';
+
+import DbFields from '../components/DbFields';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
@@ -39,31 +41,24 @@ export const DataSourceCreate = props => (
         ]}
       />
 
-      <FileInput
-        source="files"
-        label="Related files"
-        multiple={false}
-        placeholder={<p>Drop your file here (geoJson or SHP)</p>}
-      >
-        <FileField source="file_data" title="title" />
-      </FileInput>
+      <FormDataConsumer>
+        {({ formData = {}, ...rest }) =>
+          formData.type === 'file' && (
+            <FileInput
+              source="files"
+              label="Related files"
+              multiple={false}
+              placeholder={<p>Drop your file here (geoJson or SHP)</p>}
+              {...rest}
+            >
+              <FileField source="file_data" title="title" />
+            </FileInput>
+          )}
+      </FormDataConsumer>
 
-      <TextInput source="db_host" type="text" label="Host server" />
-      <TextInput source="db_name" type="text" label="Database name" />
-      <TextInput source="db_user" type="text" label="User name" />
-      <TextInput source="db_pwd" type="password" label="User password" />
-      <LongTextInput source="query" type="text" />
-      <TextInput source="geom_field" type="text" label="Geometry field name" />
-      <SelectInput
-        source="refresh_rate"
-        choices={[
-          { id: 'never', name: 'Never update' },
-          { id: 'hourly', name: 'Hourly' },
-          { id: 'daily', name: 'Daily' },
-          { id: 'weekly', name: 'Weekly' },
-          { id: 'monthly', name: 'Monthly' },
-        ]}
-      />
+      <FormDataConsumer>
+        {({ formData = {}, ...rest }) => formData.type === 'sql_query' && <DbFields {...rest} />}
+      </FormDataConsumer>
     </SimpleForm>
   </Create>
 );

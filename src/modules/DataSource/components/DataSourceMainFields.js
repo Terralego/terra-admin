@@ -32,17 +32,17 @@ const DataSourceMainFields = props => (
     />
 
     <RadioButtonGroupInput
-      source="type"
+      source="_type"
       validate={defaultRequired}
       choices={[
-        { id: 'file', name: 'Import file' },
-        { id: 'sql_query', name: 'SQL query' },
+        { id: 'GeoJSONSourceModel', name: 'Import file' },
+        { id: 'PostGISSourceModel', name: 'SQL query' },
       ]}
     />
 
     <FormDataConsumer>
-      {({ formData = {}, ...rest }) =>
-        formData.type === 'file' && (
+      {({ formData: { _type: type } = {}, ...rest }) =>
+        type === 'GeoJSONSourceModel' && (
           <FileInput
             source="files"
             label="Related files"
@@ -56,7 +56,7 @@ const DataSourceMainFields = props => (
     </FormDataConsumer>
 
     <FormDataConsumer>
-      {({ formData = {}, ...rest }) => formData.type === 'sql_query' && <DbFields {...rest} />}
+      {({ formData: { _type: type } = {}, ...rest }) => type === 'PostGISSourceModel' && <DbFields {...rest} />}
     </FormDataConsumer>
   </FieldGroup>
 );

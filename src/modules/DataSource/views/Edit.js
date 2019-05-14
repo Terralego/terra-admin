@@ -22,9 +22,17 @@ import DataSourceMainFields from '../components/DataSourceMainFields';
 import FieldSample from '../../../components/react-admin/FieldSample';
 import AttributeMessage from '../components/AttributeMessage';
 
-const DataSourceEditActions = () => (
+import dataProvider from '../../../services/react-admin/dataProvider';
+
+const DataSourceEditActions = ({ data: { id } = {} }) => (
   <CardActions>
-    <Button color="primary" variant="raised" onClick={() => {}}>Refresh data</Button>
+    <Button
+      color="primary"
+      variant="raised"
+      onClick={() => dataProvider('REFRESH', 'geosource', { id })}
+    >
+      Refresh data
+    </Button>
   </CardActions>
 );
 

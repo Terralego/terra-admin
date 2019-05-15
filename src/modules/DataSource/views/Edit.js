@@ -73,6 +73,7 @@ export const DataSourceEdit = props => (
                 { id: 'string', name: 'String' },
                 { id: 'number', name: 'Number' },
                 { id: 'float', name: 'Float' },
+                { id: 'boolean', name: 'Boolean' },
               ]}
             />
             <FieldSample />

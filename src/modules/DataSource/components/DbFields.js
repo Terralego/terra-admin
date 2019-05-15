@@ -7,8 +7,8 @@ const DbFields = () => (
   <FieldGroup>
     <TextInput source="db_host" type="text" label="Host server" />
     <TextInput source="db_name" type="text" label="Database name" />
-    <TextInput source="db_user" type="text" label="User name" />
-    <TextInput source="db_pwd" type="password" label="User password" />
+    <TextInput source="db_username" type="text" label="User name" />
+    <TextInput source="db_password" type="password" label="User password" />
     <LongTextInput source="query" type="text" />
     <TextInput source="geom_field" type="text" label="Geometry field name" />
     <SelectInput

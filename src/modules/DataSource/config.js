@@ -4,9 +4,9 @@ export default {
   permission: 'admin.datasources',
   nav: [{
     label: 'datasources.nav.list',
-    href: '#source',
+    href: '#geosource',
   }, {
     label: 'datasources.nav.create',
-    href: '#source/create',
+    href: '#geosource/create',
   }],
 };

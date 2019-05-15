@@ -5,8 +5,11 @@ import {
   TextInput,
   EditButton,
   SelectInput,
+  FunctionField,
   Filter,
 } from 'react-admin';
+
+import { sourceTypes, sourceTypeChoices } from '../DataSource';
 
 const ListFilters = props => (
   <Filter {...props}>
@@ -14,10 +17,7 @@ const ListFilters = props => (
     <SelectInput
       source="type"
       label="Source type"
-      choices={[
-        { id: 'file', name: 'Import file' },
-        { id: 'sql_query', name: 'SQL query' },
-      ]}
+      choices={sourceTypeChoices}
     />
   </Filter>
 );
@@ -34,7 +34,7 @@ export const DataSourceList = props => (
   >
     <Datagrid rowClick="edit">
       <TextField source="name" />
-      <TextField source="type" />
+      <FunctionField label="Type" render={({ _type: type }) => sourceTypes[type] || ''} />
       <TextField source="geom_type" />
       <EditButton />
     </Datagrid>

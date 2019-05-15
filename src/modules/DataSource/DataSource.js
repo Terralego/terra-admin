@@ -30,3 +30,12 @@ export const DataSource = ({ locale }) => (
 );
 
 export default withLocale(DataSource);
+
+export const GEOJSON = 'GeoJSONSourceModel';
+export const SQL = 'PostGISSourceModel';
+export const sourceTypes = {
+  [GEOJSON]: 'GeoJSON',
+  [SQL]: 'PostGIS',
+};
+export const sourceTypeChoices = Object.entries(sourceTypes)
+  .map(([id, name]) => ({ id, name }));

@@ -6,6 +6,8 @@ import {
   FormDataConsumer,
 } from 'react-admin';
 
+import { GEOJSON, SQL, sourceTypeChoices } from '../DataSource';
+
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import DbFields from './DbFields';
 
@@ -34,20 +36,17 @@ const DataSourceMainFields = props => (
     <RadioButtonGroupInput
       source="_type"
       validate={defaultRequired}
-      choices={[
-        { id: 'GeoJSONSourceModel', name: 'Import file' },
-        { id: 'PostGISSourceModel', name: 'SQL query' },
-      ]}
+      choices={sourceTypeChoices}
     />
 
     <FormDataConsumer>
       {({ formData: { _type: type } = {}, ...rest }) =>
-        type === 'GeoJSONSourceModel' && (
+        type === GEOJSON && (
           <FileInput
             source="files"
             label="Related files"
             multiple={false}
-            placeholder={<p>Drop your file here (geoJson or SHP)</p>}
+            placeholder={<p>Drop your GeoJSON file here</p>}
             {...rest}
           >
             <FileField source="file_data" title="title" />
@@ -56,7 +55,7 @@ const DataSourceMainFields = props => (
     </FormDataConsumer>
 
     <FormDataConsumer>
-      {({ formData: { _type: type } = {}, ...rest }) => type === 'PostGISSourceModel' && <DbFields {...rest} />}
+      {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
     </FormDataConsumer>
   </FieldGroup>
 );

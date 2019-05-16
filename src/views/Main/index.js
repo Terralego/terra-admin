@@ -1,5 +1,5 @@
 import React from 'react';
-import { connectAuthProvider, LoginForm } from 'mc-tf-test/modules/Auth';
+import { connectAuthProvider, LoginForm } from '@terralego/core/modules/Auth';
 
 import Header from './Header';
 import Content from './Content';

@@ -10,7 +10,7 @@ import { DateInput } from '@blueprintjs/datetime';
 import { Form, Field } from 'react-final-form';
 import { withNamespaces } from 'react-i18next';
 
-import localeUtils from 'mc-tf-test/utils/localeUtils';
+import localeUtils from '@terralego/core/utils/localeUtils';
 
 import { locale, localErrorMessages } from '../../../../../../utils/date';
 import { validateAddPicture } from './validateAddPictureForm';

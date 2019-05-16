@@ -8,7 +8,7 @@ import {
   MenuItem,
   Position,
 } from '@blueprintjs/core';
-import { connectAuthProvider } from 'mc-tf-test/modules/Auth';
+import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { withNamespaces } from 'react-i18next';
 
 export const UserDropdown = ({ user, logoutAction, t }) => (

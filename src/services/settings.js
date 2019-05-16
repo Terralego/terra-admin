@@ -1,4 +1,4 @@
-import Api from 'mc-tf-test/modules/Api';
+import Api from '@terralego/core/modules/Api';
 
 export const getSettings = async () => Api.request('settings');
 

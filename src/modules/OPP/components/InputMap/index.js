@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import mapboxgl from 'mapbox-gl';
-import { Map } from 'mc-tf-test';
+import { Map } from '@terralego/core';
 import { withNamespaces } from 'react-i18next';
 
 import { connectAppProvider } from '../../../../components/AppProvider';

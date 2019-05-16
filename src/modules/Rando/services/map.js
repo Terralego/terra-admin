@@ -1,4 +1,4 @@
-import Api from 'mc-tf-test/modules/Api';
+import Api from '@terralego/core/modules/Api';
 import config from './mock-config.json';
 
 export async function fetchMapConfig () {

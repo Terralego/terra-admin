@@ -1,4 +1,4 @@
-import Api from 'mc-tf-test/modules/Api';
+import Api from '@terralego/core/modules/Api';
 
 export const fetchViewpoints = async ({ data = {}, itemsPerPage = 10, page = 1 }) =>
   Api.request('viewpoints/', {

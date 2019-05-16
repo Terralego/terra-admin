@@ -4,7 +4,7 @@ import {
   TYPE_MANY,
   TYPE_RANGE,
   TYPE_SINGLE,
-} from 'mc-tf-test/modules/Forms/Filters';
+} from '@terralego/core/modules/Forms/Filters';
 
 export const schema = [
   {

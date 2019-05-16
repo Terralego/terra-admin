@@ -1,5 +1,5 @@
 import drfProvider from 'ra-data-drf';
-import Api from 'mc-tf-test/modules/Api';
+import Api from '@terralego/core/modules/Api';
 
 export default (...args) => {
   const [queryType, resource, params] = args;

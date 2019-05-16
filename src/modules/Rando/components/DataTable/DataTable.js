@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from 'mc-tf-test/modules/Table';
+import Table from '@terralego/core/modules/Table';
 import classnames from 'classnames';
 import { withNamespaces } from 'react-i18next';
 

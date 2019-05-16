@@ -1,6 +1,4 @@
-// import AuthProvider from 'mc-tf-test/modules/Auth/services/auth'
-import auth from 'mc-tf-test/modules/Auth/services/auth';
-// import Api from 'mc-tf-test/modules/Api/services/api'
+import auth from '@terralego/core/modules/Auth/services/auth';
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
 
 export default (type, params) => {

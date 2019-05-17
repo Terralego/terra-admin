@@ -1,12 +1,12 @@
 export default {
-  title: 'users.project',
+  title: 'user.project',
   path: '/users',
   permission: 'admin.users',
   nav: [{
-    label: 'users.nav.list',
+    label: 'user.nav.list',
     href: '#user',
   }, {
-    label: 'users.nav.create',
+    label: 'user.nav.create',
     href: '#user/create',
   }],
 };

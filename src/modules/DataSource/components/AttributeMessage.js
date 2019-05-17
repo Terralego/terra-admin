@@ -1,20 +1,21 @@
 import React from 'react';
 
+import { withNamespaces } from 'react-i18next';
+
 /* eslint-disable import/no-extraneous-dependencies */
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 /* eslint-enable */
 
-const AttributeMessage = () => (
+export const AttributeMessage = ({ t }) => (
   <Card style={{ marginTop: '1em' }}>
     <CardContent>
       <Typography color="textSecondary">
-        It is required to include fields in Vector Tiles for being also
-        available in popup and mini-fiche templates.
+        {t('datasource.edit.message')}
       </Typography>
     </CardContent>
   </Card>
 );
 
-export default AttributeMessage;
+export default withNamespaces()(AttributeMessage);

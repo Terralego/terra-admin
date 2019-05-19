@@ -162,11 +162,52 @@
       "create": "Ajouter une source de données"
     }
   },
-  "datalayers": {
+  "datalayer": {
     "project": "Visualiseur",
     "nav": {
       "list": "Toutes les couches de données",
       "create": "Ajouter une couche de données"
+    },
+    "form": {
+      "name": "Nom",
+      "data-source": "Source des données",
+      "definition": "Définition",
+      "type": "Type",
+      "view": "Vue",
+      "ordering": "Ordonner",
+      "description": "Description",
+      "style": "Style",
+      "layer-style": "Style de la couche",
+      "legend": {
+        "display": "Afficher la légende",
+        "template": "Modèle de la légende"
+      },
+      "interactions": "Intéractions",
+      "allow-display-data-table": " Permettre l'affichage du tableau de données",
+      "allow-export-data": " Permettre l'export des données",
+      "all-data-available": " Toutes les données disponibles",
+      "all-fields-available": " Tous les champs disponibles",
+      "show": "Afficher",
+      "exportable": "Exportable",
+      "popup": {
+        "display-on-hover": "Afficher une fenêtre contextuelle",
+        "min-zoom": "Zoom minimum",
+        "max-zoom": "Zoom maximum",
+        "template": "Modèle de la fenêtre contextuelle"
+      },
+      "minifiche": {
+        "display-on-click": "Afficher la minifiche",
+        "template": "Modèle de la minifiche"
+      },
+      "filter": "Filtre",
+      "allow-filtering-field": "Permettre de filter par le champ",
+      "text": "Texte",
+      "enum": "Énumération",
+      "number": "Nombre",
+      "number-range": "Plage de numéros",
+      "data-sample": "Extrait des données",
+      "values-for-enum": "Valeur (pour la plage de numéro)",
+      "values": "Valeurs"
     }
   },
   "ra": {

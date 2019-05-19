@@ -1,12 +1,12 @@
 export default {
-  title: 'datalayers.project',
+  title: 'datalayer.project',
   path: '/datalayers',
   permission: 'admin.datalayers',
   nav: [{
-    label: 'datalayers.nav.list',
+    label: 'datalayer.nav.list',
     href: '#layer',
   }, {
-    label: 'datalayers.nav.create',
+    label: 'datalayer.nav.create',
     href: '#layer/create',
   }],
 };

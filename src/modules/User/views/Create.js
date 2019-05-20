@@ -10,11 +10,11 @@ import JSONArea from '../../../components/react-admin/JSONArea';
 export const UserCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <TextInput source="email" type="email" />
-      <TextInput source="password" type="password" />
-      <BooleanInput source="is_superuser" />
-      <BooleanInput source="is_active" />
-      <LongTextInput source="properties" component={JSONArea} defaultValue={{}} />
+      <TextInput source="email" type="email" label="user.form.email" />
+      <TextInput source="password" type="password" label="user.form.password" />
+      <BooleanInput source="is_superuser" label="user.form.superuser" />
+      <BooleanInput source="is_active" label="user.form.active" />
+      <LongTextInput source="properties" component={JSONArea} defaultValue={{}} label="user.form.additional-information" />
     </SimpleForm>
   </Create>
 );

@@ -14,13 +14,13 @@ const UserTitle = ({ record }) => <span>User {record ? `"${record.email}"` : ''}
 export const UserEdit = props => (
   <Edit title={<UserTitle />} undoable={false} {...props}>
     <SimpleForm>
-      <DisabledInput source="id" />
-      <DisabledInput source="uuid" />
-      <TextInput source="email" type="email" />
-      <BooleanInput source="is_superuser" />
-      <BooleanInput source="is_active" />
-      <TermListInput source="permissions" />
-      <LongTextInput source="properties" component={JSONArea} defaultValue={{}} />
+      <DisabledInput source="id" label="user.form.id" />
+      <DisabledInput source="uuid" label="user.form.uuid" />
+      <TextInput source="email" type="email" label="user.form.email" />
+      <BooleanInput source="is_superuser" label="user.form.superuser" />
+      <BooleanInput source="is_active" label="user.form.active" />
+      <TermListInput source="permissions" label="user.form.permissions" />
+      <LongTextInput source="properties" component={JSONArea} defaultValue={{}} label="user.form.additional-information" />
     </SimpleForm>
   </Edit>
 );

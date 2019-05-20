@@ -1,7 +1,7 @@
 import React from 'react';
 import { Labeled } from 'react-admin';
 
-export const JSONArea = ({ input, meta, source, defaultValue }) => {
+export const JSONArea = ({ label, input, meta, source, defaultValue }) => {
   const handleChange = ({ target: { value } }) => {
     meta.touched = true;
     try {
@@ -15,7 +15,7 @@ export const JSONArea = ({ input, meta, source, defaultValue }) => {
   const value = JSON.stringify(input.value || defaultValue, null, 2);
 
   return (
-    <Labeled label={source}>
+    <Labeled label={label || source}>
       <>
         <textarea {...input} onChange={handleChange} value={value} />
         {meta.touched && meta.error && <p className="error">{meta.error}</p>}

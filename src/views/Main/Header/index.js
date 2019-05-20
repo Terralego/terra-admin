@@ -4,7 +4,7 @@ import { connectAppProvider } from '../../../components/AppProvider';
 
 import Header from './Header';
 
-export default connectAppProvider(({ env: { title, theme: { logo } } }) => ({
+export default connectAppProvider(({ env: { title = '', theme: { logo = '' } = {} } }) => ({
   title,
   logo,
 }))(connectAuthProvider('authenticated')(withNamespaces()(Header)));

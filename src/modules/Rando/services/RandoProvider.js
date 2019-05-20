@@ -89,11 +89,13 @@ export class RandoProvider extends React.Component {
           [feature.identifier]: feature,
         },
       }));
+      return feature;
     } catch (e) {
       this.setState(state => ({
         ...state,
         errors: { ...state.errors, [state[layerId].length]: true },
       }));
+      return null;
     }
   }
 

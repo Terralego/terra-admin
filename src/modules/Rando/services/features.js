@@ -20,7 +20,7 @@ export async function saveFeature (layerId, featureId = false, body) {
   if (featureId) {
     return updateFeature(layerId, featureId, body);
   }
-  return createFeature(layerId, featureId, body);
+  return createFeature(layerId, body);
 }
 
 function getBoundingBox (list, item) {

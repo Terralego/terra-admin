@@ -59,7 +59,7 @@ const DataSourceMainFields = ({ translate, ...props }) => (
       {({ formData: { _type: type } = {}, ...rest }) =>
         type === GEOJSON && (
           <FileInput
-            source="files"
+            source="file"
             label="datasource.form.file.related-files"
             multiple={false}
             placeholder={translate('datasource.form.file.placeholder')}

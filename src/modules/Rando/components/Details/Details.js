@@ -5,11 +5,13 @@ import { Icon } from '@blueprintjs/core';
 import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
 
+import Create from './Create';
 import Read from './Read';
 import Update from './Update';
 import './styles.scss';
 
 const ACTIONS = {
+  create: Create,
   read: Read,
   update: Update,
 };
@@ -25,7 +27,9 @@ class Details extends React.Component {
   }
 
   componentDidUpdate ({
-    paramLayer: prevParamlayer, paramId: prevParamId,
+    paramId: prevParamId,
+    paramLayer: prevParamlayer,
+    paramAction: prevParamAction,
     feature: {
       [prevParamId]: {
         geom: { coordinates: prevCoordinates = [] } = {},
@@ -35,17 +39,21 @@ class Details extends React.Component {
     layer: prevLayer,
   }) {
     const {
-      paramLayer, paramId,
+      paramId,
+      paramLayer,
+      paramAction,
       feature: { [paramId]: { geom: { coordinates = [] } = {}, properties } = {} } = {},
       map,
       layer,
     } = this.props;
 
+    const isCreateAction = prevParamAction !== paramAction && paramAction === 'create';
+
     if (prevParamlayer !== paramLayer || prevParamId !== paramId || prevLayer !== layer) {
       this.getData();
     }
 
-    if (properties !== prevProperties) {
+    if (properties !== prevProperties || isCreateAction) {
       this.setSchema();
     }
 
@@ -70,7 +78,7 @@ class Details extends React.Component {
       feature: { [paramId]: { properties } = {} } = {},
       layer: { schema } = {},
     } = this.props;
-    if (properties && schema) {
+    if (schema) {
       this.setState({
         schema: {
           type: 'object',
@@ -79,7 +87,7 @@ class Details extends React.Component {
             ...list,
             [prop]: {
               ...schema.properties[prop],
-              default: properties[prop] || '',
+              default: properties ? properties[prop] : '',
             },
           }), {}),
         },
@@ -110,7 +118,7 @@ class Details extends React.Component {
           </NavLink>
         </div>
         <div className="rando-details__content">
-          {!feature ? (
+          {!feature && paramAction !== 'create' ? (
             <Loading spinner />
           ) : (
             <ComponentAction schema={schema} />

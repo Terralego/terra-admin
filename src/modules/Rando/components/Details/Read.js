@@ -23,7 +23,7 @@ const Read = ({
         <NavLink to={`/rando/map/${layer}/update/${id}`}>
           <span className="bp3-button">
             <Icon icon="edit" />
-            <span className="bp3-button-text"> {t('rando.details.edit')}</span>
+            <span className="bp3-button-text"> {t('rando.details.update')}</span>
           </span>
         </NavLink>
       </div>

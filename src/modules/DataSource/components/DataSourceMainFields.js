@@ -4,6 +4,7 @@ import {
   LongTextInput,
   FileInput,
   FileField,
+  SelectInput,
   RadioButtonGroupInput,
   FormDataConsumer,
   translate as translateRA,
@@ -31,14 +32,19 @@ const DataSourceMainFields = ({ translate, ...props }) => (
     />
     <LongTextInput source="description" defaultValue="" label="datasource.form.description" />
 
-    <RadioButtonGroupInput
+    <SelectInput
       source="geom_type"
       label="datasource.form.geometry"
       validate={defaultRequired}
       choices={[
-        { id: 'point', name: 'Point' },
-        { id: 'line', name: 'Line' },
-        { id: 'polygon', name: 'Polygon' },
+        { id: '0', name: 'Point' },
+        { id: 1, name: 'LineString' },
+        { id: 2, name: 'LinearRi' },
+        { id: 3, name: 'Polygon' },
+        { id: 4, name: 'MultiPoint' },
+        { id: 5, name: 'MultiLineString' },
+        { id: 6, name: 'MultiPolygon' },
+        { id: 7, name: 'GeometryCollection' },
       ]}
     />
 

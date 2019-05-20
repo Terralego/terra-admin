@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import InteractiveMap, { INTERACTION_FN } from 'mc-tf-test/modules/Map/InteractiveMap';
+import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/InteractiveMap';
 
 import DataTable from '../../components/DataTable';
 import Details from '../../components/Details';

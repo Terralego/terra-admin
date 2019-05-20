@@ -1,5 +1,5 @@
 import React from 'react';
-import connect from 'mc-tf-test/utils/connect';
+import connect from 'react-ctx-connect';
 
 import { fetchViewpoint, fetchViewpoints, saveViewpoint, addImageToViewpoint } from './viewpoints';
 

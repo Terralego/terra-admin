@@ -1,4 +1,4 @@
-import Api from 'mc-tf-test/modules/Api';
+import Api from '@terralego/core/modules/Api';
 
 export async function fetchFeaturesList (layerId) {
   return Api.request(`layer/${layerId}/feature/`);

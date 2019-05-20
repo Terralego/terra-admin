@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button } from '@blueprintjs/core/lib/esm/index';
 
-import Filters from 'mc-tf-test/modules/Forms/Filters';
+import Filters from '@terralego/core/modules/Forms/Filters';
 import { isDate, parsePropertiesToData } from '../../../../utils/validateFilters';
 
 import './search-form.scss';

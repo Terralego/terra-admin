@@ -1,24 +1,29 @@
 import React from 'react';
-import { TextInput, LongTextInput, SelectInput } from 'react-admin';
+import {
+  TextInput,
+  LongTextInput,
+  SelectInput,
+} from 'react-admin';
 
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 
 const DbFields = () => (
   <FieldGroup>
-    <TextInput source="db_host" type="text" label="Host server" />
-    <TextInput source="db_name" type="text" label="Database name" />
-    <TextInput source="db_username" type="text" label="User name" />
-    <TextInput source="db_password" type="password" label="User password" />
-    <LongTextInput source="query" type="text" />
-    <TextInput source="geom_field" type="text" label="Geometry field name" />
+    <TextInput source="db_host" type="text" label="datasource.form.request.host-server" />
+    <TextInput source="db_name" type="text" label="datasource.form.request.database-name" />
+    <TextInput source="db_username" type="text" label="datasource.form.request.user-name" />
+    <TextInput source="db_password" type="password" label="datasource.form.request.user-password" />
+    <LongTextInput source="query" type="text" label="datasource.form.request.query" />
+    <TextInput source="geom_field" type="text" label="datasource.form.geometry" />
     <SelectInput
       source="refresh"
+      label="datasource.form.request.refresh.name"
       choices={[
-        { id: -1, name: 'Never update' },
-        { id: 60, name: 'Hourly' },
-        { id: (60 * 24), name: 'Daily' },
-        { id: (60 * 24 * 7), name: 'Weekly' },
-        { id: (60 * 24 * 30), name: 'Monthly' },
+        { id: -1, name: 'datasource.form.request.refresh.never' },
+        { id: 60, name: 'datasource.form.request.refresh.hourly' },
+        { id: (60 * 24), name: 'datasource.form.request.refresh.daily' },
+        { id: (60 * 24 * 7), name: 'datasource.form.request.refresh.weekly' },
+        { id: (60 * 24 * 30), name: 'datasource.form.request.refresh.monthly' },
       ]}
     />
   </FieldGroup>

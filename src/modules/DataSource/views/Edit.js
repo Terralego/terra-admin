@@ -13,10 +13,8 @@ import {
   Datagrid,
   TextField,
   CardActions,
+  RefreshButton,
 } from 'react-admin';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-import Button from '@material-ui/core/Button';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
 import FieldSample from '../../../components/react-admin/FieldSample';
@@ -26,47 +24,46 @@ import dataProvider from '../../../services/react-admin/dataProvider';
 
 const DataSourceEditActions = ({ data: { id } = {} }) => (
   <CardActions>
-    <Button
+    <RefreshButton
       color="primary"
       variant="raised"
+      label="datasource.edit.refresh"
       onClick={() => dataProvider('REFRESH', 'geosource', { id })}
-    >
-      Refresh data
-    </Button>
+    />
   </CardActions>
 );
 
 export const DataSourceEdit = props => (
   <Edit
     undoable={false}
-    actions={<DataSourceEditActions />}
+    actions={<DataSourceEditActions {...props} />}
     {...props}
   >
     <TabbedForm>
-      <FormTab label="Definition">
+      <FormTab label="datasource.form.definition">
         <DataSourceMainFields />
 
         {/* List of dataLayers referencing this */}
         <ReferenceManyField
-          label="Already used by"
+          label="datasource.form.use-by"
           reference="layer"
           target="source_id"
         >
           <Datagrid>
-            <TextField source="type" />
-            <TextField source="name" />
+            <TextField source="type" label="datasource.form.type" />
+            <TextField source="name" label="datasource.form.name" />
           </Datagrid>
         </ReferenceManyField>
       </FormTab>
 
       {/* Fields */}
-      <FormTab label="Attribute data">
+      <FormTab label="datasource.form.data">
         <AttributeMessage />
 
-        <ArrayInput source="fields">
+        <ArrayInput source="fields" label="datasource.form.fields">
           <SimpleFormIterator disableRemove disableAdd>
-            <DisabledInput source="name" />
-            <TextInput source="label" />
+            <DisabledInput source="name" label="datasource.form.name" />
+            <TextInput source="label" label="datasource.form.label" />
             <SelectInput
               source="type"
               choices={[
@@ -75,9 +72,10 @@ export const DataSourceEdit = props => (
                 { id: 'float', name: 'Float' },
                 { id: 'boolean', name: 'Boolean' },
               ]}
+              label="datasource.form.type"
             />
             <FieldSample />
-            <BooleanInput source="in_mvt" label="Include field in Vector tiles" />
+            <BooleanInput source="in_mvt" label="datasource.form.include-field-tiles" />
           </SimpleFormIterator>
         </ArrayInput>
       </FormTab>

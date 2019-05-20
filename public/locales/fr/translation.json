@@ -167,11 +167,46 @@
       "password": "Mot de passe"
     }
   },
-  "datasources": {
+  "datasource": {
     "project": "Entrepôt de données",
     "nav": {
       "list": "Toutes les sources de données",
       "create": "Ajouter une source de données"
+    },
+    "form": {
+      "definition": "Définition",
+      "name": "Nom",
+      "type": "Type",
+      "geometry": "Géométrie",
+      "use-by": "Utilisé par",
+      "data": "Données",
+      "label": "Libellé",
+      "fields": "Champs",
+      "description": "Description",
+      "file": {
+        "related-files": "Fichiers associés",
+        "placeholder": "Déposez votre fichier GeoJSON ici"
+      },
+      "request": {
+        "host-server": "Serveur hôte",
+        "database-name": "Nom de la base de données",
+        "user-name": "Nom de l'utilisateur",
+        "user-password": "Mot de passe de l'utilisateur",
+        "query": "Requête",
+        "refresh": {
+          "name": "Actualiser",
+          "never": "Jamais",
+          "hourly": "Toutes les heures",
+          "daily": "Quotidiennement",
+          "weekly": "Hebdomadaire",
+          "monthly": "Mensuel"
+        }
+      },
+      "include-field-tiles": "Inclure ce champ dans les tuiles vectorielles"
+    },
+    "edit": {
+      "refresh": "Actualiser les données",
+      "message": "Il est nécessaire d'inclure des champs dans les tuiles vectorielles pour qu'ils soient également disponibles dans les popups et les mini-fiches."
     }
   },
   "datalayers": {

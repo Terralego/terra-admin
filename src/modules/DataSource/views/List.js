@@ -13,10 +13,10 @@ import { sourceTypes, sourceTypeChoices } from '../DataSource';
 
 const ListFilters = props => (
   <Filter {...props}>
-    <TextInput label="Search" source="q" alwaysOn />
+    <TextInput label="ra.action.search" source="q" alwaysOn />
     <SelectInput
       source="type"
-      label="Source type"
+      label="datasource.form.type"
       choices={sourceTypeChoices}
     />
   </Filter>
@@ -33,9 +33,9 @@ export const DataSourceList = props => (
     {...props}
   >
     <Datagrid rowClick="edit">
-      <TextField source="name" />
-      <FunctionField label="Type" render={({ _type: type }) => sourceTypes[type] || ''} />
-      <TextField source="geom_type" />
+      <TextField source="name" label="datasource.form.name" />
+      <FunctionField label="datasource.form.type" render={({ _type: type }) => sourceTypes[type] || ''} />
+      <TextField source="geom_type" label="datasource.form.geometry" />
       <EditButton />
     </Datagrid>
   </List>

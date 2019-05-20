@@ -1,12 +1,19 @@
 import React from 'react';
 import {
-  TextInput, LongTextInput,
-  FileInput, FileField,
+  TextInput,
+  LongTextInput,
+  FileInput,
+  FileField,
   RadioButtonGroupInput,
   FormDataConsumer,
+  translate as translateRA,
 } from 'react-admin';
 
-import { GEOJSON, SQL, sourceTypeChoices } from '../DataSource';
+import {
+  GEOJSON,
+  SQL,
+  sourceTypeChoices,
+} from '../DataSource';
 
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import DbFields from './DbFields';
@@ -14,17 +21,19 @@ import DbFields from './DbFields';
 const required = (message = 'Required') => value => (value ? undefined : message);
 const defaultRequired = required();
 
-const DataSourceMainFields = props => (
+const DataSourceMainFields = ({ translate, ...props }) => (
   <FieldGroup {...props}>
     <TextInput
       source="name"
       validate={defaultRequired}
       type="text"
+      label="datasource.form.name"
     />
-    <LongTextInput source="description" defaultValue="" />
+    <LongTextInput source="description" defaultValue="" label="datasource.form.description" />
 
     <RadioButtonGroupInput
       source="geom_type"
+      label="datasource.form.geometry"
       validate={defaultRequired}
       choices={[
         { id: 'point', name: 'Point' },
@@ -35,6 +44,7 @@ const DataSourceMainFields = props => (
 
     <RadioButtonGroupInput
       source="_type"
+      label="datasource.form.type"
       validate={defaultRequired}
       choices={sourceTypeChoices}
     />
@@ -44,9 +54,9 @@ const DataSourceMainFields = props => (
         type === GEOJSON && (
           <FileInput
             source="files"
-            label="Related files"
+            label="datasource.form.file.related-files"
             multiple={false}
-            placeholder={<p>Drop your GeoJSON file here</p>}
+            placeholder={translate('datasource.form.file.placeholder')}
             {...rest}
           >
             <FileField source="file_data" title="title" />
@@ -60,4 +70,4 @@ const DataSourceMainFields = props => (
   </FieldGroup>
 );
 
-export default DataSourceMainFields;
+export default translateRA(DataSourceMainFields);

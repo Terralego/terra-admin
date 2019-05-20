@@ -1,12 +1,12 @@
 export default {
-  title: 'datasources.project',
+  title: 'datasource.project',
   path: '/datasources',
   permission: 'admin.datasources',
   nav: [{
-    label: 'datasources.nav.list',
+    label: 'datasource.nav.list',
     href: '#geosource',
   }, {
-    label: 'datasources.nav.create',
+    label: 'datasource.nav.create',
     href: '#geosource/create',
   }],
 };

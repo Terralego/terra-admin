@@ -15,7 +15,7 @@ const SourceSelector = connect()(({ dispatch, ...props }) => (
   <ReferenceInput
     source="source_id"
     reference="geosource"
-    label="Data source"
+    label="datalayer.form.data-source"
     onChange={async (event, toId) => {
       const { data: { fields } } = await dataProvider(GET_ONE, 'geosource', { id: toId });
       dispatch(change(REDUX_FORM_NAME, 'fields', fields || null));

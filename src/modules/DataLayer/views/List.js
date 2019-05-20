@@ -12,9 +12,9 @@ import {
 
 const ListFilters = props => (
   <Filter {...props}>
-    <TextInput label="Search" source="q" alwaysOn />
+    <TextInput label="ra.action.search" source="q" alwaysOn />
 
-    <ReferenceInput source="source_id" reference="geosource" label="Data source">
+    <ReferenceInput source="source_id" reference="geosource" label="datalayer.form.data-source">
       <SelectInput />
     </ReferenceInput>
   </Filter>
@@ -31,8 +31,8 @@ export const DataLayerList = props => (
     {...props}
   >
     <Datagrid rowClick="edit">
-      <TextField source="name" />
-      <ReferenceField source="source_id" reference="geosource" label="Data source" linkType={false}>
+      <TextField source="name" label="datalayer.form.name" />
+      <ReferenceField source="source_id" reference="geosource" label="datalayer.form.data-source" linkType={false}>
         <TextField source="name" />
       </ReferenceField>
       <EditButton />

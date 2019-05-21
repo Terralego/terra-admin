@@ -10,6 +10,7 @@ import FieldGroup from '../../../components/react-admin/FieldGroup';
 const DbFields = () => (
   <FieldGroup>
     <TextInput source="db_host" type="text" label="datasource.form.request.host-server" />
+    <TextInput source="db_port" type="number" label="datasource.form.request.host-port" />
     <TextInput source="db_name" type="text" label="datasource.form.request.database-name" />
     <TextInput source="db_username" type="text" label="datasource.form.request.user-name" />
     <TextInput source="db_password" type="password" label="datasource.form.request.user-password" />

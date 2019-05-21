@@ -9,7 +9,7 @@ import {
   Filter,
 } from 'react-admin';
 
-import { sourceTypes, sourceTypeChoices } from '../DataSource';
+import { sourceTypes, geomTypes, sourceTypeChoices } from '../DataSource';
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
 
 const ListFilters = props => (
@@ -37,7 +37,7 @@ export const DataSourceList = props => (
     <Datagrid rowClick="edit">
       <TextField source="name" label="datasource.form.name" />
       <FunctionField label="datasource.form.type" render={({ _type: type }) => sourceTypes[type] || ''} />
-      <TextField source="geom_type" label="datasource.form.geometry" />
+      <FunctionField label="datasource.form.geometry" render={({ geom_type: geomType }) => geomTypes[geomType] || ''} />
       <EditButton />
     </Datagrid>
   </List>

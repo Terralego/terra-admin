@@ -6,7 +6,7 @@ import {
   translate as translateRA,
 } from 'react-admin';
 
-
+import { geomTypeChoices } from '../DataSource';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
@@ -26,16 +26,8 @@ const DataSourceMainFields = ({ translate, ...props }) => (
       source="geom_type"
       label="datasource.form.geometry"
       validate={defaultRequired}
-      choices={[
-        { id: '0', name: 'Point' },
-        { id: 1, name: 'LineString' },
-        { id: 2, name: 'LinearRi' },
-        { id: 3, name: 'Polygon' },
-        { id: 4, name: 'MultiPoint' },
-        { id: 5, name: 'MultiLineString' },
-        { id: 6, name: 'MultiPolygon' },
-        { id: 7, name: 'GeometryCollection' },
-      ]}
+      choices={geomTypeChoices}
+      format={v => `${v}`}
     />
   </FieldGroup>
 );

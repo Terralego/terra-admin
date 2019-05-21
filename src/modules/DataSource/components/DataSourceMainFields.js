@@ -2,22 +2,12 @@ import React from 'react';
 import {
   TextInput,
   LongTextInput,
-  FileInput,
-  FileField,
   SelectInput,
-  RadioButtonGroupInput,
-  FormDataConsumer,
   translate as translateRA,
 } from 'react-admin';
 
-import {
-  GEOJSON,
-  SQL,
-  sourceTypeChoices,
-} from '../DataSource';
 
 import FieldGroup from '../../../components/react-admin/FieldGroup';
-import DbFields from './DbFields';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 const defaultRequired = required();
@@ -47,32 +37,6 @@ const DataSourceMainFields = ({ translate, ...props }) => (
         { id: 7, name: 'GeometryCollection' },
       ]}
     />
-
-    <RadioButtonGroupInput
-      source="_type"
-      label="datasource.form.type"
-      validate={defaultRequired}
-      choices={sourceTypeChoices}
-    />
-
-    <FormDataConsumer>
-      {({ formData: { _type: type } = {}, ...rest }) =>
-        type === GEOJSON && (
-          <FileInput
-            source="file"
-            label="datasource.form.file.related-files"
-            multiple={false}
-            placeholder={translate('datasource.form.file.placeholder')}
-            {...rest}
-          >
-            <FileField source="file_data" title="title" />
-          </FileInput>
-        )}
-    </FormDataConsumer>
-
-    <FormDataConsumer>
-      {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
-    </FormDataConsumer>
   </FieldGroup>
 );
 

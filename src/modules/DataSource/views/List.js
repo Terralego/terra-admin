@@ -10,6 +10,7 @@ import {
 } from 'react-admin';
 
 import { sourceTypes, sourceTypeChoices } from '../DataSource';
+import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
 
 const ListFilters = props => (
   <Filter {...props}>
@@ -30,6 +31,7 @@ export const DataSourceList = props => (
     }}
     exporter={false}
     filters={<ListFilters />}
+    bulkActionButtons={<CommonBulkActionButtons />}
     {...props}
   >
     <Datagrid rowClick="edit">

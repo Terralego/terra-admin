@@ -17,7 +17,11 @@ import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceSelector from './SourceSelector';
 import FieldSummary from '../../../components/react-admin/FieldSummary';
 
+import { fetchDatalayerConfig } from '../services/datalayer';
+
 const required = (message = 'Required') => value => (value ? undefined : message);
+
+const viewChoices = fetchDatalayerConfig();
 
 const DataLayerTabbedForm = props => (
   <TabbedForm {...props}>
@@ -27,11 +31,7 @@ const DataLayerTabbedForm = props => (
       <SelectInput
         source="view"
         label="datalayer.form.view"
-        choices={[
-          { id: 'Visualiser', name: 'Visualiser' },
-          { id: 'Analyser', name: 'Analyser' },
-          { id: 'Story', name: 'Story' },
-        ]}
+        choices={viewChoices}
       />
 
       <TextInput

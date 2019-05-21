@@ -103,7 +103,7 @@ class Details extends React.Component {
     return (
       <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
         <div className="rando-details__close">
-          <NavLink to={`/rando/map/layer/${paramLayer}`}>
+          <NavLink to={`/rando/map/${paramLayer}`}>
             <span className="bp3-button bp3-minimal">
               <Icon icon="cross" title={t('rando.details.close')} />
             </span>

@@ -9,6 +9,7 @@ import {
 
 import './header.scss';
 import UserDropdown from '../UserDropdown';
+import MenuDropdown from '../MenuDropdown';
 
 const logo = ({ title, logo: { src = false, alt = title }, t }) => {
   if (!src) {
@@ -31,7 +32,10 @@ export const Header = ({ authenticated, ...props }) => (
         </NavbarHeading>
       </NavbarGroup>
       {authenticated && (
-        <UserDropdown />
+        <NavbarGroup align="right">
+          <MenuDropdown />
+          <UserDropdown />
+        </NavbarGroup>
       )}
     </Navbar>
   </header>

@@ -69,7 +69,7 @@ export class Map extends React.Component {
           fn: ({
             feature: { sourceLayer, properties: { _id: id } },
           }) => {
-            push(`/rando/map/layer/${sourceLayer}/read/${id}`);
+            push(`/rando/map/${sourceLayer}/read/${id}`);
           },
         };
       }

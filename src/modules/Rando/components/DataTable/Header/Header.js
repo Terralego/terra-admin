@@ -9,7 +9,7 @@ import './styles.scss';
 const Header = ({ source, full, resize, t, columns, onChange, match: { params: { layer } } }) => (
   <div className="table-header">
     <div className="table-header__title">
-      {t('rando.table.title')} {source}
+      {t('rando.table.title', { source })}
       <NavLink className="table-header__create" to={generateURI('layer', { layer, action: 'create' })}>
         <span className="bp3-button">
           <Icon icon="plus" />
@@ -19,7 +19,7 @@ const Header = ({ source, full, resize, t, columns, onChange, match: { params: {
     </div>
     <div>
       <Popover
-        content="Filtrer les propriétés"
+        content={t('rando.table.filterProps')}
         interactionKind={PopoverInteractionKind.HOVER}
       >
         <ColumnsSelector

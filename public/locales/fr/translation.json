@@ -132,12 +132,15 @@
   "rando": {
     "project": "Randonnées",
     "nav": {
-      "map": "Carte"
+      "map": "Carte",
+      "foldMenu": "Replier le menu",
+      "unfoldMenu": "Déplier le menu"
     },
     "table": {
-      "title": "Liste de la couche :",
+      "title": "Liste de la couche : {{source}}",
       "sortAsc": "Tri croissant",
       "sortDesc": "Tri décroissant",
+      "filterProps": "Filtrer les propriétés",
       "minimize": "Réduire",
       "maximize": "Agrandir",
       "columnsDisplay": "Afficher toutes les colonnes",

@@ -35,7 +35,7 @@ export default async (...args) => {
         break;
 
       case 'UPDATE':
-        response = await Api.request(`geosource/${params.id}/`, { method: 'PUT', body });
+        response = await Api.request(`geosource/${params.id}/`, { method: 'PATCH', body });
         break;
       default:
     }

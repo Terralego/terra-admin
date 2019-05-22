@@ -18,7 +18,8 @@ import {
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import DbFields from './DbFields';
 
-const required = (message = 'Required') => value => (value ? undefined : message);
+import { required } from '../../../utils/react-admin/validate';
+
 const defaultRequired = required();
 
 const DataSourceMainFields = ({ translate, ...props }) => (

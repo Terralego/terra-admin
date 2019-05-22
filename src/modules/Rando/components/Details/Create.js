@@ -5,6 +5,7 @@ import Form from 'react-jsonschema-form';
 import { Button } from '@blueprintjs/core';
 
 import { connectRandoProvider } from '../../services/RandoProvider';
+import { generateURI } from '../../config';
 
 const MOCK_GEOM = { geom: { type: 'LineString', coordinates: [[0.5317265, 43.9421408], [0.5316611, 43.9420908]] } };
 class Create extends React.Component {
@@ -38,7 +39,7 @@ class Create extends React.Component {
     );
 
     if (savedFeature !== null) {
-      push(`/rando/map/${layer}/${savedFeature.identifier}/update`);
+      push(generateURI('layer', { layer, id: savedFeature.identifier, action: 'update' }));
       return;
     }
 

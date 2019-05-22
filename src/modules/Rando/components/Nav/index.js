@@ -4,7 +4,7 @@ import { Button } from '@blueprintjs/core';
 import classnames from 'classnames';
 
 import { connectRandoProvider } from '../../services/RandoProvider';
-import config from '../../config';
+import { generateURI } from '../../config';
 
 import './styles.scss';
 
@@ -43,7 +43,7 @@ export const Nav = ({ getAllLayersAction, resizingMap, layersList }) => {
         {layersList.map(({ name }) => (
           <li key={name}>
             <NavLink
-              to={`${config.path}/map/${name}`}
+              to={generateURI('layer', { layer: name })}
             >
               {name}
             </NavLink>

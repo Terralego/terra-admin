@@ -8,6 +8,7 @@ import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
 import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
+import { generateURI } from '../../config';
 
 import './styles.scss';
 
@@ -75,7 +76,7 @@ export class Map extends React.Component {
           fn: ({
             feature: { sourceLayer, properties: { _id: id } },
           }) => {
-            push(`/rando/map/${sourceLayer}/${id}`);
+            push(generateURI('layer', { layer: sourceLayer, id }));
           },
         };
       }

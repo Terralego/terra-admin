@@ -5,6 +5,7 @@ import { Icon } from '@blueprintjs/core';
 import { ACTION_CREATE, ACTION_UPDATE } from '../../views/Map/Map';
 import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
+import { generateURI } from '../../config';
 
 import Create from './Create';
 import Read from './Read';
@@ -122,7 +123,7 @@ class Details extends React.Component {
     return (
       <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
         <div className="rando-details__close">
-          <NavLink to={`/rando/map/${paramLayer}`}>
+          <NavLink to={generateURI('layer', { layer: paramLayer })}>
             <span className="bp3-button bp3-minimal">
               <Icon icon="cross" title={t('rando.details.close')} />
             </span>

@@ -15,7 +15,7 @@ const DbFields = () => (
     <TextInput source="db_username" type="text" label="datasource.form.request.user-name" />
     <TextInput source="db_password" type="password" label="datasource.form.request.user-password" />
     <LongTextInput source="query" type="text" label="datasource.form.request.query" />
-    <TextInput source="geom_field" type="text" label="datasource.form.geometry" />
+    <TextInput source="geom_field" type="text" label="datasource.form.geom-field" />
     <SelectInput
       source="refresh"
       label="datasource.form.request.refresh.name"

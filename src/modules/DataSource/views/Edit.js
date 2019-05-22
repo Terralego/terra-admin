@@ -53,6 +53,8 @@ export const DataSourceEdit = props => (
           {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
         </FormDataConsumer>
 
+        <TextInput source="id_field" type="text" label="datasource.form.uid-field" />
+
         {/* List of dataLayers referencing this */}
         <ReferenceManyField
           label="datasource.form.use-by"

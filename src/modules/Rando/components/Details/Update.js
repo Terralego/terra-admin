@@ -20,7 +20,7 @@ class Update extends React.Component {
   }
 
   static getDerivedStateFromProps ({ schema }, { schema: stateSchema }) {
-    if (!Object.keys(stateSchema).length && stateSchema !== schema) {
+    if (stateSchema !== schema) {
       return {
         schema,
       };
@@ -38,8 +38,10 @@ class Update extends React.Component {
     } = this.props;
 
 
-    const formHasChanged = Object.keys(formData)
-      .some(prop => formData[prop] !== schema.properties[prop].default);
+    const formHasChanged = Object.keys(formData).some(prop => (
+      formData[prop] !== schema.properties[prop].default
+    ));
+
     if (!formHasChanged) {
       return;
     }

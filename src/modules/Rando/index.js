@@ -8,9 +8,7 @@ import RandoProvider from './services/RandoProvider';
 
 import './styles.scss';
 
-const Map = () => import('./views/Map');
-
-const { path } = config;
+const { routes } = config;
 
 export const Rando = () => (
   <RandoProvider>
@@ -18,16 +16,7 @@ export const Rando = () => (
       <NavLayout nav={<Nav />}>
         <div className="rando-main">
           <Routing
-            routes={[
-              {
-                path: `${path}/map/:layer?/:action?/:id?`,
-                import: Map,
-              },
-              {
-                path,
-                redirect: `${path}/map`,
-              },
-            ]}
+            routes={routes}
           />
         </div>
       </NavLayout>

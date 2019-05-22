@@ -2,17 +2,15 @@ import React from 'react';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { Icon } from '@blueprintjs/core';
+import { ACTION_CREATE, ACTION_UPDATE } from '../../views/Map/Map';
 import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
+import { generateURI } from '../../config';
 
+import Create from './Create';
 import Read from './Read';
 import Update from './Update';
 import './styles.scss';
-
-const ACTIONS = {
-  read: Read,
-  update: Update,
-};
 
 class Details extends React.Component {
   state = {
@@ -25,7 +23,8 @@ class Details extends React.Component {
   }
 
   componentDidUpdate ({
-    paramLayer: prevParamlayer, paramId: prevParamId,
+    paramId: prevParamId,
+    paramLayer: prevParamlayer,
     feature: {
       [prevParamId]: {
         geom: { coordinates: prevCoordinates = [] } = {},
@@ -35,17 +34,19 @@ class Details extends React.Component {
     layer: prevLayer,
   }) {
     const {
-      paramLayer, paramId,
+      paramId,
+      paramLayer,
       feature: { [paramId]: { geom: { coordinates = [] } = {}, properties } = {} } = {},
       map,
       layer,
     } = this.props;
 
+
     if (prevParamlayer !== paramLayer || prevParamId !== paramId || prevLayer !== layer) {
       this.getData();
     }
 
-    if (properties !== prevProperties) {
+    if (properties !== prevProperties || (prevParamId !== paramId && this.isCreateAction)) {
       this.setSchema();
     }
 
@@ -56,9 +57,14 @@ class Details extends React.Component {
     }
   }
 
+  get isCreateAction () {
+    const { paramId } = this.props;
+    return paramId === ACTION_CREATE;
+  }
+
   getData () {
     const { layer, paramId, fetchFeature } = this.props;
-    if (layer && paramId) {
+    if (layer && paramId && !this.isCreateAction) {
       const { id: layerId } = layer;
       fetchFeature(layerId, paramId);
     }
@@ -70,7 +76,7 @@ class Details extends React.Component {
       feature: { [paramId]: { properties } = {} } = {},
       layer: { schema } = {},
     } = this.props;
-    if (properties && schema) {
+    if (schema) {
       this.setState({
         schema: {
           type: 'object',
@@ -79,7 +85,7 @@ class Details extends React.Component {
             ...list,
             [prop]: {
               ...schema.properties[prop],
-              default: properties[prop] || '',
+              default: properties ? properties[prop] : '',
             },
           }), {}),
         },
@@ -87,30 +93,44 @@ class Details extends React.Component {
     }
   }
 
+  get ComponentAction () {
+    const {
+      paramId,
+      paramAction,
+    } = this.props;
+    if (paramId === ACTION_CREATE) {
+      return Create;
+    }
+    if (paramAction === ACTION_UPDATE) {
+      return Update;
+    }
+    return Read;
+  }
+
   render () {
     const {
       feature,
       visible,
       paramLayer,
-      paramAction,
+      paramId,
       t,
     } = this.props;
     const { schema } = this.state;
-    const ComponentAction = ACTIONS[paramAction];
+    const { ComponentAction } = this;
     if (!ComponentAction) {
       return null;
     }
     return (
       <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
         <div className="rando-details__close">
-          <NavLink to={`/rando/map/${paramLayer}`}>
+          <NavLink to={generateURI('layer', { layer: paramLayer })}>
             <span className="bp3-button bp3-minimal">
               <Icon icon="cross" title={t('rando.details.close')} />
             </span>
           </NavLink>
         </div>
         <div className="rando-details__content">
-          {!feature ? (
+          {!feature && paramId !== ACTION_CREATE ? (
             <Loading spinner />
           ) : (
             <ComponentAction schema={schema} />

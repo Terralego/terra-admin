@@ -3,8 +3,9 @@ import { withRouter } from 'react-router';
 import classnames from 'classnames';
 import { Icon } from '@blueprintjs/core';
 import { NavLink } from 'react-router-dom';
-
 import { withNamespaces } from 'react-i18next';
+import { generateURI } from '../../config';
+
 
 const NO_FEATURE = 'rando.details.noFeature';
 
@@ -20,10 +21,10 @@ const Read = ({
     <div className="details">
       <div className="details__header">
         <h2 className="details__title">{title || t(NO_FEATURE)}</h2>
-        <NavLink to={`/rando/map/${layer}/update/${id}`}>
+        <NavLink to={generateURI('layer', { layer, id, action: 'update' })}>
           <span className="bp3-button">
             <Icon icon="edit" />
-            <span className="bp3-button-text"> {t('rando.details.edit')}</span>
+            <span className="bp3-button-text"> {t('rando.details.update')}</span>
           </span>
         </NavLink>
       </div>

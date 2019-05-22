@@ -1,13 +1,22 @@
 import React from 'react';
-import { Intent, Position, Popover, PopoverInteractionKind, Button } from '@blueprintjs/core';
+import { Intent, Position, Popover, PopoverInteractionKind, Button, Icon } from '@blueprintjs/core';
 import ColumnsSelector from '@terralego/core/modules/Table/components/ColumnsSelector';
-import { withNamespaces } from 'react-i18next';
+import { NavLink } from 'react-router-dom';
+import { generateURI } from '../../../config';
 
 import './styles.scss';
 
-const Header = ({ source, full, resize, t, columns, onChange }) => (
+const Header = ({ source, full, resize, t, columns, onChange, match: { params: { layer } } }) => (
   <div className="table-header">
-    <div className="table-header__title">{t('rando.table.title')} {source}</div>
+    <div className="table-header__title">
+      {t('rando.table.title')} {source}
+      <NavLink className="table-header__create" to={generateURI('layer', { layer, action: 'create' })}>
+        <span className="bp3-button">
+          <Icon icon="plus" />
+          <span className="bp3-button-text"> {t('rando.details.create')}</span>
+        </span>
+      </NavLink>
+    </div>
     <div>
       <Popover
         content="Filtrer les propriétés"
@@ -39,4 +48,4 @@ const Header = ({ source, full, resize, t, columns, onChange }) => (
   </div>
 );
 
-export default withNamespaces()(Header);
+export default Header;

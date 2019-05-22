@@ -8,9 +8,12 @@ import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
 import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
+import { generateURI } from '../../config';
 
 import './styles.scss';
 
+export const ACTION_CREATE = 'create';
+export const ACTION_UPDATE = 'update';
 export const INTERACTION_VIEW_FEATURE = 'viewFeature';
 export class Map extends React.Component {
   state = {
@@ -44,15 +47,19 @@ export class Map extends React.Component {
     if (layersList !== prevLayersList) {
       this.generateLayersToMap();
     }
+
     if (layer !== prevLayer || map !== prevMap) {
       this.displayCurrentLayer(layer);
     }
+
     if (layersList !== prevLayersList || layer !== prevLayer || map !== prevMap) {
       this.loadFeatures();
     }
-    if (action !== prevAction) {
+
+    if (action !== prevAction || (prevId !== id && [prevId, id].includes(undefined))) {
       resizingMap();
     }
+
     if (!id && featuresList && (prevId !== id || featuresList !== prevFeaturesList)) {
       this.setFitBounds();
     }
@@ -69,7 +76,7 @@ export class Map extends React.Component {
           fn: ({
             feature: { sourceLayer, properties: { _id: id } },
           }) => {
-            push(`/rando/map/${sourceLayer}/read/${id}`);
+            push(generateURI('layer', { layer: sourceLayer, id }));
           },
         };
       }
@@ -129,11 +136,11 @@ export class Map extends React.Component {
       map,
       mapConfig,
       mapIsResizing,
-      match: { params: { layer = false, action = false } },
+      match: { params: { layer = false, id } },
     } = this.props;
 
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
-    const isDetailsVisible = action;
+    const isDetailsVisible = !!id;
 
     return (
       <div
@@ -163,7 +170,7 @@ export class Map extends React.Component {
               <div
                 className={classnames(
                   'rando-map__table',
-                  { 'rando-map__table--active': layer && !action },
+                  { 'rando-map__table--active': layer && !isDetailsVisible },
                 )}
               >
                 <DataTable

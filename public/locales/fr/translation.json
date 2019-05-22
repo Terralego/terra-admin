@@ -144,7 +144,8 @@
       "columnsHide": "Cacher toutes les colonnes"
     },
     "details": {
-      "edit": "Modifier",
+      "create": "Ajouter",
+      "update": "Modifier",
       "noFeature": "Non renseigné",
       "informations": "Informations",
       "save": "Sauvegarder",

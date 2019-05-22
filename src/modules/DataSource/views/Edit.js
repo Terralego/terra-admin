@@ -14,11 +14,15 @@ import {
   TextField,
   CardActions,
   RefreshButton,
+  FormDataConsumer,
 } from 'react-admin';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
+import DataSourceFileField from '../components/DataSourceFileField';
 import FieldSample from '../../../components/react-admin/FieldSample';
 import AttributeMessage from '../components/AttributeMessage';
+import DbFields from '../components/DbFields';
+import { SQL } from '../DataSource';
 
 import dataProvider from '../../../services/react-admin/dataProvider';
 
@@ -42,6 +46,12 @@ export const DataSourceEdit = props => (
     <TabbedForm>
       <FormTab label="datasource.form.definition">
         <DataSourceMainFields />
+
+        <DataSourceFileField />
+
+        <FormDataConsumer>
+          {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
+        </FormDataConsumer>
 
         {/* List of dataLayers referencing this */}
         <ReferenceManyField

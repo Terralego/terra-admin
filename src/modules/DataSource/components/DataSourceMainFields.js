@@ -2,21 +2,12 @@ import React from 'react';
 import {
   TextInput,
   LongTextInput,
-  FileInput,
-  FileField,
-  RadioButtonGroupInput,
-  FormDataConsumer,
+  SelectInput,
   translate as translateRA,
 } from 'react-admin';
 
-import {
-  GEOJSON,
-  SQL,
-  sourceTypeChoices,
-} from '../DataSource';
-
+import { geomTypeChoices } from '../DataSource';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
-import DbFields from './DbFields';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 const defaultRequired = required();
@@ -31,42 +22,13 @@ const DataSourceMainFields = ({ translate, ...props }) => (
     />
     <LongTextInput source="description" defaultValue="" label="datasource.form.description" />
 
-    <RadioButtonGroupInput
+    <SelectInput
       source="geom_type"
       label="datasource.form.geometry"
       validate={defaultRequired}
-      choices={[
-        { id: 'point', name: 'Point' },
-        { id: 'line', name: 'Line' },
-        { id: 'polygon', name: 'Polygon' },
-      ]}
+      choices={geomTypeChoices}
+      format={v => `${v}`}
     />
-
-    <RadioButtonGroupInput
-      source="_type"
-      label="datasource.form.type"
-      validate={defaultRequired}
-      choices={sourceTypeChoices}
-    />
-
-    <FormDataConsumer>
-      {({ formData: { _type: type } = {}, ...rest }) =>
-        type === GEOJSON && (
-          <FileInput
-            source="files"
-            label="datasource.form.file.related-files"
-            multiple={false}
-            placeholder={translate('datasource.form.file.placeholder')}
-            {...rest}
-          >
-            <FileField source="file_data" title="title" />
-          </FileInput>
-        )}
-    </FormDataConsumer>
-
-    <FormDataConsumer>
-      {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
-    </FormDataConsumer>
   </FieldGroup>
 );
 

@@ -10,6 +10,8 @@ import {
   ReferenceField,
 } from 'react-admin';
 
+import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
+
 const ListFilters = props => (
   <Filter {...props}>
     <TextInput label="ra.action.search" source="q" alwaysOn />
@@ -28,6 +30,7 @@ export const DataLayerList = props => (
     }}
     exporter={false}
     filters={<ListFilters />}
+    bulkActionButtons={<CommonBulkActionButtons />}
     {...props}
   >
     <Datagrid rowClick="edit">

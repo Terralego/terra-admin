@@ -5,18 +5,12 @@ import {
   TextField,
   EditButton,
   BooleanField,
-  BulkDeleteButton,
 } from 'react-admin';
 import ArrayCountField from '../../../components/react-admin/ArrayCountField';
-
-const UserBulkActionButtons = props => (
-  <>
-    <BulkDeleteButton undoable={false} {...props} />
-  </>
-);
+import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
 
 export const UserList = props => (
-  <List {...props} bulkActionButtons={<UserBulkActionButtons />}>
+  <List {...props} bulkActionButtons={<CommonBulkActionButtons />}>
     <Datagrid rowClick="edit">
       <TextField source="id" label="user.form.id" />
       <TextField source="email" label="user.form.email" />

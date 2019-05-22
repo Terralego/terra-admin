@@ -190,6 +190,7 @@
       },
       "request": {
         "host-server": "Serveur hôte",
+        "host-port": "Port hôte",
         "database-name": "Nom de la base de données",
         "user-name": "Nom de l'utilisateur",
         "user-password": "Mot de passe de l'utilisateur",

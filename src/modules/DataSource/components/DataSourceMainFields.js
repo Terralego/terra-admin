@@ -9,7 +9,8 @@ import {
 import { geomTypeChoices } from '../DataSource';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 
-const required = (message = 'Required') => value => (value ? undefined : message);
+import { required } from '../../../utils/react-admin/validate';
+
 const defaultRequired = required();
 
 const DataSourceMainFields = ({ translate, ...props }) => (

@@ -9,7 +9,7 @@ import {
 } from '@blueprintjs/core';
 
 export const MenuDropdown = ({ t, modules = [], history: { push } }) => {
-  const [{ config: { nav = [] } }] = modules;
+  const [{ config: { nav = [] } = {} } = {}] = modules;
   if (modules.length <= 1 && nav.length <= 1) {
     return null;
   }

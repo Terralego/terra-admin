@@ -32,6 +32,8 @@ const DataLayerTabbedForm = props => (
         source="view"
         label="datalayer.form.view"
         choices={viewChoices}
+        format={v => `${v}`}
+        parse={v => +v}
       />
 
       <TextInput

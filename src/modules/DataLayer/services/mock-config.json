@@ -1,14 +1,14 @@
 [
   {
-    "id": "Visualiser",
+    "id": 1,
     "name": "Visualiser"
   },
   {
-    "id": "Analyser",
+    "id": 2,
     "name": "Analyser"
   },
   {
-    "id": "Story",
+    "id": 3,
     "name": "Story"
   }
 ]

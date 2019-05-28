@@ -11,7 +11,7 @@ const FieldSample = ({ t, record: { sample } }) => (sample
     <Card>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>{t('datalayer.form.data-sample')}</Typography>
-        {sample}
+        {sample.join(', ')}
       </CardContent>
     </Card>
   )

@@ -4,6 +4,7 @@ import {
   TextField,
   TextInput,
   EditButton,
+  CloneButton,
   SelectInput,
   FunctionField,
   Filter,
@@ -37,8 +38,9 @@ export const DataSourceList = props => (
     <Datagrid rowClick="edit">
       <TextField source="name" label="datasource.form.name" />
       <FunctionField label="datasource.form.type" render={({ _type: type }) => sourceTypes[type] || ''} />
-      <FunctionField label="datasource.form.geometry" render={({ geom_type: geomType }) => geomTypes[geomType] || ''} />
+      <FunctionField label="datasource.form.geom-field" render={({ geom_type: geomType }) => geomTypes[geomType] || ''} />
       <EditButton />
+      <CloneButton />
     </Datagrid>
   </List>
 );

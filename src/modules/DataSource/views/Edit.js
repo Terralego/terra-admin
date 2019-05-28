@@ -22,7 +22,7 @@ import DataSourceFileField from '../components/DataSourceFileField';
 import FieldSample from '../../../components/react-admin/FieldSample';
 import AttributeMessage from '../components/AttributeMessage';
 import DbFields from '../components/DbFields';
-import { SQL } from '../DataSource';
+import { SQL, fieldTypeChoices } from '../DataSource';
 
 import dataProvider from '../../../services/react-admin/dataProvider';
 
@@ -53,6 +53,8 @@ export const DataSourceEdit = props => (
           {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
         </FormDataConsumer>
 
+        <TextInput source="id_field" type="text" label="datasource.form.uid-field" />
+
         {/* List of dataLayers referencing this */}
         <ReferenceManyField
           label="datasource.form.use-by"
@@ -76,12 +78,7 @@ export const DataSourceEdit = props => (
             <TextInput source="label" label="datasource.form.label" />
             <SelectInput
               source="type"
-              choices={[
-                { id: 'string', name: 'String' },
-                { id: 'number', name: 'Number' },
-                { id: 'float', name: 'Float' },
-                { id: 'boolean', name: 'Boolean' },
-              ]}
+              choices={fieldTypeChoices}
               label="datasource.form.type"
             />
             <FieldSample />

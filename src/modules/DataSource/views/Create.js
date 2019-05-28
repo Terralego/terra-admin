@@ -4,6 +4,7 @@ import {
   SimpleForm,
   RadioButtonGroupInput,
   FormDataConsumer,
+  TextInput,
 } from 'react-admin';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
@@ -34,6 +35,8 @@ export const DataSourceCreate = props => (
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
       </FormDataConsumer>
+
+      <TextInput source="id_field" type="text" label="datasource.form.uid-field" />
     </SimpleForm>
   </Create>
 );

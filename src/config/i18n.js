@@ -14,7 +14,7 @@ i18n
       loadPath: `${PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
     },
     fallbackLng: 'fr',
-    debug: true,
+    debug: false,
 
     interpolation: {
       escapeValue: false, // not needed for react!!

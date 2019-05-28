@@ -33,12 +33,16 @@ export default withLocale(DataSource);
 
 export const GEOJSON = 'GeoJSONSource';
 export const SQL = 'PostGISSource';
+
+const typesToChoices = types => Object.entries(types)
+  .map(([id, name]) => ({ id, name }));
+
 export const sourceTypes = {
   [GEOJSON]: 'GeoJSON',
   [SQL]: 'PostGIS',
 };
-export const sourceTypeChoices = Object.entries(sourceTypes)
-  .map(([id, name]) => ({ id, name }));
+export const sourceTypeChoices = typesToChoices(sourceTypes);
+
 export const geomTypes = {
   0: 'Point',
   1: 'LineString',
@@ -49,5 +53,13 @@ export const geomTypes = {
   6: 'MultiPolygon',
   7: 'GeometryCollection',
 };
-export const geomTypeChoices = Object.entries(geomTypes)
-  .map(([id, name]) => ({ id, name }));
+export const geomTypeChoices = typesToChoices(geomTypes);
+
+export const fieldTypes = {
+  1: 'String',
+  2: 'Integer',
+  3: 'Float',
+  4: 'Boolean',
+  5: 'Undefined',
+};
+export const fieldTypeChoices = typesToChoices(fieldTypes);

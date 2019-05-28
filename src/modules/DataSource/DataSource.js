@@ -23,7 +23,7 @@ export const DataSource = ({ locale }) => (
         {...dataSourceViews}
       />
       <Resource
-        name="layer"
+        name="geolayer"
       />
     </Admin>
   </NavLayout>

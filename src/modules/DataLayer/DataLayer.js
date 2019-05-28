@@ -20,7 +20,7 @@ export const DataLayer = ({ locale }) => (
       {...providers}
     >
       <Resource
-        name="layer"
+        name="geolayer"
         {...dataLayerViews}
       />
       <Resource name="geosource" />

@@ -3,9 +3,9 @@ export default {
   path: '/datalayers',
   nav: [{
     label: 'datalayer.nav.list',
-    href: '#layer',
+    href: '#geolayer',
   }, {
     label: 'datalayer.nav.create',
-    href: '#layer/create',
+    href: '#geolayer/create',
   }],
 };

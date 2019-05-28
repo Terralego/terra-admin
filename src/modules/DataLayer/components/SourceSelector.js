@@ -13,7 +13,7 @@ import dataProvider from '../../../services/react-admin/dataProvider';
 
 const SourceSelector = connect()(({ dispatch, ...props }) => (
   <ReferenceInput
-    source="source_id"
+    source="source"
     reference="geosource"
     label="datalayer.form.data-source"
     onChange={async (event, toId) => {

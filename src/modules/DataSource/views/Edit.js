@@ -59,7 +59,7 @@ export const DataSourceEdit = props => (
         <ReferenceManyField
           label="datasource.form.use-by"
           reference="layer"
-          target="source_id"
+          target="source"
         >
           <Datagrid>
             <TextField source="type" label="datasource.form.type" />

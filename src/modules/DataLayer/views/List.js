@@ -16,7 +16,7 @@ const ListFilters = props => (
   <Filter {...props}>
     <TextInput label="ra.action.search" source="q" alwaysOn />
 
-    <ReferenceInput source="source_id" reference="geosource" label="datalayer.form.data-source">
+    <ReferenceInput source="source" reference="geosource" label="datalayer.form.data-source">
       <SelectInput />
     </ReferenceInput>
   </Filter>
@@ -35,7 +35,7 @@ export const DataLayerList = props => (
   >
     <Datagrid rowClick="edit">
       <TextField source="name" label="datalayer.form.name" />
-      <ReferenceField source="source_id" reference="geosource" label="datalayer.form.data-source" linkType={false}>
+      <ReferenceField source="source" reference="geosource" label="datalayer.form.data-source" linkType={false}>
         <TextField source="name" />
       </ReferenceField>
       <EditButton />

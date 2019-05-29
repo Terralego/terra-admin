@@ -8,6 +8,7 @@ import {
   SelectInput,
   Filter,
   ReferenceField,
+  Pagination,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
@@ -22,6 +23,9 @@ const ListFilters = props => (
   </Filter>
 );
 
+const DataLayerListPagination = props =>
+  <Pagination rowsPerPageOptions={[]} {...props} />;
+
 export const DataLayerList = props => (
   <List
     sort={{
@@ -31,6 +35,8 @@ export const DataLayerList = props => (
     exporter={false}
     filters={<ListFilters />}
     bulkActionButtons={<CommonBulkActionButtons />}
+    perPage={100}
+    pagination={<DataLayerListPagination />}
     {...props}
   >
     <Datagrid rowClick="edit">

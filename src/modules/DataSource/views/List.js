@@ -8,6 +8,7 @@ import {
   SelectInput,
   FunctionField,
   Filter,
+  Pagination,
 } from 'react-admin';
 
 import { sourceTypes, geomTypes, sourceTypeChoices } from '../DataSource';
@@ -24,6 +25,9 @@ const ListFilters = props => (
   </Filter>
 );
 
+const DataSourceListPagination = props =>
+  <Pagination rowsPerPageOptions={[]} {...props} />;
+
 export const DataSourceList = props => (
   <List
     sort={{
@@ -33,6 +37,8 @@ export const DataSourceList = props => (
     exporter={false}
     filters={<ListFilters />}
     bulkActionButtons={<CommonBulkActionButtons />}
+    perPage={100}
+    pagination={<DataSourceListPagination />}
     {...props}
   >
     <Datagrid rowClick="edit">

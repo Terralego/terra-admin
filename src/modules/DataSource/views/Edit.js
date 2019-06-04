@@ -12,6 +12,7 @@ import {
   CardActions,
   RefreshButton,
   FormDataConsumer,
+  withDataProvider,
 } from 'react-admin';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
@@ -21,9 +22,7 @@ import AttributeMessage from '../components/AttributeMessage';
 import DbFields from '../components/DbFields';
 import { SQL, fieldTypeChoices } from '../DataSource';
 
-import dataProvider from '../../../services/react-admin/dataProvider';
-
-const DataSourceEditActions = ({ data: { id } = {} }) => (
+const DataSourceEditActions = withDataProvider(({ dataProvider, data: { id } = {} }) => (
   <CardActions>
     <RefreshButton
       color="primary"
@@ -32,7 +31,7 @@ const DataSourceEditActions = ({ data: { id } = {} }) => (
       onClick={() => dataProvider('REFRESH', 'geosource', { id })}
     />
   </CardActions>
-);
+));
 
 export const DataSourceEdit = props => (
   <Edit

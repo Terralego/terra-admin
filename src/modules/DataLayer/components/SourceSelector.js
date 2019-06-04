@@ -1,17 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-import { connect } from 'react-redux';
 import { change } from 'redux-form';
 import {
   SelectInput,
   ReferenceInput,
+  withDataProvider,
   GET_ONE,
   REDUX_FORM_NAME,
 } from 'react-admin';
 
-import dataProvider from '../../../services/react-admin/dataProvider';
-
-const SourceSelector = connect()(({ dispatch, ...props }) => (
+const SourceSelector = withDataProvider(({ dispatch, dataProvider, ...props }) => (
   <ReferenceInput
     source="source"
     reference="geosource"

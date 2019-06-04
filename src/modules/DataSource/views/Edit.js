@@ -72,7 +72,7 @@ export const DataSourceEdit = props => (
       <FormTab label="datasource.form.data">
         <AttributeMessage />
 
-        <ArrayInput source="fields" label="datasource.form.fields">
+        <ArrayInput source="fields" label="datasource.form.fields" style={{ width: '100%' }}>
           <SimpleFormIterator disableRemove disableAdd>
             <DisabledInput source="name" label="datasource.form.name" />
             <TextInput source="label" label="datasource.form.label" />
@@ -83,7 +83,7 @@ export const DataSourceEdit = props => (
               format={v => `${v}`}
               parse={v => +v}
             />
-            <FieldSample />
+            <FieldSample source="sample" />
             <BooleanInput source="in_mvt" label="datasource.form.include-field-tiles" />
           </SimpleFormIterator>
         </ArrayInput>

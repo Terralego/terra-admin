@@ -77,9 +77,11 @@ export const DataSourceEdit = props => (
             <DisabledInput source="name" label="datasource.form.name" />
             <TextInput source="label" label="datasource.form.label" />
             <SelectInput
-              source="type"
+              source="data_type"
               choices={fieldTypeChoices}
               label="datasource.form.type"
+              format={v => `${v}`}
+              parse={v => +v}
             />
             <FieldSample />
             <BooleanInput source="in_mvt" label="datasource.form.include-field-tiles" />

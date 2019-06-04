@@ -9,9 +9,6 @@ import {
   SimpleFormIterator,
   FormTab,
   DisabledInput,
-  ReferenceManyField,
-  Datagrid,
-  TextField,
   CardActions,
   RefreshButton,
   FormDataConsumer,
@@ -54,18 +51,6 @@ export const DataSourceEdit = props => (
         </FormDataConsumer>
 
         <TextInput source="id_field" type="text" label="datasource.form.uid-field" />
-
-        {/* List of dataLayers referencing this */}
-        <ReferenceManyField
-          label="datasource.form.use-by"
-          reference="layer"
-          target="source"
-        >
-          <Datagrid>
-            <TextField source="type" label="datasource.form.type" />
-            <TextField source="name" label="datasource.form.name" />
-          </Datagrid>
-        </ReferenceManyField>
       </FormTab>
 
       {/* Fields */}

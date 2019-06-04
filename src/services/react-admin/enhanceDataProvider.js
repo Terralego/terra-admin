@@ -15,9 +15,11 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
     Object.keys(params.data).forEach(key => {
       if (key === 'file') { return; }
 
-      const value = typeof params.data[key] === 'object'
-        ? JSON.stringify(params.data[key])
-        : params.data[key];
+      let value = params.data[key];
+
+      if (typeof value === 'object') {
+        value = JSON.stringify(value, null, 2);
+      }
 
       body.append(key, value);
     });

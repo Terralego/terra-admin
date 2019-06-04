@@ -116,7 +116,6 @@ const DataLayerTabbedForm = props => (
                     case 'string':
                       choices.push(
                         { id: 'text', name: 'datalayer.form.text' },
-                        { id: 'number_range', name: 'Text from values' },
                         { id: 'enum', name: 'datalayer.form.enum' },
                       );
                       break;

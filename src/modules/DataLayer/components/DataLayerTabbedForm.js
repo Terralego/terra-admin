@@ -61,19 +61,10 @@ const DataLayerTabbedForm = props => (
     <FormTab label="datalayer.form.interactions">
       <BooleanInput source="table_enable" label="datalayer.form.allow-display-data-table" />
 
-      <FormDataConsumer className="table_field-content">
-        {({ formData, dispatch, ...rest }) => (formData.table_enable && (
-          <FieldGroup>
-            <BooleanInput source="table_export_enable" label="datalayer.form.allow-export-data" />
-            <ArrayInput source="fields" label="datalayer.form.all-data-available" {...rest}>
-              <CustomFormIterator disableAdd disableRemove classes={{ form: 'table_field-content-row' }}>
-                <DisabledInput source="name" label="datalayer.form.name" />
-                <BooleanInput source="shown" label="datalayer.form.show" />
-                {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
-              </CustomFormIterator>
-            </ArrayInput>
-          </FieldGroup>
-        ))}
+      <FormDataConsumer>
+        {({ formData }) => formData.table_enable && (
+          <BooleanInput source="table_export_enable" label="datalayer.form.allow-export-data" />
+        )}
       </FormDataConsumer>
 
       <BooleanInput source="popup_enable" label="datalayer.form.popup.display-on-hover" />
@@ -94,35 +85,43 @@ const DataLayerTabbedForm = props => (
       </FormDataConsumer>
     </FormTab>
 
-    <FormTab label="datalayer.form.filter">
-      <BooleanInput source="filter_enable" label="datalayer.form.allow-filtering-field" />
+    <FormTab label="datalayer.form.fields-settings">
 
       <FormDataConsumer>
-        {({ formData, dispatch, ...rest }) => formData.filter_enable && (
-          <ArrayInput source="fields" label="datalayer.form.all-fields-available" {...rest}>
+        {({ formData }) => formData.filter_enable && (
+          <ArrayInput source="fields" label="datalayer.form.all-fields-available">
             <CustomFormIterator disableAdd disableRemove>
-              <FieldSummary />
+              <DisabledInput source="name" />
+              <BooleanInput source="filter_enable" label="datalayer.form.allow-filtering-field" />
+              {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <React.Fragment />}
+              {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
 
               <FormDataConsumer>
-                {({ formData: _, scopedFormData, getSource, record, ...rest2 }) => {
+                {({ getSource, scopedFormData }) => {
                   const choices = [];
 
-                  switch (record.type) {
-                    case 'number':
-                    case 'float':
+                  switch (scopedFormData.data_type) {
+                    case 2: // 'Integer'
+                    case 3: // 'Float'
                       choices.push(
                         { id: 'number', name: 'datalayer.form.number' },
                         { id: 'number_range', name: 'datalayer.form.number-range' },
                         { id: 'enum', name: 'datalayer.form.enum' },
                       );
                       break;
-                    case 'string':
+                    case 1: // 'String'
                       choices.push(
                         { id: 'text', name: 'datalayer.form.text' },
                         { id: 'enum', name: 'datalayer.form.enum' },
                       );
                       break;
                     default:
+                      choices.push(
+                        { id: 'number', name: 'datalayer.form.number' },
+                        { id: 'number_range', name: 'datalayer.form.number-range' },
+                        { id: 'text', name: 'datalayer.form.text' },
+                        { id: 'enum', name: 'datalayer.form.enum' },
+                      );
                   }
 
                   return (
@@ -130,10 +129,9 @@ const DataLayerTabbedForm = props => (
                       <SelectInput
                         source={getSource('filter_type')}
                         choices={choices}
-                        {...rest2}
                         label="datalayer.form.type"
                       />
-                      <LongTextInput source="values" {...rest2} label="datalayer.form.values-for-enum" />
+                      <LongTextInput source="values" label="datalayer.form.values-for-enum" />
                     </FieldGroup>
                   );
                 }}

@@ -19,21 +19,22 @@ import FieldSummary from '../../../components/react-admin/FieldSummary';
 import JSONField from '../../../components/react-admin/JSONField';
 
 import { fetchDatalayerConfig } from '../services/datalayer';
+import { required } from '../../../utils/react-admin/validate';
 
-const required = (message = 'Required') => value => (value ? undefined : message);
+const defaultRequired = required();
 
 const viewChoices = fetchDatalayerConfig();
 
 const DataLayerTabbedForm = props => (
   <TabbedForm {...props}>
     <FormTab label="datalayer.form.definition">
-      <SourceSelector validate={required()} />
+      <SourceSelector validate={defaultRequired} />
 
       <SelectInput
         source="view"
         label="datalayer.form.view"
         choices={viewChoices}
-        validate={required()}
+        validate={defaultRequired}
         format={v => `${v}`}
         parse={v => +v}
       />
@@ -41,11 +42,11 @@ const DataLayerTabbedForm = props => (
       <TextInput
         source="name"
         label="datalayer.form.name"
-        validate={required()}
+        validate={defaultRequired}
         type="text"
       />
 
-      <NumberInput source="order" label="datalayer.form.ordering" validate={required()} />
+      <NumberInput source="order" label="datalayer.form.ordering" validate={defaultRequired} />
       <LongTextInput source="description" label="datalayer.form.description" />
     </FormTab>
 

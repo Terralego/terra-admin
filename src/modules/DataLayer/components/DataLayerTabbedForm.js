@@ -53,31 +53,31 @@ const DataLayerTabbedForm = props => (
 
       <JSONField source="layer_style" label="datalayer.form.layer-style" />
 
-      <BooleanInput source="enable_legend" label="datalayer.form.legend.display" />
+      <BooleanInput source="legend_enable" label="datalayer.form.legend.display" />
       <LongTextInput source="legend_template" label="datalayer.form.legend.template" />
     </FormTab>
 
     <FormTab label="datalayer.form.interactions">
-      <BooleanInput source="enable_table" label="datalayer.form.allow-display-data-table" />
+      <BooleanInput source="table_enable" label="datalayer.form.allow-display-data-table" />
 
       <FormDataConsumer className="table_field-content">
-        {({ formData, dispatch, ...rest }) => (formData.enable_table && (
+        {({ formData, dispatch, ...rest }) => (formData.table_enable && (
           <FieldGroup>
-            <BooleanInput source="enable_export" label="datalayer.form.allow-export-data" />
+            <BooleanInput source="table_export_enable" label="datalayer.form.allow-export-data" />
             <ArrayInput source="fields" label="datalayer.form.all-data-available" {...rest}>
               <CustomFormIterator disableAdd disableRemove classes={{ form: 'table_field-content-row' }}>
                 <DisabledInput source="name" label="datalayer.form.name" />
                 <BooleanInput source="shown" label="datalayer.form.show" />
-                {formData.enable_export ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
+                {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
               </CustomFormIterator>
             </ArrayInput>
           </FieldGroup>
         ))}
       </FormDataConsumer>
 
-      <BooleanInput source="enable_popup" label="datalayer.form.popup.display-on-hover" />
+      <BooleanInput source="popup_enable" label="datalayer.form.popup.display-on-hover" />
       <FormDataConsumer>
-        {({ formData, dispatch, ...rest }) => formData.enable_popup && (
+        {({ formData, dispatch, ...rest }) => formData.popup_enable && (
           <FieldGroup>
             <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={10} step={1} />
             <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={15} step={1} />
@@ -86,18 +86,18 @@ const DataLayerTabbedForm = props => (
         )}
       </FormDataConsumer>
 
-      <BooleanInput source="enable_minifiche" label="datalayer.form.minifiche.display-on-click" />
+      <BooleanInput source="minisheet_enable" label="datalayer.form.minifiche.display-on-click" />
       <FormDataConsumer>
-        {({ formData, dispatch, ...rest }) => formData.enable_minifiche &&
+        {({ formData, dispatch, ...rest }) => formData.minisheet_enable &&
           <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" {...rest} />}
       </FormDataConsumer>
     </FormTab>
 
     <FormTab label="datalayer.form.filter">
-      <BooleanInput source="enable_filtering" label="datalayer.form.allow-filtering-field" />
+      <BooleanInput source="filter_enable" label="datalayer.form.allow-filtering-field" />
 
       <FormDataConsumer>
-        {({ formData, dispatch, ...rest }) => formData.enable_filtering && (
+        {({ formData, dispatch, ...rest }) => formData.filter_enable && (
           <ArrayInput source="fields" label="datalayer.form.all-fields-available" {...rest}>
             <CustomFormIterator disableAdd disableRemove>
               <FieldSummary />

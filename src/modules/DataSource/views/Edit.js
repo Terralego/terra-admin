@@ -9,12 +9,10 @@ import {
   SimpleFormIterator,
   FormTab,
   DisabledInput,
-  ReferenceManyField,
-  Datagrid,
-  TextField,
   CardActions,
   RefreshButton,
   FormDataConsumer,
+  withDataProvider,
 } from 'react-admin';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
@@ -24,9 +22,7 @@ import AttributeMessage from '../components/AttributeMessage';
 import DbFields from '../components/DbFields';
 import { SQL, fieldTypeChoices } from '../DataSource';
 
-import dataProvider from '../../../services/react-admin/dataProvider';
-
-const DataSourceEditActions = ({ data: { id } = {} }) => (
+const DataSourceEditActions = withDataProvider(({ dataProvider, data: { id } = {} }) => (
   <CardActions>
     <RefreshButton
       color="primary"
@@ -35,7 +31,7 @@ const DataSourceEditActions = ({ data: { id } = {} }) => (
       onClick={() => dataProvider('REFRESH', 'geosource', { id })}
     />
   </CardActions>
-);
+));
 
 export const DataSourceEdit = props => (
   <Edit
@@ -54,34 +50,24 @@ export const DataSourceEdit = props => (
         </FormDataConsumer>
 
         <TextInput source="id_field" type="text" label="datasource.form.uid-field" />
-
-        {/* List of dataLayers referencing this */}
-        <ReferenceManyField
-          label="datasource.form.use-by"
-          reference="layer"
-          target="source_id"
-        >
-          <Datagrid>
-            <TextField source="type" label="datasource.form.type" />
-            <TextField source="name" label="datasource.form.name" />
-          </Datagrid>
-        </ReferenceManyField>
       </FormTab>
 
       {/* Fields */}
       <FormTab label="datasource.form.data">
         <AttributeMessage />
 
-        <ArrayInput source="fields" label="datasource.form.fields">
+        <ArrayInput source="fields" label="datasource.form.fields" style={{ width: '100%' }}>
           <SimpleFormIterator disableRemove disableAdd>
             <DisabledInput source="name" label="datasource.form.name" />
             <TextInput source="label" label="datasource.form.label" />
             <SelectInput
-              source="type"
+              source="data_type"
               choices={fieldTypeChoices}
               label="datasource.form.type"
+              format={v => `${v}`}
+              parse={v => +v}
             />
-            <FieldSample />
+            <FieldSample source="sample" />
             <BooleanInput source="in_mvt" label="datasource.form.include-field-tiles" />
           </SimpleFormIterator>
         </ArrayInput>

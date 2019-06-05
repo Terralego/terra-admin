@@ -29,6 +29,7 @@ const DataSourceMainFields = ({ translate, ...props }) => (
       validate={defaultRequired}
       choices={geomTypeChoices}
       format={v => `${v}`}
+      parse={v => +v}
     />
   </FieldGroup>
 );

@@ -26,12 +26,15 @@ const viewChoices = fetchDatalayerConfig();
 const DataLayerTabbedForm = props => (
   <TabbedForm {...props}>
     <FormTab label="datalayer.form.definition">
-      <SourceSelector />
+      <SourceSelector validate={required()} />
 
       <SelectInput
         source="view"
         label="datalayer.form.view"
         choices={viewChoices}
+        validate={required()}
+        format={v => `${v}`}
+        parse={v => +v}
       />
 
       <TextInput
@@ -41,7 +44,7 @@ const DataLayerTabbedForm = props => (
         type="text"
       />
 
-      <NumberInput source="order" label="datalayer.form.ordering" />
+      <NumberInput source="order" label="datalayer.form.ordering" validate={required()} />
       <LongTextInput source="description" label="datalayer.form.description" />
     </FormTab>
 
@@ -113,7 +116,6 @@ const DataLayerTabbedForm = props => (
                     case 'string':
                       choices.push(
                         { id: 'text', name: 'datalayer.form.text' },
-                        { id: 'number_range', name: 'Text from values' },
                         { id: 'enum', name: 'datalayer.form.enum' },
                       );
                       break;

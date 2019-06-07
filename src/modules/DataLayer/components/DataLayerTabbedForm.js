@@ -87,7 +87,7 @@ const DataLayerTabbedForm = props => (
       <BooleanInput source="enable_minifiche" label="datalayer.form.minifiche.display-on-click" />
       <FormDataConsumer>
         {({ formData, dispatch, ...rest }) => formData.enable_minifiche &&
-          <LongTextInput source="minifiche_template" label="datalayer.form.minifiche.template" {...rest} />}
+          <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" {...rest} />}
       </FormDataConsumer>
     </FormTab>
 

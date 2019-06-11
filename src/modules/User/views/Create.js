@@ -1,11 +1,11 @@
 import React from 'react';
 import {
   Create, SimpleForm,
-  TextInput, LongTextInput,
+  TextInput,
   BooleanInput,
 } from 'react-admin';
 
-import JSONArea from '../../../components/react-admin/JSONArea';
+import JSONField from '../../../components/react-admin/JSONField';
 
 export const UserCreate = props => (
   <Create {...props}>
@@ -14,7 +14,7 @@ export const UserCreate = props => (
       <TextInput source="password" type="password" label="user.form.password" />
       <BooleanInput source="is_superuser" label="user.form.superuser" />
       <BooleanInput source="is_active" label="user.form.active" />
-      <LongTextInput source="properties" component={JSONArea} defaultValue={{}} label="user.form.additional-information" />
+      <JSONField source="properties" label="user.form.additional-information" />
     </SimpleForm>
   </Create>
 );

@@ -2,11 +2,11 @@ import React from 'react';
 import {
   Edit, SimpleForm,
   DisabledInput,
-  TextInput, LongTextInput,
+  TextInput,
   BooleanInput,
 } from 'react-admin';
 
-import JSONArea from '../../../components/react-admin/JSONArea';
+import JSONField from '../../../components/react-admin/JSONField';
 import TermListInput from '../../../components/react-admin/TermListInput';
 
 const UserTitle = ({ record }) => <span>User {record ? `"${record.email}"` : ''}</span>;
@@ -20,7 +20,7 @@ export const UserEdit = props => (
       <BooleanInput source="is_superuser" label="user.form.superuser" />
       <BooleanInput source="is_active" label="user.form.active" />
       <TermListInput source="permissions" label="user.form.permissions" />
-      <LongTextInput source="properties" component={JSONArea} defaultValue={{}} label="user.form.additional-information" />
+      <JSONField source="properties" label="user.form.additional-information" />
     </SimpleForm>
   </Edit>
 );

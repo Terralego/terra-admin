@@ -16,6 +16,7 @@ import CustomFormIterator from '../../../components/react-admin/CustomFormIterat
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceSelector from './SourceSelector';
 import FieldSummary from '../../../components/react-admin/FieldSummary';
+import JSONField from '../../../components/react-admin/JSONField';
 
 import { fetchDatalayerConfig } from '../services/datalayer';
 
@@ -49,7 +50,8 @@ const DataLayerTabbedForm = props => (
     </FormTab>
 
     <FormTab label="datalayer.form.style">
-      <LongTextInput source="style" label="datalayer.form.layer-style" />
+
+      <JSONField source="layer_style" label="datalayer.form.layer-style" />
 
       <BooleanInput source="enable_legend" label="datalayer.form.legend.display" />
       <LongTextInput source="legend_template" label="datalayer.form.legend.template" />

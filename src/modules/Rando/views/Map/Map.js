@@ -63,7 +63,11 @@ export class Map extends React.Component {
       resizingMap();
     }
 
-    if (!id && featuresList && (prevId !== id || featuresList !== prevFeaturesList)) {
+    if (
+      (!id || id === ACTION_CREATE)
+      && featuresList
+      && (prevId !== id || featuresList !== prevFeaturesList)
+    ) {
       this.setFitBounds();
     }
   }

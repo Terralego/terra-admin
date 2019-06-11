@@ -91,7 +91,7 @@ class Details extends React.Component {
             ...list,
             [prop]: {
               ...schema.properties[prop],
-              default: properties ? properties[prop] : '',
+              default: properties && paramId !== ACTION_CREATE ? properties[prop] : '',
             },
           }), {}),
         },

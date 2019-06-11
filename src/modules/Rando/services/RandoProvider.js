@@ -89,6 +89,20 @@ export class RandoProvider extends React.Component {
           [feature.identifier]: feature,
         },
       }));
+      const { featuresList } = this.state;
+      const isFeatureAlreadyExist = featuresList.some(({ identifier }) =>
+        identifier === feature.identifier);
+
+      if (isFeatureAlreadyExist) {
+        this.setState({
+          featuresList: featuresList.map(item =>
+            (item.identifier === feature.identifier ? feature : item)),
+        });
+      } else {
+        this.setState({
+          featuresList: [...featuresList, feature],
+        });
+      }
       return feature;
     } catch (e) {
       this.setState(state => ({

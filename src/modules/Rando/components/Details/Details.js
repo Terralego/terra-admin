@@ -25,6 +25,7 @@ class Details extends React.Component {
   componentDidUpdate ({
     paramId: prevParamId,
     paramLayer: prevParamlayer,
+    paramAction: prevParamAction,
     feature: {
       [prevParamId]: {
         geom: { coordinates: prevCoordinates = [] } = {},
@@ -36,6 +37,7 @@ class Details extends React.Component {
     const {
       paramId,
       paramLayer,
+      paramAction,
       feature: { [paramId]: { geom: { coordinates = [] } = {}, properties } = {} } = {},
       map,
       layer,
@@ -46,7 +48,11 @@ class Details extends React.Component {
       this.getData();
     }
 
-    if (properties !== prevProperties || (prevParamId !== paramId && this.isCreateAction)) {
+    if (
+      properties !== prevProperties
+      || prevParamId !== paramId
+      || prevParamAction !== paramAction
+    ) {
       this.setSchema();
     }
 
@@ -114,6 +120,7 @@ class Details extends React.Component {
       paramLayer,
       paramId,
       t,
+      updateControls,
     } = this.props;
     const { schema } = this.state;
     const { ComponentAction } = this;
@@ -133,7 +140,7 @@ class Details extends React.Component {
           {!feature && paramId !== ACTION_CREATE ? (
             <Loading spinner />
           ) : (
-            <ComponentAction schema={schema} />
+            <ComponentAction schema={schema} updateControls={updateControls} />
           )}
         </div>
       </div>

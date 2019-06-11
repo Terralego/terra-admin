@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/InteractiveMap';
+import { DEFAULT_CONTROLS } from '@terralego/core/modules/Map';
 
 import DataTable from '../../components/DataTable';
 import Details from '../../components/Details';
@@ -15,10 +16,12 @@ import './styles.scss';
 export const ACTION_CREATE = 'create';
 export const ACTION_UPDATE = 'update';
 export const INTERACTION_VIEW_FEATURE = 'viewFeature';
+
 export class Map extends React.Component {
   state = {
     interactions: [],
     customStyle: undefined,
+    controls: DEFAULT_CONTROLS,
   }
 
   componentDidMount () {
@@ -122,6 +125,10 @@ export class Map extends React.Component {
     });
   }
 
+  updateControls = controls => this.setState({
+    controls: [...controls, ...DEFAULT_CONTROLS],
+  })
+
   generateLayersToMap () {
     this.setState({
       customStyle: {
@@ -131,7 +138,7 @@ export class Map extends React.Component {
   }
 
   render () {
-    const { customStyle, interactions } = this.state;
+    const { customStyle, interactions, controls } = this.state;
     const {
       map,
       mapConfig,
@@ -141,7 +148,6 @@ export class Map extends React.Component {
 
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
     const isDetailsVisible = !!id;
-
     return (
       <div
         className={classnames(
@@ -159,10 +165,12 @@ export class Map extends React.Component {
                   {...mapConfig}
                   customStyle={customStyle}
                   interactions={interactions}
+                  controls={controls}
                 />
                 {map && (
                 <Details
                   visible={isDetailsVisible}
+                  updateControls={this.updateControls}
                 />
                 )}
               </div>

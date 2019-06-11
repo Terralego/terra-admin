@@ -1,14 +1,14 @@
 [
   {
-    "id": 1,
-    "name": "Visualiser"
+    "id": "1",
+    "name": "rechercher"
   },
   {
-    "id": 2,
-    "name": "Analyser"
+    "id": "2",
+    "name": "analyse"
   },
   {
-    "id": 3,
-    "name": "Story"
+    "id": "3",
+    "name": "story"
   }
 ]

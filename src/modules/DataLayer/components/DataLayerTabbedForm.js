@@ -15,7 +15,6 @@ import {
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceSelector from './SourceSelector';
-import FieldSummary from '../../../components/react-admin/FieldSummary';
 import JSONField from '../../../components/react-admin/JSONField';
 
 import { fetchDatalayerConfig } from '../services/datalayer';

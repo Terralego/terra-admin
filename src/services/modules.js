@@ -6,9 +6,9 @@ import modules from '../modules';
  * @returns {Array} modules components driven by the config enabled_modules
  */
 export const getComponentsByEnabledModules = (selectedModules = []) =>
-  Object.values(modules).reduce((list, { default: module }) => (
-    selectedModules.includes(module.name)
-      ? [...list, module]
+  Object.keys(modules).reduce((list, moduleName) => (
+    selectedModules.includes(moduleName)
+      ? [...list, modules[moduleName].default]
       : list
   ), []);
 

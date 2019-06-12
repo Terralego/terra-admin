@@ -230,7 +230,7 @@
       "fields-settings": "Configuration des champs",
       "type": "Type",
       "view": "Vue",
-      "ordering": "Ordonner",
+      "ordering": "Classement",
       "description": "Description",
       "style": "Style",
       "layer-style": "Style de la couche",
@@ -238,7 +238,7 @@
         "display": "Afficher la légende",
         "template": "Modèle de la légende"
       },
-      "interactions": "Intéractions",
+      "interactions": "Interactions",
       "allow-display-data-table": " Permettre l'affichage du tableau de données",
       "allow-export-data": " Permettre l'export des données",
       "all-data-available": " Toutes les données disponibles",
@@ -306,12 +306,12 @@
     },
     "input": {
       "file": {
-        "upload_several": "Déposez les fichiers à uploader, ou cliquez pour en sélectionner.",
-        "upload_single": "Déposez le fichier à uploader, ou cliquez pour le sélectionner."
+        "upload_several": "Déposez les fichiers à envoyer, ou cliquez pour en sélectionner.",
+        "upload_single": "Déposez le fichier à envoyer, ou cliquez pour le sélectionner."
       },
       "image": {
-        "upload_several": "Déposez les images à uploader, ou cliquez pour en sélectionner.",
-        "upload_single": "Déposez l'image à uploader, ou cliquez pour la sélectionner."
+        "upload_several": "Déposez les images à envoyer, ou cliquez pour en sélectionner.",
+        "upload_single": "Déposez l'image à envoyer, ou cliquez pour la sélectionner."
       },
       "references": {
         "all_missing": "Impossible de trouver des données de références.",

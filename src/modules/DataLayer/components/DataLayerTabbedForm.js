@@ -83,11 +83,9 @@ const DataLayerTabbedForm = props => (
           <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" {...rest} />}
       </FormDataConsumer>
     </FormTab>
-
     <FormTab label="datalayer.form.fields-settings">
-
       <FormDataConsumer>
-        {({ formData }) => formData.filter_enable && (
+        {({ formData }) => (
           <ArrayInput source="fields" label="datalayer.form.all-fields-available">
             <CustomFormIterator disableAdd disableRemove>
               <DisabledInput source="name" />

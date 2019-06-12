@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 
 export const required = () =>
-  value => (value ? undefined : i18n.t('ra.validation.required'));
+  value => (value || value === 0 ? undefined : i18n.t('ra.validation.required'));
 
 export const minLength = min =>
   value => (value && value.length < min ? i18n.t('ra.validation.minLength', { min }) : undefined);

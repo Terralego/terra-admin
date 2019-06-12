@@ -227,6 +227,7 @@
       "name": "Nom",
       "data-source": "Source des données",
       "definition": "Définition",
+      "fields-settings": "Configuration des champs",
       "type": "Type",
       "view": "Vue",
       "ordering": "Ordonner",
@@ -242,7 +243,7 @@
       "allow-export-data": " Permettre l'export des données",
       "all-data-available": " Toutes les données disponibles",
       "all-fields-available": " Tous les champs disponibles",
-      "show": "Afficher",
+      "show": "Afficher dans le tableau",
       "exportable": "Exportable",
       "popup": {
         "display-on-hover": "Afficher une fenêtre contextuelle",

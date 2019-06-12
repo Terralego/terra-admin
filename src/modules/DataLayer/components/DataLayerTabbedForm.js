@@ -15,25 +15,25 @@ import {
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceSelector from './SourceSelector';
-import FieldSummary from '../../../components/react-admin/FieldSummary';
 import JSONField from '../../../components/react-admin/JSONField';
 
 import { fetchDatalayerConfig } from '../services/datalayer';
+import { required } from '../../../utils/react-admin/validate';
 
-const required = (message = 'Required') => value => (value ? undefined : message);
+const defaultRequired = required();
 
 const viewChoices = fetchDatalayerConfig();
 
 const DataLayerTabbedForm = props => (
   <TabbedForm {...props}>
     <FormTab label="datalayer.form.definition">
-      <SourceSelector validate={required()} />
+      <SourceSelector validate={defaultRequired} />
 
       <SelectInput
         source="view"
         label="datalayer.form.view"
         choices={viewChoices}
-        validate={required()}
+        validate={defaultRequired}
         format={v => `${v}`}
         parse={v => +v}
       />
@@ -41,11 +41,11 @@ const DataLayerTabbedForm = props => (
       <TextInput
         source="name"
         label="datalayer.form.name"
-        validate={required()}
+        validate={defaultRequired}
         type="text"
       />
 
-      <NumberInput source="order" label="datalayer.form.ordering" validate={required()} />
+      <NumberInput source="order" label="datalayer.form.ordering" validate={defaultRequired} />
       <LongTextInput source="description" label="datalayer.form.description" />
     </FormTab>
 
@@ -53,31 +53,22 @@ const DataLayerTabbedForm = props => (
 
       <JSONField source="layer_style" label="datalayer.form.layer-style" />
 
-      <BooleanInput source="enable_legend" label="datalayer.form.legend.display" />
+      <BooleanInput source="legend_enable" label="datalayer.form.legend.display" />
       <LongTextInput source="legend_template" label="datalayer.form.legend.template" />
     </FormTab>
 
     <FormTab label="datalayer.form.interactions">
-      <BooleanInput source="enable_table" label="datalayer.form.allow-display-data-table" />
+      <BooleanInput source="table_enable" label="datalayer.form.allow-display-data-table" />
 
-      <FormDataConsumer className="table_field-content">
-        {({ formData, dispatch, ...rest }) => (formData.enable_table && (
-          <FieldGroup>
-            <BooleanInput source="enable_export" label="datalayer.form.allow-export-data" />
-            <ArrayInput source="fields" label="datalayer.form.all-data-available" {...rest}>
-              <CustomFormIterator disableAdd disableRemove classes={{ form: 'table_field-content-row' }}>
-                <DisabledInput source="name" label="datalayer.form.name" />
-                <BooleanInput source="shown" label="datalayer.form.show" />
-                {formData.enable_export ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
-              </CustomFormIterator>
-            </ArrayInput>
-          </FieldGroup>
-        ))}
+      <FormDataConsumer>
+        {({ formData }) => formData.table_enable && (
+          <BooleanInput source="table_export_enable" label="datalayer.form.allow-export-data" />
+        )}
       </FormDataConsumer>
 
-      <BooleanInput source="enable_popup" label="datalayer.form.popup.display-on-hover" />
+      <BooleanInput source="popup_enable" label="datalayer.form.popup.display-on-hover" />
       <FormDataConsumer>
-        {({ formData, dispatch, ...rest }) => formData.enable_popup && (
+        {({ formData, dispatch, ...rest }) => formData.popup_enable && (
           <FieldGroup>
             <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={10} step={1} />
             <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={15} step={1} />
@@ -86,42 +77,50 @@ const DataLayerTabbedForm = props => (
         )}
       </FormDataConsumer>
 
-      <BooleanInput source="enable_minifiche" label="datalayer.form.minifiche.display-on-click" />
+      <BooleanInput source="minisheet_enable" label="datalayer.form.minifiche.display-on-click" />
       <FormDataConsumer>
-        {({ formData, dispatch, ...rest }) => formData.enable_minifiche &&
+        {({ formData, dispatch, ...rest }) => formData.minisheet_enable &&
           <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" {...rest} />}
       </FormDataConsumer>
     </FormTab>
 
-    <FormTab label="datalayer.form.filter">
-      <BooleanInput source="enable_filtering" label="datalayer.form.allow-filtering-field" />
+    <FormTab label="datalayer.form.fields-settings">
 
       <FormDataConsumer>
-        {({ formData, dispatch, ...rest }) => formData.enable_filtering && (
-          <ArrayInput source="fields" label="datalayer.form.all-fields-available" {...rest}>
+        {({ formData }) => formData.filter_enable && (
+          <ArrayInput source="fields" label="datalayer.form.all-fields-available">
             <CustomFormIterator disableAdd disableRemove>
-              <FieldSummary />
+              <DisabledInput source="name" />
+              <BooleanInput source="filter_enable" label="datalayer.form.allow-filtering-field" />
+              {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <React.Fragment />}
+              {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
 
               <FormDataConsumer>
-                {({ formData: _, scopedFormData, getSource, record, ...rest2 }) => {
+                {({ getSource, scopedFormData }) => {
                   const choices = [];
 
-                  switch (record.type) {
-                    case 'number':
-                    case 'float':
+                  switch (scopedFormData.data_type) {
+                    case 2: // 'Integer'
+                    case 3: // 'Float'
                       choices.push(
                         { id: 'number', name: 'datalayer.form.number' },
                         { id: 'number_range', name: 'datalayer.form.number-range' },
                         { id: 'enum', name: 'datalayer.form.enum' },
                       );
                       break;
-                    case 'string':
+                    case 1: // 'String'
                       choices.push(
                         { id: 'text', name: 'datalayer.form.text' },
                         { id: 'enum', name: 'datalayer.form.enum' },
                       );
                       break;
                     default:
+                      choices.push(
+                        { id: 'number', name: 'datalayer.form.number' },
+                        { id: 'number_range', name: 'datalayer.form.number-range' },
+                        { id: 'text', name: 'datalayer.form.text' },
+                        { id: 'enum', name: 'datalayer.form.enum' },
+                      );
                   }
 
                   return (
@@ -129,10 +128,9 @@ const DataLayerTabbedForm = props => (
                       <SelectInput
                         source={getSource('filter_type')}
                         choices={choices}
-                        {...rest2}
                         label="datalayer.form.type"
                       />
-                      <LongTextInput source="values" {...rest2} label="datalayer.form.values-for-enum" />
+                      <LongTextInput source="values" label="datalayer.form.values-for-enum" />
                     </FieldGroup>
                   );
                 }}

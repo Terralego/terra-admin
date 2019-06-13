@@ -7,9 +7,8 @@ import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 
-import Create from './Create';
 import Read from './Read';
-import Update from './Update';
+import Edit from './Edit';
 import './styles.scss';
 
 class Details extends React.Component {
@@ -99,18 +98,23 @@ class Details extends React.Component {
     }
   }
 
-  get ComponentAction () {
+  renderContent = () => {
     const {
       paramId,
       paramAction,
+      updateControls,
     } = this.props;
-    if (paramId === ACTION_CREATE) {
-      return Create;
+    const { schema } = this.state;
+    if (paramId === ACTION_CREATE || paramAction === ACTION_UPDATE) {
+      return (
+        <Edit
+          schema={schema}
+          updateControls={updateControls}
+          action={paramAction || paramId}
+        />
+      );
     }
-    if (paramAction === ACTION_UPDATE) {
-      return Update;
-    }
-    return Read;
+    return <Read schema={schema} />;
   }
 
   render () {
@@ -120,13 +124,7 @@ class Details extends React.Component {
       paramLayer,
       paramId,
       t,
-      updateControls,
     } = this.props;
-    const { schema } = this.state;
-    const { ComponentAction } = this;
-    if (!ComponentAction) {
-      return null;
-    }
     return (
       <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
         <div className="rando-details__close">
@@ -140,7 +138,7 @@ class Details extends React.Component {
           {!feature && paramId !== ACTION_CREATE ? (
             <Loading spinner />
           ) : (
-            <ComponentAction schema={schema} updateControls={updateControls} />
+            <>{this.renderContent()}</>
           )}
         </div>
       </div>

@@ -15,7 +15,7 @@ import {
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceSelector from './SourceSelector';
-import JSONField from '../../../components/react-admin/JSONField';
+import StyleField from './StyleField';
 
 import { fetchDatalayerConfig } from '../services/datalayer';
 import { required } from '../../../utils/react-admin/validate';
@@ -51,7 +51,7 @@ const DataLayerTabbedForm = props => (
 
     <FormTab label="datalayer.form.style">
 
-      <JSONField source="layer_style" label="datalayer.form.layer-style" />
+      <StyleField source="layer_style" label="datalayer.form.layer-style" />
 
       <BooleanInput source="legend_enable" label="datalayer.form.legend.display" />
       <LongTextInput source="legend_template" label="datalayer.form.legend.template" />
@@ -96,6 +96,8 @@ const DataLayerTabbedForm = props => (
               <FormDataConsumer>
                 {({ getSource, scopedFormData }) => {
                   const choices = [];
+
+                  if (!scopedFormData) return null;
 
                   switch (scopedFormData.data_type) {
                     case 2: // 'Integer'

@@ -7,9 +7,8 @@ import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 
-import Create from './Create';
 import Read from './Read';
-import Update from './Update';
+import Edit from './Edit';
 import './styles.scss';
 
 class Details extends React.Component {
@@ -25,6 +24,7 @@ class Details extends React.Component {
   componentDidUpdate ({
     paramId: prevParamId,
     paramLayer: prevParamlayer,
+    paramAction: prevParamAction,
     feature: {
       [prevParamId]: {
         geom: { coordinates: prevCoordinates = [] } = {},
@@ -36,6 +36,7 @@ class Details extends React.Component {
     const {
       paramId,
       paramLayer,
+      paramAction,
       feature: { [paramId]: { geom: { coordinates = [] } = {}, properties } = {} } = {},
       map,
       layer,
@@ -46,7 +47,11 @@ class Details extends React.Component {
       this.getData();
     }
 
-    if (properties !== prevProperties || (prevParamId !== paramId && this.isCreateAction)) {
+    if (
+      properties !== prevProperties
+      || prevParamId !== paramId
+      || prevParamAction !== paramAction
+    ) {
       this.setSchema();
     }
 
@@ -85,7 +90,7 @@ class Details extends React.Component {
             ...list,
             [prop]: {
               ...schema.properties[prop],
-              default: properties ? properties[prop] : '',
+              default: properties && paramId !== ACTION_CREATE ? properties[prop] : '',
             },
           }), {}),
         },
@@ -93,18 +98,23 @@ class Details extends React.Component {
     }
   }
 
-  get ComponentAction () {
+  renderContent = () => {
     const {
       paramId,
       paramAction,
+      updateControls,
     } = this.props;
-    if (paramId === ACTION_CREATE) {
-      return Create;
+    const { schema } = this.state;
+    if (paramId === ACTION_CREATE || paramAction === ACTION_UPDATE) {
+      return (
+        <Edit
+          schema={schema}
+          updateControls={updateControls}
+          action={paramAction || paramId}
+        />
+      );
     }
-    if (paramAction === ACTION_UPDATE) {
-      return Update;
-    }
-    return Read;
+    return <Read schema={schema} />;
   }
 
   render () {
@@ -115,11 +125,6 @@ class Details extends React.Component {
       paramId,
       t,
     } = this.props;
-    const { schema } = this.state;
-    const { ComponentAction } = this;
-    if (!ComponentAction) {
-      return null;
-    }
     return (
       <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
         <div className="rando-details__close">
@@ -133,7 +138,7 @@ class Details extends React.Component {
           {!feature && paramId !== ACTION_CREATE ? (
             <Loading spinner />
           ) : (
-            <ComponentAction schema={schema} />
+            <>{this.renderContent()}</>
           )}
         </div>
       </div>

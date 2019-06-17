@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 
 import { validateCreate } from './validateCreateForm';
 import FormCreate from './FormCreate';
-import { toast } from '../../utils/toast';
+import { toast } from '../../../../utils/toast';
 
 export class ViewpointCreate extends React.Component {
   state = {

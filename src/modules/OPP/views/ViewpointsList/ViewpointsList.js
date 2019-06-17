@@ -12,7 +12,7 @@ import Loading from '../../../../components/Loading';
 import noResult from '../../images/no_result.png';
 
 import './viewpoint-list.scss';
-import { toast } from '../../utils/toast';
+import { toast } from '../../../../utils/toast';
 
 const itemsPerPage = 14;
 

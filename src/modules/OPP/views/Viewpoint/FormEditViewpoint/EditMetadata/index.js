@@ -7,7 +7,7 @@ import { withNamespaces } from 'react-i18next';
 
 import { validateEdit } from './validateFormMetadata';
 import FormMetadata from './FormMetadata';
-import { toast } from '../../../../utils/toast';
+import { toast } from '../../../../../../utils/toast';
 
 export class EditMetadata extends React.Component {
   onSubmit = async values => {

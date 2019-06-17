@@ -5,6 +5,7 @@ import {
   fetchFeaturesList,
   fetchFeature as fetchFeatureAction,
   saveFeature as saveFeatureAction,
+  deleteFeature as deleteFeatureAction,
 } from './features';
 
 export const context = React.createContext({});
@@ -113,6 +114,24 @@ export class RandoProvider extends React.Component {
     }
   }
 
+  deleteFeature = async (layerId, featureId) => {
+    try {
+      const { feature, featuresList } = this.state;
+      const deletion = await deleteFeatureAction(layerId, featureId);
+      this.setState({
+        feature: feature.filter(feat => feat !== featureId),
+        featuresList: featuresList.filter(({ identifier }) => identifier !== featureId),
+      });
+      return deletion;
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, code: e.message },
+      }));
+      return null;
+    }
+  }
+
   resizingMap = () => {
     const { map } = this.state;
     if (!map) return;
@@ -134,6 +153,7 @@ export class RandoProvider extends React.Component {
       getFeaturesList,
       fetchFeature,
       saveFeature,
+      deleteFeature,
       setMap,
       resizingMap,
     } = this;
@@ -144,6 +164,7 @@ export class RandoProvider extends React.Component {
       getFeaturesList,
       fetchFeature,
       saveFeature,
+      deleteFeature,
       setMap,
       resizingMap,
     };

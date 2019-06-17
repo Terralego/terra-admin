@@ -149,10 +149,14 @@
     "details": {
       "create": "Ajouter",
       "update": "Modifier",
+      "delete": "Supprimer",
       "noFeature": "Non renseigné",
       "informations": "Informations",
       "save": "Sauvegarder",
-      "close": "Fermer"
+      "close": "Fermer",
+      "cancel": "Annuler",
+      "confirmDeletion": "Confirmer la suppression",
+      "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer cet objet ? Vous ne pourrez plus le récupérer."
     }
   },
   "user": {

@@ -3,8 +3,10 @@
   width: 20rem;
   display: flex;
   flex-direction: column;
+  max-height: calc(100vh - 50px);
   margin-right: -20rem;
   transition: margin 0.2s ease-in;
+
   &--visible {
     margin-right: 0; 
   }
@@ -14,60 +16,93 @@
   }
 
   &__content {
-    padding: 1rem;
+    display: flex;
+    overflow: auto;
+    margin: 0 0 1rem;
+    justify-content: center;
+  }
+}
+
+.details {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  &__content {
+    display: flex;
     flex: auto;
-    overflow-y: auto;
+    flex-direction: column;
+    overflow: auto;
+    padding: 0 1rem;
   }
 
-  .details {
-    &__header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+  &__subtitle {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  &__list {
+    display: table;
+    flex: auto;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-collapse: collapse;
+    max-height: 100%;
+  }
+
+  &__list-item {
+    display: table-row;
+
+    &:nth-child(odd) {
+      background: #efefef;
     }
 
-    &__title {
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      font-weight: 300;
-    }
-
-    &__subtitle {
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #ccc;
-    }
-
-    &__list {
-      width: 100%;
-      padding: 0;
-      display: table;
-      border-collapse: collapse;
-    }
-
-    &__list-item {
-      display: table-row;
-
-      &:nth-child(odd) {
-        background: #efefef;
-      }
-
-      > * {
-        display: table-cell;
-        padding: 0.3rem;
-        border: 1px solid #ccc;
-      }
-    }
-
-    &__list-value {
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      
-      &--empty {
-        opacity: 0.6;
-      }
+    > * {
+      display: table-cell;
+      padding: 0.3rem;
+      border: 1px solid #ccc;
     }
   }
+
+  &__list-value {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    
+    &--empty {
+      opacity: 0.6;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem 1rem 0;
+  }
+
+  &__confirm-content {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    > button + button {
+      margin-left: 1rem;
+    }
+  }
+
 
   // Below from bootstrap
   fieldset {
@@ -75,16 +110,28 @@
     // unlike e.g. `<div>`s, which have `min-width: 0;` by default.
     // So we reset that to ensure fieldsets behave more like a standard block element.
     // See https://github.com/twbs/bootstrap/issues/12359
-    // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements
+    // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements 
     min-width: 0;
     // Reset the default outline behavior of fieldsets so they don't affect page layout.
     padding: 0;
     margin: 0;
     border: 0;
   }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .list-group {
+    margin-bottom: 1rem;
+  }
 }
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/list-group";
 @import "~bootstrap/scss/forms";

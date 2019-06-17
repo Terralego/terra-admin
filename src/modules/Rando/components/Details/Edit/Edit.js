@@ -5,6 +5,7 @@ import { CONTROL_DRAW, CONTROLS_TOP_LEFT } from '@terralego/core/modules/Map';
 
 import { ACTION_CREATE, ACTION_UPDATE } from '../../../views/Map/Map';
 import { generateURI } from '../../../config';
+import Actions from '../Actions';
 
 class Edit extends React.Component {
   state = {
@@ -163,7 +164,6 @@ class Edit extends React.Component {
 
     if (savedFeature !== null && action === ACTION_CREATE) {
       push(generateURI('layer', { layer, id: savedFeature.identifier, action: 'update' }));
-      return;
     }
 
     this.setState({
@@ -173,7 +173,7 @@ class Edit extends React.Component {
 
   render () {
     const { loading, schema, schema: { properties } } = this.state;
-    const { t, action } = this.props;
+    const { t, action, match: { params: { layer, id } } } = this.props;
     if (!properties) return null;
     const { name: { default: title } = {} } = properties;
     const mainTitle = action === ACTION_CREATE ? t('rando.details.create') : (title || t('rando.details.noFeature'));
@@ -183,7 +183,7 @@ class Edit extends React.Component {
         <div className="details__header">
           <h2 className="details__title">{mainTitle}</h2>
         </div>
-        <div className="details_content">
+        <div className="details__content">
           <Form
             schema={schema}
             onSubmit={this.submitFeature}
@@ -192,6 +192,9 @@ class Edit extends React.Component {
             <Button intent="primary" loading={loading} type="submit">{button}</Button>
           </Form>
         </div>
+        {action === ACTION_UPDATE && (
+          <Actions id={id} layer={layer} displayDelete />
+        )}
       </div>
     );
   }

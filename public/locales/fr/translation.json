@@ -146,6 +146,9 @@
       "columnsDisplay": "Afficher toutes les colonnes",
       "columnsHide": "Cacher toutes les colonnes"
     },
+    "layer": {
+      "errorNoLayer": "La couche recherchée n'existe pas"
+    },
     "details": {
       "create": "Ajouter",
       "update": "Modifier",
@@ -156,7 +159,8 @@
       "close": "Fermer",
       "cancel": "Annuler",
       "confirmDeletion": "Confirmer la suppression",
-      "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer cet objet ? Vous ne pourrez plus le récupérer."
+      "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer cet objet ? Vous ne pourrez plus le récupérer.",
+      "errorNoFeature": "L'objet recherché n'existe pas"
     }
   },
   "user": {

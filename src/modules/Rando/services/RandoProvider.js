@@ -18,6 +18,7 @@ export class RandoProvider extends React.Component {
     layersList: [],
     featuresList: [],
     mapConfig: {},
+    errors: {},
   };
 
   componentWillUnmount () {
@@ -35,7 +36,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.mapConfig.length]: true },
+        errors: { ...state.errors, code: e.message },
       }));
     }
   };
@@ -47,7 +48,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.allLayers.length]: true },
+        errors: { ...state.errors, code: e.message },
       }));
     }
   };
@@ -76,7 +77,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state[layerId].length]: true },
+        errors: { ...state.errors, [featureId]: true, code: e.message },
       }));
     }
   }
@@ -108,7 +109,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state[layerId].length]: true },
+        errors: { ...state.errors, [featureId]: e.message },
       }));
       return null;
     }

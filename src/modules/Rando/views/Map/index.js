@@ -1,4 +1,5 @@
 import { withRouter } from 'react-router-dom';
+import { withNamespaces } from 'react-i18next';
 import { connectRandoProvider } from '../../services/RandoProvider';
 
 import Map from './Map';
@@ -13,4 +14,4 @@ export default connectRandoProvider(
   'mapIsResizing',
   'getFeaturesList',
   'featuresList',
-)(withRouter(Map));
+)(withRouter(withNamespaces()(Map)));

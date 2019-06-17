@@ -1,11 +1,12 @@
 import React from 'react';
-import classnames from 'classnames';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { Icon } from '@blueprintjs/core';
+
 import { ACTION_CREATE, ACTION_UPDATE } from '../../views/Map/Map';
 import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
+import { toast } from '../../../../utils/toast';
 
 import Read from './Read';
 import Edit from './Edit';
@@ -17,14 +18,19 @@ class Details extends React.Component {
   }
 
   componentDidMount () {
+    const { paramId, detailsHasLoaded } = this.props;
     this.getData();
     this.setSchema();
+    if (paramId === ACTION_CREATE) {
+      detailsHasLoaded();
+    }
   }
 
   componentDidUpdate ({
     paramId: prevParamId,
     paramLayer: prevParamlayer,
     paramAction: prevParamAction,
+    feature: prevFeature,
     feature: {
       [prevParamId]: {
         geom: { coordinates: prevCoordinates = [] } = {},
@@ -37,11 +43,16 @@ class Details extends React.Component {
       paramId,
       paramLayer,
       paramAction,
+      feature,
       feature: { [paramId]: { geom: { coordinates = [] } = {}, properties } = {} } = {},
       map,
       layer,
+      detailsHasLoaded,
     } = this.props;
 
+    if (feature !== prevFeature) {
+      detailsHasLoaded();
+    }
 
     if (prevParamlayer !== paramLayer || prevParamId !== paramId || prevLayer !== layer) {
       this.getData();
@@ -120,13 +131,20 @@ class Details extends React.Component {
   render () {
     const {
       feature,
-      visible,
       paramLayer,
       paramId,
       t,
+      hasError,
+      errorCode,
     } = this.props;
+
+    if (hasError && errorCode === 'Not Found') {
+      toast.displayError(t('rando.details.errorNoFeature'));
+      return <Redirect to={generateURI('layer', { layer: paramLayer })} />;
+    }
+
     return (
-      <div className={classnames('rando-details', { 'rando-details--visible': visible })}>
+      <>
         <div className="rando-details__close">
           <NavLink to={generateURI('layer', { layer: paramLayer })}>
             <span className="bp3-button bp3-minimal">
@@ -141,7 +159,7 @@ class Details extends React.Component {
             <>{this.renderContent()}</>
           )}
         </div>
-      </div>
+      </>
     );
   }
 }

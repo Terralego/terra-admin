@@ -5,6 +5,7 @@ import {
   fetchFeaturesList,
   fetchFeature as fetchFeatureAction,
   saveFeature as saveFeatureAction,
+  deleteFeature as deleteFeatureAction,
 } from './features';
 
 export const context = React.createContext({});
@@ -17,6 +18,7 @@ export class RandoProvider extends React.Component {
     layersList: [],
     featuresList: [],
     mapConfig: {},
+    errors: {},
   };
 
   componentWillUnmount () {
@@ -34,7 +36,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.mapConfig.length]: true },
+        errors: { ...state.errors, code: e.message },
       }));
     }
   };
@@ -46,7 +48,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.allLayers.length]: true },
+        errors: { ...state.errors, code: e.message },
       }));
     }
   };
@@ -75,7 +77,7 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state[layerId].length]: true },
+        errors: { ...state.errors, [featureId]: true, code: e.message },
       }));
     }
   }
@@ -107,7 +109,25 @@ export class RandoProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state[layerId].length]: true },
+        errors: { ...state.errors, [featureId]: e.message },
+      }));
+      return null;
+    }
+  }
+
+  deleteFeature = async (layerId, featureId) => {
+    try {
+      const { feature, featuresList } = this.state;
+      const deletion = await deleteFeatureAction(layerId, featureId);
+      this.setState({
+        feature: feature.filter(feat => feat !== featureId),
+        featuresList: featuresList.filter(({ identifier }) => identifier !== featureId),
+      });
+      return deletion;
+    } catch (e) {
+      this.setState(state => ({
+        ...state,
+        errors: { ...state.errors, code: e.message },
       }));
       return null;
     }
@@ -134,6 +154,7 @@ export class RandoProvider extends React.Component {
       getFeaturesList,
       fetchFeature,
       saveFeature,
+      deleteFeature,
       setMap,
       resizingMap,
     } = this;
@@ -144,6 +165,7 @@ export class RandoProvider extends React.Component {
       getFeaturesList,
       fetchFeature,
       saveFeature,
+      deleteFeature,
       setMap,
       resizingMap,
     };

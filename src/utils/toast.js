@@ -2,10 +2,10 @@ import { Intent, Toaster } from '@blueprintjs/core';
 
 const submitToaster = Toaster.create();
 
-function displayToaster (viewpoint, translationSucess, translationError) {
+function displayToaster (data, translationSuccess, translationError) {
   submitToaster.show({
-    message: viewpoint.id ? translationSucess : translationError,
-    intent: viewpoint.id ? Intent.SUCCESS : Intent.DANGER,
+    message: data.id ? translationSuccess : translationError,
+    intent: data.id ? Intent.SUCCESS : Intent.DANGER,
   });
 }
 

@@ -146,13 +146,27 @@
       "columnsDisplay": "Afficher toutes les colonnes",
       "columnsHide": "Cacher toutes les colonnes"
     },
+    "layer": {
+      "errorNoLayer": "La couche recherchée n'existe pas"
+    },
     "details": {
       "create": "Ajouter",
       "update": "Modifier",
+      "delete": "Supprimer",
       "noFeature": "Non renseigné",
       "informations": "Informations",
       "save": "Sauvegarder",
-      "close": "Fermer"
+      "close": "Fermer",
+      "cancel": "Annuler",
+      "confirmDeletion": "Confirmer la suppression",
+      "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer cet objet ? Vous ne pourrez plus le récupérer.",
+      "errorNoFeature": "L'objet recherché n'existe pas",
+      "successCreateFeature": "L'objet a été enregistré avec succès",
+      "failCreateFeature": "L'objet n'a pas été enregistré",
+      "successUpdateFeature": "L'objet a été mis à jour avec succès",
+      "failUpdateFeature": "L'objet n'a pas été mis à jour",
+      "successDeleteFeature": "L'objet a supprimé avec succès",
+      "failUDeleteFeature": "L'objet n'a pas été supprimé"
     }
   },
   "user": {

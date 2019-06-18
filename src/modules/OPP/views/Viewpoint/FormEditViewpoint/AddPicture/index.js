@@ -14,7 +14,7 @@ import localeUtils from '@terralego/core/utils/localeUtils';
 
 import { locale, localErrorMessages } from '../../../../../../utils/date';
 import { validateAddPicture } from './validateAddPictureForm';
-import { toast } from '../../../../utils/toast';
+import { toast } from '../../../../../../utils/toast';
 
 const displayError = ({ error, touched }) => !!(error && touched);
 

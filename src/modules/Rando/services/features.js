@@ -16,6 +16,10 @@ export async function updateFeature (layerId, featureId, body) {
   return Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'PUT', body });
 }
 
+export async function deleteFeature (layerId, featureId) {
+  return Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'DELETE' });
+}
+
 export async function saveFeature (layerId, featureId = false, body) {
   if (featureId) {
     return updateFeature(layerId, featureId, body);

@@ -8,6 +8,7 @@ export default withRouter(connectRandoProvider(({
   map,
   fetchFeature,
   feature,
+  errors,
 }, {
   match: { params: { layer, action, id } },
 }) => ({
@@ -18,4 +19,6 @@ export default withRouter(connectRandoProvider(({
   paramLayer: layer,
   paramAction: action,
   paramId: id,
+  hasError: errors[id],
+  errorCode: errors.code,
 }))(withNamespaces()(Details)));

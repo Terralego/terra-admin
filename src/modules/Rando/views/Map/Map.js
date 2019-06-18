@@ -1,15 +1,18 @@
 import React from 'react';
 import classnames from 'classnames';
+import { Redirect } from 'react-router-dom';
 import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/InteractiveMap';
 import { DEFAULT_CONTROLS } from '@terralego/core/modules/Map';
 
 import DataTable from '../../components/DataTable';
+import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
 import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
+import { toast } from '../../../../utils/toast';
 
 import './styles.scss';
 
@@ -65,7 +68,7 @@ export class Map extends React.Component {
 
     if (
       (!id || id === ACTION_CREATE)
-      && featuresList
+      && featuresList.length
       && (prevId !== id || featuresList !== prevFeaturesList)
     ) {
       this.setFitBounds();
@@ -123,10 +126,12 @@ export class Map extends React.Component {
   displayCurrentLayer = currentPath => {
     const { customStyle: { layers = [] } = {} } = this.state;
     const { map } = this.props;
-    layers.forEach(({ id, 'source-layer': sourceLayer }) => {
-      if (!map.getLayer(id)) return;
-      map.setLayoutProperty(id, 'visibility', sourceLayer === currentPath ? 'visible' : 'none');
-    });
+    if (map) {
+      layers.forEach(({ id, 'source-layer': sourceLayer }) => {
+        if (!map.getLayer(id)) return;
+        map.setLayoutProperty(id, 'visibility', sourceLayer === currentPath ? 'visible' : 'none');
+      });
+    }
   }
 
   updateControls = controls => this.setState({
@@ -147,11 +152,18 @@ export class Map extends React.Component {
       map,
       mapConfig,
       mapIsResizing,
+      layersList,
       match: { params: { layer = false, id } },
+      t,
     } = this.props;
 
     const isConfigLoaded = Object.keys(mapConfig).length > 1;
     const isDetailsVisible = !!id;
+
+    if (layersList.length && layer && !layersList.find(({ name }) => name === layer)) {
+      toast.displayError(t('rando.layer.errorNoLayer'));
+      return <Redirect to={generateURI('layer')} />;
+    }
     return (
       <div
         className={classnames(
@@ -171,12 +183,13 @@ export class Map extends React.Component {
                   interactions={interactions}
                   controls={controls}
                 />
-                {map && (
-                <Details
-                  visible={isDetailsVisible}
-                  updateControls={this.updateControls}
-                />
-                )}
+                <DetailsWrapper>
+                  {isDetailsVisible && (
+                    <Details
+                      updateControls={this.updateControls}
+                    />
+                  )}
+                </DetailsWrapper>
               </div>
               {map && (
               <div

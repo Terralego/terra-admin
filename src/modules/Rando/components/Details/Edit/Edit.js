@@ -4,7 +4,9 @@ import { Button } from '@blueprintjs/core';
 import { CONTROL_DRAW, CONTROLS_TOP_LEFT } from '@terralego/core/modules/Map';
 
 import { ACTION_CREATE, ACTION_UPDATE } from '../../../views/Map/Map';
+import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
+import Actions from '../Actions';
 
 class Edit extends React.Component {
   state = {
@@ -145,9 +147,12 @@ class Edit extends React.Component {
     const {
       match: { params: { layer, id } },
       saveFeature,
+      t,
     } = this.props;
 
-    if (!formTouched || !geomTouched) {
+    const isActionUpdate = action === ACTION_UPDATE;
+
+    if (!formTouched && !geomTouched) {
       return;
     }
 
@@ -157,23 +162,30 @@ class Edit extends React.Component {
 
     const savedFeature = await saveFeature(
       layer,
-      action === ACTION_UPDATE ? id : false,
+      isActionUpdate ? id : false,
       { geom, properties: formData },
     );
 
-    if (savedFeature !== null && action === ACTION_CREATE) {
+    if (savedFeature !== null && !isActionUpdate) {
       push(generateURI('layer', { layer, id: savedFeature.identifier, action: 'update' }));
-      return;
     }
+
+    toast.displayToaster(
+      { id: savedFeature ? savedFeature.identifier : false },
+      t(isActionUpdate ? 'rando.details.successUpdateFeature' : 'rando.details.successCreateFeature'),
+      t(isActionUpdate ? 'rando.details.failUpdateFeature' : 'rando.details.failCreateFeature'),
+    );
 
     this.setState({
       loading: false,
+      formTouched: false,
+      geomTouched: false,
     });
   }
 
   render () {
     const { loading, schema, schema: { properties } } = this.state;
-    const { t, action } = this.props;
+    const { t, action, match: { params: { layer, id } } } = this.props;
     if (!properties) return null;
     const { name: { default: title } = {} } = properties;
     const mainTitle = action === ACTION_CREATE ? t('rando.details.create') : (title || t('rando.details.noFeature'));
@@ -183,7 +195,7 @@ class Edit extends React.Component {
         <div className="details__header">
           <h2 className="details__title">{mainTitle}</h2>
         </div>
-        <div className="details_content">
+        <div className="details__content">
           <Form
             schema={schema}
             onSubmit={this.submitFeature}
@@ -192,6 +204,9 @@ class Edit extends React.Component {
             <Button intent="primary" loading={loading} type="submit">{button}</Button>
           </Form>
         </div>
+        {action === ACTION_UPDATE && (
+          <Actions id={id} layer={layer} displayDelete />
+        )}
       </div>
     );
   }

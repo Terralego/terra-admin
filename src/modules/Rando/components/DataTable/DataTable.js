@@ -39,7 +39,7 @@ class DataTable extends React.Component {
     const {
       featuresList,
       layer: {
-        schema: { properties },
+        schema: { properties = {} },
         settings: { properties: { default_list: defaultList = false } = {} },
       },
     } = this.props;

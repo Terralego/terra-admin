@@ -160,7 +160,13 @@
       "cancel": "Annuler",
       "confirmDeletion": "Confirmer la suppression",
       "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer cet objet ? Vous ne pourrez plus le récupérer.",
-      "errorNoFeature": "L'objet recherché n'existe pas"
+      "errorNoFeature": "L'objet recherché n'existe pas",
+      "successCreateFeature": "L'objet a été enregistré avec succès",
+      "failCreateFeature": "L'objet n'a pas été enregistré",
+      "successUpdateFeature": "L'objet a été mis à jour avec succès",
+      "failUpdateFeature": "L'objet n'a pas été mis à jour",
+      "successDeleteFeature": "L'objet a supprimé avec succès",
+      "failUDeleteFeature": "L'objet n'a pas été supprimé"
     }
   },
   "user": {

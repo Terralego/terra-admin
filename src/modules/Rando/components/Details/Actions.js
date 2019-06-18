@@ -6,11 +6,17 @@ import { withRouter } from 'react-router';
 
 import { connectRandoProvider } from '../../services/RandoProvider';
 import { generateURI } from '../../config';
+import { toast } from '../../../../utils/toast';
 
 class Actions extends React.Component {
   deleteFeature = () => {
-    const { layer, id, deleteFeature, history: { push } } = this.props;
+    const { layer, id, deleteFeature, history: { push }, t } = this.props;
     deleteFeature(layer, id);
+    toast.displayToaster(
+      { id },
+      t('rando.details.successDeleteFeature'),
+      t('rando.details.failDeleteFeature'),
+    );
     push(generateURI('layer', { layer }));
   }
 

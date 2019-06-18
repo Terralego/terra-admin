@@ -4,6 +4,7 @@ import { Button } from '@blueprintjs/core';
 import { CONTROL_DRAW, CONTROLS_TOP_LEFT } from '@terralego/core/modules/Map';
 
 import { ACTION_CREATE, ACTION_UPDATE } from '../../../views/Map/Map';
+import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';
 
@@ -146,9 +147,12 @@ class Edit extends React.Component {
     const {
       match: { params: { layer, id } },
       saveFeature,
+      t,
     } = this.props;
 
-    if (!formTouched || !geomTouched) {
+    const isActionUpdate = action === ACTION_UPDATE;
+
+    if (!formTouched && !geomTouched) {
       return;
     }
 
@@ -158,16 +162,24 @@ class Edit extends React.Component {
 
     const savedFeature = await saveFeature(
       layer,
-      action === ACTION_UPDATE ? id : false,
+      isActionUpdate ? id : false,
       { geom, properties: formData },
     );
 
-    if (savedFeature !== null && action === ACTION_CREATE) {
+    if (savedFeature !== null && !isActionUpdate) {
       push(generateURI('layer', { layer, id: savedFeature.identifier, action: 'update' }));
     }
 
+    toast.displayToaster(
+      { id: savedFeature ? savedFeature.identifier : false },
+      t(isActionUpdate ? 'rando.details.successUpdateFeature' : 'rando.details.successCreateFeature'),
+      t(isActionUpdate ? 'rando.details.failUpdateFeature' : 'rando.details.failCreateFeature'),
+    );
+
     this.setState({
       loading: false,
+      formTouched: false,
+      geomTouched: false,
     });
   }
 

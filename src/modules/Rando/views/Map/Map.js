@@ -25,6 +25,7 @@ export class Map extends React.Component {
     interactions: [],
     customStyle: undefined,
     controls: DEFAULT_CONTROLS,
+    tableSize: 'medium', // 'minified', 'medium', 'full'
   }
 
   componentDidMount () {
@@ -138,6 +139,12 @@ export class Map extends React.Component {
     controls: [...controls, ...DEFAULT_CONTROLS],
   })
 
+  onTableSizeChange = tableSize => {
+    const { resizingMap } = this.props;
+    this.setState({ tableSize });
+    resizingMap();
+  }
+
   generateLayersToMap () {
     this.setState({
       customStyle: {
@@ -147,7 +154,7 @@ export class Map extends React.Component {
   }
 
   render () {
-    const { customStyle, interactions, controls } = this.state;
+    const { customStyle, interactions, controls, tableSize } = this.state;
     const {
       map,
       mapConfig,
@@ -196,9 +203,12 @@ export class Map extends React.Component {
                 className={classnames(
                   'rando-map__table',
                   { 'rando-map__table--active': layer && !isDetailsVisible },
+                  { [`rando-map__table--${tableSize}`]: layer && !isDetailsVisible },
                 )}
               >
                 <DataTable
+                  onTableSizeChange={this.onTableSizeChange}
+                  tableSize={tableSize}
                   source={layer}
                 />
               </div>

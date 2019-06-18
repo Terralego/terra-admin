@@ -144,7 +144,9 @@
       "minimize": "Réduire",
       "maximize": "Agrandir",
       "columnsDisplay": "Afficher toutes les colonnes",
-      "columnsHide": "Cacher toutes les colonnes"
+      "columnsHide": "Cacher toutes les colonnes",
+      "showTable": "Montrer le tableau attributaire",
+      "hideTable": "Cacher le tableau attributaire"
     },
     "layer": {
       "errorNoLayer": "La couche recherchée n'existe pas"

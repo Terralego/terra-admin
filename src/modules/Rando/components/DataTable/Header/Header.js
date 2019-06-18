@@ -6,7 +6,15 @@ import { generateURI } from '../../../config';
 
 import './styles.scss';
 
-const Header = ({ source, full, resize, t, columns, onChange, match: { params: { layer } } }) => (
+const Header = ({
+  source,
+  tableSize,
+  resize,
+  t,
+  columns,
+  onChange,
+  match: { params: { layer } },
+}) => (
   <div className="table-header">
     <div className="table-header__title">
       {t('rando.table.title', { source })}
@@ -18,29 +26,42 @@ const Header = ({ source, full, resize, t, columns, onChange, match: { params: {
       </NavLink>
     </div>
     <div>
+      {tableSize !== 'minified' && (
+        <Popover
+          content={t('rando.table.filterProps')}
+          interactionKind={PopoverInteractionKind.HOVER}
+        >
+          <ColumnsSelector
+            columns={columns}
+            onChange={onChange}
+            position={Position.LEFT}
+            locales={{
+              displayAllColumns: t('rando.table.columnsDisplay'),
+              hideAllColumns: t('rando.table.columnsHide'),
+            }}
+          />
+        </Popover>
+      )}
       <Popover
-        content={t('rando.table.filterProps')}
-        interactionKind={PopoverInteractionKind.HOVER}
-      >
-        <ColumnsSelector
-          columns={columns}
-          onChange={onChange}
-          position={Position.LEFT}
-          locales={{
-            displayAllColumns: t('rando.table.columnsDisplay'),
-            hideAllColumns: t('rando.table.columnsHide'),
-          }}
-        />
-      </Popover>
-      <Popover
-        content={full ? t('rando.table.minimize') : t('rando.table.maximize')}
+        content={tableSize === 'minified' ? t('rando.table.showTable') : t('rando.table.hideTable')}
         interactionKind={PopoverInteractionKind.HOVER}
       >
         <Button
-          onClick={() => resize(!full)}
-          icon={full ? 'minimize' : 'maximize'}
+          onClick={() => resize(tableSize === 'minified' ? 'medium' : 'minified')}
+          icon={tableSize === 'minified' ? 'arrow-up' : 'arrow-down'}
           minimal
-          active={full}
+          intent={Intent.PRIMARY}
+        />
+      </Popover>
+      <Popover
+        content={tableSize === 'full' ? t('rando.table.minimize') : t('rando.table.maximize')}
+        interactionKind={PopoverInteractionKind.HOVER}
+      >
+        <Button
+          onClick={() => resize(tableSize === 'full' ? 'medium' : 'full')}
+          icon={tableSize === 'full' ? 'minimize' : 'maximize'}
+          minimal
+          active={tableSize === 'full'}
           intent={Intent.PRIMARY}
         />
       </Popover>

@@ -9,8 +9,6 @@ class DataTable extends React.Component {
   state = {
     data: [],
     columns: [],
-    full: false,
-    isResizing: false,
     loading: false,
   }
 
@@ -68,30 +66,31 @@ class DataTable extends React.Component {
     });
   }
 
-  resize = () => this.setState(({ full }) => {
-    const delay = !full ? 0 : 1000;
-    setTimeout(() => this.setState({ full: !full, isResizing: false }), delay);
-
-    return { isResizing: true };
-  })
+  resize = (tableSize = 'medium') => {
+    const { onTableSizeChange } = this.props;
+    onTableSizeChange(tableSize);
+  }
 
   render () {
-    const { source, t } = this.props;
-    const { data, columns, isResizing, full, loading } = this.state;
-
+    const { source, t, tableSize } = this.props;
+    const { data, columns, loading } = this.state;
     return (
       <div
         className={classnames(
           'table-container',
-          { 'table-container--full': full },
-          { 'table-container--is-resizing': isResizing },
+          { [`table-container--${tableSize}`]: tableSize },
         )}
       >
         <Table
           columns={columns}
           data={data}
           Header={props => (
-            <Header {...props} source={source} full={full} resize={this.resize} />
+            <Header
+              {...props}
+              source={source}
+              tableSize={tableSize}
+              resize={this.resize}
+            />
           )}
           locales={{
             sortAsc: t('rando.table.sortAsc'),

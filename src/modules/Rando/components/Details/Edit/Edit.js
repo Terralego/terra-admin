@@ -186,8 +186,7 @@ class Edit extends React.Component {
   render () {
     const { loading, schema, schema: { properties } } = this.state;
     const { t, action, match: { params: { layer, id } } } = this.props;
-    if (!properties) return null;
-    const { name: { default: title } = {} } = properties;
+    const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE ? t('rando.details.create') : (title || t('rando.details.noFeature'));
     const button = action === ACTION_CREATE ? mainTitle : t('rando.details.save');
     return (
@@ -196,13 +195,33 @@ class Edit extends React.Component {
           <h2 className="details__title">{mainTitle}</h2>
         </div>
         <div className="details__content">
-          <Form
-            schema={schema}
-            onSubmit={this.submitFeature}
-            onChange={this.changeForm}
-          >
-            <Button intent="primary" loading={loading} type="submit">{button}</Button>
-          </Form>
+          {properties
+            ? (
+              <Form
+                schema={schema}
+                onSubmit={this.submitFeature}
+                onChange={this.changeForm}
+              >
+                <Button
+                  intent="primary"
+                  loading={loading}
+                  type="submit"
+                >
+                  {button}
+                </Button>
+              </Form>
+            )
+            : (
+              <Button
+                intent="primary"
+                loading={loading}
+                type="button"
+                onClick={() => this.submitFeature({})}
+              >
+                {button}
+              </Button>
+            )
+        }
         </div>
         {action === ACTION_UPDATE && (
           <Actions id={id} layer={layer} displayDelete />

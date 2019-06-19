@@ -35,7 +35,7 @@ class DataTable extends React.Component {
 
   setData = () => {
     const {
-      featuresList,
+      featuresList = [],
       layer: {
         schema: { properties = {} },
         settings: { properties: { default_list: defaultList = false } = {} },
@@ -58,6 +58,11 @@ class DataTable extends React.Component {
       data,
       loading: false,
     });
+
+    if (!data.length) {
+      const { onTableSizeChange } = this.props;
+      onTableSizeChange('minified');
+    }
   }
 
   cleanData = () => {
@@ -81,23 +86,37 @@ class DataTable extends React.Component {
           { [`table-container--${tableSize}`]: tableSize },
         )}
       >
-        <Table
-          columns={columns}
-          data={data}
-          Header={props => (
-            <Header
-              {...props}
-              source={source}
-              tableSize={tableSize}
-              resize={this.resize}
+        {data.length
+          ? (
+            <Table
+              columns={columns}
+              data={data}
+              Header={props => (
+                <Header
+                  {...props}
+                  source={source}
+                  tableSize={tableSize}
+                  resize={this.resize}
+                />
+              )}
+              locales={{
+                sortAsc: t('rando.table.sortAsc'),
+                sortDesc: t('rando.table.sortDesc'),
+              }}
+              loading={loading}
             />
+          )
+          : (
+            <div>
+              <Header
+                columns={[]}
+                source={source}
+                tableSize={tableSize}
+                resize={this.resize}
+              />
+              <p>{t('rando.table.noFeature')}</p>
+            </div>
           )}
-          locales={{
-            sortAsc: t('rando.table.sortAsc'),
-            sortDesc: t('rando.table.sortDesc'),
-          }}
-          loading={loading}
-        />
       </div>
     );
   }

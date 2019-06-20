@@ -169,7 +169,7 @@
       "failCreateFeature": "L'objet n'a pas été enregistré",
       "successUpdateFeature": "L'objet a été mis à jour avec succès",
       "failUpdateFeature": "L'objet n'a pas été mis à jour",
-      "successDeleteFeature": "L'objet a supprimé avec succès",
+      "successDeleteFeature": "L'objet a été supprimé avec succès",
       "failUDeleteFeature": "L'objet n'a pas été supprimé"
     }
   },

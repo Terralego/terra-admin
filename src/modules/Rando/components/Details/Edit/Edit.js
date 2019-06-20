@@ -170,8 +170,8 @@ class Edit extends React.Component {
       { geom, properties: formData },
     );
 
-    if (savedFeature !== null && !isActionUpdate) {
-      push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier, action: 'update' }));
+    if (savedFeature !== null) {
+      push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
     }
 
     toast.displayToaster(

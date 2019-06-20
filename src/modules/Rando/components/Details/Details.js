@@ -90,7 +90,7 @@ class Details extends React.Component {
     const {
       paramId,
       feature: { [paramId]: { properties } = {} } = {},
-      layer: { schema } = {},
+      layer: { schema = {} } = {},
     } = this.props;
     if (Object.keys(schema).length > 0) {
       this.setState({

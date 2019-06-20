@@ -153,7 +153,7 @@
       "errorNoLayer": "La couche recherchée n'existe pas"
     },
     "details": {
-      "create": "Ajouter",
+      "create": "Ajouter {{layer}}",
       "update": "Modifier",
       "delete": "Supprimer",
       "noFeature": "Non renseigné",

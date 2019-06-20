@@ -191,7 +191,9 @@ class Edit extends React.Component {
     const { loading, schema, schema: { properties } } = this.state;
     const { t, action, paramLayer, paramId } = this.props;
     const { name: { default: title } = {} } = properties || {};
-    const mainTitle = action === ACTION_CREATE ? t('rando.details.create') : (title || t('rando.details.noFeature'));
+    const mainTitle = action === ACTION_CREATE
+      ? t('rando.details.create', { layer: paramLayer })
+      : (title || t('rando.details.noFeature'));
     const button = action === ACTION_CREATE ? mainTitle : t('rando.details.save');
     return (
       <div className="details ">

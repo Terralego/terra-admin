@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button } from '@blueprintjs/core';
+import { Button, Icon } from '@blueprintjs/core';
 import classnames from 'classnames';
 
 import { generateURI } from '../../config';
@@ -11,7 +11,6 @@ import './styles.scss';
 export const Nav = ({ getAllLayersAction, resizingMap, layersList, t }) => {
   const [menuOpen, setMenuOpen] = useState(true);
 
-
   useEffect(() => {
     getAllLayersAction();
   }, []);
@@ -19,6 +18,22 @@ export const Nav = ({ getAllLayersAction, resizingMap, layersList, t }) => {
   useEffect(() => {
     resizingMap();
   }, [menuOpen]);
+
+  const layersListByGroups = layersList.reduce((list, item) => {
+    const matchingGroup = list.find(({ group }) => group === item.group);
+    if (matchingGroup) {
+      return list.map(listItem => (listItem !== matchingGroup
+        ? listItem
+        : {
+          ...listItem,
+          list: [
+            ...listItem.list,
+            item,
+          ],
+        }));
+    }
+    return [...list, { group: item.group, list: [item] }];
+  }, []);
 
   return (
     <div
@@ -43,13 +58,25 @@ export const Nav = ({ getAllLayersAction, resizingMap, layersList, t }) => {
         id="rando-nav__menu"
         className="rando-nav__menu"
       >
-        {layersList.map(({ name }) => (
-          <li key={name}>
-            <NavLink
-              to={generateURI('layer', { layer: name })}
-            >
-              {name}
-            </NavLink>
+        {layersListByGroups.map(({ group, list }) => (
+          <li className="rando-nav__group" key={group}>
+            <p className="rando-nav__group-name">
+              {group}
+            </p>
+            <ul className="rando-nav__list">
+              {list.map(({ name }) => (
+                <li className="rando-nav__item" key={name}>
+                  <NavLink
+                    to={generateURI('layer', { layer: name })}
+                  >
+                    <span className="bp3-button bp3-minimal">
+                      <Icon icon="layout" />
+                      <span className="bp3-button-text">{name}</span>
+                    </span>
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>

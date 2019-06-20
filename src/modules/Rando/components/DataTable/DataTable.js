@@ -58,11 +58,6 @@ class DataTable extends React.Component {
       data,
       loading: false,
     });
-
-    if (!data.length) {
-      const { onTableSizeChange } = this.props;
-      onTableSizeChange('minified');
-    }
   }
 
   cleanData = () => {

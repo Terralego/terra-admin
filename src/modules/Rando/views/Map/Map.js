@@ -102,8 +102,10 @@ export class Map extends React.Component {
     const { featuresList, map } = this.props;
     const coordinates = featuresList.map(feature => feature.geom.coordinates);
     const bounds = getBounds(coordinates);
-    map.resize();
-    map.fitBounds(bounds, { padding: 20 });
+    if (map) {
+      map.resize();
+      map.fitBounds(bounds, { padding: 20 });
+    }
   }
 
   getLayerFromList () {
@@ -190,28 +192,30 @@ export class Map extends React.Component {
                   interactions={interactions}
                   controls={controls}
                 />
-                <DetailsWrapper>
-                  {isDetailsVisible && (
-                    <Details
-                      updateControls={this.updateControls}
-                    />
-                  )}
-                </DetailsWrapper>
+                {map && (
+                  <DetailsWrapper>
+                    {isDetailsVisible && (
+                      <Details
+                        updateControls={this.updateControls}
+                      />
+                    )}
+                  </DetailsWrapper>
+                )}
               </div>
               {map && (
-              <div
-                className={classnames(
-                  'rando-map__table',
-                  { 'rando-map__table--active': layer && !isDetailsVisible },
-                  { [`rando-map__table--${tableSize}`]: layer && !isDetailsVisible },
-                )}
-              >
-                <DataTable
-                  onTableSizeChange={this.onTableSizeChange}
-                  tableSize={tableSize}
-                  source={layer}
-                />
-              </div>
+                <div
+                  className={classnames(
+                    'rando-map__table',
+                    { 'rando-map__table--active': layer && !isDetailsVisible },
+                    { [`rando-map__table--${tableSize}`]: layer && !isDetailsVisible },
+                  )}
+                >
+                  <DataTable
+                    onTableSizeChange={this.onTableSizeChange}
+                    tableSize={tableSize}
+                    source={layer}
+                  />
+                </div>
               )}
             </>
           )}

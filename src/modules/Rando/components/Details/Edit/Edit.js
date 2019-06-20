@@ -170,8 +170,8 @@ class Edit extends React.Component {
       { geom, properties: formData },
     );
 
-    if (savedFeature !== null && !isActionUpdate) {
-      push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier, action: 'update' }));
+    if (savedFeature !== null) {
+      push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
     }
 
     toast.displayToaster(
@@ -193,6 +193,12 @@ class Edit extends React.Component {
     const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE ? t('rando.details.create') : (title || t('rando.details.noFeature'));
     const button = action === ACTION_CREATE ? mainTitle : t('rando.details.save');
+    const actionsButtons = {
+      layer: paramLayer,
+      displayCancel: true,
+      displayDelete: true,
+      ...action === ACTION_UPDATE ? { id: paramId } : {},
+    };
     return (
       <div className="details ">
         <div className="details__header">
@@ -227,9 +233,7 @@ class Edit extends React.Component {
             )
         }
         </div>
-        {action === ACTION_UPDATE && (
-          <Actions id={paramId} layer={paramLayer} displayDelete />
-        )}
+        <Actions {...actionsButtons} />
       </div>
     );
   }

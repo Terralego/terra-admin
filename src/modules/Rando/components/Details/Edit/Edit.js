@@ -20,7 +20,8 @@ class Edit extends React.Component {
   componentDidMount () {
     const {
       schema,
-      match: { params: { id } }, feature: { [id]: { geom = {} } = {} } = {},
+      paramId,
+      feature: { [paramId]: { geom = {} } = {} } = {},
     } = this.props;
     this.setState({
       schema,
@@ -42,12 +43,12 @@ class Edit extends React.Component {
   componentWillUnmount () {
     const {
       map,
-      match: { params: { layer } },
+      paramLayer,
       updateControls,
     } = this.props;
     // Remove controlDraw from controls
     updateControls([]);
-    map.setFilter(`terralego-${layer}`, ['all']);
+    map.setFilter(`terralego-${paramLayer}`, ['all']);
   }
 
   updateSchema = schema => {
@@ -57,7 +58,8 @@ class Edit extends React.Component {
   initDraw = () => {
     const {
       map,
-      match: { params: { layer, id } },
+      paramLayer,
+      paramId,
       feature,
       updateControls,
       action,
@@ -80,15 +82,15 @@ class Edit extends React.Component {
           uncombine_features: false,
         },
       };
-      const layers = `terralego-${layer}`;
-      const { [id]: { geom } } = feature;
+      const layers = `terralego-${paramLayer}`;
+      const { [paramId]: { geom } } = feature;
       const listener = ({ control: addedControl }) => {
         if (addedControl !== control.control) return;
         map.draw.add(geom);
         map.off('control_added', listener);
       };
       map.on('control_added', listener);
-      map.setFilter(layers, ['!=', '_id', id]);
+      map.setFilter(layers, ['!=', '_id', paramId]);
     } else {
       control = {
         ...control,
@@ -145,7 +147,9 @@ class Edit extends React.Component {
     const { history: { push }, action } = this.props;
     const { geom, geomTouched, formTouched } = this.state;
     const {
-      match: { params: { layer, id } },
+      layer: { id: layerId },
+      paramId,
+      paramLayer,
       saveFeature,
       t,
     } = this.props;
@@ -161,13 +165,13 @@ class Edit extends React.Component {
     });
 
     const savedFeature = await saveFeature(
-      layer,
-      isActionUpdate ? id : false,
+      layerId,
+      isActionUpdate ? paramId : false,
       { geom, properties: formData },
     );
 
     if (savedFeature !== null && !isActionUpdate) {
-      push(generateURI('layer', { layer, id: savedFeature.identifier, action: 'update' }));
+      push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier, action: 'update' }));
     }
 
     toast.displayToaster(
@@ -185,7 +189,7 @@ class Edit extends React.Component {
 
   render () {
     const { loading, schema, schema: { properties } } = this.state;
-    const { t, action, match: { params: { layer, id } } } = this.props;
+    const { t, action, paramLayer, paramId } = this.props;
     const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE ? t('rando.details.create') : (title || t('rando.details.noFeature'));
     const button = action === ACTION_CREATE ? mainTitle : t('rando.details.save');
@@ -224,7 +228,7 @@ class Edit extends React.Component {
         }
         </div>
         {action === ACTION_UPDATE && (
-          <Actions id={id} layer={layer} displayDelete />
+          <Actions id={paramId} layer={paramLayer} displayDelete />
         )}
       </div>
     );

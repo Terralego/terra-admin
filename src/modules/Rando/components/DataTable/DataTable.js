@@ -86,7 +86,7 @@ class DataTable extends React.Component {
           { [`table-container--${tableSize}`]: tableSize },
         )}
       >
-        {data.length
+        {loading || data.length
           ? (
             <Table
               columns={columns}

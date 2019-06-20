@@ -156,7 +156,7 @@ class Edit extends React.Component {
 
     const isActionUpdate = action === ACTION_UPDATE;
 
-    if (!formTouched && !geomTouched) {
+    if ((!formTouched && !geomTouched) || !Object.keys(geom).length) {
       return;
     }
 

@@ -21,7 +21,7 @@ class Actions extends React.Component {
   }
 
   render () {
-    const { layer, id, displayUpdate, displayDelete, t } = this.props;
+    const { layer, id, displayUpdate, displayDelete, displayCancel, t } = this.props;
     return (
       <div className="details__actions">
         {displayUpdate && (
@@ -31,6 +31,14 @@ class Actions extends React.Component {
             <span className="bp3-button-text">{t('rando.details.update')}</span>
           </span>
         </NavLink>
+        )}
+        {displayCancel && (
+          <NavLink to={generateURI('layer', { layer, id })}>
+            <span className="bp3-button">
+              <Icon icon="undo" />
+              <span className="bp3-button-text">{t('rando.details.cancel')}</span>
+            </span>
+          </NavLink>
         )}
         {displayDelete && (
           <Popover

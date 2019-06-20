@@ -20,6 +20,7 @@ import StyleField from './StyleField';
 
 import { fetchDatalayerConfig } from '../services/datalayer';
 import { required } from '../../../utils/react-admin/validate';
+import TextArrayInput from '../../../components/react-admin/TextArrayInput';
 
 const defaultRequired = required();
 
@@ -93,51 +94,60 @@ const DataLayerTabbedForm = props => (
               <CustomFormIterator disableAdd disableRemove>
                 <DisabledInput source="name" />
                 <BooleanInput source="filter_enable" label="datalayer.form.allow-filtering-field" />
-                {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <React.Fragment />}
-                {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
-
                 <FormDataConsumer>
-                  {({ getSource, scopedFormData }) => {
-                    const choices = [];
-
-                    if (!scopedFormData) return null;
-
-                    switch (scopedFormData.data_type) {
-                      case 2: // 'Integer'
-                      case 3: // 'Float'
-                        choices.push(
-                          { id: 'number', name: 'datalayer.form.number' },
-                          { id: 'number_range', name: 'datalayer.form.number-range' },
-                          { id: 'enum', name: 'datalayer.form.enum' },
-                        );
-                        break;
-                      case 1: // 'String'
-                        choices.push(
-                          { id: 'text', name: 'datalayer.form.text' },
-                          { id: 'enum', name: 'datalayer.form.enum' },
-                        );
-                        break;
-                      default:
-                        choices.push(
-                          { id: 'number', name: 'datalayer.form.number' },
-                          { id: 'number_range', name: 'datalayer.form.number-range' },
-                          { id: 'text', name: 'datalayer.form.text' },
-                          { id: 'enum', name: 'datalayer.form.enum' },
-                        );
-                    }
+                  {({
+                    scopedFormData: {
+                      filter_enable: filterEnable,
+                      filter_settings: { type: filterType, fetch: filterFetch } = {},
+                    } = {},
+                    getSource,
+                  }) => {
+                    if (!filterEnable) return null;
 
                     return (
-                      <FieldGroup>
+                      <>
                         <SelectInput
-                          source={getSource('filter_type')}
-                          choices={choices}
-                          label="datalayer.form.type"
+                          source={getSource('filter_settings.type')}
+                          choices={[
+                            { id: 'single', name: 'datalayer.form.type.single' },
+                            { id: 'many', name: 'datalayer.form.type.many' },
+                            { id: 'range', name: 'datalayer.form.type.range' },
+                          ]}
+                          label="datalayer.form.type.label"
+                          validate={defaultRequired}
                         />
-                        <LongTextInput source="values" label="datalayer.form.values-for-enum" />
-                      </FieldGroup>
+                        {['single', 'many'].includes(filterType) && (
+                          <FieldGroup>
+                            <BooleanInput
+                              source={getSource('filter_settings.fetch')}
+                              label="datalayer.form.type.fetch.label"
+                            />
+                            {!filterFetch && (
+                              <TextArrayInput
+                                source={getSource('filter_settings.values')}
+                                label={`datalayer.form.type.values${filterType === 'many' ? '' : '_optional'}`}
+                                validate={filterType === 'many' ? defaultRequired : undefined}
+                              />
+                            )}
+                          </FieldGroup>
+                        )}
+                        {filterType === 'range' && (
+                          <SelectInput
+                            source={getSource('filter_settings.format')}
+                            label="datalayer.form.type.range_format.label"
+                            choices={[
+                              { id: '', name: 'datalayer.form.type.range_format.number' },
+                              { id: 'date', name: 'datalayer.form.type.range_format.date' },
+                            ]}
+                            validate={defaultRequired}
+                          />
+                        )}
+                      </>
                     );
                   }}
                 </FormDataConsumer>
+                {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <React.Fragment />}
+                {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
               </CustomFormIterator>
             </ArrayInput>
           )}

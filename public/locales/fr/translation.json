@@ -276,12 +276,23 @@
       "filter": "Filtre",
       "allow-filtering-field": "Permettre de filter par le champ",
       "text": "Texte",
-      "enum": "Énumération",
-      "number": "Nombre",
-      "number-range": "Plage de numéros",
       "data-sample": "Extrait des données",
-      "values-for-enum": "Valeur (pour la plage de numéro)",
-      "values": "Valeurs"
+      "type": {
+        "label": "Type de filtrage",
+        "single": "Une seule valeur",
+        "many": "Plusieurs valeurs",
+        "range": "Une étendue de valeurs",
+        "values": "Proposer une liste définie de valeurs pour le filtrage",
+        "values_optional": "Proposer une liste définie de valeurs pour le filtrage (optionnel)",
+        "range_format": {
+          "label": "Format du filtre",
+          "number": "Numérique",
+          "date": "Dates"
+        },
+        "fetch": {
+          "label": "Proposer toutes les valeurs disponibles en base de données pour le filtrage"
+        }
+      }
     }
   },
   "ra": {

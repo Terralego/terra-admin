@@ -10,16 +10,22 @@ import {
   REDUX_FORM_NAME,
 } from 'react-admin';
 
-const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId }) => {
-  const load = memo(async id => {
-    const { data: { fields } } = await dataProvider(GET_ONE, 'geosource', { id });
-    dispatch(change(REDUX_FORM_NAME, 'fields', fields || null));
-  });
-
+const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId, fields }) => {
+  const load = memo(async id => dataProvider(GET_ONE, 'geosource', { id }));
   useEffect(() => {
-    if (sourceId) {
-      load(sourceId);
+    if (!sourceId) return;
+
+    async function fillFields () {
+      const { data: { fields: sourceFields = [] } } = await load(sourceId);
+      const filledFields = sourceFields.map(({ id, name, label }) => ({
+        name,
+        label,
+        ...fields.find(({ id: fieldId }) => id === fieldId) || {},
+      }));
+
+      dispatch(change(REDUX_FORM_NAME, 'fields', filledFields || null));
     }
+    fillFields();
   }, [sourceId]);
 
   return null;
@@ -27,4 +33,5 @@ const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId }) =>
 
 export default connect(state => ({
   sourceId: get(state, 'form.record-form.values.source'),
+  fields: get(state, 'form.record-form.values.fields'),
 }))(SourceFetcher);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { addField } from 'react-admin';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { connect } from 'react-redux';
 import get from 'lodash.get';
 

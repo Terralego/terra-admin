@@ -1,42 +1,20 @@
 import React from 'react';
-import { addField, Labeled } from 'react-admin';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { TextField } from '@material-ui/core';
+import { LongTextInput } from 'react-admin';
 
-export const JSONField = ({
-  label, input, input: { value }, meta: { error, pristine }, defaultValue,
-}) => {
-  const v = (pristine && !value) ? defaultValue : value;
-  const displayedValue = typeof v === 'string'
-    ? v
-    : JSON.stringify(v, null, 2);
-
-  return (
-    <Labeled label={label}>
-      <>
-        <TextField
-          {...input}
-          value={displayedValue}
-          fullWidth
-          multiline
-        />
-        {!pristine && error && <p>{error}</p>}
-      </>
-    </Labeled>
-  );
-};
-
-export const parse = value => {
+export const validate = value => {
   try {
-    return JSON.parse(value);
-  } catch (e) {
-    return value;
+    JSON.parse(value);
+  } catch (err) {
+    return 'Invalid JSON';
   }
+  return undefined;
 };
 
-export const validate = value => typeof value !== 'object' && 'invalid json';
+export const JSONField = props => (
+  <LongTextInput
+    {...props}
+    validate={validate}
+  />
+);
 
-export default addField(JSONField, {
-  parse,
-  validate,
-});
+export default JSONField;

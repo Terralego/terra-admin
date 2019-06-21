@@ -1,55 +1,45 @@
 import React from 'react';
 import {
-  LongTextInput,
   FormDataConsumer,
   REDUX_FORM_NAME,
   withDataProvider,
+  Labeled,
 } from 'react-admin';
 
-/* eslint-disable import/no-extraneous-dependencies */
+import { JsonEditor as Editor } from 'jsoneditor-react';
+import 'jsoneditor-react/es/editor.min.css';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
-import Button from '@material-ui/core/Button';
-/* eslint-enable */
 
-export const validate = value => {
-  try {
-    JSON.parse(value);
-  } catch (err) {
-    return `Invalid JSON: \n${err}`;
+const sanitizeObject = data => {
+  if (typeof data === 'string') {
+    try {
+      return JSON.parse(data);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    }
   }
-  return undefined;
-};
 
-const securedPrettyJSON = input => {
-  try {
-    return JSON.stringify(JSON.parse(input), null, 2);
-  } catch (err) {
-    return input;
-  }
+  return data;
 };
 
 export const JSONInput = withDataProvider(({ dispatch, dataProvider, source, ...props }) => (
-  <>
-    <LongTextInput
-      {...props}
-      source={source}
-      validate={validate}
-    />
-    <br />
+  <Labeled {...props}>
     <FormDataConsumer>
-      {({ formData: { [source]: data } }) => (
-        <Button
-          variant="outlined"
-          size="small"
-          color="primary"
-          disabled={!!validate(data)}
-          onClick={() => dispatch(change(REDUX_FORM_NAME, source, securedPrettyJSON(data) || null))}
-        >
-          Beautify
-        </Button>
+      {({ formData: { [source]: data = {} } }) => (
+        <Editor
+          value={sanitizeObject(data)}
+          navigationBar={false}
+          search={false}
+          name={source}
+          onChange={newData =>
+            dispatch(change(REDUX_FORM_NAME, source, newData, null, 2))}
+        />
       )}
     </FormDataConsumer>
-  </>
+  </Labeled>
 ));
 
 export default JSONInput;

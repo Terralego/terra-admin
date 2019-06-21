@@ -14,7 +14,7 @@ export const UserCreate = props => (
       <TextInput source="password" type="password" label="user.form.password" />
       <BooleanInput source="is_superuser" label="user.form.superuser" />
       <BooleanInput source="is_active" label="user.form.active" />
-      <JSONInput source="properties" label="user.form.additional-information" />
+      <JSONInput source="properties" label="user.form.additional-information" fullWidth />
     </SimpleForm>
   </Create>
 );

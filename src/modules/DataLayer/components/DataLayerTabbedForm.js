@@ -55,7 +55,7 @@ const DataLayerTabbedForm = props => (
 
       <FormTab label="datalayer.form.style">
 
-        <StyleField source="layer_style" label="datalayer.form.layer-style" />
+        <StyleField source="layer_style" label="datalayer.form.layer-style" fullWidth />
 
         <BooleanInput source="legend_enable" label="datalayer.form.legend.display" />
         <LongTextInput source="legend_template" label="datalayer.form.legend.template" />

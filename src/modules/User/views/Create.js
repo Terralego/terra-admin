@@ -5,7 +5,7 @@ import {
   BooleanInput,
 } from 'react-admin';
 
-import JSONField from '../../../components/react-admin/JSONField';
+import JSONInput from '../../../components/react-admin/JSONInput';
 
 export const UserCreate = props => (
   <Create {...props}>
@@ -14,7 +14,7 @@ export const UserCreate = props => (
       <TextInput source="password" type="password" label="user.form.password" />
       <BooleanInput source="is_superuser" label="user.form.superuser" />
       <BooleanInput source="is_active" label="user.form.active" />
-      <JSONField source="properties" label="user.form.additional-information" />
+      <JSONInput source="properties" label="user.form.additional-information" />
     </SimpleForm>
   </Create>
 );

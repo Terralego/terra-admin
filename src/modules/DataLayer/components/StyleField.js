@@ -3,7 +3,7 @@ import { addField } from 'react-admin';
 import { connect } from 'react-redux';
 import get from 'lodash.get';
 
-import { JSONField } from '../../../components/react-admin/JSONField';
+import { JSONInput } from '../../../components/react-admin/JSONInput';
 
 const randomColor = seed => {
   const magicNumber = parseInt(seed.replace(/[^abcdef]/g, '1'), 16) * 100000000;
@@ -39,7 +39,7 @@ const parse = value => {
 export default addField(props => (
   <WithColorSeed
     {...props}
-    component={JSONField}
+    component={JSONInput}
   />
 ), {
   parse,

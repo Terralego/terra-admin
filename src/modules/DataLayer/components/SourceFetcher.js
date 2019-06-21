@@ -18,11 +18,11 @@ const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId, fiel
     async function fillFields () {
       const { data: { fields: sourceFields = [] } } = await load(sourceId);
       const filledFields = sourceFields.map(({ id, name, label }) => ({
+        id,
         name,
         label,
         ...fields.find(({ id: fieldId }) => id === fieldId) || {},
       }));
-
       dispatch(change(REDUX_FORM_NAME, 'fields', filledFields || null));
     }
     fillFields();

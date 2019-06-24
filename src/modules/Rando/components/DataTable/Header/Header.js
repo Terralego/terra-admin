@@ -26,7 +26,7 @@ const Header = ({
       </NavLink>
     </div>
     <div>
-      {tableSize !== 'minified' && (
+      {!!columns.length && tableSize !== 'minified' && (
         <Popover
           content={t('rando.table.filterProps')}
           interactionKind={PopoverInteractionKind.HOVER}

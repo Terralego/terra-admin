@@ -4,18 +4,32 @@ import classnames from 'classnames';
 class DetailsWrapper extends React.Component {
   state = {
     childrenHasLoaded: false,
+    full: false,
   }
 
   hasLoaded = () => this.setState({ childrenHasLoaded: true })
 
+  onSizeChange = () => {
+    const { full } = this.state;
+    this.setState({ full: !full });
+  }
+
   render () {
     const { children } = this.props;
-    const { childrenHasLoaded } = this.state;
+    const { childrenHasLoaded, full } = this.state;
 
     return (
-      <div className={classnames('rando-details', { 'rando-details--visible': children && childrenHasLoaded })}>
+      <div className={
+        classnames(
+          'rando-details',
+          { 'rando-details--visible': children && childrenHasLoaded },
+          { 'rando-details--full': full },
+        )}
+      >
         {children && React.Children.map(children, child => React.cloneElement(child, {
           detailsHasLoaded: () => this.hasLoaded(),
+          onSizeChange: () => this.onSizeChange(),
+          full,
         }))}
       </div>
     );

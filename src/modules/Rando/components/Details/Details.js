@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
-import { Icon } from '@blueprintjs/core';
+import { Icon, Button } from '@blueprintjs/core';
 
 import { ACTION_CREATE, ACTION_UPDATE } from '../../views/Map/Map';
 import { getBounds } from '../../services/features';
@@ -130,6 +130,11 @@ class Details extends React.Component {
     return <Read schema={schema} />;
   }
 
+  onSizeChange = () => {
+    const { full, onSizeChange } = this.props;
+    onSizeChange({ full: !full });
+  }
+
   render () {
     const {
       feature,
@@ -138,6 +143,7 @@ class Details extends React.Component {
       t,
       hasError,
       errorCode,
+      full,
     } = this.props;
 
     if (hasError && errorCode === 'Not Found') {
@@ -147,7 +153,12 @@ class Details extends React.Component {
 
     return (
       <>
-        <div className="rando-details__close">
+        <div className="rando-details__actions">
+          <Button
+            minimal
+            icon={full ? 'minimize' : 'maximize'}
+            onClick={this.onSizeChange}
+          />
           <NavLink to={generateURI('layer', { layer: paramLayer })}>
             <span className="bp3-button bp3-minimal">
               <Icon icon="cross" title={t('rando.details.close')} />

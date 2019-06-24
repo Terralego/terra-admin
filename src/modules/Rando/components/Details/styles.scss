@@ -1,17 +1,33 @@
 .rando-details {
-  position: relative;
-  width: 20rem;
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  right: 3.2rem;
+  width: 40%;
+  min-width: 20rem;
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 50px);
-  margin-right: -20rem;
-  transition: margin 0.2s ease-in;
-
+  transform: translateX(calc(100% + 3.2rem));
+  transition: transform 0.2s ease-in;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  
   &--visible {
-    margin-right: 0; 
+    transform: translateX(0);
+  }
+
+  &--full {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background: #fff;
+    border-left: 1px solid #efefef;
   }
   
-  &__close {
+  &__actions {
     text-align: right;
   }
 

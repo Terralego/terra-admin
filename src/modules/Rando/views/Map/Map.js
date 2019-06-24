@@ -41,12 +41,12 @@ export class Map extends React.Component {
   componentDidUpdate ({
     map: prevMap,
     layersList: prevLayersList,
-    match: { params: { layer: prevLayer, action: prevAction, id: prevId } },
+    match: { params: { layer: prevLayer, id: prevId } },
     featuresList: prevFeaturesList,
   }) {
     const {
       layersList,
-      match: { params: { layer, action, id } },
+      match: { params: { layer, id } },
       resizingMap,
       map,
       featuresList,
@@ -63,7 +63,7 @@ export class Map extends React.Component {
       this.loadFeatures();
     }
 
-    if (action !== prevAction || (prevId !== id && [prevId, id].includes(undefined))) {
+    if (prevId !== id && [prevId, id].includes(undefined)) {
       resizingMap();
     }
 

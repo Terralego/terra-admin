@@ -300,8 +300,7 @@
       "add_filter": "Ajouter un filtre",
       "add": "Ajouter",
       "back": "Retour",
-      "bulk_actions": "{{smart_count}} selectionné",
-      "bulk_actions_plural": "{{smart_count}} selectionnés",
+      "bulk_actions": "%{smart_count} selectionné |||| %{smart_count} selectionnés",
       "cancel": "Annuler",
       "clear_input_value": "Vider le champ",
       "clone": "Dupliquer",
@@ -325,14 +324,14 @@
       "false": "Non"
     },
     "page": {
-      "create": "Créer {{name}}",
+      "create": "Créer %{name}",
       "dashboard": "Tableau de bord",
-      "edit": "{{name}} #{{id}}",
+      "edit": "%{name} #%{id}",
       "error": "Un problème est survenu",
-      "list": "{{name}}",
+      "list": "%{name}",
       "loading": "Chargement",
       "not_found": "Page manquante",
-      "show": "{{name}} #{{id}}"
+      "show": "%{name} #%{id}"
     },
     "input": {
       "file": {
@@ -352,12 +351,10 @@
     "message": {
       "about": "Au sujet de",
       "are_you_sure": "Êtes-vous sûr ?",
-      "bulk_delete_content": "Êtes-vous sûr(e) de vouloir supprimer cet élément ?",
-      "bulk_delete_content_plural": "Êtes-vous sûr(e) de vouloir supprimer ces {{smart_count}} éléments ?",
-      "bulk_delete_title": "Supprimer {{name}}",
-      "bulk_delete_title_plural": "Supprimer {{smart_count}} {{name}}",
+      "bulk_delete_content": "Êtes-vous sûr(e) de vouloir supprimer cet élément ? |||| Êtes-vous sûr(e) de vouloir supprimer ces %{smart_count} éléments ?",
+      "bulk_delete_title": "Supprimer %{name} |||| Supprimer %{smart_count} %{name}",
       "delete_content": "Êtes-vous sûr(e) de vouloir supprimer cet élément ?",
-      "delete_title": "Supprimer {{name}} #{{id}}",
+      "delete_title": "Supprimer %{name} #%{id}",
       "details": "Détails",
       "error": "En raison d'une erreur côté navigateur, votre requête n'a pas pu aboutir.",
       "invalid_form": "Le formulaire n'est pas valide.",
@@ -368,11 +365,11 @@
     },
     "navigation": {
       "no_results": "Aucun résultat",
-      "no_more_results": "La page numéro {{page}} est en dehors des limites. Essayez la page précédente.",
-      "page_out_of_boundaries": "La page {{page}} est en dehors des limites",
+      "no_more_results": "La page numéro %{page} est en dehors des limites. Essayez la page précédente.",
+      "page_out_of_boundaries": "La page %{page} est en dehors des limites",
       "page_out_from_end": "Fin de la pagination",
       "page_out_from_begin": "La page doit être supérieure à 1",
-      "page_range_info": "{{offsetBegin}}-{{offsetEnd}} sur {{total}}",
+      "page_range_info": "%{offsetBegin}-%{offsetEnd} sur %{total}",
       "page_rows_per_page": "Lignes par page :",
       "next": "Suivant",
       "prev": "Précédent"
@@ -386,11 +383,9 @@
       "logout": "Déconnexion"
     },
     "notification": {
-      "updated": "Élément mis à jour",
-      "updated_plural": "{{smart_count}} élements mis à jour",
+      "updated": "Élément mis à jour |||| %{smart_count} élements mis à jour",
       "created": "Élément créé",
-      "deleted": "Élément supprimé",
-      "deleted_plural": "{{smart_count}} élements supprimés",
+      "deleted": "Élément supprimé |||| %{smart_count} élements supprimés",
       "bad_item": "Élément inconnu",
       "item_doesnt_exist": "L'élément n'existe pas",
       "http_error": "Erreur de communication avec le serveur",
@@ -406,8 +401,8 @@
       "maxValue": "Maximum {{max}}",
       "number": "Doit être un nombre",
       "email": "Doit être un email",
-      "oneOf": "Doit être au choix: {{options}}",
-      "regex": "Doit respecter un format spécifique (regexp): {{pattern}}"
+      "oneOf": "Doit être au choix: %{options}",
+      "regex": "Doit respecter un format spécifique (regexp): %{pattern}"
     }
   }
 }

@@ -9,7 +9,6 @@ import {
   NumberInput,
   ArrayInput,
   FormDataConsumer,
-  DisabledInput,
 } from 'react-admin';
 
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
@@ -92,7 +91,11 @@ const DataLayerTabbedForm = props => (
           {({ formData }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available">
               <CustomFormIterator disableAdd disableRemove>
-                <DisabledInput source="name" />
+                <FormDataConsumer>
+                  {({ scopedFormData = {}, getSource }) => (
+                    <LongTextInput source={getSource('label')} label={scopedFormData.name} />
+                  )}
+                </FormDataConsumer>
                 <BooleanInput source="filter_enable" label="datalayer.form.allow-filtering-field" />
                 <FormDataConsumer>
                   {({

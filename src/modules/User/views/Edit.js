@@ -20,7 +20,7 @@ export const UserEdit = props => (
       <BooleanInput source="is_superuser" label="user.form.superuser" />
       <BooleanInput source="is_active" label="user.form.active" />
       <TermListInput source="permissions" label="user.form.permissions" />
-      <JSONInput source="properties" label="user.form.additional-information" />
+      <JSONInput source="properties" label="user.form.additional-information" fullWidth />
     </SimpleForm>
   </Edit>
 );

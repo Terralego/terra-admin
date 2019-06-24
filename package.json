@@ -13,6 +13,8 @@
     "i18next": "^13.0.0",
     "i18next-browser-languagedetector": "^2.2.4",
     "i18next-xhr-backend": "^1.5.1",
+    "jsoneditor": "~6.0.0",
+    "jsoneditor-react": "~1.0.1",
     "lodash.get": "^4.4.2",
     "mapbox-gl": "^0.53.0",
     "memoize-one": "^5.0.4",

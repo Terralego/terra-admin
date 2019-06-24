@@ -189,7 +189,11 @@ class Edit extends React.Component {
 
   render () {
     const { loading, schema, schema: { properties } } = this.state;
-    const { t, action, paramLayer, paramId } = this.props;
+    const { t,
+      action,
+      layer: { schema: { uischema = {} } = {} },
+      paramLayer,
+      paramId } = this.props;
     const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE
       ? t('rando.details.create', { layer: paramLayer })
@@ -211,6 +215,7 @@ class Edit extends React.Component {
             ? (
               <Form
                 schema={schema}
+                uiSchema={uischema}
                 onSubmit={this.submitFeature}
                 onChange={this.changeForm}
               >

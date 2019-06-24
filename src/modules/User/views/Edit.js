@@ -6,7 +6,7 @@ import {
   BooleanInput,
 } from 'react-admin';
 
-import JSONField from '../../../components/react-admin/JSONField';
+import JSONInput from '../../../components/react-admin/JSONInput';
 import TermListInput from '../../../components/react-admin/TermListInput';
 
 const UserTitle = ({ record }) => <span>User {record ? `"${record.email}"` : ''}</span>;
@@ -20,7 +20,7 @@ export const UserEdit = props => (
       <BooleanInput source="is_superuser" label="user.form.superuser" />
       <BooleanInput source="is_active" label="user.form.active" />
       <TermListInput source="permissions" label="user.form.permissions" />
-      <JSONField source="properties" label="user.form.additional-information" />
+      <JSONInput source="properties" label="user.form.additional-information" />
     </SimpleForm>
   </Edit>
 );

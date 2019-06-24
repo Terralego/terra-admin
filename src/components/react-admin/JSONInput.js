@@ -37,7 +37,7 @@ const sanitizeRestProps = ({
 export const JSONInput = withDataProvider(({ dispatch, dataProvider, source, ...props }) => (
   <Labeled {...props}>
     <FormDataConsumer>
-      {({ defaultValue, formData: { [source]: data = defaultValue } }) => (
+      {({ defaultValue = {}, formData: { [source]: data = defaultValue } }) => (
         <Editor
           value={sanitizeObject(data)}
           ace={ace}

@@ -31,6 +31,8 @@ export const JSONInput = withDataProvider(({ dispatch, dataProvider, source, ...
       {({ formData: { [source]: data = {} } }) => (
         <Editor
           value={sanitizeObject(data)}
+          mode="code"
+          allowedModes={['code', 'tree', 'view']}
           navigationBar={false}
           search={false}
           name={source}

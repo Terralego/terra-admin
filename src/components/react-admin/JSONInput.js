@@ -9,6 +9,10 @@ import {
 import { JsonEditor as Editor } from 'jsoneditor-react';
 import 'jsoneditor-react/es/editor.min.css';
 
+import ace from 'brace';
+import 'brace/mode/json';
+import 'brace/theme/github';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
 
@@ -31,6 +35,8 @@ export const JSONInput = withDataProvider(({ dispatch, dataProvider, source, ...
       {({ formData: { [source]: data = {} } }) => (
         <Editor
           value={sanitizeObject(data)}
+          ace={ace}
+          theme="ace/theme/github"
           mode="code"
           allowedModes={['code', 'tree', 'view']}
           navigationBar={false}

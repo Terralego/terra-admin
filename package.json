@@ -8,6 +8,7 @@
     "@blueprintjs/icons": "^3.4.0",
     "@terralego/core": "^1.0.15",
     "bootstrap": "^4.3.1",
+    "brace": "~0.11.1",
     "classnames": "^2.2.6",
     "final-form": "^4.11.0",
     "i18next": "^13.0.0",

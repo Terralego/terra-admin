@@ -9,6 +9,10 @@ import {
 import { JsonEditor as Editor } from 'jsoneditor-react';
 import 'jsoneditor-react/es/editor.min.css';
 
+import ace from 'brace';
+import 'brace/mode/json';
+import 'brace/theme/github';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
 
@@ -25,17 +29,27 @@ const sanitizeObject = data => {
   return data;
 };
 
+const sanitizeRestProps = ({
+  basePath, i18n, i18nOptions, id, index,
+  lng, resource, source, tReady, ...rest
+}) => rest;
+
 export const JSONInput = withDataProvider(({ dispatch, dataProvider, source, ...props }) => (
   <Labeled {...props}>
     <FormDataConsumer>
-      {({ formData: { [source]: data = {} } }) => (
+      {({ defaultValue, formData: { [source]: data = defaultValue } }) => (
         <Editor
           value={sanitizeObject(data)}
+          ace={ace}
+          theme="ace/theme/github"
+          mode="code"
+          allowedModes={['code', 'tree', 'view']}
           navigationBar={false}
           search={false}
           name={source}
           onChange={newData =>
             dispatch(change(REDUX_FORM_NAME, source, newData, null, 2))}
+          {...sanitizeRestProps(props)}
         />
       )}
     </FormDataConsumer>

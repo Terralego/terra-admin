@@ -29,10 +29,15 @@ const sanitizeObject = data => {
   return data;
 };
 
+const sanitizeRestProps = ({
+  basePath, i18n, i18nOptions, id, index,
+  lng, resource, source, tReady, ...rest
+}) => rest;
+
 export const JSONInput = withDataProvider(({ dispatch, dataProvider, source, ...props }) => (
   <Labeled {...props}>
     <FormDataConsumer>
-      {({ formData: { [source]: data = {} } }) => (
+      {({ defaultValue, formData: { [source]: data = defaultValue } }) => (
         <Editor
           value={sanitizeObject(data)}
           ace={ace}
@@ -44,6 +49,7 @@ export const JSONInput = withDataProvider(({ dispatch, dataProvider, source, ...
           name={source}
           onChange={newData =>
             dispatch(change(REDUX_FORM_NAME, source, newData, null, 2))}
+          {...sanitizeRestProps(props)}
         />
       )}
     </FormDataConsumer>

@@ -9,7 +9,9 @@ import {
   NumberInput,
   ArrayInput,
   FormDataConsumer,
+  REDUX_FORM_NAME,
 } from 'react-admin';
+import { change } from 'redux-form';
 
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
@@ -61,11 +63,28 @@ const DataLayerTabbedForm = props => (
       </FormTab>
 
       <FormTab label="datalayer.form.interactions">
-        <BooleanInput source="table_enable" label="datalayer.form.allow-display-data-table" />
+        <FormDataConsumer>
+          {({ dispatch }) => (
+            <BooleanInput
+              source="table_enable"
+              label="datalayer.form.allow-display-data-table"
+              onChange={value => {
+                if (!value) return;
+                dispatch(change(REDUX_FORM_NAME, 'table_export_enable', false));
+              }}
+            />
+          )}
+        </FormDataConsumer>
 
         <FormDataConsumer>
-          {({ formData }) => formData.table_enable && (
-            <BooleanInput source="table_export_enable" label="datalayer.form.allow-export-data" />
+          {({ formData }) => (
+            <BooleanInput
+              source="table_export_enable"
+              label="datalayer.form.allow-export-data"
+              options={{
+                disabled: !formData.table_enable,
+              }}
+            />
           )}
         </FormDataConsumer>
 

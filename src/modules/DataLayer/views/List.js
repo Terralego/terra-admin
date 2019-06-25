@@ -41,6 +41,7 @@ export const DataLayerList = props => (
   >
     <Datagrid rowClick="edit">
       <TextField source="name" label="datalayer.form.name" />
+      <TextField source="view" label="datalayer.form.view" />
       <ReferenceField source="source" reference="geosource" label="datalayer.form.data-source" linkType={false}>
         <TextField source="name" />
       </ReferenceField>

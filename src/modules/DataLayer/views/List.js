@@ -2,26 +2,26 @@ import React from 'react';
 import {
   List, Datagrid,
   TextField,
-  TextInput,
+  // TextInput,
   EditButton,
-  ReferenceInput,
-  SelectInput,
-  Filter,
+  // ReferenceInput,
+  // SelectInput,
+  // Filter,
   ReferenceField,
   Pagination,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
 
-const ListFilters = props => (
-  <Filter {...props}>
-    <TextInput label="ra.action.search" source="q" alwaysOn />
+// const ListFilters = props => (
+//   <Filter {...props}>
+//     <TextInput label="ra.action.search" source="q" alwaysOn />
 
-    <ReferenceInput source="source" reference="geosource" label="datalayer.form.data-source">
-      <SelectInput />
-    </ReferenceInput>
-  </Filter>
-);
+//     <ReferenceInput source="source" reference="geosource" label="datalayer.form.data-source">
+//       <SelectInput />
+//     </ReferenceInput>
+//   </Filter>
+// );
 
 const DataLayerListPagination = props =>
   <Pagination rowsPerPageOptions={[]} {...props} />;
@@ -33,7 +33,7 @@ export const DataLayerList = props => (
       order: 'ASC',
     }}
     exporter={false}
-    filters={<ListFilters />}
+    // filters={<ListFilters />}
     bulkActionButtons={<CommonBulkActionButtons />}
     perPage={100}
     pagination={<DataLayerListPagination />}

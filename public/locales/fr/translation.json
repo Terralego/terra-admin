@@ -173,6 +173,9 @@
       "failUDeleteFeature": "L'objet n'a pas été supprimé"
     }
   },
+  "help": {
+    "block-heading": "Conseils :"
+  },
   "user": {
     "project": "Utilisateurs",
     "nav": {
@@ -188,6 +191,11 @@
       "permissions": "Permissions",
       "additional-information": "Information supplémentaire",
       "password": "Mot de passe"
+    },
+    "help": {
+      "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",
+      "is_superuser": "Le mode \"Superutilisateur\" donne  tous les droits d'administration",
+      "is_active": "Le mode \"Actif\" rend disponible le profil de l'utilisateur"
     }
   },
   "datasource": {

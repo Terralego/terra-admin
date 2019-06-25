@@ -8,6 +8,7 @@ import {
 } from 'react-admin';
 
 import JSONInput from '../../../components/react-admin/JSONInput';
+import UserFieldsHelp from './UserFieldsHelp';
 
 const UserFields = ({ edit = false, ...props }) => (
   <SimpleForm {...props}>
@@ -19,6 +20,7 @@ const UserFields = ({ edit = false, ...props }) => (
     <BooleanInput source="is_superuser" label="user.form.superuser" />
     <BooleanInput source="is_active" label="user.form.active" />
     <JSONInput source="properties" label="user.form.additional-information" fullWidth />
+    <UserFieldsHelp />
   </SimpleForm>
 );
 

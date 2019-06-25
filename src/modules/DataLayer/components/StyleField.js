@@ -45,7 +45,7 @@ export default addField(props => (
 ), {
   parse,
   validate: value => {
-    if (typeof value !== 'object') {
+    if (!value || typeof value !== 'object') {
       return 'invalid json';
     }
     if (!value.type) {

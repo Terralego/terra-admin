@@ -2,28 +2,32 @@ import React from 'react';
 import {
   List, Datagrid,
   TextField,
-  TextInput,
+  // TextInput,
   EditButton,
   CloneButton,
-  SelectInput,
+  // SelectInput,
   FunctionField,
-  Filter,
+  // Filter,
   Pagination,
 } from 'react-admin';
 
-import { sourceTypes, geomTypes, sourceTypeChoices } from '../DataSource';
+import {
+  sourceTypes,
+  geomTypes,
+  // sourceTypeChoices,
+} from '../DataSource';
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
 
-const ListFilters = props => (
-  <Filter {...props}>
-    <TextInput label="ra.action.search" source="q" alwaysOn />
-    <SelectInput
-      source="type"
-      label="datasource.form.type"
-      choices={sourceTypeChoices}
-    />
-  </Filter>
-);
+// const ListFilters = props => (
+//   <Filter {...props}>
+//     <TextInput label="ra.action.search" source="q" alwaysOn />
+//     <SelectInput
+//       source="type"
+//       label="datasource.form.type"
+//       choices={sourceTypeChoices}
+//     />
+//   </Filter>
+// );
 
 const DataSourceListPagination = props =>
   <Pagination rowsPerPageOptions={[]} {...props} />;
@@ -35,7 +39,7 @@ export const DataSourceList = props => (
       order: 'ASC',
     }}
     exporter={false}
-    filters={<ListFilters />}
+    // filters={<ListFilters />}
     bulkActionButtons={<CommonBulkActionButtons />}
     perPage={100}
     pagination={<DataSourceListPagination />}
@@ -43,8 +47,9 @@ export const DataSourceList = props => (
   >
     <Datagrid rowClick="edit">
       <TextField source="name" label="datasource.form.name" />
-      <FunctionField label="datasource.form.type" render={({ _type: type }) => sourceTypes[type] || ''} />
-      <FunctionField label="datasource.form.geom-field" render={({ geom_type: geomType }) => geomTypes[geomType] || ''} />
+      <FunctionField source="_type" label="datasource.form.type" render={({ _type: type }) => sourceTypes[type] || ''} />
+      <FunctionField source="geom_type" label="datasource.form.geom-field" render={({ geom_type: geomType }) => geomTypes[geomType] || ''} />
+      <TextField source="status.state" label="datasource.status" sortable={false} />
       <EditButton />
       <CloneButton />
     </Datagrid>

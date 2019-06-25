@@ -18,6 +18,7 @@ const SourceSelector = withDataProvider(({ dispatch, dataProvider, ...props }) =
       const { data: { fields } } = await dataProvider(GET_ONE, 'geosource', { id: toId });
       dispatch(change(REDUX_FORM_NAME, 'fields', fields || null));
     }}
+    sort={{ field: 'name', order: 'ASC' }}
     {...props}
   >
     <SelectInput />

@@ -141,7 +141,7 @@ const DataLayerTabbedForm = props => (
                         {['single', 'many'].includes(filterType) && (
                           <FieldGroup>
                             <BooleanInput
-                              source={getSource('filter_settings.fetch')}
+                              source={getSource('filter_settings.fetchValues')}
                               label="datalayer.form.type.fetch.label"
                             />
                             {!filterFetch && (

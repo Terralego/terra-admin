@@ -205,12 +205,15 @@
       "create": "Ajouter une source de données"
     },
     "form": {
+      "help1": "Une fois le type de la donnée déterminé, il n'est pas possible de le changer",
       "definition": "Définition",
       "name": "Nom",
       "type": "Type",
       "geometry": "Type de géométrie",
       "geom-field": "Champ contenant la géométrie",
+      "geom-field-help": "Indiquer le champ de la géométrie de la donnée(ex: geom, the_geom, geometry..).",
       "uid-field": "Champ de l'identifiant unique",
+      "uid-field-help": "Indiquer le champs correspondant à l'identifiant unique de la donnée (ex: gid, id..).",
       "use-by": "Utilisé par",
       "data": "Données",
       "label": "Libellé",
@@ -227,6 +230,7 @@
         "user-name": "Nom de l'utilisateur",
         "user-password": "Mot de passe de l'utilisateur",
         "query": "Requête",
+        "query-help": "Exemple de requete PostGis : SELECT * FROM tm2_espace_activite (ne pas rajouter de \";\")",
         "refresh": {
           "name": "Actualiser",
           "never": "Jamais",

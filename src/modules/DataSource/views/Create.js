@@ -5,6 +5,7 @@ import {
   RadioButtonGroupInput,
   FormDataConsumer,
   TextInput,
+  translate,
 } from 'react-admin';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
@@ -15,10 +16,12 @@ import {
   sourceTypeChoices,
 } from '../DataSource';
 
+import DataSourceHelp from '../components/DataSourceHelp';
+
 const required = (message = 'Required') => value => (value ? undefined : message);
 const defaultRequired = required();
 
-export const DataSourceCreate = props => (
+export const DataSourceCreate = ({ translate: t, ...props }) => (
   <Create {...props}>
     <SimpleForm>
       <DataSourceMainFields />
@@ -30,15 +33,24 @@ export const DataSourceCreate = props => (
         choices={sourceTypeChoices}
       />
 
+      <DataSourceHelp />
+
       <DataSourceFileField />
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
       </FormDataConsumer>
 
-      <TextInput source="id_field" type="text" label="datasource.form.uid-field" />
+      <TextInput
+        type="text"
+        source="id_field"
+        label="datasource.form.uid-field"
+        validate={defaultRequired}
+        helperText={t('datasource.form.uid-field-help')}
+        fullWidth
+      />
     </SimpleForm>
   </Create>
 );
 
-export default DataSourceCreate;
+export default translate(DataSourceCreate);

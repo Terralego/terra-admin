@@ -13,6 +13,7 @@ import {
   RefreshButton,
   FormDataConsumer,
   withDataProvider,
+  translate,
 } from 'react-admin';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
@@ -33,7 +34,7 @@ const DataSourceEditActions = withDataProvider(({ dataProvider, data: { id } = {
   </CardActions>
 ));
 
-export const DataSourceEdit = props => (
+export const DataSourceEdit = ({ translate: t, ...props }) => (
   <Edit
     undoable={false}
     actions={<DataSourceEditActions {...props} />}
@@ -49,7 +50,13 @@ export const DataSourceEdit = props => (
           {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
         </FormDataConsumer>
 
-        <TextInput source="id_field" type="text" label="datasource.form.uid-field" />
+        <TextInput
+          source="id_field"
+          type="text"
+          label="datasource.form.uid-field"
+          helperText={t('datasource.form.uid-field-help')}
+          fullWidth
+        />
       </FormTab>
 
       {/* Fields */}
@@ -77,4 +84,4 @@ export const DataSourceEdit = props => (
   </Edit>
 );
 
-export default DataSourceEdit;
+export default translate(DataSourceEdit);

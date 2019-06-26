@@ -2,13 +2,13 @@
   position: absolute;
   top: 0.5rem;
   bottom: 0.5rem;
-  right: 3.2rem;
+  right:0.5rem;
   width: 40%;
   min-width: 20rem;
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 50px);
-  transform: translateX(calc(100% + 3.2rem));
+  transform: translateX(calc(100% + 0.5rem));
   transition: transform 0.2s ease-in;
   background: rgba(255,255,255,0.9);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -16,6 +16,12 @@
   
   &--visible {
     transform: translateX(0);
+
+    & + .interactive-map {
+      .mapboxgl-ctrl-top-right {
+        right: 20.5rem;
+      }
+    }
   }
 
   &--full {
@@ -142,6 +148,18 @@
 
   .list-group {
     margin-bottom: 1rem;
+  }
+}
+
+@media all and (min-width: 66em) {
+  .rando-details {
+    &--visible {
+      & + .interactive-map {
+        .mapboxgl-ctrl-top-right {
+          right: calc(40% + 0.5rem);
+        }
+      }
+    }
   }
 }
 

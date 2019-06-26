@@ -11,6 +11,7 @@ import {
   FormDataConsumer,
   REDUX_FORM_NAME,
 } from 'react-admin';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
 
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';

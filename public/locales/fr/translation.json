@@ -205,6 +205,7 @@
       "create": "Ajouter une source de données"
     },
     "form": {
+      "read-only": "Cette source de données n'est pas modifiable.",
       "help1": "Une fois le type de la donnée déterminé, il n'est pas possible de le changer",
       "definition": "Définition",
       "name": "Nom",

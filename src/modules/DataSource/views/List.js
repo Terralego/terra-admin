@@ -11,6 +11,8 @@ import {
   Pagination,
 } from 'react-admin';
 
+import StatusChip from '../components/StatusChip';
+
 import {
   sourceTypes,
   geomTypes,
@@ -49,7 +51,12 @@ export const DataSourceList = props => (
       <TextField source="name" label="datasource.form.name" />
       <FunctionField source="_type" label="datasource.form.type" render={({ _type: type }) => sourceTypes[type] || ''} />
       <FunctionField source="geom_type" label="datasource.form.geom-field" render={({ geom_type: geomType }) => geomTypes[geomType] || ''} />
-      <TextField source="status.state" label="datasource.status" sortable={false} />
+      <FunctionField
+        source="status.state"
+        label="datasource.status"
+        sortable={false}
+        render={({ status }) => <StatusChip status={status} />}
+      />
       <EditButton />
       <CloneButton />
     </Datagrid>

@@ -68,18 +68,21 @@ class Edit extends React.Component {
       control: CONTROL_DRAW,
       position: CONTROLS_TOP_LEFT,
       onDrawUpdate: this.updateGeometry,
+      controls: {
+        combine_features: false,
+        uncombine_features: false,
+      },
     };
     if (action === ACTION_UPDATE) {
       if (!feature) return;
       control = {
         ...control,
         controls: {
+          ...control.controls,
           line_string: false,
           polygon: false,
           point: false,
           trash: false,
-          combine_features: false,
-          uncombine_features: false,
         },
       };
       const layers = `terralego-${paramLayer}`;

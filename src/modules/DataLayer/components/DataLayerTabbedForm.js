@@ -161,7 +161,6 @@ const DataLayerTabbedForm = props => (
                               { id: '', name: 'datalayer.form.type.range_format.number' },
                               { id: 'date', name: 'datalayer.form.type.range_format.date' },
                             ]}
-                            validate={defaultRequired}
                           />
                         )}
                       </>

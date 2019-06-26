@@ -4,7 +4,7 @@ const mockedCustomStyle = {
     {
       id: 'terralego',
       type: 'vector',
-      url: '/api/layer/reference/tilejson',
+      url: '/api/layer/Référence/tilejson',
     },
   ],
   layers: [

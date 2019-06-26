@@ -4,6 +4,8 @@ import classnames from 'classnames';
 import { withNamespaces } from 'react-i18next';
 
 import Header from './Header';
+import CellRender from './CellRender';
+import './styles.scss';
 
 class DataTable extends React.Component {
   state = {
@@ -72,8 +74,9 @@ class DataTable extends React.Component {
   }
 
   render () {
-    const { source, t, tableSize } = this.props;
+    const { source, t, tableSize, featuresList = [], layer: { name } } = this.props;
     const { data, columns, loading } = this.state;
+
     return (
       <div
         className={classnames(
@@ -99,6 +102,13 @@ class DataTable extends React.Component {
                 sortDesc: t('rando.table.sortDesc'),
               }}
               loading={loading}
+              renderCell={props => (
+                <CellRender
+                  featuresList={featuresList}
+                  layer={name}
+                  {...props}
+                />
+              )}
             />
           )
           : (

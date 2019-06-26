@@ -265,10 +265,6 @@
       "description": "Description",
       "style": "Style",
       "layer-style": "Style de la couche",
-      "legend": {
-        "display": "Afficher la légende",
-        "template": "Modèle de la légende"
-      },
       "interactions": "Interactions",
       "allow-display-data-table": " Permettre l'affichage du tableau de données",
       "allow-export-data": " Permettre l'export des données",
@@ -305,6 +301,12 @@
         "fetch": {
           "label": "Proposer toutes les valeurs disponibles en base de données pour le filtrage"
         }
+      },
+      "legends": "Afficher une ou plusieurs légendes",
+      "legend": {
+        "title": "Titre de la légende",
+        "template": "Contenu mis en page de la légende (optionnel)",
+        "items": "Items de la légende (Optionnel)"
       }
     }
   },

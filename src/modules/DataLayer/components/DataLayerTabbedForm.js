@@ -11,6 +11,7 @@ import {
   FormDataConsumer,
   REDUX_FORM_NAME,
 } from 'react-admin';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
 
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
@@ -18,6 +19,7 @@ import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceFetcher from './SourceFetcher';
 import SourceSelector from './SourceSelector';
 import StyleField from './StyleField';
+import JSONInput from '../../../components/react-admin/JSONInput';
 
 import { fetchDatalayerConfig } from '../services/datalayer';
 import { required } from '../../../utils/react-admin/validate';
@@ -59,7 +61,15 @@ const DataLayerTabbedForm = props => (
         <StyleField source="layer_style" label="datalayer.form.layer-style" fullWidth />
 
         <BooleanInput source="legend_enable" label="datalayer.form.legend.display" />
-        <LongTextInput source="legend_template" label="datalayer.form.legend.template" />
+
+        <ArrayInput source="legends" label="datalayer.form.legends">
+          <CustomFormIterator>
+            <LongTextInput source="title" label="datalayer.form.legend.title" />
+            <LongTextInput source="content" label="datalayer.form.legend.template" />
+            <JSONInput source="items" label="datalayer.form.legend.items" defaultValue={[]} />
+          </CustomFormIterator>
+        </ArrayInput>
+
       </FormTab>
 
       <FormTab label="datalayer.form.interactions">

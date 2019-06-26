@@ -205,10 +205,10 @@ class Edit extends React.Component {
       : (title || t('rando.details.noFeature'));
     const button = action === ACTION_CREATE ? mainTitle : t('rando.details.save');
     const actionsButtons = {
-      layer: paramLayer,
+      paramLayer,
       displayCancel: true,
       displayDelete: true,
-      ...action === ACTION_UPDATE ? { id: paramId } : {},
+      ...action === ACTION_UPDATE ? { paramId } : {},
     };
     return (
       <div className="details ">

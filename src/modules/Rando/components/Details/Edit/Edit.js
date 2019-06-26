@@ -7,6 +7,7 @@ import { ACTION_CREATE, ACTION_UPDATE } from '../../../views/Map/Map';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';
+import mockedCustomStyle from '../../../views/Map/mockedCustomStyle';
 
 class Edit extends React.Component {
   state = {
@@ -43,12 +44,17 @@ class Edit extends React.Component {
   componentWillUnmount () {
     const {
       map,
-      paramLayer,
       updateControls,
     } = this.props;
     // Remove controlDraw from controls
     updateControls([]);
-    map.setFilter(`terralego-${paramLayer}`, ['all']);
+    map.setFilter(this.layerId, ['all']);
+  }
+
+  get layerId () {
+    const { paramLayer } = this.props;
+    const { id } = mockedCustomStyle.layers.find(layer => layer['source-layer'] === paramLayer);
+    return id;
   }
 
   updateSchema = schema => {
@@ -58,7 +64,6 @@ class Edit extends React.Component {
   initDraw = () => {
     const {
       map,
-      paramLayer,
       paramId,
       feature,
       updateControls,
@@ -82,15 +87,15 @@ class Edit extends React.Component {
           uncombine_features: false,
         },
       };
-      const layers = `terralego-${paramLayer}`;
-      const { [paramId]: { geom } } = feature;
+      const { [paramId]: { geom } = {} } = feature;
       const listener = ({ control: addedControl }) => {
         if (addedControl !== control.control) return;
         map.draw.add(geom);
         map.off('control_added', listener);
       };
       map.on('control_added', listener);
-      map.setFilter(layers, ['!=', '_id', paramId]);
+
+      map.setFilter(this.layerId, ['!=', '_id', paramId]);
     } else {
       control = {
         ...control,

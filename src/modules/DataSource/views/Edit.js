@@ -6,9 +6,7 @@ import {
   withDataProvider,
 } from 'react-admin';
 
-import DataSourceTabbedForm from '../components/DataSourceTabbedForm';
-import DataSourceReadOnlyForm from '../components/DataSourceReadOnlyForm';
-import { sourceTypes } from '../DataSource';
+import DataSourceFormSelector from '../components/DataSourceFormSelector';
 
 const DataSourceEditActions = withDataProvider(({ dataProvider, data: { id } = {} }) => (
   <CardActions>
@@ -21,21 +19,13 @@ const DataSourceEditActions = withDataProvider(({ dataProvider, data: { id } = {
   </CardActions>
 ));
 
-const FormSelector = props => {
-  const { record: { _type: type } } = props;
-  const isEditable = Object.keys(sourceTypes).includes(type);
-  return isEditable
-    ? <DataSourceTabbedForm {...props} />
-    : <DataSourceReadOnlyForm {...props} />
-};
-
 export const DataSourceEdit = props => (
   <Edit
     undoable={false}
     actions={<DataSourceEditActions {...props} />}
     {...props}
   >
-    <FormSelector />
+    <DataSourceFormSelector />
   </Edit>
 );
 

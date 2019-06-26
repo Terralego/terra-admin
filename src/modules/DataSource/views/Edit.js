@@ -1,23 +1,8 @@
 import React from 'react';
-import {
-  Edit,
-  CardActions,
-  RefreshButton,
-  withDataProvider,
-} from 'react-admin';
+import { Edit } from 'react-admin';
 
 import DataSourceFormSelector from '../components/DataSourceFormSelector';
-
-const DataSourceEditActions = withDataProvider(({ dataProvider, data: { id } = {} }) => (
-  <CardActions>
-    <RefreshButton
-      color="primary"
-      variant="raised"
-      label="datasource.edit.refresh"
-      onClick={() => dataProvider('REFRESH', 'geosource', { id })}
-    />
-  </CardActions>
-));
+import DataSourceEditActions from '../components/DataSourceEditActions';
 
 export const DataSourceEdit = props => (
   <Edit

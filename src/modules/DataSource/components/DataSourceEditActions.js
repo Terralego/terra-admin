@@ -5,8 +5,11 @@ import {
   withDataProvider,
 } from 'react-admin';
 
-const DataSourceEditActions = ({ dataProvider, data: { id } = {} }) => (
+import StatusChip from './StatusChip';
+
+const DataSourceEditActions = ({ dataProvider, data: { id, status } = {} }) => (
   <CardActions>
+    <StatusChip status={status} />
     <RefreshButton
       color="primary"
       variant="raised"

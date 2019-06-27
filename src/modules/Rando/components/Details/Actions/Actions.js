@@ -1,31 +1,36 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Icon, Button, Popover, H5, PopoverInteractionKind, Classes } from '@blueprintjs/core';
-import { withNamespaces } from 'react-i18next';
-import { withRouter } from 'react-router';
 
-import { connectRandoProvider } from '../../services/RandoProvider';
-import { generateURI } from '../../config';
-import { toast } from '../../../../utils/toast';
+import { generateURI } from '../../../config';
+import { toast } from '../../../../../utils/toast';
 
 class Actions extends React.Component {
   deleteFeature = () => {
-    const { layer, id, deleteFeature, history: { push }, t } = this.props;
-    deleteFeature(layer, id);
+    const {
+      paramLayer,
+      paramId,
+      layer: { id: layerId },
+      deleteFeature,
+      history: { push },
+      t,
+    } = this.props;
+
+    deleteFeature(layerId, paramId);
     toast.displayToaster(
-      { id },
+      { id: paramId },
       t('rando.details.successDeleteFeature'),
       t('rando.details.failDeleteFeature'),
     );
-    push(generateURI('layer', { layer }));
+    push(generateURI('layer', { layer: paramLayer }));
   }
 
   render () {
-    const { layer, id, displayUpdate, displayDelete, displayCancel, t } = this.props;
+    const { paramLayer, paramId, displayUpdate, displayDelete, displayCancel, t } = this.props;
     return (
       <div className="details__actions">
         {displayUpdate && (
-        <NavLink to={generateURI('layer', { layer, id, action: 'update' })}>
+        <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId, action: 'update' })}>
           <span className="bp3-button">
             <Icon icon="edit" />
             <span className="bp3-button-text">{t('rando.details.update')}</span>
@@ -33,7 +38,7 @@ class Actions extends React.Component {
         </NavLink>
         )}
         {displayCancel && (
-          <NavLink to={generateURI('layer', { layer, id })}>
+          <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId })}>
             <span className="bp3-button">
               <Icon icon="undo" />
               <span className="bp3-button-text">{t('rando.details.cancel')}</span>
@@ -71,6 +76,4 @@ class Actions extends React.Component {
   }
 }
 
-export default withRouter(connectRandoProvider(
-  'deleteFeature',
-)(withNamespaces()(Actions)));
+export default Actions;

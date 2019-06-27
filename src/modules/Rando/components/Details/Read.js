@@ -33,7 +33,7 @@ const Read = ({
           ))}
         </ul>
       </div>
-      <Actions id={id} layer={layer} displayUpdate displayDelete />
+      <Actions paramId={id} paramLayer={layer} displayUpdate displayDelete />
     </div>
   );
 };

@@ -103,8 +103,10 @@ export class Map extends React.Component {
     const coordinates = featuresList.map(feature => feature.geom.coordinates);
     const bounds = getBounds(coordinates);
     if (map) {
-      map.resize();
-      map.fitBounds(bounds, { padding: 20 });
+      setTimeout(() => {
+        map.resize();
+        map.fitBounds(bounds, { padding: 20 });
+      }, 600);
     }
   }
 
@@ -144,7 +146,10 @@ export class Map extends React.Component {
   onTableSizeChange = tableSize => {
     const { resizingMap } = this.props;
     this.setState({ tableSize });
-    resizingMap();
+    if (tableSize !== 'full') {
+      resizingMap();
+      this.setFitBounds();
+    }
   }
 
   generateLayersToMap () {

@@ -2,7 +2,9 @@ import React from 'react';
 import {
   SelectInput,
   ReferenceInput,
+  FormDataConsumer,
 } from 'react-admin';
+import get from 'lodash.get';
 
 import StyleField from './StyleField';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
@@ -18,12 +20,19 @@ export const CustomLayer = ({ resource, source }) => (
     >
       <SelectInput />
     </ReferenceInput>
-    <StyleField
-      source={`${source}.style`}
-      withSource={`${source}.source`}
-      label="datalayer.form.styles.label.style"
-      fullWidth
-    />
+    <FormDataConsumer>
+      {({ formData }) => (get(formData, `${source}.source`)
+        ? (
+          <StyleField
+            source={`${source}.style`}
+            withSource={`${source}.source`}
+            label="datalayer.form.styles.label.style"
+            fullWidth
+          />
+        )
+        : <React.Fragment />
+      )}
+    </FormDataConsumer>
   </FieldGroup>
 );
 

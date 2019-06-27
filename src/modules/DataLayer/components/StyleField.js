@@ -6,6 +6,19 @@ import get from 'lodash.get';
 
 import { JSONInput } from '../../../components/react-admin/JSONInput';
 
+const getType = geomtype => {
+  switch (geomtype) {
+    case 0:
+    case 4:
+      return 'circle';
+    case 1:
+    case 5:
+      return 'line';
+    default:
+      return 'fill';
+  }
+};
+
 const randomColor = seed => {
   const magicNumber = parseInt(seed.replace(/[^abcdef]/g, '1'), 16) * 100000000;
   const hexa = magicNumber.toString(16);
@@ -13,19 +26,26 @@ const randomColor = seed => {
   return `#${hexa.substr(0, 6)}`;
 };
 
-const DEFAULT_VALUE = seed => ({
-  type: 'fill',
+const DEFAULT_VALUE = (seed, type = 'fill') => ({
+  type,
   paint: {
-    'fill-color': randomColor(seed),
+    [`${type}-color`]: randomColor(seed),
   },
 });
 
-const WithColorSeed = connect(state => ({
-  colorSeed: get(state, 'form.record-form.values.name') || 'noname',
-}))(({ component: Component, colorSeed, ...props }) => (
+const WithColorSeed = connect((state, { withSource = '' }) => {
+  const source = get(state, `form.record-form.values.${withSource}`);
+  const type = source &&
+    getType(get(state, `admin.resources.geosource.data.${source}.geom_type`));
+
+  return {
+    colorSeed: get(state, 'form.record-form.values.name') || 'noname',
+    type,
+  };
+})(({ component: Component, colorSeed, type, ...props }) => (
   <Component
     {...props}
-    defaultValue={DEFAULT_VALUE(colorSeed)}
+    defaultValue={DEFAULT_VALUE(colorSeed, type)}
   />
 ));
 

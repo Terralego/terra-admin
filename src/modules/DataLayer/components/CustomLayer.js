@@ -20,6 +20,7 @@ export const CustomLayer = ({ resource, source }) => (
     </ReferenceInput>
     <StyleField
       source={`${source}.style`}
+      withSource={`${source}.source`}
       label="datalayer.form.styles.label.style"
       fullWidth
     />

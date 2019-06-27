@@ -23,12 +23,15 @@ class Edit extends React.Component {
       schema,
       paramId,
       feature: { [paramId]: { geom = {} } = {} } = {},
+      action,
     } = this.props;
     this.setState({
       schema,
       geom,
     });
-    this.initDraw();
+    if (action !== ACTION_UPDATE || Object.keys(geom).length) {
+      this.initDraw();
+    }
   }
 
   componentDidUpdate ({ schema: prevSchema, feature: prevFeature }) {

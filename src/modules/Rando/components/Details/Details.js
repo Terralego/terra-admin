@@ -37,7 +37,6 @@ class Details extends React.Component {
         properties: prevProperties,
       } = {},
     } = {},
-    layer: prevLayer,
   }) {
     const {
       paramId,
@@ -46,7 +45,6 @@ class Details extends React.Component {
       feature,
       feature: { [paramId]: { geom: { coordinates = [] } = {}, properties } = {} } = {},
       map,
-      layer,
       detailsHasLoaded,
     } = this.props;
 
@@ -54,7 +52,7 @@ class Details extends React.Component {
       detailsHasLoaded();
     }
 
-    if (prevParamlayer !== paramLayer || prevParamId !== paramId || prevLayer !== layer) {
+    if (prevParamlayer !== paramLayer || prevParamId !== paramId) {
       this.getData();
     }
 

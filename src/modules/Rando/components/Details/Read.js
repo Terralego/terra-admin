@@ -7,6 +7,9 @@ import Actions from './Actions';
 
 const NO_FEATURE = 'rando.details.noFeature';
 
+// eslint-disable-next-line react/no-array-index-key
+const formattedProp = value => value.split('\n').map((item, i) => (<React.Fragment key={i}>{item} <br /></React.Fragment>));
+
 const Read = ({
   t,
   match: { params: { layer, id } },
@@ -27,7 +30,7 @@ const Read = ({
             <li key={prop} className="details__list-item">
               <strong className="details__list-label">{properties[prop].title || prop}</strong>
               <span className={classnames('details__list-value', { 'details__list-value--empty': !properties[prop].default })}>
-                {properties[prop].default || t(NO_FEATURE)}
+                {formattedProp(properties[prop].default || t(NO_FEATURE))}
               </span>
             </li>
           ))}

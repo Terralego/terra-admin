@@ -43,6 +43,30 @@ const mockedInteraction = {
     }, {
       id: 'terralego-composantes',
       interaction: 'viewFeature',
+    }, {
+      id: 'terralego-tourism-location',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-tourism-content',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-tourism-services',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-tourism-observations',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-culture-mediation',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-culture-event',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-culture-awareness',
+      interaction: 'viewFeature',
+    }, {
+      id: 'terralego-culture-participation',
+      interaction: 'viewFeature',
     },
   ],
 };

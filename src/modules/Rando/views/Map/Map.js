@@ -185,13 +185,6 @@ export class Map extends React.Component {
           : (
             <>
               <div className="rando-map__map">
-                <InteractiveMap
-                  onMapLoaded={this.resetMap}
-                  {...mapConfig}
-                  customStyle={customStyle}
-                  interactions={interactions}
-                  controls={controls}
-                />
                 {map && (
                   <DetailsWrapper>
                     {isDetailsVisible && (
@@ -201,6 +194,13 @@ export class Map extends React.Component {
                     )}
                   </DetailsWrapper>
                 )}
+                <InteractiveMap
+                  onMapLoaded={this.resetMap}
+                  {...mapConfig}
+                  customStyle={customStyle}
+                  interactions={interactions}
+                  controls={controls}
+                />
               </div>
               {map && (
                 <div

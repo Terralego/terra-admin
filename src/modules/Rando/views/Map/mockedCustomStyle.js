@@ -26,7 +26,7 @@ const mockedCustomStyle = {
         'line-color': 'lightblue',
         'line-width': 3,
       },
-      'source-layer': 'chemins',
+      'source-layer': 'Chemins',
     },
     {
       id: 'terralego-biens',

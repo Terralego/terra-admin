@@ -7,8 +7,16 @@ import Actions from './Actions';
 
 const NO_FEATURE = 'rando.details.noFeature';
 
-// eslint-disable-next-line react/no-array-index-key
-const formattedProp = value => value.split('\n').map((item, i) => (<React.Fragment key={i}>{item} <br /></React.Fragment>));
+const formattedProp = value => {
+  if (typeof value === 'string') {
+    // eslint-disable-next-line react/no-array-index-key
+    return value.split('\n').map((item, i) => (<React.Fragment key={i}>{item} <br /></React.Fragment>));
+  }
+  if (Array.isArray(value)) {
+    return value.join(', ');
+  }
+  return value;
+};
 
 const Read = ({
   t,

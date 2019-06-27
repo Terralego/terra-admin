@@ -18,8 +18,9 @@ import CustomFormIterator from '../../../components/react-admin/CustomFormIterat
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceFetcher from './SourceFetcher';
 import SourceSelector from './SourceSelector';
-import StyleField from './StyleField';
 import JSONInput from '../../../components/react-admin/JSONInput';
+import CustomLayer from './CustomLayer';
+import StyleField from './StyleField';
 
 import { fetchDatalayerConfig } from '../services/datalayer';
 import { required } from '../../../utils/react-admin/validate';
@@ -57,8 +58,17 @@ const DataLayerTabbedForm = props => (
       </FormTab>
 
       <FormTab label="datalayer.form.style">
+        <StyleField
+          source="layer_style"
+          label="datalayer.form.styles.label.style"
+          fullWidth
+        />
 
-        <StyleField source="layer_style" label="datalayer.form.layer-style" fullWidth />
+        <ArrayInput source="custom_styles" label="datalayer.form.styles.label">
+          <CustomFormIterator>
+            <CustomLayer />
+          </CustomFormIterator>
+        </ArrayInput>
 
         <BooleanInput source="legend_enable" label="datalayer.form.legend.display" />
 

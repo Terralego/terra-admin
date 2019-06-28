@@ -33,7 +33,7 @@ export default withLocale(DataSource);
 
 export const GEOJSON = 'GeoJSONSource';
 export const SQL = 'PostGISSource';
-export const WMTS = 'WMTSource';
+export const WMTS = 'WMTSSource';
 
 const typesToChoices = types => Object.entries(types)
   .map(([id, name]) => ({ id, name }));

@@ -26,29 +26,22 @@ class Actions extends React.Component {
   }
 
   render () {
-    const { paramLayer, paramId, displayUpdate, displayDelete, displayCancel, t } = this.props;
+    const {
+      paramLayer,
+      paramId,
+      displayUpdate,
+      displayDelete,
+      displayCancel,
+      children,
+      t,
+    } = this.props;
     return (
       <div className="details__actions">
-        {displayUpdate && (
-        <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId, action: 'update' })}>
-          <span className="bp3-button">
-            <Icon icon="edit" />
-            <span className="bp3-button-text">{t('rando.details.update')}</span>
-          </span>
-        </NavLink>
-        )}
-        {displayCancel && (
-          <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId })}>
-            <span className="bp3-button">
-              <Icon icon="undo" />
-              <span className="bp3-button-text">{t('rando.details.cancel')}</span>
-            </span>
-          </NavLink>
-        )}
         {displayDelete && (
           <Popover
             popoverClassName={Classes.POPOVER_CONTENT_SIZING}
             interactionKind={PopoverInteractionKind.CLICK}
+            className="details__actions-delete"
             content={(
               <div className="details__confirm">
                 <H5>{t('rando.details.confirmDeletion')}</H5>
@@ -70,6 +63,25 @@ class Actions extends React.Component {
           >
             <Button icon="trash" intent="danger" text={t('rando.details.delete')} />
           </Popover>
+        )}
+        {displayUpdate && (
+          <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId, action: 'update' })}>
+            <span className="bp3-button bp3-intent-primary">
+              <Icon icon="edit" />
+              <span className="bp3-button-text">{t('rando.details.update')}</span>
+            </span>
+          </NavLink>
+        )}
+        {displayCancel && (
+          <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId })}>
+            <span className="bp3-button">
+              <Icon icon="undo" />
+              <span className="bp3-button-text">{t('rando.details.cancel')}</span>
+            </span>
+          </NavLink>
+        )}
+        {!!children && (
+          <>{children}</>
         )}
       </div>
     );

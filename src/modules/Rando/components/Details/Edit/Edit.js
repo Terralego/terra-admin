@@ -209,13 +209,25 @@ class Edit extends React.Component {
     const mainTitle = action === ACTION_CREATE
       ? t('rando.details.create', { layer: paramLayer })
       : (title || t('rando.details.noFeature'));
-    const button = action === ACTION_CREATE ? mainTitle : t('rando.details.save');
+
+    const SaveButton = props => (
+      <Button
+        intent="primary"
+        className="details__actions-save"
+        loading={loading}
+        {...props}
+      >
+        {action === ACTION_CREATE ? mainTitle : t('rando.details.save')}
+      </Button>
+    );
+
     const actionsButtons = {
       paramLayer,
       displayCancel: true,
-      displayDelete: true,
+      displayDelete: action === ACTION_UPDATE,
       ...action === ACTION_UPDATE ? { paramId } : {},
     };
+
     return (
       <div className="details ">
         <div className="details__header">
@@ -230,28 +242,18 @@ class Edit extends React.Component {
                 onSubmit={this.submitFeature}
                 onChange={this.changeForm}
               >
-                <Button
-                  intent="primary"
-                  loading={loading}
-                  type="submit"
-                >
-                  {button}
-                </Button>
+                <Actions {...actionsButtons}>
+                  <SaveButton type="submit" />
+                </Actions>
               </Form>
             )
             : (
-              <Button
-                intent="primary"
-                loading={loading}
-                type="button"
-                onClick={() => this.submitFeature({})}
-              >
-                {button}
-              </Button>
+              <Actions {...actionsButtons}>
+                <SaveButton onClick={() => this.submitFeature({})} />
+              </Actions>
             )
-        }
+          }
         </div>
-        <Actions {...actionsButtons} />
       </div>
     );
   }

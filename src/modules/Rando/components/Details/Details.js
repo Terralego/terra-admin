@@ -17,6 +17,8 @@ class Details extends React.Component {
     schema: {},
   }
 
+  detailContent = React.createRef();
+
   componentDidMount () {
     const { paramId, detailsHasLoaded } = this.props;
     this.getData();
@@ -67,7 +69,8 @@ class Details extends React.Component {
     if (prevCoordinates.join() !== coordinates.join() || prevParamId !== paramId) {
       if (!coordinates.length) return;
       const bounds = getBounds(coordinates);
-      map.fitBounds(bounds, { padding: 20 });
+      const right = (this.detailContent.current.offsetWidth || 0) + 20;
+      map.fitBounds(bounds, { padding: { top: 20, right, bottom: 20, left: 20 } });
     }
   }
 
@@ -163,7 +166,7 @@ class Details extends React.Component {
             </span>
           </NavLink>
         </div>
-        <div className="rando-details__content">
+        <div ref={this.detailContent} className="rando-details__content">
           {!feature && paramId !== ACTION_CREATE ? (
             <Loading spinner />
           ) : (

@@ -13,6 +13,7 @@ import DataSourceFileField from '../components/DataSourceFileField';
 import DbFields from '../components/DbFields';
 import {
   SQL,
+  GEOJSON,
   sourceTypeChoices,
 } from '../DataSource';
 
@@ -35,10 +36,14 @@ export const DataSourceCreate = ({ translate: t, ...props }) => (
 
       <DataSourceHelp />
 
-      <DataSourceFileField />
+      <FormDataConsumer>
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === GEOJSON && <DataSourceFileField {...rest} />}
+      </FormDataConsumer>
 
       <FormDataConsumer>
-        {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === SQL && <DbFields {...rest} />}
       </FormDataConsumer>
 
       <TextInput

@@ -17,7 +17,11 @@ import DataSourceFileField from './DataSourceFileField';
 import FieldSample from '../../../components/react-admin/FieldSample';
 import AttributeMessage from './AttributeMessage';
 import DbFields from './DbFields';
-import { SQL, fieldTypeChoices } from '../DataSource';
+import {
+  SQL,
+  GEOJSON,
+  fieldTypeChoices,
+} from '../DataSource';
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => (
   <TabbedForm {...props}>
@@ -25,10 +29,14 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
 
       <DataSourceMainFields />
 
-      <DataSourceFileField />
+      <FormDataConsumer>
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === GEOJSON && <DataSourceFileField {...rest} />}
+      </FormDataConsumer>
 
       <FormDataConsumer>
-        {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === SQL && <DbFields {...rest} />}
       </FormDataConsumer>
 
       <TextInput

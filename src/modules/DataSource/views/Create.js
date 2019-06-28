@@ -45,15 +45,6 @@ export const DataSourceCreate = ({ translate: t, ...props }) => (
         {({ formData: { _type: type } = {}, ...rest }) =>
           type === SQL && <DbFields {...rest} />}
       </FormDataConsumer>
-
-      <TextInput
-        type="text"
-        source="id_field"
-        label="datasource.form.uid-field"
-        validate={defaultRequired}
-        helperText={t('datasource.form.uid-field-help')}
-        fullWidth
-      />
     </SimpleForm>
   </Create>
 );

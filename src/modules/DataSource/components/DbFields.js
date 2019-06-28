@@ -4,12 +4,13 @@ import {
   LongTextInput,
   SelectInput,
   translate,
+  required,
 } from 'react-admin';
 
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 
-const DbFields = ({ translate: t }) => (
-  <FieldGroup>
+const DbFields = ({ translate: t, ...props }) => (
+  <FieldGroup {...props}>
     <TextInput source="db_host" type="text" label="datasource.form.request.host-server" />
     <TextInput source="db_port" type="number" label="datasource.form.request.host-port" />
     <TextInput source="db_name" type="text" label="datasource.form.request.database-name" />
@@ -38,6 +39,15 @@ const DbFields = ({ translate: t }) => (
         { id: (60 * 24 * 7), name: 'datasource.form.request.refresh.weekly' },
         { id: (60 * 24 * 30), name: 'datasource.form.request.refresh.monthly' },
       ]}
+    />
+
+    <TextInput
+      type="text"
+      source="id_field"
+      label="datasource.form.uid-field"
+      validate={required()}
+      helperText={t('datasource.form.uid-field-help')}
+      fullWidth
     />
   </FieldGroup>
 );

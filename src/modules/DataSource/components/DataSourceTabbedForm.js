@@ -38,14 +38,6 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
         {({ formData: { _type: type } = {}, ...rest }) =>
           type === SQL && <DbFields {...rest} />}
       </FormDataConsumer>
-
-      <TextInput
-        source="id_field"
-        type="text"
-        label="datasource.form.uid-field"
-        helperText={t('datasource.form.uid-field-help')}
-        fullWidth
-      />
     </FormTab>
 
     {/* Fields */}

@@ -12,7 +12,7 @@ const WMTSFields = ({ translate: t, ...props }) => (
   <FieldGroup {...props}>
     <NumberInput source="minzoom" label="datasource.form.min-zoom" step={1} />
     <NumberInput source="maxzoom" label="datasource.form.max-zoom" step={1} />
-    <NumberInput source="tile_size" label="datasource.form.tile-size" step={1} />
+    <NumberInput source="tile_size" label="datasource.form.tile-size" defaultValue={256} step={1} validate={required()} />
     <TextInput source="url" type="text" label="datasource.form.wmts-url" validate={required()} />
   </FieldGroup>
 );

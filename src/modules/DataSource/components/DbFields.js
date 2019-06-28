@@ -7,10 +7,20 @@ import {
   required,
 } from 'react-admin';
 
+import { geomTypeChoices } from '../DataSource';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 
 const DbFields = ({ translate: t, ...props }) => (
   <FieldGroup {...props}>
+    <SelectInput
+      source="geom_type"
+      label="datasource.form.geometry"
+      validate={[required()]}
+      choices={geomTypeChoices}
+      format={v => `${v}`}
+      parse={v => +v}
+    />
+
     <TextInput source="db_host" type="text" label="datasource.form.request.host-server" />
     <TextInput source="db_port" type="number" label="datasource.form.request.host-port" />
     <TextInput source="db_name" type="text" label="datasource.form.request.database-name" />

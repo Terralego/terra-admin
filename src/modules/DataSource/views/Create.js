@@ -4,7 +4,6 @@ import {
   SimpleForm,
   RadioButtonGroupInput,
   FormDataConsumer,
-  TextInput,
   translate,
 } from 'react-admin';
 
@@ -32,7 +31,7 @@ export const DataSourceCreate = ({ translate: t, ...props }) => (
 
       <RadioButtonGroupInput
         source="_type"
-        label="datasource.form.type"
+        label="datasource.form.data-type"
         validate={defaultRequired}
         choices={sourceTypeChoices}
       />

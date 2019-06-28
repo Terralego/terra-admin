@@ -14,12 +14,14 @@ import {
 
 import DataSourceMainFields from './DataSourceMainFields';
 import DataSourceFileField from './DataSourceFileField';
+import DataSourceWMTSField from './DataSourceWMTSField';
 import FieldSample from '../../../components/react-admin/FieldSample';
 import AttributeMessage from './AttributeMessage';
 import DbFields from './DbFields';
 import {
   SQL,
   GEOJSON,
+  WMTS,
   fieldTypeChoices,
 } from '../DataSource';
 
@@ -28,6 +30,11 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
     <FormTab label="datasource.form.definition">
 
       <DataSourceMainFields />
+
+      <FormDataConsumer>
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === WMTS && <DataSourceWMTSField {...rest} />}
+      </FormDataConsumer>
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>

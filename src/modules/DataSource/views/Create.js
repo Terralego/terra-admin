@@ -11,9 +11,12 @@ import {
 import DataSourceMainFields from '../components/DataSourceMainFields';
 import DataSourceFileField from '../components/DataSourceFileField';
 import DbFields from '../components/DbFields';
+import DataSourceWMTSField from '../components/DataSourceWMTSField';
+
 import {
   SQL,
   GEOJSON,
+  WMTS,
   sourceTypeChoices,
 } from '../DataSource';
 
@@ -35,6 +38,11 @@ export const DataSourceCreate = ({ translate: t, ...props }) => (
       />
 
       <DataSourceHelp />
+
+      <FormDataConsumer>
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === WMTS && <DataSourceWMTSField {...rest} />}
+      </FormDataConsumer>
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>

@@ -13,11 +13,11 @@ import {
 } from 'react-admin';
 
 import DataSourceMainFields from './DataSourceMainFields';
-import DataSourceFileField from './DataSourceFileField';
+import DataSourceFileFields from './DataSourceFileFields';
 import DataSourceWMTSField from './DataSourceWMTSField';
 import FieldSample from '../../../components/react-admin/FieldSample';
 import AttributeMessage from './AttributeMessage';
-import DbFields from './DbFields';
+import DataSourceDbFields from './DataSourceDbFields';
 import {
   SQL,
   GEOJSON,
@@ -38,12 +38,12 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          type === GEOJSON && <DataSourceFileField {...rest} />}
+          type === GEOJSON && <DataSourceFileFields {...rest} />}
       </FormDataConsumer>
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          type === SQL && <DbFields {...rest} />}
+          type === SQL && <DataSourceDbFields {...rest} />}
       </FormDataConsumer>
     </FormTab>
 

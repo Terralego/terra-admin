@@ -8,8 +8,8 @@ import {
 } from 'react-admin';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
-import DataSourceFileField from '../components/DataSourceFileField';
-import DbFields from '../components/DbFields';
+import DataSourceFileFields from '../components/DataSourceFileFields';
+import DataSourceDbFields from '../components/DataSourceDbFields';
 import DataSourceWMTSField from '../components/DataSourceWMTSField';
 
 import {
@@ -45,12 +45,12 @@ export const DataSourceCreate = ({ translate: t, ...props }) => (
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          type === GEOJSON && <DataSourceFileField {...rest} />}
+          type === GEOJSON && <DataSourceFileFields {...rest} />}
       </FormDataConsumer>
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          type === SQL && <DbFields {...rest} />}
+          type === SQL && <DataSourceDbFields {...rest} />}
       </FormDataConsumer>
     </SimpleForm>
   </Create>

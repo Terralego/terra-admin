@@ -10,7 +10,7 @@ import {
 import { geomTypeChoices } from '../DataSource';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 
-const DbFields = ({ translate: t, ...props }) => (
+const DataSourceDbFields = ({ translate: t, ...props }) => (
   <FieldGroup {...props}>
     <SelectInput
       source="geom_type"
@@ -62,4 +62,4 @@ const DbFields = ({ translate: t, ...props }) => (
   </FieldGroup>
 );
 
-export default translate(DbFields);
+export default translate(DataSourceDbFields);

@@ -8,6 +8,15 @@ import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';
 import mockedCustomStyle from '../../../views/Map/mockedCustomStyle';
+import {
+  ALL,
+  POINT,
+  LINESTRING,
+  POLYGON,
+  MULTI_POINT,
+  MULTI_LINESTRING,
+  MULTI_POLYGON,
+} from '../../../../../utils/geom';
 
 class Edit extends React.Component {
   state = {
@@ -71,28 +80,26 @@ class Edit extends React.Component {
       feature,
       updateControls,
       action,
+      layer: { geom_type: geomType },
     } = this.props;
-    let control = {
+
+    const control = {
       control: CONTROL_DRAW,
       position: CONTROLS_TOP_LEFT,
       onDrawUpdate: this.updateGeometry,
+      onDrawCreate: this.updateGeometry,
+      onDrawDelete: this.updateGeometry,
       controls: {
+        point:  [ALL, POINT, MULTI_POINT].includes(geomType),
+        line_string: [ALL, LINESTRING, MULTI_LINESTRING].includes(geomType),
+        polygon:  [ALL, POLYGON, MULTI_POLYGON].includes(geomType),
+        trash: true,
         combine_features: false,
         uncombine_features: false,
       },
     };
     if (action === ACTION_UPDATE) {
       if (!feature) return;
-      control = {
-        ...control,
-        controls: {
-          ...control.controls,
-          line_string: false,
-          polygon: false,
-          point: false,
-          trash: false,
-        },
-      };
       const { [paramId]: { geom } = {} } = feature;
       const listener = ({ control: addedControl }) => {
         if (addedControl !== control.control) return;
@@ -102,28 +109,26 @@ class Edit extends React.Component {
       map.on('control_added', listener);
 
       map.setFilter(this.layerId, ['!=', '_id', paramId]);
-    } else {
-      control = {
-        ...control,
-        onDrawCreate: this.updateGeometry,
-        onDrawDelete: this.updateGeometry,
-      };
     }
     updateControls([control]);
   }
 
   updateGeometry = ({ type, features: [{ geometry: geom, id }], target: map }) => {
-    const { action } = this.props;
+    const {
+      action,
+      layer: { geom_type: geomType },
+    } = this.props;
     if (action === ACTION_CREATE) {
       const isDeleted = type === 'draw.delete';
       this.setState({
+        geom: {},
         geomTouched: !isDeleted,
       });
       if (isDeleted) {
         return;
       }
       const { features } = map.draw.getAll();
-      if (features.length > 1) {
+      if (features.length > 1 && [POINT, LINESTRING, POLYGON].includes(geomType)) {
         map.draw.delete(
           features.reduce((list, feature) =>
             (feature.id !== id ? [...list, feature.id] : list),

@@ -60,6 +60,7 @@ const DataLayerTabbedForm = props => (
       <FormTab label="datalayer.form.style">
         <StyleField
           source="layer_style"
+          withSource="source"
           label="datalayer.form.styles.label.style"
           fullWidth
         />

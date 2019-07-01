@@ -14,4 +14,5 @@ export default connectRandoProvider(
   'mapIsResizing',
   'getFeaturesList',
   'featuresList',
+  'feature',
 )(withRouter(withNamespaces()(Map)));

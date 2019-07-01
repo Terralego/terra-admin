@@ -3,7 +3,6 @@ import { NavLink, Redirect } from 'react-router-dom';
 import { Icon, Button } from '@blueprintjs/core';
 
 import { ACTION_CREATE, ACTION_UPDATE } from '../../views/Map/Map';
-import { getBounds } from '../../services/features';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
@@ -35,7 +34,6 @@ class Details extends React.Component {
     feature: prevFeature,
     feature: {
       [prevParamId]: {
-        geom: { coordinates: prevCoordinates = [] } = {},
         properties: prevProperties,
       } = {},
     } = {},
@@ -45,8 +43,7 @@ class Details extends React.Component {
       paramLayer,
       paramAction,
       feature,
-      feature: { [paramId]: { geom: { coordinates = [] } = {}, properties } = {} } = {},
-      map,
+      feature: { [paramId]: { properties } = {} } = {},
       detailsHasLoaded,
     } = this.props;
 
@@ -64,13 +61,6 @@ class Details extends React.Component {
       || prevParamAction !== paramAction
     ) {
       this.setSchema();
-    }
-
-    if (prevCoordinates.join() !== coordinates.join() || prevParamId !== paramId) {
-      if (!coordinates.length) return;
-      const bounds = getBounds(coordinates);
-      const right = (this.detailContent.current.offsetWidth || 0) + 20;
-      map.fitBounds(bounds, { padding: { top: 20, right, bottom: 20, left: 20 } });
     }
   }
 

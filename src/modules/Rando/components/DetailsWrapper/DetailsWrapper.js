@@ -15,11 +15,14 @@ class DetailsWrapper extends React.Component {
   }
 
   render () {
-    const { children } = this.props;
+    const { children, detailsRef } = this.props;
     const { childrenHasLoaded, full } = this.state;
 
+
     return (
-      <div className={
+      <div
+        ref={detailsRef}
+        className={
         classnames(
           'rando-details',
           { 'rando-details--visible': children && childrenHasLoaded },

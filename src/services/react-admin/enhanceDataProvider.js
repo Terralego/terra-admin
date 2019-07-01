@@ -1,5 +1,5 @@
 import Api from '@terralego/core/modules/Api';
-import WMTS from '../../modules/DataSource/DataSource';
+import { WMTS } from '../../modules/DataSource/DataSource';
 
 const enhanceDataProvider = mainDataProvider => async (...args) => {
   const [type, resource, params] = args;

@@ -18,8 +18,8 @@ const sanitizeRestProps = ({
 
 
 export const JSONInput = addField(({ input, meta, source, defaultValue, ...props }) => {
-  const initialValue = input.value || defaultValue || {}; // TODO not working with empty string ...
-  const [value] = React.useState(initialValue);
+  // eslint-disable-next-line prefer-const
+  let value = input.value || defaultValue || {}; // TODO not working with empty string ...
 
   const handleChange = newValue => {
     // TODO We may add a debounce here to speed up process
@@ -30,7 +30,7 @@ export const JSONInput = addField(({ input, meta, source, defaultValue, ...props
   return (
     <Labeled label={source} {...props}>
       <>
-        <pre style={{ display: 'none' }}>debug: {JSON.stringify(input.value, null, 2)}</pre>
+        <pre style={{ display: 'none' }}>debug input.value: {JSON.stringify(input.value, null, 2)}</pre>
         <Editor
           value={value}
           ace={ace}

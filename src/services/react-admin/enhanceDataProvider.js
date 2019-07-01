@@ -1,4 +1,5 @@
 import Api from '@terralego/core/modules/Api';
+import WMTS from '../../modules/DataSource/DataSource';
 
 const enhanceDataProvider = mainDataProvider => async (...args) => {
   const [type, resource, params] = args;
@@ -6,6 +7,13 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
   // Manage custom query type
   if (type === 'REFRESH') {
     return Api.request(`${resource}/${params.id}/refresh/`);
+  }
+
+  if (type === 'CREATE' && resource === 'geosource') {
+    const { _type: sourceType } = params.data;
+    if (sourceType === WMTS) {
+      params.data.geom_type = 7;
+    }
   }
 
   // Manage file upload

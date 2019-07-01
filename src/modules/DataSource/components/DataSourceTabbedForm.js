@@ -13,11 +13,17 @@ import {
 } from 'react-admin';
 
 import DataSourceMainFields from './DataSourceMainFields';
-import DataSourceFileField from './DataSourceFileField';
+import DataSourceFileFields from './DataSourceFileFields';
+import DataSourceWMTSField from './DataSourceWMTSField';
 import FieldSample from '../../../components/react-admin/FieldSample';
 import AttributeMessage from './AttributeMessage';
-import DbFields from './DbFields';
-import { SQL, fieldTypeChoices } from '../DataSource';
+import DataSourceDbFields from './DataSourceDbFields';
+import {
+  SQL,
+  GEOJSON,
+  WMTS,
+  fieldTypeChoices,
+} from '../DataSource';
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => (
   <TabbedForm {...props}>
@@ -25,19 +31,20 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
 
       <DataSourceMainFields />
 
-      <DataSourceFileField />
-
       <FormDataConsumer>
-        {({ formData: { _type: type } = {}, ...rest }) => type === SQL && <DbFields {...rest} />}
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === WMTS && <DataSourceWMTSField {...rest} />}
       </FormDataConsumer>
 
-      <TextInput
-        source="id_field"
-        type="text"
-        label="datasource.form.uid-field"
-        helperText={t('datasource.form.uid-field-help')}
-        fullWidth
-      />
+      <FormDataConsumer>
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === GEOJSON && <DataSourceFileFields {...rest} />}
+      </FormDataConsumer>
+
+      <FormDataConsumer>
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === SQL && <DataSourceDbFields {...rest} />}
+      </FormDataConsumer>
     </FormTab>
 
     {/* Fields */}

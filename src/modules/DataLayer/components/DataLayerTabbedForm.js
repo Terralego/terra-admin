@@ -185,7 +185,7 @@ const DataLayerTabbedForm = props => (
                               source={getSource('filter_settings.format')}
                               label="datalayer.form.type.range_format.label"
                               choices={[
-                                { id: undefined, name: 'datalayer.form.type.range_format.number' },
+                                { id: 'number', name: 'datalayer.form.type.range_format.number' },
                                 { id: 'date', name: 'datalayer.form.type.range_format.date' },
                               ]}
                             />

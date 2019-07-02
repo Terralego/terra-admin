@@ -11,14 +11,22 @@ import ace from 'brace';
 import 'brace/mode/json';
 import 'brace/theme/github';
 
+
 const sanitizeRestProps = ({
   basePath, i18n, i18nOptions, id, index,
   lng, resource, source, tReady, ...rest
 }) => rest;
 
+const sanitizeObject = val => {
+  // To handle string values when unmounting component
+  if (typeof (val) !== 'object') {
+    return null;
+  }
+  return val;
+};
 
 export const JSONInput = addField((
-  { input, meta, source, defaultValue = {}, input: { value = defaultValue, onChange }, ...props },
+  { input, meta, source, defaultValue = {}, input: { value = defaultValue || {}, onChange }, ...props },
 ) => {
   const handleChange = newValue => {
     meta.touched = true;
@@ -29,7 +37,7 @@ export const JSONInput = addField((
     <Labeled label={source} {...props}>
       <>
         <Editor
-          value={value}
+          value={sanitizeObject(value)}
           ace={ace}
           theme="ace/theme/github"
           mode="code"
@@ -39,7 +47,7 @@ export const JSONInput = addField((
           onChange={val => handleChange(val)}
           {...sanitizeRestProps(props)}
         />
-        {meta.touched && meta.error && <p className="error">{meta.error}</p>}
+        {meta.error && <p className="error">{meta.error}</p>}
       </>
     </Labeled>
   );

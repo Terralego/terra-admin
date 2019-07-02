@@ -26,6 +26,20 @@ const getDefaultValue = (color, type) => ({
 const StyleField = withRandomColor(({ randomColor, sourceData: { geom_type: type = 'fill' }, ...props }) => (
   <JSONInput
     {...props}
+    validate={
+      value => {
+        if (!value) {
+          return 'empty value';
+        }
+        if (!value.type) {
+          return 'type not found';
+        }
+        if (!value.paint) {
+          return 'paint not found';
+        }
+        return null;
+      }
+    }
     defaultValue={getDefaultValue(randomColor, type)}
   />
 ));

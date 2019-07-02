@@ -65,17 +65,17 @@ const DataLayerTabbedForm = props => (
           fullWidth
         />
 
-        <ArrayInput source="custom_styles" label="datalayer.form.styles.label">
+        <ArrayInput source="custom_styles" label="datalayer.form.styles.label" fullWidth>
           <CustomFormIterator>
             <CustomLayer />
           </CustomFormIterator>
         </ArrayInput>
 
-        <ArrayInput source="legends" label="datalayer.form.legends">
+        <ArrayInput source="legends" label="datalayer.form.legends" fullWidth>
           <CustomFormIterator>
             <LongTextInput source="title" label="datalayer.form.legend.title" />
             <LongTextInput source="content" label="datalayer.form.legend.template" />
-            <JSONInput source="items" label="datalayer.form.legend.items" defaultValue={[]} />
+            <JSONInput source="items" label="datalayer.form.legend.items" defaultValue={[]} fullWidth />
           </CustomFormIterator>
         </ArrayInput>
 
@@ -108,38 +108,42 @@ const DataLayerTabbedForm = props => (
         </FormDataConsumer>
 
         <BooleanInput source="popup_enable" label="datalayer.form.popup.display-on-hover" />
-        <FormDataConsumer>
+        <FormDataConsumer fullWidth>
           {({ formData, dispatch, ...rest }) => formData.popup_enable && (
-            <FieldGroup>
+            <FieldGroup {...rest}>
               <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={10} step={1} />
               <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={15} step={1} />
-              <LongTextInput source="popup_template" label="datalayer.form.popup.template" {...rest} />
+              <LongTextInput source="popup_template" label="datalayer.form.popup.template" />
             </FieldGroup>
           )}
         </FormDataConsumer>
 
         <BooleanInput source="minisheet_enable" label="datalayer.form.minifiche.display-on-click" />
         <FormDataConsumer>
-          {({ formData, dispatch, ...rest }) => formData.minisheet_enable &&
-            <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" {...rest} />}
+          {({ formData }) => formData.minisheet_enable &&
+            <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" fullWidth />}
         </FormDataConsumer>
       </FormTab>
       <FormTab label="datalayer.form.fields-settings">
         <FormDataConsumer>
           {({ formData }) => (
-            <ArrayInput source="fields" label="datalayer.form.all-fields-available">
+            <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>
               <CustomFormIterator disableAdd disableRemove>
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (
-                    <LongTextInput source={getSource('label')} label={scopedFormData.name} />
+                    <LongTextInput source={getSource('label')} label={scopedFormData.name} fullWidth />
                   )}
                 </FormDataConsumer>
-                <BooleanInput source="filter_enable" label="datalayer.form.allow-filtering-field" />
+                <BooleanInput
+                  source="filter_enable"
+                  label="datalayer.form.allow-filtering-field"
+                  fullWidth
+                />
                 <FormDataConsumer>
                   {({
                     scopedFormData: {
                       filter_enable: filterEnable,
-                      filter_settings: { type: filterType, fetch: filterFetch } = {},
+                      filter_settings: { type: filterType, fetchValues: filterFetch } = {},
                     } = {},
                     getSource,
                   }) => {
@@ -162,25 +166,30 @@ const DataLayerTabbedForm = props => (
                             <BooleanInput
                               source={getSource('filter_settings.fetchValues')}
                               label="datalayer.form.type.fetch.label"
+                              fullWidth
                             />
                             {!filterFetch && (
                               <TextArrayInput
                                 source={getSource('filter_settings.values')}
                                 label={`datalayer.form.type.values${filterType === 'many' ? '' : '_optional'}`}
                                 validate={filterType === 'many' ? defaultRequired : undefined}
+                                fullWidth
                               />
                             )}
                           </FieldGroup>
                         )}
                         {filterType === 'range' && (
-                          <SelectInput
-                            source={getSource('filter_settings.format')}
-                            label="datalayer.form.type.range_format.label"
-                            choices={[
-                              { id: '', name: 'datalayer.form.type.range_format.number' },
-                              { id: 'date', name: 'datalayer.form.type.range_format.date' },
-                            ]}
-                          />
+                          <>
+                            {' '}
+                            <SelectInput
+                              source={getSource('filter_settings.format')}
+                              label="datalayer.form.type.range_format.label"
+                              choices={[
+                                { id: undefined, name: 'datalayer.form.type.range_format.number' },
+                                { id: 'date', name: 'datalayer.form.type.range_format.date' },
+                              ]}
+                            />
+                          </>
                         )}
                       </>
                     );

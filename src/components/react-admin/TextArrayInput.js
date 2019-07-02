@@ -13,11 +13,12 @@ const add = input => addedChip => {
   input.onChange([...values, ...newValues]);
 };
 
-export const TextArrayInput = ({ t, source, label }) => (
+export const TextArrayInput = ({ t, source, label, ...rest }) => (
   <Field
     name={source}
     component={({ input }) => (
       <ChipInput
+        {...rest}
         label={t(label)}
         value={input.value || []}
         onAdd={add(input)}

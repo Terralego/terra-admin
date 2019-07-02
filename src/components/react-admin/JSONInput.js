@@ -18,22 +18,21 @@ const sanitizeRestProps = ({
 }) => rest;
 
 const sanitizeObject = val => {
-  // To handle string values when unmounting component
+  // To handle bad string values when unmounting component
   if (typeof (val) !== 'object') {
     return null;
   }
   return val;
 };
 
-export const JSONInput = addField((
-  { input, meta, source, defaultValue = {}, input: { value = defaultValue || {}, onChange }, ...props },
-) => {
-  const handleChange = newValue => {
-    meta.touched = true;
-    return onChange(newValue);
-  };
-
-  return (
+export const JSONInput = addField(
+  ({
+    meta,
+    source,
+    defaultValue = {},
+    input: { value = defaultValue || {}, onChange },
+    ...props
+  }) => (
     <Labeled label={source} {...props}>
       <>
         <Editor
@@ -44,14 +43,13 @@ export const JSONInput = addField((
           allowedModes={['code', 'tree']}
           navigationBar={false}
           search={false}
-          onChange={val => handleChange(val)}
+          onChange={val => onChange(val)}
           {...sanitizeRestProps(props)}
         />
         {meta.error && <p className="error">{meta.error}</p>}
       </>
     </Labeled>
-  );
-});
-
+  ),
+);
 
 export default JSONInput;

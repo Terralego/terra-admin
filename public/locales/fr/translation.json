@@ -147,7 +147,8 @@
       "columnsHide": "Cacher toutes les colonnes",
       "showTable": "Montrer le tableau attributaire",
       "hideTable": "Cacher le tableau attributaire",
-      "noFeature": "Aucun objet à afficher pour cette couche."
+      "noFeature": "Aucun objet à afficher pour cette couche.",
+      "readOrUpdateMessage": "<0>Voir</0> ou <2>Modifier</2> cet objet."
     },
     "layer": {
       "errorNoLayer": "La couche recherchée n'existe pas"
@@ -156,7 +157,6 @@
       "create": "Ajouter {{layer}}",
       "update": "Modifier",
       "delete": "Supprimer",
-      "cancel": "Annuler",
       "noFeature": "Non renseigné",
       "informations": "Informations",
       "save": "Sauvegarder",

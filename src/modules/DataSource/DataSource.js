@@ -8,6 +8,15 @@ import { withLocale } from '../../components/Locale';
 import providers from '../../services/react-admin/providers';
 import RALayout from '../../components/react-admin/Layout';
 import dataSourceViews from './views';
+import {
+  POINT,
+  LINESTRING,
+  POLYGON,
+  MULTI_POINT,
+  MULTI_LINESTRING,
+  MULTI_POLYGON,
+  GEOMETRY_COLLECTION,
+} from '../../utils/geom';
 
 import './styles.scss';
 
@@ -46,14 +55,14 @@ export const sourceTypes = {
 export const sourceTypeChoices = typesToChoices(sourceTypes);
 
 export const geomTypes = {
-  0: 'Point',
-  1: 'LineString',
+  [POINT]: 'Point',
+  [LINESTRING]: 'LineString',
   // 2: 'LinearRi',
-  3: 'Polygon',
-  4: 'MultiPoint',
-  5: 'MultiLineString',
-  6: 'MultiPolygon',
-  7: 'GeometryCollection',
+  [POLYGON]: 'Polygon',
+  [MULTI_POINT]: 'MultiPoint',
+  [MULTI_LINESTRING]: 'MultiLineString',
+  [MULTI_POLYGON]: 'MultiPolygon',
+  [GEOMETRY_COLLECTION]: 'GeometryCollection',
 };
 export const geomTypeChoices = typesToChoices(geomTypes);
 

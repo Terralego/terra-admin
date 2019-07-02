@@ -28,6 +28,8 @@ export class Map extends React.Component {
     tableSize: 'medium', // 'minified', 'medium', 'full'
   }
 
+  details = React.createRef();
+
   componentDidMount () {
     const { getMapConfig, match: { params: { layer } } } = this.props;
     getMapConfig();
@@ -50,7 +52,9 @@ export class Map extends React.Component {
       resizingMap,
       map,
       featuresList,
+      feature: { [id]: { geom: { coordinates = [] } = {} } = {} } = {},
     } = this.props;
+
     if (layersList !== prevLayersList) {
       this.generateLayersToMap();
     }
@@ -73,6 +77,8 @@ export class Map extends React.Component {
       && (prevId !== id || featuresList !== prevFeaturesList)
     ) {
       this.setFitBounds();
+    } else if (id && coordinates.length) {
+      this.setFitBounds(coordinates);
     }
   }
 
@@ -98,16 +104,29 @@ export class Map extends React.Component {
     });
   }
 
-  setFitBounds = () => {
-    const { featuresList, map } = this.props;
-    const coordinates = featuresList.map(feature => feature.geom.coordinates);
-    const bounds = getBounds(coordinates);
-    if (map) {
-      setTimeout(() => {
-        map.resize();
-        map.fitBounds(bounds, { padding: 20 });
-      }, 600);
-    }
+  setFitBounds = (coordinates = false) => {
+    const {
+      map,
+      featuresList,
+      match: { params: { id } },
+    } = this.props;
+    const coords = coordinates || featuresList.map(feature => feature.geom.coordinates);
+
+    if (!coords.length || !map) return;
+
+    const { current } = this.details;
+
+    const padding = {
+      top: 20,
+      right: (id && current) ? (current.offsetWidth + 20) : 20,
+      bottom: 20,
+      left: 20,
+    };
+
+    setTimeout(() => {
+      map.resize();
+      map.fitBounds(getBounds(coords), { padding });
+    }, 800);
   }
 
   getLayerFromList () {
@@ -191,7 +210,7 @@ export class Map extends React.Component {
             <>
               <div className="rando-map__map">
                 {map && (
-                  <DetailsWrapper>
+                  <DetailsWrapper detailsRef={this.details}>
                     {isDetailsVisible && (
                       <Details
                         updateControls={this.updateControls}

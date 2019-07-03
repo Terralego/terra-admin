@@ -18,7 +18,7 @@ import CustomFormIterator from '../../../components/react-admin/CustomFormIterat
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceFetcher from './SourceFetcher';
 import SourceSelector from './SourceSelector';
-import JSONInput from '../../../components/react-admin/JSONInput';
+import LegendItemsField from './LegendItemsField';
 import CustomLayer from './CustomLayer';
 import StyleField from './StyleField';
 
@@ -75,7 +75,11 @@ const DataLayerTabbedForm = props => (
           <CustomFormIterator>
             <LongTextInput source="title" label="datalayer.form.legend.title" />
             <LongTextInput source="content" label="datalayer.form.legend.template" />
-            <JSONInput source="items" label="datalayer.form.legend.items" defaultValue={[]} fullWidth />
+            <LegendItemsField
+              source="items"
+              label="datalayer.form.legend.items"
+              withSource="source"
+            />
           </CustomFormIterator>
         </ArrayInput>
 

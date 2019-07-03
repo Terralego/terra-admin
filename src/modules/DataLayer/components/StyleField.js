@@ -1,10 +1,8 @@
 import React from 'react';
 import { addField } from 'react-admin';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { connect } from 'react-redux';
-import get from 'lodash.get';
 
 import { JSONInput } from '../../../components/react-admin/JSONInput';
+import withRandomColor from './withRandomColor';
 
 const getType = geomtype => {
   switch (geomtype) {
@@ -19,33 +17,17 @@ const getType = geomtype => {
   }
 };
 
-const randomColor = seed => {
-  const magicNumber = parseInt(seed.replace(/[^abcdef]/g, '1'), 16) * 100000000;
-  const hexa = magicNumber.toString(16);
-
-  return `#${hexa.substr(0, 6)}`;
-};
-
-const DEFAULT_VALUE = (seed, type = 'fill') => ({
-  type,
+const getDefaultValue = (color, type) => ({
+  type: getType(type),
   paint: {
-    [`${type}-color`]: randomColor(seed),
+    [`${getType(type)}-color`]: color,
   },
 });
 
-const WithColorSeed = connect((state, { withSource = '' }) => {
-  const source = get(state, `form.record-form.values.${withSource}`);
-  const type = source &&
-    getType(get(state, `admin.resources.geosource.data.${source}.geom_type`));
-
-  return {
-    colorSeed: get(state, 'form.record-form.values.name') || 'noname',
-    type,
-  };
-})(({ component: Component, colorSeed, type, ...props }) => (
-  <Component
+const StyleField = withRandomColor(({ randomColor, sourceData: { geom_type: type = 'fill' }, ...props }) => (
+  <JSONInput
     {...props}
-    defaultValue={DEFAULT_VALUE(colorSeed, type)}
+    defaultValue={getDefaultValue(randomColor, type)}
   />
 ));
 
@@ -57,12 +39,7 @@ const parse = value => {
   }
 };
 
-export default addField(props => (
-  <WithColorSeed
-    {...props}
-    component={JSONInput}
-  />
-), {
+export default addField(StyleField, {
   parse,
   validate: value => {
     if (!value || typeof value !== 'object') {

@@ -29,10 +29,8 @@ export class RandoProvider extends React.Component {
 
   getMapConfig = async () => {
     try {
-      const mapConfig = await fetchMapConfig();
-      this.setState({ mapConfig: {
-        ...mapConfig.results,
-      } });
+      const { results: mapConfig = {} } = await fetchMapConfig();
+      this.setState({ mapConfig });
     } catch (e) {
       this.setState(state => ({
         ...state,
@@ -43,8 +41,8 @@ export class RandoProvider extends React.Component {
 
   getAllLayersAction = async () => {
     try {
-      const allLayers = await fetchAllLayers();
-      this.setState({ layersList: allLayers });
+      const { results: layersList = [] } = await fetchAllLayers();
+      this.setState({ layersList });
     } catch (e) {
       this.setState(state => ({
         ...state,
@@ -55,7 +53,7 @@ export class RandoProvider extends React.Component {
 
   getFeaturesList = async layerId => {
     try {
-      const featuresList = await fetchFeaturesList(layerId);
+      const { results: featuresList = [] } = await fetchFeaturesList(layerId);
       this.setState({ featuresList });
     } catch (e) {
       this.setState(state => ({
@@ -67,7 +65,7 @@ export class RandoProvider extends React.Component {
 
   fetchFeature = async (layerId, featureId) => {
     try {
-      const feature = await fetchFeatureAction(layerId, featureId);
+      const { results: feature = [] } = await fetchFeatureAction(layerId, featureId);
       this.setState(state => ({
         feature: {
           ...state.feature,

@@ -148,6 +148,7 @@
       "showTable": "Montrer le tableau attributaire",
       "hideTable": "Cacher le tableau attributaire",
       "noFeature": "Aucun objet à afficher pour cette couche.",
+      "readMessage": "<0>Voir</0> cet objet.",
       "readOrUpdateMessage": "<0>Voir</0> ou <2>Modifier</2> cet objet."
     },
     "layer": {
@@ -170,7 +171,8 @@
       "successUpdateFeature": "L'objet a été mis à jour avec succès",
       "failUpdateFeature": "L'objet n'a pas été mis à jour",
       "successDeleteFeature": "L'objet a été supprimé avec succès",
-      "failUDeleteFeature": "L'objet n'a pas été supprimé"
+      "failUDeleteFeature": "L'objet n'a pas été supprimé",
+      "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource."
     }
   },
   "help": {

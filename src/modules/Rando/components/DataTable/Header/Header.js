@@ -14,16 +14,19 @@ const Header = ({
   columns,
   onChange,
   match: { params: { layer } },
+  displayAddFeature,
 }) => (
   <div className="table-header">
     <div className="table-header__title">
       {t('rando.table.title', { source })}
-      <NavLink className="table-header__create" to={generateURI('layer', { layer, action: 'create' })}>
-        <span className="bp3-button">
-          <Icon icon="plus" />
-          <span className="bp3-button-text"> {t('rando.details.create')}</span>
-        </span>
-      </NavLink>
+      {displayAddFeature && (
+        <NavLink className="table-header__create" to={generateURI('layer', { layer, action: 'create' })}>
+          <span className="bp3-button">
+            <Icon icon="plus" />
+            <span className="bp3-button-text"> {t('rando.details.create')}</span>
+          </span>
+        </NavLink>
+      )}
     </div>
     <div>
       {!!columns.length && tableSize !== 'minified' && (

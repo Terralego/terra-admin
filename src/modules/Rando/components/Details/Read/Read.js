@@ -1,9 +1,10 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import classnames from 'classnames';
-import { withNamespaces } from 'react-i18next';
 
-import Actions from './Actions';
+import { toast } from '../../../../../utils/toast';
+import { generateURI } from '../../../config';
+import Actions from '../Actions';
 
 const NO_FEATURE = 'rando.details.noFeature';
 
@@ -22,7 +23,13 @@ const Read = ({
   t,
   match: { params: { layer, id } },
   schema: { properties = {} },
+  displayViewFeature,
 }) => {
+  if (!displayViewFeature) {
+    toast.displayError(t('rando.details.noAccess'));
+    return (<Redirect to={generateURI('layer', { layer })} />);
+  }
+
   const { name: { default: title } = {} } = properties;
   const hasProperties = !!Object.keys(properties).length;
 
@@ -50,4 +57,4 @@ const Read = ({
     </div>
   );
 };
-export default withRouter(withNamespaces()(Read));
+export default Read;

@@ -8,6 +8,7 @@ import {
   SelectInput,
   NumberInput,
   ArrayInput,
+  ReferenceInput,
   FormDataConsumer,
   REDUX_FORM_NAME,
 } from 'react-admin';
@@ -17,7 +18,6 @@ import { change } from 'redux-form';
 import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 import SourceFetcher from './SourceFetcher';
-import SourceSelector from './SourceSelector';
 import LegendItemsField from './LegendItemsField';
 import CustomLayer from './CustomLayer';
 import StyleField from './StyleField';
@@ -35,7 +35,15 @@ const DataLayerTabbedForm = props => (
     <SourceFetcher />
     <TabbedForm {...props}>
       <FormTab label="datalayer.form.definition">
-        <SourceSelector validate={defaultRequired} />
+        <ReferenceInput
+          source="source"
+          reference="geosource"
+          label="datalayer.form.data-source"
+          sort={{ field: 'name', order: 'ASC' }}
+          validate={defaultRequired}
+        >
+          <SelectInput />
+        </ReferenceInput>
 
         <SelectInput
           source="view"

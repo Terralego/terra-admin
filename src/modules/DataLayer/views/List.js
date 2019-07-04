@@ -8,10 +8,15 @@ import {
   // SelectInput,
   // Filter,
   ReferenceField,
+  FunctionField,
   Pagination,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
+
+import { fetchDatalayerConfig } from '../services/datalayer';
+
+const views = fetchDatalayerConfig();
 
 // const ListFilters = props => (
 //   <Filter {...props}>
@@ -25,6 +30,11 @@ import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkA
 
 const DataLayerListPagination = props =>
   <Pagination rowsPerPageOptions={[]} {...props} />;
+
+const renderViewField = ({ view }) => {
+  const { name = view } = views.find(({ id }) => (+id === view)) || {};
+  return name;
+};
 
 export const DataLayerList = props => (
   <List
@@ -41,7 +51,7 @@ export const DataLayerList = props => (
   >
     <Datagrid rowClick="edit">
       <TextField source="name" label="datalayer.form.name" />
-      <TextField source="view" label="datalayer.form.view" />
+      <FunctionField source="view" render={renderViewField} />
       <ReferenceField source="source" reference="geosource" label="datalayer.form.data-source" linkType={false}>
         <TextField source="name" />
       </ReferenceField>

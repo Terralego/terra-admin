@@ -1,11 +1,11 @@
 import React from 'react';
 import { Edit } from 'react-admin';
 
-import DataLayerTabbedForm from '../components/DataLayerTabbedForm';
+import DataLayerFormSelector from '../components/DataLayerFormSelector';
 
 export const DataLayerEdit = props => (
   <Edit undoable={false} {...props}>
-    <DataLayerTabbedForm />
+    <DataLayerFormSelector />
   </Edit>
 );
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Create } from 'react-admin';
 
-import DataLayerTabbedForm from '../components/DataLayerTabbedForm';
+import DataLayerFormSelector from '../components/DataLayerFormSelector';
 
 export const DataLayerCreate = props => (
   <Create {...props}>
-    <DataLayerTabbedForm />
+    <DataLayerFormSelector />
   </Create>
 );
 

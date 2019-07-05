@@ -83,10 +83,10 @@ export class Map extends React.Component {
   }
 
   setInteractions = () => {
-    const { history: { push } } = this.props;
+    const { history: { push }, displayViewFeature } = this.props;
     const { interactions = [] } = mockedInteraction;
     const newInteractions = interactions.map(interaction => {
-      if (interaction.interaction === INTERACTION_VIEW_FEATURE) {
+      if (interaction.interaction === INTERACTION_VIEW_FEATURE && displayViewFeature) {
         return {
           ...interaction,
           interaction: INTERACTION_FN,

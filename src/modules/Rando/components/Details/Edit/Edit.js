@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from 'react-jsonschema-form';
+import { Redirect } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
 import { CONTROL_DRAW, CONTROLS_TOP_LEFT } from '@terralego/core/modules/Map';
 
@@ -205,11 +206,24 @@ class Edit extends React.Component {
 
   render () {
     const { loading, schema, schema: { properties } } = this.state;
-    const { t,
+    const {
+      t,
       action,
       layer: { schema: { uischema = {} } = {} },
       paramLayer,
-      paramId } = this.props;
+      paramId,
+      displayAddFeature,
+      displayChangeFeature,
+    } = this.props;
+
+    if (
+      (action === ACTION_CREATE && !displayAddFeature)
+      || (action === ACTION_UPDATE && !displayChangeFeature)
+    ) {
+      toast.displayError(t('rando.details.noAccess'));
+      return (<Redirect to={generateURI('layer', { layer: paramLayer })} />);
+    }
+
     const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE
       ? t('rando.details.create', { layer: paramLayer })

@@ -1,18 +1,21 @@
+
 import { withRouter } from 'react-router';
 import { withNamespaces } from 'react-i18next';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
-import Header from './Header';
+import Read from './Read';
 
 export default connectAuthProvider(({
   user,
 }) => {
   const { permissions = [] } = user;
   return {
-    displayAddFeature: permissions.includes('terra.add_feature'),
+    displayViewFeature: permissions.includes('terra.view_feature'),
   };
 })(
-  withNamespaces()(
-    withRouter(Header),
+  withRouter(
+    withNamespaces()(
+      Read,
+    ),
   ),
 );

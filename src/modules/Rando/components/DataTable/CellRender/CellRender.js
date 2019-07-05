@@ -22,10 +22,12 @@ class CellRender extends React.Component {
       displayUpdateFeature,
     } = this.props;
 
-    if (contentCell === '' || !featuresList.length || !displayViewFeature) {
+    const { identifier: id } = featuresList[originalRowIndex] || {};
+
+    if (contentCell === '' || !featuresList.length || !displayViewFeature || !id) {
       return contentCell;
     }
-    const { identifier: id } = featuresList[originalRowIndex];
+
     return (
       <div className="table__cell-wrapper">
         <Popover

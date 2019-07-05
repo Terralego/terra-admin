@@ -6,9 +6,10 @@ import { connectRandoProvider } from '../../../services/RandoProvider';
 import Actions from './Actions';
 
 export default connectAuthProvider(({
+  authenticated,
   user,
 }, { displayUpdate, displayDelete }) => {
-  const { permissions = [] } = user;
+  const permissions = authenticated ? user.permissions : [];
   return {
     displayDelete: displayDelete && permissions.includes('terra.delete_feature'),
     displayUpdate: displayUpdate && permissions.includes('terra.change_feature'),

@@ -7,9 +7,10 @@ import { connectRandoProvider } from '../../services/RandoProvider';
 import Map from './Map';
 
 export default connectAuthProvider(({
+  authenticated,
   user,
 }) => {
-  const { permissions = [] } = user;
+  const permissions = authenticated ? user.permissions : [];
   return {
     displayViewFeature: permissions.includes('terra.view_feature'),
   };

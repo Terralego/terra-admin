@@ -10,7 +10,7 @@ import {
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { withNamespaces } from 'react-i18next';
 
-export const UserDropdown = ({ user, logoutAction, t }) => (
+export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => (
   <Popover
     content={(
       <Menu>
@@ -32,7 +32,7 @@ export const UserDropdown = ({ user, logoutAction, t }) => (
       className={Classes.MINIMAL}
       icon="user"
       rightIcon="caret-down"
-      text={user.email}
+      text={email}
     />
   </Popover>
 );

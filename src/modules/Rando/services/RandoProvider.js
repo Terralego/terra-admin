@@ -118,7 +118,12 @@ export class RandoProvider extends React.Component {
       const { feature, featuresList } = this.state;
       const deletion = await deleteFeatureAction(layerId, featureId);
       this.setState({
-        feature: feature.filter(feat => feat !== featureId),
+        feature: Object.keys(feature).reduce(
+          (list, id) => (
+            (id === featureId)
+              ? list
+              : { ...list, [id]: feature[id] }), {},
+        ),
         featuresList: featuresList.filter(({ identifier }) => identifier !== featureId),
       });
       return deletion;

@@ -65,7 +65,7 @@ export class RandoProvider extends React.Component {
 
   fetchFeature = async (layerId, featureId) => {
     try {
-      const { results: feature = [] } = await fetchFeatureAction(layerId, featureId);
+      const feature = await fetchFeatureAction(layerId, featureId);
       this.setState(state => ({
         feature: {
           ...state.feature,

@@ -83,26 +83,19 @@ export class RandoProvider extends React.Component {
   saveFeature = async (layerId, featureId, data) => {
     try {
       const feature = await saveFeatureAction(layerId, featureId, data);
+      const { featuresList } = this.state;
+      const featureAlreadyExists = featuresList.some(({ identifier }) =>
+        identifier === feature.identifier);
+
       this.setState(state => ({
         feature: {
           ...state.feature,
           [feature.identifier]: feature,
         },
+        featuresList: featureAlreadyExists
+          ? featuresList.map(item => (item.identifier === feature.identifier ? feature : item))
+          : [...featuresList, feature],
       }));
-      const { featuresList } = this.state;
-      const isFeatureAlreadyExist = featuresList.some(({ identifier }) =>
-        identifier === feature.identifier);
-
-      if (isFeatureAlreadyExist) {
-        this.setState({
-          featuresList: featuresList.map(item =>
-            (item.identifier === feature.identifier ? feature : item)),
-        });
-      } else {
-        this.setState({
-          featuresList: [...featuresList, feature],
-        });
-      }
       return feature;
     } catch (e) {
       this.setState(state => ({

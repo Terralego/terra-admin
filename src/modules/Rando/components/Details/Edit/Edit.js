@@ -189,6 +189,12 @@ class Edit extends React.Component {
 
     if (savedFeature !== null) {
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
+    } else {
+      this.setState({
+        loading: false,
+        formTouched: false,
+        geomTouched: false,
+      });
     }
 
     toast.displayToaster(
@@ -196,12 +202,6 @@ class Edit extends React.Component {
       t(isActionUpdate ? 'rando.details.successUpdateFeature' : 'rando.details.successCreateFeature'),
       t(isActionUpdate ? 'rando.details.failUpdateFeature' : 'rando.details.failCreateFeature'),
     );
-
-    this.setState({
-      loading: false,
-      formTouched: false,
-      geomTouched: false,
-    });
   }
 
   render () {

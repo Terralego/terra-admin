@@ -21,6 +21,26 @@
   "main": {
     "title": "Terralego"
   },
+  "auth": {
+    "loginform": {
+      "email": {
+        "invalid": "Email invalide",
+        "help": "Indiquez votre email",
+        "label": "Email",
+        "info": "requis",
+        "placeholder": "Email"
+      },
+      "password": {
+        "invalid": "Mot de passe invalide",
+        "help": "Tapez votre mot de passe",
+        "label": "Mot de passe",
+        "info": "requis",
+        "placeholder": "Mot de passe"
+      },
+      "submit": "Connexion",
+      "error_generic": "Informations d'identification invalides"
+    }
+  },
   "form": {
     "search": "Rechercher",
     "submit": "Envoyer",

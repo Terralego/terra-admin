@@ -23,25 +23,36 @@ const getDefaultValue = (color, type) => ({
   },
 });
 
-const StyleField = withRandomColor(({ randomColor, sourceData: { geom_type: type = 'fill' }, ...props }) => (
-  <JSONInput
-    {...props}
-    validate={
-      value => {
-        if (!value) {
-          return 'empty value';
-        }
-        if (!value.type) {
-          return 'type not found';
-        }
-        if (!value.paint) {
-          return 'paint not found';
-        }
-        return null;
-      }
-    }
-    defaultValue={getDefaultValue(randomColor, type)}
-  />
-));
+const validate = value => {
+  if (!value) {
+    return 'empty value';
+  }
+  if (!value.type) {
+    return 'type not found';
+  }
+  if (!value.paint) {
+    return 'paint not found';
+  }
+  return undefined;
+};
+
+const StyleField = withRandomColor(({
+  randomColor,
+  sourceData: { geom_type: type = 'fill' },
+  ...props
+}) => {
+  const [defaultValue, setDefaultValue] = React.useState({});
+  React.useEffect(() => {
+    setDefaultValue(getDefaultValue(randomColor, type));
+  }, [randomColor, type, getDefaultValue]);
+  return (
+    <JSONInput
+      {...props}
+      validate={validate}
+      defaultValue={defaultValue}
+    />
+  );
+});
+
 
 export default StyleField;

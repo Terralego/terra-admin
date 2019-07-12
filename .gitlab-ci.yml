@@ -1,108 +1,24 @@
-image: node:10.9.0 # Should match .nvmrc content
-
-stages:
-  - tests
-  - build
-  - deploy
-
-before_script:
-  - node --version
-  - npm --version
-  - ls -alh
-
-# Tests stage
-
-npm_test:
-  before_script:
-    - npm ci
+deploy_dev:
   tags: [shared-ci-docker]
-  stage: tests
-  script:
-    - npm run test
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
-
-npm_run_lint:
-  before_script:
-    - npm ci
-  tags: [shared-ci-docker]
-  stage: tests
-  script:
-    - npm run lint
-
-# Build stage
-
-npm_run_build:
-  before_script:
-    - npm ci
-  tags: [shared-ci-docker]
-  stage: build
-  script:
-    - npm run build
-  artifacts:
-    expire_in: 2 days
-    name: "build-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}"
-    paths:
-      - dist
-
-# Build admin
-
-build:
-  before_script:
-    - npm ci
-  tags: [shared-ci-docker]
-  stage: build
-  script:
-    - npm run build
-  artifacts:
-    expire_in: 3 days
-    paths:
-      - build/
-
-# Deploy admin
-
-.deploy: &deploy_base
-  tags: [shared-ci-docker]
+  image: ilyasemenov/gitlab-ci-git-push
   stage: deploy
-  dependencies:
-    - build
-  when: manual
+  environment:
+    name: dev
+    url: https://acir-front-dev.geo.paas.corp-cluster.com
   only:
     - master
   script:
-    - mkdir ./tmp
-    - mv ./build ./tmp/admin
-    - mv ./tmp/admin/_* ./tmp
-    - npx netlify-cli deploy --site=$SITE_NAME --auth=$NETLIFY_ACCESS_TOKEN  --dir=./tmp --prod
-
-deploy_dev:
-  <<: *deploy_base
-  environment:
-    name: dev
-    url: https://terra-admin-dev.netlify.com/admin
-  when: on_success
-  variables:
-    SITE_NAME: "terra-admin-dev.netlify.com"
-
-deploy_qa:
-  <<: *deploy_base
-  environment:
-    name: qa
-    url: https://terra-admin-qa.netlify.com/admin
-  variables:
-    SITE_NAME: "terra-admin-qa.netlify.com"
+    - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-dev
 
 deploy_staging:
-  <<: *deploy_base
+  tags: [shared-ci-docker]
+  image: ilyasemenov/gitlab-ci-git-push
+  stage: deploy
   environment:
     name: staging
-    url: https://terra-admin-staging.netlify.com/admin
-  variables:
-    SITE_NAME: "terra-admin-staging.netlify.com"
-
-deploy_prod:
-  <<: *deploy_base
-  environment:
-    name: prod
-    url: https://terra-admins.netlify.com/admin
-  variables:
-    SITE_NAME: "terra-admin.netlify.com"
+    url: https://acir-front-staging.geo.paas.corp-cluster.com
+  only:
+    - master
+  script:
+    - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-staging
+  when: manual

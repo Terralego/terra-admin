@@ -1,0 +1,28 @@
+.page--content {
+  margin-top: 3em;
+
+  .form-edit {
+    margin: 2em 0;
+  }
+
+  .picture-add{
+    margin: 2em 0;
+  }
+
+  .visu-edit {
+    margin: 2em 0;
+
+    .bp3-card {
+      width: 15%;
+      margin: 1%;
+
+      p {
+        margin: 0.5em 0;
+      }
+
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}

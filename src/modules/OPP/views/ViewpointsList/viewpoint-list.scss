@@ -1,0 +1,75 @@
+@import "../../variables.scss";
+
+.nav-layout__content {
+  display: flex;
+  flex-direction: row;
+
+  .page {
+    &--title,
+    &--content {
+      padding: 1%;
+    }
+  }
+}
+
+.viewpoint-list {
+  width: 100%;
+
+  .page--content {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: flex-start;
+    flex-wrap: wrap;
+
+    .bp3-card {
+      display: flex;
+      flex-direction: column;
+      margin: 4%;
+      padding: 0;
+      border-color: transparent;
+      box-shadow: none;
+
+      h3 {
+        max-width: 300px;
+        margin: 0.5em 0;
+      }
+
+      img {
+        align-self: center;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+.pagination {
+  width: 100%;
+  text-align: center;
+
+  li {
+    display: inline-flex;
+    padding: 0.2em 1em;
+
+    &.previous,
+    &.next {
+
+      &.disabled {
+        opacity: 0.2;
+
+        a {
+          cursor: not-allowed;
+          text-decoration: none;
+        }
+      }
+    }
+
+    &.active {
+      background-color: $grey-light;
+
+      a  {
+        font-weight: 600;
+      }
+    }
+  }
+}

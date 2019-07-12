@@ -7,10 +7,6 @@ deploy_dev:
     url: https://acir-front-dev.geo.paas.corp-cluster.com
   only:
     - master
-  before_script:
-    - git clone https://gitlab+deploy-token-4:YtnjZtNkAsEkC6ofVupZ@gitlab.makina-corpus.net/Terralego/Core/terra-admin.git
-    - cd terra-admin
-    - export CI_COMMIT_SHA=$(git rev-parse --verify HEAD)
   script:
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-dev
 
@@ -23,10 +19,6 @@ deploy_staging:
     url: https://acir-front-staging.geo.paas.corp-cluster.com
   only:
     - master
-  before_script:
-    - git clone https://gitlab+deploy-token-4:YtnjZtNkAsEkC6ofVupZ@gitlab.makina-corpus.net/Terralego/Core/terra-admin.git
-    - cd terra-admin
-    - export CI_COMMIT_SHA=$(git rev-parse --verify HEAD)
   script:
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-staging
   when: manual

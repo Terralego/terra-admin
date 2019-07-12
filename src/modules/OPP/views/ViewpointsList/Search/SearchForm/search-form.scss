@@ -1,0 +1,165 @@
+@import "../../../../variables.scss";
+
+.search-filters {
+  padding-top: 10px;
+}
+
+.search {
+
+  // Override Blueprintjs
+  .bp3-select-popover {
+    .bp3-menu {
+      max-width: 270px;
+      max-height: 300px;
+      overflow: auto;
+
+      &-item {
+        text-transform: lowercase;
+
+        > div::first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  // Override Blueprintjs
+  .bp3-form-group {
+    margin: 10px;
+    padding-top: 5px;
+
+    .bp3-popover-target {
+      width: 100%;
+
+      .bp3-input {
+        background-color: $input-grey-blue;
+        text-transform: capitalize;
+
+        .bp3-input-ghost {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  // Override TerraFront
+  .control-container {
+    margin: 10px;
+    padding: 5px 0 0 0;
+
+    .bp3-popover-target {
+      width: 100%;
+
+      button {
+        width: 100%;
+        text-align: left;
+        justify-content: space-between;
+        background-color: $input-grey-blue;
+        background-image: none;
+        color: #fff;
+        text-transform: lowercase;
+
+        > span::first-letter {
+          text-transform: uppercase;
+        }
+
+        &:hover {
+          text-decoration: none;
+          background-color: initial;
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 1px #137cbd, 0 0 0 3px rgba(19, 124, 189, 0.3), inset 0 1px 1px rgba(16, 22, 26, 0.2);
+        }
+      }
+    }
+  }
+
+  .date_range {
+    color: #000;
+
+    // Override Blueprintjs
+    .bp3-popover-target {
+      background-color: $main-color;
+      padding: 5px;
+      box-shadow: 0 0 3px rgba(255, 255, 255, .2) inset;
+
+      .bp3-control-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .bp3-input-group {
+        border-radius: 3px;
+        width: 80%;
+      }
+    }
+
+    .input-range {
+      display: flex;
+      color: #fff;
+
+      // Override Blueprintjs
+      .bp3-input {
+        color: #fff;
+      }
+
+      &:before {
+        content: "";
+        padding: 5px 10px 5px 5px;
+        line-height: 20px;
+      }
+    }
+
+    .input-range--start {
+      padding-bottom: 0.5em;
+
+      &:before {
+        content: "Du";
+      }
+    }
+
+    .input-range--end {
+      &:before {
+        content: "Au";
+      }
+    }
+  }
+
+  .action-search {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 10px;
+
+    > button {
+      background-color: $button-action;
+      background-image: none;
+      margin-left: 5px;
+      color: #fff;
+
+      &:hover {
+        text-decoration: none;
+        background-color: $main-color-hover;
+      }
+
+      &.bp3-disabled {
+        background-color: #30404d;
+      }
+    }
+  }
+
+}
+
+// Override blueprintjs
+.bp3-multi-select-popover {
+  .bp3-menu {
+    max-width: 270px;
+    max-height: 300px;
+    overflow: auto;
+
+    &-item {
+      text-transform: capitalize;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+@import "../../variables.scss";
+
+.oppm {
+  .nav-layout__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $main-color;
+
+    .navbar__mainMenu {
+
+      .active {
+        button {
+          background-color: $main-color-active;
+        }
+      }
+
+      button {
+        background-color: $main-color;
+        background-image: none;
+        margin-bottom: 10px;
+
+        &:hover {
+          text-decoration: none;
+          background-color: $main-color-hover;
+          color: #fff;
+        }
+      }
+
+      img {
+        width: 22px;
+        height: auto;
+      }
+    }
+
+    .navbar__logo {
+      .logo {
+        width: 50px;
+        margin: 10px;
+      }
+    }
+  }
+}

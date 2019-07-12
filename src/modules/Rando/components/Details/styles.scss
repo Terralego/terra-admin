@@ -1,0 +1,181 @@
+.rando-details {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  right:0.5rem;
+  width: 40%;
+  min-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 50px);
+  transform: translateX(calc(100% + 0.5rem));
+  transition: transform 0.2s ease-in;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  
+  &--visible {
+    transform: translateX(0);
+
+    & + .interactive-map {
+      .mapboxgl-ctrl-top-right {
+        right: 20.5rem;
+      }
+    }
+  }
+
+  &--full {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background: #fff;
+    border-left: 1px solid #efefef;
+  }
+  
+  &__actions {
+    text-align: right;
+  }
+
+  &__content {
+    display: flex;
+    overflow: auto;
+    margin: 0 0 1rem;
+    justify-content: center;
+  }
+}
+
+.details {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+
+  &__content {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    overflow: auto;
+    padding: 0 1rem;
+  }
+
+  &__list {
+    display: table;
+    flex: auto;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-collapse: collapse;
+    max-height: 100%;
+  }
+
+  &__list-item {
+    display: table-row;
+
+    &:nth-child(odd) {
+      background: #efefef;
+    }
+
+    > * {
+      display: table-cell;
+      padding: 0.3rem;
+      border: 1px solid #ccc;
+    }
+  }
+
+  &__list-value {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    
+    &--empty {
+      opacity: 0.6;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 1rem 0;
+    > * + * {
+      margin-left: 1rem;
+    }
+    &-delete {
+      margin-right: auto;
+    }
+  }
+
+  &__confirm-content {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    > button + button {
+      margin-left: 1rem;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0 -1rem;
+    > .form-group {
+      padding: 0 1rem;
+      overflow: auto;
+    }
+  }
+
+
+  // Below from bootstrap
+  fieldset {
+    // Browsers set a default `min-width: min-content;` on fieldsets,
+    // unlike e.g. `<div>`s, which have `min-width: 0;` by default.
+    // So we reset that to ensure fieldsets behave more like a standard block element.
+    // See https://github.com/twbs/bootstrap/issues/12359
+    // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements 
+    min-width: 0;
+    // Reset the default outline behavior of fieldsets so they don't affect page layout.
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .list-group {
+    margin-bottom: 1rem;
+  }
+}
+
+@media all and (min-width: 66em) {
+  .rando-details {
+    &--visible {
+      & + .interactive-map {
+        .mapboxgl-ctrl-top-right {
+          right: calc(40% + 0.5rem);
+        }
+      }
+    }
+  }
+}
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/list-group";
+@import "~bootstrap/scss/forms";

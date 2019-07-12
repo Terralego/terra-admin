@@ -1,0 +1,445 @@
+{
+  "common": {
+    "account": "Votre compte",
+    "add": "Ajouter",
+    "error": {
+      "title": "Un problème est survenu. ",
+      "text": "Retourner à la page d'accueil : ",
+      "link": "Accueil",
+      "title_404": "Erreur 404 : Page introuvable.",
+      "text_404": "Retourner à la page d'accueil : ",
+      "link_404": "Accueil"
+    },
+    "modules": "Modules",
+    "pagination": {
+      "previous": "Précedent",
+      "next": "Suivant"
+    },
+    "loading": "Chargement en cours…",
+    "logout": "Se déconnecter"
+  },
+  "main": {
+    "title": "Terralego"
+  },
+  "auth": {
+    "loginform": {
+      "email": {
+        "invalid": "Email invalide",
+        "help": "Indiquez votre email",
+        "label": "Email",
+        "info": "requis",
+        "placeholder": "Email"
+      },
+      "password": {
+        "invalid": "Mot de passe invalide",
+        "help": "Tapez votre mot de passe",
+        "label": "Mot de passe",
+        "info": "requis",
+        "placeholder": "Mot de passe"
+      },
+      "submit": "Connexion",
+      "error_generic": "Informations d'identification invalides"
+    }
+  },
+  "form": {
+    "search": "Rechercher",
+    "submit": "Envoyer",
+    "required": "(*)",
+    "reset": "Réinitialiser",
+    "error": "Erreur inconnue",
+    "error_required": "Ce champ {{name}} est requis.",
+    "error_required-picture": "Ce champ image est requis.",
+    "error_number": "Ce champ {{name}} doit être un nombre.",
+    "error_minmax": "Ce champ {{name}} doit avoir une valeur comprise entre {{min}} et {{max}}.",
+    "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à {{min}}.",
+    "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à {{min}}."
+  },
+  "date": {
+    "today": "Aujourd'hui",
+    "clear": "Effacer",
+    "error": {
+      "overlapping-date": "Date chevauchante",
+      "invalid-date": "Date invalide"
+    },
+    "range": {
+      "placeholder-start-date": "JJ/MM/AAAA",
+      "placeholder-end-date": "JJ/MM/AAAA"
+    }
+  },
+  "opp": {
+    "nav": {
+      "viewpoints": "Les points de vue",
+      "compaign": "Les campagnes"
+    },
+    "project": "Observatoire Photographique des Paysages",
+    "viewpoint": {
+      "edit": {
+        "add-picture": "$t(common.add) une picture",
+        "title": "Formulaire d'édition du point de vue",
+        "visualization-pictures": "Visualisation des images",
+        "show-map": "Afficher la carte",
+        "label": "$t(opp.form.label)",
+        "longitude": {
+          "label": "$t(opp.form.longitude.label)",
+          "placeholder": "$t(opp.form.longitude.placeholder)"
+        },
+        "latitude": {
+          "label": "$t(opp.form.latitude.label)",
+          "placeholder": "$t(opp.form.latitude.placeholder)"
+        },
+        "picture": "$t(opp.form.picture)",
+        "date": "$t(opp.form.date)",
+        "date-format": "$t(opp.form.date-format)"
+      },
+      "create": {
+        "title": "Formulaire de création d'un point de vue",
+        "label": "$t(opp.form.label)",
+        "longitude": {
+          "label": "$t(opp.form.longitude.label)",
+          "placeholder": "$t(opp.form.longitude.placeholder)"
+        },
+        "latitude": {
+          "label": "$t(opp.form.latitude.label)",
+          "placeholder": "$t(opp.form.latitude.placeholder)"
+        },
+        "picture": "$t(opp.form.picture)",
+        "date": "$t(opp.form.date)",
+        "date-format": "$t(opp.form.date-format)"
+      },
+      "filter": {
+        "simple-search": "Recherche Simple",
+        "advanced-search": "Recherche Avancée",
+        "no-result": "Aucun résultat",
+        "empty-selected-input": "Tous"
+      }
+    },
+    "viewpoints": {
+      "title": "Les points de vue"
+    },
+    "form": {
+      "label": "Libellé",
+      "longitude": {
+        "label": "Longitude",
+        "placeholder": "61.2018"
+      },
+      "latitude": {
+        "label": "Latitude",
+        "placeholder": "14.7786"
+      },
+      "picture": "Image",
+      "picture-id": "ID de la photographie",
+      "date": "Date",
+      "date-format": "JJ/MM/AAAA",
+      "municipalities": "Communes",
+      "themes": "Thèmes",
+      "keywords": "Mots clés",
+      "filters": "Filtres",
+      "typology": "Typologie des paysages",
+      "photographer": "Photographe",
+      "viewpoint-name": "Nom du point de vue",
+      "no-result": "Oups, il n'y a pas de résultats à votre recherche.",
+      "error": {
+        "server": "Le service est indisponible."
+      },
+      "success": {
+        "notification": "L'action s'est executée correctement.",
+        "notification_edit": "Le point de vue {{name, uppercase}} a été modifié.",
+        "notification_create": "Le point de vue {{name}} a été créé.",
+        "notification_add-picture": "Une image a été ajoutée au point de vue : {{name}}."
+      }
+    }
+  },
+  "rando": {
+    "project": "Randonnées",
+    "nav": {
+      "map": "Carte",
+      "foldMenu": "Replier le menu",
+      "unfoldMenu": "Déplier le menu"
+    },
+    "table": {
+      "title": "Liste de la couche : {{source}}",
+      "sortAsc": "Tri croissant",
+      "sortDesc": "Tri décroissant",
+      "filterProps": "Filtrer les propriétés",
+      "minimize": "Réduire",
+      "maximize": "Agrandir",
+      "columnsDisplay": "Afficher toutes les colonnes",
+      "columnsHide": "Cacher toutes les colonnes",
+      "showTable": "Montrer le tableau attributaire",
+      "hideTable": "Cacher le tableau attributaire",
+      "noFeature": "Aucun objet à afficher pour cette couche.",
+      "readMessage": "<0>Voir</0> cet objet.",
+      "readOrUpdateMessage": "<0>Voir</0> ou <2>Modifier</2> cet objet."
+    },
+    "layer": {
+      "errorNoLayer": "La couche recherchée n'existe pas"
+    },
+    "details": {
+      "create": "Ajouter {{layer}}",
+      "update": "Modifier",
+      "delete": "Supprimer",
+      "noFeature": "Non renseigné",
+      "informations": "Informations",
+      "save": "Sauvegarder",
+      "close": "Fermer",
+      "cancel": "Annuler",
+      "confirmDeletion": "Confirmer la suppression",
+      "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer cet objet ? Vous ne pourrez plus le récupérer.",
+      "errorNoFeature": "L'objet recherché n'existe pas",
+      "successCreateFeature": "L'objet a été enregistré avec succès",
+      "failCreateFeature": "L'objet n'a pas été enregistré",
+      "successUpdateFeature": "L'objet a été mis à jour avec succès",
+      "failUpdateFeature": "L'objet n'a pas été mis à jour",
+      "successDeleteFeature": "L'objet a été supprimé avec succès",
+      "failUDeleteFeature": "L'objet n'a pas été supprimé",
+      "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource."
+    }
+  },
+  "help": {
+    "block-heading": "Conseils :"
+  },
+  "user": {
+    "project": "Utilisateurs",
+    "nav": {
+      "list": "Tous les utilisateurs",
+      "create": "Créer un nouvel utilisateur"
+    },
+    "form": {
+      "id": "Id",
+      "email": "Email",
+      "uuid": "Uuid",
+      "superuser": "Superutilisateur",
+      "active": "Actif",
+      "permissions": "Permissions",
+      "additional-information": "Information supplémentaire",
+      "password": "Mot de passe"
+    },
+    "help": {
+      "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",
+      "is_superuser": "Le mode \"Superutilisateur\" donne  tous les droits d'administration",
+      "is_active": "Le mode \"Actif\" rend disponible le profil de l'utilisateur"
+    }
+  },
+  "datasource": {
+    "project": "Entrepôt de données",
+    "nav": {
+      "list": "Toutes les sources de données",
+      "create": "Ajouter une source de données"
+    },
+    "form": {
+      "read-only": "Cette source de données n'est pas modifiable.",
+      "help1": "Une fois le type de la donnée déterminé, il n'est pas possible de le changer",
+      "definition": "Définition",
+      "name": "Nom",
+      "data-type": "Type de données",
+      "geometry": "Type de géométrie",
+      "geom-field": "Champ contenant la géométrie",
+      "geom-field-help": "Indiquer le champ de la géométrie de la donnée(ex: geom, the_geom, geometry..).",
+      "uid-field": "Champ de l'identifiant unique",
+      "uid-field-help": "Indiquer le champs correspondant à l'identifiant unique de la donnée (ex: gid, id..).",
+      "use-by": "Utilisé par",
+      "data": "Données",
+      "label": "Libellé",
+      "fields": "Champs",
+      "description": "Description",
+      "file": {
+        "related-files": "Fichiers associés",
+        "placeholder": "Déposez votre fichier GeoJSON ici"
+      },
+      "request": {
+        "host-server": "Serveur hôte",
+        "host-port": "Port hôte",
+        "database-name": "Nom de la base de données",
+        "user-name": "Nom de l'utilisateur",
+        "user-password": "Mot de passe de l'utilisateur",
+        "query": "Requête",
+        "query-help": "Exemple de requete PostGis : SELECT * FROM tm2_espace_activite (ne pas rajouter de \";\")",
+        "refresh": {
+          "name": "Actualiser",
+          "never": "Jamais",
+          "hourly": "Toutes les heures",
+          "daily": "Quotidiennement",
+          "weekly": "Hebdomadaire",
+          "monthly": "Mensuel"
+        }
+      },
+      "include-field-tiles": "Inclure ce champ dans les tuiles vectorielles"
+    },
+    "edit": {
+      "refresh": "Actualiser les données",
+      "message": "Il est nécessaire d'inclure des champs dans les tuiles vectorielles pour qu'ils soient également disponibles dans les popups et les mini-fiches."
+    },
+    "status": "Statut"
+  },
+  "datalayer": {
+    "project": "Visualiseur",
+    "nav": {
+      "list": "Toutes les couches de données",
+      "create": "Ajouter une couche de données"
+    },
+    "form": {
+      "name": "Nom",
+      "data-source": "Source des données",
+      "definition": "Définition",
+      "fields-settings": "Configuration des champs",
+      "view": "Vue",
+      "ordering": "Classement",
+      "description": "Description",
+      "style": "Style",
+      "layer-style": "Style de la couche",
+      "interactions": "Interactions",
+      "allow-display-data-table": " Permettre l'affichage du tableau de données",
+      "allow-export-data": " Permettre l'export des données",
+      "all-data-available": " Toutes les données disponibles",
+      "all-fields-available": " Tous les champs disponibles",
+      "show": "Afficher dans le tableau",
+      "exportable": "Exportable",
+      "popup": {
+        "display-on-hover": "Afficher une fenêtre contextuelle",
+        "min-zoom": "Zoom minimum",
+        "max-zoom": "Zoom maximum",
+        "template": "Modèle de la fenêtre contextuelle"
+      },
+      "minifiche": {
+        "display-on-click": "Afficher la minifiche",
+        "template": "Modèle de la minifiche"
+      },
+      "filter": "Filtre",
+      "allow-filtering-field": "Permettre de filter par le champ",
+      "text": "Texte",
+      "data-sample": "Extrait des données",
+      "type": {
+        "label": "Type de filtrage",
+        "single": "Une seule valeur",
+        "many": "Plusieurs valeurs",
+        "range": "Une étendue de valeurs",
+        "values": "Proposer une liste définie de valeurs pour le filtrage",
+        "values_optional": "Proposer une liste définie de valeurs pour le filtrage (optionnel)",
+        "range_format": {
+          "label": "Format du filtre",
+          "number": "Numérique",
+          "date": "Dates"
+        },
+        "fetch": {
+          "label": "Proposer toutes les valeurs disponibles en base de données pour le filtrage"
+        }
+      },
+      "legends": "Afficher une ou plusieurs légendes",
+      "legend": {
+        "title": "Titre de la légende",
+        "template": "Contenu mis en page de la légende (optionnel)",
+        "items": "Items de la légende (Optionnel)"
+      }
+    }
+  },
+  "ra": {
+    "action": {
+      "add_filter": "Ajouter un filtre",
+      "add": "Ajouter",
+      "back": "Retour",
+      "bulk_actions": "%{smart_count} selectionné |||| %{smart_count} selectionnés",
+      "cancel": "Annuler",
+      "clear_input_value": "Vider le champ",
+      "clone": "Dupliquer",
+      "confirm": "Confirmer",
+      "create": "Créer",
+      "delete": "Supprimer",
+      "edit": "Éditer",
+      "export": "Exporter",
+      "list": "Liste",
+      "refresh": "Actualiser",
+      "remove_filter": "Supprimer ce filtre",
+      "remove": "Supprimer",
+      "save": "Enregistrer",
+      "search": "Rechercher",
+      "show": "Afficher",
+      "sort": "Trier",
+      "undo": "Annuler"
+    },
+    "boolean": {
+      "true": "Oui",
+      "false": "Non"
+    },
+    "page": {
+      "create": "Créer %{name}",
+      "dashboard": "Tableau de bord",
+      "edit": "%{name} #%{id}",
+      "error": "Un problème est survenu",
+      "list": "%{name}",
+      "loading": "Chargement",
+      "not_found": "Page manquante",
+      "show": "%{name} #%{id}"
+    },
+    "input": {
+      "file": {
+        "upload_several": "Déposez les fichiers à envoyer, ou cliquez pour en sélectionner.",
+        "upload_single": "Déposez le fichier à envoyer, ou cliquez pour le sélectionner."
+      },
+      "image": {
+        "upload_several": "Déposez les images à envoyer, ou cliquez pour en sélectionner.",
+        "upload_single": "Déposez l'image à envoyer, ou cliquez pour la sélectionner."
+      },
+      "references": {
+        "all_missing": "Impossible de trouver des données de références.",
+        "many_missing": "Au moins une des références associées semble ne plus être disponible.",
+        "single_missing": "La référence associée ne semble plus disponible."
+      }
+    },
+    "message": {
+      "about": "Au sujet de",
+      "are_you_sure": "Êtes-vous sûr ?",
+      "bulk_delete_content": "Êtes-vous sûr(e) de vouloir supprimer cet élément ? |||| Êtes-vous sûr(e) de vouloir supprimer ces %{smart_count} éléments ?",
+      "bulk_delete_title": "Supprimer %{name} |||| Supprimer %{smart_count} %{name}",
+      "delete_content": "Êtes-vous sûr(e) de vouloir supprimer cet élément ?",
+      "delete_title": "Supprimer %{name} #%{id}",
+      "details": "Détails",
+      "error": "En raison d'une erreur côté navigateur, votre requête n'a pas pu aboutir.",
+      "invalid_form": "Le formulaire n'est pas valide. Vérifiez votre saisie.",
+      "loading": "La page est en cours de chargement, merci de bien vouloir patienter.",
+      "no": "Non",
+      "not_found": "L'URL saisie est incorrecte, ou vous avez suivi un mauvais lien.",
+      "yes": "Oui"
+    },
+    "navigation": {
+      "no_results": "Aucun résultat",
+      "no_more_results": "La page numéro %{page} est en dehors des limites. Essayez la page précédente.",
+      "page_out_of_boundaries": "La page %{page} est en dehors des limites",
+      "page_out_from_end": "Fin de la pagination",
+      "page_out_from_begin": "La page doit être supérieure à 1",
+      "page_range_info": "%{offsetBegin}-%{offsetEnd} sur %{total}",
+      "page_rows_per_page": "Lignes par page :",
+      "next": "Suivant",
+      "prev": "Précédent"
+    },
+    "auth": {
+      "user_menu": "Profil",
+      "username": "Identifiant",
+      "password": "Mot de passe",
+      "sign_in": "Connexion",
+      "sign_in_error": "Échec de l'authentification, merci de réessayer",
+      "logout": "Déconnexion"
+    },
+    "notification": {
+      "updated": "Élément mis à jour |||| %{smart_count} élements mis à jour",
+      "created": "Élément créé",
+      "deleted": "Élément supprimé |||| %{smart_count} élements supprimés",
+      "bad_item": "Élément inconnu",
+      "item_doesnt_exist": "L'élément n'existe pas",
+      "http_error": "Erreur de communication avec le serveur",
+      "data_provider_error": "Erreur dans le dataProvider. Plus de détails dans la console.",
+      "canceled": "Action annulée",
+      "logged_out": "Votre session a pris fin, veuillez vous reconnecter."
+    },
+    "validation": {
+      "required": "Ce champ est requis",
+      "minLength": "Minimum {{min}} caractères",
+      "maxLength": "Maximum {{max}} caractères",
+      "minValue": "Minimum {{min}}",
+      "maxValue": "Maximum {{max}}",
+      "number": "Doit être un nombre",
+      "email": "Doit être un email",
+      "oneOf": "Doit être au choix: %{options}",
+      "regex": "Doit respecter un format spécifique (regexp): %{pattern}"
+    }
+  }
+}

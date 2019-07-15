@@ -43,6 +43,7 @@ export const JSONInput = addField(
           allowedModes={['code', 'tree']}
           navigationBar={false}
           search={false}
+          name={source}
           onChange={val => onChange(val)}
           {...sanitizeRestProps(props)}
         />

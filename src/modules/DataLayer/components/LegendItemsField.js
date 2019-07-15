@@ -29,7 +29,7 @@ const getDefaultValue = (label, type, color) => {
 };
 
 const LegendItemsField = withRandomColor(({
-  sourceData: { geom_type: type = 'fill', name = '' }, randomColor, ...props
+  sourceData: { geom_type: type = 'fill', name = '' } = {}, randomColor, ...props
 }) => (
   <JSONInput
     {...props}

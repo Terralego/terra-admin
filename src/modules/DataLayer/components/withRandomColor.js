@@ -10,20 +10,24 @@ const randomColor = seed => {
   return `#${hexa.substr(0, 6)}`;
 };
 
-
-export const withRandomColor = WrappedComponent => connect((state, { withSource = '' }) => {
+const mapStateToProps = (state, { withSource = '' }) => {
   const source = get(state, `form.record-form.values.${withSource}`);
-  const sourceData = get(state, `admin.resources.geosource.data.${source}`) || {};
+  const sourceData = get(state, `admin.resources.geosource.data.${source}`);
+  const colorSeed = get(state, 'form.record-form.values.name', 'noname');
 
   return {
-    colorSeed: get(state, 'form.record-form.values.name') || 'noname',
+    colorSeed,
     sourceData,
   };
-})(({ component: Component, colorSeed, type, ...props }) => (
-  <WrappedComponent
-    {...props}
-    randomColor={randomColor(colorSeed)}
-  />
-));
+};
+
+export const withRandomColor = WrappedComponent =>
+  connect(mapStateToProps)(({ component: Component, colorSeed, type, ...props }) => (
+    <WrappedComponent
+      {...props}
+      randomColor={randomColor(colorSeed)}
+    />
+  ));
+
 
 export default withRandomColor;

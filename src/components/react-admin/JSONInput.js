@@ -43,8 +43,7 @@ export const JSONInput = addField(
           allowedModes={['code', 'tree']}
           navigationBar={false}
           search={false}
-          name={source}
-          onChange={val => onChange(val)}
+          onChange={onChange}
           {...sanitizeRestProps(props)}
         />
         {meta.error && <p className="error">{meta.error}</p>}

@@ -38,7 +38,7 @@ const validate = value => {
 
 const StyleField = withRandomColor(({
   randomColor,
-  sourceData: { geom_type: type = 'fill' },
+  sourceData: { geom_type: type = 'fill' } = {},
   ...props
 }) => {
   const [defaultValue, setDefaultValue] = React.useState({});

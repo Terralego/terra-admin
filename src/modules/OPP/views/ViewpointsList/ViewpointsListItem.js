@@ -12,9 +12,15 @@ export const ViewpointsListItem = ({
   location: { pathname },
 }) => (
   <NavLink className="card-link" to={`${pathname}/${id}`}>
-    <Card interactive>
-      <img src={(picture && picture.list) || noPhoto} alt={label} />
-      <h3>{id} / {label}</h3>
+    <Card interactive className="card-card">
+      <img
+        className="card-picture"
+        src={(picture && picture.list) || noPhoto}
+        alt={label}
+      />
+      <div className="card-body">
+        <h3 className="card-title">{id} / {label}</h3>
+      </div>
     </Card>
   </NavLink>
 );

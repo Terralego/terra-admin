@@ -173,35 +173,30 @@ const DataLayerTabbedForm = props => (
                           label="datalayer.form.type.label"
                           validate={defaultRequired}
                         />
-                        {['single', 'many'].includes(filterType) && (
-                          <FieldGroup>
-                            <BooleanInput
-                              source={getSource('filter_settings.fetchValues')}
-                              label="datalayer.form.type.fetch.label"
-                              fullWidth
-                            />
-                            {!filterFetch && (
-                              <TextArrayInput
-                                source={getSource('filter_settings.values')}
-                                label={`datalayer.form.type.values${filterType === 'many' ? '' : '_optional'}`}
-                                validate={filterType === 'many' ? defaultRequired : undefined}
-                                fullWidth
-                              />
-                            )}
-                          </FieldGroup>
+                        {filterType && (
+                          <BooleanInput
+                            source={getSource('filter_settings.fetchValues')}
+                            label="datalayer.form.type.fetch.label"
+                            fullWidth
+                          />
+                        )}
+                        {(filterType && !filterFetch) && (
+                          <TextArrayInput
+                            source={getSource('filter_settings.values')}
+                            label={`datalayer.form.type.values${filterType === 'many' ? '' : '_optional'}`}
+                            validate={filterType === 'many' ? defaultRequired : undefined}
+                            fullWidth
+                          />
                         )}
                         {filterType === 'range' && (
-                          <>
-                            {' '}
-                            <SelectInput
-                              source={getSource('filter_settings.format')}
-                              label="datalayer.form.type.range_format.label"
-                              choices={[
-                                { id: 'number', name: 'datalayer.form.type.range_format.number' },
-                                { id: 'date', name: 'datalayer.form.type.range_format.date' },
-                              ]}
-                            />
-                          </>
+                          <SelectInput
+                            source={getSource('filter_settings.format')}
+                            label="datalayer.form.type.range_format.label"
+                            choices={[
+                              { id: 'number', name: 'datalayer.form.type.range_format.number' },
+                              { id: 'date', name: 'datalayer.form.type.range_format.date' },
+                            ]}
+                          />
                         )}
                       </>
                     );

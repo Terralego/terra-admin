@@ -63,7 +63,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
             parse={v => +v}
           />
           <FieldSample source="sample" />
-          <BooleanInput source="in_mvt" label="datasource.form.include-field-tiles" />
+          <BooleanInput source="level" label="datasource.form.include-field-tiles" parse={v => (v ? 1 : 0)} />
         </SimpleFormIterator>
       </ArrayInput>
     </FormTab>

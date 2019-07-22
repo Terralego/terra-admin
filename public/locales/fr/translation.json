@@ -328,7 +328,11 @@
       "legend": {
         "title": "Titre de la légende",
         "template": "Contenu mis en page de la légende (optionnel)",
-        "items": "Items de la légende (Optionnel)"
+        "items": "Items de la légende (Optionnel)",
+        "help": {
+          "title": "3 élements nécessaires dans la légende :",
+          "text": "<ul><li>label : nom</li><li>shape : type de symbole (square pour les polygone et les lignes, circle pour les points)</li><li>color : HEX, RGB ou nom</li></ul><p>Exemple:</p><pre>\n[{\n  \"label\": \"communes\",\n  \"shape\": \"square\",/n  \"color\": \"red\"\n}]\n</pre>"
+        }
       },
       "search": {
         "mainField": "Afficher les résultats de recherche en utilisant ce champs"

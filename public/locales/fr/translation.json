@@ -263,13 +263,17 @@
           "monthly": "Mensuel"
         }
       },
-      "include-field-tiles": "Inclure ce champ dans les tuiles vectorielles"
+      "include-field-tiles": "Inclure ce champ dans les tuiles vectorielles",
+      "status": "Statut",
+      "min-zoom": "Zoom minimum",
+      "max-zoom": "Zoom maximum",
+      "tile-size": "Taille des tuiles",
+      "wmts-url": "Adresse de la source WMTS"
     },
     "edit": {
       "refresh": "Actualiser les données",
       "message": "Il est nécessaire d'inclure des champs dans les tuiles vectorielles pour qu'ils soient également disponibles dans les popups et les mini-fiches."
-    },
-    "status": "Statut"
+    }
   },
   "datalayer": {
     "project": "Visualiseur",

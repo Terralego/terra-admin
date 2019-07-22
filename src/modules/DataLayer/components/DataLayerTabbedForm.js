@@ -135,6 +135,18 @@ const DataLayerTabbedForm = props => (
           {({ formData }) => formData.minisheet_enable &&
             <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" fullWidth />}
         </FormDataConsumer>
+
+        <FormDataConsumer>
+          {({ formData }) => ((formData.fields && formData.fields.length) ? (
+            <SelectInput
+              source="settings.mainField"
+              label="datalayer.form.search.mainField"
+              choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
+              fullWidth
+            />
+          ) : <></>
+          )}
+        </FormDataConsumer>
       </FormTab>
       <FormTab label="datalayer.form.fields-settings">
         <FormDataConsumer>

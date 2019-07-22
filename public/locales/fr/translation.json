@@ -329,6 +329,9 @@
         "title": "Titre de la légende",
         "template": "Contenu mis en page de la légende (optionnel)",
         "items": "Items de la légende (Optionnel)"
+      },
+      "search": {
+        "mainField": "Afficher les résultats de recherche en utilisant ce champs"
       }
     }
   },

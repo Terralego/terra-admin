@@ -69,11 +69,11 @@ const DataLayerTabbedForm = props => (
         <StyleField
           source="layer_style"
           withSource="source"
-          label="datalayer.form.styles.label.style"
+          label="datalayer.form.styles.mainstyle"
           fullWidth
         />
 
-        <ArrayInput source="custom_styles" label="datalayer.form.styles.label" fullWidth>
+        <ArrayInput source="custom_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
           <CustomFormIterator>
             <CustomLayer />
           </CustomFormIterator>

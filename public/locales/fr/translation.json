@@ -336,6 +336,11 @@
       },
       "search": {
         "mainField": "Afficher les résultats de recherche en utilisant ce champs"
+      },
+      "styles": {
+        "mainstyle": "Style principal",
+        "secondarylabels": "Styles secondaires",
+        "style": "Configuration du style"
       }
     }
   },

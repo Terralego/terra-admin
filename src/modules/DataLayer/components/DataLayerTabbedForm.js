@@ -25,6 +25,7 @@ import StyleField from './StyleField';
 import { fetchDatalayerConfig } from '../services/datalayer';
 import { required } from '../../../utils/react-admin/validate';
 import TextArrayInput from '../../../components/react-admin/TextArrayInput';
+import HelpContent from '../../../components/react-admin/HelpContent';
 
 const defaultRequired = required();
 
@@ -87,7 +88,9 @@ const DataLayerTabbedForm = props => (
               source="items"
               label="datalayer.form.legend.items"
               withSource="source"
+              fullWidth
             />
+            <HelpContent title="datalayer.form.legend.help.title" content="datalayer.form.legend.help.text" />
           </CustomFormIterator>
         </ArrayInput>
 

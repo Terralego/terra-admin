@@ -126,8 +126,8 @@ const DataLayerTabbedForm = props => (
         <FormDataConsumer fullWidth>
           {({ formData, dispatch, ...rest }) => formData.popup_enable && (
             <FieldGroup {...rest}>
-              <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={10} step={1} />
-              <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={15} step={1} />
+              <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={0} step={1} />
+              <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={24} step={1} />
               <LongTextInput source="popup_template" label="datalayer.form.popup.template" />
             </FieldGroup>
           )}

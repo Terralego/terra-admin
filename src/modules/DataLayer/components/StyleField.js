@@ -40,19 +40,13 @@ const StyleField = withRandomColor(({
   randomColor,
   sourceData: { geom_type: type = 'fill' } = {},
   ...props
-}) => {
-  const [defaultValue, setDefaultValue] = React.useState({});
-  React.useEffect(() => {
-    setDefaultValue(getDefaultValue(randomColor, type));
-  }, [randomColor, type, getDefaultValue]);
-  return (
-    <JSONInput
-      {...props}
-      validate={validate}
-      defaultValue={defaultValue}
-    />
-  );
-});
+}) => (
+  <JSONInput
+    {...props}
+    validate={validate}
+    defaultValue={getDefaultValue(randomColor, type)}
+  />
+));
 
 
 export default StyleField;

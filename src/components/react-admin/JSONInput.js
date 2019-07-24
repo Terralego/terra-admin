@@ -17,26 +17,23 @@ const sanitizeRestProps = ({
   lng, resource, source, tReady, ...rest
 }) => rest;
 
-const sanitizeObject = val => {
-  // To handle bad string values when unmounting component
-  if (typeof (val) !== 'object') {
-    return null;
-  }
-  return val;
-};
+const sanitizeValue = (value, defaultValue) =>
+  (typeof value === 'object'
+    ? value
+    : defaultValue);
 
 export const JSONInput = addField(
   ({
     meta,
     source,
     defaultValue = {},
-    input: { value = defaultValue || {}, onChange },
+    input: { value, onChange },
     ...props
   }) => (
     <Labeled label={source} {...props}>
       <>
         <Editor
-          value={sanitizeObject(value)}
+          value={sanitizeValue(value, defaultValue)}
           ace={ace}
           theme="ace/theme/github"
           mode="code"

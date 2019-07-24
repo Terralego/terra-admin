@@ -142,7 +142,7 @@ const DataLayerTabbedForm = props => (
         <FormDataConsumer>
           {({ formData }) => ((formData.fields && formData.fields.length) ? (
             <SelectInput
-              source="settings.mainField"
+              source="filters_settings.mainField"
               label="datalayer.form.search.mainField"
               choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
               fullWidth

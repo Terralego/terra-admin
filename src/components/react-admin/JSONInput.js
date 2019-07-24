@@ -17,10 +17,11 @@ const sanitizeRestProps = ({
   lng, resource, source, tReady, ...rest
 }) => rest;
 
-const sanitizeValue = (value, defaultValue) =>
-  (typeof value === 'object'
+const sanitizeValue = (value, defaultValue) => (
+  typeof value === 'object'
     ? value
-    : defaultValue);
+    : defaultValue
+);
 
 export const JSONInput = addField(
   ({

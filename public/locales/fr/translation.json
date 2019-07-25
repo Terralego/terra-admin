@@ -244,7 +244,7 @@
       "description": "Description",
       "file": {
         "related-files": "Fichiers associés",
-        "placeholder": "Déposez votre fichier GeoJSON ici"
+        "placeholder": "Déposez votre fichier %{type} ici"
       },
       "request": {
         "host-server": "Serveur hôte",

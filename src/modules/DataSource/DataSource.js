@@ -43,12 +43,14 @@ export default withLocale(DataSource);
 export const GEOJSON = 'GeoJSONSource';
 export const SQL = 'PostGISSource';
 export const WMTS = 'WMTSSource';
+export const SHP = 'ShapefileSource';
 
 const typesToChoices = types => Object.entries(types)
   .map(([id, name]) => ({ id, name }));
 
 export const sourceTypes = {
   [GEOJSON]: 'GeoJSON',
+  [SHP]: 'Shapefile',
   [SQL]: 'PostGIS',
   [WMTS]: 'WMTS',
 };

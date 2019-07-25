@@ -21,6 +21,7 @@ import DataSourceDbFields from './DataSourceDbFields';
 import {
   SQL,
   GEOJSON,
+  SHP,
   WMTS,
   fieldTypeChoices,
 } from '../DataSource';
@@ -38,7 +39,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          type === GEOJSON && <DataSourceFileFields {...rest} />}
+          [SHP, GEOJSON].includes(type) && <DataSourceFileFields {...rest} type={type} />}
       </FormDataConsumer>
 
       <FormDataConsumer>

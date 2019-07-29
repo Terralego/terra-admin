@@ -199,6 +199,26 @@ export class Map extends React.Component {
     }
   }
 
+  onTableHoverCell = (featureId, hover = true) => {
+    const { match: { params: { layer } } } = this.props;
+    const { customStyle: { layers = [] } = {}, addHighlight, removeHighlight } = this.state;
+    const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer);
+    if (hover) {
+      addHighlight({
+        layerId,
+        featureId,
+        highlightColor: 'red',
+        unique: true,
+        source,
+      });
+    } else {
+      removeHighlight({
+        layerId,
+        featureId,
+      });
+    }
+  }
+
   generateLayersToMap () {
     this.setState({
       customStyle: {
@@ -267,6 +287,7 @@ export class Map extends React.Component {
                     onTableSizeChange={this.onTableSizeChange}
                     tableSize={tableSize}
                     source={layer}
+                    onHoverCell={this.onTableHoverCell}
                   />
                 </div>
               )}

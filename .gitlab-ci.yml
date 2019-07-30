@@ -72,7 +72,8 @@ build:
     - mkdir ./tmp
     - mv ./build ./tmp/admin
     - mv ./tmp/admin/_* ./tmp
-    - npx netlify-cli deploy --site=$SITE_NAME --auth=$NETLIFY_ACCESS_TOKEN  --dir=./tmp --prod
+    - npm i -g netlify-cli
+    - npx netlify deploy --site=$SITE_NAME --auth=$NETLIFY_ACCESS_TOKEN  --dir=./tmp --prod
 
 deploy_dev:
   <<: *deploy_base

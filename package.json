@@ -30,6 +30,7 @@
     "react-ctx-connect": "^1.0.1",
     "react-dom": "^16.8.6",
     "react-final-form": "^4.0.2",
+    "react-helmet": "^5.2.1",
     "react-i18next": "^8.4.0",
     "react-jsonschema-form": "^1.6.1",
     "react-paginate": "^6.2.1",

@@ -74,7 +74,14 @@ class DataTable extends React.Component {
   }
 
   render () {
-    const { source, t, tableSize, featuresList = [], layer: { name } = {} } = this.props;
+    const {
+      source,
+      t,
+      tableSize,
+      featuresList = [],
+      layer: { name } = {},
+      onHoverCell = () => null,
+    } = this.props;
     const { data, columns, loading } = this.state;
 
     return (
@@ -106,6 +113,7 @@ class DataTable extends React.Component {
                 <CellRender
                   featuresList={featuresList}
                   layer={name}
+                  onHoverCell={onHoverCell}
                   {...props}
                 />
               )}

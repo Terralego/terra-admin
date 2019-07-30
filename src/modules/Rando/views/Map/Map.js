@@ -48,12 +48,15 @@ export class Map extends React.Component {
   }) {
     const {
       layersList,
-      match: { params: { layer, id } },
+      match: { params: { layer, id, action } },
       resizingMap,
       map,
       featuresList,
       feature: { [id]: { geom: { coordinates = [] } = {} } = {} } = {},
     } = this.props;
+
+
+    const { customStyle: { layers } = {}, addHighlight, removeHighlight } = this.state;
 
     if (layersList !== prevLayersList) {
       this.generateLayersToMap();
@@ -79,6 +82,24 @@ export class Map extends React.Component {
       this.setFitBounds();
     } else if (id && coordinates.length) {
       this.setFitBounds(coordinates);
+      if (action !== ACTION_UPDATE) {
+        const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer);
+        addHighlight({
+          layerId,
+          featureId: id,
+          highlightColor: 'red',
+          unique: true,
+          source,
+        });
+      }
+    }
+
+    if ((prevId && prevId !== ACTION_CREATE && !id) || action === ACTION_UPDATE) {
+      const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer);
+      removeHighlight && removeHighlight({
+        layerId,
+        featureId: prevId,
+      });
     }
   }
 
@@ -140,6 +161,13 @@ export class Map extends React.Component {
     map.resize();
   }
 
+  interactiveMapInit = ({ addHighlight, removeHighlight }) => {
+    this.setState({
+      addHighlight,
+      removeHighlight,
+    });
+  }
+
   loadFeatures = () => {
     const { getFeaturesList } = this.props;
     const layer = this.getLayerFromList();
@@ -168,6 +196,26 @@ export class Map extends React.Component {
     if (tableSize !== 'full') {
       resizingMap();
       this.setFitBounds();
+    }
+  }
+
+  onTableHoverCell = (featureId, hover = true) => {
+    const { match: { params: { layer } } } = this.props;
+    const { customStyle: { layers = [] } = {}, addHighlight, removeHighlight } = this.state;
+    const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer);
+    if (hover) {
+      addHighlight({
+        layerId,
+        featureId,
+        highlightColor: 'red',
+        unique: true,
+        source,
+      });
+    } else {
+      removeHighlight({
+        layerId,
+        featureId,
+      });
     }
   }
 
@@ -224,6 +272,7 @@ export class Map extends React.Component {
                   customStyle={customStyle}
                   interactions={interactions}
                   controls={controls}
+                  onInit={this.interactiveMapInit}
                 />
               </div>
               {map && (
@@ -238,6 +287,7 @@ export class Map extends React.Component {
                     onTableSizeChange={this.onTableSizeChange}
                     tableSize={tableSize}
                     source={layer}
+                    onHoverCell={this.onTableHoverCell}
                   />
                 </div>
               )}

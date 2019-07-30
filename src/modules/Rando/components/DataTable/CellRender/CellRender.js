@@ -10,7 +10,7 @@ class CellRender extends React.Component {
     isOpen: undefined,
   }
 
-  togglePopover = value => this.setState({ isOpen: value })
+  togglePopover = isOpen => this.setState({ isOpen })
 
   render () {
     const { isOpen } = this.state;
@@ -20,23 +20,48 @@ class CellRender extends React.Component {
       originalRowIndex,
       displayViewFeature,
       displayUpdateFeature,
+      onHoverCell = () => null,
     } = this.props;
 
     const { identifier: id } = featuresList[originalRowIndex] || {};
 
-    if (contentCell === '' || !featuresList.length || !displayViewFeature || !id) {
+    if (!featuresList.length || !id) {
       return contentCell;
     }
 
+    const CellTarget = () => (
+      <Button
+        className="table__cell-target"
+        minimal
+        small
+        onClick={() => this.togglePopover(undefined)}
+      >
+        {contentCell}
+      </Button>
+    );
+
     return (
-      <div className="table__cell-wrapper">
-        <Popover
-          className="table__cell-popover"
-          popoverClassName={`${Classes.POPOVER_CONTENT_SIZING} ${Classes.POPOVER_DISMISS}`}
-          interactionKind={PopoverInteractionKind.CLICK}
-          position={Position.TOP}
-          isOpen={isOpen}
-          content={
+      <div
+        className="table__cell-wrapper"
+        onMouseOver={() => onHoverCell(id)}
+        onFocus={() => onHoverCell(id)}
+        onMouseOut={() => onHoverCell(id, false)}
+        onBlur={() => onHoverCell(id, false)}
+      >
+        {!displayViewFeature
+          ? (
+            <div className="table__cell-popover">
+              <CellTarget />
+            </div>
+          )
+          : (
+            <Popover
+              className="table__cell-popover"
+              popoverClassName={`${Classes.POPOVER_CONTENT_SIZING} ${Classes.POPOVER_DISMISS}`}
+              interactionKind={PopoverInteractionKind.CLICK}
+              position={Position.TOP}
+              isOpen={isOpen}
+              content={
             displayUpdateFeature ? (
               <Trans
                 i18nKey="rando.table.readOrUpdateMessage"
@@ -72,17 +97,10 @@ class CellRender extends React.Component {
               this feature
               </Trans>
             )}
-
-        >
-          <Button
-            className="table__cell-target"
-            minimal
-            small
-            onClick={() => this.togglePopover(undefined)}
-          >
-            {contentCell}
-          </Button>
-        </Popover>
+            >
+              <CellTarget />
+            </Popover>
+          )}
       </div>
     );
   }

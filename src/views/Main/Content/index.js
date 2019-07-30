@@ -4,10 +4,7 @@ import { getComponentsByEnabledModules } from '../../../services/modules';
 
 
 const getDefaultRoute = landingModule => {
-  if (!landingModule) {
-    return '';
-  }
-  const [{ config: { path } }] = getComponentsByEnabledModules([landingModule]);
+  const [{ config: { path = '' } = {} } = {}] = getComponentsByEnabledModules([landingModule]);
   return path;
 };
 

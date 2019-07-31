@@ -30,6 +30,8 @@ export class Map extends React.Component {
 
   details = React.createRef();
 
+  dataTable = React.createRef();
+
   componentDidMount () {
     const { getMapConfig, match: { params: { layer } } } = this.props;
     getMapConfig();
@@ -49,7 +51,6 @@ export class Map extends React.Component {
     const {
       layersList,
       match: { params: { layer, id, action } },
-      resizingMap,
       map,
       featuresList,
       feature: { [id]: { geom: { coordinates = [] } = {} } = {} } = {},
@@ -68,10 +69,6 @@ export class Map extends React.Component {
 
     if (layersList !== prevLayersList || layer !== prevLayer || map !== prevMap) {
       this.loadFeatures();
-    }
-
-    if (prevId !== id && [prevId, id].includes(undefined)) {
-      resizingMap();
     }
 
     if (
@@ -135,19 +132,19 @@ export class Map extends React.Component {
 
     if (!coords.length || !map) return;
 
-    const { current } = this.details;
-
-    const padding = {
-      top: 20,
-      right: (id && current) ? (current.offsetWidth + 20) : 20,
-      bottom: 20,
-      left: 20,
-    };
+    const { current: detail } = this.details;
+    const { current: dataTable } = this.dataTable;
 
     setTimeout(() => {
+      const padding = {
+        top: 20,
+        right: (id && detail) ? (detail.offsetWidth + 50) : 50,
+        bottom: !id ? (dataTable.offsetHeight + 20) : 20,
+        left: 20,
+      };
       map.resize();
       map.fitBounds(getBounds(coords), { padding });
-    }, 800);
+    }, 500);
   }
 
   getLayerFromList () {
@@ -191,10 +188,8 @@ export class Map extends React.Component {
   })
 
   onTableSizeChange = tableSize => {
-    const { resizingMap } = this.props;
     this.setState({ tableSize });
     if (tableSize !== 'full') {
-      resizingMap();
       this.setFitBounds();
     }
   }
@@ -246,41 +241,29 @@ export class Map extends React.Component {
       return <Redirect to={generateURI('layer')} />;
     }
     return (
-      <div
-        className={classnames(
-          'CRUD-map',
-          { 'CRUD-map--is-resizing': mapIsResizing },
-        )}
-      >
+      <>
         {!isConfigLoaded
           ? <Loading spinner />
           : (
             <>
-              <div className="CRUD-map__map">
-                {map && (
-                  <DetailsWrapper detailsRef={this.details}>
-                    {isDetailsVisible && (
-                      <Details
-                        updateControls={this.updateControls}
-                      />
-                    )}
-                  </DetailsWrapper>
-                )}
-                <InteractiveMap
-                  onMapLoaded={this.resetMap}
-                  {...mapConfig}
-                  customStyle={customStyle}
-                  interactions={interactions}
-                  controls={controls}
-                  onInit={this.interactiveMapInit}
-                />
-              </div>
+              {map && (
+                <DetailsWrapper detailsRef={this.details}>
+                  {isDetailsVisible && (
+                  <Details
+                    updateControls={this.updateControls}
+                  />
+                  )}
+                </DetailsWrapper>
+              )}
               {map && (
                 <div
+                  ref={this.dataTable}
                   className={classnames(
-                    'CRUD-map__table',
-                    { 'CRUD-map__table--active': layer && !isDetailsVisible },
-                    { [`CRUD-map__table--${tableSize}`]: layer && !isDetailsVisible },
+                    {
+                      'CRUD-table': true,
+                      'CRUD-table--active': layer && !isDetailsVisible,
+                      [`CRUD-table--${tableSize}`]: layer && !isDetailsVisible,
+                    },
                   )}
                 >
                   <DataTable
@@ -291,9 +274,24 @@ export class Map extends React.Component {
                   />
                 </div>
               )}
+              <div
+                className={classnames(
+                  'CRUD-map',
+                  { 'CRUD-map--is-resizing': mapIsResizing },
+                )}
+              >
+                <InteractiveMap
+                  onMapLoaded={this.resetMap}
+                  {...mapConfig}
+                  customStyle={customStyle}
+                  interactions={interactions}
+                  controls={controls}
+                  onInit={this.interactiveMapInit}
+                />
+              </div>
             </>
           )}
-      </div>
+      </>
     );
   }
 }

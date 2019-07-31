@@ -15,10 +15,9 @@
 
 .CRUD-main {
   display: flex;
+  position: relative;
   flex-direction: column;
   height: 100%;
-  .interactive-map {
-    height: 100%;
-    flex: 1;
-  }
+  justify-content: flex-end;
+  overflow: hidden;
 }

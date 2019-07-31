@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
 import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/InteractiveMap';
-import { DEFAULT_CONTROLS } from '@terralego/core/modules/Map';
+import { DEFAULT_CONTROLS, CONTROL_CAPTURE, CONTROLS_TOP_RIGHT } from '@terralego/core/modules/Map';
 
 import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
@@ -19,12 +19,16 @@ import './styles.scss';
 export const ACTION_CREATE = 'create';
 export const ACTION_UPDATE = 'update';
 export const INTERACTION_VIEW_FEATURE = 'viewFeature';
+export const CONTROL_CAPTURE_POSITION = {
+  control: CONTROL_CAPTURE,
+  position: CONTROLS_TOP_RIGHT,
+};
 
 export class Map extends React.Component {
   state = {
     interactions: [],
     customStyle: undefined,
-    controls: DEFAULT_CONTROLS,
+    controls: [...DEFAULT_CONTROLS, CONTROL_CAPTURE_POSITION],
     tableSize: 'medium', // 'minified', 'medium', 'full'
   }
 
@@ -184,7 +188,7 @@ export class Map extends React.Component {
   }
 
   updateControls = controls => this.setState({
-    controls: [...controls, ...DEFAULT_CONTROLS],
+    controls: [...controls, ...DEFAULT_CONTROLS, CONTROL_CAPTURE_POSITION],
   })
 
   onTableSizeChange = tableSize => {

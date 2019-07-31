@@ -149,8 +149,8 @@
       }
     }
   },
-  "rando": {
-    "project": "Randonnées",
+  "CRUD": {
+    "project": "CRUD",
     "nav": {
       "map": "Carte",
       "foldMenu": "Replier le menu",

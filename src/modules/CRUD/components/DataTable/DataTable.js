@@ -1,6 +1,5 @@
 import React from 'react';
 import Table from '@terralego/core/modules/Table';
-import classnames from 'classnames';
 import { withNamespaces } from 'react-i18next';
 
 import Header from './Header';
@@ -85,12 +84,7 @@ class DataTable extends React.Component {
     const { data, columns, loading } = this.state;
 
     return (
-      <div
-        className={classnames(
-          'table-container',
-          { [`table-container--${tableSize}`]: tableSize },
-        )}
-      >
+      <div className="table-container">
         {loading || data.length
           ? (
             <Table

@@ -109,6 +109,7 @@
     padding: 1rem 1rem 0;
     > * + * {
       margin-left: 1rem;
+      width: auto;
     }
     &-delete {
       margin-right: auto;
@@ -129,7 +130,14 @@
     flex-direction: column;
     height: 100%;
     margin: 0 -1rem;
+    > * {
+      margin-right: 1rem;
+      margin-left: 1rem;
+      margin-bottom: 1rem;
+    }
     > .form-group {
+      margin-left: 0;
+      margin-right: 0;
       padding: 0 1rem;
       overflow: auto;
     }

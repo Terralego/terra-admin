@@ -9,6 +9,8 @@ import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';
 import mockedCustomStyle from '../../../views/Map/mockedCustomStyle';
+import ErrorListTemplate from './ErrorListTemplate';
+
 import {
   ALL,
   POINT,
@@ -19,13 +21,22 @@ import {
   MULTI_POLYGON,
 } from '../../../../../utils/geom';
 
+function updateSchemaPropertiesValues (properties, formData) {
+  return Object.keys(properties).reduce((list, prop) => ({
+    ...list,
+    [prop]: {
+      ...properties[prop],
+      default: formData[prop],
+    },
+  }), {});
+}
+
+
 class Edit extends React.Component {
   state = {
     loading: false,
     schema: {},
     geom: {},
-    formTouched: false,
-    geomTouched: false,
   }
 
   componentDidMount () {
@@ -119,15 +130,14 @@ class Edit extends React.Component {
       action,
       layer: { geom_type: geomType },
     } = this.props;
+    const isDeleted = type === 'draw.delete';
+    this.setState({
+      geom: {},
+    });
+    if (isDeleted) {
+      return;
+    }
     if (action === ACTION_CREATE) {
-      const isDeleted = type === 'draw.delete';
-      this.setState({
-        geom: {},
-        geomTouched: !isDeleted,
-      });
-      if (isDeleted) {
-        return;
-      }
       const { features } = map.draw.getAll();
       if (features.length > 1 && [POINT, LINESTRING, POLYGON].includes(geomType)) {
         map.draw.delete(
@@ -139,30 +149,27 @@ class Edit extends React.Component {
     }
     this.setState({
       geom,
-      geomTouched: true,
     });
   }
 
   changeForm = ({ formData }) => {
-    const { schema } = this.state;
+    const { schema, geom } = this.state;
+    const { t } = this.props;
+
+    const properties = updateSchemaPropertiesValues(schema.properties, formData);
+    const geometryFromMap = { type: 'boolean', title: t('CRUD.details.geometry'), default: !!Object.keys(geom).length };
+
     this.setState({
       schema: {
         ...schema,
-        properties: Object.keys(schema.properties).reduce((list, prop) => ({
-          ...list,
-          [prop]: {
-            ...schema.properties[prop],
-            default: formData[prop],
-          },
-        }), {}),
+        properties: { ...properties, geometryFromMap },
       },
-      formTouched: true,
     });
   }
 
-  submitFeature = async ({ formData }) => {
+  submitFeature = async ({ formData: { geometryFromMap, ...properties } }) => {
     const { history: { push }, action } = this.props;
-    const { geom, geomTouched, formTouched } = this.state;
+    const { geom } = this.state;
     const {
       layer: { id: layerId },
       paramId,
@@ -173,10 +180,6 @@ class Edit extends React.Component {
 
     const isActionUpdate = action === ACTION_UPDATE;
 
-    if ((!formTouched && !geomTouched) || !Object.keys(geom).length) {
-      return;
-    }
-
     this.setState({
       loading: true,
     });
@@ -184,7 +187,7 @@ class Edit extends React.Component {
     const savedFeature = await saveFeature(
       layerId,
       isActionUpdate ? paramId : false,
-      { geom, properties: formData },
+      { geom, properties },
     );
 
     if (savedFeature !== null) {
@@ -192,8 +195,6 @@ class Edit extends React.Component {
     } else {
       this.setState({
         loading: false,
-        formTouched: false,
-        geomTouched: false,
       });
     }
 
@@ -202,6 +203,15 @@ class Edit extends React.Component {
       t(isActionUpdate ? 'CRUD.details.successUpdateFeature' : 'CRUD.details.successCreateFeature'),
       t(isActionUpdate ? 'CRUD.details.failUpdateFeature' : 'CRUD.details.failCreateFeature'),
     );
+  }
+
+  validateForm = (formData, errors) => {
+    const { geom } = this.state;
+    const { t } = this.props;
+    if (!Object.keys(geom).length) {
+      errors.geometryFromMap.addError(t('CRUD.details.errorNoGeometry'));
+    }
+    return errors;
   }
 
   render () {
@@ -257,9 +267,11 @@ class Edit extends React.Component {
             ? (
               <Form
                 schema={schema}
-                uiSchema={uischema}
+                uiSchema={{ ...uischema, geometryFromMap: { 'ui:widget': 'hidden' } }}
                 onSubmit={this.submitFeature}
                 onChange={this.changeForm}
+                validate={this.validateForm}
+                ErrorList={ErrorListTemplate}
               >
                 <Actions {...actionsButtons}>
                   <SaveButton type="submit" />

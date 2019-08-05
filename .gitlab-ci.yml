@@ -1,8 +1,7 @@
 image: node:10.9.0 # Should match .nvmrc content
 
 stages:
-  - tests
-  - build
+  - prepare
   - deploy
 
 before_script:
@@ -12,45 +11,28 @@ before_script:
 
 # Tests stage
 
-npm_test:
+Tests:
   before_script:
     - npm ci
   tags: [shared-ci-docker]
-  stage: tests
+  stage: prepare
   script:
     - npm run test
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
-npm_run_lint:
+Lint:
   before_script:
     - npm ci
   tags: [shared-ci-docker]
-  stage: tests
+  stage: prepare
   script:
     - npm run lint
 
-# Build stage
-
-npm_run_build:
+Build:
   before_script:
     - npm ci
   tags: [shared-ci-docker]
-  stage: build
-  script:
-    - npm run build
-  artifacts:
-    expire_in: 2 days
-    name: "build-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}"
-    paths:
-      - dist
-
-# Build admin
-
-build:
-  before_script:
-    - npm ci
-  tags: [shared-ci-docker]
-  stage: build
+  stage: prepare
   variables:
     PUBLIC_URL: "/admin/"
   script:
@@ -60,52 +42,61 @@ build:
     paths:
       - build/
 
-# Deploy admin
-
-.deploy: &deploy_base
+.deploy: &deploy # Deploy template
   tags: [shared-ci-docker]
   stage: deploy
-  dependencies:
-    - build
   when: manual
-  only:
-    - master
+  variables:
+    SITE_ID: "yournamehere.netlify.com"
+  dependencies:
+    - Build
   script:
     - mkdir ./tmp
     - mv ./build ./tmp/admin
     - mv ./tmp/admin/_* ./tmp
     - npm i -g netlify-cli
-    - npx netlify deploy --site=$SITE_NAME --auth=$NETLIFY_ACCESS_TOKEN  --dir=./tmp --prod
+    - npx netlify deploy --site=$SITE_ID --auth=$NETLIFY_ACCESS_TOKEN  --dir=./tmp --prod
 
-deploy_dev:
-  <<: *deploy_base
+Deploy Dev (force): &deploy_predev
+  <<: *deploy
   environment:
     name: dev
     url: https://terra-admin-dev.netlify.com/admin
-  when: on_success
   variables:
-    SITE_NAME: "terra-admin-dev.netlify.com"
+    SITE_ID: "terra-admin-dev.netlify.com"
 
-deploy_qa:
-  <<: *deploy_base
+Deploy Dev:
+  <<: *deploy_predev
+  only:
+    - master
+  when: always
+
+Deploy QA:
+  <<: *deploy
+  only:
+    - master
   environment:
     name: qa
     url: https://terra-admin-qa.netlify.com/admin
   variables:
-    SITE_NAME: "terra-admin-qa.netlify.com"
+    SITE_ID: "terra-admin-qa.netlify.com"
 
-deploy_staging:
-  <<: *deploy_base
+Deploy Staging:
+  <<: *deploy
+  only:
+    - master
   environment:
     name: staging
     url: https://terra-admin-staging.netlify.com/admin
   variables:
-    SITE_NAME: "terra-admin-staging.netlify.com"
+    SITE_ID: "terra-admin-staging.netlify.com"
 
-deploy_prod:
-  <<: *deploy_base
+Deploy Prod:
+  <<: *deploy
+  only:
+    - master
   environment:
     name: prod
     url: https://terra-admins.netlify.com/admin
   variables:
-    SITE_NAME: "terra-admin.netlify.com"
+    SITE_ID: "terra-admin.netlify.com"

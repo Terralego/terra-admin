@@ -51,6 +51,8 @@ build:
     - npm ci
   tags: [shared-ci-docker]
   stage: build
+  variables:
+    PUBLIC_URL: "/admin/"
   script:
     - npm run build
   artifacts:

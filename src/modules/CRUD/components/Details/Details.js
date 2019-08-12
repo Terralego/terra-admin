@@ -105,10 +105,11 @@ class Details extends React.Component {
   renderContent = () => {
     const {
       paramId,
-      paramAction,
+      match: { params: { action: paramAction } },
       updateControls,
     } = this.props;
     const { schema } = this.state;
+
     if (paramId === ACTION_CREATE || paramAction === ACTION_UPDATE) {
       return (
         <Edit

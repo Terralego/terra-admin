@@ -1,8 +1,11 @@
 import Api from '@terralego/core/modules/Api';
 import { WMTS } from '../../modules/DataSource/DataSource';
+import { getResourceWithoutBasePath } from './utils';
 
 const enhanceDataProvider = mainDataProvider => async (...args) => {
-  const [type, resource, params] = args;
+  const [type, resourceWithBasePath, params] = args;
+
+  const resource = getResourceWithoutBasePath(resourceWithBasePath);
 
   // Manage custom query type
   if (type === 'REFRESH') {

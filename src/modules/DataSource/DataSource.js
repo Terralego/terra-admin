@@ -1,5 +1,6 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
+import { withRouter } from 'react-router-dom';
 
 import config from './config';
 import NavLayout from '../../components/NavLayout';
@@ -7,6 +8,7 @@ import SimpleNav from '../../components/SimpleNav';
 import { withLocale } from '../../components/Locale';
 import providers from '../../services/react-admin/providers';
 import RALayout from '../../components/react-admin/Layout';
+import { getResourceWithoutBasePath } from '../../services/react-admin/utils';
 import dataSourceViews from './views';
 import {
   POINT,
@@ -20,15 +22,16 @@ import {
 
 import './styles.scss';
 
-export const DataSource = ({ locale }) => (
-  <NavLayout nav={<SimpleNav items={config.nav} />}>
+export const DataSource = ({ locale, history }) => (
+  <NavLayout nav={<SimpleNav config={config} />}>
     <Admin
       appLayout={RALayout}
-      {...providers}
       locale={`${locale}`.substr(0, 2)}
+      history={history}
+      {...providers}
     >
       <Resource
-        name="geosource"
+        name={`${getResourceWithoutBasePath(config.path)}/geosource`}
         {...dataSourceViews}
       />
       <Resource
@@ -38,7 +41,7 @@ export const DataSource = ({ locale }) => (
   </NavLayout>
 );
 
-export default withLocale(DataSource);
+export default withRouter(withLocale(DataSource));
 
 export const GEOJSON = 'GeoJSONSource';
 export const SQL = 'PostGISSource';

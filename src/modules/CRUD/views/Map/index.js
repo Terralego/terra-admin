@@ -6,28 +6,28 @@ import { connectCRUDProvider } from '../../services/CRUDProvider';
 
 import Map from './Map';
 
-export default connectAuthProvider(({
-  authenticated,
-  user,
-}) => {
-  const permissions = authenticated ? user.permissions : [];
-  return {
-    displayViewFeature: permissions.includes('terra.view_feature'),
-  };
-})(
-  connectCRUDProvider(
-    'getMapConfig',
-    'mapConfig',
-    'layersList',
-    'setMap',
-    'map',
-    'resizingMap',
-    'mapIsResizing',
-    'getFeaturesList',
-    'featuresList',
-    'feature',
-  )(
-    withRouter(
+export default withRouter(
+  connectAuthProvider(({
+    authenticated,
+    user,
+  }) => {
+    const permissions = authenticated ? user.permissions : [];
+    return {
+      displayViewFeature: permissions.includes('terra.view_feature'),
+    };
+  })(
+    connectCRUDProvider(
+      'getMapConfig',
+      'mapConfig',
+      'layersList',
+      'setMap',
+      'map',
+      'resizingMap',
+      'mapIsResizing',
+      'getFeaturesList',
+      'featuresList',
+      'feature',
+    )(
       withNamespaces()(Map),
     ),
   ),

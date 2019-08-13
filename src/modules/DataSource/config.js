@@ -3,9 +3,9 @@ export default {
   path: '/datasources',
   nav: [{
     label: 'datasource.nav.list',
-    href: '#geosource',
+    href: 'geosource',
   }, {
     label: 'datasource.nav.create',
-    href: '#geosource/create',
+    href: 'geosource/create',
   }],
 };

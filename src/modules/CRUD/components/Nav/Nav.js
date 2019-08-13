@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button, Icon } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import classnames from 'classnames';
 
 import { generateURI } from '../../config';
+import NavIcon from './NavIcon';
 
 import './styles.scss';
 
+const sortByOrder = ({ order: orderA }, { order: orderB }) =>
+  (orderA !== null ? orderA : 0) - (orderB !== null ? orderB : 0);
 
-export const Nav = ({ getAllLayersAction, resizingMap, layersList, t }) => {
+const getFilteredAndOrderedMenu = menu => menu && (
+  menu.sort(sortByOrder).reduce((group, menuItem) => {
+    const { name, crud_views: views } = menuItem;
+    return (name !== 'Unclassified')
+      ? [...group, ({ views: views.sort(sortByOrder), ...menuItem })]
+      : group;
+  },
+  [])
+);
+
+export const Nav = ({
+  settings: { menu } = {},
+  resizingMap,
+  t,
+}) => {
   const [menuOpen, setMenuOpen] = useState(true);
+  const [orderedMenu, setOrderedMenu] = useState(menu);
 
-  useEffect(() => {
-    getAllLayersAction();
-  }, []);
-
-  useEffect(() => {
-    resizingMap();
-  }, [menuOpen]);
-
-  const layersListByGroups = layersList.reduce((list, item) => {
-    const matchingGroup = list.find(({ group }) => group === item.group);
-    if (matchingGroup) {
-      return list.map(listItem => (listItem !== matchingGroup
-        ? listItem
-        : {
-          ...listItem,
-          list: [
-            ...listItem.list,
-            item,
-          ],
-        }));
-    }
-    return [...list, { group: item.group, list: [item] }];
-  }, []);
+  useEffect(resizingMap, [menuOpen]);
+  useEffect(() => setOrderedMenu(getFilteredAndOrderedMenu(menu)), [menu]);
 
   return (
     <div
@@ -54,32 +51,35 @@ export const Nav = ({ getAllLayersAction, resizingMap, layersList, t }) => {
           minimal
         />
       </div>
-      <ul
-        id="CRUD-nav__menu"
-        className="CRUD-nav__menu"
-      >
-        {layersListByGroups.map(({ group, list }) => (
-          <li className="CRUD-nav__group" key={group}>
-            <p className="CRUD-nav__group-name">
-              {group}
-            </p>
-            <ul className="CRUD-nav__list">
-              {list.map(({ name }) => (
-                <li className="CRUD-nav__item" key={name}>
-                  <NavLink
-                    to={generateURI('layer', { layer: name })}
-                  >
-                    <span className="bp3-button bp3-minimal">
-                      <Icon icon="layout" />
-                      <span className="bp3-button-text">{name}</span>
-                    </span>
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+      { orderedMenu && (
+        <ul
+          id="CRUD-nav__menu"
+          className="CRUD-nav__menu"
+        >
+          {orderedMenu.map(({ name: group, pictogram: groupPictogram, views }) => (
+            <li className="CRUD-nav__group" key={group}>
+              <p className="CRUD-nav__group-name">
+                <NavIcon src={groupPictogram} />
+                {group}
+              </p>
+              <ul className="CRUD-nav__list">
+                {views.map(({ name, pictogram, layer }) => (
+                  <li className="CRUD-nav__item" key={name}>
+                    <NavLink
+                      to={generateURI('layer', { layer: layer.name })}
+                    >
+                      <span className="bp3-button bp3-minimal">
+                        <NavIcon src={pictogram} />
+                        <span className="bp3-button-text">{name}</span>
+                      </span>
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

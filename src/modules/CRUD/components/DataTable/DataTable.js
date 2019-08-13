@@ -17,9 +17,9 @@ class DataTable extends React.Component {
     this.loadData();
   }
 
-  componentDidUpdate ({ source: prevSource, featuresList: prevFeaturesList }) {
-    const { source, featuresList } = this.props;
-    if (prevSource !== source) {
+  componentDidUpdate ({ layerName: prevLayerName, featuresList: prevFeaturesList }) {
+    const { layerName, featuresList } = this.props;
+    if (prevLayerName !== layerName) {
       this.cleanData();
       this.loadData();
     }
@@ -74,11 +74,11 @@ class DataTable extends React.Component {
 
   render () {
     const {
-      source,
+      layer: { name, displayName = name },
+      layerName,
       t,
       tableSize,
       featuresList = [],
-      layer: { name } = {},
       onHoverCell = () => null,
     } = this.props;
     const { data, columns, loading } = this.state;
@@ -93,7 +93,7 @@ class DataTable extends React.Component {
               Header={props => (
                 <Header
                   {...props}
-                  source={source}
+                  layerName={displayName}
                   tableSize={tableSize}
                   resize={this.resize}
                 />
@@ -106,7 +106,7 @@ class DataTable extends React.Component {
               renderCell={props => (
                 <CellRender
                   featuresList={featuresList}
-                  layer={name}
+                  layer={layerName}
                   onHoverCell={onHoverCell}
                   {...props}
                 />
@@ -117,7 +117,7 @@ class DataTable extends React.Component {
             <div>
               <Header
                 columns={[]}
-                source={source}
+                layerName={displayName}
                 tableSize={tableSize}
                 resize={this.resize}
               />

@@ -219,7 +219,7 @@ class Edit extends React.Component {
     const {
       t,
       action,
-      layer: { schema: { uischema = {} } = {} },
+      layer: { name, displayName = name, schema: { uischema = {} } = {} },
       paramLayer,
       paramId,
       displayAddFeature,
@@ -236,7 +236,7 @@ class Edit extends React.Component {
 
     const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE
-      ? t('CRUD.details.create', { layer: paramLayer })
+      ? t('CRUD.details.create', { layer: displayName })
       : (title || t('CRUD.details.noFeature'));
 
     const SaveButton = props => (

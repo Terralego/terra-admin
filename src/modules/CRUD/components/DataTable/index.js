@@ -1,8 +1,9 @@
 import DataTable from './DataTable';
 import { connectCRUDProvider } from '../../services/CRUDProvider';
+import { getLayerFromCRUD } from '../../services/CRUD';
 
-export default connectCRUDProvider(({ layersList, featuresList }, { source }) => ({
+export default connectCRUDProvider(({ featuresList, settings }, { layerName }) => ({
   featuresList,
-  layer: layersList.find(({ name }) => name === source),
-  source,
+  layer: getLayerFromCRUD(settings, layerName),
+  layerName,
 }))(DataTable);

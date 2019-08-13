@@ -10,6 +10,7 @@ import Details from '../../components/Details';
 import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
 import { getBounds } from '../../services/features';
+import { getLayerFromCRUD } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
@@ -37,7 +38,8 @@ export class Map extends React.Component {
   dataTable = React.createRef();
 
   componentDidMount () {
-    const { getMapConfig, match: { params: { layer } } } = this.props;
+    const { getSettings, getMapConfig, match: { params: { layer } } } = this.props;
+    getSettings();
     getMapConfig();
     this.generateLayersToMap();
     this.setInteractions();
@@ -48,12 +50,12 @@ export class Map extends React.Component {
 
   componentDidUpdate ({
     map: prevMap,
-    layersList: prevLayersList,
+    settings: prevSettings,
     match: { params: { layer: prevLayer, id: prevId } },
     featuresList: prevFeaturesList,
   }) {
     const {
-      layersList,
+      settings,
       match: { params: { layer, id, action } },
       map,
       featuresList,
@@ -63,7 +65,7 @@ export class Map extends React.Component {
 
     const { customStyle: { layers } = {}, addHighlight, removeHighlight } = this.state;
 
-    if (layersList !== prevLayersList) {
+    if (settings !== prevSettings) {
       this.generateLayersToMap();
     }
 
@@ -71,7 +73,7 @@ export class Map extends React.Component {
       this.displayCurrentLayer(layer);
     }
 
-    if (layersList !== prevLayersList || layer !== prevLayer || map !== prevMap) {
+    if (settings !== prevSettings || layer !== prevLayer || map !== prevMap) {
       this.loadFeatures();
     }
 
@@ -151,11 +153,6 @@ export class Map extends React.Component {
     }, 500);
   }
 
-  getLayerFromList () {
-    const { layersList, match: { params: { layer } } } = this.props;
-    return layersList.find(({ name }) => name === layer);
-  }
-
   resetMap = map => {
     const { setMap } = this.props;
     setMap(map);
@@ -170,8 +167,8 @@ export class Map extends React.Component {
   }
 
   loadFeatures = () => {
-    const { getFeaturesList } = this.props;
-    const layer = this.getLayerFromList();
+    const { getFeaturesList, settings, match: { params: { layer: paramLayer } } } = this.props;
+    const layer = getLayerFromCRUD(settings, paramLayer);
     if (!layer) return;
     getFeaturesList(layer.id);
   }
@@ -232,21 +229,21 @@ export class Map extends React.Component {
       map,
       mapConfig,
       mapIsResizing,
-      layersList,
+      settings,
       match: { params: { layer = false, id } },
       t,
     } = this.props;
-
-    const isConfigLoaded = Object.keys(mapConfig).length > 1;
+    const isSettingsLoaded = Object.keys(settings).length > 1;
+    const isDataLoaded = Object.keys(mapConfig).length > 1 && isSettingsLoaded;
     const isDetailsVisible = !!id;
 
-    if (layersList.length && layer && !layersList.find(({ name }) => name === layer)) {
+    if (isSettingsLoaded && layer && !getLayerFromCRUD(settings, layer)) {
       toast.displayError(t('CRUD.layer.errorNoLayer'));
       return <Redirect to={generateURI('layer')} />;
     }
     return (
       <>
-        {!isConfigLoaded
+        {!isDataLoaded
           ? <Loading spinner />
           : (
             <>
@@ -273,7 +270,7 @@ export class Map extends React.Component {
                   <DataTable
                     onTableSizeChange={this.onTableSizeChange}
                     tableSize={tableSize}
-                    source={layer}
+                    layerName={layer}
                     onHoverCell={this.onTableHoverCell}
                   />
                 </div>

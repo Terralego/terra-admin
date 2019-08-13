@@ -157,7 +157,7 @@
       "unfoldMenu": "Déplier le menu"
     },
     "table": {
-      "title": "Liste de la couche : {{source}}",
+      "title": "Liste de la couche : {{layerName}}",
       "sortAsc": "Tri croissant",
       "sortDesc": "Tri décroissant",
       "filterProps": "Filtrer les propriétés",

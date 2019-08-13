@@ -1,6 +1,7 @@
 import React from 'react';
 import connect from 'react-ctx-connect';
-import { fetchMapConfig, fetchAllLayers } from './map';
+import { fetchSettings } from './CRUD';
+import { fetchMapConfig } from './map';
 import {
   fetchFeaturesList,
   fetchFeature as fetchFeatureAction,
@@ -15,7 +16,7 @@ const { Provider } = context;
 
 export class CRUDProvider extends React.Component {
   state = {
-    layersList: [],
+    settings: {},
     featuresList: [],
     mapConfig: {},
     errors: {},
@@ -39,17 +40,17 @@ export class CRUDProvider extends React.Component {
     }
   };
 
-  getAllLayersAction = async () => {
+  getSettings = async () => {
     try {
-      const { results: layersList = [] } = await fetchAllLayers();
-      this.setState({ layersList });
+      const settings = await fetchSettings();
+      this.setState({ settings });
     } catch (e) {
       this.setState(state => ({
         ...state,
         errors: { ...state.errors, code: e.message },
       }));
     }
-  };
+  }
 
   getFeaturesList = async layerId => {
     try {
@@ -146,7 +147,7 @@ export class CRUDProvider extends React.Component {
 
     const {
       getMapConfig,
-      getAllLayersAction,
+      getSettings,
       getFeaturesList,
       fetchFeature,
       saveFeature,
@@ -157,7 +158,7 @@ export class CRUDProvider extends React.Component {
     const value = {
       ...this.state,
       getMapConfig,
-      getAllLayersAction,
+      getSettings,
       getFeaturesList,
       fetchFeature,
       saveFeature,
@@ -165,6 +166,7 @@ export class CRUDProvider extends React.Component {
       setMap,
       resizingMap,
     };
+
     return (
       <Provider value={value}>
         {children}

@@ -3,6 +3,8 @@ import { withNamespaces } from 'react-i18next';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
+import { getLayerFromCRUD } from '../../../services/CRUD';
+
 import Edit from './Edit';
 
 export default withRouter(
@@ -17,7 +19,7 @@ export default withRouter(
     };
   })(
     connectCRUDProvider(({
-      layersList,
+      settings,
       map,
       feature,
       saveFeature,
@@ -27,7 +29,7 @@ export default withRouter(
       map,
       feature,
       saveFeature,
-      layer: layersList.find(({ name }) => name === layer),
+      layer: getLayerFromCRUD(settings, layer),
       paramLayer: layer,
       paramId: id,
     }))(

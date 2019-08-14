@@ -1,11 +1,12 @@
 import React from 'react';
 import { withNamespaces } from 'react-i18next';
+import { NavLink } from 'react-router-dom';
 
-const SimpleNav = ({ items, t }) => (
+const SimpleNav = ({ config: { nav, path }, t }) => (
   <ul>
-    {items.map(({ label, href }) => (
+    {nav.map(({ label, href }) => (
       <li key={label}>
-        <a href={href}>{t(label)}</a>
+        <NavLink to={`${path}/${href}`}>{t(label)}</NavLink>
       </li>
     ))}
   </ul>

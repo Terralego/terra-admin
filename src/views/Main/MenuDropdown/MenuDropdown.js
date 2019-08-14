@@ -1,4 +1,6 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
 import {
   Button,
   Classes,
@@ -8,7 +10,7 @@ import {
   Position,
 } from '@blueprintjs/core';
 
-export const MenuDropdown = ({ t, modules = [], history: { push } }) => {
+export const MenuDropdown = ({ t, modules = [] }) => {
   const [{ config: { nav = [] } = {} } = {}] = modules;
   if (modules.length <= 1 && nav.length <= 1) {
     return null;
@@ -23,12 +25,13 @@ export const MenuDropdown = ({ t, modules = [], history: { push } }) => {
               className={Classes.MINIMAL}
               text={t(Component.config.title)}
             >
-              {Component.config.nav.map(item => (
-                <MenuItem
-                  key={item.href}
-                  text={t(item.label)}
-                  onClick={() => push(`${Component.config.path}/${item.href}`)}
-                />
+              {Component.config.nav.map(({ href, label }) => (
+                <NavLink key={href} to={`${Component.config.path}/${href}`}>
+                  <MenuItem
+                    tagName="span"
+                    text={t(label)}
+                  />
+                </NavLink>
               ))}
             </MenuItem>
           ))}

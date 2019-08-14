@@ -1,0 +1,23 @@
+// Override default layout style
+.CRUD {
+  min-height: 100%;
+  .nav-layout {
+    flex: auto;
+    height: 100%;
+    &__nav {
+      padding: 0;
+    }
+    &__content {
+      padding: 0;
+    }
+  }
+}
+
+.CRUD-main {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  overflow: hidden;
+}

@@ -1,5 +1,4 @@
 import React from 'react';
-import { addField } from 'react-admin';
 
 import { JSONInput } from '../../../components/react-admin/JSONInput';
 import withRandomColor from './withRandomColor';
@@ -24,33 +23,30 @@ const getDefaultValue = (color, type) => ({
   },
 });
 
-const StyleField = withRandomColor(({ randomColor, sourceData: { geom_type: type = 'fill' }, ...props }) => (
+const validate = value => {
+  if (!value) {
+    return 'empty value';
+  }
+  if (!value.type) {
+    return 'type not found';
+  }
+  if (!value.paint) {
+    return 'paint not found';
+  }
+  return undefined;
+};
+
+const StyleField = withRandomColor(({
+  randomColor,
+  sourceData: { geom_type: type = 'fill' } = {},
+  ...props
+}) => (
   <JSONInput
     {...props}
+    validate={validate}
     defaultValue={getDefaultValue(randomColor, type)}
   />
 ));
 
-const parse = value => {
-  try {
-    return JSON.parse(value);
-  } catch (e) {
-    return value;
-  }
-};
 
-export default addField(StyleField, {
-  parse,
-  validate: value => {
-    if (!value || typeof value !== 'object') {
-      return 'invalid json';
-    }
-    if (!value.type) {
-      return 'type not found';
-    }
-    if (!value.paint) {
-      return 'paint not found';
-    }
-    return null;
-  },
-});
+export default StyleField;

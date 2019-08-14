@@ -15,6 +15,7 @@ import DataSourceWMTSField from '../components/DataSourceWMTSField';
 import {
   SQL,
   GEOJSON,
+  SHP,
   WMTS,
   sourceTypeChoices,
 } from '../DataSource';
@@ -45,7 +46,7 @@ export const DataSourceCreate = ({ translate: t, ...props }) => (
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          type === GEOJSON && <DataSourceFileFields {...rest} />}
+          [SHP, GEOJSON].includes(type) && <DataSourceFileFields {...rest} type={type} />}
       </FormDataConsumer>
 
       <FormDataConsumer>

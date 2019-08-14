@@ -1,26 +1,16 @@
-import React from 'react';
+import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { withNamespaces } from 'react-i18next';
-import { connectAuthProvider, LoginForm } from '@terralego/core/modules/Auth';
+import { connectAppProvider } from '../../components/AppProvider';
+import { withLocale } from '../../components/Locale';
+import Main from './Main';
 
-import Header from './Header';
-import Content from './Content';
-
-import './styles.scss';
-
-export const Main = ({ authenticated, t }) => (
-  <div className="main">
-    <Header />
-    <div className="main-container">
-      {authenticated
-        ? <Content />
-        : <LoginForm translate={t} />
-    }
-    </div>
-  </div>
-);
-
-export default withNamespaces()(
-  connectAuthProvider('authenticated')(
-    Main,
+export default
+withNamespaces()(
+  withLocale(
+    connectAppProvider('env')(
+      connectAuthProvider('authenticated')(
+        Main,
+      ),
+    ),
   ),
 );

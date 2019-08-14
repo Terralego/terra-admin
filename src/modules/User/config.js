@@ -3,9 +3,9 @@ export default {
   path: '/users',
   nav: [{
     label: 'user.nav.list',
-    href: '#user',
+    href: 'user',
   }, {
     label: 'user.nav.create',
-    href: '#user/create',
+    href: 'user/create',
   }],
 };

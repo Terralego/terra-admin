@@ -149,8 +149,8 @@
       }
     }
   },
-  "rando": {
-    "project": "Randonnées",
+  "CRUD": {
+    "project": "CRUD",
     "nav": {
       "map": "Carte",
       "foldMenu": "Replier le menu",
@@ -186,13 +186,15 @@
       "confirmDeletion": "Confirmer la suppression",
       "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer cet objet ? Vous ne pourrez plus le récupérer.",
       "errorNoFeature": "L'objet recherché n'existe pas",
+      "errorNoGeometry": "Un traçé sur la carte est obligatoire",
       "successCreateFeature": "L'objet a été enregistré avec succès",
       "failCreateFeature": "L'objet n'a pas été enregistré",
       "successUpdateFeature": "L'objet a été mis à jour avec succès",
       "failUpdateFeature": "L'objet n'a pas été mis à jour",
       "successDeleteFeature": "L'objet a été supprimé avec succès",
       "failUDeleteFeature": "L'objet n'a pas été supprimé",
-      "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource."
+      "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
+      "geometry": "Géométrie"
     }
   },
   "help": {
@@ -244,7 +246,7 @@
       "description": "Description",
       "file": {
         "related-files": "Fichiers associés",
-        "placeholder": "Déposez votre fichier GeoJSON ici"
+        "placeholder": "Déposez votre fichier %{type} ici"
       },
       "request": {
         "host-server": "Serveur hôte",
@@ -263,13 +265,17 @@
           "monthly": "Mensuel"
         }
       },
-      "include-field-tiles": "Inclure ce champ dans les tuiles vectorielles"
+      "include-field-tiles": "Inclure ce champ dans les tuiles vectorielles",
+      "status": "Statut",
+      "min-zoom": "Zoom minimum",
+      "max-zoom": "Zoom maximum",
+      "tile-size": "Taille des tuiles",
+      "wmts-url": "Adresse de la source WMTS"
     },
     "edit": {
       "refresh": "Actualiser les données",
       "message": "Il est nécessaire d'inclure des champs dans les tuiles vectorielles pour qu'ils soient également disponibles dans les popups et les mini-fiches."
-    },
-    "status": "Statut"
+    }
   },
   "datalayer": {
     "project": "Visualiseur",
@@ -328,7 +334,19 @@
       "legend": {
         "title": "Titre de la légende",
         "template": "Contenu mis en page de la légende (optionnel)",
-        "items": "Items de la légende (Optionnel)"
+        "items": "Items de la légende (Optionnel)",
+        "help": {
+          "title": "3 élements nécessaires dans la légende :",
+          "text": "<ul><li>label : nom</li><li>shape : type de symbole (square pour les polygone et les lignes, circle pour les points)</li><li>color : HEX, RGB ou nom</li></ul><p>Exemple:</p><pre>\n[{\n  \"label\": \"communes\",\n  \"shape\": \"square\",\n  \"color\": \"red\"\n}]\n</pre>"
+        }
+      },
+      "search": {
+        "mainField": "Afficher les résultats de recherche en utilisant ce champs"
+      },
+      "styles": {
+        "mainstyle": "Style principal",
+        "secondarylabels": "Styles secondaires",
+        "style": "Configuration du style"
       }
     }
   },

@@ -5,6 +5,10 @@ import ChipInput from 'material-ui-chip-input';
 import { Field } from 'redux-form';
 import { withNamespaces } from 'react-i18next';
 
+const sanitizeRestProps = ({
+  tReady, reportNS, defaultNS, i18nOptions, ...rest
+}) => rest;
+
 const add = input => addedChip => {
   const { value: values = [] } = input;
   const newValues = addedChip
@@ -18,7 +22,7 @@ export const TextArrayInput = ({ t, source, label, ...rest }) => (
     name={source}
     component={({ input }) => (
       <ChipInput
-        {...rest}
+        {...sanitizeRestProps(rest)}
         label={t(label)}
         value={input.value || []}
         onAdd={add(input)}

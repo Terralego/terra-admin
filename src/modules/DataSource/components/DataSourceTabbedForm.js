@@ -21,6 +21,7 @@ import DataSourceDbFields from './DataSourceDbFields';
 import {
   SQL,
   GEOJSON,
+  SHP,
   WMTS,
   fieldTypeChoices,
 } from '../DataSource';
@@ -38,7 +39,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          type === GEOJSON && <DataSourceFileFields {...rest} />}
+          [SHP, GEOJSON].includes(type) && <DataSourceFileFields {...rest} type={type} />}
       </FormDataConsumer>
 
       <FormDataConsumer>
@@ -63,7 +64,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
             parse={v => +v}
           />
           <FieldSample source="sample" />
-          <BooleanInput source="in_mvt" label="datasource.form.include-field-tiles" />
+          <BooleanInput source="level" label="datasource.form.include-field-tiles" parse={v => (v ? 1 : 0)} />
         </SimpleFormIterator>
       </ArrayInput>
     </FormTab>

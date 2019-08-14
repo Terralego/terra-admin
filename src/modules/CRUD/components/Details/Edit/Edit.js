@@ -8,7 +8,6 @@ import { ACTION_CREATE, ACTION_UPDATE } from '../../../views/Map/Map';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';
-import mockedCustomStyle from '../../../views/Map/mockedCustomStyle';
 import ErrorListTemplate from './ErrorListTemplate';
 
 import {
@@ -76,8 +75,7 @@ class Edit extends React.Component {
   }
 
   get layerId () {
-    const { paramLayer } = this.props;
-    const { id } = mockedCustomStyle.layers.find(layer => layer['source-layer'] === paramLayer);
+    const { layerPaint: { id } } = this.props;
     return id;
   }
 

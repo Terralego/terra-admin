@@ -7,10 +7,9 @@ import { DEFAULT_CONTROLS, CONTROL_CAPTURE, CONTROLS_TOP_RIGHT } from '@terraleg
 import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
-import mockedCustomStyle from './mockedCustomStyle';
 import mockedInteraction from './mockedInteraction';
 import { getBounds } from '../../services/features';
-import { getLayerFromCRUD } from '../../services/CRUD';
+import { getLayerFromCRUD, getSourcesFromCRUD, getLayersPaintsFromCRUD } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
@@ -86,7 +85,10 @@ export class Map extends React.Component {
     } else if (id && coordinates.length) {
       this.setFitBounds(coordinates);
       if (action !== ACTION_UPDATE) {
-        const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer);
+        const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
+        if (!layerId) {
+          return;
+        }
         addHighlight({
           layerId,
           featureId: id,
@@ -98,7 +100,10 @@ export class Map extends React.Component {
     }
 
     if ((prevId && prevId !== ACTION_CREATE && !id) || action === ACTION_UPDATE) {
-      const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer);
+      const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer) || {};
+      if (!layerId) {
+        return;
+      }
       removeHighlight && removeHighlight({
         layerId,
         featureId: prevId,
@@ -198,7 +203,10 @@ export class Map extends React.Component {
   onTableHoverCell = (featureId, hover = true) => {
     const { match: { params: { layer } } } = this.props;
     const { customStyle: { layers = [] } = {}, addHighlight, removeHighlight } = this.state;
-    const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer);
+    const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
+    if (!layerId) {
+      return;
+    }
     if (hover) {
       addHighlight({
         layerId,
@@ -216,9 +224,15 @@ export class Map extends React.Component {
   }
 
   generateLayersToMap () {
+    const { settings } = this.props;
+    if (!settings) {
+      return;
+    }
+
     this.setState({
       customStyle: {
-        ...mockedCustomStyle,
+        sources: getSourcesFromCRUD(settings),
+        layers: getLayersPaintsFromCRUD(settings),
       },
     });
   }

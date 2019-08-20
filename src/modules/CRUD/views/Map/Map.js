@@ -7,7 +7,6 @@ import { DEFAULT_CONTROLS, CONTROL_CAPTURE, CONTROLS_TOP_RIGHT } from '@terraleg
 import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
-import mockedInteraction from './mockedInteraction';
 import { getBounds } from '../../services/features';
 import { getLayerFromCRUD, getSourcesFromCRUD, getLayersPaintsFromCRUD } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
@@ -18,7 +17,6 @@ import './styles.scss';
 
 export const ACTION_CREATE = 'create';
 export const ACTION_UPDATE = 'update';
-export const INTERACTION_VIEW_FEATURE = 'viewFeature';
 export const CONTROL_CAPTURE_POSITION = {
   control: CONTROL_CAPTURE,
   position: CONTROLS_TOP_RIGHT,
@@ -66,6 +64,7 @@ export class Map extends React.Component {
 
     if (settings !== prevSettings) {
       this.generateLayersToMap();
+      this.setInteractions();
     }
 
     if (layer !== prevLayer || map !== prevMap) {
@@ -112,10 +111,14 @@ export class Map extends React.Component {
   }
 
   setInteractions = () => {
-    const { history: { push }, displayViewFeature } = this.props;
-    const { interactions = [] } = mockedInteraction;
-    const newInteractions = interactions.map(interaction => {
-      if (interaction.interaction === INTERACTION_VIEW_FEATURE && displayViewFeature) {
+    const {
+      history: { push },
+      displayViewFeature,
+      settings,
+    } = this.props;
+    const layers = getLayersPaintsFromCRUD(settings);
+    const interactions = layers.map(interaction => {
+      if (displayViewFeature) {
         return {
           ...interaction,
           interaction: INTERACTION_FN,
@@ -129,7 +132,7 @@ export class Map extends React.Component {
       return interaction;
     });
     this.setState({
-      interactions: newInteractions,
+      interactions,
     });
   }
 

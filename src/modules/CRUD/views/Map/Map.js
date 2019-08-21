@@ -8,7 +8,7 @@ import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
-import { getLayerFromCRUD, getSourcesFromCRUD, getLayersPaintsFromCRUD } from '../../services/CRUD';
+import { getLayer, getSources, getLayersPaints } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
@@ -116,7 +116,7 @@ export class Map extends React.Component {
       displayViewFeature,
       settings,
     } = this.props;
-    const layers = getLayersPaintsFromCRUD(settings);
+    const layers = getLayersPaints(settings);
     const interactions = layers.map(interaction => {
       if (displayViewFeature) {
         return {
@@ -176,7 +176,7 @@ export class Map extends React.Component {
 
   loadFeatures = () => {
     const { getFeaturesList, settings, match: { params: { layer: paramLayer } } } = this.props;
-    const layer = getLayerFromCRUD(settings, paramLayer);
+    const layer = getLayer(settings, paramLayer);
     if (!layer) return;
     getFeaturesList(layer.id);
   }
@@ -234,8 +234,8 @@ export class Map extends React.Component {
 
     this.setState({
       customStyle: {
-        sources: getSourcesFromCRUD(settings),
-        layers: getLayersPaintsFromCRUD(settings),
+        sources: getSources(settings),
+        layers: getLayersPaints(settings),
       },
     });
   }
@@ -254,7 +254,7 @@ export class Map extends React.Component {
     const isDataLoaded = Object.keys(mapConfig).length > 1 && isSettingsLoaded;
     const isDetailsVisible = !!id;
 
-    if (isSettingsLoaded && layer && !getLayerFromCRUD(settings, layer)) {
+    if (isSettingsLoaded && layer && !getLayer(settings, layer)) {
       toast.displayError(t('CRUD.layer.errorNoLayer'));
       return <Redirect to={generateURI('layer')} />;
     }

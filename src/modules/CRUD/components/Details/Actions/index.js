@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
-import { getLayerFromCRUD } from '../../../services/CRUD';
+import { getLayer } from '../../../services/CRUD';
 
 import Actions from './Actions';
 
@@ -25,7 +25,7 @@ export default withRouter(
       match: { params: { layer } },
     }) => ({
       deleteFeature,
-      layer: getLayerFromCRUD(settings, layer),
+      layer: getLayer(settings, layer),
     }))(
       withNamespaces()(Actions),
     ),

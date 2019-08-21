@@ -12,13 +12,13 @@ const sortByOrder = ({ order: orderA }, { order: orderB }) =>
   (orderA !== null ? orderA : 0) - (orderB !== null ? orderB : 0);
 
 const getFilteredAndOrderedMenu = menu => menu && (
-  menu.sort(sortByOrder).reduce((group, menuItem) => {
+  menu.reduce((group, menuItem) => {
     const { name, crud_views: views } = menuItem;
     return (name !== 'Unclassified')
       ? [...group, ({ views: views.sort(sortByOrder), ...menuItem })]
       : group;
   },
-  [])
+  []).filter(({ crud_views: views }) => views.length).sort(sortByOrder)
 );
 
 export const Nav = ({

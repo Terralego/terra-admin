@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 const sanitizeRestProps = ({
   basePath, i18n, i18nOptions, id, index,
-  lng, resource, source, tReady, ...rest
+  lng, resource, source, tReady, reportNS, defaultNS, ...rest
 }) => rest;
 
 const FieldSample = ({ t, record: { sample }, ...rest }) => (sample

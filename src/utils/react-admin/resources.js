@@ -1,4 +1,32 @@
 /**
+ * Remove the base path if it exists
+ *
+ * @example
+ * getResourceWithoutBasePath('foo/bar')
+ * // returns 'bar'
+ * @example
+ * getResourceWithoutBasePath('foo/bar/')
+ * // returns 'bar'
+ * @example
+ * getResourceWithoutBasePath('foobar')
+ * // returns 'foobar'
+ *
+ * @param {string} [string=''] Resource fullname
+ * @returns {string}
+ */
+export const getResourceWithoutBasePath = (string = '') => (
+  string.includes('/')
+    /*
+               🡆 'a//b/c/'
+        split  🡆 ['a', undefined, 'b', 'c', undefined]
+        filter 🡆 ['a', 'b', 'c']
+        pop    🡆 'c'
+    */
+    ? string.split('/').filter(a => a).pop()
+    : string
+);
+
+/**
  * Return the fullname of a resource,
  * by prefixing with path, but without leading "/"
  *
@@ -11,5 +39,6 @@ export const getResourceFullname = ({ path, resource }) =>
   `${path}/${resource}`.replace(/^\//g, '');
 
 export default {
+  getResourceWithoutBasePath,
   getResourceFullname,
 };

@@ -71,11 +71,13 @@ class Edit extends React.Component {
     } = this.props;
     // Remove controlDraw from controls
     updateControls([]);
-    map.setFilter(this.layerId, ['all']);
+    if (this.layerId) {
+      map.setFilter(this.layerId, ['all']);
+    }
   }
 
   get layerId () {
-    const { layerPaint: { id } } = this.props;
+    const { layerPaint: { id } = {} } = this.props;
     return id;
   }
 
@@ -118,7 +120,9 @@ class Edit extends React.Component {
       };
       map.on('control_added', listener);
 
-      map.setFilter(this.layerId, ['!=', '_id', paramId]);
+      if (this.layerId) {
+        map.setFilter(this.layerId, ['!=', '_id', paramId]);
+      }
     }
     updateControls([control]);
   }

@@ -8,7 +8,6 @@ import { ACTION_CREATE, ACTION_UPDATE } from '../../../views/Map/Map';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';
-import mockedCustomStyle from '../../../views/Map/mockedCustomStyle';
 import ErrorListTemplate from './ErrorListTemplate';
 
 import {
@@ -76,8 +75,7 @@ class Edit extends React.Component {
   }
 
   get layerId () {
-    const { paramLayer } = this.props;
-    const { id } = mockedCustomStyle.layers.find(layer => layer['source-layer'] === paramLayer);
+    const { layerPaint: { id } } = this.props;
     return id;
   }
 
@@ -219,7 +217,7 @@ class Edit extends React.Component {
     const {
       t,
       action,
-      layer: { schema: { uischema = {} } = {} },
+      layer: { name, displayName = name, schema: { uischema = {} } = {} },
       paramLayer,
       paramId,
       displayAddFeature,
@@ -236,7 +234,7 @@ class Edit extends React.Component {
 
     const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE
-      ? t('CRUD.details.create', { layer: paramLayer })
+      ? t('CRUD.details.create', { layer: displayName })
       : (title || t('CRUD.details.noFeature'));
 
     const SaveButton = props => (

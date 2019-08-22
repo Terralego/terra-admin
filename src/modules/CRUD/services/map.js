@@ -1,4 +1,3 @@
-import Api from '@terralego/core/modules/Api';
 import config from './mock-config.json';
 
 export async function fetchMapConfig () {
@@ -8,8 +7,4 @@ export async function fetchMapConfig () {
   };
 }
 
-export async function fetchAllLayers () {
-  return Api.request('layer/');
-}
-
-export default { fetchMapConfig, fetchAllLayers };
+export default { fetchMapConfig };

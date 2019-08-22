@@ -4,4 +4,6 @@ import { connectCRUDProvider } from '../../services/CRUDProvider';
 import Nav from './Nav';
 
 
-export default withNamespaces()(connectCRUDProvider('getAllLayersAction', 'layersList', 'resizingMap')(Nav));
+export default connectCRUDProvider('settings', 'resizingMap')(
+  withNamespaces()(Nav),
+);

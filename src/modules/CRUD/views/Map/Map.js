@@ -7,9 +7,8 @@ import { DEFAULT_CONTROLS, CONTROL_CAPTURE, CONTROLS_TOP_RIGHT } from '@terraleg
 import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
-import mockedCustomStyle from './mockedCustomStyle';
-import mockedInteraction from './mockedInteraction';
 import { getBounds } from '../../services/features';
+import { getLayer, getSources, getLayersPaints } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
@@ -18,7 +17,6 @@ import './styles.scss';
 
 export const ACTION_CREATE = 'create';
 export const ACTION_UPDATE = 'update';
-export const INTERACTION_VIEW_FEATURE = 'viewFeature';
 export const CONTROL_CAPTURE_POSITION = {
   control: CONTROL_CAPTURE,
   position: CONTROLS_TOP_RIGHT,
@@ -37,7 +35,8 @@ export class Map extends React.Component {
   dataTable = React.createRef();
 
   componentDidMount () {
-    const { getMapConfig, match: { params: { layer } } } = this.props;
+    const { getSettings, getMapConfig, match: { params: { layer } } } = this.props;
+    getSettings();
     getMapConfig();
     this.generateLayersToMap();
     this.setInteractions();
@@ -48,12 +47,12 @@ export class Map extends React.Component {
 
   componentDidUpdate ({
     map: prevMap,
-    layersList: prevLayersList,
+    settings: prevSettings,
     match: { params: { layer: prevLayer, id: prevId } },
     featuresList: prevFeaturesList,
   }) {
     const {
-      layersList,
+      settings,
       match: { params: { layer, id, action } },
       map,
       featuresList,
@@ -63,15 +62,16 @@ export class Map extends React.Component {
 
     const { customStyle: { layers } = {}, addHighlight, removeHighlight } = this.state;
 
-    if (layersList !== prevLayersList) {
+    if (settings !== prevSettings) {
       this.generateLayersToMap();
+      this.setInteractions();
     }
 
     if (layer !== prevLayer || map !== prevMap) {
       this.displayCurrentLayer(layer);
     }
 
-    if (layersList !== prevLayersList || layer !== prevLayer || map !== prevMap) {
+    if (settings !== prevSettings || layer !== prevLayer || map !== prevMap) {
       this.loadFeatures();
     }
 
@@ -84,7 +84,10 @@ export class Map extends React.Component {
     } else if (id && coordinates.length) {
       this.setFitBounds(coordinates);
       if (action !== ACTION_UPDATE) {
-        const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer);
+        const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
+        if (!layerId) {
+          return;
+        }
         addHighlight({
           layerId,
           featureId: id,
@@ -96,7 +99,10 @@ export class Map extends React.Component {
     }
 
     if ((prevId && prevId !== ACTION_CREATE && !id) || action === ACTION_UPDATE) {
-      const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer);
+      const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer) || {};
+      if (!layerId) {
+        return;
+      }
       removeHighlight && removeHighlight({
         layerId,
         featureId: prevId,
@@ -105,10 +111,14 @@ export class Map extends React.Component {
   }
 
   setInteractions = () => {
-    const { history: { push }, displayViewFeature } = this.props;
-    const { interactions = [] } = mockedInteraction;
-    const newInteractions = interactions.map(interaction => {
-      if (interaction.interaction === INTERACTION_VIEW_FEATURE && displayViewFeature) {
+    const {
+      history: { push },
+      displayViewFeature,
+      settings,
+    } = this.props;
+    const layers = getLayersPaints(settings);
+    const interactions = layers.map(interaction => {
+      if (displayViewFeature) {
         return {
           ...interaction,
           interaction: INTERACTION_FN,
@@ -122,7 +132,7 @@ export class Map extends React.Component {
       return interaction;
     });
     this.setState({
-      interactions: newInteractions,
+      interactions,
     });
   }
 
@@ -151,11 +161,6 @@ export class Map extends React.Component {
     }, 500);
   }
 
-  getLayerFromList () {
-    const { layersList, match: { params: { layer } } } = this.props;
-    return layersList.find(({ name }) => name === layer);
-  }
-
   resetMap = map => {
     const { setMap } = this.props;
     setMap(map);
@@ -170,8 +175,8 @@ export class Map extends React.Component {
   }
 
   loadFeatures = () => {
-    const { getFeaturesList } = this.props;
-    const layer = this.getLayerFromList();
+    const { getFeaturesList, settings, match: { params: { layer: paramLayer } } } = this.props;
+    const layer = getLayer(settings, paramLayer);
     if (!layer) return;
     getFeaturesList(layer.id);
   }
@@ -201,7 +206,10 @@ export class Map extends React.Component {
   onTableHoverCell = (featureId, hover = true) => {
     const { match: { params: { layer } } } = this.props;
     const { customStyle: { layers = [] } = {}, addHighlight, removeHighlight } = this.state;
-    const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer);
+    const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
+    if (!layerId) {
+      return;
+    }
     if (hover) {
       addHighlight({
         layerId,
@@ -219,9 +227,15 @@ export class Map extends React.Component {
   }
 
   generateLayersToMap () {
+    const { settings } = this.props;
+    if (!settings) {
+      return;
+    }
+
     this.setState({
       customStyle: {
-        ...mockedCustomStyle,
+        sources: getSources(settings),
+        layers: getLayersPaints(settings),
       },
     });
   }
@@ -232,21 +246,21 @@ export class Map extends React.Component {
       map,
       mapConfig,
       mapIsResizing,
-      layersList,
+      settings,
       match: { params: { layer = false, id } },
       t,
     } = this.props;
-
-    const isConfigLoaded = Object.keys(mapConfig).length > 1;
+    const isSettingsLoaded = Object.keys(settings).length > 1;
+    const isDataLoaded = Object.keys(mapConfig).length > 1 && isSettingsLoaded;
     const isDetailsVisible = !!id;
 
-    if (layersList.length && layer && !layersList.find(({ name }) => name === layer)) {
+    if (isSettingsLoaded && layer && !getLayer(settings, layer)) {
       toast.displayError(t('CRUD.layer.errorNoLayer'));
       return <Redirect to={generateURI('layer')} />;
     }
     return (
       <>
-        {!isConfigLoaded
+        {!isDataLoaded
           ? <Loading spinner />
           : (
             <>
@@ -273,7 +287,7 @@ export class Map extends React.Component {
                   <DataTable
                     onTableSizeChange={this.onTableSizeChange}
                     tableSize={tableSize}
-                    source={layer}
+                    layerName={layer}
                     onHoverCell={this.onTableHoverCell}
                   />
                 </div>

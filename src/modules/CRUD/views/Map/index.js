@@ -17,9 +17,10 @@ export default withRouter(
     };
   })(
     connectCRUDProvider(
+      'getSettings',
       'getMapConfig',
+      'settings',
       'mapConfig',
-      'layersList',
       'setMap',
       'map',
       'resizingMap',

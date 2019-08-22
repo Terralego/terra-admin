@@ -12,6 +12,7 @@ import {
   Pagination,
 } from 'react-admin';
 
+import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
 
 import { fetchDatalayerConfig } from '../services/datalayer';
@@ -22,7 +23,11 @@ const views = fetchDatalayerConfig();
 //   <Filter {...props}>
 //     <TextInput label="ra.action.search" source="q" alwaysOn />
 
-//     <ReferenceInput source="source" reference="geosource" label="datalayer.form.data-source">
+//     <ReferenceInput
+//       source="source"
+//       reference={GeosourceResourceFullName}
+//       label="datalayer.form.data-source"
+//     >
 //       <SelectInput />
 //     </ReferenceInput>
 //   </Filter>
@@ -52,7 +57,7 @@ export const DataLayerList = props => (
     <Datagrid rowClick="edit">
       <TextField source="name" label="datalayer.form.name" />
       <FunctionField source="view" render={renderViewField} />
-      <ReferenceField source="source" reference="geosource" label="datalayer.form.data-source" linkType={false}>
+      <ReferenceField source="source" reference={GeosourceResourceFullName} label="datalayer.form.data-source">
         <TextField source="name" />
       </ReferenceField>
       <EditButton />

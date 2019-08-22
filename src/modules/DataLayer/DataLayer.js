@@ -7,10 +7,12 @@ import NavLayout from '../../components/NavLayout';
 import SimpleNav from '../../components/SimpleNav';
 import { withLocale } from '../../components/Locale';
 import providers from '../../services/react-admin/providers';
-import { getResourceWithoutBasePath } from '../../services/react-admin/utils';
 
 import RALayout from '../../components/react-admin/Layout';
 import dataLayerViews from './views';
+
+import { resourceFullname as GeolayerResourceFullname } from '.';
+import { resourceFullname as GeosourceResourceFullname } from '../DataSource';
 
 import './styles.scss';
 
@@ -22,11 +24,8 @@ export const DataLayer = ({ locale, history }) => (
       history={history}
       {...providers}
     >
-      <Resource
-        name={`${getResourceWithoutBasePath(config.path)}/geolayer`}
-        {...dataLayerViews}
-      />
-      <Resource name="geosource" />
+      <Resource name={GeolayerResourceFullname} {...dataLayerViews} />
+      <Resource name={GeosourceResourceFullname} />
     </Admin>
   </NavLayout>
 );

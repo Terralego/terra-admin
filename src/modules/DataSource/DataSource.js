@@ -8,7 +8,6 @@ import SimpleNav from '../../components/SimpleNav';
 import { withLocale } from '../../components/Locale';
 import providers from '../../services/react-admin/providers';
 import RALayout from '../../components/react-admin/Layout';
-import { getResourceWithoutBasePath } from '../../services/react-admin/utils';
 import dataSourceViews from './views';
 import {
   POINT,
@@ -20,6 +19,9 @@ import {
   GEOMETRY_COLLECTION,
 } from '../../utils/geom';
 
+import { resourceFullname as GeosourceResourceFullname } from '.';
+import { resourceFullname as GeolayerResourceFullname } from '../DataLayer';
+
 import './styles.scss';
 
 export const DataSource = ({ locale, history }) => (
@@ -30,13 +32,8 @@ export const DataSource = ({ locale, history }) => (
       history={history}
       {...providers}
     >
-      <Resource
-        name={`${getResourceWithoutBasePath(config.path)}/geosource`}
-        {...dataSourceViews}
-      />
-      <Resource
-        name="geolayer"
-      />
+      <Resource name={GeosourceResourceFullname} {...dataSourceViews} />
+      <Resource name={GeolayerResourceFullname} />
     </Admin>
   </NavLayout>
 );

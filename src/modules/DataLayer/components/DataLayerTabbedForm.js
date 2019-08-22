@@ -26,6 +26,7 @@ import { fetchDatalayerConfig } from '../services/datalayer';
 import { required } from '../../../utils/react-admin/validate';
 import TextArrayInput from '../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../components/react-admin/HelpContent';
+import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
 
 const defaultRequired = required();
 
@@ -38,7 +39,7 @@ const DataLayerTabbedForm = props => (
       <FormTab label="datalayer.form.definition">
         <ReferenceInput
           source="source"
-          reference="geosource"
+          reference={GeosourceResourceFullName}
           label="datalayer.form.data-source"
           sort={{ field: 'name', order: 'ASC' }}
           validate={defaultRequired}

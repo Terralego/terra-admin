@@ -8,9 +8,10 @@ import SimpleNav from '../../components/SimpleNav';
 import { withLocale } from '../../components/Locale';
 import providers from '../../services/react-admin/providers';
 import RALayout from '../../components/react-admin/Layout';
-import { getResourceWithoutBasePath } from '../../services/react-admin/utils';
 
 import userViews from './views';
+
+import { resourceFullname } from '.';
 
 import './styles.scss';
 
@@ -22,10 +23,7 @@ export const User = ({ locale, history }) => (
       history={history}
       {...providers}
     >
-      <Resource
-        name={`${getResourceWithoutBasePath(config.path)}/user`}
-        {...userViews}
-      />
+      <Resource name={resourceFullname} {...userViews} />
     </Admin>
   </NavLayout>
 );

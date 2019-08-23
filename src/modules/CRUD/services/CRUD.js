@@ -40,9 +40,11 @@ export const getLayer = ({ menu = [] }, name) => {
   const {
     layer,
     name: displayName,
+    form_schema: schema,
+    ui_schema: uiSchema,
   } = flattenMenu(menu).find(item => item.layer.name === name) || {};
 
-  return layer ? { ...layer, displayName } : false;
+  return layer ? { ...layer, displayName, schema, uiSchema } : false;
 };
 
 export const getSources = ({ menu = [] }) =>

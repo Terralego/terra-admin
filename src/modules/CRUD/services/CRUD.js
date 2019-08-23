@@ -1,4 +1,12 @@
 import Api from '@terralego/core/modules/Api';
+import {
+  POINT,
+  LINESTRING,
+  POLYGON,
+  MULTI_POINT,
+  MULTI_LINESTRING,
+  MULTI_POLYGON,
+} from '../../../utils/geom';
 
 export const fetchSettings = () => Api.request('crud/settings');
 
@@ -7,6 +15,22 @@ const flattenMenu = menu => (
     [...list, ...views]
   ), [])
 );
+
+const getDefaultPaintsByGeomType = geomType => {
+  switch (geomType) {
+    case LINESTRING:
+    case MULTI_LINESTRING:
+      return { type: 'line', paint: { 'line-color': '#000', 'line-width': 3 } };
+    case POINT:
+    case MULTI_POINT:
+      return { type: 'circle', paint: { 'circle-color': '#000', 'circle-radius': 8 } };
+    case POLYGON:
+    case MULTI_POLYGON:
+      return { type: 'fill', paint: { 'fill-color': '#000' } };
+    default:
+      return {};
+  }
+};
 
 export const getLayer = ({ menu = [] }, name) => {
   const layers = flattenMenu(menu);
@@ -34,9 +58,14 @@ export const getSources = ({ menu = [] }) =>
 export const getLayersPaints = ({ menu = [] }) =>
   flattenMenu(menu).reduce((
     layersList,
-    { id, map_style: style = {}, layer: { name, group: source } },
-  ) => (
-    (!Object.keys(style).length)
+    {
+      id,
+      layer: { name, group: source, geom_type: geomType },
+      map_style: mapStyle = {},
+    },
+  ) => {
+    const style = (Object.keys(mapStyle).length) ? mapStyle : getDefaultPaintsByGeomType(geomType);
+    return (!Object.keys(style).length)
       ? layersList
       : [
         ...layersList,
@@ -46,7 +75,7 @@ export const getLayersPaints = ({ menu = [] }) =>
           source,
           ...style,
         },
-      ]
-  ), []);
+      ];
+  }, []);
 
 export default { fetchSettings, getLayer, getSources, getLayersPaints };

@@ -104,8 +104,7 @@ class Details extends React.Component {
 
   renderContent = () => {
     const {
-      paramId,
-      match: { params: { action: paramAction } },
+      match: { params: { action: paramAction, id: paramId } },
       updateControls,
     } = this.props;
     const { schema } = this.state;

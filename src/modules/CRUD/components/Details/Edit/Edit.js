@@ -221,7 +221,7 @@ class Edit extends React.Component {
     const {
       t,
       action,
-      layer: { name, displayName = name, schema: { uischema = {} } = {} },
+      layer: { name, displayName = name, uiSchema = {} },
       paramLayer,
       paramId,
       displayAddFeature,
@@ -269,7 +269,7 @@ class Edit extends React.Component {
             ? (
               <Form
                 schema={schema}
-                uiSchema={{ ...uischema, geometryFromMap: { 'ui:widget': 'hidden' } }}
+                uiSchema={{ ...uiSchema, geometryFromMap: { 'ui:widget': 'hidden' } }}
                 onSubmit={this.submitFeature}
                 onChange={this.changeForm}
                 validate={this.validateForm}

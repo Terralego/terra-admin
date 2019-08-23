@@ -7,7 +7,7 @@ import { generateURI } from '../../../config';
 import './styles.scss';
 
 const Header = ({
-  source,
+  layerName,
   tableSize,
   resize,
   t,
@@ -18,7 +18,7 @@ const Header = ({
 }) => (
   <div className="table-header">
     <div className="table-header__title">
-      {t('CRUD.table.title', { source })}
+      {t('CRUD.table.title', { layerName })}
       {displayAddFeature && (
         <NavLink className="table-header__create" to={generateURI('layer', { layer, action: 'create' })}>
           <span className="bp3-button">

@@ -1,11 +1,14 @@
 import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
+
 import { connectCRUDProvider } from '../../services/CRUDProvider';
+import { getLayer } from '../../services/CRUD';
+
 import Details from './Details';
 
 export default withRouter(
   connectCRUDProvider(({
-    layersList,
+    settings,
     map,
     fetchFeature,
     feature,
@@ -16,7 +19,7 @@ export default withRouter(
     map,
     fetchFeature,
     feature,
-    layer: layersList.find(({ name }) => name === layer),
+    layer: getLayer(settings, layer),
     paramLayer: layer,
     paramAction: action,
     paramId: id,

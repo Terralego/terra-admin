@@ -8,7 +8,6 @@ import { ACTION_CREATE, ACTION_UPDATE } from '../../../views/Map/Map';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';
-import mockedCustomStyle from '../../../views/Map/mockedCustomStyle';
 import ErrorListTemplate from './ErrorListTemplate';
 
 import {
@@ -72,12 +71,13 @@ class Edit extends React.Component {
     } = this.props;
     // Remove controlDraw from controls
     updateControls([]);
-    map.setFilter(this.layerId, ['all']);
+    if (this.layerId) {
+      map.setFilter(this.layerId, ['all']);
+    }
   }
 
   get layerId () {
-    const { paramLayer } = this.props;
-    const { id } = mockedCustomStyle.layers.find(layer => layer['source-layer'] === paramLayer);
+    const { layerPaint: { id } = {} } = this.props;
     return id;
   }
 
@@ -120,7 +120,9 @@ class Edit extends React.Component {
       };
       map.on('control_added', listener);
 
-      map.setFilter(this.layerId, ['!=', '_id', paramId]);
+      if (this.layerId) {
+        map.setFilter(this.layerId, ['!=', '_id', paramId]);
+      }
     }
     updateControls([control]);
   }
@@ -219,7 +221,7 @@ class Edit extends React.Component {
     const {
       t,
       action,
-      layer: { schema: { uischema = {} } = {} },
+      layer: { name, displayName = name, uiSchema = {} },
       paramLayer,
       paramId,
       displayAddFeature,
@@ -236,7 +238,7 @@ class Edit extends React.Component {
 
     const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE
-      ? t('CRUD.details.create', { layer: paramLayer })
+      ? t('CRUD.details.create', { layer: displayName })
       : (title || t('CRUD.details.noFeature'));
 
     const SaveButton = props => (
@@ -267,7 +269,7 @@ class Edit extends React.Component {
             ? (
               <Form
                 schema={schema}
-                uiSchema={{ ...uischema, geometryFromMap: { 'ui:widget': 'hidden' } }}
+                uiSchema={{ ...uiSchema, geometryFromMap: { 'ui:widget': 'hidden' } }}
                 onSubmit={this.submitFeature}
                 onChange={this.changeForm}
                 validate={this.validateForm}

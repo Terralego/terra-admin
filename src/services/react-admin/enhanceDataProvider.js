@@ -1,6 +1,6 @@
 import Api from '@terralego/core/modules/Api';
 import { WMTS } from '../../modules/DataSource/DataSource';
-import { getResourceWithoutBasePath } from './utils';
+import { getResourceWithoutBasePath } from '../../utils/react-admin/resources';
 
 const enhanceDataProvider = mainDataProvider => async (...args) => {
   const [type, resourceWithBasePath, params] = args;

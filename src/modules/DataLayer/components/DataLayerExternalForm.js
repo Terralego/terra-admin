@@ -11,6 +11,7 @@ import {
 
 import SourceFetcher from './SourceFetcher';
 import { fetchDatalayerConfig } from '../services/datalayer';
+import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
 
 const viewChoices = fetchDatalayerConfig();
 
@@ -19,7 +20,7 @@ const DataLayerExternalForm = props => (
     <SourceFetcher />
     <ReferenceInput
       source="source"
-      reference="geosource"
+      reference={GeosourceResourceFullName}
       label="datalayer.form.data-source"
       sort={{ field: 'name', order: 'ASC' }}
       validate={[required()]}

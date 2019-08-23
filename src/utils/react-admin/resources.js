@@ -22,7 +22,7 @@ export const getResourceWithoutBasePath = (string = '') => (
         filter 🡆 ['a', 'b', 'c']
         pop    🡆 'c'
     */
-    ? string.split('/').filter(a => a).pop()
+    ? string.split('/').filter(Boolean).pop()
     : string
 );
 

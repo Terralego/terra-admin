@@ -14,15 +14,12 @@ export default withRouter(
     feature,
     errors,
   }, {
-    match: { params: { layer, action, id } },
+    match: { params: { layer, id } },
   }) => ({
     map,
     fetchFeature,
     feature,
     layer: getLayer(settings, layer),
-    paramLayer: layer,
-    paramAction: action,
-    paramId: id,
     hasError: errors[id],
     errorCode: errors.code,
   }))(

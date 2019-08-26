@@ -19,7 +19,10 @@ class Details extends React.Component {
   detailContent = React.createRef();
 
   componentDidMount () {
-    const { paramId, detailsHasLoaded } = this.props;
+    const {
+      match: { params: { id: paramId } },
+      detailsHasLoaded,
+    } = this.props;
     this.getData();
     this.setSchema();
     if (paramId === ACTION_CREATE) {
@@ -28,9 +31,13 @@ class Details extends React.Component {
   }
 
   componentDidUpdate ({
-    paramId: prevParamId,
-    paramLayer: prevParamlayer,
-    paramAction: prevParamAction,
+    match: {
+      params: {
+        action: prevParamAction,
+        id: prevParamId,
+        layer: prevParamlayer,
+      },
+    },
     feature: prevFeature,
     feature: {
       [prevParamId]: {
@@ -39,9 +46,13 @@ class Details extends React.Component {
     } = {},
   }) {
     const {
-      paramId,
-      paramLayer,
-      paramAction,
+      match: {
+        params: {
+          action: paramAction,
+          id: paramId,
+          layer: paramLayer,
+        },
+      },
       feature,
       feature: { [paramId]: { properties } = {} } = {},
       detailsHasLoaded,
@@ -65,12 +76,16 @@ class Details extends React.Component {
   }
 
   get isCreateAction () {
-    const { paramId } = this.props;
+    const { match: { params: { id: paramId } } } = this.props;
     return paramId === ACTION_CREATE;
   }
 
   getData () {
-    const { layer, paramId, fetchFeature } = this.props;
+    const {
+      layer,
+      fetchFeature,
+      match: { params: { id: paramId } },
+    } = this.props;
     if (layer && paramId && !this.isCreateAction) {
       const { id: layerId } = layer;
       fetchFeature(layerId, paramId);
@@ -79,7 +94,7 @@ class Details extends React.Component {
 
   setSchema = () => {
     const {
-      paramId,
+      match: { params: { id: paramId } },
       feature: { [paramId]: { properties } = {} } = {},
       layer: { schema = {} } = {},
     } = this.props;
@@ -129,8 +144,7 @@ class Details extends React.Component {
   render () {
     const {
       feature,
-      paramLayer,
-      paramId,
+      match: { params: { id: paramId, layer: paramLayer } },
       t,
       hasError,
       errorCode,

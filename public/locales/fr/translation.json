@@ -246,7 +246,7 @@
       "description": "Description",
       "file": {
         "related-files": "Fichiers associés",
-        "placeholder": "Déposez votre fichier %{type} ici"
+        "placeholder": "Déposez un zip contenant tous les fichiers du %{type} ici "
       },
       "request": {
         "host-server": "Serveur hôte",

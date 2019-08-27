@@ -1,12 +1,15 @@
 import Api from '@terralego/core/modules/Api';
 
-let datalayerconfig = null;
+let viewList = null;
 
-export const fetchDatalayerConfig = async () => {
-  if (datalayerconfig === null) {
+export const fetchViewList = async () => {
+  if (viewList === null) {
     const apiViews =  await Api.request('geolayer/view/');
 
-    datalayerconfig = Object.entries(apiViews)
+    // Object tranformation from backend format
+    // To frontend one.
+    // Should be removed in a future release
+    viewList = Object.entries(apiViews)
       .map(elt => {
         const [key, { pk, ...rest }] = elt;
         return { ...rest, id: pk, key };
@@ -14,6 +17,6 @@ export const fetchDatalayerConfig = async () => {
       .sort(({ id: idA }, { id: idB }) => idA - idB);
   }
 
-  return datalayerconfig;
+  return viewList;
 };
-export default { fetchDatalayerConfig };
+export default { fetchViewList };

@@ -22,7 +22,7 @@ import LegendItemsField from './LegendItemsField';
 import CustomLayer from './CustomLayer';
 import StyleField from './StyleField';
 
-import withDatalayerConfig from './withDatalayerConfig';
+import withViewList from './withViewList';
 import { required } from '../../../utils/react-admin/validate';
 import TextArrayInput from '../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../components/react-admin/HelpContent';
@@ -30,7 +30,7 @@ import { resourceFullname as GeosourceResourceFullName } from '../../DataSource'
 
 const defaultRequired = required();
 
-const DataLayerTabbedForm = ({ datalayerConfig, ...props }) => (
+const DataLayerTabbedForm = ({ viewList, ...props }) => (
   <>
     <SourceFetcher />
     <TabbedForm {...props}>
@@ -45,11 +45,11 @@ const DataLayerTabbedForm = ({ datalayerConfig, ...props }) => (
           <SelectInput />
         </ReferenceInput>
 
-        {datalayerConfig.length > 0 && (
+        {viewList.length > 0 && (
         <SelectInput
           source="view"
           label="datalayer.form.view"
-          choices={datalayerConfig}
+          choices={viewList}
           validate={defaultRequired}
         />
         )}
@@ -227,4 +227,4 @@ const DataLayerTabbedForm = ({ datalayerConfig, ...props }) => (
   </>
 );
 
-export default withDatalayerConfig(DataLayerTabbedForm);
+export default withViewList(DataLayerTabbedForm);

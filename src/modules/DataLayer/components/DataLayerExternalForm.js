@@ -10,11 +10,11 @@ import {
 } from 'react-admin';
 
 import SourceFetcher from './SourceFetcher';
-import withDatalayerConfig from './withDatalayerConfig';
+import withViewList from './withViewList';
 import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
 
 
-const DataLayerExternalForm = ({ datalayerConfig, ...props }) => (
+const DataLayerExternalForm = ({ viewList, ...props }) => (
   <SimpleForm {...props}>
     <SourceFetcher />
     <ReferenceInput
@@ -28,11 +28,11 @@ const DataLayerExternalForm = ({ datalayerConfig, ...props }) => (
     </ReferenceInput>
 
 
-    {datalayerConfig.length > 0 && (
+    {viewList.length > 0 && (
     <SelectInput
       source="view"
       label="datalayer.form.view"
-      choices={datalayerConfig}
+      choices={viewList}
       validate={[required()]}
     />
     )}
@@ -50,4 +50,4 @@ const DataLayerExternalForm = ({ datalayerConfig, ...props }) => (
   </SimpleForm>
 );
 
-export default withDatalayerConfig(DataLayerExternalForm);
+export default withViewList(DataLayerExternalForm);

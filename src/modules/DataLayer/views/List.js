@@ -13,7 +13,7 @@ import {
 } from 'react-admin';
 
 
-import withDatalayerConfig from '../components/withDatalayerConfig';
+import withViewList from '../components/withViewList';
 import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
 
@@ -34,9 +34,9 @@ import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkA
 const DataLayerListPagination = props =>
   <Pagination rowsPerPageOptions={[]} {...props} />;
 
-export const DataLayerList = ({ datalayerConfig, ...props }) => {
+export const DataLayerList = ({ viewList, ...props }) => {
   const renderViewField = ({ view }) => {
-    const { name = view } = datalayerConfig.find(({ id }) => (+id === view)) || {};
+    const { name = view } = viewList.find(({ id }) => (+id === view)) || {};
     return name;
   };
   return (
@@ -64,4 +64,4 @@ export const DataLayerList = ({ datalayerConfig, ...props }) => {
   );
 };
 
-export default withDatalayerConfig(DataLayerList);
+export default withViewList(DataLayerList);

@@ -43,7 +43,7 @@ export const Nav = ({
         className="CRUD-nav__button"
       >
         <Button
-          icon="align-right"
+          icon={`arrow-${menuOpen ? 'left' : 'right'}`}
           aria-controls="CRUD-nav__menu"
           expandable={menuOpen ? 'true' : 'false'}
           aria-label={t(menuOpen ? 'CRUD.nav.foldMenu' : 'CRUD.nav.unfoldMenu')}
@@ -60,12 +60,13 @@ export const Nav = ({
             <li className="CRUD-nav__group" key={group}>
               <p className="CRUD-nav__group-name">
                 <NavIcon src={groupPictogram} />
-                {group}
+                <span className="CRUD-nav__group-text">{group}</span>
               </p>
               <ul className="CRUD-nav__list">
                 {views.map(({ name, pictogram, layer }) => (
                   <li className="CRUD-nav__item" key={name}>
                     <NavLink
+                      className="CRUD-nav__link"
                       to={generateURI('layer', { layer: layer.name })}
                     >
                       <span className="bp3-button bp3-minimal">

@@ -12,12 +12,10 @@ import {
   Pagination,
 } from 'react-admin';
 
+
+import withViewList from '../components/withViewList';
 import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
-
-import { fetchDatalayerConfig } from '../services/datalayer';
-
-const views = fetchDatalayerConfig();
 
 // const ListFilters = props => (
 //   <Filter {...props}>
@@ -36,33 +34,34 @@ const views = fetchDatalayerConfig();
 const DataLayerListPagination = props =>
   <Pagination rowsPerPageOptions={[]} {...props} />;
 
-const renderViewField = ({ view }) => {
-  const { name = view } = views.find(({ id }) => (+id === view)) || {};
-  return name;
+export const DataLayerList = ({ viewList, ...props }) => {
+  const renderViewField = ({ view }) => {
+    const { name = view } = viewList.find(({ id }) => (+id === view)) || {};
+    return name;
+  };
+  return (
+    <List
+      sort={{
+        field: 'name',
+        order: 'ASC',
+      }}
+      exporter={false}
+    // filters={<ListFilters />}
+      bulkActionButtons={<CommonBulkActionButtons />}
+      perPage={100}
+      pagination={<DataLayerListPagination />}
+      {...props}
+    >
+      <Datagrid rowClick="edit">
+        <TextField source="name" label="datalayer.form.name" />
+        <FunctionField source="view" render={renderViewField} />
+        <ReferenceField source="source" reference={GeosourceResourceFullName} label="datalayer.form.data-source">
+          <TextField source="name" />
+        </ReferenceField>
+        <EditButton />
+      </Datagrid>
+    </List>
+  );
 };
 
-export const DataLayerList = props => (
-  <List
-    sort={{
-      field: 'name',
-      order: 'ASC',
-    }}
-    exporter={false}
-    // filters={<ListFilters />}
-    bulkActionButtons={<CommonBulkActionButtons />}
-    perPage={100}
-    pagination={<DataLayerListPagination />}
-    {...props}
-  >
-    <Datagrid rowClick="edit">
-      <TextField source="name" label="datalayer.form.name" />
-      <FunctionField source="view" render={renderViewField} />
-      <ReferenceField source="source" reference={GeosourceResourceFullName} label="datalayer.form.data-source">
-        <TextField source="name" />
-      </ReferenceField>
-      <EditButton />
-    </Datagrid>
-  </List>
-);
-
-export default DataLayerList;
+export default withViewList(DataLayerList);

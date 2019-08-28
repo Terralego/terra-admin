@@ -139,7 +139,7 @@ export class CRUDProvider extends React.Component {
       if (this.isUnmount) return;
 
       this.setState({ mapIsResizing: false });
-    }, 800);
+    }, 300);
   }
 
   render () {

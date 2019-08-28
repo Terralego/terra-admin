@@ -5,8 +5,5 @@ export default {
   nav: [{
     label: 'user.nav.list',
     href: 'user',
-  }, {
-    label: 'user.nav.create',
-    href: 'user/create',
   }],
 };

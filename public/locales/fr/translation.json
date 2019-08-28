@@ -203,8 +203,7 @@
   "user": {
     "project": "Utilisateurs",
     "nav": {
-      "list": "Tous les utilisateurs",
-      "create": "Créer un nouvel utilisateur"
+      "list": "Liste des utilisateurs"
     },
     "form": {
       "id": "Id",
@@ -225,8 +224,7 @@
   "datasource": {
     "project": "Entrepôt de données",
     "nav": {
-      "list": "Toutes les sources de données",
-      "create": "Ajouter une source de données"
+      "list": "Sources de données"
     },
     "form": {
       "read-only": "Cette source de données n'est pas modifiable.",
@@ -280,8 +278,7 @@
   "datalayer": {
     "project": "Visualiseur",
     "nav": {
-      "list": "Toutes les couches de données",
-      "create": "Ajouter une couche de données"
+      "list": "Couches de données"
     },
     "form": {
       "name": "Nom",

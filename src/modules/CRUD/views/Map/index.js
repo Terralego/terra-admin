@@ -23,7 +23,6 @@ export default withRouter(
       'mapConfig',
       'setMap',
       'map',
-      'resizingMap',
       'mapIsResizing',
       'getFeaturesList',
       'featuresList',

@@ -14,7 +14,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 3;
   
-  &--visible {
+  &--active {
     transform: translateX(0);
 
     ~ .CRUD-map .interactive-map {
@@ -175,7 +175,7 @@
 
 @media all and (min-width: 66em) {
   .CRUD-details {
-    &--visible {
+    &--active {
       ~ .CRUD-map .interactive-map {
         .mapboxgl-ctrl-top-right {
           right: calc(40% + 0.3rem);

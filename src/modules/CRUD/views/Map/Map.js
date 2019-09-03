@@ -61,7 +61,7 @@ export class Map extends React.Component {
 
   state = {
     interactions: [],
-    customStyle: undefined,
+    customStyle: {},
     controls: [...DEFAULT_CONTROLS, CONTROL_CAPTURE_POSITION],
     tableSize: 'medium', // 'minified', 'medium', 'full'
   }
@@ -95,7 +95,7 @@ export class Map extends React.Component {
       feature: { [id]: { geom: { coordinates = [] } = {} } = {} } = {},
     } = this.props;
 
-    const { customStyle: { layers } = {}, addHighlight, removeHighlight } = this.state;
+    const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
 
     if (settings !== prevSettings) {
       this.generateLayersToMap();
@@ -222,7 +222,7 @@ export class Map extends React.Component {
       map,
       match: { params: { layer } },
     } = this.props;
-    const { customStyle: { layers = [] } = {} } = this.state;
+    const { customStyle: { layers = [] } } = this.state;
     if (!Object.keys(map).length || !layers.length) {
       return;
     }
@@ -245,7 +245,7 @@ export class Map extends React.Component {
 
   onTableHoverCell = (featureId, hover = true) => {
     const { match: { params: { layer } } } = this.props;
-    const { customStyle: { layers = [] } = {}, addHighlight, removeHighlight } = this.state;
+    const { customStyle: { layers = [] } , addHighlight, removeHighlight } = this.state;
     const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
     if (!layerId) {
       return;
@@ -294,7 +294,7 @@ export class Map extends React.Component {
     const isDataLoaded = Object.keys(mapConfig).length > 1 && isSettingsLoaded;
     const isDetailsVisible = !!id;
 
-    if (layer && !getLayer(settings, layer)) {
+    if (isSettingsLoaded && layer && !getLayer(settings, layer)) {
       toast.displayError(t('CRUD.layer.errorNoLayer'));
       return <Redirect to={generateURI('layer')} />;
     }

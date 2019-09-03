@@ -579,7 +579,7 @@ it('should not highlight on table hover cell if there is not the identifiable la
     match: { params: { layer: 'layerTest' } },
   });
   instance.state = {
-    customStyle: undefined,
+    customStyle: { layers: undefined },
     addHighlight: jest.fn(),
     removeHighlight: jest.fn(),
   };

@@ -1,7 +1,7 @@
 import React from 'react';
 import connect from 'react-ctx-connect';
-import { fetchSettings } from './CRUD';
 import { fetchMapConfig } from './map';
+import { fetchSettings } from './CRUD';
 import {
   fetchFeaturesList,
   fetchFeature as fetchFeatureAction,
@@ -19,7 +19,10 @@ export class CRUDProvider extends React.Component {
     settings: {},
     featuresList: [],
     mapConfig: {},
-    errors: {},
+    errors: {
+      featuresList: [],
+      feature: [],
+    },
   };
 
   componentWillUnmount () {
@@ -30,12 +33,12 @@ export class CRUDProvider extends React.Component {
 
   getMapConfig = async () => {
     try {
-      const { results: mapConfig = {} } = await fetchMapConfig();
+      const { results: mapConfig } = await fetchMapConfig();
       this.setState({ mapConfig });
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, code: e.message },
+        errors: { ...state.errors, message: e.message },
       }));
     }
   };
@@ -47,24 +50,43 @@ export class CRUDProvider extends React.Component {
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, code: e.message },
+        errors: { ...state.errors, message: e.message },
       }));
     }
   }
 
   getFeaturesList = async layerId => {
+    if (!layerId) {
+      return;
+    }
     try {
-      const { results: featuresList = [] } = await fetchFeaturesList(layerId);
-      this.setState({ featuresList });
+      const { results: featuresList } = await fetchFeaturesList(layerId);
+      this.setState(state => ({
+        ...state,
+        featuresList,
+        errors: {
+          ...state.errors,
+          featuresList: state.errors.featuresList.filter(item => !item[layerId]),
+        },
+      }));
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [state.featuresList.length]: true },
+        errors: {
+          ...state.errors,
+          featuresList: [
+            ...state.errors.featuresList,
+            { [layerId]: { message: e.message } },
+          ],
+        },
       }));
     }
   }
 
   fetchFeature = async (layerId, featureId) => {
+    if (!layerId || !featureId) {
+      return;
+    }
     try {
       const feature = await fetchFeatureAction(layerId, featureId);
       this.setState(state => ({
@@ -72,16 +94,29 @@ export class CRUDProvider extends React.Component {
           ...state.feature,
           [feature.identifier]: feature,
         },
+        errors: {
+          ...state.errors,
+          feature: state.errors.feature.filter(item => !item[featureId]),
+        },
       }));
     } catch (e) {
       this.setState(state => ({
         ...state,
-        errors: { ...state.errors, [featureId]: true, code: e.message },
+        errors: {
+          ...state.errors,
+          feature: [
+            ...state.errors.feature,
+            { [featureId]: { message: e.message } },
+          ],
+        },
       }));
     }
   }
 
   saveFeature = async (layerId, featureId, data) => {
+    if (!layerId) {
+      return null;
+    }
     try {
       const feature = await saveFeatureAction(layerId, featureId, data);
       const { featuresList } = this.state;
@@ -108,6 +143,9 @@ export class CRUDProvider extends React.Component {
   }
 
   deleteFeature = async (layerId, featureId) => {
+    if (!layerId || !featureId) {
+      return null;
+    }
     try {
       const { feature, featuresList } = this.state;
       const deletion = await deleteFeatureAction(layerId, featureId);
@@ -122,10 +160,6 @@ export class CRUDProvider extends React.Component {
       });
       return deletion;
     } catch (e) {
-      this.setState(state => ({
-        ...state,
-        errors: { ...state.errors, code: e.message },
-      }));
       return null;
     }
   }
@@ -137,7 +171,6 @@ export class CRUDProvider extends React.Component {
     setTimeout(() => {
       map.resize();
       if (this.isUnmount) return;
-
       this.setState({ mapIsResizing: false });
     }, 300);
   }

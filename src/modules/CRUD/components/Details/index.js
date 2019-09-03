@@ -15,14 +15,17 @@ export default withRouter(
     errors,
   }, {
     match: { params: { layer, id } },
-  }) => ({
-    map,
-    fetchFeature,
-    feature,
-    layer: getLayer(settings, layer),
-    hasError: errors[id],
-    errorCode: errors.code,
-  }))(
+  }) => {
+    const errorFeature = errors.feature.find(item => item[id]);
+    return {
+      map,
+      fetchFeature,
+      feature,
+      layer: getLayer(settings, layer),
+      hasError: !!errorFeature,
+      errorCode: errorFeature ? errorFeature[id].message : '',
+    };
+  })(
     withNamespaces()(Details),
   ),
 );

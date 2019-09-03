@@ -1,10 +1,6 @@
 import config from './mock-config.json';
 
-export async function fetchMapConfig () {
-  // Mock api the config return
-  return {
-    results: { ...config },
-  };
-}
+// Mock api the config return
+export const fetchMapConfig = () => ({ results: { ...config } });
 
 export default { fetchMapConfig };

@@ -1,45 +1,42 @@
 import Api from '@terralego/core/modules/Api';
 
-export async function fetchFeaturesList (layerId) {
-  return Api.request(`layer/${layerId}/feature/`);
-}
 
-export async function fetchFeature (layerId, featureId) {
-  return Api.request(`layer/${layerId}/feature/${featureId}/`);
-}
+export const fetchFeaturesList = layerId =>
+  Api.request(`layer/${layerId}/feature/`);
 
-export async function createFeature (layerId, body) {
-  return Api.request(`layer/${layerId}/feature/`, { method: 'POST', body });
-}
+export const fetchFeature = (layerId, featureId) =>
+  Api.request(`layer/${layerId}/feature/${featureId}/`);
 
-export async function updateFeature (layerId, featureId, body) {
-  return Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'PUT', body });
-}
+const createFeature = (layerId, body) =>
+  Api.request(`layer/${layerId}/feature/`, { method: 'POST', body });
 
-export async function deleteFeature (layerId, featureId) {
-  return Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'DELETE' });
-}
+const updateFeature = (layerId, featureId, body) =>
+  Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'PUT', body });
 
-export async function saveFeature (layerId, featureId = false, body) {
-  if (featureId) {
-    return updateFeature(layerId, featureId, body);
-  }
-  return createFeature(layerId, body);
-}
+export const deleteFeature = (layerId, featureId) =>
+  Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'DELETE' });
 
-function getBoundingBox (list, item) {
-  const [lng, lat] = item;
+export const saveFeature = (layerId, featureId, body) => (
+  (featureId)
+    ? updateFeature(layerId, featureId, body)
+    : createFeature(layerId, body)
+);
+
+const getBoundingBox = (list, item) => {
   const [
     [minLng, minLat],
     [maxLng, maxLat],
   ] = list;
+
+  const [lng, lat] = item;
+
   return [
     [Math.min(minLng, lng), Math.min(minLat, lat)],
     [Math.max(maxLng, lng), Math.max(maxLat, lat)],
   ];
-}
+};
 
-export function getBounds (coordinates, limits = [[Infinity, Infinity], [-Infinity, -Infinity]]) {
+export const getBounds = (coordinates, limits = [[Infinity, Infinity], [-Infinity, -Infinity]]) => {
   if (!Array.isArray(coordinates[0])) {
     return getBoundingBox(limits, coordinates);
   }
@@ -52,4 +49,4 @@ export function getBounds (coordinates, limits = [[Infinity, Infinity], [-Infini
 }
 
 
-export default { fetchFeaturesList, fetchFeature, getBounds };
+export default { fetchFeaturesList, fetchFeature, deleteFeature, saveFeature, getBounds };

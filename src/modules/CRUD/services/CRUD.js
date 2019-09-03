@@ -34,7 +34,7 @@ const getDefaultPaintsByGeomType = geomType => {
 
 export const getLayer = ({ menu = [] }, name) => {
   const layers = flattenMenu(menu);
-  if (!layers || !name) {
+  if (!layers.length || !name) {
     return false;
   }
   const {

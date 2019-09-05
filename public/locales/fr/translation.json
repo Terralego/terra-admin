@@ -314,7 +314,8 @@
       },
       "minifiche": {
         "display-on-click": "Afficher la minifiche",
-        "template": "Modèle de la minifiche"
+        "template": "Modèle de la minifiche",
+        "highlight-color": "Choisir la couleur de surbrillance"
       },
       "filter": "Filtre",
       "allow-filtering-field": "Permettre de filter par le champ",

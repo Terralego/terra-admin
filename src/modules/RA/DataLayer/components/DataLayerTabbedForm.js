@@ -12,6 +12,7 @@ import {
   FormDataConsumer,
   REDUX_FORM_NAME,
 } from 'react-admin';
+import { ColorInput } from 'react-admin-color-input';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
 
@@ -133,6 +134,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
         </FormDataConsumer>
 
         <BooleanInput source="minisheet_enable" label="datalayer.form.minifiche.display-on-click" />
+        <ColorInput source="highlight_color" label="datalayer.form.minifiche.highlight-color" />
         <FormDataConsumer>
           {({ formData }) => formData.minisheet_enable &&
             <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" fullWidth />}

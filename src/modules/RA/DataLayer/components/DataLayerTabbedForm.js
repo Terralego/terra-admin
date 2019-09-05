@@ -133,11 +133,11 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
           )}
         </FormDataConsumer>
 
-        <BooleanInput source="minisheet_enable" label="datalayer.form.minifiche.display-on-click" />
-        <ColorInput source="highlight_color" label="datalayer.form.minifiche.highlight-color" />
+        <BooleanInput source="minisheet_enable" label="datalayer.form.minisheet.display-on-click" />
+        <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" />
         <FormDataConsumer>
           {({ formData }) => formData.minisheet_enable &&
-            <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" fullWidth />}
+            <LongTextInput source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
         </FormDataConsumer>
 
         <FormDataConsumer>

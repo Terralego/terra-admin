@@ -312,10 +312,10 @@
         "max-zoom": "Zoom maximum",
         "template": "Modèle de la fenêtre contextuelle"
       },
-      "minifiche": {
+      "minisheet": {
         "display-on-click": "Afficher la minifiche",
         "template": "Modèle de la minifiche",
-        "highlight-color": "Choisir la couleur de surbrillance"
+        "pick-highlight-color": "Sélectionner une couleur de surbrillance"
       },
       "filter": "Filtre",
       "allow-filtering-field": "Permettre de filter par le champ",

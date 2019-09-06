@@ -55,7 +55,7 @@ export class Map extends React.Component {
     },
     map: {},
     mapConfig: {},
-    settings: {},
+    settings: undefined,
     featuresList: [],
   }
 

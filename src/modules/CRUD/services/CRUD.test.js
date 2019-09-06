@@ -68,9 +68,18 @@ const settings = {
   }],
 };
 
-it('should fetch settings', () => {
-  fetchSettings();
+it('should fetch settings', async () => {
+  await fetchSettings();
   expect(Api.request).toHaveBeenCalled();
+});
+
+it('should not crash when no fetching ', async () => {
+  Api.request = jest.fn(() => {
+    throw new Error('No fetching settings');
+  });
+  expect(await fetchSettings()).toEqual({
+    settings: {}, error: 'No fetching settings',
+  });
 });
 
 it('should get the selected layer', () => {

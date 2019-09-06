@@ -5,7 +5,6 @@ import CRUDProvider from './CRUDProvider';
 import mapUtils from './map';
 import crudUtils from './CRUD';
 
-
 jest.mock('react-ctx-connect', () => {
   const connect = () => jest.fn();
   return connect;
@@ -17,37 +16,112 @@ jest.mock('./map', () => ({
       foo: 'foo',
       bar: 'bar',
     },
+    error: {},
   }),
 }));
 
 jest.mock('./CRUD', () => ({
   fetchSettings: () => ({
-    fooSettings: 'foobar',
+    settings: {
+      fooSettings: 'foobar',
+    },
+    error: {},
   }),
 }));
 
 jest.mock('./features', () => ({
   fetchFeaturesList: layerId => {
-    if (layerId === 'foo') {
+    if (!layerId) {
       return {
-        results: [{ featureID: 1 }, { featureID: 2 }],
+        featuresList: [],
+        error: { layerId, message: 'Layer ID is missing' },
       };
     }
-    throw new Error('No access to the list of features');
+    if (layerId === 'foo') {
+      return {
+        featuresList: [{ featureID: 1 }, { featureID: 2 }],
+        error: {},
+      };
+    }
+    return {
+      featuresList: [],
+      error: { layerId, message: 'No found' },
+    };
   },
   fetchFeature: (layerId, featureId) => {
-    if (layerId === 'foo' && featureId) {
-      return { identifier: '1', name: 'foo' };
+    if (!layerId || !featureId) {
+      return {
+        feature: {},
+        error: { layerId, featureId, message: 'Layer ID or feature ID are missing' },
+      };
     }
-    throw new Error('No access to data of features');
+    if (layerId === 'foo' && featureId === '1') {
+      return {
+        feature: { identifier: 1, foo: 'foo' },
+        error: {},
+      };
+    }
+    return {
+      feature: {},
+      error: { layerId, featureId, message: 'Not found' },
+    };
   },
   saveFeature: (layerId, featureId, data) => {
-    if (layerId === 'foo' && featureId) {
-      return { identifier: '1', name: 'foo', ...data };
+    if (!layerId) {
+      return {
+        feature: {},
+        error: { layerId, message: 'Layer ID is missing' },
+      };
     }
-    throw new Error('No saving feature');
+    // Create Feature
+    if (layerId === 'foo' && !featureId) {
+      return {
+        feature: { identifier: '999', foo: 'foo', ...data },
+        error: {},
+      };
+    }
+    // Fail Create Feature
+    if (layerId === 'NO_EXISTS' && !featureId) {
+      return {
+        feature: {},
+        error: { layerId, message: 'Not found' },
+      };
+    }
+
+    // Update Feature
+    if (layerId === 'bar' && featureId === '1000') {
+      return {
+        feature: { identifier: '1000', foo: 'bar', ...data },
+        error: {},
+      };
+    }
+
+    // Fail Update Feature
+    return {
+      feature: {},
+      error: { layerId, message: 'Not found' },
+    };
   },
-  deleteFeature: jest.fn(),
+  deleteFeature: (layerId, featureId) => {
+    if (!layerId || !featureId) {
+      return {
+        featuresList: [],
+        error: { layerId, message: 'Layer ID or Feature ID are missing' },
+      };
+    }
+    // Delete Feature
+    if (layerId === 'foo' && featureId === '100') {
+      return {
+        feature: { identifier: '100', foo: 'bar' },
+        error: {},
+      };
+    }
+    // Fail delete feature
+    return {
+      featuresList: [],
+      error: { layerId, message: 'Not found' },
+    };
+  },
 }));
 
 it('should render correctly', () => {
@@ -78,18 +152,29 @@ it('should set map', () => {
   instance.setMap({ bar: 'bar' });
   expect(instance.setState).toHaveBeenCalledWith({ map: { bar: 'bar' } });
 });
+
 it('should get map config', async () => {
   const instance = new CRUDProvider();
-  instance.setState = jest.fn();
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
   await instance.getMapConfig();
-  expect(instance.setState).toHaveBeenCalledWith({ mapConfig: { foo: 'foo', bar: 'bar' } });
+  expect(stateCallback({})).toEqual({
+    mapConfig: { foo: 'foo', bar: 'bar' },
+    errors: { mapConfig: {} },
+  });
 });
 
 it('should not crash when no getting map config', async () => {
   // eslint-disable-next-line import/no-named-as-default-member
-  mapUtils.fetchMapConfig = () => {
-    throw new Error('Error config');
-  };
+  mapUtils.fetchMapConfig = () => ({
+    results: {},
+    error: {
+      foo: 'foo',
+      bar: 'bar',
+    },
+  });
 
   const instance = new CRUDProvider();
   let stateCallback;
@@ -97,21 +182,34 @@ it('should not crash when no getting map config', async () => {
     stateCallback = callback;
   });
   await instance.getMapConfig();
-  expect(stateCallback({})).toEqual({ errors: { message: 'Error config' } });
+  expect(stateCallback({})).toEqual({
+    mapConfig: {},
+    errors: { mapConfig: { bar: 'bar', foo: 'foo' } },
+  });
 });
 
 it('should get settings', async () => {
   const instance = new CRUDProvider();
-  instance.setState = jest.fn();
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
   await instance.getSettings();
-  expect(instance.setState).toHaveBeenCalledWith({ settings: { fooSettings: 'foobar' } });
+  expect(stateCallback({})).toEqual({
+    settings: { fooSettings: 'foobar' },
+    errors: { settings: {} },
+  });
 });
 
 it('should not crash when no getting settings', async () => {
   // eslint-disable-next-line import/no-named-as-default-member
-  crudUtils.fetchSettings = () => {
-    throw new Error('Error settings');
-  };
+  crudUtils.fetchSettings = () => ({
+    settings: {},
+    error: {
+      foo: 'foo',
+      bar: 'bar',
+    },
+  });
 
   const instance = new CRUDProvider();
   let stateCallback;
@@ -119,120 +217,163 @@ it('should not crash when no getting settings', async () => {
     stateCallback = callback;
   });
   await instance.getSettings();
-  expect(stateCallback({})).toEqual({ errors: { message: 'Error settings' } });
+  expect(stateCallback({})).toEqual({
+    settings: {},
+    errors: { settings: { foo: 'foo', bar: 'bar' } },
+  });
 });
 
 it('should not get list of features without layer ID parameter', async () => {
   const instance = new CRUDProvider();
   instance.setState = jest.fn();
   await instance.getFeaturesList();
-  expect(instance.setState).not.toHaveBeenCalled();
+  expect(instance.setState).toHaveBeenCalledWith({
+    errors: {
+      feature: [],
+      featuresList: [{ layerId: undefined, message: 'Layer ID is missing' }],
+      settings: undefined,
+    },
+    featuresList: [],
+  });
 });
 
 it('should get list of features', async () => {
   const instance = new CRUDProvider();
-  const state = {
-    errors: {
-      featuresList: [{ foo: { message: 'Not found' } }],
-    },
-  };
-  let stateCallback;
-  instance.setState = jest.fn(callback => {
-    stateCallback = callback;
-  });
+  instance.setState = jest.fn();
   await instance.getFeaturesList('foo');
-  expect(stateCallback(state)).toEqual({
-    errors: { featuresList: [] },
+  expect(instance.setState).toHaveBeenCalledWith({
+    errors: {
+      feature: [],
+      featuresList: [],
+      settings: undefined,
+    },
     featuresList: [{ featureID: 1 }, { featureID: 2 }],
   });
+});
 
+it('should not crash when no getting list of feature', async () => {
+  const instance = new CRUDProvider();
+  instance.setState = jest.fn();
   await instance.getFeaturesList('NO_EXISTS');
-  expect(stateCallback(state)).toEqual({
-    errors: { featuresList: [
-      { foo: { message: 'Not found' } },
-      { NO_EXISTS: { message: 'No access to the list of features' } }
-    ] },
+  expect(instance.setState).toHaveBeenCalledWith({
+    errors: {
+      feature: [],
+      featuresList: [{ layerId: 'NO_EXISTS', message: 'No found' }],
+      settings: undefined,
+    },
+    featuresList: [],
   });
 });
 
 it('should not get feature data without layer id or feature id', async () => {
   const instance = new CRUDProvider();
-  instance.setState = jest.fn();
-  await instance.fetchFeature();
-  expect(instance.setState).not.toHaveBeenCalled();
-
-  await instance.fetchFeature('foo');
-  expect(instance.setState).not.toHaveBeenCalled();
-});
-
-it('should get feature data', async () => {
-  const instance = new CRUDProvider();
-  const state = {
-    errors: {
-      feature: [{ 1: { message: 'Not found' } }],
-    },
-  };
   let stateCallback;
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  await instance.fetchFeature('foo', 1);
-  expect(stateCallback(state)).toEqual({
-    errors: { feature: [] },
-    feature: {
-      1: {
-        identifier: '1',
-        name: 'foo',
-      },
+  await instance.fetchFeature();
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [{
+        featureId: undefined,
+        layerId: undefined,
+        message: 'Layer ID or feature ID are missing',
+      }],
+      featuresList: [],
+      settings: undefined,
     },
+    feature: {},
+  });
+});
+
+it('should get feature data', async () => {
+  const instance = new CRUDProvider();
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
+  await instance.fetchFeature('foo', '1');
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [],
+      featuresList: [],
+      settings: undefined,
+    },
+    feature: { 1: { identifier: 1, foo: 'foo' } },
   });
 });
 
 it('should not crash when no getting feature data', async () => {
   const instance = new CRUDProvider();
-  const state = {
-    errors: {
-      feature: [],
-    },
-  };
   let stateCallback;
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  await instance.fetchFeature('bar', 1);
-  expect(stateCallback(state)).toEqual({
-    errors: { feature: [{ 1: { message: 'No access to data of features' } }] },
+  await instance.fetchFeature('foo', 'NO_EXISTS');
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [{
+        featureId: 'NO_EXISTS',
+        layerId: 'foo',
+        message: 'Not found',
+      }],
+      featuresList: [],
+      settings: undefined,
+    },
+    feature: {},
   });
 });
 
-it('should not save without layer id', async () => {
+it('should not save feature without layer id', async () => {
   const instance = new CRUDProvider();
-  instance.setState = jest.fn();
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
   await instance.saveFeature();
-  expect(instance.setState).not.toHaveBeenCalled();
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [{
+        layerId: undefined,
+        message: 'Layer ID is missing',
+      }],
+      featuresList: [],
+      settings: undefined,
+    },
+    feature: {},
+    featuresList: [],
+  });
 });
 
-it('should save feature', async () => {
+it('should create feature', async () => {
   const instance = new CRUDProvider();
   instance.state = {
-    featuresList: [{ identifier: '2', name: 'Bar' }],
+    ...instance.state,
+    featuresList: [{
+      displayName: 'myFeature',
+      foo: 'foo',
+      identifier: 'existingFeature',
+    }],
   };
   let stateCallback;
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  await instance.saveFeature('foo', '1', { displayName: 'Foo' });
-  expect(stateCallback({})).toEqual({
+  await instance.saveFeature('foo', false, { displayName: 'Foo' });
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [],
+      featuresList: [],
+      settings: undefined,
+    },
     feature: {
-      1: {
-        identifier: '1',
-        name: 'foo',
-        displayName: 'Foo',
+      999: {
+        displayName: 'Foo', foo: 'foo', identifier: '999',
       },
     },
     featuresList: [
-      { identifier: '2', name: 'Bar' },
-      { identifier: '1', name: 'foo', displayName: 'Foo' },
+      { displayName: 'myFeature', foo: 'foo', identifier: 'existingFeature' },
+      { displayName: 'Foo', foo: 'foo', identifier: '999' },
     ],
   });
 });
@@ -240,27 +381,43 @@ it('should save feature', async () => {
 it('should update feature', async () => {
   const instance = new CRUDProvider();
   instance.state = {
-    featuresList: [
-      { identifier: '1', name: 'foo' },
-      { identifier: '2', name: 'Bar' },
-    ],
+    ...instance.state,
+    errors: {
+      feature: [{ layerId: 'bar', message: 'Not found' }],
+      featuresList: [],
+      settings: undefined,
+    },
+    featuresList: [{
+      displayName: 'myFeature',
+      foo: 'foo',
+      identifier: '1000',
+    }, {
+      displayName: 'otherFeature',
+      foo: 'bar',
+      identifier: '123',
+    }],
   };
   let stateCallback;
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  await instance.saveFeature('foo', '1', { displayName: 'Foo' });
-  expect(stateCallback({})).toEqual({
+  await instance.saveFeature('bar', '1000', { displayName: 'Foo' });
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [],
+      featuresList: [],
+      settings: undefined,
+    },
     feature: {
-      1: {
-        identifier: '1',
-        name: 'foo',
+      1000: {
+        identifier: '1000',
+        foo: 'bar',
         displayName: 'Foo',
       },
     },
     featuresList: [
-      { identifier: '1', name: 'foo', displayName: 'Foo' },
-      { identifier: '2', name: 'Bar' },
+      { identifier: '1000', foo: 'bar', displayName: 'Foo' },
+      { identifier: '123', foo: 'bar', displayName: 'otherFeature' },
     ],
   });
 });
@@ -272,64 +429,131 @@ it('should not crash when no saving feature', async () => {
     stateCallback = callback;
   });
   await instance.saveFeature('bar', 1);
-  expect(stateCallback({})).toEqual({
-    errors: { 1: 'No saving feature' },
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [{ layerId: 'bar', message: 'Not found' }],
+      featuresList: [],
+      settings: undefined,
+    },
+    feature: {},
+    featuresList: [],
   });
 });
 
 it('should not delete feature without layer id or feature id', async () => {
   const instance = new CRUDProvider();
-  instance.setState = jest.fn();
-  await instance.deleteFeature();
-  expect(instance.setState).not.toHaveBeenCalled();
-
-  await instance.deleteFeature('foo');
-  expect(instance.setState).not.toHaveBeenCalled();
-});
-
-it('should delete feature', async () => {
-  const instance = new CRUDProvider();
   instance.state = {
-    feature: {
-      1: {
-        identifier: '1',
-        name: 'foo',
-        displayName: 'Foo',
-      },
-      2: {
-        identifier: '2',
-        name: 'bar',
-        displayName: 'bar',
-      },
-    },
-    featuresList: [
-      { identifier: '2', name: 'Bar' },
-      { identifier: '1', name: 'foo', displayName: 'Foo' },
-    ],
+    ...instance.state,
+    featuresList: [{
+      displayName: 'Bar',
+      foo: 'bar',
+      identifier: '1000',
+    }, {
+      displayName: 'Foo',
+      foo: 'foo',
+      identifier: '100',
+    }],
   };
   let stateCallback;
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  await instance.deleteFeature('foo', '1');
-  expect(stateCallback).toEqual({
-    feature: {
-      2: {
-        identifier: '2',
-        name: 'bar',
-        displayName: 'bar',
-      },
+  await instance.deleteFeature();
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [{
+        layerId: undefined,
+        message: 'Layer ID or Feature ID are missing',
+      }],
+      featuresList: [],
+      settings: undefined,
     },
-    featuresList: [
-      { identifier: '2', name: 'Bar' },
-    ],
+    feature: {},
+    featuresList: [{
+      displayName: 'Bar',
+      foo: 'bar',
+      identifier: '1000',
+    }, {
+      displayName: 'Foo',
+      foo: 'foo',
+      identifier: '100',
+    }],
+  });
+});
+
+it('should delete feature', async () => {
+  const instance = new CRUDProvider();
+  instance.state = {
+    ...instance.state,
+    featuresList: [{
+      displayName: 'Bar',
+      foo: 'bar',
+      identifier: '1000',
+    }, {
+      displayName: 'Foo',
+      foo: 'foo',
+      identifier: '100',
+    }],
+  };
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
+  await instance.deleteFeature('foo', '100');
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [],
+      featuresList: [],
+      settings: undefined,
+    },
+    feature: {},
+    featuresList: [{
+      displayName: 'Bar',
+      foo: 'bar',
+      identifier: '1000',
+    }],
   });
 });
 
 it('should not crash when no deleting feature', async () => {
   const instance = new CRUDProvider();
-  const deletion = await instance.deleteFeature('bar', 1);
-  expect(deletion).toEqual(null);
+  instance.state = {
+    ...instance.state,
+    featuresList: [{
+      displayName: 'Bar',
+      foo: 'bar',
+      identifier: '1000',
+    }, {
+      displayName: 'Foo',
+      foo: 'foo',
+      identifier: '100',
+    }],
+  };
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
+  await instance.deleteFeature('foo', '123');
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [{
+        layerId: 'foo',
+        message: 'Not found',
+      }],
+      featuresList: [],
+      settings: undefined,
+    },
+    feature: {},
+    featuresList: [{
+      displayName: 'Bar',
+      foo: 'bar',
+      identifier: '1000',
+    }, {
+      displayName: 'Foo',
+      foo: 'foo',
+      identifier: '100',
+    }],
+  });
 });
 
 it('should resizing map', () => {

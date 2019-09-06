@@ -27,6 +27,7 @@ export default withRouter(
       'getFeaturesList',
       'featuresList',
       'feature',
+      'errors',
     )(
       withNamespaces()(Map),
     ),

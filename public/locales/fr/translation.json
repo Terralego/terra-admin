@@ -156,6 +156,9 @@
       "foldMenu": "Replier le menu",
       "unfoldMenu": "Déplier le menu"
     },
+    "settings": {
+      "unableToLoad": "Impossible de charger la configuration du module. Veuillez contacter un administrateur."
+    },
     "table": {
       "title": "Liste de la couche : {{layerName}}",
       "sortAsc": "Tri croissant",

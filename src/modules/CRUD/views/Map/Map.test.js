@@ -30,6 +30,8 @@ jest.mock('@terralego/core/modules/Map', () => ({
   CONTROLS_TOP_RIGHT: 'top-right',
 }));
 
+jest.mock('../../components/Message', () => () => <div>No settings</div>);
+
 jest.mock('../../components/DataTable', () => () => <div>Datatable</div>);
 
 jest.mock('../../components/DetailsWrapper', () => ({ children }) => children);
@@ -98,10 +100,25 @@ beforeEach(() => {
     history: { push: () => null },
     t: key => key,
     settings,
+    errors: {
+      settings: undefined,
+    },
   };
 });
 
 describe('snapshots', () => {
+  it('should display no settings message', () => {
+    const tree = renderer.create((
+      <Map
+        {...props}
+        errors={{
+          settings: 'Not found',
+        }}
+      />
+    )).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it('should render correctly', () => {
     const tree = renderer.create((
       <Map

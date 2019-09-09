@@ -221,6 +221,12 @@
       "is_active": "Le mode \"Actif\" rend disponible le profil de l'utilisateur"
     }
   },
+  "usergroup": {
+    "project": "Groupes d'utilisateurs",
+    "nav": {
+      "list": "Groupes d'utilisateurs"
+    }
+  },
   "datasource": {
     "project": "Entrepôt de données",
     "nav": {
@@ -455,6 +461,27 @@
       "email": "Doit être un email",
       "oneOf": "Doit être au choix: %{options}",
       "regex": "Doit respecter un format spécifique (regexp): %{pattern}"
+    }
+  },
+  "resources": {
+    "users/user": {
+      "fields": {
+        "id": "Id",
+        "email": "Adresse e-mail",
+        "uuid": "Uuid",
+        "groups": "Groupes de l'utilisateur",
+        "password": "Mot de passe",
+        "is_superuser": "Superutilisateur",
+        "is_active": "Actif",
+        "permissions": "Permissions"
+      }
+    },
+    "groups/usergroup": {
+      "fields": {
+        "id": "Id",
+        "name": "Nom du groupe",
+        "users": "Utilisateurs dans le groupe"
+      }
     }
   }
 }

@@ -39,11 +39,7 @@ class Details extends React.Component {
       },
     },
     feature: prevFeature,
-    feature: {
-      [prevParamId]: {
-        properties: prevProperties,
-      } = {},
-    } = {},
+    feature: { properties: prevProperties },
   }) {
     const {
       match: {
@@ -54,7 +50,7 @@ class Details extends React.Component {
         },
       },
       feature,
-      feature: { [paramId]: { properties } = {} } = {},
+      feature: { properties } = {},
       detailsHasLoaded,
     } = this.props;
 
@@ -95,10 +91,10 @@ class Details extends React.Component {
   setSchema = () => {
     const {
       match: { params: { id: paramId } },
-      feature: { [paramId]: { properties } = {} } = {},
-      layer: { schema = {} } = {},
+      feature: { properties },
+      layer: { schema = {} },
     } = this.props;
-    if (Object.keys(schema).length > 0) {
+    if (Object.keys(schema).length) {
       this.setState({
         schema: {
           type: 'object',
@@ -171,7 +167,7 @@ class Details extends React.Component {
           </NavLink>
         </div>
         <div ref={this.detailContent} className="CRUD-details__content">
-          {!feature && paramId !== ACTION_CREATE ? (
+          {!Object.keys(feature).length && paramId !== ACTION_CREATE ? (
             <Loading spinner />
           ) : (
             <>{this.renderContent()}</>

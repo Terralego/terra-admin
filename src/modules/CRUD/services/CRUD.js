@@ -11,9 +11,9 @@ import {
 export const fetchSettings = async () => {
   try {
     const settings = await Api.request('crud/settings/');
-    return { settings, error: undefined };
+    return { settings };
   } catch (e) {
-    return { settings: {}, error: e.message };
+    return { error: e.message };
   }
 };
 

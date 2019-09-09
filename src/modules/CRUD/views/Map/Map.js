@@ -44,6 +44,7 @@ export class Map extends React.Component {
     map: PropTypes.shape({}),
     mapConfig: PropTypes.shape({}),
     featuresList: PropTypes.arrayOf(PropTypes.object),
+    feature: PropTypes.shape({}),
   };
 
   static defaultProps = {
@@ -58,6 +59,7 @@ export class Map extends React.Component {
     mapConfig: {},
     settings: undefined,
     featuresList: [],
+    feature: {},
   }
 
   state = {
@@ -93,7 +95,7 @@ export class Map extends React.Component {
       match: { params: { layer, id, action } },
       map,
       featuresList,
-      feature: { [id]: { geom: { coordinates = [] } = {} } = {} } = {},
+      feature: { geom: { coordinates = [] } = {} },
     } = this.props;
 
     const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;

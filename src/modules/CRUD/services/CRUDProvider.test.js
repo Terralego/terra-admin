@@ -16,7 +16,6 @@ jest.mock('./map', () => ({
       foo: 'foo',
       bar: 'bar',
     },
-    error: {},
   }),
 }));
 
@@ -25,7 +24,6 @@ jest.mock('./CRUD', () => ({
     settings: {
       fooSettings: 'foobar',
     },
-    error: {},
   }),
 }));
 
@@ -40,7 +38,6 @@ jest.mock('./features', () => ({
     if (layerId === 'foo') {
       return {
         featuresList: [{ featureID: 1 }, { featureID: 2 }],
-        error: {},
       };
     }
     return {
@@ -51,25 +48,21 @@ jest.mock('./features', () => ({
   fetchFeature: (layerId, featureId) => {
     if (!layerId || !featureId) {
       return {
-        feature: {},
         error: { layerId, featureId, message: 'Layer ID or feature ID are missing' },
       };
     }
     if (layerId === 'foo' && featureId === '1') {
       return {
         feature: { identifier: 1, foo: 'foo' },
-        error: {},
       };
     }
     return {
-      feature: {},
       error: { layerId, featureId, message: 'Not found' },
     };
   },
   saveFeature: (layerId, featureId, data) => {
     if (!layerId) {
       return {
-        feature: {},
         error: { layerId, message: 'Layer ID is missing' },
       };
     }
@@ -77,13 +70,11 @@ jest.mock('./features', () => ({
     if (layerId === 'foo' && !featureId) {
       return {
         feature: { identifier: '999', foo: 'foo', ...data },
-        error: {},
       };
     }
     // Fail Create Feature
     if (layerId === 'NO_EXISTS' && !featureId) {
       return {
-        feature: {},
         error: { layerId, message: 'Not found' },
       };
     }
@@ -92,13 +83,11 @@ jest.mock('./features', () => ({
     if (layerId === 'bar' && featureId === '1000') {
       return {
         feature: { identifier: '1000', foo: 'bar', ...data },
-        error: {},
       };
     }
 
     // Fail Update Feature
     return {
-      feature: {},
       error: { layerId, message: 'Not found' },
     };
   },
@@ -113,7 +102,6 @@ jest.mock('./features', () => ({
     if (layerId === 'foo' && featureId === '100') {
       return {
         feature: { identifier: '100', foo: 'bar' },
-        error: {},
       };
     }
     // Fail delete feature
@@ -197,7 +185,7 @@ it('should get settings', async () => {
   await instance.getSettings();
   expect(stateCallback({})).toEqual({
     settings: { fooSettings: 'foobar' },
-    errors: { settings: {} },
+    errors: { settings: undefined },
   });
 });
 
@@ -218,8 +206,8 @@ it('should not crash when no getting settings', async () => {
   });
   await instance.getSettings();
   expect(stateCallback({})).toEqual({
-    settings: {},
     errors: { settings: { foo: 'foo', bar: 'bar' } },
+    settings: {},
   });
 });
 
@@ -282,12 +270,18 @@ it('should not get feature data without layer id or feature id', async () => {
       featuresList: [],
       settings: undefined,
     },
-    feature: {},
+    featuresList: [],
   });
 });
 
 it('should get feature data', async () => {
   const instance = new CRUDProvider();
+  instance.state = {
+    ...instance.state,
+    featuresList: [
+      { identifier: 2, foo: 'bar' },
+    ],
+  };
   let stateCallback;
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
@@ -299,7 +293,24 @@ it('should get feature data', async () => {
       featuresList: [],
       settings: undefined,
     },
-    feature: { 1: { identifier: 1, foo: 'foo' } },
+    featuresList: [{ identifier: 2, foo: 'bar' }, { identifier: 1, foo: 'foo' }],
+  });
+
+  instance.state = {
+    ...instance.state,
+    featuresList: [
+      { identifier: 2, foo: 'bar' },
+      { identifier: 1, foo: 'foobar' },
+    ],
+  };
+  await instance.fetchFeature('foo', '1');
+  expect(stateCallback(instance.state)).toEqual({
+    errors: {
+      feature: [],
+      featuresList: [],
+      settings: undefined,
+    },
+    featuresList: [{ identifier: 2, foo: 'bar' }, { identifier: 1, foo: 'foo' }],
   });
 });
 
@@ -318,9 +329,8 @@ it('should not crash when no getting feature data', async () => {
         message: 'Not found',
       }],
       featuresList: [],
-      settings: undefined,
     },
-    feature: {},
+    featuresList: [],
   });
 });
 
@@ -338,9 +348,7 @@ it('should not save feature without layer id', async () => {
         message: 'Layer ID is missing',
       }],
       featuresList: [],
-      settings: undefined,
     },
-    feature: {},
     featuresList: [],
   });
 });
@@ -364,12 +372,6 @@ it('should create feature', async () => {
     errors: {
       feature: [],
       featuresList: [],
-      settings: undefined,
-    },
-    feature: {
-      999: {
-        displayName: 'Foo', foo: 'foo', identifier: '999',
-      },
     },
     featuresList: [
       { displayName: 'myFeature', foo: 'foo', identifier: 'existingFeature' },
@@ -385,7 +387,6 @@ it('should update feature', async () => {
     errors: {
       feature: [{ layerId: 'bar', message: 'Not found' }],
       featuresList: [],
-      settings: undefined,
     },
     featuresList: [{
       displayName: 'myFeature',
@@ -406,14 +407,6 @@ it('should update feature', async () => {
     errors: {
       feature: [],
       featuresList: [],
-      settings: undefined,
-    },
-    feature: {
-      1000: {
-        identifier: '1000',
-        foo: 'bar',
-        displayName: 'Foo',
-      },
     },
     featuresList: [
       { identifier: '1000', foo: 'bar', displayName: 'Foo' },
@@ -433,9 +426,7 @@ it('should not crash when no saving feature', async () => {
     errors: {
       feature: [{ layerId: 'bar', message: 'Not found' }],
       featuresList: [],
-      settings: undefined,
     },
-    feature: {},
     featuresList: [],
   });
 });
@@ -460,15 +451,6 @@ it('should not delete feature without layer id or feature id', async () => {
   });
   await instance.deleteFeature();
   expect(stateCallback(instance.state)).toEqual({
-    errors: {
-      feature: [{
-        layerId: undefined,
-        message: 'Layer ID or Feature ID are missing',
-      }],
-      featuresList: [],
-      settings: undefined,
-    },
-    feature: {},
     featuresList: [{
       displayName: 'Bar',
       foo: 'bar',
@@ -501,12 +483,6 @@ it('should delete feature', async () => {
   });
   await instance.deleteFeature('foo', '100');
   expect(stateCallback(instance.state)).toEqual({
-    errors: {
-      feature: [],
-      featuresList: [],
-      settings: undefined,
-    },
-    feature: {},
     featuresList: [{
       displayName: 'Bar',
       foo: 'bar',
@@ -535,15 +511,6 @@ it('should not crash when no deleting feature', async () => {
   });
   await instance.deleteFeature('foo', '123');
   expect(stateCallback(instance.state)).toEqual({
-    errors: {
-      feature: [{
-        layerId: 'foo',
-        message: 'Not found',
-      }],
-      featuresList: [],
-      settings: undefined,
-    },
-    feature: {},
     featuresList: [{
       displayName: 'Bar',
       foo: 'bar',

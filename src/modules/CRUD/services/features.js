@@ -2,58 +2,58 @@ import Api from '@terralego/core/modules/Api';
 
 export const fetchFeaturesList = async layerId => {
   if (!layerId) {
-    return { featuresList: [], error: { layerId, message: 'Layer ID is missing' } };
+    return { error: { layerId, message: 'Layer ID is missing' } };
   }
   try {
     const { results: featuresList } = await Api.request(`layer/${layerId}/feature/`);
-    return { featuresList, error: {} };
+    return { featuresList };
   } catch (e) {
-    return { featuresList: [], error: { layerId, message: e.message } };
+    return { error: { layerId, message: e.message } };
   }
 };
 
 export const fetchFeature = async (layerId, featureId) => {
   if (!layerId || !featureId) {
-    return { feature: {}, error: { layerId, featureId, message: 'Layer ID or Feature ID are missing' } };
+    return { error: { layerId, featureId, message: 'Layer ID or Feature ID are missing' } };
   }
   try {
     const feature = await Api.request(`layer/${layerId}/feature/${featureId}/`);
-    return { feature, error: {} };
+    return { feature };
   } catch (e) {
-    return { feature: {}, error: { layerId, featureId, message: e.message } };
+    return { error: { layerId, featureId, message: e.message } };
   }
 };
 
 const createFeature = async (layerId, body) => {
   if (!layerId) {
-    return { feature: {}, error: { layerId, message: 'Layer ID is missing' } };
+    return { error: { layerId, message: 'Layer ID is missing' } };
   }
   try {
     const feature = await Api.request(`layer/${layerId}/feature/`, { method: 'POST', body });
-    return { feature, error: {} };
+    return { feature };
   } catch (e) {
-    return { feature: {}, error: { layerId, message: e.message } };
+    return { error: { layerId, message: e.message } };
   }
 };
 
 const updateFeature = async (layerId, featureId, body) => {
   try {
     const feature = await Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'PUT', body });
-    return { feature, error: {} };
+    return { feature };
   } catch (e) {
-    return { feature: {}, error: { layerId, featureId, message: e.message } };
+    return { error: { layerId, featureId, message: e.message } };
   }
 };
 
 export const deleteFeature = async (layerId, featureId) => {
   if (!layerId || !featureId) {
-    return { feature: null, error: { layerId, featureId, message: 'Layer ID or feature ID are missing' } };
+    return { error: { layerId, featureId, message: 'Layer ID or feature ID are missing' } };
   }
   try {
     await Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'DELETE' });
-    return { feature: featureId, error: {} };
+    return { feature: featureId };
   } catch (e) {
-    return { feature: null, error: { layerId, featureId, message: e.message } };
+    return { error: { layerId, featureId, message: e.message } };
   }
 };
 

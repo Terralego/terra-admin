@@ -103,6 +103,7 @@ beforeEach(() => {
     errors: {
       settings: undefined,
     },
+    feature: {},
   };
 });
 
@@ -378,7 +379,7 @@ it('should addLight current feature', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
-    feature: { 1: { geom: { coordinates: [1, 2] } } },
+    feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {
     addHighlight: jest.fn(),
@@ -400,7 +401,7 @@ it('should addLight current feature', () => {
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '2', layer: 'layerTest' } },
-    feature: { 2: { geom: { coordinates: [3, 4] } } },
+    feature: { id: '2', geom: { coordinates: [3, 4] } },
   }, {});
 
   expect(instance.setFitBounds).toHaveBeenCalled();
@@ -411,7 +412,7 @@ it('should not addLight current feature if layers array is empty', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
-    feature: { 1: { geom: { coordinates: [1, 2] } } },
+    feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {
     addHighlight: jest.fn(),
@@ -424,7 +425,7 @@ it('should not addLight current feature if layers array is empty', () => {
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '2', layer: 'layerTest' } },
-    feature: { 2: { geom: { coordinates: [3, 4] } } },
+    feature: { id: '2', geom: { coordinates: [3, 4] } },
   }, {});
 
   expect(instance.setFitBounds).toHaveBeenCalled();
@@ -435,7 +436,7 @@ it('should remove highlight', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest', action: ACTION_UPDATE } },
-    feature: { 1: { geom: { coordinates: [1, 2] } } },
+    feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {
     removeHighlight: jest.fn(),
@@ -456,7 +457,7 @@ it('should remove highlight', () => {
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '2', layer: 'layerTest', action: 'read' } },
-    feature: { 2: { geom: { coordinates: [3, 4] } } },
+    feature: { id: '2', geom: { coordinates: [3, 4] } },
   }, {});
   expect(instance.state.removeHighlight).toHaveBeenCalled();
 });
@@ -465,7 +466,7 @@ it('should not remove highlight if layers array is empty', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest', action: ACTION_UPDATE } },
-    feature: { 1: { geom: { coordinates: [1, 2] } } },
+    feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {
     removeHighlight: jest.fn(),
@@ -477,7 +478,7 @@ it('should not remove highlight if layers array is empty', () => {
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '2', layer: 'layerTest', action: 'read' } },
-    feature: { 2: { geom: { coordinates: [3, 4] } } },
+    feature: { id: 2, geom: { coordinates: [3, 4] } },
   }, {});
   expect(instance.state.removeHighlight).not.toHaveBeenCalled();
 });

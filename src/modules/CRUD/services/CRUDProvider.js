@@ -34,11 +34,11 @@ export class CRUDProvider extends React.Component {
   setMap = map => !this.isUnmount && this.setState({ map });
 
   getMapConfig = async () => {
-    const { results: mapConfig, error } = await fetchMapConfig();
-    this.setState(state => ({
+    const { results: mapConfig = {}, error = {} } = await fetchMapConfig();
+    this.setState(({ errors }) => ({
       mapConfig,
       errors: {
-        ...state.errors,
+        ...errors,
         mapConfig: error,
       },
     }));
@@ -46,11 +46,11 @@ export class CRUDProvider extends React.Component {
   };
 
   getSettings = async () => {
-    const { settings, error } = await fetchSettings();
-    this.setState(state => ({
+    const { settings = {}, error } = await fetchSettings();
+    this.setState(({ errors }) => ({
       settings,
       errors: {
-        ...state.errors,
+        ...errors,
         settings: error,
       },
     }));
@@ -77,7 +77,7 @@ export class CRUDProvider extends React.Component {
   }
 
   getFeaturesList = async layerId => {
-    const { featuresList, error } = await fetchFeaturesList(layerId);
+    const { featuresList = [], error = {} } = await fetchFeaturesList(layerId);
     const { errors } = this.state;
 
     this.setState({
@@ -92,13 +92,19 @@ export class CRUDProvider extends React.Component {
   };
 
   fetchFeature = async (layerId, featureId) => {
-    const { feature, error } = await fetchFeatureAction(layerId, featureId);
-    const { errors } = this.state;
+    const { feature = {}, error = {} } = await fetchFeatureAction(layerId, featureId);
+    const { featuresList: prevFeaturesList } = this.state;
 
-    this.setState(state => ({
-      feature: (!feature.identifier)
-        ? { ...state.feature }
-        : { ...state.feature, [feature.identifier]: feature },
+    const isFeatureAlreadyExisting = prevFeaturesList.some(({ identifier }) => (
+      identifier === feature.identifier
+    ));
+
+    const featuresList = isFeatureAlreadyExisting
+      ? prevFeaturesList.map(item => (item.identifier === feature.identifier ? feature : item))
+      : [...prevFeaturesList, (feature.identifier) && feature].filter(Boolean);
+
+    this.setState(({ errors }) => ({
+      featuresList,
       errors: {
         ...errors,
         feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),
@@ -109,8 +115,8 @@ export class CRUDProvider extends React.Component {
   }
 
   saveFeature = async (layerId, featureId, data) => {
-    const { feature, error } = await saveFeatureAction(layerId, featureId, data);
-    const { errors, featuresList: prevFeaturesList } = this.state;
+    const { feature = {}, error = {} } = await saveFeatureAction(layerId, featureId, data);
+    const { featuresList: prevFeaturesList } = this.state;
 
     const isFeatureAlreadyExisting = prevFeaturesList.some(({ identifier }) => (
       identifier === feature.identifier
@@ -120,40 +126,24 @@ export class CRUDProvider extends React.Component {
       ? prevFeaturesList.map(item => (item.identifier === feature.identifier ? feature : item))
       : [...prevFeaturesList, (feature.identifier) && feature].filter(Boolean);
 
-    this.setState(state => ({
-      feature: (!feature.identifier)
-        ? { ...state.feature }
-        : { ...state.feature, [feature.identifier]: feature },
+    this.setState(({ errors }) => ({
       featuresList,
       errors: {
         ...errors,
         feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),
       },
-
     }));
 
     return feature;
   }
 
   deleteFeature = async (layerId, featureId) => {
-    const { feature, error } = await deleteFeatureAction(layerId, featureId);
-    const {
-      errors,
-      featuresList,
-      feature: { [featureId]: featureToDelete, ...featuresRest },
-    } = this.state;
+    const { feature } = await deleteFeatureAction(layerId, featureId);
 
-    this.setState(state => ({
-      feature: feature === null
-        ? state.feature
-        : featuresRest,
-      featuresList: feature === null
-        ? state.featuresList
+    this.setState(({ featuresList }) => ({
+      featuresList: !feature
+        ? featuresList
         : featuresList.filter(({ identifier }) => identifier !== featureId),
-      errors: {
-        ...errors,
-        feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),
-      },
     }));
 
     return feature;

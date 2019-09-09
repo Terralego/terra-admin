@@ -16,15 +16,15 @@ class Actions extends React.Component {
       t,
     } = this.props;
 
-    const deletion = await deleteFeature(layerId, paramId);
+    const deleted = await deleteFeature(layerId, paramId);
 
     toast.displayToaster(
-      deletion === null ? {} : { id: paramId },
+      deleted ? { id: deleted } : { },
       t('CRUD.details.successDeleteFeature'),
       t('CRUD.details.failDeleteFeature'),
     );
 
-    if (deletion === null) {
+    if (!deleted) {
       return;
     }
 

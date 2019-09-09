@@ -78,7 +78,7 @@ it('should not crash when no fetching ', async () => {
     throw new Error('No fetching settings');
   });
   expect(await fetchSettings()).toEqual({
-    settings: {}, error: 'No fetching settings',
+    error: 'No fetching settings',
   });
 });
 

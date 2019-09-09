@@ -11,7 +11,7 @@ export default withRouter(
     settings,
     map,
     fetchFeature,
-    feature,
+    featuresList,
     errors,
   }, {
     match: { params: { layer, id } },
@@ -20,7 +20,9 @@ export default withRouter(
     return {
       map,
       fetchFeature,
-      feature,
+      feature: featuresList.find(({ identifier }) => (
+        identifier === id
+      )) || {},
       layer: getLayer(settings, layer),
       hasError: !!errorFeature,
       errorCode: errorFeature ? errorFeature.message : '',

@@ -1,9 +1,10 @@
 export default {
   title: 'datalayer.project',
   path: '/datalayers',
-  resource: 'geolayer',
+  resource: 'datalayer',
+  endpoint: 'geolayer',
   nav: [{
     label: 'datalayer.nav.list',
-    href: 'geolayer',
+    href: 'datalayer',
   }],
 };

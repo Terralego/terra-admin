@@ -1,15 +1,16 @@
 import Api from '@terralego/core/modules/Api';
 import { WMTS } from '../../modules/DataSource/DataSource';
-import { getResourceWithoutBasePath } from '../../utils/react-admin/resources';
+import { getResourceWithoutBasePath, getEndpoint } from '../../utils/react-admin/resources';
 
 const enhanceDataProvider = mainDataProvider => async (...args) => {
   const [type, resourceWithBasePath, params] = args;
 
   const resource = getResourceWithoutBasePath(resourceWithBasePath);
+  const endpoint = getEndpoint(resource);
 
   // Manage custom query type
   if (type === 'REFRESH') {
-    return Api.request(`${resource}/${params.id}/refresh/`);
+    return Api.request(`${endpoint}/${params.id}/refresh/`);
   }
 
   if (type === 'CREATE' && resource === 'geosource') {
@@ -43,11 +44,11 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
 
     switch (type) {
       case 'CREATE':
-        response = await Api.request('geosource/', { method: 'POST', body });
+        response = await Api.request(`${endpoint}/`, { method: 'POST', body });
         break;
 
       case 'UPDATE':
-        response = await Api.request(`geosource/${params.id}/`, { method: 'PATCH', body });
+        response = await Api.request(`${endpoint}/${params.id}/`, { method: 'PATCH', body });
         break;
       default:
     }
@@ -60,7 +61,7 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
     }
   }
 
-  return mainDataProvider(type, resource, params);
+  return mainDataProvider(type, endpoint, params);
 };
 
 export default enhanceDataProvider;

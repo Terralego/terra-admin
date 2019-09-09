@@ -1,3 +1,7 @@
+import userConfig from '../../modules/User/config';
+import dataSourceConfig  from '../../modules/DataSource/config';
+import dataLayerConfig  from '../../modules/DataLayer/config';
+
 /**
  * Remove the base path if it exists
  *
@@ -38,7 +42,34 @@ export const getResourceWithoutBasePath = (string = '') => (
 export const getResourceFullname = ({ path, resource }) =>
   `${path}/${resource}`.replace(/^\//g, '');
 
+export const allConfig = [
+  userConfig,
+  dataSourceConfig,
+  dataLayerConfig,
+];
+
+/**
+ * Return the endpoint of specified resource
+ *
+ * @example
+ * getEndpoint('user')
+ * // returns 'custom/endpoint'
+ *
+ * @param {string} resource The resource name
+ * @returns {string} The endpoint of specified resource
+ */
+export const getEndpoint = resource => {
+  const currentConfig = allConfig.find(config => (config.resource === resource));
+
+  if (currentConfig && currentConfig.endpoint) {
+    return currentConfig.endpoint;
+  }
+
+  return resource;
+};
+
 export default {
   getResourceWithoutBasePath,
   getResourceFullname,
+  getEndpoint,
 };

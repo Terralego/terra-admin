@@ -112,11 +112,11 @@ export class CRUDProvider extends React.Component {
     const { feature, error } = await saveFeatureAction(layerId, featureId, data);
     const { errors, featuresList: prevFeaturesList } = this.state;
 
-    const isFeatureAlreadyExists = prevFeaturesList.some(({ identifier }) => (
+    const isFeatureAlreadyExisting = prevFeaturesList.some(({ identifier }) => (
       identifier === feature.identifier
     ));
 
-    const featuresList = isFeatureAlreadyExists
+    const featuresList = isFeatureAlreadyExisting
       ? prevFeaturesList.map(item => (item.identifier === feature.identifier ? feature : item))
       : [...prevFeaturesList, (feature.identifier) && feature].filter(Boolean);
 

@@ -43,7 +43,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "version": "git changelog -n -t $npm_package_version && git add CHANGELOG.md",
     "lint": "eslint src"
   },
   "eslintConfig": {

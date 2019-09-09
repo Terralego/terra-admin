@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Admin, Resource } from 'react-admin';
+
 import { withRouter } from 'react-router-dom';
 
 import config from './config';
@@ -9,12 +11,10 @@ import { withLocale } from '../../components/Locale';
 import providers from '../../services/react-admin/providers';
 import RALayout from '../../components/react-admin/Layout';
 
-import userViews from './views';
+import views from './views';
 
 import { resourceFullname } from '.';
-import { resourceFullname as useGroupResourceFullname } from '../UserGroup';
-
-import './styles.scss';
+import { resourceFullname as userResourceFullname } from '../User';
 
 export const User = ({ locale, history }) => (
   <NavLayout nav={<SimpleNav config={config} />}>
@@ -24,8 +24,8 @@ export const User = ({ locale, history }) => (
       history={history}
       {...providers}
     >
-      <Resource name={resourceFullname} {...userViews} />
-      <Resource name={useGroupResourceFullname} />
+      <Resource name={resourceFullname} {...views} />
+      <Resource name={userResourceFullname} />
     </Admin>
   </NavLayout>
 );

@@ -5,40 +5,35 @@ import {
   Datagrid,
   TextField,
   EditButton,
-  BooleanField,
-  // NullableBooleanInput,
   Pagination,
 } from 'react-admin';
 import ArrayCountField from '../../../components/react-admin/ArrayCountField';
 import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
 
-// const UserListFilters = props => (
+// const UserGroupListFilters = props => (
 //   <Filter {...props}>
 //     <NullableBooleanInput source="is_active" label="user.form.active" />
 //   </Filter>
 // );
 
-const UserListPagination = props =>
+const UserGroupListPagination = props =>
   <Pagination rowsPerPageOptions={[]} {...props} />;
 
-export const UserList = props => (
+export const UserGroupList = props => (
   <List
     {...props}
     bulkActionButtons={<CommonBulkActionButtons />}
-    // filters={<UserListFilters />}
+    // filters={<UserGroupListFilters />}
     perPage={100}
-    pagination={<UserListPagination />}
+    pagination={<UserGroupListPagination />}
   >
     <Datagrid rowClick="edit">
       <TextField source="id" />
-      <TextField source="email" />
-      <TextField source="uuid" />
-      <BooleanField source="is_superuser" />
-      <BooleanField source="is_active" />
-      <ArrayCountField source="permissions" />
+      <TextField source="name" />
+      <ArrayCountField source="users" />
       <EditButton />
     </Datagrid>
   </List>
 );
 
-export default UserList;
+export default UserGroupList;

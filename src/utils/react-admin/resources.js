@@ -1,4 +1,5 @@
 import userConfig from '../../modules/User/config';
+import userGroupConfig from '../../modules/UserGroup/config';
 import dataSourceConfig  from '../../modules/DataSource/config';
 import dataLayerConfig  from '../../modules/DataLayer/config';
 
@@ -44,6 +45,7 @@ export const getResourceFullname = ({ path, resource }) =>
 
 export const allConfig = [
   userConfig,
+  userGroupConfig,
   dataSourceConfig,
   dataLayerConfig,
 ];

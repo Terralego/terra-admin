@@ -5,20 +5,29 @@ import {
   SimpleForm,
   BooleanInput,
   DisabledInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from 'react-admin';
 
 import JSONInput from '../../../components/react-admin/JSONInput';
 import UserFieldsHelp from './UserFieldsHelp';
 
+import { resourceFullname as userGroupResourceFullname } from '../../UserGroup';
+
 const UserFields = ({ edit = false, ...props }) => (
   <SimpleForm {...props}>
-    {edit && <DisabledInput source="id" label="user.form.id" />}
-    {edit && <DisabledInput source="uuid" label="user.form.uuid" />}
+    {edit && <DisabledInput source="id" />}
+    {edit && <DisabledInput source="uuid" />}
 
-    <TextInput source="email" type="email" label="user.form.email" />
-    {!edit && <TextInput source="password" type="password" label="user.form.password" />}
-    <BooleanInput source="is_superuser" label="user.form.superuser" />
-    <BooleanInput source="is_active" label="user.form.active" />
+    <TextInput source="email" type="email" />
+    {!edit && <TextInput source="password" type="password" />}
+    <BooleanInput source="is_superuser" />
+    <BooleanInput source="is_active" />
+
+    <ReferenceArrayInput source="groups" reference={userGroupResourceFullname}>
+      <SelectArrayInput optionText="name" />
+    </ReferenceArrayInput>
+
     <JSONInput source="properties" label="user.form.additional-information" fullWidth />
     <UserFieldsHelp />
   </SimpleForm>

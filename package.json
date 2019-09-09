@@ -18,7 +18,7 @@
     "jsoneditor-react": "~1.0.1",
     "lodash.get": "^4.4.2",
     "mapbox-gl": "^0.53.0",
-    "memoize-one": "^5.0.4",
+    "memoize-one": "~5.1.1",
     "node-sass": "^4.11.0",
     "normalize.css": "^8.0.1",
     "path-to-regexp": "^3.0.0",

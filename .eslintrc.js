@@ -13,7 +13,6 @@ module.exports = {
     'react/destructuring-assignment':    [error],
     'react/no-this-in-sfc':              [error],
     'react/no-access-state-in-setstate': [error],
-    'react/react-hooks/exhaustive-deps': [off],
     'react-hooks/exhaustive-deps':       [off],
   }
 };

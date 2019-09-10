@@ -14,5 +14,6 @@ module.exports = {
     'react/no-this-in-sfc':              [error],
     'react/no-access-state-in-setstate': [error],
     'react-hooks/exhaustive-deps':       [off],
+    'import/no-cycle':                   [off],
   }
 };

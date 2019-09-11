@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { JSONInput } from '../../../components/react-admin/JSONInput';
+import { JSONInput } from '../../../../components/react-admin/JSONInput';
 import withRandomColor from './withRandomColor';
 
 const getIconByType = type => {

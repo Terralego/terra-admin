@@ -1,5 +1,5 @@
 import config from './config';
-import { getResourceFullname } from '../../utils/react-admin/resources';
+import { getResourceFullname } from '../../../utils/react-admin/resources';
 
 import {
   POINT,
@@ -9,7 +9,7 @@ import {
   MULTI_LINESTRING,
   MULTI_POLYGON,
   GEOMETRY_COLLECTION,
-} from '../../utils/geom';
+} from '../../../utils/geom';
 
 export const GEOJSON = 'GeoJSONSource';
 export const SQL = 'PostGISSource';

@@ -9,8 +9,8 @@ import {
   // NullableBooleanInput,
   Pagination,
 } from 'react-admin';
-import ArrayCountField from '../../../components/react-admin/ArrayCountField';
-import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
+import ArrayCountField from '../../../../components/react-admin/ArrayCountField';
+import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
 // const UserListFilters = props => (
 //   <Filter {...props}>

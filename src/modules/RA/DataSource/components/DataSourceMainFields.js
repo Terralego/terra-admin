@@ -5,9 +5,9 @@ import {
   translate as translateRA,
 } from 'react-admin';
 
-import FieldGroup from '../../../components/react-admin/FieldGroup';
+import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
-import { required } from '../../../utils/react-admin/validate';
+import { required } from '../../../../utils/react-admin/validate';
 
 const defaultRequired = required();
 

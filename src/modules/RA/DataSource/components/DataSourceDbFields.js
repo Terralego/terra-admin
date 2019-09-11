@@ -7,8 +7,8 @@ import {
   required,
 } from 'react-admin';
 
-import { geomTypeChoices } from '../';
-import FieldGroup from '../../../components/react-admin/FieldGroup';
+import { geomTypeChoices } from '..';
+import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
 const DataSourceDbFields = ({ translate: t, ...props }) => (
   <FieldGroup {...props}>

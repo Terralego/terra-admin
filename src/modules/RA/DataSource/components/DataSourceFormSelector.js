@@ -2,7 +2,7 @@ import React from 'react';
 
 import DataSourceTabbedForm from './DataSourceTabbedForm';
 import DataSourceReadOnlyForm from './DataSourceReadOnlyForm';
-import { sourceTypes } from '../';
+import { sourceTypes } from '..';
 
 
 const DataSourceFormSelector = props => {

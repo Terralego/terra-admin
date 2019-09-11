@@ -6,7 +6,7 @@ import {
   required,
 } from 'react-admin';
 
-import FieldGroup from '../../../components/react-admin/FieldGroup';
+import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
 const WMTSFields = ({ translate: t, ...props }) => (
   <FieldGroup {...props}>

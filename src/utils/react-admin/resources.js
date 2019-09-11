@@ -1,7 +1,7 @@
-import userConfig from '../../modules/User/config';
-import userGroupConfig from '../../modules/UserGroup/config';
-import dataSourceConfig  from '../../modules/DataSource/config';
-import dataLayerConfig  from '../../modules/DataLayer/config';
+import userConfig from '../../modules/RA/User/config';
+import userGroupConfig from '../../modules/RA/UserGroup/config';
+import dataSourceConfig  from '../../modules/RA/DataSource/config';
+import dataLayerConfig  from '../../modules/RA/DataLayer/config';
 
 /**
  * Remove the base path if it exists

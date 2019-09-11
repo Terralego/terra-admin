@@ -15,7 +15,7 @@ import {
 import DataSourceMainFields from './DataSourceMainFields';
 import DataSourceFileFields from './DataSourceFileFields';
 import DataSourceWMTSField from './DataSourceWMTSField';
-import FieldSample from '../../../components/react-admin/FieldSample';
+import FieldSample from '../../../../components/react-admin/FieldSample';
 import AttributeMessage from './AttributeMessage';
 import DataSourceDbFields from './DataSourceDbFields';
 import {
@@ -24,7 +24,7 @@ import {
   SHP,
   WMTS,
   fieldTypeChoices,
-} from '../';
+} from '..';
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => (
   <TabbedForm {...props}>

@@ -7,7 +7,7 @@ import {
 import get from 'lodash.get';
 
 import StyleField from './StyleField';
-import FieldGroup from '../../../components/react-admin/FieldGroup';
+import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
 
 export const CustomLayer = ({ resource, source }) => (

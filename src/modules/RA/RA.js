@@ -2,6 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Admin, Resource } from 'react-admin';
 
+import compose from '../../utils/compose';
+
 import dataProvider from '../../services/react-admin/dataProvider';
 import enhanceDataProvider from '../../services/react-admin/enhanceDataProvider';
 import authProvider from '../../services/react-admin/authProvider';
@@ -28,4 +30,7 @@ export const CustomAdmin = ({ locale, history }) => (
   </Admin>
 );
 
-export default withRouter(withLocale(CustomAdmin));
+export default compose(
+  withRouter,
+  withLocale,
+)(CustomAdmin);

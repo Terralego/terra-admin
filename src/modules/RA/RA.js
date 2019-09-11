@@ -13,24 +13,36 @@ import { withLocale } from '../../components/Locale';
 import RALayout from '../../components/react-admin/Layout';
 
 import { resources } from './ra-modules';
+import { connectAppProvider } from '../../components/AppProvider';
 
-const sanitizeProps = ({ enpoint, ...rest }) => rest;
+const sanitizeProps = ({ enpoint, moduleName, ...rest }) => rest;
 
-export const CustomAdmin = ({ locale, history }) => (
-  <Admin
-    appLayout={RALayout}
-    locale={`${locale}`.substr(0, 2)}
-    history={history}
+export const CustomAdmin = ({ locale, history, allowedModules = [] }) => {
+  // Keep only allowedModules
+  const enabledResources = resources.filter(({ moduleName }) =>
+    allowedModules.includes(moduleName));
 
-    dataProvider={enhanceDataProvider(dataProvider)}
-    authProvider={authProvider}
-    i18nProvider={i18nProvider}
-  >
-    {resources.map(resource => <Resource key={resource.name} {...sanitizeProps(resource)} />)}
-  </Admin>
-);
+  return (
+    <Admin
+      appLayout={RALayout}
+      locale={`${locale}`.substr(0, 2)}
+      history={history}
+
+      dataProvider={enhanceDataProvider(dataProvider)}
+      authProvider={authProvider}
+      i18nProvider={i18nProvider}
+    >
+      {enabledResources.map(resource => (
+        <Resource key={resource.name} {...sanitizeProps(resource)} />
+      ))}
+    </Admin>
+  );
+};
+
+const componentsToDisplay = ({ env: { enabled_modules: allowedModules } }) => ({ allowedModules });
 
 export default compose(
   withRouter,
   withLocale,
+  connectAppProvider(componentsToDisplay),
 )(CustomAdmin);

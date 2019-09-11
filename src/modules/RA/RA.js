@@ -12,6 +12,8 @@ import RALayout from '../../components/react-admin/Layout';
 
 import { resources } from './ra-modules';
 
+const sanitizeProps = ({ enpoint, ...rest }) => rest;
+
 export const CustomAdmin = ({ locale, history }) => (
   <Admin
     appLayout={RALayout}
@@ -22,7 +24,7 @@ export const CustomAdmin = ({ locale, history }) => (
     authProvider={authProvider}
     i18nProvider={i18nProvider}
   >
-    {resources.map(resource => <Resource key={resource.name} {...resource} />)}
+    {resources.map(resource => <Resource key={resource.name} {...sanitizeProps(resource)} />)}
   </Admin>
 );
 

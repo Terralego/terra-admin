@@ -1,11 +1,10 @@
 import Api from '@terralego/core/modules/Api';
 import { WMTS } from '../../modules/RA/DataSource';
-import { getResourceWithoutBasePath, getEndpoint } from '../../utils/react-admin/resources';
+import { getEndpoint } from '../../utils/react-admin/resources';
 
 const enhanceDataProvider = mainDataProvider => async (...args) => {
-  const [type, resourceWithBasePath, params] = args;
+  const [type, resource, params] = args;
 
-  const resource = getResourceWithoutBasePath(resourceWithBasePath);
   const endpoint = getEndpoint(resource);
 
   // Manage custom query type

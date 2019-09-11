@@ -11,7 +11,7 @@ export const AppSummary = ({ t, title, path = '', nav = [] }) => {
     <div>
       {title && (<H2>{t(title)}</H2>)}
 
-      {nav.length && (
+      {!!nav.length && (
         <nav>
           <ul>
             {nav.map(({ label, href }) => (

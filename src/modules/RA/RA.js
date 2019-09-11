@@ -6,29 +6,7 @@ import { withLocale } from '../../components/Locale';
 import providers from '../../services/react-admin/providers';
 import RALayout from '../../components/react-admin/Layout';
 
-import userView from './User/views';
-import userGroupView from './UserGroup/views';
-import dataSourceView from './DataSource/views';
-import dataLayerView from './DataLayer/views';
-
-const modules = [
-  {
-    name: 'user',
-    ...userView,
-  },
-  {
-    name: 'usergroup',
-    ...userGroupView,
-  },
-  {
-    name: 'datasource',
-    ...dataSourceView,
-  },
-  {
-    name: 'datalayer',
-    ...dataLayerView,
-  },
-];
+import { resources } from './ra-modules';
 
 export const CustomAdmin = ({ locale, history }) => (
   <Admin
@@ -37,7 +15,7 @@ export const CustomAdmin = ({ locale, history }) => (
     history={history}
     {...providers}
   >
-    {modules.map(module => <Resource key={module.name} {...module} />)}
+    {resources.map(resource => <Resource key={resource.name} {...resource} />)}
   </Admin>
 );
 

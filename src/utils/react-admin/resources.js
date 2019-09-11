@@ -40,8 +40,7 @@ export const getResourceWithoutBasePath = (string = '') => (
  * @param {string} config.resource The proper resource name
  * @returns {string} The resource fullname
  */
-export const getResourceFullname = ({ path, resource }) =>
-  `${path}/${resource}`.replace(/^\//g, '');
+export const getResourceFullname = ({ resource }) => resource;
 
 export const allConfig = [
   userConfig,

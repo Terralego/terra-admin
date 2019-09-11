@@ -18,7 +18,7 @@ import {
   SHP,
   WMTS,
   sourceTypeChoices,
-} from '../DataSource';
+} from '../';
 
 import DataSourceHelp from '../components/DataSourceHelp';
 

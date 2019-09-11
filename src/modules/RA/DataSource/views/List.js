@@ -17,8 +17,8 @@ import {
   sourceTypes,
   geomTypes,
   // sourceTypeChoices,
-} from '../';
-import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
+} from '..';
+import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
 // const ListFilters = props => (
 //   <Filter {...props}>

@@ -15,17 +15,17 @@ import {
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
 
-import CustomFormIterator from '../../../components/react-admin/CustomFormIterator';
-import FieldGroup from '../../../components/react-admin/FieldGroup';
+import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
+import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import SourceFetcher from './SourceFetcher';
 import LegendItemsField from './LegendItemsField';
 import CustomLayer from './CustomLayer';
 import StyleField from './StyleField';
 
 import withViewList from './withViewList';
-import { required } from '../../../utils/react-admin/validate';
-import TextArrayInput from '../../../components/react-admin/TextArrayInput';
-import HelpContent from '../../../components/react-admin/HelpContent';
+import { required } from '../../../../utils/react-admin/validate';
+import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
+import HelpContent from '../../../../components/react-admin/HelpContent';
 import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
 
 const defaultRequired = required();

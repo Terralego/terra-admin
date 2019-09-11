@@ -9,7 +9,7 @@ import {
   SelectArrayInput,
 } from 'react-admin';
 
-import JSONInput from '../../../components/react-admin/JSONInput';
+import JSONInput from '../../../../components/react-admin/JSONInput';
 import UserFieldsHelp from './UserFieldsHelp';
 
 import { resourceFullname as userGroupResourceFullname } from '../../UserGroup';

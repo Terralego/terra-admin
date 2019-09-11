@@ -6,10 +6,10 @@ import { withLocale } from '../../components/Locale';
 import providers from '../../services/react-admin/providers';
 import RALayout from '../../components/react-admin/Layout';
 
-import userView from '../User/views';
-import userGroupView from '../UserGroup/views';
-import dataSourceView from '../DataSource/views';
-import dataLayerView from '../DataLayer/views';
+import userView from './User/views';
+import userGroupView from './UserGroup/views';
+import dataSourceView from './DataSource/views';
+import dataLayerView from './DataLayer/views';
 
 const modules = [
   {

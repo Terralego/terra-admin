@@ -15,7 +15,7 @@ import {
 
 import withViewList from '../components/withViewList';
 import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
-import CommonBulkActionButtons from '../../../components/react-admin/CommonBulkActionButtons';
+import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
 // const ListFilters = props => (
 //   <Filter {...props}>

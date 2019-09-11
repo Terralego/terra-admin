@@ -24,7 +24,7 @@ import {
   SHP,
   WMTS,
   fieldTypeChoices,
-} from '../DataSource';
+} from '../';
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => (
   <TabbedForm {...props}>

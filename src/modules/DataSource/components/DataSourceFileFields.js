@@ -8,7 +8,7 @@ import {
   required,
 } from 'react-admin';
 
-import { geomTypeChoices, sourceTypes } from '../DataSource';
+import { geomTypeChoices, sourceTypes } from '../';
 import FieldGroup from '../../../components/react-admin/FieldGroup';
 
 const DataSourceFileFields = ({ translate: t, type, ...props }) => (

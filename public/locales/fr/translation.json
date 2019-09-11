@@ -464,7 +464,7 @@
     }
   },
   "resources": {
-    "users/user": {
+    "user": {
       "fields": {
         "id": "Id",
         "email": "Adresse e-mail",
@@ -476,7 +476,7 @@
         "permissions": "Permissions"
       }
     },
-    "groups/usergroup": {
+    "usergroup": {
       "fields": {
         "id": "Id",
         "name": "Nom du groupe",

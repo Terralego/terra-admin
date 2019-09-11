@@ -10,7 +10,7 @@ import {
   REDUX_FORM_NAME,
 } from 'react-admin';
 
-import { WMTS } from '../../DataSource/DataSource';
+import { WMTS } from '../../DataSource';
 
 const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId, fields = [] }) => {
   const load = memo(async id => dataProvider(GET_ONE, 'geosource', { id }));

@@ -2,6 +2,8 @@ import React, { lazy, Suspense } from 'react';
 
 import Loading from '../../components/Loading';
 
+import { config } from './ra-modules';
+
 const RAMain = lazy(() => import('./RA'));
 
 const RA = () => (
@@ -10,32 +12,6 @@ const RA = () => (
   </Suspense>
 );
 
-RA.config = {
-  title: 'Common',
-  path: [
-    '/user',
-    '/usergroup',
-    '/datalayer',
-    '/datasource',
-  ],
-  nav: [
-    {
-      label: 'user_label',
-      href: '/user',
-    },
-    {
-      label: 'usergroup_label',
-      href: '/usergroup',
-    },
-    {
-      label: 'datalayer_label',
-      href: '/datalayer',
-    },
-    {
-      label: 'datasource_label',
-      href: '/datasource',
-    },
-  ],
-};
+RA.config = config;
 
 export default RA;

@@ -1,5 +1,4 @@
 import config from './config';
-import { getResourceFullname } from '../../../utils/react-admin/resources';
 
 import {
   POINT,
@@ -49,4 +48,4 @@ export const fieldTypes = {
 export const fieldTypeChoices = typesToChoices(fieldTypes);
 
 
-export const resourceFullname = getResourceFullname(config);
+export const resourceName = config.resource;

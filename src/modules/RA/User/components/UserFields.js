@@ -12,7 +12,7 @@ import {
 import JSONInput from '../../../../components/react-admin/JSONInput';
 import UserFieldsHelp from './UserFieldsHelp';
 
-import { resourceFullname as userGroupResourceFullname } from '../../UserGroup';
+import { resourceName as userGroupResourceName } from '../../UserGroup';
 
 const UserFields = ({ edit = false, ...props }) => (
   <SimpleForm {...props}>
@@ -24,7 +24,7 @@ const UserFields = ({ edit = false, ...props }) => (
     <BooleanInput source="is_superuser" />
     <BooleanInput source="is_active" />
 
-    <ReferenceArrayInput source="groups" reference={userGroupResourceFullname}>
+    <ReferenceArrayInput source="groups" reference={userGroupResourceName}>
       <SelectArrayInput optionText="name" />
     </ReferenceArrayInput>
 

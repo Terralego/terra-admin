@@ -14,7 +14,7 @@ import {
 
 
 import withViewList from '../components/withViewList';
-import { resourceFullname as GeosourceResourceFullName } from '../../DataSource';
+import { resourceName as GeosourceResourceName } from '../../DataSource';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
 // const ListFilters = props => (
@@ -23,7 +23,7 @@ import CommonBulkActionButtons from '../../../../components/react-admin/CommonBu
 
 //     <ReferenceInput
 //       source="source"
-//       reference={GeosourceResourceFullName}
+//       reference={GeosourceResourceName}
 //       label="datalayer.form.data-source"
 //     >
 //       <SelectInput />
@@ -55,7 +55,7 @@ export const DataLayerList = ({ viewList, ...props }) => {
       <Datagrid rowClick="edit">
         <TextField source="name" label="datalayer.form.name" />
         <FunctionField source="view" render={renderViewField} />
-        <ReferenceField source="source" reference={GeosourceResourceFullName} label="datalayer.form.data-source">
+        <ReferenceField source="source" reference={GeosourceResourceName} label="datalayer.form.data-source">
           <TextField source="name" />
         </ReferenceField>
         <EditButton />

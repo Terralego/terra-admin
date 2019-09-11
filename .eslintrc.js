@@ -5,7 +5,10 @@ const always = 'always';
 
 module.exports = {
   root: true,
-  extends: 'makina',
+  extends: [
+    'react-app',
+    'makina',
+  ],
 
   // Custom rules
   rules: {
@@ -13,6 +16,6 @@ module.exports = {
     'react/destructuring-assignment':    [error],
     'react/no-this-in-sfc':              [error],
     'react/no-access-state-in-setstate': [error],
-    'react-hooks/exhaustive-deps':       [off],
+    'import/no-cycle':                   [off],
   }
 };

@@ -1,14 +1,4 @@
-import userConfig from '../../modules/RA/User/config';
-import userGroupConfig from '../../modules/RA/UserGroup/config';
-import dataSourceConfig  from '../../modules/RA/DataSource/config';
-import dataLayerConfig  from '../../modules/RA/DataLayer/config';
-
-export const allConfig = [
-  userConfig,
-  userGroupConfig,
-  dataSourceConfig,
-  dataLayerConfig,
-];
+import { resources as allConfig } from '../../modules/RA/ra-modules';
 
 /**
  * Return the endpoint of specified resource
@@ -21,7 +11,7 @@ export const allConfig = [
  * @returns {string} The endpoint of specified resource
  */
 export const getEndpoint = resource => {
-  const currentConfig = allConfig.find(config => (config.resource === resource));
+  const currentConfig = allConfig.find(config => (config.name === resource));
 
   if (currentConfig && currentConfig.endpoint) {
     return currentConfig.endpoint;

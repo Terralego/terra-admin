@@ -8,13 +8,13 @@ import get from 'lodash.get';
 
 import StyleField from './StyleField';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
-import { resourceName as GeosourceResourceName } from '../../DataSource';
+import { RES_DATASOURCE } from '../../ra-modules';
 
 export const CustomLayer = ({ resource, source }) => (
   <FieldGroup>
     <ReferenceInput
       source={`${source}.source`}
-      reference={GeosourceResourceName}
+      reference={RES_DATASOURCE}
       label="datalayer.form.data-source"
       sort={{ field: 'name', order: 'ASC' }}
       resource={resource}

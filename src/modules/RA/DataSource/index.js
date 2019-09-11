@@ -1,5 +1,3 @@
-import config from './config';
-
 import {
   POINT,
   LINESTRING,
@@ -46,6 +44,3 @@ export const fieldTypes = {
   5: 'Undefined',
 };
 export const fieldTypeChoices = typesToChoices(fieldTypes);
-
-
-export const resourceName = config.resource;

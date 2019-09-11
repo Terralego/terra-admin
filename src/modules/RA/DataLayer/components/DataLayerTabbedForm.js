@@ -26,7 +26,7 @@ import withViewList from './withViewList';
 import { required } from '../../../../utils/react-admin/validate';
 import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
-import { resourceName as GeosourceResourceName } from '../../DataSource';
+import { RES_DATASOURCE } from '../../ra-modules';
 
 const defaultRequired = required();
 
@@ -37,7 +37,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
       <FormTab label="datalayer.form.definition">
         <ReferenceInput
           source="source"
-          reference={GeosourceResourceName}
+          reference={RES_DATASOURCE}
           label="datalayer.form.data-source"
           sort={{ field: 'name', order: 'ASC' }}
           validate={defaultRequired}

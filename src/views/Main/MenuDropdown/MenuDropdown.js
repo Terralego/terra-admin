@@ -25,14 +25,20 @@ export const MenuDropdown = ({ t, modules = [] }) => {
               className={Classes.MINIMAL}
               text={t(Component.config.title)}
             >
-              {Component.config.nav.map(({ href, label }) => (
-                <NavLink key={href} to={`${Component.config.path}/${href}`}>
-                  <MenuItem
-                    tagName="span"
-                    text={t(label)}
-                  />
-                </NavLink>
-              ))}
+              {Component.config.nav.map(({ href, label }) => {
+                const prefix = typeof Component.config.path === 'string'
+                  ? `${Component.config.path}/`
+                  : '';
+
+                return (
+                  <NavLink key={href} to={`${prefix}${href}`}>
+                    <MenuItem
+                      tagName="span"
+                      text={t(label)}
+                    />
+                  </NavLink>
+                );
+              })}
             </MenuItem>
           ))}
         </Menu>

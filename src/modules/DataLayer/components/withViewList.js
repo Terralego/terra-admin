@@ -5,11 +5,11 @@ import { fetchViewList } from '../services/datalayer';
 export const withViewList = WrappedComponent => props => {
   /** Injects the viewList as prop to the wrapped component */
   const [viewList, setViewList] = React.useState([]);
-  let isUnmounted = false;
+  const isUnmounted = React.useRef(false);
 
   const fetchList = async () => {
     const loadedViewList = await fetchViewList();
-    if (isUnmounted) return;
+    if (isUnmounted.current) return;
     setViewList(loadedViewList);
   };
 
@@ -17,7 +17,7 @@ export const withViewList = WrappedComponent => props => {
     fetchList();
 
     return () => {
-      isUnmounted = true;
+      isUnmounted.current = true;
     };
   }, []);
 

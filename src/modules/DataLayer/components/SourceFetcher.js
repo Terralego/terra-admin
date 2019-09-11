@@ -29,7 +29,7 @@ const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId, fiel
       dispatch(change(REDUX_FORM_NAME, 'external', type === WMTS));
     }
     fillFields();
-  }, [sourceId]);
+  }, [dispatch, fields, load, sourceId]);
 
   return null;
 });

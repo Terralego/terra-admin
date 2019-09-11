@@ -7,7 +7,7 @@ import modules from '../modules';
  */
 export const getComponentsByEnabledModules = (selectedModules = []) =>
   Object.keys(modules).reduce((list, moduleName) => (
-    selectedModules.includes(moduleName)
+    [...selectedModules, 'RA'].includes(moduleName)
       ? [...list, modules[moduleName].default]
       : list
   ), []);

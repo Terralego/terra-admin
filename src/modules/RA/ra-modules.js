@@ -11,21 +11,25 @@ export const RES_DATALAYER = 'datalayer';
 export const resources = [
   {
     name: RES_USER,
+    moduleName: 'User',
     endpoint: 'user',
     ...userView,
   },
   {
     name: RES_USERGROUP,
+    moduleName: 'group',
     endpoint: 'group',
     ...userGroupView,
   },
   {
     name: RES_DATASOURCE,
+    moduleName: 'DataSource',
     endpoint: 'geosource',
     ...dataSourceView,
   },
   {
     name: RES_DATALAYER,
+    moduleName: 'DataLayer',
     endpoint: 'geolayer',
     ...dataLayerView,
   },

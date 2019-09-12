@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Icon, Button } from '@blueprintjs/core';
 
@@ -12,6 +13,38 @@ import Edit from './Edit';
 import './styles.scss';
 
 class Details extends React.Component {
+  static propTypes = {
+    layer: PropTypes.shape({}).isRequired,
+    feature: PropTypes.shape({}),
+    fetchFeature: PropTypes.func.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+        layer: PropTypes.string,
+        action: PropTypes.string,
+      }),
+    }),
+    hasError: PropTypes.bool,
+    errorMessage: PropTypes.string,
+    detailsHasLoaded: PropTypes.func,
+    onSizeChange: PropTypes.func,
+  };
+
+  static defaultProps = {
+    feature: {},
+    match: {
+      params: {
+        id: undefined,
+        layer: undefined,
+        action: undefined,
+      },
+    },
+    hasError: false,
+    errorMessage: '',
+    detailsHasLoaded () {},
+    onSizeChange () {},
+  }
+
   state = {
     schema: {},
   }

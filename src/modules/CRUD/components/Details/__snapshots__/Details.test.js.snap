@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshots should redirect if there is an error 1`] = `
+<div>
+  Error because Redirect
+</div>
+`;
+
+exports[`Snapshots should render details Create correctly 1`] = `
+Array [
+  <div
+    className="CRUD-details__actions"
+  >
+    <div>
+      Button
+    </div>
+    <div>
+      <span
+        className="bp3-button bp3-minimal"
+      >
+        <div>
+          Icon close
+        </div>
+      </span>
+    </div>
+  </div>,
+  <div
+    className="CRUD-details__content"
+  >
+    <div>
+      create
+    </div>
+  </div>,
+]
+`;
+
+exports[`Snapshots should render details Read correctly 1`] = `
+Array [
+  <div
+    className="CRUD-details__actions"
+  >
+    <div>
+      Button
+    </div>
+    <div>
+      <span
+        className="bp3-button bp3-minimal"
+      >
+        <div>
+          Icon close
+        </div>
+      </span>
+    </div>
+  </div>,
+  <div
+    className="CRUD-details__content"
+  >
+    <div>
+      Read
+    </div>
+  </div>,
+]
+`;
+
+exports[`Snapshots should render details Update correctly 1`] = `
+Array [
+  <div
+    className="CRUD-details__actions"
+  >
+    <div>
+      Button
+    </div>
+    <div>
+      <span
+        className="bp3-button bp3-minimal"
+      >
+        <div>
+          Icon close
+        </div>
+      </span>
+    </div>
+  </div>,
+  <div
+    className="CRUD-details__content"
+  >
+    <div>
+      update
+    </div>
+  </div>,
+]
+`;
+
+exports[`Snapshots should render loading correctly 1`] = `
+Array [
+  <div
+    className="CRUD-details__actions"
+  >
+    <div>
+      Button
+    </div>
+    <div>
+      <span
+        className="bp3-button bp3-minimal"
+      >
+        <div>
+          Icon close
+        </div>
+      </span>
+    </div>
+  </div>,
+  <div
+    className="CRUD-details__content"
+  >
+    <div>
+      Loading
+    </div>
+  </div>,
+]
+`;

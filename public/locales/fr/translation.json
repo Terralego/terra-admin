@@ -354,6 +354,12 @@
     }
   },
   "ra": {
+    "nav": {
+      "user_list": "Liste des utilisateurs",
+      "usergroup_list": "Liste des groupes utilisateurs",
+      "datalayer_list": "Liste des couches",
+      "datasource_list": "Liste des sources de données"
+    },
     "action": {
       "add_filter": "Ajouter un filtre",
       "add": "Ajouter",

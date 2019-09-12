@@ -22,6 +22,10 @@ export const CustomAdmin = ({ locale, history, allowedModules = [] }) => {
   const enabledResources = resources.filter(({ moduleName }) =>
     allowedModules.includes(moduleName));
 
+  if (!enabledResources.length) {
+    return null;
+  }
+
   return (
     <Admin
       appLayout={RALayout}

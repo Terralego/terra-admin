@@ -40,19 +40,19 @@ export const config = {
   path: resources.map(({ name }) => `/${name}`),
   nav: [
     {
-      label: 'user_list',
+      label: 'ra.nav.user_list',
       href: `/${RES_USER}`,
     },
     {
-      label: 'usergroup_list',
+      label: 'ra.nav.usergroup_list',
       href: `/${RES_USERGROUP}`,
     },
     {
-      label: 'datalayer_list',
+      label: 'ra.nav.datalayer_list',
       href: `/${RES_DATASOURCE}`,
     },
     {
-      label: 'datasource_list',
+      label: 'ra.nav.datasource_list',
       href: `/${RES_DATALAYER}`,
     },
   ],

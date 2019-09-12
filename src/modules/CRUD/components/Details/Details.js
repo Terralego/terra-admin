@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Icon, Button } from '@blueprintjs/core';
 
-import { ACTION_CREATE, ACTION_UPDATE } from '../../views/Map/Map';
+import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';

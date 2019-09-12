@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
 import { CONTROL_DRAW, CONTROLS_TOP_LEFT } from '@terralego/core/modules/Map';
 
-import { ACTION_CREATE, ACTION_UPDATE } from '../../../views/Map/Map';
+import { ACTION_CREATE, ACTION_UPDATE } from '../../../services/CRUD';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';

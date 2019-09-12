@@ -48,7 +48,6 @@ const getColsForWidth = width => {
 };
 
 const GridList = ({ translate: t, classes, ids, data, basePath, width, selectedIds, onSelect }) => {
-
   const handleCheckboxClick = id => () => {
     const index = selectedIds.findIndex(currentId => currentId === id);
 
@@ -66,7 +65,7 @@ const GridList = ({ translate: t, classes, ids, data, basePath, width, selectedI
       <MuiGridList cellHeight={180} cols={getColsForWidth(width)} className={classes.gridList}>
         {ids.map(id => (
           <GridListTile component={Link} key={id} to={linkToRecord(basePath, data[id].id)}>
-            <img src={data[id].picture.list} alt={data[id].label} />
+            {data[id].picture && <img src={data[id].picture.list} alt={data[id].label} />}
             <GridListTileBar
               className={classes.tileBar}
               title={data[id].label}

@@ -9,7 +9,7 @@ import dataSourceView from './DataSource/views';
 import dataLayerView from './DataLayer/views';
 
 // OPP
-import viewpointList from './Viewpoint/views/List';
+import viewpointView from './Viewpoint/views';
 
 // User
 export const RES_USER = 'user';
@@ -53,7 +53,7 @@ export const resources = [
     name: RES_VIEWPOINT,
     moduleName: 'OPP',
     endpoint: 'viewpoints',
-    list: viewpointList,
+    ...viewpointView,
   },
   {
     name: RES_PICTURE,

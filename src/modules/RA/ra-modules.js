@@ -8,6 +8,9 @@ import userGroupView from './UserGroup/views';
 import dataSourceView from './DataSource/views';
 import dataLayerView from './DataLayer/views';
 
+// OPP
+import viewpointList from './Viewpoint/views/List';
+
 // User
 export const RES_USER = 'user';
 export const RES_USERGROUP = 'usergroup';
@@ -50,7 +53,7 @@ export const resources = [
     name: RES_VIEWPOINT,
     moduleName: 'OPP',
     endpoint: 'viewpoints',
-    list: ListGuesser,
+    list: viewpointList,
   },
   {
     name: RES_PICTURE,

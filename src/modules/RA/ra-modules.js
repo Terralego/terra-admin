@@ -1,12 +1,25 @@
+import { ListGuesser } from 'react-admin';
+
+// User
 import userView from './User/views';
 import userGroupView from './UserGroup/views';
+
+// Visu
 import dataSourceView from './DataSource/views';
 import dataLayerView from './DataLayer/views';
 
+// User
 export const RES_USER = 'user';
 export const RES_USERGROUP = 'usergroup';
+
+// Visu
 export const RES_DATASOURCE = 'datasource';
 export const RES_DATALAYER = 'datalayer';
+
+// OPP
+export const RES_VIEWPOINT = 'viewpoint';
+export const RES_PICTURE = 'picture';
+export const RES_CAMPAIGN = 'campaign';
 
 export const resources = [
   {
@@ -33,29 +46,33 @@ export const resources = [
     endpoint: 'geolayer',
     ...dataLayerView,
   },
+  {
+    name: RES_VIEWPOINT,
+    moduleName: 'OPP',
+    endpoint: 'viewpoints',
+    list: ListGuesser,
+  },
+  {
+    name: RES_PICTURE,
+    moduleName: 'OPP',
+    endpoint: 'pictures',
+    list: ListGuesser,
+  },
+  {
+    name: RES_CAMPAIGN,
+    moduleName: 'OPP',
+    endpoint: 'campaigns',
+    list: ListGuesser,
+  },
 ];
 
 export const config = {
   title: 'Common',
   path: resources.map(({ name }) => `/${name}`),
-  nav: [
-    {
-      label: 'ra.nav.user_list',
-      href: `/${RES_USER}`,
-    },
-    {
-      label: 'ra.nav.usergroup_list',
-      href: `/${RES_USERGROUP}`,
-    },
-    {
-      label: 'ra.nav.datalayer_list',
-      href: `/${RES_DATASOURCE}`,
-    },
-    {
-      label: 'ra.nav.datasource_list',
-      href: `/${RES_DATALAYER}`,
-    },
-  ],
+  nav: resources.map(({ name }) => ({
+    label: `ra.nav.${name}_list`,
+    href: `/${name}`,
+  })),
 };
 
 export default {

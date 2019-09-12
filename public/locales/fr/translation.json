@@ -358,7 +358,10 @@
       "user_list": "Liste des utilisateurs",
       "usergroup_list": "Liste des groupes utilisateurs",
       "datalayer_list": "Liste des couches",
-      "datasource_list": "Liste des sources de données"
+      "datasource_list": "Liste des sources de données",
+      "viewpoint_list": "Liste des points de vue",
+      "picture_list": "Liste des photographies",
+      "campaign_list": "Liste des campagnes"
     },
     "action": {
       "add_filter": "Ajouter un filtre",

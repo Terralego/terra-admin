@@ -473,6 +473,9 @@
     }
   },
   "resources": {
+    "viewpoint": {
+      "viewpoint-number": "Point de vue n°%{number}"
+    },
     "user": {
       "fields": {
         "id": "Id",

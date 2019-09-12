@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div>
+  <ul>
+    <li>
+      Géométrie
+       :
+      <ul>
+        <li>
+          Il est obligatoire de positionner un objet sur la carte
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+`;

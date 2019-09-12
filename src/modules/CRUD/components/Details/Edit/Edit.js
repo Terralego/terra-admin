@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-jsonschema-form';
 import { Redirect } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
@@ -29,35 +30,58 @@ function updateSchemaPropertiesValues (properties, formData) {
     },
   }), {});
 }
-
-
 class Edit extends React.Component {
+  static propTypes = {
+    map: PropTypes.shape({}),
+    feature: PropTypes.shape({}),
+    saveFeature: PropTypes.func.isRequired,
+    layer: PropTypes.shape({}).isRequired,
+    layerPaint: PropTypes.shape({}).isRequired,
+    paramLayer: PropTypes.string.isRequired,
+    paramId: PropTypes.string.isRequired,
+    action: PropTypes.oneOf([ACTION_CREATE, ACTION_UPDATE]).isRequired,
+    updateControls: PropTypes.func.isRequired,
+    displayAddFeature: PropTypes.bool,
+    displayChangeFeature: PropTypes.bool,
+    schema: PropTypes.shape({}).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }),
+  }
+
+  static defaultProps = {
+    map: {},
+    feature: {},
+    displayAddFeature: true,
+    displayChangeFeature: true,
+    history: {
+      push () {},
+    },
+  }
+
   state = {
     loading: false,
-    schema: {},
+    schema: {
+      properties: {},
+    },
     geom: {},
   }
 
   componentDidMount () {
-    const {
-      schema,
-      feature: { geom = {} },
-      action,
-    } = this.props;
-    this.setState({
-      schema,
-      geom,
-    });
-    if (action !== ACTION_UPDATE || Object.keys(geom).length) {
-      this.initDraw();
-    }
+    this.initEdit();
   }
 
-  componentDidUpdate ({ schema: prevSchema, feature: prevFeature }) {
-    const { feature, schema } = this.props;
-    if (prevFeature !== feature) {
+  componentDidUpdate ({
+    schema: prevSchema,
+    feature: prevFeature,
+    map: prevMap,
+  }) {
+    const { feature, schema, map } = this.props;
+    if (prevFeature !== feature || prevMap !== map) {
       this.initDraw();
     }
+
+
     if (schema !== prevSchema) {
       this.updateSchema(schema);
     }
@@ -70,18 +94,47 @@ class Edit extends React.Component {
     } = this.props;
     // Remove controlDraw from controls
     updateControls([]);
-    if (this.layerId) {
+    if (this.layerId && Object.keys(map).length) {
       map.setFilter(this.layerId, ['all']);
     }
   }
 
   get layerId () {
-    const { layerPaint: { id } = {} } = this.props;
+    const { layerPaint: { id } } = this.props;
     return id;
   }
 
+  initEdit = () => {
+    const {
+      schema,
+      feature: { geom = {} },
+      action,
+    } = this.props;
+
+    this.setState({
+      schema,
+      geom,
+    }, () => {
+      if (action !== ACTION_UPDATE || Object.keys(geom).length) {
+        this.initDraw();
+      }
+    });
+  }
+
   updateSchema = schema => {
-    this.setState({ schema });
+    const { t } = this.props;
+    this.setState(({ geom }) => {
+      const geometryFromMap = { type: 'boolean', title: t('CRUD.details.geometry'), default: !!Object.keys(geom).length };
+      return {
+        schema: {
+          ...schema,
+          properties: {
+            ...schema.properties,
+            geometryFromMap,
+          },
+        },
+      };
+    });
   }
 
   initDraw = () => {
@@ -109,8 +162,10 @@ class Edit extends React.Component {
         uncombine_features: false,
       },
     };
+
     if (action === ACTION_UPDATE) {
-      if (!geom) return;
+      if (!geom || !Object.keys(map).length) return;
+
       const listener = ({ control: addedControl }) => {
         if (addedControl !== control.control) {
           return;
@@ -119,7 +174,6 @@ class Edit extends React.Component {
         map.off('control_added', listener);
       };
       map.on('control_added', listener);
-
       if (this.layerId) {
         map.setFilter(this.layerId, ['!=', '_id', paramId]);
       }
@@ -128,30 +182,25 @@ class Edit extends React.Component {
   }
 
   updateGeometry = ({ type, features: [{ geometry: geom, id }], target: map }) => {
-    const {
-      action,
-      layer: { geom_type: geomType },
-    } = this.props;
-    const isDeleted = type === 'draw.delete';
-    this.setState({
-      geom: {},
-    });
-    if (isDeleted) {
+    if (type === 'draw.delete') {
+      this.setState({ geom: {} });
       return;
     }
-    if (action === ACTION_CREATE) {
-      const { features } = map.draw.getAll();
-      if (features.length > 1 && [POINT, LINESTRING, POLYGON].includes(geomType)) {
-        map.draw.delete(
-          features.reduce((list, feature) =>
-            (feature.id !== id ? [...list, feature.id] : list),
-          []),
-        );
-      }
+
+    const { layer: { geom_type: geomType } } = this.props;
+    const { features } = map.draw.getAll();
+
+    if (features.length > 1 && [POINT, LINESTRING, POLYGON].includes(geomType)) {
+      map.draw.delete(
+        features.reduce((list, feature) => (
+          feature.id !== id
+            ? [...list, feature.id]
+            : list
+        ), []),
+      );
     }
-    this.setState({
-      geom,
-    });
+
+    this.setState({ geom });
   }
 
   changeForm = ({ formData }) => {
@@ -170,13 +219,14 @@ class Edit extends React.Component {
   }
 
   submitFeature = async ({ formData: { geometryFromMap, ...properties } }) => {
-    const { history: { push }, action } = this.props;
     const { geom } = this.state;
     const {
+      history: { push },
       layer: { id: layerId },
       paramId,
       paramLayer,
       saveFeature,
+      action,
       t,
     } = this.props;
 

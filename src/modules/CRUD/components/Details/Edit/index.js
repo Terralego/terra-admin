@@ -31,8 +31,8 @@ export default withRouter(
         identifier === id
       )) || {},
       saveFeature,
-      layer: getLayer(settings, layer),
-      layerPaint: getLayersPaints(settings).find(item => item['source-layer'] === layer),
+      layer: getLayer(settings, layer) || {},
+      layerPaint: getLayersPaints(settings).find(item => item['source-layer'] === layer) || {},
       paramLayer: layer,
       paramId: id,
     }))(

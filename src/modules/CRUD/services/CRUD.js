@@ -8,7 +8,7 @@ import {
   MULTI_POLYGON,
 } from '../../../utils/geom';
 
-export const fetchSettings = () => Api.request('crud/settings');
+export const fetchSettings = () => Api.request('crud/settings/');
 
 const flattenMenu = menu => (
   menu.reduce((list, { crud_views: views }) => (

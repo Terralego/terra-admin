@@ -24,5 +24,18 @@ export default {
     label: 'CRUD.nav.map',
     href: 'map',
   }],
+
+  menu: [
+    {
+      label: 'CRUD.project',
+      items: [
+        {
+          label: 'CRUD.nav.map',
+          href: 'map',
+        }
+      ],
+    },
+  ],
+
   routes,
 };

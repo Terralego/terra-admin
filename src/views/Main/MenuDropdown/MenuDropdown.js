@@ -1,61 +1,33 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import {
   Button,
   Classes,
   Popover,
   Menu,
-  MenuItem,
   Position,
 } from '@blueprintjs/core';
 
 import MenuTree from '../../../components/MenuTree';
 
 export const MenuDropdown = ({ t, modules = [] }) => {
-  const [{ config: { nav = [] } = {} } = {}] = modules;
-  if (modules.length <= 1 && nav.length <= 1) {
-    return null;
-  }
-
   const menuContent = modules.reduce((acc, { config: { menu = [] } = {} }) => [
     ...acc,
     ...menu,
   ], []);
 
+  if (!menuContent.length) {
+    return null;
+  }
+
   return (
     <Popover
+      position={Position.BOTTOM_RIGHT}
       content={(
         <Menu>
-          {!!menuContent.length && (
-            menuContent.map(menuProps => <MenuTree key={menuProps.label} {...menuProps} />)
-          )}
-
-          {!menuContent.length && modules.map(Component => (
-            <MenuItem
-              key={Component.name}
-              className={Classes.MINIMAL}
-              text={t(Component.config.title)}
-            >
-              {Component.config.nav.map(({ href, label }) => {
-                const prefix = typeof Component.config.path === 'string'
-                  ? `${Component.config.path}/`
-                  : '';
-
-                return (
-                  <NavLink key={href} to={`${prefix}${href}`}>
-                    <MenuItem
-                      tagName="span"
-                      text={t(label)}
-                    />
-                  </NavLink>
-                );
-              })}
-            </MenuItem>
-          ))}
+          {menuContent.map(menuProps => <MenuTree key={menuProps.label} {...menuProps} />)}
         </Menu>
       )}
-      position={Position.BOTTOM_RIGHT}
     >
       <Button
         className={Classes.MINIMAL}

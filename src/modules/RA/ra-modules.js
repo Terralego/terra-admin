@@ -70,7 +70,6 @@ export const resources = [
 ];
 
 export const config = {
-  title: 'Common',
   // path used by router to define when to display current module
   path: resources.map(({ name }) => `/${name}`),
   menu: [

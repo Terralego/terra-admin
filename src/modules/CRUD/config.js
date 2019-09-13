@@ -20,10 +20,6 @@ export const generateURI = generateURIFactory(routes);
 export default {
   title: 'CRUD.project',
   path,
-  nav: [{
-    label: 'CRUD.nav.map',
-    href: 'map',
-  }],
 
   menu: [
     {
@@ -31,8 +27,8 @@ export default {
       items: [
         {
           label: 'CRUD.nav.map',
-          href: 'map',
-        }
+          href: '/CRUD/map',
+        },
       ],
     },
   ],

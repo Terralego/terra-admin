@@ -11,9 +11,10 @@ import {
 } from 'react-admin';
 
 import { WMTS } from '../../DataSource';
+import { RES_DATASOURCE } from '../../ra-modules';
 
 const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId, fields = [] }) => {
-  const load = memo(async id => dataProvider(GET_ONE, 'geosource', { id }));
+  const load = memo(async id => dataProvider(GET_ONE, RES_DATASOURCE, { id }));
   useEffect(() => {
     if (!sourceId) return;
 

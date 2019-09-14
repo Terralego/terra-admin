@@ -2,6 +2,8 @@ import Api from '@terralego/core/modules/Api';
 import { WMTS } from '../../modules/RA/DataSource';
 import { getEndpoint } from '../../utils/react-admin/resources';
 
+import { RES_DATASOURCE } from '../../modules/RA/ra-modules';
+
 const enhanceDataProvider = mainDataProvider => async (...args) => {
   const [type, resource, params] = args;
 
@@ -12,15 +14,14 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
     return Api.request(`${endpoint}/${params.id}/refresh/`);
   }
 
-  if (type === 'CREATE' && resource === 'geosource') {
+  if (type === 'CREATE' && resource === RES_DATASOURCE) {
     const { _type: sourceType } = params.data;
     if (sourceType === WMTS) {
       params.data.geom_type = 7;
     }
   }
 
-  // Manage file upload
-  if (['CREATE', 'UPDATE'].includes(type) && resource === 'geosource') {
+  if (['CREATE', 'UPDATE'].includes(type) && resource === RES_DATASOURCE) {
     const body = new FormData();
 
     Object.keys(params.data).forEach(key => {
@@ -44,19 +45,13 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
     switch (type) {
       case 'CREATE':
         response = await Api.request(`${endpoint}/`, { method: 'POST', body });
-        break;
+        return { data: response, id: response.id };
 
       case 'UPDATE':
         response = await Api.request(`${endpoint}/${params.id}/`, { method: 'PATCH', body });
-        break;
-      default:
-    }
-
-    switch (type) {
-      case 'CREATE':
-        return { data: response, id: response.id };
-      default:
         return { data: response };
+
+      default:
     }
   }
 

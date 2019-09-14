@@ -6,6 +6,7 @@ import {
 } from 'react-admin';
 
 import StatusChip from './StatusChip';
+import { RES_DATASOURCE } from '../../ra-modules';
 
 const DataSourceEditActions = ({ dataProvider, data: { id, status } = {} }) => (
   <CardActions>
@@ -14,7 +15,7 @@ const DataSourceEditActions = ({ dataProvider, data: { id, status } = {} }) => (
       color="primary"
       variant="raised"
       label="datasource.edit.refresh"
-      onClick={() => dataProvider('REFRESH', 'geosource', { id })}
+      onClick={() => dataProvider('REFRESH', RES_DATASOURCE, { id })}
     />
   </CardActions>
 );

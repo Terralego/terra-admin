@@ -9,11 +9,16 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
 
   const endpoint = getEndpoint(resource);
 
-  // Manage custom query type
+  /**
+   * Manage custom RESFRESH query type
+  */
   if (type === 'REFRESH') {
     return Api.request(`${endpoint}/${params.id}/refresh/`);
   }
 
+  /**
+   * Force geom_type field for WMTS _type
+   */
   if (type === 'CREATE' && resource === RES_DATASOURCE) {
     const { _type: sourceType } = params.data;
     if (sourceType === WMTS) {
@@ -21,6 +26,9 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
     }
   }
 
+  /**
+   * Manage file upload by converting query content to FormData()
+   */
   if (['CREATE', 'UPDATE'].includes(type) && resource === RES_DATASOURCE) {
     const body = new FormData();
 
@@ -55,6 +63,9 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
     }
   }
 
+  /**
+   * At least return initial data provider
+   */
   return mainDataProvider(type, endpoint, params);
 };
 

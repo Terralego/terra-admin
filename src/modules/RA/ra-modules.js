@@ -1,4 +1,4 @@
-import { ListGuesser } from 'react-admin';
+import { ListGuesser, EditGuesser } from 'react-admin';
 
 // User
 import userView from './User/views';
@@ -10,6 +10,11 @@ import dataLayerView from './DataLayer/views';
 
 // OPP
 import viewpointView from './Viewpoint/views';
+
+const guessers = {
+  edit: EditGuesser,
+  list: ListGuesser,
+};
 
 // User
 export const RES_USER = 'user';
@@ -60,18 +65,19 @@ export const resources = [
     name: RES_PICTURE,
     moduleName: 'OPP',
     endpoint: 'pictures',
-    list: ListGuesser,
+    ...guessers,
   },
   {
     name: RES_CAMPAIGN,
     moduleName: 'OPP',
     endpoint: 'campaigns',
-    list: ListGuesser,
+    ...guessers,
   },
   {
     name: RES_THEME,
     moduleName: 'OPP',
     endpoint: 'theme',
+    ...guessers,
   },
 ];
 

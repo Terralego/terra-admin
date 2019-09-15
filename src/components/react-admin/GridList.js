@@ -8,7 +8,6 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
-import Checkbox from '@material-ui/core/Checkbox';
 import { linkToRecord } from 'ra-core';
 /* eslint-enable */
 
@@ -47,43 +46,22 @@ const getColsForWidth = width => {
   return 6;
 };
 
-const GridList = ({ translate: t, classes, ids, data, basePath, width, selectedIds, onSelect }) => {
-  const handleCheckboxClick = id => () => {
-    const index = selectedIds.findIndex(currentId => currentId === id);
-
-    if (index === -1) {
-      onSelect([...selectedIds, id]);
-    } else {
-      const selection = [...selectedIds];
-      selection.splice(index, 1);
-      onSelect(selection);
-    }
-  };
-
-  return (
-    <div className={classes.root}>
-      <MuiGridList cellHeight={180} cols={getColsForWidth(width)} className={classes.gridList}>
-        {ids.map(id => (
-          <GridListTile component={Link} key={id} to={linkToRecord(basePath, data[id].id)}>
-            {data[id].picture && <img src={data[id].picture.list} alt={data[id].label} />}
-            <GridListTileBar
-              className={classes.tileBar}
-              title={data[id].label}
-              subtitle={<span>{t('resources.viewpoint.viewpoint-number', { number: id })}</span>}
-              actionIcon={(
-                <Checkbox
-                  color="secondary"
-                  onChange={handleCheckboxClick(id)}
-                  checked={selectedIds.includes(id)}
-                />
-              )}
-            />
-          </GridListTile>
-        ))}
-      </MuiGridList>
-    </div>
-  );
-};
+const GridList = ({ translate: t, classes, ids, data, basePath, width }) => (
+  <div className={classes.root}>
+    <MuiGridList cellHeight={180} cols={getColsForWidth(width)} className={classes.gridList}>
+      {ids.map(id => (
+        <GridListTile component={Link} key={id} to={linkToRecord(basePath, data[id].id)}>
+          {data[id].picture && <img src={data[id].picture.list} alt={data[id].label} />}
+          <GridListTileBar
+            className={classes.tileBar}
+            title={data[id].label}
+            subtitle={<span>{t('resources.viewpoint.viewpoint-number', { number: id })}</span>}
+          />
+        </GridListTile>
+      ))}
+    </MuiGridList>
+  </div>
+);
 
 export default compose(
   translate,

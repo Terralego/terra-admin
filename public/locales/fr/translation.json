@@ -477,7 +477,36 @@
   },
   "resources": {
     "viewpoint": {
-      "viewpoint-number": "Point de vue n°%{number}"
+      "viewpoint-number": "Point de vue n°%{number}",
+      "fields": {
+        "label": "Nom du point de vue",
+        "address": "Adresse",
+        "city_id": "Commune",
+        "properties.altitude": "Altitude",
+        "properties.hauteur": "Hauteur de l'œil",
+        "properties.orientation": "Orientation",
+        "properties.focale_35mm": "Focale 35 mm",
+        "properties.focale_objectif": "Focale de l'objectif",
+        "properties.frequency": "Fréquence de rephotographie",
+        "properties.difficulty": "Difficulté à reproduire",
+        "properties.note": "Observations de rephotographie",
+        "properties.description": "Description du paysage",
+        "properties.current-progressions": "Dynamiques en cours",
+        "properties.issues": "Enjeux",
+        "properties.observations": "Observations",
+        "properties.historial-data": "Données historiques",
+        "properties.cultural-references": "Références culturelles",
+        "properties.theme_ids": "Thématiques",
+        "properties.keywords": "Mots-clés",
+        "properties.landscape-entities": "Entités paysagères",
+        "properties.related-elements": "Documents associés"
+      },
+      "tabs": {
+        "general": "Informations principales",
+        "repeat": "Rephotographie",
+        "landscape": "Paysage",
+        "pictures": "Photographies"
+      }
     },
     "user": {
       "fields": {

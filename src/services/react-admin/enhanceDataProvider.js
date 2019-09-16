@@ -1,7 +1,10 @@
+import { CREATE, UPDATE } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 import { WMTS } from '../../modules/RA/DataSource';
 
 import { RES_DATASOURCE } from '../../modules/RA/ra-modules';
+
+const REFRESH = 'REFRESH';
 
 const enhanceDataProvider = nextDataProvider => async (...args) => {
   const [type, resource, params, meta = {}] = args;
@@ -10,14 +13,14 @@ const enhanceDataProvider = nextDataProvider => async (...args) => {
   /**
    * Manage custom RESFRESH query type
   */
-  if (type === 'REFRESH') {
+  if (type === REFRESH) {
     return Api.request(`${endpoint}/${params.id}/refresh/`);
   }
 
   /**
    * Force geom_type field for WMTS _type
    */
-  if (type === 'CREATE' && resource === RES_DATASOURCE) {
+  if (type === CREATE && resource === RES_DATASOURCE) {
     const { _type: sourceType } = params.data;
     if (sourceType === WMTS) {
       params.data.geom_type = 7;
@@ -27,7 +30,7 @@ const enhanceDataProvider = nextDataProvider => async (...args) => {
   /**
    * Manage file upload by converting query content to FormData()
    */
-  if (['CREATE', 'UPDATE'].includes(type) && resource === RES_DATASOURCE) {
+  if ([CREATE, UPDATE].includes(type) && resource === RES_DATASOURCE) {
     const body = new FormData();
 
     Object.keys(params.data).forEach(key => {
@@ -49,11 +52,11 @@ const enhanceDataProvider = nextDataProvider => async (...args) => {
     let response;
 
     switch (type) {
-      case 'CREATE':
+      case CREATE:
         response = await Api.request(`${endpoint}/`, { method: 'POST', body });
         return { data: response, id: response.id };
 
-      case 'UPDATE':
+      case UPDATE:
         response = await Api.request(`${endpoint}/${params.id}/`, { method: 'PATCH', body });
         return { data: response };
 

@@ -5,7 +5,10 @@ import { Admin, Resource } from 'react-admin';
 import compose from '../../utils/compose';
 
 import dataProvider from '../../services/react-admin/dataProvider';
+import withResourceEndpoint from '../../services/react-admin/withResourceEndpoint';
+import withViewpointIds from '../../services/react-admin/withViewpointIds';
 import enhanceDataProvider from '../../services/react-admin/enhanceDataProvider';
+
 import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
 
@@ -32,7 +35,11 @@ export const CustomAdmin = ({ locale, history, allowedModules = [] }) => {
       locale={`${locale}`.substr(0, 2)}
       history={history}
 
-      dataProvider={enhanceDataProvider(dataProvider)}
+      dataProvider={compose(
+        withResourceEndpoint,
+        withViewpointIds,
+        enhanceDataProvider,
+      )(dataProvider)}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
     >

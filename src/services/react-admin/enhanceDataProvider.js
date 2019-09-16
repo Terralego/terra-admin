@@ -1,13 +1,11 @@
 import Api from '@terralego/core/modules/Api';
 import { WMTS } from '../../modules/RA/DataSource';
-import { getEndpoint } from '../../utils/react-admin/resources';
 
 import { RES_DATASOURCE } from '../../modules/RA/ra-modules';
 
-const enhanceDataProvider = mainDataProvider => async (...args) => {
-  const [type, resource, params] = args;
-
-  const endpoint = getEndpoint(resource);
+const enhanceDataProvider = nextDataProvider => async (...args) => {
+  const [type, resource, params, meta = {}] = args;
+  const { endpoint = resource } = meta;
 
   /**
    * Manage custom RESFRESH query type
@@ -66,7 +64,7 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
   /**
    * At least return initial data provider
    */
-  return mainDataProvider(type, endpoint, params);
+  return nextDataProvider(type, endpoint, params);
 };
 
 export default enhanceDataProvider;

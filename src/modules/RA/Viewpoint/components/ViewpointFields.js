@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  AutocompleteArrayInput,
   Datagrid,
   DateField,
   DisabledInput,
@@ -12,11 +11,10 @@ import {
   TabbedForm,
   TextField,
   TextInput,
-  ReferenceArrayInput,
   translate,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
-import { RES_PICTURE, RES_THEME } from '../../ra-modules';
+import { RES_PICTURE } from '../../ra-modules';
 
 const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
   <TabbedForm {...props}>
@@ -48,11 +46,7 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
       <LongTextInput source="properties.observations" />
       <LongTextInput source="properties.historial-data" />
       <LongTextInput source="properties.cultural-references" />
-
-      <ReferenceArrayInput reference={RES_THEME} source="properties.theme_ids">
-        <AutocompleteArrayInput optionText="label" />
-      </ReferenceArrayInput>
-
+      <TextInput source="properties.theme_ids" /* Should be converted to referenceInput to RES_THEME */ />
       <TextInput source="properties.keywords" />
       <TextInput source="properties.landscape-entities" />
       <TextInput source="properties.related-elements" />

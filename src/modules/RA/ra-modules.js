@@ -28,7 +28,6 @@ export const RES_DATALAYER = 'datalayer';
 export const RES_VIEWPOINT = 'viewpoint';
 export const RES_PICTURE = 'picture';
 export const RES_CAMPAIGN = 'campaign';
-export const RES_THEME = 'theme';
 
 export const resources = [
   {
@@ -71,12 +70,6 @@ export const resources = [
     name: RES_CAMPAIGN,
     moduleName: 'OPP',
     endpoint: 'campaigns',
-    ...guessers,
-  },
-  {
-    name: RES_THEME,
-    moduleName: 'OPP',
-    endpoint: 'theme',
     ...guessers,
   },
 ];

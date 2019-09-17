@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import CRUDProvider from './CRUDProvider';
 import mapUtils from './map';
 import crudUtils from './CRUD';
+import featuresUtils from './features';
 
 jest.mock('react-ctx-connect', () => {
   const connect = () => jest.fn();
@@ -12,84 +13,64 @@ jest.mock('react-ctx-connect', () => {
 
 jest.mock('./map', () => ({
   fetchMapConfig: () => ({
-    results: {
-      foo: 'foo',
-      bar: 'bar',
-    },
+    foo: 'foo',
+    bar: 'bar',
   }),
 }));
 
 jest.mock('./CRUD', () => ({
   fetchSettings: () => ({
-    settings: {
-      fooSettings: 'foobar',
-    },
+    fooSettings: 'foobar',
   }),
 }));
 
 jest.mock('./features', () => ({
+  updateOrSaveFeatureInFeaturesList: (featuresList, feature) => {
+    const isFeatureAlreadyExisting = featuresList.some(({ identifier }) => (
+      identifier === feature.identifier
+    ));
+
+    return isFeatureAlreadyExisting
+      ? featuresList.map(item => (item.identifier === feature.identifier ? feature : item))
+      : [...featuresList, feature.identifier && feature].filter(Boolean);
+  },
   fetchFeaturesList: layerId => {
-    if (!layerId) {
-      return {
-        featuresList: [],
-        error: { layerId, message: 'Layer ID is missing' },
-      };
-    }
     if (layerId === 'foo') {
       return {
-        featuresList: [{ featureID: 1 }, { featureID: 2 }],
+        results: [{ featureID: 1 }, { featureID: 2 }],
       };
     }
-    return {
-      featuresList: [],
-      error: { layerId, message: 'No found' },
-    };
+    throw new Error('Not found');
   },
   fetchFeature: (layerId, featureId) => {
-    if (!layerId || !featureId) {
-      return {
-        error: { layerId, featureId, message: 'Layer ID or feature ID are missing' },
-      };
-    }
     if (layerId === 'foo' && featureId === '1') {
       return {
-        feature: { identifier: 1, foo: 'foo' },
+        identifier: 1, foo: 'foo',
       };
     }
-    return {
-      error: { layerId, featureId, message: 'Not found' },
-    };
+    throw new Error('Not found');
   },
   saveFeature: (layerId, featureId, data) => {
-    if (!layerId) {
-      return {
-        error: { layerId, message: 'Layer ID is missing' },
-      };
-    }
     // Create Feature
     if (layerId === 'foo' && !featureId) {
       return {
-        feature: { identifier: '999', foo: 'foo', ...data },
+        identifier: '999', foo: 'foo', ...data,
       };
     }
     // Fail Create Feature
-    if (layerId === 'NO_EXISTS' && !featureId) {
-      return {
-        error: { layerId, message: 'Not found' },
-      };
+    if (layerId === 'NOT_EXISTS' && !featureId) {
+      throw new Error('No create feature');
     }
 
     // Update Feature
     if (layerId === 'bar' && featureId === '1000') {
       return {
-        feature: { identifier: '1000', foo: 'bar', ...data },
+        identifier: '1000', foo: 'bar', ...data,
       };
     }
 
     // Fail Update Feature
-    return {
-      error: { layerId, message: 'Not found' },
-    };
+    throw new Error('No update feature');
   },
   deleteFeature: (layerId, featureId) => {
     if (!layerId || !featureId) {
@@ -150,19 +131,15 @@ it('should get map config', async () => {
   await instance.getMapConfig();
   expect(stateCallback({})).toEqual({
     mapConfig: { foo: 'foo', bar: 'bar' },
-    errors: { mapConfig: {} },
+    errors: { mapConfig: undefined },
   });
 });
 
 it('should not crash when no getting map config', async () => {
   // eslint-disable-next-line import/no-named-as-default-member
-  mapUtils.fetchMapConfig = () => ({
-    results: {},
-    error: {
-      foo: 'foo',
-      bar: 'bar',
-    },
-  });
+  mapUtils.fetchMapConfig = () => {
+    throw new Error('No fetching map');
+  };
 
   const instance = new CRUDProvider();
   let stateCallback;
@@ -172,7 +149,7 @@ it('should not crash when no getting map config', async () => {
   await instance.getMapConfig();
   expect(stateCallback({})).toEqual({
     mapConfig: {},
-    errors: { mapConfig: { bar: 'bar', foo: 'foo' } },
+    errors: { mapConfig: new Error('No fetching map') },
   });
 });
 
@@ -191,13 +168,9 @@ it('should get settings', async () => {
 
 it('should not crash when no getting settings', async () => {
   // eslint-disable-next-line import/no-named-as-default-member
-  crudUtils.fetchSettings = () => ({
-    settings: {},
-    error: {
-      foo: 'foo',
-      bar: 'bar',
-    },
-  });
+  crudUtils.fetchSettings = () => {
+    throw new Error('No getting settings');
+  };
 
   const instance = new CRUDProvider();
   let stateCallback;
@@ -206,22 +179,8 @@ it('should not crash when no getting settings', async () => {
   });
   await instance.getSettings();
   expect(stateCallback({})).toEqual({
-    errors: { settings: { foo: 'foo', bar: 'bar' } },
     settings: {},
-  });
-});
-
-it('should not get list of features without layer ID parameter', async () => {
-  const instance = new CRUDProvider();
-  instance.setState = jest.fn();
-  await instance.getFeaturesList();
-  expect(instance.setState).toHaveBeenCalledWith({
-    errors: {
-      feature: [],
-      featuresList: [{ layerId: undefined, message: 'Layer ID is missing' }],
-      settings: undefined,
-    },
-    featuresList: [],
+    errors: { settings: new Error('No getting settings') },
   });
 });
 
@@ -240,34 +199,18 @@ it('should get list of features', async () => {
 });
 
 it('should not crash when no getting list of feature', async () => {
+  // eslint-disable-next-line import/no-named-as-default-member
+  featuresUtils.fetchFeaturesList = () => {
+    throw new Error('Not found');
+  };
+
   const instance = new CRUDProvider();
   instance.setState = jest.fn();
-  await instance.getFeaturesList('NO_EXISTS');
+  await instance.getFeaturesList('NOT_EXISTS');
   expect(instance.setState).toHaveBeenCalledWith({
     errors: {
       feature: [],
-      featuresList: [{ layerId: 'NO_EXISTS', message: 'No found' }],
-      settings: undefined,
-    },
-    featuresList: [],
-  });
-});
-
-it('should not get feature data without layer id or feature id', async () => {
-  const instance = new CRUDProvider();
-  let stateCallback;
-  instance.setState = jest.fn(callback => {
-    stateCallback = callback;
-  });
-  await instance.fetchFeature();
-  expect(stateCallback(instance.state)).toEqual({
-    errors: {
-      feature: [{
-        featureId: undefined,
-        layerId: undefined,
-        message: 'Layer ID or feature ID are missing',
-      }],
-      featuresList: [],
+      featuresList: [{ layerId: 'NOT_EXISTS', error: new Error('Not found') }],
       settings: undefined,
     },
     featuresList: [],
@@ -320,32 +263,14 @@ it('should not crash when no getting feature data', async () => {
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  await instance.fetchFeature('foo', 'NO_EXISTS');
+  await instance.fetchFeature('foo', 'NOT_EXISTS');
   expect(stateCallback(instance.state)).toEqual({
     errors: {
+      settings: undefined,
       feature: [{
-        featureId: 'NO_EXISTS',
+        featureId: 'NOT_EXISTS',
         layerId: 'foo',
-        message: 'Not found',
-      }],
-      featuresList: [],
-    },
-    featuresList: [],
-  });
-});
-
-it('should not save feature without layer id', async () => {
-  const instance = new CRUDProvider();
-  let stateCallback;
-  instance.setState = jest.fn(callback => {
-    stateCallback = callback;
-  });
-  await instance.saveFeature();
-  expect(stateCallback(instance.state)).toEqual({
-    errors: {
-      feature: [{
-        layerId: undefined,
-        message: 'Layer ID is missing',
+        error: new Error('Not found'),
       }],
       featuresList: [],
     },
@@ -421,45 +346,17 @@ it('should not crash when no saving feature', async () => {
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  await instance.saveFeature('bar', 1);
+  await instance.saveFeature('NOT_EXISTS', false);
   expect(stateCallback(instance.state)).toEqual({
     errors: {
-      feature: [{ layerId: 'bar', message: 'Not found' }],
+      feature: [{
+        layerId: 'NOT_EXISTS',
+        featureId: false,
+        error: new Error('No create feature'),
+      }],
       featuresList: [],
     },
     featuresList: [],
-  });
-});
-
-it('should not delete feature without layer id or feature id', async () => {
-  const instance = new CRUDProvider();
-  instance.state = {
-    ...instance.state,
-    featuresList: [{
-      displayName: 'Bar',
-      foo: 'bar',
-      identifier: '1000',
-    }, {
-      displayName: 'Foo',
-      foo: 'foo',
-      identifier: '100',
-    }],
-  };
-  let stateCallback;
-  instance.setState = jest.fn(callback => {
-    stateCallback = callback;
-  });
-  await instance.deleteFeature();
-  expect(stateCallback(instance.state)).toEqual({
-    featuresList: [{
-      displayName: 'Bar',
-      foo: 'bar',
-      identifier: '1000',
-    }, {
-      displayName: 'Foo',
-      foo: 'foo',
-      identifier: '100',
-    }],
   });
 });
 

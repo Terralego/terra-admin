@@ -73,15 +73,6 @@ it('should fetch settings', async () => {
   expect(Api.request).toHaveBeenCalled();
 });
 
-it('should not crash when no fetching ', async () => {
-  Api.request = jest.fn(() => {
-    throw new Error('No fetching settings');
-  });
-  expect(await fetchSettings()).toEqual({
-    error: 'No fetching settings',
-  });
-});
-
 it('should get the selected layer', () => {
   expect(getLayer(settings, 'bar_bar')).toEqual({
     displayName: 'Bar bar',

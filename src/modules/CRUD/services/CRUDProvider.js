@@ -7,6 +7,7 @@ import {
   fetchFeature as fetchFeatureAction,
   saveFeature as saveFeatureAction,
   deleteFeature as deleteFeatureAction,
+  updateOrSaveFeatureInFeaturesList,
 } from './features';
 
 export const context = React.createContext({});
@@ -18,7 +19,6 @@ export class CRUDProvider extends React.Component {
   state = {
     settings: {},
     featuresList: [],
-    feature: {},
     mapConfig: {},
     errors: {
       settings: undefined,
@@ -34,7 +34,15 @@ export class CRUDProvider extends React.Component {
   setMap = map => !this.isUnmount && this.setState({ map });
 
   getMapConfig = async () => {
-    const { results: mapConfig = {}, error = {} } = await fetchMapConfig();
+    const result = {};
+    try {
+      const mapConfig = await fetchMapConfig();
+      result.mapConfig = mapConfig;
+    } catch (e) {
+      result.error = e;
+    }
+
+    const { mapConfig = {}, error } = result;
     this.setState(({ errors }) => ({
       mapConfig,
       errors: {
@@ -42,11 +50,21 @@ export class CRUDProvider extends React.Component {
         mapConfig: error,
       },
     }));
+
     return mapConfig;
   };
 
   getSettings = async () => {
-    const { settings = {}, error } = await fetchSettings();
+    const result = {};
+    try {
+      const settings = await fetchSettings();
+      result.settings = settings;
+    } catch (e) {
+      result.error = e;
+    }
+
+    const { settings = {}, error } = result;
+
     this.setState(({ errors }) => ({
       settings,
       errors: {
@@ -54,6 +72,7 @@ export class CRUDProvider extends React.Component {
         settings: error,
       },
     }));
+
     return settings;
   }
 
@@ -67,78 +86,103 @@ export class CRUDProvider extends React.Component {
 
     const propsFromIds = Object.keys(ids);
 
-    if (!Object.keys(error).length) {
-      return errorStore.filter(item => (
-        propsFromIds.every(prop => item[prop] !== ids[prop])
+    // Remove error if it was before in the store
+    if (!(error instanceof Error)) {
+      return errorStore.filter(errorItem => (
+        propsFromIds.every(prop => errorItem[prop] !== ids[prop])
       ));
     }
 
-    return [...errorStore, error];
+    // Modify error if it was before in the store
+    const isErrorItemAlreadyExisting = errorStore.some(errorItem => (
+      propsFromIds.every(prop => errorItem[prop] === ids[prop])
+    ));
+
+    if (isErrorItemAlreadyExisting) {
+      return errorStore.map(errorItem => (
+        propsFromIds.every(prop => errorItem[prop] === ids[prop])
+          ? { error, ...ids }
+          : errorItem
+      ));
+    }
+
+    // Else add error in the store
+    return [...errorStore, { error, ...ids }];
   }
 
   getFeaturesList = async layerId => {
-    const { featuresList = [], error = {} } = await fetchFeaturesList(layerId);
-    const { errors } = this.state;
+    const result = {};
+    try {
+      const { results: featuresList } = await fetchFeaturesList(layerId);
+      result.featuresList = featuresList;
+    } catch (e) {
+      result.error = e;
+    }
+    const { featuresList = [], error = {} } = result;
 
-    this.setState({
+    this.setState(({ errors }) => ({
       featuresList,
       errors: {
         ...errors,
         featuresList: this.getFormattedError({ error, ids: { layerId }, store: 'featuresList' }),
       },
-    });
-
-    return featuresList;
+    }));
+    return featuresList.length && featuresList;
   };
 
   fetchFeature = async (layerId, featureId) => {
-    const { feature = {}, error = {} } = await fetchFeatureAction(layerId, featureId);
-    const { featuresList: prevFeaturesList } = this.state;
+    const result = {};
+    try {
+      const feature = await fetchFeatureAction(layerId, featureId);
+      result.feature = feature;
+    } catch (e) {
+      result.error = e;
+    }
 
-    const isFeatureAlreadyExisting = prevFeaturesList.some(({ identifier }) => (
-      identifier === feature.identifier
-    ));
+    const { feature = {}, error = {} } = result;
 
-    const featuresList = isFeatureAlreadyExisting
-      ? prevFeaturesList.map(item => (item.identifier === feature.identifier ? feature : item))
-      : [...prevFeaturesList, (feature.identifier) && feature].filter(Boolean);
-
-    this.setState(({ errors }) => ({
-      featuresList,
+    this.setState(({ errors, featuresList }) => ({
+      featuresList: updateOrSaveFeatureInFeaturesList(featuresList, feature),
       errors: {
         ...errors,
         feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),
       },
     }));
 
-    return feature;
+    return Object.keys(feature).length > 0 && feature;
   }
 
   saveFeature = async (layerId, featureId, data) => {
-    const { feature = {}, error = {} } = await saveFeatureAction(layerId, featureId, data);
-    const { featuresList: prevFeaturesList } = this.state;
+    const result = {};
+    try {
+      const feature = await saveFeatureAction(layerId, featureId, data);
+      result.feature = feature;
+    } catch (e) {
+      result.error = e;
+    }
 
-    const isFeatureAlreadyExisting = prevFeaturesList.some(({ identifier }) => (
-      identifier === feature.identifier
-    ));
+    const { feature = {}, error = {} } = result;
 
-    const featuresList = isFeatureAlreadyExisting
-      ? prevFeaturesList.map(item => (item.identifier === feature.identifier ? feature : item))
-      : [...prevFeaturesList, (feature.identifier) && feature].filter(Boolean);
-
-    this.setState(({ errors }) => ({
-      featuresList,
+    this.setState(({ errors, featuresList }) => ({
+      featuresList: updateOrSaveFeatureInFeaturesList(featuresList, feature),
       errors: {
         ...errors,
         feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),
       },
     }));
 
-    return feature;
+    return Object.keys(feature).length > 0 && feature;
   }
 
   deleteFeature = async (layerId, featureId) => {
-    const { feature } = await deleteFeatureAction(layerId, featureId);
+    const result = {};
+    try {
+      await deleteFeatureAction(layerId, featureId);
+      result.feature = featureId;
+    } catch (e) {
+      // Error
+    }
+    const { feature } = result;
 
     this.setState(({ featuresList }) => ({
       featuresList: !feature

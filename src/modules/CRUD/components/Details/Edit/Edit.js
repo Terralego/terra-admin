@@ -192,7 +192,7 @@ class Edit extends React.Component {
       { geom, properties },
     );
 
-    if (savedFeature !== null) {
+    if (savedFeature) {
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
     } else {
       this.setState({

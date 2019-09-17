@@ -8,14 +8,8 @@ import {
   MULTI_POLYGON,
 } from '../../../utils/geom';
 
-export const fetchSettings = async () => {
-  try {
-    const settings = await Api.request('crud/settings/');
-    return { settings };
-  } catch (e) {
-    return { error: e.message };
-  }
-};
+export const fetchSettings = () =>
+  Api.request('crud/settings/');
 
 const flattenMenu = menu => (
   menu.reduce((list, { crud_views: views }) => (

@@ -16,7 +16,10 @@ export default withRouter(
   }, {
     match: { params: { layer, id } },
   }) => {
-    const errorFeature = errors.feature.find(({ featureId }) => (featureId === id));
+    const {
+      error = {},
+      error: { message = '' } = {},
+    } = errors.feature.find(({ featureId }) => featureId === id) || {};
     return {
       map,
       fetchFeature,
@@ -24,8 +27,8 @@ export default withRouter(
         identifier === id
       )) || {},
       layer: getLayer(settings, layer),
-      hasError: !!errorFeature,
-      errorCode: errorFeature ? errorFeature.message : '',
+      hasError: !!error,
+      errorMessage: message,
     };
   })(
     withNamespaces()(Details),

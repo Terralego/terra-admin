@@ -143,11 +143,11 @@ class Details extends React.Component {
       match: { params: { id: paramId, layer: paramLayer } },
       t,
       hasError,
-      errorCode,
+      errorMessage,
       full,
     } = this.props;
 
-    if (hasError && errorCode === 'Not Found') {
+    if (hasError && errorMessage === 'Not Found') {
       toast.displayError(t('CRUD.details.errorNoFeature'));
       return <Redirect to={generateURI('layer', { layer: paramLayer })} />;
     }

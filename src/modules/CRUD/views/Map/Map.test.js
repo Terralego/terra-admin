@@ -3,7 +3,8 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import config from '../../services/mock-config.json';
 import { toast } from '../../../../utils/toast';
-import Map, { ACTION_CREATE, ACTION_UPDATE } from './Map';
+import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
+import Map from './Map';
 
 jest.mock('react-router-dom', () => ({
   Redirect: () => null,

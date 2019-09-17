@@ -11,14 +11,12 @@ import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
-import { getLayer, getSources, getLayersPaints } from '../../services/CRUD';
+import { ACTION_CREATE, ACTION_UPDATE, getLayer, getSources, getLayersPaints } from '../../services/CRUD';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
 
 import './styles.scss';
 
-export const ACTION_CREATE = 'create';
-export const ACTION_UPDATE = 'update';
 export const CONTROL_CAPTURE_POSITION = {
   control: CONTROL_CAPTURE,
   position: CONTROLS_TOP_RIGHT,

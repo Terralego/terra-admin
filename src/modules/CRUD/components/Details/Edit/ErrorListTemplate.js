@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Callout } from '@blueprintjs/core';
 
 const ErrorListTemplate = ({ errorSchema: { __errors, ...fields }, schema: { properties } }) => {
@@ -23,6 +24,13 @@ const ErrorListTemplate = ({ errorSchema: { __errors, ...fields }, schema: { pro
       </ul>
     </Callout>
   );
+};
+
+ErrorListTemplate.propTypes = {
+  errorSchema: PropTypes.shape({}).isRequired,
+  schema: PropTypes.shape({
+    properties: PropTypes.shape({}),
+  }).isRequired,
 };
 
 export default ErrorListTemplate;

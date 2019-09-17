@@ -150,6 +150,8 @@ class Details extends React.Component {
     const {
       match: { params: { action: paramAction, id: paramId } },
       updateControls,
+      layer,
+      feature,
     } = this.props;
     const { schema } = this.state;
 
@@ -159,10 +161,11 @@ class Details extends React.Component {
           schema={schema}
           updateControls={updateControls}
           action={paramAction || paramId}
+          layer={layer}
         />
       );
     }
-    return <Read schema={schema} />;
+    return <Read schema={schema} layer={layer} feature={feature} />;
   }
 
   onSizeChange = () => {

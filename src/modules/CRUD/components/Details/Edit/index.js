@@ -3,7 +3,7 @@ import { withNamespaces } from 'react-i18next';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
-import { getLayer, getLayersPaints  } from '../../../services/CRUD';
+import { getLayersPaints } from '../../../services/CRUD';
 
 import Edit from './Edit';
 
@@ -31,7 +31,6 @@ export default withRouter(
         identifier === id
       )) || {},
       saveFeature,
-      layer: getLayer(settings, layer) || {},
       layerPaint: getLayersPaints(settings).find(item => item['source-layer'] === layer) || {},
       paramLayer: layer,
       paramId: id,

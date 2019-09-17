@@ -4,6 +4,7 @@ import classnames from 'classnames';
 
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
+import Templates from '../Templates';
 import Actions from '../Actions';
 
 const NO_FEATURE = 'CRUD.details.noFeature';
@@ -37,6 +38,7 @@ const Read = ({
     <div className="details">
       <div className="details__header">
         <h2 className="details__title">{title || t(NO_FEATURE)}</h2>
+        <Templates id={id} files={templates} />
       </div>
       {hasProperties && (
         <div className="details__content">

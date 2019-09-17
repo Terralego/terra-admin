@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Icon, Button, Popover, H5, PopoverInteractionKind, Classes } from '@blueprintjs/core';
 
@@ -6,6 +7,37 @@ import { generateURI } from '../../../config';
 import { toast } from '../../../../../utils/toast';
 
 class Actions extends React.Component {
+  static propTypes = {
+    paramLayer: PropTypes.string.isRequired,
+    paramId: PropTypes.string,
+    layer: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+    t: PropTypes.func,
+    deleteFeature: PropTypes.func,
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }),
+    displayUpdate: PropTypes.bool,
+    displayDelete: PropTypes.bool,
+    displayCancel: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    deleteFeature () { return undefined; },
+    paramId: undefined,
+    layer: {
+      id: undefined,
+    },
+    history: {
+      push () {},
+    },
+    displayUpdate: false,
+    displayDelete: false,
+    displayCancel: false,
+    t: text => text,
+  }
+
   deleteFeature = async () => {
     const {
       paramLayer,
@@ -19,7 +51,7 @@ class Actions extends React.Component {
     const deleted = await deleteFeature(layerId, paramId);
 
     toast.displayToaster(
-      deleted ? { id: deleted } : { },
+      deleted ? { id: deleted } : {},
       t('CRUD.details.successDeleteFeature'),
       t('CRUD.details.failDeleteFeature'),
     );
@@ -86,9 +118,7 @@ class Actions extends React.Component {
             </span>
           </NavLink>
         )}
-        {!!children && (
-          <>{children}</>
-        )}
+        {children}
       </div>
     );
   }

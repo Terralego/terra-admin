@@ -33,12 +33,14 @@ export const resources = [
   {
     name: RES_USER,
     moduleName: 'User',
+    requiredPermissions: 'auth.change_group',
     endpoint: 'user',
     ...userView,
   },
   {
     name: RES_USERGROUP,
     moduleName: 'User',
+    requiredPermissions: 'auth.change_group',
     endpoint: 'group',
     ...userGroupView,
   },

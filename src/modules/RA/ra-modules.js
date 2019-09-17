@@ -76,27 +76,29 @@ export const resources = [
   },
 ];
 
+const byModule = (...modules) => ({ moduleName }) => modules.includes(moduleName);
+
 export const config = {
   // path used by router to define when to display current module
   path: resources.map(({ name }) => `/${name}`),
   menu: [
     {
       label: 'user.project',
-      items: resources.filter(({ moduleName }) => (moduleName === 'User')).map(({ name }) => ({
+      items: resources.filter(byModule('User')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
       })),
     },
     {
       label: 'datalayer.project',
-      items: resources.filter(({ moduleName }) => ['DataSource', 'DataLayer'].includes(moduleName)).map(({ name }) => ({
+      items: resources.filter(byModule('DataSource', 'DataLayer')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
       })),
     },
     {
       label: 'opp.project',
-      items: resources.filter(({ moduleName }) => (moduleName === 'OPP')).map(({ name }) => ({
+      items: resources.filter(byModule('OPP')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
       })),

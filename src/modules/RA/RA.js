@@ -29,17 +29,18 @@ export const CustomAdmin = ({ locale, history, allowedModules = [] }) => {
     return null;
   }
 
+  const customDataProvider = compose(
+    withResourceEndpoint,
+    withViewpointIds,
+    enhanceDataProvider,
+  )(dataProvider);
+
   return (
     <Admin
       appLayout={RALayout}
       locale={`${locale}`.substr(0, 2)}
       history={history}
-
-      dataProvider={compose(
-        withResourceEndpoint,
-        withViewpointIds,
-        enhanceDataProvider,
-      )(dataProvider)}
+      dataProvider={customDataProvider}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
     >

@@ -186,9 +186,12 @@ it('should not crash when no getting settings', async () => {
 
 it('should get list of features', async () => {
   const instance = new CRUDProvider();
-  instance.setState = jest.fn();
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
   await instance.getFeaturesList('foo');
-  expect(instance.setState).toHaveBeenCalledWith({
+  expect(stateCallback(instance.state)).toEqual({
     errors: {
       feature: [],
       featuresList: [],
@@ -205,9 +208,12 @@ it('should not crash when no getting list of feature', async () => {
   };
 
   const instance = new CRUDProvider();
-  instance.setState = jest.fn();
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
   await instance.getFeaturesList('NOT_EXISTS');
-  expect(instance.setState).toHaveBeenCalledWith({
+  expect(stateCallback(instance.state)).toEqual({
     errors: {
       feature: [],
       featuresList: [{ layerId: 'NOT_EXISTS', error: new Error('Not found') }],

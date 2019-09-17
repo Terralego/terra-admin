@@ -375,11 +375,14 @@ it('should attach addHighlight and removeHighlight methods on interactive map in
   expect(stateCallback).toEqual({ addHighlight, removeHighlight });
 });
 
-it('should addLight current feature', () => {
+it('should addHighLight current feature', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
     feature: { id: '1', geom: { coordinates: [1, 2] } },
+    map: {
+      getLayer: jest.fn(),
+    },
   });
   instance.state = {
     addHighlight: jest.fn(),

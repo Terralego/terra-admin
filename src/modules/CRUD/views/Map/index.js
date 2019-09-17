@@ -42,7 +42,7 @@ export default withRouter(
       map,
       mapIsResizing,
       getFeaturesList,
-      featuresList,
+      featuresList: featuresList || [],
       feature: featuresList.find(({ identifier }) => (
         identifier === id
       )) || {},

@@ -123,7 +123,7 @@ export class Map extends React.Component {
       this.setFitBounds(coordinates);
       if (action !== ACTION_UPDATE) {
         const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
-        if (!layerId) {
+        if (!layerId || !Object.keys(map).length) {
           return;
         }
         addHighlight({

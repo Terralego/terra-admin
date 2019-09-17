@@ -6,7 +6,7 @@ import { generateURI } from '../../../config';
 import { toast } from '../../../../../utils/toast';
 
 class Actions extends React.Component {
-  deleteFeature = () => {
+  deleteFeature = async () => {
     const {
       paramLayer,
       paramId,
@@ -16,12 +16,18 @@ class Actions extends React.Component {
       t,
     } = this.props;
 
-    deleteFeature(layerId, paramId);
+    const deleted = await deleteFeature(layerId, paramId);
+
     toast.displayToaster(
-      { id: paramId },
+      deleted ? { id: deleted } : { },
       t('CRUD.details.successDeleteFeature'),
       t('CRUD.details.failDeleteFeature'),
     );
+
+    if (!deleted) {
+      return;
+    }
+
     push(generateURI('layer', { layer: paramLayer }));
   }
 

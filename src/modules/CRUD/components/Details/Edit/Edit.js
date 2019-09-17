@@ -41,8 +41,7 @@ class Edit extends React.Component {
   componentDidMount () {
     const {
       schema,
-      paramId,
-      feature: { [paramId]: { geom = {} } = {} } = {},
+      feature: { geom = {} },
       action,
     } = this.props;
     this.setState({
@@ -89,7 +88,7 @@ class Edit extends React.Component {
     const {
       map,
       paramId,
-      feature,
+      feature: { geom },
       updateControls,
       action,
       layer: { geom_type: geomType },
@@ -111,10 +110,11 @@ class Edit extends React.Component {
       },
     };
     if (action === ACTION_UPDATE) {
-      if (!feature) return;
-      const { [paramId]: { geom } = {} } = feature;
+      if (!geom) return;
       const listener = ({ control: addedControl }) => {
-        if (addedControl !== control.control) return;
+        if (addedControl !== control.control) {
+          return;
+        }
         map.draw.add(geom);
         map.off('control_added', listener);
       };
@@ -192,7 +192,7 @@ class Edit extends React.Component {
       { geom, properties },
     );
 
-    if (savedFeature !== null) {
+    if (savedFeature) {
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
     } else {
       this.setState({

@@ -8,7 +8,8 @@ import {
   MULTI_POLYGON,
 } from '../../../utils/geom';
 
-export const fetchSettings = () => Api.request('crud/settings/');
+export const fetchSettings = () =>
+  Api.request('crud/settings/');
 
 const flattenMenu = menu => (
   menu.reduce((list, { crud_views: views }) => (
@@ -34,7 +35,7 @@ const getDefaultPaintsByGeomType = geomType => {
 
 export const getLayer = ({ menu = [] }, name) => {
   const layers = flattenMenu(menu);
-  if (!layers || !name) {
+  if (!layers.length || !name) {
     return false;
   }
   const {

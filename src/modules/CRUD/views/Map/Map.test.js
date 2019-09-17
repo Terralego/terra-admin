@@ -30,6 +30,8 @@ jest.mock('@terralego/core/modules/Map', () => ({
   CONTROLS_TOP_RIGHT: 'top-right',
 }));
 
+jest.mock('../../components/Message', () => () => <div>No settings</div>);
+
 jest.mock('../../components/DataTable', () => () => <div>Datatable</div>);
 
 jest.mock('../../components/DetailsWrapper', () => ({ children }) => children);
@@ -98,10 +100,26 @@ beforeEach(() => {
     history: { push: () => null },
     t: key => key,
     settings,
+    errors: {
+      settings: undefined,
+    },
+    feature: {},
   };
 });
 
 describe('snapshots', () => {
+  it('should display no settings message', () => {
+    const tree = renderer.create((
+      <Map
+        {...props}
+        errors={{
+          settings: 'Not found',
+        }}
+      />
+    )).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it('should render correctly', () => {
     const tree = renderer.create((
       <Map
@@ -357,11 +375,14 @@ it('should attach addHighlight and removeHighlight methods on interactive map in
   expect(stateCallback).toEqual({ addHighlight, removeHighlight });
 });
 
-it('should addLight current feature', () => {
+it('should addHighLight current feature', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
-    feature: { 1: { geom: { coordinates: [1, 2] } } },
+    feature: { id: '1', geom: { coordinates: [1, 2] } },
+    map: {
+      getLayer: jest.fn(),
+    },
   });
   instance.state = {
     addHighlight: jest.fn(),
@@ -383,7 +404,7 @@ it('should addLight current feature', () => {
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '2', layer: 'layerTest' } },
-    feature: { 2: { geom: { coordinates: [3, 4] } } },
+    feature: { id: '2', geom: { coordinates: [3, 4] } },
   }, {});
 
   expect(instance.setFitBounds).toHaveBeenCalled();
@@ -394,7 +415,7 @@ it('should not addLight current feature if layers array is empty', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
-    feature: { 1: { geom: { coordinates: [1, 2] } } },
+    feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {
     addHighlight: jest.fn(),
@@ -407,7 +428,7 @@ it('should not addLight current feature if layers array is empty', () => {
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '2', layer: 'layerTest' } },
-    feature: { 2: { geom: { coordinates: [3, 4] } } },
+    feature: { id: '2', geom: { coordinates: [3, 4] } },
   }, {});
 
   expect(instance.setFitBounds).toHaveBeenCalled();
@@ -418,7 +439,7 @@ it('should remove highlight', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest', action: ACTION_UPDATE } },
-    feature: { 1: { geom: { coordinates: [1, 2] } } },
+    feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {
     removeHighlight: jest.fn(),
@@ -439,7 +460,7 @@ it('should remove highlight', () => {
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '2', layer: 'layerTest', action: 'read' } },
-    feature: { 2: { geom: { coordinates: [3, 4] } } },
+    feature: { id: '2', geom: { coordinates: [3, 4] } },
   }, {});
   expect(instance.state.removeHighlight).toHaveBeenCalled();
 });
@@ -448,7 +469,7 @@ it('should not remove highlight if layers array is empty', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: '1', layer: 'layerTest', action: ACTION_UPDATE } },
-    feature: { 1: { geom: { coordinates: [1, 2] } } },
+    feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {
     removeHighlight: jest.fn(),
@@ -460,7 +481,7 @@ it('should not remove highlight if layers array is empty', () => {
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '2', layer: 'layerTest', action: 'read' } },
-    feature: { 2: { geom: { coordinates: [3, 4] } } },
+    feature: { id: 2, geom: { coordinates: [3, 4] } },
   }, {});
   expect(instance.state.removeHighlight).not.toHaveBeenCalled();
 });
@@ -579,7 +600,7 @@ it('should not highlight on table hover cell if there is not the identifiable la
     match: { params: { layer: 'layerTest' } },
   });
   instance.state = {
-    customStyle: undefined,
+    customStyle: { layers: undefined },
     addHighlight: jest.fn(),
     removeHighlight: jest.fn(),
   };

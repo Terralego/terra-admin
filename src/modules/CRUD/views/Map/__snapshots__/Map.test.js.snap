@@ -6,6 +6,12 @@ exports[`snapshots should display loading 1`] = `
 </div>
 `;
 
+exports[`snapshots should display no settings message 1`] = `
+<div>
+  No settings
+</div>
+`;
+
 exports[`snapshots should not display details when the feature id is not defined 1`] = `
 Array [
   <div

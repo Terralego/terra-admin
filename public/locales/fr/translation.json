@@ -156,6 +156,9 @@
       "foldMenu": "Replier le menu",
       "unfoldMenu": "Déplier le menu"
     },
+    "settings": {
+      "unableToLoad": "Impossible de charger la configuration du module. Veuillez contacter un administrateur."
+    },
     "table": {
       "title": "Liste de la couche : {{layerName}}",
       "sortAsc": "Tri croissant",
@@ -192,7 +195,7 @@
       "successUpdateFeature": "L'objet a été mis à jour avec succès",
       "failUpdateFeature": "L'objet n'a pas été mis à jour",
       "successDeleteFeature": "L'objet a été supprimé avec succès",
-      "failUDeleteFeature": "L'objet n'a pas été supprimé",
+      "failDeleteFeature": "L'objet n'a pu être supprimé",
       "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
       "geometry": "Géométrie"
     }

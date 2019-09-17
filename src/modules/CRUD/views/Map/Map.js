@@ -5,12 +5,13 @@ import { Redirect } from 'react-router-dom';
 import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/InteractiveMap';
 import { DEFAULT_CONTROLS, CONTROL_CAPTURE, CONTROLS_TOP_RIGHT } from '@terralego/core/modules/Map';
 
+import Loading from '../../../../components/Loading';
+import Message from '../../components/Message';
 import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
 import { getLayer, getSources, getLayersPaints } from '../../services/CRUD';
-import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
 
@@ -43,6 +44,7 @@ export class Map extends React.Component {
     map: PropTypes.shape({}),
     mapConfig: PropTypes.shape({}),
     featuresList: PropTypes.arrayOf(PropTypes.object),
+    feature: PropTypes.shape({}),
   };
 
   static defaultProps = {
@@ -55,13 +57,14 @@ export class Map extends React.Component {
     },
     map: {},
     mapConfig: {},
-    settings: {},
+    settings: undefined,
     featuresList: [],
+    feature: {},
   }
 
   state = {
     interactions: [],
-    customStyle: undefined,
+    customStyle: {},
     controls: [...DEFAULT_CONTROLS, CONTROL_CAPTURE_POSITION],
     tableSize: 'medium', // 'minified', 'medium', 'full'
   }
@@ -92,10 +95,10 @@ export class Map extends React.Component {
       match: { params: { layer, id, action } },
       map,
       featuresList,
-      feature: { [id]: { geom: { coordinates = [] } = {} } = {} } = {},
+      feature: { geom: { coordinates = [] } = {} },
     } = this.props;
 
-    const { customStyle: { layers } = {}, addHighlight, removeHighlight } = this.state;
+    const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
 
     if (settings !== prevSettings) {
       this.generateLayersToMap();
@@ -120,7 +123,7 @@ export class Map extends React.Component {
       this.setFitBounds(coordinates);
       if (action !== ACTION_UPDATE) {
         const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
-        if (!layerId) {
+        if (!layerId || !Object.keys(map).length) {
           return;
         }
         addHighlight({
@@ -222,7 +225,7 @@ export class Map extends React.Component {
       map,
       match: { params: { layer } },
     } = this.props;
-    const { customStyle: { layers = [] } = {} } = this.state;
+    const { customStyle: { layers = [] } } = this.state;
     if (!Object.keys(map).length || !layers.length) {
       return;
     }
@@ -245,7 +248,7 @@ export class Map extends React.Component {
 
   onTableHoverCell = (featureId, hover = true) => {
     const { match: { params: { layer } } } = this.props;
-    const { customStyle: { layers = [] } = {}, addHighlight, removeHighlight } = this.state;
+    const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
     const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
     if (!layerId) {
       return;
@@ -289,12 +292,22 @@ export class Map extends React.Component {
       settings,
       match: { params: { layer, id } },
       t,
+      errors,
     } = this.props;
-    const isSettingsLoaded = Object.keys(settings).length > 1;
-    const isDataLoaded = Object.keys(mapConfig).length > 1 && isSettingsLoaded;
-    const isDetailsVisible = !!id;
 
-    if (layer && !getLayer(settings, layer)) {
+    if (errors.settings) {
+      return (
+        <Message intent="danger" className="CRUD-no-settings">
+          {t('CRUD.settings.unableToLoad')}
+        </Message>
+      );
+    }
+
+    const areSettingsLoaded = Object.keys(settings).length > 1;
+    const isDataLoaded = Object.keys(mapConfig).length > 1 && areSettingsLoaded;
+    const areDetailsVisible = !!id;
+
+    if (areSettingsLoaded && layer && !getLayer(settings, layer)) {
       toast.displayError(t('CRUD.layer.errorNoLayer'));
       return <Redirect to={generateURI('layer')} />;
     }
@@ -305,7 +318,7 @@ export class Map extends React.Component {
           : (
             <>
               <DetailsWrapper detailsRef={this.details}>
-                {isDetailsVisible && (
+                {areDetailsVisible && (
                   <Details
                     updateControls={this.updateControls}
                   />
@@ -316,8 +329,8 @@ export class Map extends React.Component {
                 className={classnames(
                   {
                     'CRUD-table': true,
-                    'CRUD-table--active': layer && !isDetailsVisible,
-                    [`CRUD-table--${tableSize}`]: layer && !isDetailsVisible,
+                    'CRUD-table--active': layer && !areDetailsVisible,
+                    [`CRUD-table--${tableSize}`]: layer && !areDetailsVisible,
                   },
                 )}
               >

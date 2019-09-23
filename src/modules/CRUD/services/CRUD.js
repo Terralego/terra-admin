@@ -8,7 +8,12 @@ import {
   MULTI_POLYGON,
 } from '../../../utils/geom';
 
-export const fetchSettings = () => Api.request('crud/settings');
+export const ACTION_CREATE = 'create';
+export const ACTION_UPDATE = 'update';
+
+export const fetchSettings = () =>
+  Api.request('crud/settings/');
+
 
 const flattenMenu = menu => (
   menu.reduce((list, { crud_views: views }) => (
@@ -34,7 +39,7 @@ const getDefaultPaintsByGeomType = geomType => {
 
 export const getLayer = ({ menu = [] }, name) => {
   const layers = flattenMenu(menu);
-  if (!layers || !name) {
+  if (!layers.length || !name) {
     return false;
   }
   const {
@@ -42,9 +47,9 @@ export const getLayer = ({ menu = [] }, name) => {
     name: displayName,
     form_schema: schema,
     ui_schema: uiSchema,
+    templates,
   } = flattenMenu(menu).find(item => item.layer.name === name) || {};
-
-  return layer ? { ...layer, displayName, schema, uiSchema } : false;
+  return layer ? { ...layer, displayName, schema, uiSchema, templates } : false;
 };
 
 export const getSources = ({ menu = [] }) =>

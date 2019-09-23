@@ -25,14 +25,14 @@
     "loginform": {
       "email": {
         "invalid": "Email invalide",
-        "help": "Indiquez votre email",
+        "helper": "Indiquez votre email",
         "label": "Email",
         "info": "requis",
         "placeholder": "Email"
       },
       "password": {
         "invalid": "Mot de passe invalide",
-        "help": "Tapez votre mot de passe",
+        "helper": "Tapez votre mot de passe",
         "label": "Mot de passe",
         "info": "requis",
         "placeholder": "Mot de passe"
@@ -156,6 +156,9 @@
       "foldMenu": "Replier le menu",
       "unfoldMenu": "Déplier le menu"
     },
+    "settings": {
+      "unableToLoad": "Impossible de charger la configuration du module. Veuillez contacter un administrateur."
+    },
     "table": {
       "title": "Liste de la couche : {{layerName}}",
       "sortAsc": "Tri croissant",
@@ -192,7 +195,7 @@
       "successUpdateFeature": "L'objet a été mis à jour avec succès",
       "failUpdateFeature": "L'objet n'a pas été mis à jour",
       "successDeleteFeature": "L'objet a été supprimé avec succès",
-      "failUDeleteFeature": "L'objet n'a pas été supprimé",
+      "failDeleteFeature": "L'objet n'a pu être supprimé",
       "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
       "geometry": "Géométrie"
     }
@@ -203,8 +206,7 @@
   "user": {
     "project": "Utilisateurs",
     "nav": {
-      "list": "Tous les utilisateurs",
-      "create": "Créer un nouvel utilisateur"
+      "list": "Liste des utilisateurs"
     },
     "form": {
       "id": "Id",
@@ -222,11 +224,16 @@
       "is_active": "Le mode \"Actif\" rend disponible le profil de l'utilisateur"
     }
   },
+  "usergroup": {
+    "project": "Groupes d'utilisateurs",
+    "nav": {
+      "list": "Groupes d'utilisateurs"
+    }
+  },
   "datasource": {
     "project": "Entrepôt de données",
     "nav": {
-      "list": "Toutes les sources de données",
-      "create": "Ajouter une source de données"
+      "list": "Sources de données"
     },
     "form": {
       "read-only": "Cette source de données n'est pas modifiable.",
@@ -235,7 +242,7 @@
       "name": "Nom",
       "data-type": "Type de données",
       "geometry": "Type de géométrie",
-      "geom-field": "Champ contenant la géométrie",
+      "geom-field": "Champ geométrie auto-détecté",
       "geom-field-help": "Indiquer le champ de la géométrie de la donnée(ex: geom, the_geom, geometry..).",
       "uid-field": "Champ de l'identifiant unique",
       "uid-field-help": "Indiquer le champs correspondant à l'identifiant unique de la donnée (ex: gid, id..).",
@@ -280,8 +287,7 @@
   "datalayer": {
     "project": "Visualiseur",
     "nav": {
-      "list": "Toutes les couches de données",
-      "create": "Ajouter une couche de données"
+      "list": "Couches de données"
     },
     "form": {
       "name": "Nom",
@@ -351,6 +357,15 @@
     }
   },
   "ra": {
+    "nav": {
+      "user_list": "Liste des utilisateurs",
+      "usergroup_list": "Liste des groupes utilisateurs",
+      "datalayer_list": "Liste des couches",
+      "datasource_list": "Liste des sources de données",
+      "viewpoint_list": "Liste des points de vue",
+      "picture_list": "Liste des photographies",
+      "campaign_list": "Liste des campagnes"
+    },
     "action": {
       "add_filter": "Ajouter un filtre",
       "add": "Ajouter",
@@ -458,6 +473,59 @@
       "email": "Doit être un email",
       "oneOf": "Doit être au choix: %{options}",
       "regex": "Doit respecter un format spécifique (regexp): %{pattern}"
+    }
+  },
+  "resources": {
+    "viewpoint": {
+      "viewpoint-number": "Point de vue n°%{number}",
+      "fields": {
+        "label": "Nom du point de vue",
+        "address": "Adresse",
+        "city_id": "Commune",
+        "properties.altitude": "Altitude",
+        "properties.hauteur": "Hauteur de l'œil",
+        "properties.orientation": "Orientation",
+        "properties.focale_35mm": "Focale 35 mm",
+        "properties.focale_objectif": "Focale de l'objectif",
+        "properties.frequency": "Fréquence de rephotographie",
+        "properties.difficulty": "Difficulté à reproduire",
+        "properties.note": "Observations de rephotographie",
+        "properties.description": "Description du paysage",
+        "properties.current-progressions": "Dynamiques en cours",
+        "properties.issues": "Enjeux",
+        "properties.observations": "Observations",
+        "properties.historial-data": "Données historiques",
+        "properties.cultural-references": "Références culturelles",
+        "properties.theme_ids": "Thématiques",
+        "properties.keywords": "Mots-clés",
+        "properties.landscape-entities": "Entités paysagères",
+        "properties.related-elements": "Documents associés"
+      },
+      "tabs": {
+        "general": "Informations principales",
+        "repeat": "Rephotographie",
+        "landscape": "Paysage",
+        "pictures": "Photographies"
+      }
+    },
+    "user": {
+      "fields": {
+        "id": "Id",
+        "email": "Adresse e-mail",
+        "uuid": "Uuid",
+        "groups": "Groupes de l'utilisateur",
+        "password": "Mot de passe",
+        "is_superuser": "Superutilisateur",
+        "is_active": "Actif",
+        "permissions": "Permissions"
+      }
+    },
+    "usergroup": {
+      "fields": {
+        "id": "Id",
+        "name": "Nom du groupe",
+        "users": "Utilisateurs dans le groupe"
+      }
     }
   }
 }

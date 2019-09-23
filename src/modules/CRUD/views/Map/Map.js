@@ -1,31 +1,70 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
 import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/InteractiveMap';
 import { DEFAULT_CONTROLS, CONTROL_CAPTURE, CONTROLS_TOP_RIGHT } from '@terralego/core/modules/Map';
 
+import Loading from '../../../../components/Loading';
+import Message from '../../components/Message';
 import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
-import { getLayer, getSources, getLayersPaints } from '../../services/CRUD';
-import Loading from '../../../../components/Loading';
+import { ACTION_CREATE, ACTION_UPDATE, getLayer, getSources, getLayersPaints } from '../../services/CRUD';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
 
 import './styles.scss';
 
-export const ACTION_CREATE = 'create';
-export const ACTION_UPDATE = 'update';
 export const CONTROL_CAPTURE_POSITION = {
   control: CONTROL_CAPTURE,
   position: CONTROLS_TOP_RIGHT,
 };
 
+const isTrueFeatureID = id => ![undefined, ACTION_CREATE].includes(id);
+
 export class Map extends React.Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
+    getMapConfig: PropTypes.func.isRequired,
+    getSettings: PropTypes.func.isRequired,
+    getFeaturesList: PropTypes.func.isRequired,
+    setMap: PropTypes.func.isRequired,
+    displayViewFeature: PropTypes.bool,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+        layer: PropTypes.string,
+      }),
+    }),
+    settings: PropTypes.shape({}),
+    map: PropTypes.shape({}),
+    mapConfig: PropTypes.shape({}),
+    featuresList: PropTypes.arrayOf(PropTypes.object),
+    feature: PropTypes.shape({}),
+  };
+
+  static defaultProps = {
+    displayViewFeature: true,
+    match: {
+      params: {
+        id: undefined,
+        layer: undefined,
+      },
+    },
+    map: {},
+    mapConfig: {},
+    settings: undefined,
+    featuresList: [],
+    feature: {},
+  }
+
   state = {
     interactions: [],
-    customStyle: undefined,
+    customStyle: {},
     controls: [...DEFAULT_CONTROLS, CONTROL_CAPTURE_POSITION],
     tableSize: 'medium', // 'minified', 'medium', 'full'
   }
@@ -56,11 +95,10 @@ export class Map extends React.Component {
       match: { params: { layer, id, action } },
       map,
       featuresList,
-      feature: { [id]: { geom: { coordinates = [] } = {} } = {} } = {},
+      feature: { geom: { coordinates = [] } = {} },
     } = this.props;
 
-
-    const { customStyle: { layers } = {}, addHighlight, removeHighlight } = this.state;
+    const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
 
     if (settings !== prevSettings) {
       this.generateLayersToMap();
@@ -68,7 +106,7 @@ export class Map extends React.Component {
     }
 
     if (layer !== prevLayer || map !== prevMap) {
-      this.displayCurrentLayer(layer);
+      this.displayCurrentLayer();
     }
 
     if (settings !== prevSettings || layer !== prevLayer || map !== prevMap) {
@@ -76,16 +114,16 @@ export class Map extends React.Component {
     }
 
     if (
-      (!id || id === ACTION_CREATE)
+      !isTrueFeatureID(id)
       && featuresList.length
       && (prevId !== id || featuresList !== prevFeaturesList)
     ) {
       this.setFitBounds();
-    } else if (id && coordinates.length) {
+    } else if (isTrueFeatureID(id) && coordinates.length) {
       this.setFitBounds(coordinates);
       if (action !== ACTION_UPDATE) {
         const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
-        if (!layerId) {
+        if (!layerId || !Object.keys(map).length) {
           return;
         }
         addHighlight({
@@ -103,7 +141,7 @@ export class Map extends React.Component {
       if (!layerId) {
         return;
       }
-      removeHighlight && removeHighlight({
+      removeHighlight({
         layerId,
         featureId: prevId,
       });
@@ -116,21 +154,22 @@ export class Map extends React.Component {
       displayViewFeature,
       settings,
     } = this.props;
+
+    if (!displayViewFeature) {
+      return;
+    }
+
     const layers = getLayersPaints(settings);
-    const interactions = layers.map(interaction => {
-      if (displayViewFeature) {
-        return {
-          ...interaction,
-          interaction: INTERACTION_FN,
-          fn: ({
-            feature: { sourceLayer, properties: { _id: id } },
-          }) => {
-            push(generateURI('layer', { layer: sourceLayer, id }));
-          },
-        };
-      }
-      return interaction;
-    });
+    const interactions = layers.map(interaction => ({
+      ...interaction,
+      interaction: INTERACTION_FN,
+      fn: ({
+        feature: { sourceLayer, properties: { _id: id } },
+      }) => {
+        push(generateURI('layer', { layer: sourceLayer, id }));
+      },
+    }));
+
     this.setState({
       interactions,
     });
@@ -142,9 +181,9 @@ export class Map extends React.Component {
       featuresList,
       match: { params: { id } },
     } = this.props;
-    const coords = coordinates || featuresList.map(feature => feature.geom.coordinates);
+    const coords = coordinates || featuresList.map(({ geom }) => geom.coordinates);
 
-    if (!coords.length || !map) return;
+    if (!coords.length || !Object.keys(map).length) return;
 
     const { current: detail } = this.details;
     const { current: dataTable } = this.dataTable;
@@ -181,15 +220,19 @@ export class Map extends React.Component {
     getFeaturesList(layer.id);
   }
 
-  displayCurrentLayer = currentPath => {
-    const { customStyle: { layers = [] } = {} } = this.state;
-    const { map } = this.props;
-    if (map) {
-      layers.forEach(({ id, 'source-layer': sourceLayer }) => {
-        if (!map.getLayer(id)) return;
-        map.setLayoutProperty(id, 'visibility', sourceLayer === currentPath ? 'visible' : 'none');
-      });
+  displayCurrentLayer = () => {
+    const {
+      map,
+      match: { params: { layer } },
+    } = this.props;
+    const { customStyle: { layers = [] } } = this.state;
+    if (!Object.keys(map).length || !layers.length) {
+      return;
     }
+    layers.forEach(({ id, 'source-layer': sourceLayer }) => {
+      if (!map.getLayer(id)) return;
+      map.setLayoutProperty(id, 'visibility', sourceLayer === layer ? 'visible' : 'none');
+    });
   }
 
   updateControls = controls => this.setState({
@@ -205,7 +248,7 @@ export class Map extends React.Component {
 
   onTableHoverCell = (featureId, hover = true) => {
     const { match: { params: { layer } } } = this.props;
-    const { customStyle: { layers = [] } = {}, addHighlight, removeHighlight } = this.state;
+    const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
     const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
     if (!layerId) {
       return;
@@ -228,7 +271,8 @@ export class Map extends React.Component {
 
   generateLayersToMap () {
     const { settings } = this.props;
-    if (!settings) {
+
+    if (!Object.keys(settings).length) {
       return;
     }
 
@@ -243,18 +287,27 @@ export class Map extends React.Component {
   render () {
     const { customStyle, interactions, controls, tableSize } = this.state;
     const {
-      map,
       mapConfig,
       mapIsResizing,
       settings,
-      match: { params: { layer = false, id } },
+      match: { params: { layer, id } },
       t,
+      errors,
     } = this.props;
-    const isSettingsLoaded = Object.keys(settings).length > 1;
-    const isDataLoaded = Object.keys(mapConfig).length > 1 && isSettingsLoaded;
-    const isDetailsVisible = !!id;
 
-    if (isSettingsLoaded && layer && !getLayer(settings, layer)) {
+    if (errors.settings) {
+      return (
+        <Message intent="danger" className="CRUD-no-settings">
+          {t('CRUD.settings.unableToLoad')}
+        </Message>
+      );
+    }
+
+    const areSettingsLoaded = Object.keys(settings).length > 1;
+    const isDataLoaded = Object.keys(mapConfig).length > 1 && areSettingsLoaded;
+    const areDetailsVisible = !!id;
+
+    if (areSettingsLoaded && layer && !getLayer(settings, layer)) {
       toast.displayError(t('CRUD.layer.errorNoLayer'));
       return <Redirect to={generateURI('layer')} />;
     }
@@ -264,34 +317,31 @@ export class Map extends React.Component {
           ? <Loading spinner />
           : (
             <>
-              {map && (
-                <DetailsWrapper detailsRef={this.details}>
-                  {isDetailsVisible && (
+              <DetailsWrapper detailsRef={this.details}>
+                {areDetailsVisible && (
                   <Details
                     updateControls={this.updateControls}
                   />
-                  )}
-                </DetailsWrapper>
-              )}
-              {map && (
-                <div
-                  ref={this.dataTable}
-                  className={classnames(
-                    {
-                      'CRUD-table': true,
-                      'CRUD-table--active': layer && !isDetailsVisible,
-                      [`CRUD-table--${tableSize}`]: layer && !isDetailsVisible,
-                    },
-                  )}
-                >
-                  <DataTable
-                    onTableSizeChange={this.onTableSizeChange}
-                    tableSize={tableSize}
-                    layerName={layer}
-                    onHoverCell={this.onTableHoverCell}
-                  />
-                </div>
-              )}
+                )}
+              </DetailsWrapper>
+              <div
+                ref={this.dataTable}
+                className={classnames(
+                  {
+                    'CRUD-table': true,
+                    'CRUD-table--active': layer && !areDetailsVisible,
+                    [`CRUD-table--${tableSize}`]: layer && !areDetailsVisible,
+                  },
+                )}
+              >
+                <DataTable
+                  onTableSizeChange={this.onTableSizeChange}
+                  tableSize={tableSize}
+                  layerName={layer}
+                  onHoverCell={this.onTableHoverCell}
+                />
+              </div>
+
               <div
                 className={classnames(
                   'CRUD-map',

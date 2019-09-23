@@ -1,11 +1,13 @@
-import React, { createElement } from 'react';
-import { Notification } from 'react-admin';
+import React from 'react';
+import { Layout } from 'react-admin';
 
-export const RALayout = ({ children }) => (
-  <>
-    {createElement(Notification)}
-    {children}
-  </>
+export const RALayout = props => (
+  <Layout
+    {...props}
+    appBar={() => null}
+    sidebar={() => null}
+    menu={() => null}
+  />
 );
 
 export default RALayout;

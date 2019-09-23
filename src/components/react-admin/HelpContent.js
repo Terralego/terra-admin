@@ -14,6 +14,7 @@ const HelpContent = ({ translate: t, title, content, children }) => (
       <CardContent>
         {title && <Typography variant="subheading" gutterBottom>{t(title)}</Typography>}
         <Typography color="textSecondary" paragraph>
+          {/* eslint-disable-next-line react/no-danger */}
           {children || <span dangerouslySetInnerHTML={{ __html: t(content) }} />}
         </Typography>
       </CardContent>

@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshots should display loading 1`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`snapshots should display no settings message 1`] = `
+<div>
+  No settings
+</div>
+`;
+
+exports[`snapshots should not display details when the feature id is not defined 1`] = `
+Array [
+  <div
+    className="CRUD-table"
+  >
+    <div>
+      Datatable
+    </div>
+  </div>,
+  <div
+    className="CRUD-map"
+  >
+    <div>
+      InteractiveMap
+    </div>
+  </div>,
+]
+`;
+
+exports[`snapshots should render correctly 1`] = `
+Array [
+  <div>
+    Details
+  </div>,
+  <div
+    className="CRUD-table"
+  >
+    <div>
+      Datatable
+    </div>
+  </div>,
+  <div
+    className="CRUD-map"
+  >
+    <div>
+      InteractiveMap
+    </div>
+  </div>,
+]
+`;

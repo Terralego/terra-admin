@@ -11,18 +11,26 @@ export default withRouter(
     settings,
     map,
     fetchFeature,
-    feature,
+    featuresList,
     errors,
   }, {
     match: { params: { layer, id } },
-  }) => ({
-    map,
-    fetchFeature,
-    feature,
-    layer: getLayer(settings, layer),
-    hasError: errors[id],
-    errorCode: errors.code,
-  }))(
+  }) => {
+    const {
+      error = {},
+      error: { message = '' } = {},
+    } = errors.feature.find(({ featureId }) => featureId === id) || {};
+    return {
+      map,
+      fetchFeature,
+      feature: featuresList.find(({ identifier }) => (
+        identifier === id
+      )) || {},
+      layer: getLayer(settings, layer),
+      hasError: !!error,
+      errorMessage: message,
+    };
+  })(
     withNamespaces()(Details),
   ),
 );

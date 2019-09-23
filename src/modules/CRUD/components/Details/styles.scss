@@ -14,7 +14,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 3;
   
-  &--visible {
+  &--active {
     transform: translateX(0);
 
     ~ .CRUD-map .interactive-map {
@@ -52,8 +52,7 @@
 
   &__header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     padding: 0 1rem;
   }
 
@@ -134,6 +133,7 @@
       margin-right: 1rem;
       margin-left: 1rem;
       margin-bottom: 1rem;
+      width: auto;
     }
     > .form-group {
       margin-left: 0;
@@ -175,7 +175,7 @@
 
 @media all and (min-width: 66em) {
   .CRUD-details {
-    &--visible {
+    &--active {
       ~ .CRUD-map .interactive-map {
         .mapboxgl-ctrl-top-right {
           right: calc(40% + 0.3rem);

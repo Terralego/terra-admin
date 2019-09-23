@@ -1,25 +1,28 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  H2,
-} from '@blueprintjs/core';
 import { withNamespaces } from 'react-i18next';
 
-export const AppSummary = ({ t, title, path = '', nav }) => (
-  <div>
-    <H2>{t(title)}</H2>
-    <nav>
-      <ul>
-        {nav.map(({ label, href }) => (
-          <li key={`${href}${label}`}>
-            <NavLink to={`${path}/${href}`}>
-              {t(label)}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  </div>
+import { Tree } from '@blueprintjs/core';
+
+const menuToTreeContents = (menu = [], t = text => text) =>
+  menu.map(({ items = [], label, href, ...rest }, index) => ({
+    id: index,
+    isExpanded: true,
+    hasCaret: false,
+    label: href
+      ? (<NavLink to={href}>{t(label)}</NavLink>)
+      : t(label),
+
+    ...(items.length ? {
+      childNodes: menuToTreeContents(items, t),
+      icon: 'folder-close',
+    } : {}),
+
+    ...rest,
+  }));
+
+export const AppSummary = ({ t, menu = [] }) => (
+  <Tree contents={menuToTreeContents(menu, t)} />
 );
 
 export default withNamespaces()(AppSummary);

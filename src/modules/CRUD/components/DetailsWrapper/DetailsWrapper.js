@@ -25,7 +25,7 @@ class DetailsWrapper extends React.Component {
         className={
         classnames(
           'CRUD-details',
-          { 'CRUD-details--visible': children && childrenHasLoaded },
+          { 'CRUD-details--active': children && childrenHasLoaded },
           { 'CRUD-details--full': full },
         )}
       >

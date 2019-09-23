@@ -1,26 +1,35 @@
 import Api from '@terralego/core/modules/Api';
-import { WMTS } from '../../modules/DataSource/DataSource';
-import { getResourceWithoutBasePath } from '../../utils/react-admin/resources';
+import { WMTS } from '../../modules/RA/DataSource';
+import { getEndpoint } from '../../utils/react-admin/resources';
+
+import { RES_DATASOURCE } from '../../modules/RA/ra-modules';
 
 const enhanceDataProvider = mainDataProvider => async (...args) => {
-  const [type, resourceWithBasePath, params] = args;
+  const [type, resource, params] = args;
 
-  const resource = getResourceWithoutBasePath(resourceWithBasePath);
+  const endpoint = getEndpoint(resource);
 
-  // Manage custom query type
+  /**
+   * Manage custom RESFRESH query type
+  */
   if (type === 'REFRESH') {
-    return Api.request(`${resource}/${params.id}/refresh/`);
+    return Api.request(`${endpoint}/${params.id}/refresh/`);
   }
 
-  if (type === 'CREATE' && resource === 'geosource') {
+  /**
+   * Force geom_type field for WMTS _type
+   */
+  if (type === 'CREATE' && resource === RES_DATASOURCE) {
     const { _type: sourceType } = params.data;
     if (sourceType === WMTS) {
       params.data.geom_type = 7;
     }
   }
 
-  // Manage file upload
-  if (['CREATE', 'UPDATE'].includes(type) && resource === 'geosource') {
+  /**
+   * Manage file upload by converting query content to FormData()
+   */
+  if (['CREATE', 'UPDATE'].includes(type) && resource === RES_DATASOURCE) {
     const body = new FormData();
 
     Object.keys(params.data).forEach(key => {
@@ -43,24 +52,21 @@ const enhanceDataProvider = mainDataProvider => async (...args) => {
 
     switch (type) {
       case 'CREATE':
-        response = await Api.request('geosource/', { method: 'POST', body });
-        break;
+        response = await Api.request(`${endpoint}/`, { method: 'POST', body });
+        return { data: response, id: response.id };
 
       case 'UPDATE':
-        response = await Api.request(`geosource/${params.id}/`, { method: 'PATCH', body });
-        break;
-      default:
-    }
-
-    switch (type) {
-      case 'CREATE':
-        return { data: response, id: response.id };
-      default:
+        response = await Api.request(`${endpoint}/${params.id}/`, { method: 'PATCH', body });
         return { data: response };
+
+      default:
     }
   }
 
-  return mainDataProvider(type, resource, params);
+  /**
+   * At least return initial data provider
+   */
+  return mainDataProvider(type, endpoint, params);
 };
 
 export default enhanceDataProvider;

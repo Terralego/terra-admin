@@ -16,19 +16,38 @@ export default withRouter(
       displayViewFeature: permissions.includes('terra.view_feature'),
     };
   })(
-    connectCRUDProvider(
-      'getSettings',
-      'getMapConfig',
-      'settings',
-      'mapConfig',
-      'setMap',
-      'map',
-      'resizingMap',
-      'mapIsResizing',
-      'getFeaturesList',
-      'featuresList',
-      'feature',
-    )(
+    connectCRUDProvider(({
+      getSettings,
+      getMapConfig,
+      settings,
+      mapConfig,
+      setMap,
+      map,
+      mapIsResizing,
+      getFeaturesList,
+      featuresList,
+      errors,
+    }, {
+      match: {
+        params: {
+          id,
+        },
+      },
+    }) => ({
+      getSettings,
+      getMapConfig,
+      settings,
+      mapConfig,
+      setMap,
+      map,
+      mapIsResizing,
+      getFeaturesList,
+      featuresList: featuresList || [],
+      feature: featuresList.find(({ identifier }) => (
+        identifier === id
+      )) || {},
+      errors,
+    }))(
       withNamespaces()(Map),
     ),
   ),

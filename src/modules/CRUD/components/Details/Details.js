@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Icon, Button } from '@blueprintjs/core';
 
-import { ACTION_CREATE, ACTION_UPDATE } from '../../views/Map/Map';
+import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
@@ -12,6 +13,40 @@ import Edit from './Edit';
 import './styles.scss';
 
 class Details extends React.Component {
+  static propTypes = {
+    layer: PropTypes.shape({}).isRequired,
+    feature: PropTypes.shape({}),
+    fetchFeature: PropTypes.func.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+        layer: PropTypes.string,
+        action: PropTypes.string,
+      }),
+    }),
+    hasError: PropTypes.bool,
+    errorMessage: PropTypes.string,
+    detailsHasLoaded: PropTypes.func,
+    onSizeChange: PropTypes.func,
+    t: PropTypes.func,
+  };
+
+  static defaultProps = {
+    feature: {},
+    match: {
+      params: {
+        id: undefined,
+        layer: undefined,
+        action: undefined,
+      },
+    },
+    hasError: false,
+    errorMessage: '',
+    detailsHasLoaded () {},
+    onSizeChange () {},
+    t: text => text,
+  }
+
   state = {
     schema: {},
   }
@@ -39,11 +74,7 @@ class Details extends React.Component {
       },
     },
     feature: prevFeature,
-    feature: {
-      [prevParamId]: {
-        properties: prevProperties,
-      } = {},
-    } = {},
+    feature: { properties: prevProperties },
   }) {
     const {
       match: {
@@ -54,7 +85,7 @@ class Details extends React.Component {
         },
       },
       feature,
-      feature: { [paramId]: { properties } = {} } = {},
+      feature: { properties } = {},
       detailsHasLoaded,
     } = this.props;
 
@@ -95,10 +126,10 @@ class Details extends React.Component {
   setSchema = () => {
     const {
       match: { params: { id: paramId } },
-      feature: { [paramId]: { properties } = {} } = {},
-      layer: { schema = {} } = {},
+      feature: { properties },
+      layer: { schema = {} },
     } = this.props;
-    if (Object.keys(schema).length > 0) {
+    if (Object.keys(schema).length) {
       this.setState({
         schema: {
           type: 'object',
@@ -121,6 +152,8 @@ class Details extends React.Component {
     const {
       match: { params: { action: paramAction, id: paramId } },
       updateControls,
+      layer,
+      feature,
     } = this.props;
     const { schema } = this.state;
 
@@ -130,10 +163,11 @@ class Details extends React.Component {
           schema={schema}
           updateControls={updateControls}
           action={paramAction || paramId}
+          layer={layer}
         />
       );
     }
-    return <Read schema={schema} />;
+    return <Read schema={schema} layer={layer} feature={feature} />;
   }
 
   onSizeChange = () => {
@@ -147,14 +181,16 @@ class Details extends React.Component {
       match: { params: { id: paramId, layer: paramLayer } },
       t,
       hasError,
-      errorCode,
+      errorMessage,
       full,
     } = this.props;
 
-    if (hasError && errorCode === 'Not Found') {
+    if (hasError && errorMessage === 'Not Found') {
       toast.displayError(t('CRUD.details.errorNoFeature'));
       return <Redirect to={generateURI('layer', { layer: paramLayer })} />;
     }
+
+    const isLoading = !Object.keys(feature).length && paramId !== ACTION_CREATE;
 
     return (
       <>
@@ -171,11 +207,10 @@ class Details extends React.Component {
           </NavLink>
         </div>
         <div ref={this.detailContent} className="CRUD-details__content">
-          {!feature && paramId !== ACTION_CREATE ? (
-            <Loading spinner />
-          ) : (
-            <>{this.renderContent()}</>
-          )}
+          {isLoading
+            ? <Loading spinner />
+            : this.renderContent()
+          }
         </div>
       </>
     );

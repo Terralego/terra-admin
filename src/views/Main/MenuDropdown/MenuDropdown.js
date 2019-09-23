@@ -1,43 +1,33 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import {
   Button,
   Classes,
   Popover,
   Menu,
-  MenuItem,
   Position,
 } from '@blueprintjs/core';
 
+import MenuTree from '../../../components/MenuTree';
+
 export const MenuDropdown = ({ t, modules = [] }) => {
-  const [{ config: { nav = [] } = {} } = {}] = modules;
-  if (modules.length <= 1 && nav.length <= 1) {
+  const menuContent = modules.reduce((acc, { config: { menu = [] } = {} }) => [
+    ...acc,
+    ...menu,
+  ], []);
+
+  if (!menuContent.length) {
     return null;
   }
+
   return (
     <Popover
+      position={Position.BOTTOM_RIGHT}
       content={(
         <Menu>
-          {modules.map(Component => (
-            <MenuItem
-              key={Component.name}
-              className={Classes.MINIMAL}
-              text={t(Component.config.title)}
-            >
-              {Component.config.nav.map(({ href, label }) => (
-                <NavLink key={href} to={`${Component.config.path}/${href}`}>
-                  <MenuItem
-                    tagName="span"
-                    text={t(label)}
-                  />
-                </NavLink>
-              ))}
-            </MenuItem>
-          ))}
+          {menuContent.map(menuProps => <MenuTree key={menuProps.label} {...menuProps} />)}
         </Menu>
       )}
-      position={Position.BOTTOM_RIGHT}
     >
       <Button
         className={Classes.MINIMAL}

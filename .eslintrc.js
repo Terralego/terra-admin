@@ -5,14 +5,9 @@ const always = 'always';
 
 module.exports = {
   root: true,
-  extends: 'makina',
-  overrides: [
-    {
-      files: ['src/stories/**/*.js'],
-      rules: {
-        'import/no-extraneous-dependencies': [0],
-      },
-    },
+  extends: [
+    'react-app',
+    'makina',
   ],
 
   // Custom rules
@@ -21,7 +16,6 @@ module.exports = {
     'react/destructuring-assignment':    [error],
     'react/no-this-in-sfc':              [error],
     'react/no-access-state-in-setstate': [error],
-    'react/react-hooks/exhaustive-deps': [off],
-    'react-hooks/exhaustive-deps': [off],
+    'import/no-cycle':                   [off],
   }
 };

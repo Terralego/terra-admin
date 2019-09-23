@@ -10,14 +10,26 @@ import Actions from '../Actions';
 
 const NO_FEATURE = 'CRUD.details.noFeature';
 
-const formattedProp = value => {
+const formattedProp = ({ value, t }) => {
+  if (typeof value === 'boolean') {
+    return value
+      ? t('CRUD.details.true')
+      : t('CRUD.details.false');
+  }
+
+  if (!value) {
+    return t(NO_FEATURE);
+  }
+
   if (typeof value === 'string') {
     // eslint-disable-next-line react/no-array-index-key
     return value.split('\n').map((item, i) => (<React.Fragment key={i}>{item} <br /></React.Fragment>));
   }
+
   if (Array.isArray(value)) {
     return value.join(', ');
   }
+
   return value;
 };
 
@@ -50,8 +62,12 @@ const Read = ({
             {Object.keys(properties).map(prop => (
               <li key={prop} className="details__list-item">
                 <strong className="details__list-label">{properties[prop].title || prop}</strong>
-                <span className={classnames('details__list-value', { 'details__list-value--empty': !properties[prop].default })}>
-                  {formattedProp(properties[prop].default || t(NO_FEATURE))}
+                <span className={classnames(
+                  'details__list-value',
+                  { 'details__list-value--empty': !properties[prop].default && typeof properties[prop].default !== 'boolean' },
+                )}
+                >
+                  {formattedProp({ value: properties[prop].default, t })}
                 </span>
               </li>
             ))}

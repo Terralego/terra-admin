@@ -28,18 +28,19 @@ export const RES_DATALAYER = 'datalayer';
 export const RES_VIEWPOINT = 'viewpoint';
 export const RES_PICTURE = 'picture';
 export const RES_CAMPAIGN = 'campaign';
-export const RES_THEME = 'theme';
 
 export const resources = [
   {
     name: RES_USER,
     moduleName: 'User',
+    // requiredPermissions: 'auth.change_group',
     endpoint: 'user',
     ...userView,
   },
   {
     name: RES_USERGROUP,
     moduleName: 'User',
+    // requiredPermissions: 'auth.change_group',
     endpoint: 'group',
     ...userGroupView,
   },
@@ -73,13 +74,9 @@ export const resources = [
     endpoint: 'campaigns',
     ...guessers,
   },
-  {
-    name: RES_THEME,
-    moduleName: 'OPP',
-    endpoint: 'theme',
-    ...guessers,
-  },
 ];
+
+const byModule = (...modules) => ({ moduleName }) => modules.includes(moduleName);
 
 export const config = {
   // path used by router to define when to display current module
@@ -87,21 +84,22 @@ export const config = {
   menu: [
     {
       label: 'user.project',
-      items: resources.filter(({ moduleName }) => (moduleName === 'User')).map(({ name }) => ({
+      // requiredPermissions: 'auth.change_group',
+      items: resources.filter(byModule('User')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
       })),
     },
     {
       label: 'datalayer.project',
-      items: resources.filter(({ moduleName }) => ['DataSource', 'DataLayer'].includes(moduleName)).map(({ name }) => ({
+      items: resources.filter(byModule('DataSource', 'DataLayer')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
       })),
     },
     {
       label: 'opp.project',
-      items: resources.filter(({ moduleName }) => (moduleName === 'OPP')).map(({ name }) => ({
+      items: resources.filter(byModule('OPP')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
       })),

@@ -197,7 +197,9 @@
       "successDeleteFeature": "L'objet a été supprimé avec succès",
       "failDeleteFeature": "L'objet n'a pu être supprimé",
       "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
-      "geometry": "Géométrie"
+      "geometry": "Géométrie",
+      "true": "Oui",
+      "false": "Non"
     }
   },
   "help": {

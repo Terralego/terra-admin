@@ -84,6 +84,7 @@ export const config = {
   menu: [
     {
       label: 'user.project',
+      // requiredPermissions: 'auth.change_group',
       items: resources.filter(byModule('User')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,

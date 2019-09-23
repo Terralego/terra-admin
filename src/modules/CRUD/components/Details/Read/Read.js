@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import classnames from 'classnames';
+import { orderProperties } from 'react-jsonschema-form/lib/utils';
 
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
@@ -38,7 +39,7 @@ const Read = ({
   match: { params: { layer: paramLayer, id: paramId } },
   schema: { properties = {} },
   displayViewFeature,
-  layer: { templates },
+  layer: { templates, uiSchema: { 'ui:order': order } = {} },
   feature: { id },
 }) => {
   if (!displayViewFeature) {
@@ -48,6 +49,8 @@ const Read = ({
 
   const { name: { default: title } = {} } = properties;
   const hasProperties = !!Object.keys(properties).length;
+
+  const orderedProperties = orderProperties(Object.keys(properties), order);
 
   return (
     <div className="details">
@@ -59,7 +62,7 @@ const Read = ({
         <div className="details__content">
           <h3 className="details__subtitle">{t('CRUD.details.informations')}</h3>
           <ul className="details__list">
-            {Object.keys(properties).map(prop => (
+            {orderedProperties.map(prop => (
               <li key={prop} className="details__list-item">
                 <strong className="details__list-label">{properties[prop].title || prop}</strong>
                 <span className={classnames(

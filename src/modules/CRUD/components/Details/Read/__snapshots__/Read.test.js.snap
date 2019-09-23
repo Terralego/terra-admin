@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should redirect 1`] = `
+<div>
+  Error because Redirect
+</div>
+`;
+
+exports[`should render correctly 1`] = `
+<div
+  className="details"
+>
+  <div
+    className="details__header"
+  >
+    <h2
+      className="details__title"
+    >
+      Cathedrale Saint-Caprais
+    </h2>
+    <div>
+      Templates
+    </div>
+  </div>
+  <div
+    className="details__content"
+  >
+    <h3
+      className="details__subtitle"
+    />
+    <ul
+      className="details__list"
+    >
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Ville
+        </strong>
+        <span
+          className="details__list-value"
+        >
+          Agen, Lot-et-Garonne, Nouvelle-Aquitaine
+           
+          <br />
+        </span>
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Nom
+        </strong>
+        <span
+          className="details__list-value"
+        >
+          Cathedrale Saint-Caprais
+           
+          <br />
+        </span>
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Description
+        </strong>
+        <span
+          className="details__list-value details__list-value--empty"
+        />
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Labels
+        </strong>
+        <span
+          className="details__list-value"
+        >
+          PM 1979, PM 1981
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div>
+    Actions
+  </div>
+</div>
+`;

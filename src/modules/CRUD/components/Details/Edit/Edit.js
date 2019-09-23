@@ -40,13 +40,14 @@ class Edit extends React.Component {
     paramLayer: PropTypes.string.isRequired,
     paramId: PropTypes.string.isRequired,
     action: PropTypes.oneOf([ACTION_CREATE, ACTION_UPDATE]).isRequired,
-    updateControls: PropTypes.func.isRequired,
+    updateControls: PropTypes.func,
     displayAddFeature: PropTypes.bool,
     displayChangeFeature: PropTypes.bool,
     schema: PropTypes.shape({}).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func,
     }),
+    t: PropTypes.func,
   }
 
   static defaultProps = {
@@ -54,9 +55,11 @@ class Edit extends React.Component {
     feature: {},
     displayAddFeature: true,
     displayChangeFeature: true,
+    updateControls () {},
     history: {
       push () {},
     },
+    t: text => text,
   }
 
   state = {
@@ -80,7 +83,6 @@ class Edit extends React.Component {
     if (prevFeature !== feature || prevMap !== map) {
       this.initDraw();
     }
-
 
     if (schema !== prevSchema) {
       this.updateSchema(schema);

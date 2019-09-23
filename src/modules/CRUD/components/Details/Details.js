@@ -28,6 +28,7 @@ class Details extends React.Component {
     errorMessage: PropTypes.string,
     detailsHasLoaded: PropTypes.func,
     onSizeChange: PropTypes.func,
+    t: PropTypes.func,
   };
 
   static defaultProps = {
@@ -43,6 +44,7 @@ class Details extends React.Component {
     errorMessage: '',
     detailsHasLoaded () {},
     onSizeChange () {},
+    t: text => text,
   }
 
   state = {
@@ -150,6 +152,8 @@ class Details extends React.Component {
     const {
       match: { params: { action: paramAction, id: paramId } },
       updateControls,
+      layer,
+      feature,
     } = this.props;
     const { schema } = this.state;
 
@@ -159,10 +163,11 @@ class Details extends React.Component {
           schema={schema}
           updateControls={updateControls}
           action={paramAction || paramId}
+          layer={layer}
         />
       );
     }
-    return <Read schema={schema} />;
+    return <Read schema={schema} layer={layer} feature={feature} />;
   }
 
   onSizeChange = () => {
@@ -185,6 +190,8 @@ class Details extends React.Component {
       return <Redirect to={generateURI('layer', { layer: paramLayer })} />;
     }
 
+    const isLoading = !Object.keys(feature).length && paramId !== ACTION_CREATE;
+
     return (
       <>
         <div className="CRUD-details__actions">
@@ -200,11 +207,10 @@ class Details extends React.Component {
           </NavLink>
         </div>
         <div ref={this.detailContent} className="CRUD-details__content">
-          {!Object.keys(feature).length && paramId !== ACTION_CREATE ? (
-            <Loading spinner />
-          ) : (
-            <>{this.renderContent()}</>
-          )}
+          {isLoading
+            ? <Loading spinner />
+            : this.renderContent()
+          }
         </div>
       </>
     );

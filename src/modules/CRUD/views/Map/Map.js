@@ -22,6 +22,8 @@ export const CONTROL_CAPTURE_POSITION = {
   position: CONTROLS_TOP_RIGHT,
 };
 
+const isTrueFeatureID = id => ![undefined, ACTION_CREATE].includes(id);
+
 export class Map extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
@@ -112,12 +114,12 @@ export class Map extends React.Component {
     }
 
     if (
-      (!id || id === ACTION_CREATE)
+      !isTrueFeatureID(id)
       && featuresList.length
       && (prevId !== id || featuresList !== prevFeaturesList)
     ) {
       this.setFitBounds();
-    } else if (id && coordinates.length) {
+    } else if (isTrueFeatureID(id) && coordinates.length) {
       this.setFitBounds(coordinates);
       if (action !== ACTION_UPDATE) {
         const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};

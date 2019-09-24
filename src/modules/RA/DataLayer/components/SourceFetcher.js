@@ -16,10 +16,11 @@ import { RES_DATASOURCE } from '../../ra-modules';
 
 const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId, fields = [] }) => {
   const load = memo(async id => dataProvider(GET_ONE, RES_DATASOURCE, { id }));
+
   useEffect(() => {
     if (!sourceId) return;
 
-    async function fillFields () {
+    const fillFields = async () => {
       const { data: { _type: type, fields: sourceFields = [] } } = await load(sourceId);
       const filledFields = sourceFields.map(({ id, name, label }) => ({
         id,
@@ -27,12 +28,13 @@ const SourceFetcher = withDataProvider(({ dispatch, dataProvider, sourceId, fiel
         label,
         ...fields.find(({ id: fieldId }) => id === fieldId) || {},
       }));
+
       dispatch(change(REDUX_FORM_NAME, 'fields', filledFields || null));
       dispatch(change(REDUX_FORM_NAME, 'external', type === WMTS));
-    }
-    fillFields();
-  }, [dispatch, fields, load, sourceId]);
+    };
 
+    fillFields();
+  }, [sourceId]); // eslint-disable-line react-hooks/exhaustive-deps
   return null;
 });
 

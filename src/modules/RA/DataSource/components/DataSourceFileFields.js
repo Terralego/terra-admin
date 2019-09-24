@@ -8,7 +8,7 @@ import {
   required,
 } from 'react-admin';
 
-import { geomTypeChoices, sourceTypes } from '..';
+import { geomTypeChoices } from '..';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
 const DataSourceFileFields = ({ translate: t, type, ...props }) => (
@@ -26,7 +26,7 @@ const DataSourceFileFields = ({ translate: t, type, ...props }) => (
       source="file"
       label="datasource.form.file.related-files"
       multiple={false}
-      placeholder={t('datasource.form.file.placeholder', { type: sourceTypes[type] })}
+      placeholder={t('datasource.form.file.placeholder')}
     >
       <FileField source="file_data" title="title" />
     </FileInput>

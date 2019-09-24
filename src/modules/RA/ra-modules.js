@@ -41,7 +41,7 @@ export const resources = [
     name: RES_USERGROUP,
     moduleName: 'User',
     // requiredPermissions: 'auth.change_group',
-    endpoint: 'group',
+    endpoint: 'groups',
     ...userGroupView,
   },
   {

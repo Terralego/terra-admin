@@ -81,6 +81,44 @@ exports[`should render correctly 1`] = `
         <strong
           className="details__list-label"
         >
+          Numéro
+        </strong>
+        <span
+          className="details__list-value"
+        >
+          2
+        </span>
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Validation
+        </strong>
+        <span
+          className="details__list-value"
+        />
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Validation
+        </strong>
+        <span
+          className="details__list-value"
+        />
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
           Labels
         </strong>
         <span

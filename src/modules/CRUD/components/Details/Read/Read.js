@@ -10,6 +10,7 @@ import Templates from '../Templates';
 import Actions from '../Actions';
 
 const NO_FEATURE = 'CRUD.details.noFeature';
+const emptyStringOrUndef = value => ['', undefined].includes(value);
 
 const formattedProp = ({ value, t }) => {
   if (typeof value === 'boolean') {
@@ -18,7 +19,7 @@ const formattedProp = ({ value, t }) => {
       : t('CRUD.details.false');
   }
 
-  if (!value) {
+  if (emptyStringOrUndef(value)) {
     return t(NO_FEATURE);
   }
 
@@ -67,7 +68,7 @@ const Read = ({
                 <strong className="details__list-label">{properties[prop].title || prop}</strong>
                 <span className={classnames(
                   'details__list-value',
-                  { 'details__list-value--empty': !properties[prop].default && typeof properties[prop].default !== 'boolean' },
+                  { 'details__list-value--empty': emptyStringOrUndef(properties[prop].default) },
                 )}
                 >
                   {formattedProp({ value: properties[prop].default, t })}

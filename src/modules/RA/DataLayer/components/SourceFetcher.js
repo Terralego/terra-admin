@@ -1,9 +1,10 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { useEffect } from 'react';
 import memo from 'memoize-one';
 import get from 'lodash.get';
+/* eslint-disable import/no-extraneous-dependencies */
 import { connect } from 'react-redux';
 import { change } from 'redux-form';
+/* eslint-enable */
 import {
   withDataProvider,
   GET_ONE,

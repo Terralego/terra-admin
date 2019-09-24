@@ -23,9 +23,10 @@ jest.mock('../Templates', () => () => (<div>Templates</div>));
 jest.mock('../Actions', () => () => (<div>Actions</div>));
 
 const props = {
-  t: jest.fn(),
+  t: text => text,
   match: { params: { layer: 'layerFoo', id: 'layerId' } },
   schema: {
+    title: 'Foo Title',
     properties: {
       city: {
         type: 'string',

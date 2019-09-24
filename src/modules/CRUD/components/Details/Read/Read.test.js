@@ -42,6 +42,21 @@ const props = {
         title: 'Description',
         default: '',
       },
+      numero: {
+        type: 'integer',
+        title: 'Numéro',
+        default: 2,
+      },
+      validation: {
+        type: 'boolean',
+        title: 'Validation',
+        default: true,
+      },
+      available: {
+        type: 'boolean',
+        title: 'Validation',
+        default: false,
+      },
       labels: {
         type: 'array',
         items: {

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AnchorButton, ButtonGroup } from '@blueprintjs/core';
 
-const Templates = ({ files, id }) => id && files.length > 0 && (
-  <ButtonGroup>
+const Templates = ({ files, id, ...rest }) => id && files.length > 0 && (
+  <ButtonGroup {...rest}>
     {files.map(({ name, url }) => (
       <AnchorButton key={url} icon="download" href={url.replace('{id}', id)}>{name}</AnchorButton>
     ))}

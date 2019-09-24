@@ -61,12 +61,20 @@
     font-weight: 300;
   }
 
+  &__templates {
+    margin-bottom: 1rem;
+  }
+
   &__content {
     display: flex;
     flex: auto;
     flex-direction: column;
     overflow: auto;
     padding: 0 1rem;
+  }
+
+  &__subtitle {
+    margin-top: 0;
   }
 
   &__list {

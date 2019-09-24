@@ -57,7 +57,11 @@ const Read = ({
     <div className="details">
       <div className="details__header">
         <h2 className="details__title">{title || t(NO_FEATURE)}</h2>
-        <Templates id={id} files={templates} />
+        <Templates
+          className="details__templates"
+          id={id}
+          files={templates}
+        />
       </div>
       {hasProperties && (
         <div className="details__content">

@@ -7,6 +7,7 @@ import { withNamespaces } from 'react-i18next';
 import { Tree } from '@blueprintjs/core';
 import compose from '../../../utils/compose';
 import { withPermissions } from '../../../hoc/withUserSettings';
+import { withEnabledModules } from '../../../hoc/withAppSettings';
 
 const byPermissions = permissions => ({ requiredPermissions }) => {
   if (!requiredPermissions) {
@@ -16,9 +17,18 @@ const byPermissions = permissions => ({ requiredPermissions }) => {
   return permissions.includes(requiredPermissions);
 };
 
-const menuToTreeContents = (menu = [], t = text => text, permissions = []) =>
+const byModule = enabledModules => ({ requiredModule }) => {
+  if (!requiredModule) {
+    return true;
+  }
+
+  return enabledModules.includes(requiredModule);
+};
+
+const menuToTreeContents = (menu = [], t = text => text, permissions = [], enabledModules = []) =>
   menu
     .filter(byPermissions(permissions))
+    .filter(byModule(enabledModules))
     .map(({ items = [], label, href, ...rest }, index) => ({
       id: index,
       isExpanded: true,
@@ -28,25 +38,27 @@ const menuToTreeContents = (menu = [], t = text => text, permissions = []) =>
         : t(label),
 
       ...(items.length ? {
-        childNodes: menuToTreeContents(items, t),
+        childNodes: menuToTreeContents(items, t, permissions, enabledModules),
         icon: 'folder-close',
       } : {}),
 
       ...rest,
     }));
 
-export const AppSummary = ({ t, menu = [], permissions = [] }) => (
-  <Tree contents={menuToTreeContents(menu, t, permissions)} />
+export const AppSummary = ({ t, menu, permissions, enabledModules }) => (
+  <Tree contents={menuToTreeContents(menu, t, permissions, enabledModules)} />
 );
 
 AppSummary.defaultProps = {
   permissions: [],
+  enabledModules: [],
   menu: [],
   t: text => text,
 };
 
 AppSummary.propTypes = {
   permissions: PropTypes.arrayOf(PropTypes.string),
+  enabledModules: PropTypes.arrayOf(PropTypes.string),
   menu: PropTypes.arrayOf(PropTypes.shape({
     ...Tree.propTypes,
     href: PropTypes.string,
@@ -59,4 +71,5 @@ AppSummary.propTypes = {
 export default compose(
   withNamespaces(),
   withPermissions,
+  withEnabledModules,
 )(AppSummary);

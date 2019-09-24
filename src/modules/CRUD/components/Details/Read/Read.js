@@ -38,7 +38,7 @@ const formattedProp = ({ value, t }) => {
 const Read = ({
   t,
   match: { params: { layer: paramLayer, id: paramId } },
-  schema: { properties = {} },
+  schema: { title: schemaTitle, properties = {} },
   displayViewFeature,
   layer: { templates, uiSchema: { 'ui:order': order } = {} },
   feature: { id },
@@ -61,7 +61,9 @@ const Read = ({
       </div>
       {hasProperties && (
         <div className="details__content">
-          <h3 className="details__subtitle">{t('CRUD.details.informations')}</h3>
+          {schemaTitle && (
+            <h3 className="details__subtitle">{schemaTitle}</h3>
+          )}
           <ul className="details__list">
             {orderedProperties.map(prop => (
               <li key={prop} className="details__list-item">

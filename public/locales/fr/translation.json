@@ -255,7 +255,7 @@
       "description": "Description",
       "file": {
         "related-files": "Fichiers associés",
-        "placeholder": "Déposez un zip contenant tous les fichiers du %{type} ici "
+        "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile"
       },
       "request": {
         "host-server": "Serveur hôte",

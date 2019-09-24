@@ -10,11 +10,19 @@ import {
 
 import MenuTree from '../../../components/MenuTree';
 
-export const MenuDropdown = ({ t, modules = [] }) => {
+const byModule = enabledModules => ({ requiredModule }) => {
+  if (!requiredModule) {
+    return true;
+  }
+
+  return enabledModules.includes(requiredModule);
+};
+
+export const MenuDropdown = ({ t, modules = [], enabledModules = [] }) => {
   const menuContent = modules.reduce((acc, { config: { menu = [] } = {} }) => [
     ...acc,
     ...menu,
-  ], []);
+  ], []).filter(byModule(enabledModules));
 
   if (!menuContent.length) {
     return null;

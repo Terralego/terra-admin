@@ -66,7 +66,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
         <LongTextInput source="description" label="datalayer.form.description" />
       </FormTab>
 
-      <FormTab label="datalayer.form.style">
+      <FormTab label="datalayer.form.style" path="style">
         <StyleField
           source="layer_style"
           withSource="source"
@@ -96,7 +96,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
 
       </FormTab>
 
-      <FormTab label="datalayer.form.interactions">
+      <FormTab label="datalayer.form.interactions" path="interactions">
         <FormDataConsumer>
           {({ dispatch }) => (
             <BooleanInput
@@ -152,7 +152,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
           )}
         </FormDataConsumer>
       </FormTab>
-      <FormTab label="datalayer.form.fields-settings">
+      <FormTab label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>

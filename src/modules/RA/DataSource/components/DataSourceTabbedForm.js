@@ -49,7 +49,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
     </FormTab>
 
     {/* Fields */}
-    <FormTab label="datasource.form.data">
+    <FormTab label="datasource.form.data" path="data">
       <AttributeMessage />
 
       <ArrayInput source="fields" label="datasource.form.fields" fullWidth>

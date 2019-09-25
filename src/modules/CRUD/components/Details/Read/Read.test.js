@@ -18,7 +18,7 @@ jest.mock('../../../config', () => ({
   generateURI: jest.fn(),
 }));
 
-jest.mock('../Templates', () => () => (<div>Templates</div>));
+jest.mock('../DownloadButtons', () => () => (<div>DownloadButtons</div>));
 
 jest.mock('../Actions', () => () => (<div>Actions</div>));
 

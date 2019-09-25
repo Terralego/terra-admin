@@ -372,6 +372,7 @@
       "add_filter": "Ajouter un filtre",
       "add": "Ajouter",
       "back": "Retour",
+      "back-to-list": "Retour à la liste",
       "bulk_actions": "%{smart_count} selectionné |||| %{smart_count} selectionnés",
       "cancel": "Annuler",
       "clear_input_value": "Vider le champ",

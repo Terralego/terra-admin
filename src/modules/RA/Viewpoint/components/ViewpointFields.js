@@ -4,6 +4,7 @@ import {
   Datagrid,
   DateField,
   DisabledInput,
+  EditButton,
   FormTab,
   ImageField,
   LongTextInput,
@@ -60,6 +61,7 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
           <DateField source="date" />
           <TextField source="state" />
           <ImageField source="file" />
+          <EditButton />
         </Datagrid>
       </ReferenceArrayField>
     </FormTab>

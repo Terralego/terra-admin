@@ -3,10 +3,10 @@ import { Edit } from 'react-admin';
 
 import ViewpointFields from '../components/ViewpointFields';
 
-export const UserEdit = props => (
+export const ViewpointEdit = props => (
   <Edit undoable={false} {...props}>
     <ViewpointFields edit />
   </Edit>
 );
 
-export default UserEdit;
+export default ViewpointEdit;

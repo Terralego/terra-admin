@@ -3,10 +3,10 @@ import { Create } from 'react-admin';
 
 import ViewpointFields from '../components/ViewpointFields';
 
-export const UserCreate = props => (
+export const ViewpointCreate = props => (
   <Create {...props}>
     <ViewpointFields />
   </Create>
 );
 
-export default UserCreate;
+export default ViewpointCreate;

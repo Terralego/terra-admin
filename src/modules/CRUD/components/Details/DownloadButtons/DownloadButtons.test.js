@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import Templates from './Templates';
+import DownloadButtons from './DownloadButtons';
 
 jest.mock('@blueprintjs/core', () => ({
   ButtonGroup: ({ children }) => <ul>{children}</ul>,
@@ -23,7 +23,7 @@ const props = {
 
 it('should render correctly', () => {
   const tree = renderer.create((
-    <Templates
+    <DownloadButtons
       {...props}
     />
   )).toJSON();

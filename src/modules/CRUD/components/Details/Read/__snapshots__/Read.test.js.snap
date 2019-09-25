@@ -19,7 +19,7 @@ exports[`should render correctly 1`] = `
       Cathedrale Saint-Caprais
     </h2>
     <div>
-      Templates
+      DownloadButtons
     </div>
   </div>
   <div

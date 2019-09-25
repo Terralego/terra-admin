@@ -1,4 +1,13 @@
 
+2.1.0 / 2019-09-25
+==================
+
+  * Add paths for RA FormTab's
+  * Use compose() for SourceFetcher HOCs
+  * Change memoization index for SourceFetcher useEffect to avoid looped api calls
+  * Avoid app crash when trying to obtain user permissions with expired token
+  * Manage numeric prop display for the read view
+
 2.0.0 / 2019-09-24
 ==================
 

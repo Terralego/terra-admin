@@ -5,6 +5,7 @@ import {
   DateField,
   DisabledInput,
   FormTab,
+  ImageField,
   LongTextInput,
   ReferenceArrayField,
   SelectInput,
@@ -54,11 +55,12 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
 
     <FormTab label={t('resources.viewpoint.tabs.pictures')} path="pictures">
       <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} fullWidth>
-        <Datagrid>
+        <Datagrid rowClick="edit">
           <TextField source="owner" />
           <TextField source="properties.meteo" />
           <DateField source="date" />
           <TextField source="state" />
+          <ImageField source="file" />
         </Datagrid>
       </ReferenceArrayField>
     </FormTab>

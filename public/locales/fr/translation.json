@@ -182,7 +182,6 @@
       "update": "Modifier",
       "delete": "Supprimer",
       "noFeature": "Non renseigné",
-      "informations": "Informations",
       "save": "Sauvegarder",
       "close": "Fermer",
       "cancel": "Annuler",
@@ -255,7 +254,7 @@
       "description": "Description",
       "file": {
         "related-files": "Fichiers associés",
-        "placeholder": "Déposez un zip contenant tous les fichiers du %{type} ici "
+        "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile"
       },
       "request": {
         "host-server": "Serveur hôte",
@@ -314,9 +313,10 @@
         "max-zoom": "Zoom maximum",
         "template": "Modèle de la fenêtre contextuelle"
       },
-      "minifiche": {
+      "minisheet": {
         "display-on-click": "Afficher la minifiche",
-        "template": "Modèle de la minifiche"
+        "template": "Modèle de la minifiche",
+        "pick-highlight-color": "Sélectionner une couleur de surbrillance"
       },
       "filter": "Filtre",
       "allow-filtering-field": "Permettre de filter par le champ",

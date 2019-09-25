@@ -19,7 +19,7 @@ exports[`should render correctly 1`] = `
       Cathedrale Saint-Caprais
     </h2>
     <div>
-      Templates
+      DownloadButtons
     </div>
   </div>
   <div
@@ -27,7 +27,9 @@ exports[`should render correctly 1`] = `
   >
     <h3
       className="details__subtitle"
-    />
+    >
+      Foo Title
+    </h3>
     <ul
       className="details__list"
     >
@@ -73,7 +75,51 @@ exports[`should render correctly 1`] = `
         </strong>
         <span
           className="details__list-value details__list-value--empty"
-        />
+        >
+          CRUD.details.noFeature
+        </span>
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Numéro
+        </strong>
+        <span
+          className="details__list-value"
+        >
+          2
+        </span>
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Validation
+        </strong>
+        <span
+          className="details__list-value"
+        >
+          CRUD.details.true
+        </span>
+      </li>
+      <li
+        className="details__list-item"
+      >
+        <strong
+          className="details__list-label"
+        >
+          Validation
+        </strong>
+        <span
+          className="details__list-value"
+        >
+          CRUD.details.false
+        </span>
       </li>
       <li
         className="details__list-item"

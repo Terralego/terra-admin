@@ -18,14 +18,15 @@ jest.mock('../../../config', () => ({
   generateURI: jest.fn(),
 }));
 
-jest.mock('../Templates', () => () => (<div>Templates</div>));
+jest.mock('../DownloadButtons', () => () => (<div>DownloadButtons</div>));
 
 jest.mock('../Actions', () => () => (<div>Actions</div>));
 
 const props = {
-  t: jest.fn(),
+  t: text => text,
   match: { params: { layer: 'layerFoo', id: 'layerId' } },
   schema: {
+    title: 'Foo Title',
     properties: {
       city: {
         type: 'string',
@@ -41,6 +42,21 @@ const props = {
         type: 'string',
         title: 'Description',
         default: '',
+      },
+      numero: {
+        type: 'integer',
+        title: 'Numéro',
+        default: 2,
+      },
+      validation: {
+        type: 'boolean',
+        title: 'Validation',
+        default: true,
+      },
+      available: {
+        type: 'boolean',
+        title: 'Validation',
+        default: false,
       },
       labels: {
         type: 'array',

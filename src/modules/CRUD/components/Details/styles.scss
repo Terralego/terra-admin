@@ -61,12 +61,20 @@
     font-weight: 300;
   }
 
+  &__templates {
+    margin-bottom: 1rem;
+  }
+
   &__content {
     display: flex;
     flex: auto;
     flex-direction: column;
     overflow: auto;
     padding: 0 1rem;
+  }
+
+  &__subtitle {
+    margin-top: 0;
   }
 
   &__list {
@@ -170,6 +178,24 @@
 
   .list-group {
     margin-bottom: 1rem;
+  }
+
+  // Below from Bootstrap 3.3.6 because React-json-schema-form works fine with this version...
+  .checkbox,
+  .radio {
+    label {
+      min-height: 20px;
+      padding-left: 20px;
+      margin-bottom: 0;
+      font-weight: 400;
+      cursor: pointer;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+      position: absolute;
+      margin-top: 2px;
+      margin-left: -20px;
+    }
   }
 }
 

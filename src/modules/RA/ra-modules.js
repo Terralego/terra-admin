@@ -41,7 +41,7 @@ export const resources = [
     name: RES_USERGROUP,
     moduleName: 'User',
     // requiredPermissions: 'auth.change_group',
-    endpoint: 'group',
+    endpoint: 'groups',
     ...userGroupView,
   },
   {
@@ -85,6 +85,7 @@ export const config = {
     {
       label: 'user.project',
       // requiredPermissions: 'auth.change_group',
+      requiredModule: 'User',
       items: resources.filter(byModule('User')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
@@ -92,6 +93,7 @@ export const config = {
     },
     {
       label: 'datalayer.project',
+      requiredModule: 'DataSource',
       items: resources.filter(byModule('DataSource', 'DataLayer')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
@@ -99,6 +101,7 @@ export const config = {
     },
     {
       label: 'opp.project',
+      requiredModule: 'OPP',
       items: resources.filter(byModule('OPP')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,

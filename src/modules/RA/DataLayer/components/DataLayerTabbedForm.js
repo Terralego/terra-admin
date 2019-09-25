@@ -12,6 +12,7 @@ import {
   FormDataConsumer,
   REDUX_FORM_NAME,
 } from 'react-admin';
+import { ColorInput } from 'react-admin-color-input';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
 
@@ -65,7 +66,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
         <LongTextInput source="description" label="datalayer.form.description" />
       </FormTab>
 
-      <FormTab label="datalayer.form.style">
+      <FormTab label="datalayer.form.style" path="style">
         <StyleField
           source="layer_style"
           withSource="source"
@@ -95,7 +96,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
 
       </FormTab>
 
-      <FormTab label="datalayer.form.interactions">
+      <FormTab label="datalayer.form.interactions" path="interactions">
         <FormDataConsumer>
           {({ dispatch }) => (
             <BooleanInput
@@ -132,10 +133,11 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
           )}
         </FormDataConsumer>
 
-        <BooleanInput source="minisheet_enable" label="datalayer.form.minifiche.display-on-click" />
+        <BooleanInput source="minisheet_enable" label="datalayer.form.minisheet.display-on-click" />
+        <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" />
         <FormDataConsumer>
           {({ formData }) => formData.minisheet_enable &&
-            <LongTextInput source="minisheet_template" label="datalayer.form.minifiche.template" fullWidth />}
+            <LongTextInput source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
         </FormDataConsumer>
 
         <FormDataConsumer>
@@ -150,7 +152,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
           )}
         </FormDataConsumer>
       </FormTab>
-      <FormTab label="datalayer.form.fields-settings">
+      <FormTab label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>

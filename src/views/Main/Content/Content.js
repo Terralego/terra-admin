@@ -16,7 +16,7 @@ export const Content = ({ modules, defaultRoute }) => (
           <Component />
         </Route>
       ))}
-      {defaultRoute && <Redirect exact from="/" to={defaultRoute} />}
+      {typeof defaultRoute === 'string' && <Redirect exact from="/" to={defaultRoute} />}
       <Route path="">
         <Suspense fallback={<Loading />}>
           <Summary />

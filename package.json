@@ -35,6 +35,7 @@
     "react-helmet": "^5.2.1",
     "react-i18next": "^8.4.0",
     "react-jsonschema-form": "~1.8.0",
+    "react-mapbox-gl": "~4.6.0",
     "react-paginate": "~6.3.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",

@@ -23,6 +23,7 @@ const DataLayerExternalForm = ({ viewList, ...props }) => (
       label="datalayer.form.data-source"
       sort={{ field: 'name', order: 'ASC' }}
       validate={[required()]}
+      perPage={100}
     >
       <SelectInput />
     </ReferenceInput>

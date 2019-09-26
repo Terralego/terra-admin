@@ -2,25 +2,30 @@ import React from 'react';
 import {
   TextInput,
   LongTextInput,
-  translate as translateRA,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from 'react-admin';
 
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
 import { required } from '../../../../utils/react-admin/validate';
+import { RES_USERGROUP } from '../../ra-modules';
 
 const defaultRequired = required();
 
-const DataSourceMainFields = ({ translate, ...props }) => (
+const DataSourceMainFields = props => (
   <FieldGroup {...props}>
     <TextInput
       source="name"
       validate={defaultRequired}
       type="text"
-      label="datasource.form.name"
     />
-    <LongTextInput source="description" defaultValue="" label="datasource.form.description" />
+    <LongTextInput source="description" defaultValue="" />
+
+    <ReferenceArrayInput source="groups" reference={RES_USERGROUP}>
+      <SelectArrayInput optionText="name" />
+    </ReferenceArrayInput>
   </FieldGroup>
 );
 
-export default translateRA(DataSourceMainFields);
+export default DataSourceMainFields;

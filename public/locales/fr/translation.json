@@ -240,7 +240,6 @@
       "read-only": "Cette source de données n'est pas modifiable.",
       "help1": "Une fois le type de la donnée déterminé, il n'est pas possible de le changer",
       "definition": "Définition",
-      "name": "Nom",
       "data-type": "Type de données",
       "geometry": "Type de géométrie",
       "geom-field": "Champ geométrie auto-détecté",
@@ -251,7 +250,6 @@
       "data": "Données",
       "label": "Libellé",
       "fields": "Champs",
-      "description": "Description",
       "file": {
         "related-files": "Fichiers associés",
         "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile"
@@ -372,6 +370,7 @@
       "add_filter": "Ajouter un filtre",
       "add": "Ajouter",
       "back": "Retour",
+      "back-to-list": "Retour à la liste",
       "bulk_actions": "%{smart_count} selectionné |||| %{smart_count} selectionnés",
       "cancel": "Annuler",
       "clear_input_value": "Vider le champ",
@@ -527,6 +526,13 @@
         "id": "Id",
         "name": "Nom du groupe",
         "users": "Utilisateurs dans le groupe"
+      }
+    },
+    "datasource": {
+      "fields": {
+        "description": "Description",
+        "name": "Nom",
+        "groups": "Groupes utilisateurs"
       }
     }
   }

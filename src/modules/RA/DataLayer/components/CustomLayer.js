@@ -18,6 +18,7 @@ export const CustomLayer = ({ resource, source }) => (
       label="datalayer.form.data-source"
       sort={{ field: 'name', order: 'ASC' }}
       resource={resource}
+      perPage={100}
     >
       <SelectInput />
     </ReferenceInput>

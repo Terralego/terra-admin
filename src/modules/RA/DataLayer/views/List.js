@@ -9,7 +9,6 @@ import {
   // Filter,
   ReferenceField,
   FunctionField,
-  Pagination,
 } from 'react-admin';
 
 import { RES_DATASOURCE } from '../../ra-modules';
@@ -31,9 +30,6 @@ import CommonBulkActionButtons from '../../../../components/react-admin/CommonBu
 //   </Filter>
 // );
 
-const DataLayerListPagination = props =>
-  <Pagination rowsPerPageOptions={[]} {...props} />;
-
 export const DataLayerList = ({ viewList, ...props }) => {
   const renderViewField = ({ view }) => {
     const { name = view } = viewList.find(({ id }) => (+id === view)) || {};
@@ -48,8 +44,6 @@ export const DataLayerList = ({ viewList, ...props }) => {
       exporter={false}
     // filters={<ListFilters />}
       bulkActionButtons={<CommonBulkActionButtons />}
-      perPage={100}
-      pagination={<DataLayerListPagination />}
       {...props}
     >
       <Datagrid rowClick="edit">

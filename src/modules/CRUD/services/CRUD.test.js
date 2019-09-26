@@ -17,13 +17,13 @@ const settings = {
       {
         id: 1,
         name: 'Foo',
-        layer: { id: 6, name: 'foo', group: 'group1', group_tilejson: 'group1.tilejson', geom_type: LINESTRING },
+        layer: { id: 6, name: 'foo', tilejson: 'group1.tilejson', geom_type: LINESTRING },
         map_style: { type: 'line', paint: { 'line-color': 'red', 'line-width': 3 } },
       },
       {
         id: 2,
         name: 'Bar',
-        layer: { id: 7, name: 'bar', group: 'group1', group_tilejson: 'group1.tilejson', geom_type: LINESTRING },
+        layer: { id: 7, name: 'bar', tilejson: 'group1.tilejson', geom_type: LINESTRING },
         map_style: { type: 'line', paint: { 'line-color': 'blue', 'line-width': 3 } },
       },
     ],
@@ -32,13 +32,13 @@ const settings = {
       {
         id: 3,
         name: 'Foo foo',
-        layer: { id: 8, name: 'foo_foo', group: 'group2', group_tilejson: 'group2.tilejson', geom_type: LINESTRING },
+        layer: { id: 8, name: 'foo_foo', tilejson: 'group2.tilejson', geom_type: LINESTRING },
         map_style: { type: 'line', paint: { 'line-color': 'yellow', 'line-width': 3 } },
       },
       {
         id: 4,
         name: 'Bar bar',
-        layer: { id: 9, name: 'bar_bar', group: 'group3', group_tilejson: 'group3.tilejson', geom_type: LINESTRING },
+        layer: { id: 9, name: 'bar_bar', group: 'group3', tilejson: 'group3.tilejson', geom_type: LINESTRING },
         map_style: { type: 'line', paint: { 'line-color': 'green', 'line-width': 3 } },
       },
     ],
@@ -47,22 +47,22 @@ const settings = {
       {
         id: 4,
         name: 'Foo bar',
-        layer: { id: 10, name: 'foo_bar', group: 'group2', group_tilejson: 'group2.tilejson', geom_type: 9999 },
+        layer: { id: 10, name: 'foo_bar', tilejson: 'group2.tilejson', geom_type: 9999 },
       },
       {
         id: 5,
         name: 'Bar foo polygon',
-        layer: { id: 11, name: 'bar_foo_polygon', group: 'group1', group_tilejson: 'group1.tilejson', geom_type: POLYGON },
+        layer: { id: 11, name: 'bar_foo_polygon', tilejson: 'group1.tilejson', geom_type: POLYGON },
       },
       {
         id: 6,
         name: 'Bar foo line',
-        layer: { id: 12, name: 'bar_foo_line', group: 'group1', group_tilejson: 'group1.tilejson', geom_type: LINESTRING },
+        layer: { id: 12, name: 'bar_foo_line', tilejson: 'group1.tilejson', geom_type: LINESTRING },
       },
       {
         id: 7,
         name: 'Bar foo point',
-        layer: { id: 12, name: 'bar_foo_point', group: 'group1', group_tilejson: 'group1.tilejson', geom_type: POINT },
+        layer: { id: 12, name: 'bar_foo_point', tilejson: 'group1.tilejson', geom_type: POINT },
       },
     ],
   }],
@@ -78,7 +78,7 @@ it('should get the selected layer', () => {
     displayName: 'Bar bar',
     geom_type: 1,
     group: 'group3',
-    group_tilejson: 'group3.tilejson',
+    tilejson: 'group3.tilejson',
     id: 9,
     name: 'bar_bar',
     schema: undefined,
@@ -94,11 +94,15 @@ it('should return anything if the selected layer does not exist', () => {
   expect(getLayer(settings, 'hello')).toEqual(false);
 });
 
-it('should get sources', () => {
+fit('should get sources', () => {
   expect(getSources(settings)).toEqual([
-    { id: 'group1', type: 'vector', url: 'group1.tilejson' },
-    { id: 'group2', type: 'vector', url: 'group2.tilejson' },
-    { id: 'group3', type: 'vector', url: 'group3.tilejson' },
+    { id: '6', type: 'vector', url: 'group1.tilejson' },
+    { id: '7', type: 'vector', url: 'group1.tilejson' },
+    { id: '8', type: 'vector', url: 'group2.tilejson' },
+    { id: '9', type: 'vector', url: 'group3.tilejson' },
+    { id: '10', type: 'vector', url: 'group2.tilejson' },
+    { id: '11', type: 'vector', url: 'group1.tilejson' },
+    { id: '12', type: 'vector', url: 'group1.tilejson' },
   ]);
 });
 

@@ -42,6 +42,7 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
           label="datalayer.form.data-source"
           sort={{ field: 'name', order: 'ASC' }}
           validate={defaultRequired}
+          perPage={100}
         >
           <SelectInput />
         </ReferenceInput>

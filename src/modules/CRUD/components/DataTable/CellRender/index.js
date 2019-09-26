@@ -9,7 +9,7 @@ export default connectAuthProvider(({
 }) => {
   const permissions = authenticated ? user.permissions : [];
   return {
-    displayViewFeature: permissions.includes('terra.view_feature'),
-    displayUpdateFeature: permissions.includes('terra.change_feature'),
+    displayViewFeature: permissions.includes('geostore.view_feature'),
+    displayUpdateFeature: permissions.includes('geostore.change_feature'),
   };
 })(CellRender);

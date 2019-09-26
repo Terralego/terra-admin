@@ -13,7 +13,7 @@ export default withRouter(
   }) => {
     const permissions = authenticated ? user.permissions : [];
     return {
-      displayViewFeature: permissions.includes('terra.view_feature'),
+      displayViewFeature: permissions.includes('geostore.view_feature'),
     };
   })(
     connectCRUDProvider(({

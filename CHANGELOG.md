@@ -1,4 +1,24 @@
 
+2.2.0 / 2019-09-26
+==================
+
+  * Add an edit button for picture List in ViewpointFields
+  * Add picture display in picture list of a given Viewpoint
+  * Adapt CRUD config with the API breaking change
+  * Add groups field for DataSource
+  * Use native RA translation management
+  * Remove useless translate() HOC around DataSourceMainFields component
+  * Remove useless translate() HOC around DataSource component
+  * Remove pagination override as back-end now properly manage it
+  * Increase data-source field pagination everywhere
+  * Increase source field pagination
+  * Add BackToList button for each RA user/group Create/Edit forms
+  * Add BackToList button for each RA Create/Edit forms
+  * Rename Templates component to DownloadButtons
+  * Fix Bootstrap CSS not supported by 4+ versions
+  * Improve CSS positions for read and templates components
+  * Replace "informations" title by the schema title if it filled
+
 2.1.0 / 2019-09-25
 ==================
 

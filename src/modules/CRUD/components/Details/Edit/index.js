@@ -14,8 +14,8 @@ export default withRouter(
   }) => {
     const permissions = authenticated ? user.permissions : [];
     return {
-      displayAddFeature: permissions.includes('terra.add_feature'),
-      displayChangeFeature: permissions.includes('terra.change_feature'),
+      displayAddFeature: permissions.includes('geostore.add_feature'),
+      displayChangeFeature: permissions.includes('geostore.change_feature'),
     };
   })(
     connectCRUDProvider(({

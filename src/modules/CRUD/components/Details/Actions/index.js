@@ -14,8 +14,8 @@ export default withRouter(
   }, { displayUpdate, displayDelete }) => {
     const permissions = authenticated ? user.permissions : [];
     return {
-      displayDelete: displayDelete && permissions.includes('terra.delete_feature'),
-      displayUpdate: displayUpdate && permissions.includes('terra.change_feature'),
+      displayDelete: displayDelete && permissions.includes('geostore.delete_feature'),
+      displayUpdate: displayUpdate && permissions.includes('geostore.change_feature'),
     };
   })(
     connectCRUDProvider(({

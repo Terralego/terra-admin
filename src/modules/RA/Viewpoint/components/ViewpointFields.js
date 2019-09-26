@@ -8,6 +8,7 @@ import {
   FormTab,
   ImageField,
   LongTextInput,
+  NumberInput,
   ReferenceArrayField,
   SelectInput,
   TabbedForm,
@@ -16,6 +17,7 @@ import {
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 import { RES_PICTURE } from '../../ra-modules';
+import MapPointInput from '../../../../components/react-admin/MapPointInput';
 
 const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
   <TabbedForm {...props}>
@@ -25,8 +27,10 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
 
       <TextInput source="address" />
       <SelectInput source="city_id" choices={[]} />
+      <NumberInput source="geometry.coordinates[0]" />
+      <NumberInput source="geometry.coordinates[1]" />
 
-      <TextInput source="geometry.coordinates" />
+      <MapPointInput source="geometry.coordinates" />
     </FormTab>
 
     <FormTab label="resources.viewpoint.tabs.repeat" path="repeat">

@@ -11,7 +11,9 @@ import {
   ReferenceInput,
   FormDataConsumer,
   REDUX_FORM_NAME,
+  translate as translateRA,
 } from 'react-admin';
+import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
@@ -31,7 +33,7 @@ import { RES_DATASOURCE } from '../../ra-modules';
 
 const defaultRequired = required();
 
-const DataLayerTabbedForm = ({ viewList, ...props }) => (
+const DataLayerTabbedForm = ({ translate, viewList, ...props }) => (
   <>
     <SourceFetcher />
     <TabbedForm {...props}>
@@ -63,6 +65,23 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
         />
 
         <NumberInput source="order" label="datalayer.form.ordering" validate={defaultRequired} />
+
+        <FormDataConsumer>
+          {({ formData }) => ((formData.fields && formData.fields.length) ? (
+            <FormGroup
+              helperText={translate('datalayer.form.search.main-field.helpertext')}
+            >
+              <SelectInput
+                source="settings.filters.mainField"
+                label="datalayer.form.search.main-field.label"
+                choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
+                fullWidth
+              />
+            </FormGroup>
+          ) : <></>
+          )}
+        </FormDataConsumer>
+
         <LongTextInput source="description" label="datalayer.form.description" />
       </FormTab>
 
@@ -139,19 +158,8 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
           {({ formData }) => formData.minisheet_enable &&
             <LongTextInput source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
         </FormDataConsumer>
-
-        <FormDataConsumer>
-          {({ formData }) => ((formData.fields && formData.fields.length) ? (
-            <SelectInput
-              source="settings.filters.mainField"
-              label="datalayer.form.search.mainField"
-              choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
-              fullWidth
-            />
-          ) : <></>
-          )}
-        </FormDataConsumer>
       </FormTab>
+
       <FormTab label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData }) => (
@@ -229,4 +237,4 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
   </>
 );
 
-export default withViewList(DataLayerTabbedForm);
+export default translateRA(withViewList(DataLayerTabbedForm));

@@ -55,11 +55,11 @@ export const getLayer = ({ menu = [] }, name) => {
 
 export const getSources = ({ menu = [] }) =>
   flattenMenu(menu).reduce((sourceList, { layer }) => (
-    (sourceList.some(({ id }) => id === layer.group))
+    (sourceList.some(({ id }) => id === `${layer.id}`))
       ? sourceList
       : [
         ...sourceList,
-        { id: layer.group, type: 'vector', url: layer.group_tilejson },
+        { id: `${layer.id}`, type: 'vector', url: layer.tilejson },
       ]
   ), []);
 
@@ -67,8 +67,7 @@ export const getLayersPaints = ({ menu = [] }) =>
   flattenMenu(menu).reduce((
     layersList,
     {
-      id,
-      layer: { name, group: source, geom_type: geomType },
+      layer: { name, id, geom_type: geomType },
       map_style: mapStyle = {},
     },
   ) => {
@@ -80,7 +79,7 @@ export const getLayersPaints = ({ menu = [] }) =>
         {
           id: `terralego-${name}-${id}`,
           'source-layer': name,
-          source,
+          source: `${id}`,
           ...style,
         },
       ];

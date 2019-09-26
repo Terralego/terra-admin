@@ -64,7 +64,7 @@ const settings = {
       layer: {
         id: 1,
         name: 'layerTest',
-        group_tilejson: '/api/layer/reference/tilejson',
+        tilejson: '/api/layer/reference/tilejson',
       },
     }],
   }, {
@@ -83,7 +83,7 @@ const settings = {
       layer: {
         id: 2,
         name: 'layerTest2',
-        group_tilejson: '/api/layer/reference/tilejson',
+        tilejson: '/api/layer/reference/tilejson',
       },
     }],
   }],
@@ -675,7 +675,7 @@ it('should generate layers to map', () => {
           'line-color': 'green',
           'line-width': 3,
         },
-        source: undefined,
+        source: '1',
         'source-layer': 'layerTest',
         type: 'line',
       }, {
@@ -684,12 +684,16 @@ it('should generate layers to map', () => {
           'line-color': 'red',
           'line-width': 8,
         },
-        source: undefined,
+        source: '2',
         'source-layer': 'layerTest2',
         type: 'line',
       }],
       sources: [{
-        id: undefined,
+        id: '1',
+        type: 'vector',
+        url: '/api/layer/reference/tilejson',
+      }, {
+        id: '2',
         type: 'vector',
         url: '/api/layer/reference/tilejson',
       }],

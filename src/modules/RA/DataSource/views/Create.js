@@ -11,6 +11,8 @@ import DataSourceFileFields from '../components/DataSourceFileFields';
 import DataSourceDbFields from '../components/DataSourceDbFields';
 import DataSourceWMTSField from '../components/DataSourceWMTSField';
 
+import DefaultActions from '../../../../components/react-admin/DefaultActions';
+
 import {
   SQL,
   GEOJSON,
@@ -25,7 +27,10 @@ const required = (message = 'Required') => value => (value ? undefined : message
 const defaultRequired = required();
 
 export const DataSourceCreate = props => (
-  <Create {...props}>
+  <Create
+    {...props}
+    actions={<DefaultActions />}
+  >
     <SimpleForm>
       <DataSourceMainFields />
 

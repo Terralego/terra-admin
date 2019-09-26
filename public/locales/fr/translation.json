@@ -531,7 +531,8 @@
     "datasource": {
       "fields": {
         "description": "Description",
-        "name": "Nom"
+        "name": "Nom",
+        "groups": "Groupes utilisateurs"
       }
     }
   }

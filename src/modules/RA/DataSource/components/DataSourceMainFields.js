@@ -2,11 +2,14 @@ import React from 'react';
 import {
   TextInput,
   LongTextInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from 'react-admin';
 
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
 import { required } from '../../../../utils/react-admin/validate';
+import { RES_USERGROUP } from '../../ra-modules';
 
 const defaultRequired = required();
 
@@ -18,6 +21,10 @@ const DataSourceMainFields = props => (
       type="text"
     />
     <LongTextInput source="description" defaultValue="" />
+
+    <ReferenceArrayInput source="groups" reference={RES_USERGROUP}>
+      <SelectArrayInput optionText="name" />
+    </ReferenceArrayInput>
   </FieldGroup>
 );
 

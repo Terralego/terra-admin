@@ -4,7 +4,6 @@ import {
   SimpleForm,
   RadioButtonGroupInput,
   FormDataConsumer,
-  translate,
 } from 'react-admin';
 
 import DataSourceMainFields from '../components/DataSourceMainFields';
@@ -25,7 +24,7 @@ import DataSourceHelp from '../components/DataSourceHelp';
 const required = (message = 'Required') => value => (value ? undefined : message);
 const defaultRequired = required();
 
-export const DataSourceCreate = ({ translate: t, ...props }) => (
+export const DataSourceCreate = props => (
   <Create {...props}>
     <SimpleForm>
       <DataSourceMainFields />
@@ -57,4 +56,4 @@ export const DataSourceCreate = ({ translate: t, ...props }) => (
   </Create>
 );
 
-export default translate(DataSourceCreate);
+export default DataSourceCreate;

@@ -5,7 +5,6 @@ import {
   Datagrid,
   TextField,
   EditButton,
-  Pagination,
 } from 'react-admin';
 import ArrayCountField from '../../../../components/react-admin/ArrayCountField';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
@@ -16,16 +15,11 @@ import CommonBulkActionButtons from '../../../../components/react-admin/CommonBu
 //   </Filter>
 // );
 
-const UserGroupListPagination = props =>
-  <Pagination rowsPerPageOptions={[]} {...props} />;
-
 export const UserGroupList = props => (
   <List
     {...props}
     bulkActionButtons={<CommonBulkActionButtons />}
     // filters={<UserGroupListFilters />}
-    perPage={100}
-    pagination={<UserGroupListPagination />}
   >
     <Datagrid rowClick="edit">
       <TextField source="id" />

@@ -8,7 +8,6 @@ import {
   // SelectInput,
   FunctionField,
   // Filter,
-  Pagination,
 } from 'react-admin';
 
 import StatusChip from '../components/StatusChip';
@@ -31,9 +30,6 @@ import CommonBulkActionButtons from '../../../../components/react-admin/CommonBu
 //   </Filter>
 // );
 
-const DataSourceListPagination = props =>
-  <Pagination rowsPerPageOptions={[]} {...props} />;
-
 export const DataSourceList = props => (
   <List
     sort={{
@@ -43,8 +39,6 @@ export const DataSourceList = props => (
     exporter={false}
     // filters={<ListFilters />}
     bulkActionButtons={<CommonBulkActionButtons />}
-    perPage={100}
-    pagination={<DataSourceListPagination />}
     {...props}
   >
     <Datagrid rowClick="edit">

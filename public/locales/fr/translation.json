@@ -351,7 +351,7 @@
       "search": {
         "main-field": {
           "label": "Champ principal",
-          "helpertext": "Choisissez le champ affiché par défaut.  Celui-ci apparaitra dans les résultats de recherche par exemple."
+          "helpertext": "Choisissez le champ affiché par défaut. Celui-ci apparaitra dans les résultats de recherche par exemple."
         }
       },
       "styles": {

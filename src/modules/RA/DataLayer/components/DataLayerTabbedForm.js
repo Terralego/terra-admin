@@ -19,7 +19,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
-
+import compose from '../../../../utils/compose';
 import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import SourceFetcher from './SourceFetcher';
@@ -75,19 +75,26 @@ const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
         <NumberInput source="order" label="datalayer.form.ordering" validate={defaultRequired} />
 
         <FormDataConsumer>
-          {({ formData }) => ((formData.fields && formData.fields.length) ? (
-            <FormGroup
-              helperText={translate('datalayer.form.search.main-field.helpertext')}
-            >
-              <SelectInput
-                source="settings.filters.mainField"
-                label="datalayer.form.search.main-field.label"
-                choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
-                fullWidth
-              />
-            </FormGroup>
-          ) : <></>
-          )}
+          {({ formData }) => {
+            const hasFields = formData.fields && formData.fields.length;
+            if (!hasFields) {
+              return <></>;
+            }
+
+            return (
+              <FormGroup
+                helperText={translate('datalayer.form.search.main-field.helpertext')}
+              >
+                <SelectInput
+                  source="settings.filters.mainField"
+                  label="datalayer.form.search.main-field.label"
+                  choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
+                  fullWidth
+                />
+              </FormGroup>
+            );
+          }}
+
         </FormDataConsumer>
 
         <LongTextInput source="description" label="datalayer.form.description" />
@@ -245,4 +252,8 @@ const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
   </>
 );
 
-export default withStyles(styles)(translateRA(withViewList(DataLayerTabbedForm)));
+export default compose(
+  withStyles(styles),
+  translateRA,
+  withViewList,
+)(DataLayerTabbedForm);

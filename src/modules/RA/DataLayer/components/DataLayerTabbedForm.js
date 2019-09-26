@@ -15,6 +15,8 @@ import {
 } from 'react-admin';
 import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
+import { withStyles } from '@material-ui/core/styles';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
 
@@ -33,7 +35,13 @@ import { RES_DATASOURCE } from '../../ra-modules';
 
 const defaultRequired = required();
 
-const DataLayerTabbedForm = ({ translate, viewList, ...props }) => (
+const styles = {
+  colorPicker: {
+    width: '25%',
+  },
+};
+
+const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
   <>
     <SourceFetcher />
     <TabbedForm {...props}>
@@ -153,7 +161,7 @@ const DataLayerTabbedForm = ({ translate, viewList, ...props }) => (
         </FormDataConsumer>
 
         <BooleanInput source="minisheet_enable" label="datalayer.form.minisheet.display-on-click" />
-        <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" />
+        <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
         <FormDataConsumer>
           {({ formData }) => formData.minisheet_enable &&
             <LongTextInput source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
@@ -237,4 +245,4 @@ const DataLayerTabbedForm = ({ translate, viewList, ...props }) => (
   </>
 );
 
-export default translateRA(withViewList(DataLayerTabbedForm));
+export default withStyles(styles)(translateRA(withViewList(DataLayerTabbedForm)));

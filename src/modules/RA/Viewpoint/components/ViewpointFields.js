@@ -21,10 +21,21 @@ import {
   TextInput,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
+
+import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
+
 import { RES_PICTURE } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
+import compose from '../../../../utils/compose';
 
-const ViewpointFields = ({ edit = false, translate: t, ...props }) => {
+const styles = {
+  coords: {
+    display: 'inline-block',
+    marginRight: '1em',
+  },
+};
+
+const ViewpointFields = ({ edit, classes, ...props }) => {
   const [remoteChoices, setRemoteChoices] = React.useState([]);
   const [waiting, setWaiting] = React.useState(false);
 
@@ -64,8 +75,14 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => {
           />
         )}
 
-        <NumberInput source="geometry.coordinates[0]" />
-        <NumberInput source="geometry.coordinates[1]" />
+        <NumberInput
+          source="geometry.coordinates[1]"
+          formClassName={classes.coords}
+        />
+        <NumberInput
+          source="geometry.coordinates[0]"
+          formClassName={classes.coords}
+        />
 
         <MapPointInput source="geometry.coordinates" />
       </FormTab>
@@ -122,4 +139,6 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => {
   );
 };
 
-export default ViewpointFields;
+export default compose(
+  withStyles(styles),
+)(ViewpointFields);

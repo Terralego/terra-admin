@@ -31,6 +31,13 @@ export const updateOrSaveFeatureInFeaturesList = (featuresList, feature) => {
     : [...featuresList, feature.identifier && feature].filter(Boolean);
 };
 
+export const updateFeatureIdentifier = (feature, newFeature) => ({
+  ...feature,
+  ...(newFeature.identifier
+    ? { [newFeature.identifier]: newFeature }
+    : {}
+  ),
+});
 
 const getBoundingBox = (list, item) => {
   const [
@@ -66,4 +73,5 @@ export default {
   saveFeature,
   getBounds,
   updateOrSaveFeatureInFeaturesList,
+  updateFeatureIdentifier,
 };

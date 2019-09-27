@@ -34,6 +34,13 @@ jest.mock('./features', () => ({
       ? featuresList.map(item => (item.identifier === feature.identifier ? feature : item))
       : [...featuresList, feature.identifier && feature].filter(Boolean);
   },
+  updateFeatureIdentifier: (feature, newFeature) => ({
+    ...feature,
+    ...(newFeature.identifier
+      ? { [newFeature.identifier]: newFeature }
+      : {}
+    ),
+  }),
   fetchFeaturesList: layerId => {
     if (layerId === 'foo') {
       return {
@@ -69,7 +76,7 @@ jest.mock('./features', () => ({
       };
     }
 
-    // Fail Update Feature
+    // Fail Updating Feature
     throw new Error('No update feature');
   },
   deleteFeature: (layerId, featureId) => {
@@ -85,11 +92,8 @@ jest.mock('./features', () => ({
         feature: { identifier: '100', foo: 'bar' },
       };
     }
-    // Fail delete feature
-    return {
-      featuresList: [],
-      error: { layerId, message: 'Not found' },
-    };
+    // Fail Deleting Feature
+    throw new Error('No deleting feature');
   },
 }));
 
@@ -242,6 +246,12 @@ it('should get feature data', async () => {
       featuresList: [],
       settings: undefined,
     },
+    feature: {
+      1: {
+        foo: 'foo',
+        identifier: 1,
+      },
+    },
     featuresList: [{ identifier: 2, foo: 'bar' }, { identifier: 1, foo: 'foo' }],
   });
 
@@ -258,6 +268,12 @@ it('should get feature data', async () => {
       feature: [],
       featuresList: [],
       settings: undefined,
+    },
+    feature: {
+      1: {
+        foo: 'foo',
+        identifier: 1,
+      },
     },
     featuresList: [{ identifier: 2, foo: 'bar' }, { identifier: 1, foo: 'foo' }],
   });
@@ -280,6 +296,7 @@ it('should not crash when no getting feature data', async () => {
       }],
       featuresList: [],
     },
+    feature: {},
     featuresList: [],
   });
 });
@@ -304,6 +321,9 @@ it('should create feature', async () => {
       feature: [],
       featuresList: [],
     },
+    feature: {
+      999: { displayName: 'Foo', foo: 'foo', identifier: '999' },
+    },
     featuresList: [
       { displayName: 'myFeature', foo: 'foo', identifier: 'existingFeature' },
       { displayName: 'Foo', foo: 'foo', identifier: '999' },
@@ -318,6 +338,9 @@ it('should update feature', async () => {
     errors: {
       feature: [{ layerId: 'bar', message: 'Not found' }],
       featuresList: [],
+    },
+    feature: {
+      1000: { identifier: '1000', foo: 'foo', displayName: 'myFeature' },
     },
     featuresList: [{
       displayName: 'myFeature',
@@ -338,6 +361,9 @@ it('should update feature', async () => {
     errors: {
       feature: [],
       featuresList: [],
+    },
+    feature: {
+      1000: { identifier: '1000', foo: 'bar', displayName: 'Foo' },
     },
     featuresList: [
       { identifier: '1000', foo: 'bar', displayName: 'Foo' },
@@ -362,6 +388,7 @@ it('should not crash when no saving feature', async () => {
       }],
       featuresList: [],
     },
+    feature: {},
     featuresList: [],
   });
 });
@@ -370,6 +397,13 @@ it('should delete feature', async () => {
   const instance = new CRUDProvider();
   instance.state = {
     ...instance.state,
+    feature: {
+      100: {
+        displayName: 'Foo',
+        foo: 'foo',
+        identifier: '100',
+      },
+    },
     featuresList: [{
       displayName: 'Bar',
       foo: 'bar',
@@ -386,6 +420,7 @@ it('should delete feature', async () => {
   });
   await instance.deleteFeature('foo', '100');
   expect(stateCallback(instance.state)).toEqual({
+    feature: {},
     featuresList: [{
       displayName: 'Bar',
       foo: 'bar',
@@ -414,6 +449,7 @@ it('should not crash when no deleting feature', async () => {
   });
   await instance.deleteFeature('foo', '123');
   expect(stateCallback(instance.state)).toEqual({
+    feature: {},
     featuresList: [{
       displayName: 'Bar',
       foo: 'bar',

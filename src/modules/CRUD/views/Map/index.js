@@ -26,6 +26,7 @@ export default withRouter(
       mapIsResizing,
       getFeaturesList,
       featuresList,
+      feature,
       errors,
     }, {
       match: {
@@ -43,9 +44,7 @@ export default withRouter(
       mapIsResizing,
       getFeaturesList,
       featuresList: featuresList || [],
-      feature: featuresList.find(({ identifier }) => (
-        identifier === id
-      )) || {},
+      feature: feature[id] || {},
       errors,
     }))(
       withNamespaces()(Map),

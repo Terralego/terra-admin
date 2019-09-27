@@ -7,10 +7,12 @@ import {
   DateField,
   DisabledInput,
   EditButton,
+  FileField,
   FormTab,
   ImageField,
   LinearProgress,
   LongTextInput,
+  NumberField,
   NumberInput,
   ReferenceArrayField,
   SelectInput,
@@ -51,7 +53,7 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => {
         {edit && <DisabledInput source="id" />}
         <TextInput source="label" />
 
-        <TextInput source="address" />
+        <TextInput source="properties.voie" />
 
         {waiting && <><LinearProgress /></>}
         {!waiting && (
@@ -69,6 +71,8 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => {
       </FormTab>
 
       <FormTab label="resources.viewpoint.tabs.repeat" path="repeat">
+        <NumberField source="geometry.coordinates[0]" options={{ maximumFractionDigits: 6 }} />
+        <NumberField source="geometry.coordinates[1]" options={{ maximumFractionDigits: 6 }} />
         <TextInput source="properties.altitude" />
         <TextInput source="properties.hauteur" />
         <TextInput source="properties.orientation" />
@@ -80,8 +84,8 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => {
       </FormTab>
 
       <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
-        <RichTextInput source="properties.description" />
-        <LongTextInput source="properties.current-progressions" />
+        <RichTextInput source="properties.paysage" />
+        <RichTextInput source="properties.dynamiques" />
         <LongTextInput source="properties.issues" />
         <LongTextInput source="properties.observations" />
         <LongTextInput source="properties.historial-data" />
@@ -98,7 +102,8 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => {
 
         <TextInput source="properties.keywords" />
         <TextInput source="properties.landscape-entities" />
-        <TextInput source="properties.related-elements" />
+
+        <FileField source="related" src="document" title="key" />
       </FormTab>
 
       <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">

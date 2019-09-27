@@ -13,7 +13,7 @@ export default withRouter(
   }) => {
     const permissions = authenticated ? user.permissions : [];
     return {
-      displayViewFeature: permissions.includes('terra.view_feature'),
+      displayViewFeature: permissions.includes('geostore.view_feature'),
     };
   })(
     connectCRUDProvider(({
@@ -26,6 +26,7 @@ export default withRouter(
       mapIsResizing,
       getFeaturesList,
       featuresList,
+      feature,
       errors,
     }, {
       match: {
@@ -43,9 +44,7 @@ export default withRouter(
       mapIsResizing,
       getFeaturesList,
       featuresList: featuresList || [],
-      feature: featuresList.find(({ identifier }) => (
-        identifier === id
-      )) || {},
+      feature: feature[id] || {},
       errors,
     }))(
       withNamespaces()(Map),

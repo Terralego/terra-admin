@@ -4,21 +4,22 @@ import {
   Datagrid,
   DateField,
   DisabledInput,
+  EditButton,
   FormTab,
+  ImageField,
   LongTextInput,
   ReferenceArrayField,
   SelectInput,
   TabbedForm,
   TextField,
   TextInput,
-  translate,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 import { RES_PICTURE } from '../../ra-modules';
 
 const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
   <TabbedForm {...props}>
-    <FormTab label={t('resources.viewpoint.tabs.general')}>
+    <FormTab label="resources.viewpoint.tabs.general">
       {edit && <DisabledInput source="id" />}
       <TextInput source="label" />
 
@@ -28,7 +29,7 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
       <TextInput source="geometry.coordinates" />
     </FormTab>
 
-    <FormTab label={t('resources.viewpoint.tabs.repeat')} path="repeat">
+    <FormTab label="resources.viewpoint.tabs.repeat" path="repeat">
       <TextInput source="properties.altitude" />
       <TextInput source="properties.hauteur" />
       <TextInput source="properties.orientation" />
@@ -39,7 +40,7 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
       <TextInput source="properties.note" />
     </FormTab>
 
-    <FormTab label={t('resources.viewpoint.tabs.landscape')} path="landscape">
+    <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
       <RichTextInput source="properties.description" />
       <LongTextInput source="properties.current-progressions" />
       <LongTextInput source="properties.issues" />
@@ -52,17 +53,19 @@ const ViewpointFields = ({ edit = false, translate: t, ...props }) => (
       <TextInput source="properties.related-elements" />
     </FormTab>
 
-    <FormTab label={t('resources.viewpoint.tabs.pictures')} path="pictures">
+    <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
       <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} fullWidth>
-        <Datagrid>
+        <Datagrid rowClick="edit">
           <TextField source="owner" />
           <TextField source="properties.meteo" />
           <DateField source="date" />
           <TextField source="state" />
+          <ImageField source="file" />
+          <EditButton />
         </Datagrid>
       </ReferenceArrayField>
     </FormTab>
   </TabbedForm>
 );
 
-export default translate(ViewpointFields);
+export default ViewpointFields;

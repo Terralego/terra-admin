@@ -14,22 +14,20 @@ export default withRouter(
   }) => {
     const permissions = authenticated ? user.permissions : [];
     return {
-      displayAddFeature: permissions.includes('terra.add_feature'),
-      displayChangeFeature: permissions.includes('terra.change_feature'),
+      displayAddFeature: permissions.includes('geostore.add_feature'),
+      displayChangeFeature: permissions.includes('geostore.change_feature'),
     };
   })(
     connectCRUDProvider(({
       settings,
       map,
-      featuresList,
+      feature,
       saveFeature,
     }, {
       match: { params: { layer, id } },
     }) => ({
       map,
-      feature: featuresList.find(({ identifier }) => (
-        identifier === id
-      )) || {},
+      feature: feature[id] || {},
       saveFeature,
       layerPaint: getLayersPaints(settings).find(item => item['source-layer'] === layer) || {},
       paramLayer: layer,

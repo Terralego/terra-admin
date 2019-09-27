@@ -21,15 +21,13 @@ export default withRouter(
     connectCRUDProvider(({
       settings,
       map,
-      featuresList,
+      feature,
       saveFeature,
     }, {
       match: { params: { layer, id } },
     }) => ({
       map,
-      feature: featuresList.find(({ identifier }) => (
-        identifier === id
-      )) || {},
+      feature: feature[id] || {},
       saveFeature,
       layerPaint: getLayersPaints(settings).find(item => item['source-layer'] === layer) || {},
       paramLayer: layer,

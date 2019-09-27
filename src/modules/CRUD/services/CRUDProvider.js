@@ -8,6 +8,7 @@ import {
   saveFeature as saveFeatureAction,
   deleteFeature as deleteFeatureAction,
   updateOrSaveFeatureInFeaturesList,
+  updateFeatureIdentifier,
 } from './features';
 
 export const context = React.createContext({});
@@ -19,6 +20,7 @@ export class CRUDProvider extends React.Component {
   state = {
     settings: {},
     featuresList: [],
+    feature: {},
     mapConfig: {},
     errors: {
       settings: undefined,
@@ -139,17 +141,18 @@ export class CRUDProvider extends React.Component {
       result.error = e;
     }
 
-    const { feature = {}, error = {} } = result;
+    const { feature: newFeature = {}, error = {} } = result;
 
-    this.setState(({ errors, featuresList }) => ({
-      featuresList: updateOrSaveFeatureInFeaturesList(featuresList, feature),
+    this.setState(({ errors, feature, featuresList }) => ({
+      feature: updateFeatureIdentifier(feature, newFeature),
+      featuresList: updateOrSaveFeatureInFeaturesList(featuresList, newFeature),
       errors: {
         ...errors,
         feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),
       },
     }));
 
-    return Object.keys(feature).length > 0 && feature;
+    return Object.keys(newFeature).length > 0 && newFeature;
   }
 
   saveFeature = async (layerId, featureId, data) => {
@@ -161,17 +164,18 @@ export class CRUDProvider extends React.Component {
       result.error = e;
     }
 
-    const { feature = {}, error = {} } = result;
+    const { feature: newFeature = {}, error = {} } = result;
 
-    this.setState(({ errors, featuresList }) => ({
-      featuresList: updateOrSaveFeatureInFeaturesList(featuresList, feature),
+    this.setState(({ errors, feature, featuresList }) => ({
+      feature: updateFeatureIdentifier(feature, newFeature),
+      featuresList: updateOrSaveFeatureInFeaturesList(featuresList, newFeature),
       errors: {
         ...errors,
         feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),
       },
     }));
 
-    return Object.keys(feature).length > 0 && feature;
+    return Object.keys(newFeature).length > 0 && newFeature;
   }
 
   deleteFeature = async (layerId, featureId) => {
@@ -184,10 +188,11 @@ export class CRUDProvider extends React.Component {
     }
     const { feature } = result;
 
-    this.setState(({ featuresList }) => ({
-      featuresList: !feature
-        ? featuresList
-        : featuresList.filter(({ identifier }) => identifier !== featureId),
+    this.setState(({ featuresList, feature: { [feature]: deletedFeature, ...rest } }) => ({
+      feature: rest,
+      featuresList: deletedFeature
+        ? featuresList.filter(({ identifier }) => identifier !== featureId)
+        : featuresList,
     }));
 
     return feature;

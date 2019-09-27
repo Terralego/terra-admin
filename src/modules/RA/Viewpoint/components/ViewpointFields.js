@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Api from '@terralego/core/modules/Api';
 
 import {
@@ -137,6 +138,14 @@ const ViewpointFields = ({ edit, classes, ...props }) => {
       </FormTab>
     </TabbedForm>
   );
+};
+
+ViewpointFields.propTypes = {
+  edit: PropTypes.bool,
+};
+
+ViewpointFields.defaultProps = {
+  edit: false,
 };
 
 export default compose(

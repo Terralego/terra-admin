@@ -11,11 +11,15 @@ import {
   ReferenceInput,
   FormDataConsumer,
   REDUX_FORM_NAME,
+  translate as translateRA,
 } from 'react-admin';
+import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
+import { withStyles } from '@material-ui/core/styles';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { change } from 'redux-form';
-
+import compose from '../../../../utils/compose';
 import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import SourceFetcher from './SourceFetcher';
@@ -31,7 +35,13 @@ import { RES_DATASOURCE } from '../../ra-modules';
 
 const defaultRequired = required();
 
-const DataLayerTabbedForm = ({ viewList, ...props }) => (
+const styles = {
+  colorPicker: {
+    width: '25%',
+  },
+};
+
+const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
   <>
     <SourceFetcher />
     <TabbedForm {...props}>
@@ -64,6 +74,30 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
         />
 
         <NumberInput source="order" label="datalayer.form.ordering" validate={defaultRequired} />
+
+        <FormDataConsumer>
+          {({ formData }) => {
+            const hasFields = formData.fields && formData.fields.length;
+            if (!hasFields) {
+              return <></>;
+            }
+
+            return (
+              <FormGroup
+                helperText={translate('datalayer.form.search.main-field.helpertext')}
+              >
+                <SelectInput
+                  source="settings.filters.mainField"
+                  label="datalayer.form.search.main-field.label"
+                  choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
+                  fullWidth
+                />
+              </FormGroup>
+            );
+          }}
+
+        </FormDataConsumer>
+
         <LongTextInput source="description" label="datalayer.form.description" />
       </FormTab>
 
@@ -135,24 +169,13 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
         </FormDataConsumer>
 
         <BooleanInput source="minisheet_enable" label="datalayer.form.minisheet.display-on-click" />
-        <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" />
+        <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
         <FormDataConsumer>
           {({ formData }) => formData.minisheet_enable &&
             <LongTextInput source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
         </FormDataConsumer>
-
-        <FormDataConsumer>
-          {({ formData }) => ((formData.fields && formData.fields.length) ? (
-            <SelectInput
-              source="settings.filters.mainField"
-              label="datalayer.form.search.mainField"
-              choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
-              fullWidth
-            />
-          ) : <></>
-          )}
-        </FormDataConsumer>
       </FormTab>
+
       <FormTab label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData }) => (
@@ -230,4 +253,8 @@ const DataLayerTabbedForm = ({ viewList, ...props }) => (
   </>
 );
 
-export default withViewList(DataLayerTabbedForm);
+export default compose(
+  withStyles(styles),
+  translateRA,
+  withViewList,
+)(DataLayerTabbedForm);

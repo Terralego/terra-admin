@@ -347,7 +347,10 @@
         }
       },
       "search": {
-        "mainField": "Afficher les résultats de recherche en utilisant ce champs"
+        "main-field": {
+          "label": "Champ principal",
+          "helpertext": "Choisissez le champ affiché par défaut. Celui-ci apparaitra dans les résultats de recherche par exemple."
+        }
       },
       "styles": {
         "mainstyle": "Style principal",

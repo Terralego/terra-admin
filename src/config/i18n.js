@@ -10,6 +10,7 @@ i18n
   .use(LanguageDetector)
   .use(reactI18nextModule) // if not using I18nextProvider
   .init({
+    lng: 'fr',
     backend: {
       loadPath: `${PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
     },

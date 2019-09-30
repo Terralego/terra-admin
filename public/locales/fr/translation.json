@@ -18,6 +18,10 @@
     "loading": "Chargement en cours…",
     "logout": "Se déconnecter"
   },
+  "quill": {
+    "linkLabel": "Lien",
+    "linkSave": "Enregistrer"
+  },
   "main": {
     "title": "Terralego"
   },

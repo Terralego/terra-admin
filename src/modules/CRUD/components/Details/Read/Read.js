@@ -12,6 +12,17 @@ import Actions from '../Actions';
 const NO_FEATURE = 'CRUD.details.noFeature';
 const emptyStringOrUndef = value => ['', undefined].includes(value);
 
+
+const isHTML = value => {
+  const div = document.createElement('div');
+  const trimmedValue = value.trim();
+  if (!trimmedValue) {
+    return false;
+  }
+  div.innerHTML = trimmedValue;
+  return div.firstChild.nodeType === Node.ELEMENT_NODE;
+};
+
 const formattedProp = ({ value, t }) => {
   if (typeof value === 'boolean') {
     return value
@@ -24,8 +35,15 @@ const formattedProp = ({ value, t }) => {
   }
 
   if (typeof value === 'string') {
-    // eslint-disable-next-line react/no-array-index-key
-    return value.split('\n').map((item, i) => (<React.Fragment key={i}>{item} <br /></React.Fragment>));
+    return (
+      <div
+        className={classnames({
+          details__RTE: isHTML(value),
+          details__text: !isHTML(value),
+        })}
+        dangerouslySetInnerHTML={{ __html: value }} // eslint-disable-line react/no-danger
+      />
+    );
   }
 
   if (Array.isArray(value)) {

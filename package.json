@@ -1,6 +1,6 @@
 {
   "name": "terra-admin",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "~3.18.1",
@@ -24,6 +24,7 @@
     "path-to-regexp": "~3.1.0",
     "prop-types": "~15.7.2",
     "querystring": "^0.2.0",
+    "quill": "^1.3.7",
     "ra-data-drf": "~2.0.0",
     "ra-input-rich-text": "~2.9.3",
     "react": "~16.9.0",
@@ -35,6 +36,7 @@
     "react-helmet": "^5.2.1",
     "react-i18next": "^8.4.0",
     "react-jsonschema-form": "~1.8.0",
+    "react-mapbox-gl": "~4.6.0",
     "react-paginate": "~6.3.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",

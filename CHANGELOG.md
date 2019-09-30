@@ -1,4 +1,11 @@
 
+2.3.0 / 2019-09-30
+==================
+
+  * Use fetch feature API instead of searching in the current featureList
+  * Replace `terra` prefix permissions by `geostore`
+  * Move mainfield + Update label and helpertext
+
 2.2.0 / 2019-09-26
 ==================
 

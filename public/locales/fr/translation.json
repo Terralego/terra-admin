@@ -18,6 +18,10 @@
     "loading": "Chargement en cours…",
     "logout": "Se déconnecter"
   },
+  "quill": {
+    "linkLabel": "Lien",
+    "linkSave": "Enregistrer"
+  },
   "main": {
     "title": "Terralego"
   },
@@ -485,7 +489,8 @@
       "fields": {
         "label": "Nom du point de vue",
         "address": "Adresse",
-        "city_id": "Commune",
+        "commune": "Commune",
+        "properties.voie": "Voie",
         "properties.altitude": "Altitude",
         "properties.hauteur": "Hauteur de l'œil",
         "properties.orientation": "Orientation",
@@ -494,8 +499,8 @@
         "properties.frequency": "Fréquence de rephotographie",
         "properties.difficulty": "Difficulté à reproduire",
         "properties.note": "Observations de rephotographie",
-        "properties.description": "Description du paysage",
-        "properties.current-progressions": "Dynamiques en cours",
+        "properties.paysage": "Description du paysage",
+        "properties.dynamiques": "Dynamiques en cours",
         "properties.issues": "Enjeux",
         "properties.observations": "Observations",
         "properties.historial-data": "Données historiques",
@@ -503,7 +508,9 @@
         "properties.theme_ids": "Thématiques",
         "properties.keywords": "Mots-clés",
         "properties.landscape-entities": "Entités paysagères",
-        "properties.related-elements": "Documents associés"
+        "properties.related-elements": "Documents associés",
+        "geometry.coordinates[0]": "Longitude",
+        "geometry.coordinates[1]": "Latitude"
       },
       "tabs": {
         "general": "Informations principales",

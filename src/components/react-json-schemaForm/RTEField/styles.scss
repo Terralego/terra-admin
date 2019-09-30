@@ -1,0 +1,31 @@
+@import "~quill/dist/quill.snow.css";
+
+.ql-snow .ql-tooltip {
+  top: 100% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+}
+
+@supports (--custom: properties) {
+  .ql-snow .ql-tooltip[data-mode="link"]::before {
+    content: var(--quill-linkLabel);
+  }
+  .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+    content: var(--quill-linkSave);
+  } 
+}
+
+.RTEField {
+  position: relative;
+
+  &__input {
+    background:  #fff;
+  }
+
+  &__inputHidden {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: -1;
+  }
+}

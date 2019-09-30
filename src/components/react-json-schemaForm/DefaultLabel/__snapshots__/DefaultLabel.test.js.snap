@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not render for multiple reasons should not render if the schema type is a boolean 1`] = `
+Array [
+  <label
+    className="control-label"
+  >
+    Foo Label
+  </label>,
+  <div>
+    Description
+  </div>,
+]
+`;
+
+exports[`should not render for multiple reasons should not render if the schema type is an object 1`] = `null`;
+
+exports[`should render correctly 1`] = `
+Array [
+  <label
+    className="control-label"
+  >
+    Foo Label
+  </label>,
+  <div>
+    Description
+  </div>,
+]
+`;

@@ -30,7 +30,7 @@ import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 
 const styles = {
-  coords: {
+  inline: {
     display: 'inline-block',
     marginRight: '1em',
   },
@@ -78,27 +78,36 @@ const ViewpointFields = ({ edit, classes, ...props }) => {
 
         <NumberInput
           source="geometry.coordinates[1]"
-          formClassName={classes.coords}
+          formClassName={classes.inline}
         />
         <NumberInput
           source="geometry.coordinates[0]"
-          formClassName={classes.coords}
+          formClassName={classes.inline}
         />
 
         <MapPointInput source="geometry.coordinates" />
       </FormTab>
 
       <FormTab label="resources.viewpoint.tabs.repeat" path="repeat">
-        <NumberField source="geometry.coordinates[0]" options={{ maximumFractionDigits: 6 }} />
-        <NumberField source="geometry.coordinates[1]" options={{ maximumFractionDigits: 6 }} />
+        <NumberField
+          source="geometry.coordinates[1]"
+          options={{ maximumFractionDigits: 6 }}
+          formClassName={classes.inline}
+        />
+        <NumberField
+          source="geometry.coordinates[0]"
+          options={{ maximumFractionDigits: 6 }}
+          formClassName={classes.inline}
+        />
         <TextInput source="properties.altitude" />
         <TextInput source="properties.hauteur" />
         <TextInput source="properties.orientation" />
-        <TextInput source="properties.focale_35mm" />
-        <TextInput source="properties.focale_objectif" />
-        <SelectInput source="properties.frequency" choices={[]} />
-        <SelectInput source="properties.difficulty" choices={[]} />
-        <TextInput source="properties.note" />
+        <TextInput source="properties.focale_35mm" formClassName={classes.inline} />
+        <TextInput source="properties.focale_objectif" formClassName={classes.inline} />
+        <><br /></>
+        <SelectInput source="properties.frequency" choices={[]} formClassName={classes.inline} />
+        <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
+        <LongTextInput source="properties.note" />
       </FormTab>
 
       <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">

@@ -4,6 +4,7 @@ import Form from 'react-jsonschema-form';
 import { Redirect } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
 import { CONTROL_DRAW, CONTROLS_TOP_LEFT } from '@terralego/core/modules/Map';
+import RTEField from '../../../../../components/react-json-schemaForm/RTEField';
 
 import { ACTION_CREATE, ACTION_UPDATE } from '../../../services/CRUD';
 import { toast } from '../../../../../utils/toast';
@@ -322,6 +323,9 @@ class Edit extends React.Component {
               <Form
                 schema={schema}
                 uiSchema={{ ...uiSchema, geometryFromMap: { 'ui:widget': 'hidden' } }}
+                fields={{
+                  rte: RTEField,
+                }}
                 onSubmit={this.submitFeature}
                 onChange={this.changeForm}
                 validate={this.validateForm}

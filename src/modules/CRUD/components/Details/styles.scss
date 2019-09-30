@@ -73,6 +73,19 @@
     padding: 0 1rem;
   }
 
+  &__RTE {
+    ol, ul {
+      padding: 0 1rem !important;
+    }
+    ul {
+       list-style: disc !important;
+    }
+  }
+
+  &__text {
+    white-space: pre-wrap;
+  }
+
   &__subtitle {
     margin-top: 0;
   }

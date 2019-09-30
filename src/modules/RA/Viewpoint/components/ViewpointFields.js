@@ -36,6 +36,8 @@ const styles = {
   },
 };
 
+const Br = () => <br />;
+
 const ViewpointFields = ({ edit, classes, ...props }) => {
   const [remoteChoices, setRemoteChoices] = React.useState([]);
   const [waiting, setWaiting] = React.useState(false);
@@ -62,8 +64,10 @@ const ViewpointFields = ({ edit, classes, ...props }) => {
   return (
     <TabbedForm {...props}>
       <FormTab label="resources.viewpoint.tabs.general">
-        {edit && <DisabledInput source="id" />}
-        <TextInput source="label" />
+        <TextInput source="label" formClassName={classes.inline} />
+        {edit && <DisabledInput source="id" formClassName={classes.inline} />}
+
+        <Br />
 
         <TextInput source="properties.voie" />
 
@@ -75,6 +79,8 @@ const ViewpointFields = ({ edit, classes, ...props }) => {
             choices={remoteChoices.cities}
           />
         )}
+
+        <Br />
 
         <NumberInput
           source="geometry.coordinates[1]"
@@ -99,15 +105,23 @@ const ViewpointFields = ({ edit, classes, ...props }) => {
           options={{ maximumFractionDigits: 6 }}
           formClassName={classes.inline}
         />
-        <TextInput source="properties.altitude" />
-        <TextInput source="properties.hauteur" />
-        <TextInput source="properties.orientation" />
+
+        <Br />
+
+        <TextInput source="properties.altitude" formClassName={classes.inline} />
+        <TextInput source="properties.hauteur" formClassName={classes.inline} />
+        <TextInput source="properties.orientation" formClassName={classes.inline} />
+
+        <Br />
+
         <TextInput source="properties.focale_35mm" formClassName={classes.inline} />
         <TextInput source="properties.focale_objectif" formClassName={classes.inline} />
-        <><br /></>
+
+        <Br />
+
         <SelectInput source="properties.frequency" choices={[]} formClassName={classes.inline} />
         <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
-        <LongTextInput source="properties.note" />
+        <LongTextInput source="properties.note" rows={4} rowsMax={30} />
       </FormTab>
 
       <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">

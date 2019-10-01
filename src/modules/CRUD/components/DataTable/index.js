@@ -1,9 +1,17 @@
 import DataTable from './DataTable';
 import { connectCRUDProvider } from '../../services/CRUDProvider';
-import { getLayer } from '../../services/CRUD';
 
-export default connectCRUDProvider(({ featuresList, settings }, { layerName }) => ({
+const withCRUDProviderData = connectCRUDProvider(({
+  getFeaturesList,
   featuresList,
-  layer: getLayer(settings, layerName),
+  settings,
+}, {
   layerName,
-}))(DataTable);
+}) => ({
+  getFeaturesList,
+  featuresList,
+  settings,
+  layerName,
+}));
+
+export default withCRUDProviderData(DataTable);

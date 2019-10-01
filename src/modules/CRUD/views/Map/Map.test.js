@@ -196,10 +196,6 @@ it('should call several functions when mouting', () => {
   expect(instance.props.getMapConfig).toHaveBeenCalled();
   expect(instance.generateLayersToMap).toHaveBeenCalled();
   expect(instance.setInteractions).toHaveBeenCalled();
-  expect(instance.loadFeatures).not.toHaveBeenCalled();
-  instance.props.match.params.layer = 'test';
-  instance.componentDidMount();
-  expect(instance.loadFeatures).toHaveBeenCalled();
 });
 
 it('should not set interactions', () => {
@@ -485,24 +481,6 @@ it('should not remove highlight if layers array is empty', () => {
     feature: { id: 2, geom: { coordinates: [3, 4] } },
   }, {});
   expect(instance.state.removeHighlight).not.toHaveBeenCalled();
-});
-
-it('should not load features', () => {
-  const instance = new Map({
-    ...props,
-    match: { params: { layer: 'notExists' } },
-  });
-  instance.loadFeatures();
-  expect(instance.props.getFeaturesList).not.toHaveBeenCalled();
-});
-
-it('should load features', () => {
-  const instance = new Map({
-    ...props,
-    match: { params: { layer: 'layerTest' } },
-  });
-  instance.loadFeatures();
-  expect(instance.props.getFeaturesList).toHaveBeenCalledWith(1);
 });
 
 it('should display current layer when changing layer or map props', () => {

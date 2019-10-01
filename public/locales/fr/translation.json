@@ -519,6 +519,14 @@
         "pictures": "Photographies"
       }
     },
+    "picture": {
+      "fields": {
+        "properties.index": "Numéro d'ordre",
+        "viewpoint": "Point de vue",
+        "owner_id": "Photographe",
+        "file": "Photographie"
+      }
+    },
     "user": {
       "fields": {
         "id": "Id",

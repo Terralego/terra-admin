@@ -10,6 +10,7 @@ import dataLayerView from './DataLayer/views';
 
 // OPP
 import viewpointView from './Viewpoint/views';
+import pictureViews from './Picture/views';
 
 const guessers = {
   edit: EditGuesser,
@@ -67,6 +68,7 @@ export const resources = [
     moduleName: 'OPP',
     endpoint: 'pictures',
     ...guessers,
+    ...pictureViews,
   },
   {
     name: RES_CAMPAIGN,

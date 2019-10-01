@@ -15,6 +15,7 @@ import { RES_VIEWPOINT, RES_USER } from '../../ra-modules';
 export const PictureList = props => (
   <List
     {...props}
+    exporter={false}
     bulkActionButtons={<CommonBulkActionButtons />}
   >
     <Datagrid>

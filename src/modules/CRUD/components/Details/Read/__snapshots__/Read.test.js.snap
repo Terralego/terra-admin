@@ -44,9 +44,14 @@ exports[`should render correctly 1`] = `
         <span
           className="details__list-value"
         >
-          Agen, Lot-et-Garonne, Nouvelle-Aquitaine
-           
-          <br />
+          <div
+            className="details__text"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Agen, Lot-et-Garonne, Nouvelle-Aquitaine",
+              }
+            }
+          />
         </span>
       </li>
       <li
@@ -60,9 +65,14 @@ exports[`should render correctly 1`] = `
         <span
           className="details__list-value"
         >
-          Cathedrale Saint-Caprais
-           
-          <br />
+          <div
+            className="details__text"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Cathedrale Saint-Caprais",
+              }
+            }
+          />
         </span>
       </li>
       <li

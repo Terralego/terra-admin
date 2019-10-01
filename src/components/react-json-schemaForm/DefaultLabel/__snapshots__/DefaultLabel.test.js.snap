@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should not render for multiple reasons should not render if the schema type is a boolean 1`] = `
+exports[`should not render for multiple reasons should not render if the schema type is a boolean 1`] = `null`;
+
+exports[`should not render for multiple reasons should not render if the schema type is an array and not multiselect 1`] = `
 Array [
   <label
     className="control-label"

@@ -1,15 +1,15 @@
 import { ListGuesser, EditGuesser } from 'react-admin';
 
 // User
-import userView from './User/views';
-import userGroupView from './UserGroup/views';
+import userViews from './User/views';
+import userGroupViews from './UserGroup/views';
 
 // Visu
-import dataSourceView from './DataSource/views';
-import dataLayerView from './DataLayer/views';
+import dataSourceViews from './DataSource/views';
+import dataLayerViews from './DataLayer/views';
 
 // OPP
-import viewpointView from './Viewpoint/views';
+import viewpointViews from './Viewpoint/views';
 import pictureViews from './Picture/views';
 
 const guessers = {
@@ -36,32 +36,32 @@ export const resources = [
     moduleName: 'User',
     // requiredPermissions: 'auth.change_group',
     endpoint: 'user',
-    ...userView,
+    ...userViews,
   },
   {
     name: RES_USERGROUP,
     moduleName: 'User',
     // requiredPermissions: 'auth.change_group',
     endpoint: 'groups',
-    ...userGroupView,
+    ...userGroupViews,
   },
   {
     name: RES_DATASOURCE,
     moduleName: 'DataSource',
     endpoint: 'geosource',
-    ...dataSourceView,
+    ...dataSourceViews,
   },
   {
     name: RES_DATALAYER,
     moduleName: 'DataLayer',
     endpoint: 'geolayer',
-    ...dataLayerView,
+    ...dataLayerViews,
   },
   {
     name: RES_VIEWPOINT,
     moduleName: 'OPP',
     endpoint: 'viewpoints',
-    ...viewpointView,
+    ...viewpointViews,
   },
   {
     name: RES_PICTURE,

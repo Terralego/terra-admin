@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Datagrid,
   DateField,
+  EditButton,
   ImageField,
   List,
   ReferenceField,
@@ -35,6 +36,8 @@ export const PictureList = props => (
       </ReferenceField>
 
       <ImageField source="file" />
+
+      <EditButton />
     </Datagrid>
   </List>
 );

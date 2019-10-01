@@ -31,7 +31,6 @@ export class Map extends React.Component {
     }).isRequired,
     getMapConfig: PropTypes.func.isRequired,
     getSettings: PropTypes.func.isRequired,
-    getFeaturesList: PropTypes.func.isRequired,
     setMap: PropTypes.func.isRequired,
     displayViewFeature: PropTypes.bool,
     match: PropTypes.shape({
@@ -74,14 +73,11 @@ export class Map extends React.Component {
   dataTable = React.createRef();
 
   componentDidMount () {
-    const { getSettings, getMapConfig, match: { params: { layer } } } = this.props;
+    const { getSettings, getMapConfig } = this.props;
     getSettings();
     getMapConfig();
     this.generateLayersToMap();
     this.setInteractions();
-    if (layer) {
-      this.loadFeatures();
-    }
   }
 
   componentDidUpdate ({
@@ -107,10 +103,6 @@ export class Map extends React.Component {
 
     if (layer !== prevLayer || map !== prevMap) {
       this.displayCurrentLayer();
-    }
-
-    if (settings !== prevSettings || layer !== prevLayer || map !== prevMap) {
-      this.loadFeatures();
     }
 
     if (
@@ -211,13 +203,6 @@ export class Map extends React.Component {
       addHighlight,
       removeHighlight,
     });
-  }
-
-  loadFeatures = () => {
-    const { getFeaturesList, settings, match: { params: { layer: paramLayer } } } = this.props;
-    const layer = getLayer(settings, paramLayer);
-    if (!layer) return;
-    getFeaturesList(layer.id);
   }
 
   displayCurrentLayer = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ChipInput from 'material-ui-chip-input';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { withTranslation } from 'react-i18next';
 
 const sanitizeRestProps = ({

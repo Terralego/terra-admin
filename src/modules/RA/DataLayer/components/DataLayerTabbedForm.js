@@ -9,7 +9,6 @@ import {
   ArrayInput,
   ReferenceInput,
   FormDataConsumer,
-  REDUX_FORM_NAME,
   translate as translateRA,
   withDataProvider,
 } from 'react-admin';
@@ -18,8 +17,9 @@ import { ColorInput } from 'react-admin-color-input';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';
-import { change } from 'redux-form';
+// import { change } from 'redux-form';
 /* eslintenable import/no-extraneous-dependencies */
+import { useForm } from 'react-final-form';
 
 import compose from '../../../../utils/compose';
 import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
@@ -51,6 +51,21 @@ const styles = {
 const LazyFormTab = ({ hidden, ...props }) => (
   hidden ? null : <FormTab {...props} />
 );
+
+const DisplayDataTableField = () => {
+  const form = useForm();
+
+  return (
+    <BooleanInput
+      source="table_enable"
+      label="datalayer.form.allow-display-data-table"
+      onChange={value => {
+        if (!value) return;
+        form.change('table_export_enable', false);
+      }}
+    />
+  );
+};
 
 const DataLayerTabbedForm = ({
   classes,
@@ -183,16 +198,7 @@ const DataLayerTabbedForm = ({
 
       <LazyFormTab label="datalayer.form.interactions" path="interactions">
         <FormDataConsumer>
-          {({ dispatch }) => (
-            <BooleanInput
-              source="table_enable"
-              label="datalayer.form.allow-display-data-table"
-              onChange={value => {
-                if (!value) return;
-                dispatch(change(REDUX_FORM_NAME, 'table_export_enable', false));
-              }}
-            />
-          )}
+          {formDataProps => <DisplayDataTableField {...formDataProps} />}
         </FormDataConsumer>
 
         <FormDataConsumer>
@@ -209,7 +215,7 @@ const DataLayerTabbedForm = ({
 
         <BooleanInput source="popup_enable" label="datalayer.form.popup.display-on-hover" />
         <FormDataConsumer fullWidth>
-          {({ formData, dispatch, ...rest }) => formData.popup_enable && (
+          {({ formData, ...rest }) => formData.popup_enable && (
             <FieldGroup {...rest}>
               <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={0} step={1} />
               <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={24} step={1} />

@@ -3,9 +3,9 @@ import get from 'lodash.get';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';
-
-import { change } from 'redux-form';
 /* eslint-enable */
+
+import { useForm } from 'react-final-form';
 
 import {
   FileField,
@@ -17,7 +17,6 @@ import {
   SimpleForm,
   TextInput,
   FormDataConsumer,
-  REDUX_FORM_NAME,
   required,
   translate,
 } from 'react-admin';
@@ -55,20 +54,21 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
 
 const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
   const { record } = props;
+  const form = useForm();
   return (
     <SimpleForm {...props}>
       {edit && <TextInput disabled source="id" />}
 
       {isObjectEmpty(record) && (
         <FormDataConsumer formClassName={classes.inline}>
-          {({ dispatch, formData, ...rest }) => (
+          {({ formData, ...rest }) => (
             <TextInput
               source="name"
               label="view.form.name"
               onChange={value => {
                 if (!value) return;
                 const slug = toSlug(value.target.value);
-                dispatch(change(REDUX_FORM_NAME, 'slug', slug));
+                form.change('slug', slug);
               }}
               {...rest}
             />

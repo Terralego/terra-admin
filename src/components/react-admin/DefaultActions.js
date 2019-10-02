@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { CardActions, ListButton } from 'react-admin';
+import { TopToolbar, ListButton } from 'react-admin';
 
 const DefaultActions = ({ basePath }) => (
-  <CardActions>
+  <TopToolbar>
     <ListButton
       basePath={basePath}
       variant="outlined"
       label="ra.action.back-to-list"
     />
-  </CardActions>
+  </TopToolbar>
 );
 
 export default DefaultActions;

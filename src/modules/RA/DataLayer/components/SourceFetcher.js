@@ -2,13 +2,12 @@ import { useEffect } from 'react';
 import memo from 'memoize-one';
 import get from 'lodash.get';
 /* eslint-disable import/no-extraneous-dependencies */
-import { connect, useDispatch } from 'react-redux';
-import { change } from 'redux-form';
+import { connect } from 'react-redux';
+import { useForm } from 'react-final-form';
 /* eslint-enable */
 import {
   withDataProvider,
   GET_ONE,
-  REDUX_FORM_NAME,
 } from 'react-admin';
 
 import { WMTS } from '../../DataSource';
@@ -17,7 +16,7 @@ import compose from '../../../../utils/compose';
 
 const SourceFetcher = ({ dataProvider, sourceId, fields = [] }) => {
   const load = memo(async id => dataProvider(GET_ONE, RES_DATASOURCE, { id }));
-  const dispatch = useDispatch();
+  const form = useForm();
 
   useEffect(() => {
     if (!sourceId) return;
@@ -31,8 +30,8 @@ const SourceFetcher = ({ dataProvider, sourceId, fields = [] }) => {
         ...fields.find(({ id: fieldId }) => id === fieldId) || {},
       }));
 
-      dispatch(change(REDUX_FORM_NAME, 'fields', filledFields || null));
-      dispatch(change(REDUX_FORM_NAME, 'external', type === WMTS));
+      form.change('fields', filledFields || null);
+      form.change('external', type === WMTS);
     };
 
     fillFields();

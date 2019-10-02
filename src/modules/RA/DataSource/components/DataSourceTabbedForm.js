@@ -7,7 +7,6 @@ import {
   ArrayInput,
   SimpleFormIterator,
   FormTab,
-  DisabledInput,
   FormDataConsumer,
   translate,
 } from 'react-admin';
@@ -54,7 +53,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
 
       <ArrayInput source="fields" label="datasource.form.fields" fullWidth>
         <SimpleFormIterator disableRemove disableAdd>
-          <DisabledInput source="name" label="datasource.form.name" />
+          <TextInput disabled source="name" label="datasource.form.name" />
           <TextInput source="label" label="datasource.form.label" />
           <SelectInput
             source="data_type"

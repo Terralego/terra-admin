@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  CardActions,
+  TopToolbar,
   ListButton,
   RefreshButton,
   withDataProvider,
@@ -25,7 +25,7 @@ const DataSourceEditActions = ({
   basePath,
   classes,
 }) => (
-  <CardActions>
+  <TopToolbar>
     <ListButton
       basePath={basePath}
       variant="outlined"
@@ -39,7 +39,7 @@ const DataSourceEditActions = ({
       label="datasource.edit.refresh"
       onClick={() => dataProvider('REFRESH', RES_DATASOURCE, { id })}
     />
-  </CardActions>
+  </TopToolbar>
 );
 
 export default compose(

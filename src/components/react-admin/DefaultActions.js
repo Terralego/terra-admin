@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CardActions, Button } from 'react-admin';
+import { TopToolbar, Button } from 'react-admin';
 
 import IconArrowBack from '@material-ui/icons/ArrowBack'; // eslint-disable-line import/no-extraneous-dependencies
 import IconList from '@material-ui/icons/List'; // eslint-disable-line import/no-extraneous-dependencies
@@ -9,7 +9,7 @@ const DefaultActions = ({
   basePath,
   redirect,
 }) => (
-  <CardActions>
+  <TopToolbar>
     <Button
       component={Link}
       to={{
@@ -20,7 +20,7 @@ const DefaultActions = ({
     >
       {redirect ? <IconArrowBack /> : <IconList />}
     </Button>
-  </CardActions>
+  </TopToolbar>
 );
 
 export default DefaultActions;

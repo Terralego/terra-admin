@@ -2,6 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Admin, Resource } from 'react-admin';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+import polyglotI18nProvider from 'ra-i18n-polyglot';
+
 import compose from '../../utils/compose';
 
 import dataProvider from '../../services/react-admin/dataProvider';
@@ -11,7 +14,7 @@ import patchPictureDataProvider from '../../services/react-admin/patchPictureDat
 import toMultipart from '../../services/react-admin/toMultipart';
 
 import authProvider from '../../services/react-admin/authProvider';
-import i18nProvider from '../../services/react-admin/i18nProvider';
+import i18nProviderLegacy from '../../services/react-admin/i18nProvider';
 
 import { withLocale } from '../../components/Locale';
 import RALayout from '../../components/react-admin/Layout';
@@ -51,10 +54,11 @@ export const CustomAdmin = ({ locale, history, permissions, allowedModules = [] 
     enhanceDataProvider,
   )(dataProvider);
 
+  const i18nProvider = polyglotI18nProvider(i18nProviderLegacy, `${locale}`.substr(0, 2));
+
   return (
     <Admin
       layout={RALayout}
-      locale={`${locale}`.substr(0, 2)}
       history={history}
       dataProvider={customDataProvider}
       authProvider={authProvider}

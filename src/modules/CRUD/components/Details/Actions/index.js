@@ -19,11 +19,13 @@ export default withRouter(
     };
   })(
     connectCRUDProvider(({
+      getSettings,
       settings,
       deleteFeature,
     }, {
       match: { params: { layer } },
     }) => ({
+      getSettings,
       deleteFeature,
       layer: getLayer(settings, layer),
     }))(

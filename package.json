@@ -32,7 +32,7 @@
     "react-admin-color-input": "^1.0.8",
     "react-ctx-connect": "~1.0.2",
     "react-dom": "~16.9.0",
-    "react-final-form": "^4.0.2",
+    "react-final-form": "~6.3.0",
     "react-helmet": "^5.2.1",
     "react-i18next": "^8.4.0",
     "react-jsonschema-form": "~1.8.0",

@@ -49,7 +49,7 @@ export const CustomAdmin = ({ locale, history, permissions, allowedModules = [] 
 
   return (
     <Admin
-      appLayout={RALayout}
+      layout={RALayout}
       locale={`${locale}`.substr(0, 2)}
       history={history}
       dataProvider={customDataProvider}

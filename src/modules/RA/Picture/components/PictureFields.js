@@ -6,7 +6,6 @@ import {
   FormTab,
   ImageField,
   ImageInput,
-  LongTextInput,
   NumberInput,
   ReferenceInput,
   SelectInput,
@@ -83,7 +82,7 @@ const PictureFields = ({
       <TextInput source="properties.meteo" />
       <Br />
 
-      <LongTextInput source="properties.observations" />
+      <TextInput multiline source="properties.observations" />
 
       <Br />
 

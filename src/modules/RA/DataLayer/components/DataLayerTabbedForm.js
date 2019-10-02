@@ -2,7 +2,6 @@ import React from 'react';
 import {
   TabbedForm,
   TextInput,
-  LongTextInput,
   BooleanInput,
   FormTab,
   SelectInput,
@@ -116,7 +115,7 @@ const DataLayerTabbedForm = ({
         </FormDataConsumer>
         <BooleanInput source="active_by_default" />
 
-        <LongTextInput source="description" label="datalayer.form.description" />
+        <TextInput multiline source="description" label="datalayer.form.description" />
 
         <FormDataConsumer>
           {({ formData }) =>
@@ -167,8 +166,8 @@ const DataLayerTabbedForm = ({
 
         <ArrayInput source="legends" label="datalayer.form.legends" fullWidth>
           <CustomFormIterator>
-            <LongTextInput source="title" label="datalayer.form.legend.title" />
-            <LongTextInput source="content" label="datalayer.form.legend.template" />
+            <TextInput multiline source="title" label="datalayer.form.legend.title" />
+            <TextInput multiline source="content" label="datalayer.form.legend.template" />
             <LegendItemsField
               source="items"
               label="datalayer.form.legend.items"
@@ -214,7 +213,7 @@ const DataLayerTabbedForm = ({
             <FieldGroup {...rest}>
               <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={0} step={1} />
               <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={24} step={1} />
-              <LongTextInput source="popup_template" label="datalayer.form.popup.template" />
+              <TextInput multiline source="popup_template" label="datalayer.form.popup.template" />
             </FieldGroup>
           )}
         </FormDataConsumer>
@@ -223,7 +222,7 @@ const DataLayerTabbedForm = ({
         <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
         <FormDataConsumer>
           {({ formData }) => formData.minisheet_enable &&
-            <LongTextInput source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
+            <TextInput multiline source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
         </FormDataConsumer>
 
         <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
@@ -246,7 +245,7 @@ const DataLayerTabbedForm = ({
               >
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (
-                    <LongTextInput source={getSource('label')} label={scopedFormData.name} fullWidth />
+                    <TextInput multiline source={getSource('label')} label={scopedFormData.name} fullWidth />
                   )}
                 </FormDataConsumer>
                 <BooleanInput

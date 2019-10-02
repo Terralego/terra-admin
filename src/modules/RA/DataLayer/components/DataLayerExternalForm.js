@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SimpleForm,
   TextInput,
-  LongTextInput,
   SelectInput,
   ReferenceInput,
   required,
@@ -53,7 +52,7 @@ const DataLayerExternalForm = ({ viewList = [], ...props }) => (
       type="text"
     />
 
-    <LongTextInput source="description" label="datalayer.form.description" />
+    <TextInput multiline source="description" label="datalayer.form.description" />
   </SimpleForm>
 );
 

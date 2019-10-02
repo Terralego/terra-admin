@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import memo from 'memoize-one';
 import get from 'lodash.get';
 /* eslint-disable import/no-extraneous-dependencies */
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { change } from 'redux-form';
 /* eslint-enable */
 import {
@@ -15,8 +15,9 @@ import { WMTS } from '../../DataSource';
 import { RES_DATASOURCE } from '../../ra-modules';
 import compose from '../../../../utils/compose';
 
-const SourceFetcher = ({ dispatch, dataProvider, sourceId, fields = [] }) => {
+const SourceFetcher = ({ dataProvider, sourceId, fields = [] }) => {
   const load = memo(async id => dataProvider(GET_ONE, RES_DATASOURCE, { id }));
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!sourceId) return;

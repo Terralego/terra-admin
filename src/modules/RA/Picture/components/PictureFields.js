@@ -6,7 +6,6 @@ import {
   DisabledInput,
   FormTab,
   ImageField,
-  LongTextInput,
   NumberInput,
   TabbedForm,
   TextInput,
@@ -44,7 +43,7 @@ const PictureFields = ({ edit, classes, ...props }) => (
 
       <Br />
 
-      <LongTextInput source="properties.observations" />
+      <TextInput multiline source="properties.observations" />
 
       <Br />
 

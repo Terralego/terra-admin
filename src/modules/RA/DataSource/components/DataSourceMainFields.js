@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   TextInput,
-  LongTextInput,
   ReferenceArrayInput,
   SelectArrayInput,
 } from 'react-admin';
@@ -20,7 +19,7 @@ const DataSourceMainFields = props => (
       validate={defaultRequired}
       type="text"
     />
-    <LongTextInput source="description" defaultValue="" />
+    <TextInput multiline source="description" defaultValue="" />
 
     <ReferenceArrayInput source="groups" reference={RES_USERGROUP}>
       <SelectArrayInput optionText="name" />

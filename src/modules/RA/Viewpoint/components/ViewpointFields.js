@@ -11,7 +11,6 @@ import {
   FormTab,
   ImageField,
   LinearProgress,
-  LongTextInput,
   NumberField,
   NumberInput,
   ReferenceArrayField,
@@ -129,17 +128,17 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
 
         <SelectInput source="properties.frequency" choices={[]} formClassName={classes.inline} />
         <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
-        <LongTextInput source="properties.note" rows={4} rowsMax={30} />
+        <TextInput multiline source="properties.note" rows={4} rowsMax={30} />
       </FormTab>
       )}
       {edit && (
       <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
         <RichTextInput source="properties.paysage" />
         <RichTextInput source="properties.dynamiques" />
-        <LongTextInput source="properties.issues" />
-        <LongTextInput source="properties.observations" />
-        <LongTextInput source="properties.historial-data" />
-        <LongTextInput source="properties.cultural-references" />
+        <TextInput multiline source="properties.issues" />
+        <TextInput multiline source="properties.observations" />
+        <TextInput multiline source="properties.historial-data" />
+        <TextInput multiline source="properties.cultural-references" />
 
         {waiting && <><LinearProgress /></>}
         {!waiting && (

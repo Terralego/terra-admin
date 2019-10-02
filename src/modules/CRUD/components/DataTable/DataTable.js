@@ -44,7 +44,7 @@ class DataTable extends React.Component {
     const {
       schema: { properties = {} },
       settings: { properties: { default_list: defaultList = false } = {} },
-    } = this.layer();
+    } = this.getLayer();
     const columns = Object.keys(properties).map(value => ({
       display: !defaultList || defaultList.includes(value),
       sortable: true,

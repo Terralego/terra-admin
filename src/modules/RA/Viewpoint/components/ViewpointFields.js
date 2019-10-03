@@ -24,11 +24,11 @@ import {
 import RichTextInput from 'ra-input-rich-text';
 
 import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
-import { connectAppProvider } from '../../../../components/AppProvider';
 
 import { RES_PICTURE } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
+import { withMapConfig } from '../../../../hoc/withAppSettings';
 
 const styles = {
   inline: {
@@ -39,7 +39,7 @@ const styles = {
 
 const Br = () => <br />;
 
-const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
+const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
   const [remoteChoices, setRemoteChoices] = React.useState([]);
   const [waiting, setWaiting] = React.useState(false);
 
@@ -98,7 +98,7 @@ const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
           formClassName={classes.inline}
         />
 
-        <MapPointInput source="point.coordinates" center={configMap.center} />
+        <MapPointInput source="point.coordinates" center={mapConfig.center} />
       </FormTab>
 
       {edit && (
@@ -185,8 +185,6 @@ ViewpointFields.defaultProps = {
 };
 
 export default compose(
-  connectAppProvider(({ env: { configMap } }) => ({
-    configMap,
-  })),
+  withMapConfig,
   withStyles(styles),
 )(ViewpointFields);

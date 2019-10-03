@@ -6,7 +6,7 @@ import { addField } from 'react-admin';
 import { withStyles } from '@material-ui/core/styles';
 
 import compose from '../../utils/compose';
-import { connectAppProvider } from '../AppProvider';
+import { withMapConfig } from '../../hoc/withAppSettings';
 
 let Map = null; // For the mapbox gl component
 
@@ -20,7 +20,7 @@ const styles = theme => ({
   },
 });
 
-const MapPointInput = ({ classes, input, center, configMap }) => {
+const MapPointInput = ({ classes, input, center, mapConfig }) => {
   const [loaded, setLoaded] = React.useState(false);
   const handleMapClick = (map, { lngLat }) => {
     const coords = Object.values(lngLat).map(value => Number(value.toFixed(7)));
@@ -34,13 +34,13 @@ const MapPointInput = ({ classes, input, center, configMap }) => {
   }
 
   React.useEffect(() => {
-    if (configMap.accessToken) {
+    if (mapConfig.accessToken) {
       Map = ReactMapboxGl({
-        accessToken: configMap.accessToken,
+        accessToken: mapConfig.accessToken,
       });
       setLoaded(true);
     }
-  }, [configMap.accessToken]);
+  }, [mapConfig.accessToken]);
 
   return (
     (loaded && (
@@ -64,7 +64,5 @@ const MapPointInput = ({ classes, input, center, configMap }) => {
 export default compose(
   addField,
   withStyles(styles),
-  connectAppProvider(({ env: { configMap } }) => ({
-    configMap,
-  })),
+  withMapConfig,
 )(MapPointInput);

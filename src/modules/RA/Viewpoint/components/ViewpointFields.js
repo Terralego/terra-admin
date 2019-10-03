@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 import Api from '@terralego/core/modules/Api';
 
 import {
+  ArrayInput,
   AutocompleteArrayInput,
-  FileField,
   FormTab,
+  ImageField,
+  ImageInput,
   LinearProgress,
   LongTextInput,
   NumberField,
   NumberInput,
   ReferenceArrayField,
   SelectInput,
+  SimpleFormIterator,
   TabbedForm,
   TextInput,
 } from 'react-admin';
@@ -124,7 +127,23 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
 
         <SelectInput source="properties.frequency" choices={[]} formClassName={classes.inline} />
         <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
-        <LongTextInput source="properties.note" rows={4} rowsMax={30} />
+        <LongTextInput source="properties.rephotographie" rows={4} rowsMax={30} />
+
+        <ArrayInput source="related">
+          <SimpleFormIterator>
+            <SelectInput
+              label="resources.viewpoint.fields.related.key"
+              source="key"
+              choices={[
+                { id: 'croquis', name: 'Croquis' },
+                { id: 'emplacement', name: 'Emplacement' },
+              ]}
+            />
+            <ImageInput label="resources.viewpoint.fields.related.document">
+              <ImageField source="document" />
+            </ImageInput>
+          </SimpleFormIterator>
+        </ArrayInput>
       </FormTab>
       )}
       {edit && (
@@ -147,8 +166,6 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
 
         <TextInput source="properties.keywords" />
         <TextInput source="properties.landscape-entities" />
-
-        <FileField source="related" src="document" title="key" />
       </FormTab>
       )}
 

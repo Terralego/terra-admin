@@ -166,7 +166,7 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
             <TextField source="properties.meteo" />
             <DateField source="date" />
             <TextField source="state" />
-            <ImageField source="file" />
+            <ImageField source="file.thumbnail" />
             <EditButton />
           </Datagrid>
         </ReferenceArrayField>

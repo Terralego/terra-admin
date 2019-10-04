@@ -489,6 +489,7 @@
       "fields": {
         "label": "Nom du point de vue",
         "address": "Adresse",
+        "properties.index": "Identifiant",
         "properties.voie": "Voie",
         "properties.commune": "Commune",
         "properties.altitude": "Altitude",
@@ -509,8 +510,8 @@
         "properties.keywords": "Mots-clés",
         "properties.landscape-entities": "Entités paysagères",
         "properties.related-elements": "Documents associés",
-        "geometry.coordinates[0]": "Longitude",
-        "geometry.coordinates[1]": "Latitude"
+        "point.coordinates[0]": "Longitude",
+        "point.coordinates[1]": "Latitude"
       },
       "tabs": {
         "general": "Informations principales",

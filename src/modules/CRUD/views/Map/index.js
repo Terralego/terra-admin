@@ -24,8 +24,6 @@ export default withRouter(
       setMap,
       map,
       mapIsResizing,
-      getFeaturesList,
-      featuresList,
       feature,
       errors,
     }, {
@@ -42,8 +40,6 @@ export default withRouter(
       setMap,
       map,
       mapIsResizing,
-      getFeaturesList,
-      featuresList: featuresList || [],
       feature: feature[id] || {},
       errors,
     }))(

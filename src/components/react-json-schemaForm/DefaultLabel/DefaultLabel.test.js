@@ -54,7 +54,7 @@ describe('should not render for multiple reasons', () => {
         {...props}
         schema={{
           ...props.schema,
-          type: 'boolean  uuu',
+          type: 'boolean',
         }}
       />
     )).toJSON();
@@ -72,5 +72,6 @@ describe('should not render for multiple reasons', () => {
         }}
       />
     )).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });

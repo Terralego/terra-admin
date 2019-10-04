@@ -6,11 +6,9 @@ import { addField } from 'react-admin';
 import { withStyles } from '@material-ui/core/styles';
 
 import compose from '../../utils/compose';
+import { withMapConfig } from '../../hoc/withAppSettings';
 
-
-const Map = ReactMapboxGl({
-  accessToken: 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ',
-});
+let Map = null; // For the mapbox gl component
 
 const styles = theme => ({
   marker: {
@@ -22,7 +20,8 @@ const styles = theme => ({
   },
 });
 
-const MapPointInput = ({ classes, input }) => {
+const MapPointInput = ({ classes, input, center, mapConfig }) => {
+  const [loaded, setLoaded] = React.useState(false);
   const handleMapClick = (map, { lngLat }) => {
     const coords = Object.values(lngLat).map(value => Number(value.toFixed(7)));
     input.onChange(coords);
@@ -34,10 +33,24 @@ const MapPointInput = ({ classes, input }) => {
     customProps.center = input.value;
   }
 
+  React.useEffect(() => {
+    if (mapConfig.accessToken) {
+      Map = ReactMapboxGl({
+        accessToken: mapConfig.accessToken,
+      });
+      setLoaded(true);
+    }
+  }, [mapConfig.accessToken]);
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <Map
       style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
       containerStyle={{ height: '300px' }}
+      center={center}
       onClick={handleMapClick}
       {...customProps}
     >
@@ -53,4 +66,5 @@ const MapPointInput = ({ classes, input }) => {
 export default compose(
   addField,
   withStyles(styles),
+  withMapConfig,
 )(MapPointInput);

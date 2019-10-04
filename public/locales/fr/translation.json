@@ -489,8 +489,9 @@
       "fields": {
         "label": "Nom du point de vue",
         "address": "Adresse",
-        "commune": "Commune",
+        "properties.index": "Identifiant",
         "properties.voie": "Voie",
+        "properties.commune": "Commune",
         "properties.altitude": "Altitude",
         "properties.hauteur": "Hauteur de l'œil",
         "properties.orientation": "Orientation",
@@ -509,14 +510,39 @@
         "properties.keywords": "Mots-clés",
         "properties.landscape-entities": "Entités paysagères",
         "properties.related-elements": "Documents associés",
-        "geometry.coordinates[0]": "Longitude",
-        "geometry.coordinates[1]": "Latitude"
+        "point.coordinates[0]": "Longitude",
+        "point.coordinates[1]": "Latitude"
       },
       "tabs": {
         "general": "Informations principales",
         "repeat": "Rephotographie",
         "landscape": "Paysage",
         "pictures": "Photographies"
+      }
+    },
+    "picture": {
+      "fields": {
+        "label": "Nom du point de vue",
+        "properties.altitude": "Altitude",
+        "properties.meteo": "Conditions météo",
+        "properties.hauteur": "Hauteur de l'œil",
+        "properties.orientation": "Orientation",
+        "properties.focale_35mm": "Focale 35 mm",
+        "properties.focale_objectif": "Focale de l'objectif",
+        "properties.camera_brand":"Marque de l'appareil photo",
+        "properties.camera_model":"Modèle de l'appareil photo",
+        "properties.observations": "Observations",
+        "geometry.coordinates[0]": "Longitude",
+        "geometry.coordinates[1]": "Latitude",
+        "properties.index": "Numéro d'ordre",
+        "viewpoint": "Point de vue",
+        "owner_id": "ID du photographe",
+        "owner.properties.name": "Photographe",
+        "file": "Photographie"
+      },
+      "tabs": {
+        "metadata": "Métadonnées",
+        "repeat": "Rephotographie"
       }
     },
     "user": {

@@ -1,4 +1,21 @@
 
+2.4.0 / 2019-10-01
+==================
+
+  * Regroup some form property & inline display
+  * Change "commune" translation key
+  * Remove export from Viewpoint List
+  * Include RTEField in projet and manage its display
+  * Add RTE field to ui:field
+  * Add a default label component to custom ui:fields
+  * Add quill package
+  * Use PropTypes instead of argument default value for ViewpointFields component
+  * Display latitude & longitude inputs inline
+  * Get cities & themes from back-end data
+  * Override i18next language detection to french
+  * Create MapPointInput component for coordinates field
+  * Add dependency to react-mapbox-gl
+
 2.3.0 / 2019-09-30
 ==================
 

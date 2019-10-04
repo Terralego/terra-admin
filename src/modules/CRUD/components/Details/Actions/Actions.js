@@ -15,6 +15,7 @@ class Actions extends React.Component {
     }),
     t: PropTypes.func,
     deleteFeature: PropTypes.func,
+    getSettings: PropTypes.func,
     history: PropTypes.shape({
       push: PropTypes.func,
     }),
@@ -25,6 +26,7 @@ class Actions extends React.Component {
 
   static defaultProps = {
     deleteFeature () { return undefined; },
+    getSettings () { return undefined; },
     paramId: undefined,
     layer: {
       id: undefined,
@@ -40,6 +42,7 @@ class Actions extends React.Component {
 
   deleteFeature = async () => {
     const {
+      getSettings,
       paramLayer,
       paramId,
       layer: { id: layerId },
@@ -59,6 +62,8 @@ class Actions extends React.Component {
     if (!deleted) {
       return;
     }
+
+    await getSettings();
 
     push(generateURI('layer', { layer: paramLayer }));
   }

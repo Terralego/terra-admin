@@ -39,6 +39,70 @@ jest.mock('../../components/DetailsWrapper', () => ({ children }) => children);
 
 jest.mock('../../components/Details', () => () => <div>Details</div>);
 
+jest.mock('../../services/CRUD', () => ({
+  getLayer: (settings, layer) => ['layerTest', 'layerTest2'].includes(layer) && ({
+    id: 1,
+    tilejson: '/api/layer/1/tilejson',
+    name: 'Layer test',
+    created_at: '2019-04-17T12:22:54.568261+02:00',
+    updated_at: '2019-09-24T10:37:46.570327+02:00',
+    geom_type: 1,
+    settings: {},
+    displayName: 'Layer test',
+    schema: {
+      required: [
+        'name',
+      ],
+      properties: {
+        name: {
+          type: 'string',
+          title: 'Nom',
+        },
+        composante: {
+          type: 'boolean',
+          title: 'Composante',
+        },
+        numero: {
+          type: 'integer',
+          title: 'Numéro',
+        },
+      },
+    },
+    uiSchema: {},
+    templates: [],
+    extent: [1, 2, 3, 4],
+  }),
+  getSources: () => [{
+    id: '1',
+    type: 'vector',
+    url: '/api/layer/1/tilejson',
+  }, {
+    id: '2',
+    type: 'vector',
+    url: '/api/layer/2/tilejson',
+  }],
+  getLayersPaints: () => [{
+    id: 'terralego-layerTest-1',
+    'source-layer': 'layerTest',
+    source: '1',
+    type: 'line',
+    paint: {
+      'line-color': 'green',
+      'line-width': 3,
+    },
+  }, {
+    id: 'terralego-layerTest2-2',
+    'source-layer': 'layerTest2',
+    source: '2',
+    type: 'line',
+    paint: {
+      'line-color': 'red',
+      'line-width': 8,
+    },
+  }],
+  ACTION_UPDATE: 'update',
+}));
+
 jest.mock('../../../../utils/toast', () => ({
   toast: {
     displayError: jest.fn(),
@@ -64,14 +128,14 @@ const settings = {
       layer: {
         id: 1,
         name: 'layerTest',
-        tilejson: '/api/layer/reference/tilejson',
+        tilejson: '/api/layer/1/tilejson',
       },
     }],
   }, {
     id: 2,
     crud_views: [{
       id: 2,
-      name: 'Layer test 3',
+      name: 'Layer test 2',
       order: 0,
       map_style: {
         type: 'line',
@@ -83,7 +147,7 @@ const settings = {
       layer: {
         id: 2,
         name: 'layerTest2',
-        tilejson: '/api/layer/reference/tilejson',
+        tilejson: '/api/layer/2/tilejson',
       },
     }],
   }],
@@ -105,6 +169,7 @@ beforeEach(() => {
       settings: undefined,
     },
     feature: {},
+    map: { notEmpty: {} },
   };
 });
 
@@ -196,10 +261,6 @@ it('should call several functions when mouting', () => {
   expect(instance.props.getMapConfig).toHaveBeenCalled();
   expect(instance.generateLayersToMap).toHaveBeenCalled();
   expect(instance.setInteractions).toHaveBeenCalled();
-  expect(instance.loadFeatures).not.toHaveBeenCalled();
-  instance.props.match.params.layer = 'test';
-  instance.componentDidMount();
-  expect(instance.loadFeatures).toHaveBeenCalled();
 });
 
 it('should not set interactions', () => {
@@ -247,12 +308,11 @@ it('should generate layers and set interactions when settings are updated', () =
 it('should set fit bounds', () => {
   const instance = new Map({
     ...props,
-    match: { params: { id: '1' } },
+    match: { params: { id: '1', layer: 'layerTest' } },
     map: {
       resize: jest.fn(),
       fitBounds: jest.fn(),
     },
-    featuresList: [],
   });
   jest.useFakeTimers();
 
@@ -261,20 +321,11 @@ it('should set fit bounds', () => {
   expect(instance.props.map.resize).not.toHaveBeenCalled();
   expect(instance.props.map.fitBounds).not.toHaveBeenCalled();
 
-
-  instance.setFitBounds([2.729, 44.526]);
-  jest.runAllTimers();
-  expect(instance.props.map.resize).toHaveBeenCalled();
-  expect(instance.props.map.fitBounds).toHaveBeenCalledWith(
-    [[2.729, 44.526], [2.729, 44.526]],
-    { padding: { bottom: 20, left: 20, right: 50, top: 20 } },
-  );
-
   instance.details.current = { offsetWidth: 100 };
-  instance.props.featuresList = [
-    { geom: { coordinates: [3, 4] } },
-    { geom: { coordinates: [5, 6] } },
-  ];
+
+  instance.props.feature = {
+    geom: { coordinates: [[3, 4], [5, 6]] },
+  };
 
   instance.setFitBounds();
   jest.runAllTimers();
@@ -290,31 +341,22 @@ it('should set fit bounds', () => {
   jest.runAllTimers();
   expect(instance.props.map.resize).toHaveBeenCalled();
   expect(instance.props.map.fitBounds).toHaveBeenCalledWith(
-    [[3, 4], [5, 6]],
+    [[1, 2], [3, 4]],
     { padding: { bottom: 145, left: 20, right: 50, top: 20 } },
   );
 });
 
-it('should set fitbounds when changing from id feature view to feature list view or when list of features changed', () => {
+it('should set fitbounds when changing from id feature view to feature list view', () => {
   const instance = new Map({
     ...props,
     match: { params: { id: ACTION_CREATE, layer: 'layerTest' } },
-    featuresList: [
-      { geom: { coordinates: [3, 4] } },
-      { geom: { coordinates: [5, 6] } },
-    ],
   });
   instance.setFitBounds = jest.fn();
   instance.componentDidUpdate({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
   }, {});
-  instance.componentDidUpdate({
-    ...props,
-    match: { params: { id: ACTION_CREATE, layer: 'layerTest' } },
-    featuresList: [],
-  }, {});
-  expect(instance.setFitBounds).toBeCalledTimes(2);
+  expect(instance.setFitBounds).toBeCalledTimes(1);
 });
 
 it('should set fitbounds when changing to id feature view', () => {
@@ -485,24 +527,6 @@ it('should not remove highlight if layers array is empty', () => {
     feature: { id: 2, geom: { coordinates: [3, 4] } },
   }, {});
   expect(instance.state.removeHighlight).not.toHaveBeenCalled();
-});
-
-it('should not load features', () => {
-  const instance = new Map({
-    ...props,
-    match: { params: { layer: 'notExists' } },
-  });
-  instance.loadFeatures();
-  expect(instance.props.getFeaturesList).not.toHaveBeenCalled();
-});
-
-it('should load features', () => {
-  const instance = new Map({
-    ...props,
-    match: { params: { layer: 'layerTest' } },
-  });
-  instance.loadFeatures();
-  expect(instance.props.getFeaturesList).toHaveBeenCalledWith(1);
 });
 
 it('should display current layer when changing layer or map props', () => {
@@ -691,11 +715,11 @@ it('should generate layers to map', () => {
       sources: [{
         id: '1',
         type: 'vector',
-        url: '/api/layer/reference/tilejson',
+        url: '/api/layer/1/tilejson',
       }, {
         id: '2',
         type: 'vector',
-        url: '/api/layer/reference/tilejson',
+        url: '/api/layer/2/tilejson',
       }],
     },
   });

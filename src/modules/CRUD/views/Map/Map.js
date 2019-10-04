@@ -31,7 +31,6 @@ export class Map extends React.Component {
     }).isRequired,
     getMapConfig: PropTypes.func.isRequired,
     getSettings: PropTypes.func.isRequired,
-    getFeaturesList: PropTypes.func.isRequired,
     setMap: PropTypes.func.isRequired,
     displayViewFeature: PropTypes.bool,
     match: PropTypes.shape({
@@ -43,7 +42,6 @@ export class Map extends React.Component {
     settings: PropTypes.shape({}),
     map: PropTypes.shape({}),
     mapConfig: PropTypes.shape({}),
-    featuresList: PropTypes.arrayOf(PropTypes.object),
     feature: PropTypes.shape({}),
   };
 
@@ -58,7 +56,6 @@ export class Map extends React.Component {
     map: {},
     mapConfig: {},
     settings: undefined,
-    featuresList: [],
     feature: {},
   }
 
@@ -74,28 +71,24 @@ export class Map extends React.Component {
   dataTable = React.createRef();
 
   componentDidMount () {
-    const { getSettings, getMapConfig, match: { params: { layer } } } = this.props;
+    const { getSettings, getMapConfig } = this.props;
     getSettings();
     getMapConfig();
     this.generateLayersToMap();
     this.setInteractions();
-    if (layer) {
-      this.loadFeatures();
-    }
   }
 
   componentDidUpdate ({
     map: prevMap,
     settings: prevSettings,
     match: { params: { layer: prevLayer, id: prevId } },
-    featuresList: prevFeaturesList,
+    feature: { geom: { coordinates: prevCoordinates } = {} },
   }) {
     const {
       settings,
       match: { params: { layer, id, action } },
       map,
-      featuresList,
-      feature: { geom: { coordinates = [] } = {} },
+      feature: { geom: { coordinates } = {} },
     } = this.props;
 
     const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
@@ -109,18 +102,12 @@ export class Map extends React.Component {
       this.displayCurrentLayer();
     }
 
-    if (settings !== prevSettings || layer !== prevLayer || map !== prevMap) {
-      this.loadFeatures();
+    if (layer && (prevId !== id || layer !== prevLayer || map !== prevMap)) {
+      this.setFitBounds();
     }
 
-    if (
-      !isTrueFeatureID(id)
-      && featuresList.length
-      && (prevId !== id || featuresList !== prevFeaturesList)
-    ) {
+    if (isTrueFeatureID(id) && prevCoordinates !== coordinates) {
       this.setFitBounds();
-    } else if (isTrueFeatureID(id) && coordinates.length) {
-      this.setFitBounds(coordinates);
       if (action !== ACTION_UPDATE) {
         const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
         if (!layerId || !Object.keys(map).length) {
@@ -136,7 +123,7 @@ export class Map extends React.Component {
       }
     }
 
-    if ((prevId && prevId !== ACTION_CREATE && !id) || action === ACTION_UPDATE) {
+    if ((isTrueFeatureID(prevId) && !id) || action === ACTION_UPDATE) {
       const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer) || {};
       if (!layerId) {
         return;
@@ -175,15 +162,20 @@ export class Map extends React.Component {
     });
   }
 
-  setFitBounds = (coordinates = false) => {
+  setFitBounds = () => {
     const {
       map,
-      featuresList,
-      match: { params: { id } },
+      match: { params: { layer, id } },
+      settings,
+      feature: { geom: { coordinates = [] } = {} },
     } = this.props;
-    const coords = coordinates || featuresList.map(({ geom }) => geom.coordinates);
 
-    if (!coords.length || !Object.keys(map).length) return;
+    if (!Object.keys(map).length) return;
+
+    const { extent: [w, s, e, n] } = getLayer(settings, layer);
+    const coords = isTrueFeatureID(id) ? coordinates : [[w, s], [e, n]];
+
+    if (!coords.length) return;
 
     const { current: detail } = this.details;
     const { current: dataTable } = this.dataTable;
@@ -211,13 +203,6 @@ export class Map extends React.Component {
       addHighlight,
       removeHighlight,
     });
-  }
-
-  loadFeatures = () => {
-    const { getFeaturesList, settings, match: { params: { layer: paramLayer } } } = this.props;
-    const layer = getLayer(settings, paramLayer);
-    if (!layer) return;
-    getFeaturesList(layer.id);
   }
 
   displayCurrentLayer = () => {
@@ -311,6 +296,7 @@ export class Map extends React.Component {
       toast.displayError(t('CRUD.layer.errorNoLayer'));
       return <Redirect to={generateURI('layer')} />;
     }
+
     return (
       <>
         {!isDataLoaded

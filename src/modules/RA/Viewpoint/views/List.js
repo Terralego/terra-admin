@@ -5,7 +5,11 @@ import CommonBulkActionButtons from '../../../../components/react-admin/CommonBu
 import GridList from '../../../../components/react-admin/GridList';
 
 export const ViewpointList = props => (
-  <List {...props} bulkActionButtons={<CommonBulkActionButtons />}>
+  <List
+    {...props}
+    exporter={false}
+    bulkActionButtons={<CommonBulkActionButtons />}
+  >
     <GridList />
   </List>
 );

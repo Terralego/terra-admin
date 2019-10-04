@@ -19,6 +19,7 @@ export default withRouter(
     };
   })(
     connectCRUDProvider(({
+      getSettings,
       settings,
       map,
       feature,
@@ -26,6 +27,7 @@ export default withRouter(
     }, {
       match: { params: { layer, id } },
     }) => ({
+      getSettings,
       map,
       feature: feature[id] || {},
       saveFeature,

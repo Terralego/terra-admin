@@ -42,6 +42,7 @@ class Edit extends React.Component {
     paramId: PropTypes.string.isRequired,
     action: PropTypes.oneOf([ACTION_CREATE, ACTION_UPDATE]).isRequired,
     updateControls: PropTypes.func,
+    getSettings: PropTypes.func,
     displayAddFeature: PropTypes.bool,
     displayChangeFeature: PropTypes.bool,
     schema: PropTypes.shape({}).isRequired,
@@ -57,6 +58,7 @@ class Edit extends React.Component {
     displayAddFeature: true,
     displayChangeFeature: true,
     updateControls () {},
+    getSettings () {},
     history: {
       push () {},
     },
@@ -224,6 +226,7 @@ class Edit extends React.Component {
   submitFeature = async ({ formData: { geometryFromMap, ...properties } }) => {
     const { geom } = this.state;
     const {
+      getSettings,
       history: { push },
       layer: { id: layerId },
       paramId,
@@ -258,6 +261,8 @@ class Edit extends React.Component {
       t(isActionUpdate ? 'CRUD.details.successUpdateFeature' : 'CRUD.details.successCreateFeature'),
       t(isActionUpdate ? 'CRUD.details.failUpdateFeature' : 'CRUD.details.failCreateFeature'),
     );
+
+    getSettings();
   }
 
   validateForm = (formData, errors) => {

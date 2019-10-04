@@ -47,6 +47,7 @@ beforeEach(() => {
       push: jest.fn(),
     },
     deleteFeature: () => 'foo',
+    getSettings: jest.fn(),
   };
 });
 
@@ -64,12 +65,12 @@ it('should delete feature', async () => {
   const instance = new Actions({ ...props });
   instance.deleteFeature();
   await true;
-  expect(instance.props.history.push).toHaveBeenCalled();
+  expect(instance.props.getSettings).toHaveBeenCalled();
 });
 
 it('should not crash when no deleting feature', async () => {
   const instance = new Actions({ ...props, deleteFeature: () => undefined });
   instance.deleteFeature();
   await true;
-  expect(instance.props.history.push).not.toHaveBeenCalled();
+  expect(instance.props.getSettings).not.toHaveBeenCalled();
 });

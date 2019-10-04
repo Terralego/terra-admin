@@ -41,18 +41,15 @@ class DataTable extends React.Component {
 
   setData = () => {
     const { featuresList = [] } = this.props;
-    const {
-      schema: { properties = {} },
-      settings: { properties: { default_list: defaultList = false } = {} },
-    } = this.getLayer();
-    const columns = Object.keys(properties).map(value => ({
-      display: !defaultList || defaultList.includes(value),
+    const { featureListProperties } = this.getLayer();
+
+    const columns = Object.keys(featureListProperties).map(value => ({
+      display: featureListProperties[value].selected,
       sortable: true,
-      ...properties[value],
       value,
-      label: properties[value].title,
+      label: featureListProperties[value].title,
       format: {
-        type: properties[value].type,
+        type: featureListProperties[value].type,
       },
     }));
 

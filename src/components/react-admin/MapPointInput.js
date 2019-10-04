@@ -42,8 +42,11 @@ const MapPointInput = ({ classes, input, center, mapConfig }) => {
     }
   }, [mapConfig.accessToken]);
 
+  if (!loaded) {
+    return null;
+  }
+
   return (
-    (loaded && (
     <Map
       style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
       containerStyle={{ height: '300px' }}
@@ -57,7 +60,6 @@ const MapPointInput = ({ classes, input, center, mapConfig }) => {
         </Marker>
       )}
     </Map>
-    ))
   );
 };
 

@@ -15,10 +15,12 @@ import {
 } from 'react-admin';
 import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
-import { withStyles } from '@material-ui/core/styles';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
+import { withStyles } from '@material-ui/core/styles';
 import { change } from 'redux-form';
+/* eslintenable import/no-extraneous-dependencies */
+
 import compose from '../../../../utils/compose';
 import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';

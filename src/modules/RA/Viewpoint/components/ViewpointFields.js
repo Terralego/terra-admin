@@ -6,7 +6,6 @@ import {
   AutocompleteArrayInput,
   Datagrid,
   DateField,
-  DisabledInput,
   EditButton,
   FileField,
   FormTab,
@@ -57,16 +56,22 @@ const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
   };
 
   React.useEffect(() => {
-    if (edit) {
-      getRemoteData();
-    }
-  }, [edit]);
+    getRemoteData();
+  }, []);
 
   return (
-    <TabbedForm {...props}>
+    <TabbedForm
+      defaultValue={{
+        point: {
+          coordinates: undefined,
+          type: 'Point',
+        },
+      }}
+      {...props}
+    >
       <FormTab label="resources.viewpoint.tabs.general">
         <TextInput source="label" formClassName={classes.inline} />
-        {edit && <DisabledInput source="id" formClassName={classes.inline} />}
+        <TextInput source="properties.index" formClassName={classes.inline} />
 
         <Br />
 
@@ -84,25 +89,26 @@ const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
         <Br />
 
         <NumberInput
-          source="geometry.coordinates[1]"
+          source="point.coordinates[1]"
           formClassName={classes.inline}
         />
         <NumberInput
-          source="geometry.coordinates[0]"
+          source="point.coordinates[0]"
           formClassName={classes.inline}
         />
 
-        <MapPointInput source="geometry.coordinates" />
+        <MapPointInput source="point.coordinates" center={configMap.center} />
       </FormTab>
 
+      {edit && (
       <FormTab label="resources.viewpoint.tabs.repeat" path="repeat">
         <NumberField
-          source="geometry.coordinates[1]"
+          source="point.coordinates[1]"
           options={{ maximumFractionDigits: 6 }}
           formClassName={classes.inline}
         />
         <NumberField
-          source="geometry.coordinates[0]"
+          source="point.coordinates[0]"
           options={{ maximumFractionDigits: 6 }}
           formClassName={classes.inline}
         />
@@ -124,7 +130,8 @@ const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
         <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
         <LongTextInput source="properties.note" rows={4} rowsMax={30} />
       </FormTab>
-
+      )}
+      {edit && (
       <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
         <RichTextInput source="properties.paysage" />
         <RichTextInput source="properties.dynamiques" />
@@ -147,7 +154,9 @@ const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
 
         <FileField source="related" src="document" title="key" />
       </FormTab>
+      )}
 
+      {edit && (
       <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
         <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} fullWidth>
           <Datagrid rowClick="edit">
@@ -160,6 +169,7 @@ const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
           </Datagrid>
         </ReferenceArrayField>
       </FormTab>
+      )}
     </TabbedForm>
   );
 };

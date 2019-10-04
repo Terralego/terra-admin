@@ -26,7 +26,7 @@ const styles = {
 
 const Br = () => <br />;
 
-const PictureFields = ({ edit, classes, ...props }) => (
+const PictureFields = ({ edit, classes, mapConfig, ...props }) => (
   <TabbedForm {...props}>
     <FormTab label="resources.picture.tabs.metadata">
       <TextInput source="label" formClassName={classes.inline} />

@@ -6,7 +6,6 @@ import compose from '../../utils/compose';
 
 import dataProvider from '../../services/react-admin/dataProvider';
 import withResourceEndpoint from '../../services/react-admin/withResourceEndpoint';
-import withViewpointIds from '../../services/react-admin/withViewpointIds';
 import enhanceDataProvider from '../../services/react-admin/enhanceDataProvider';
 
 import authProvider from '../../services/react-admin/authProvider';
@@ -45,7 +44,6 @@ export const CustomAdmin = ({ locale, history, permissions, allowedModules = [] 
 
   const customDataProvider = compose(
     withResourceEndpoint,
-    withViewpointIds,
     enhanceDataProvider,
   )(dataProvider);
 

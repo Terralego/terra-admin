@@ -10,7 +10,7 @@ For development purpose, you can copy the template file :
 
     $ cp public/env.dist.json public/env.json
 
-and edit it.
+and edit it to point to the API.
 
 Otherwise you can set some env variables like `API_HOST` which will tell to the app where the backend is located.
 

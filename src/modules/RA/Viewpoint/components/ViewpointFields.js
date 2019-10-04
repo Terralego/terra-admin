@@ -24,6 +24,7 @@ import {
 import RichTextInput from 'ra-input-rich-text';
 
 import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
+import { connectAppProvider } from '../../../../components/AppProvider';
 
 import { RES_PICTURE } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
@@ -38,14 +39,14 @@ const styles = {
 
 const Br = () => <br />;
 
-const ViewpointFields = ({ edit, classes, ...props }) => {
+const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
   const [remoteChoices, setRemoteChoices] = React.useState([]);
   const [waiting, setWaiting] = React.useState(false);
 
   const getRemoteData = async () => {
     setWaiting(true);
 
-    const { themes, cities } = await Api.request('/viewpoints/filters/');
+    const { themes, cities } = await Api.request('viewpoints/filters/');
 
     setRemoteChoices({
       themes: themes.map(theme => ({ id: theme, name: theme })),
@@ -172,5 +173,8 @@ ViewpointFields.defaultProps = {
 };
 
 export default compose(
+  connectAppProvider(({ env: { configMap } }) => ({
+    configMap,
+  })),
   withStyles(styles),
 )(ViewpointFields);

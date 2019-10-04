@@ -67,7 +67,6 @@ export const resources = [
     name: RES_PICTURE,
     moduleName: 'OPP',
     endpoint: 'pictures',
-    ...guessers,
     ...pictureViews,
   },
   {

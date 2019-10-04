@@ -19,6 +19,7 @@ import {
   TabbedForm,
   TextField,
   TextInput,
+  ReferenceField,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
@@ -160,7 +161,8 @@ const ViewpointFields = ({ edit, classes, configMap, ...props }) => {
       <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
         <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} fullWidth>
           <Datagrid rowClick="edit">
-            <TextField source="owner" />
+            {/* Waiting for back-end api to manage it properly */}
+            {false && <ReferenceField source="owner_id" reference="users" />}
             <TextField source="properties.meteo" />
             <DateField source="date" />
             <TextField source="state" />

@@ -2,18 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
+  DateInput,
   DateTimeInput,
   DisabledInput,
   FormTab,
   ImageField,
+  ImageInput,
   LongTextInput,
   NumberInput,
+  ReferenceInput,
+  SelectInput,
   TabbedForm,
   TextInput,
+  required,
 } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
 
+import { RES_VIEWPOINT } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 
@@ -74,6 +80,38 @@ const PictureFields = ({ edit, classes, mapConfig, ...props }) => (
 
       <Br />
       <MapPointInput source="geometry.coordinates" />
+    </FormTab>
+
+    {/*  */}
+    {/*  */}
+
+    <FormTab label="jpa.general">
+      <ReferenceInput source="viewpoint" reference={RES_VIEWPOINT}>
+        <SelectInput optionText="label" />
+      </ReferenceInput>
+      <TextInput source="properties.index" />
+      <TextInput source="remarks" validate={required()} />
+      <DateInput source="date" />
+
+      <ImageInput source="file" accept="image/*">
+        <ImageField source="thumbnail" />
+      </ImageInput>
+    </FormTab>
+
+    <FormTab label="jpa.details">
+      <TextInput source="properties.meteo" />
+      <TextInput source="properties.hauteur" />
+      <TextInput source="properties.altitude" />
+      <TextInput source="properties.focale_35mm" />
+      <TextInput source="properties.orientation" />
+      <TextInput source="properties.camera_brand" />
+      <TextInput source="properties.camera_model" />
+      <TextInput source="properties.focale_objectif" />
+      <TextInput source="properties.photographer" />
+
+      {/* <ReferenceInput source="properties.photographer" reference={RES_USER}>
+        <SelectInput optionText="email" />
+      </ReferenceInput> */}
     </FormTab>
   </TabbedForm>
 );

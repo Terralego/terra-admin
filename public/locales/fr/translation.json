@@ -489,7 +489,7 @@
       "fields": {
         "label": "Nom du point de vue",
         "address": "Adresse",
-        "properties.index": "Identifiant",
+        "properties.index": "Numéro du point de vue",
         "properties.voie": "Voie",
         "properties.commune": "Commune",
         "properties.altitude": "Altitude",

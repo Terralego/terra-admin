@@ -58,8 +58,8 @@ const Read = ({
   match: { params: { layer: paramLayer, id: paramId } },
   schema: { title: schemaTitle, properties = {} },
   displayViewFeature,
-  view: { templates, uiSchema: { 'ui:order': order } = {} },
-  feature: { id },
+  view: { uiSchema: { 'ui:order': order } = {} },
+  feature: { documents },
 }) => {
   if (!displayViewFeature) {
     toast.displayError(t('CRUD.details.noAccess'));
@@ -77,8 +77,7 @@ const Read = ({
         <h2 className="details__title">{title || t(NO_FEATURE)}</h2>
         <DownloadButtons
           className="details__templates"
-          id={id}
-          files={templates}
+          documents={documents}
         />
       </div>
       {hasProperties && (
@@ -119,10 +118,10 @@ Read.propTypes = {
   }),
   displayViewFeature: PropTypes.bool,
   view: PropTypes.shape({
-    templates: PropTypes.array,
+    uiSchema: PropTypes.shape({}),
   }),
   feature: PropTypes.shape({
-    id: PropTypes.number,
+    documents: PropTypes.array,
   }),
   t: PropTypes.func,
 };
@@ -139,10 +138,10 @@ Read.defaultProps = {
   },
   displayViewFeature: true,
   view: {
-    templates: [],
+    uiSchema: {},
   },
   feature: {
-    id: undefined,
+    documents: [],
   },
   t: text => text,
 };

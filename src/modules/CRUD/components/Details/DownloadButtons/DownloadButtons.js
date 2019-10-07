@@ -2,27 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AnchorButton, ButtonGroup } from '@blueprintjs/core';
 
-const DownloadButtons = ({ files, id, ...rest }) => id && files.length > 0 && (
+const DownloadButtons = ({ documents, ...rest }) => documents.length > 0 && (
   <ButtonGroup {...rest}>
-    {files.map(({ name, url }) => (
-      <AnchorButton key={url} icon="download" href={url.replace('{id}', id)}>{name}</AnchorButton>
+    {documents.map(({ download_url: url, template_file: file, template_name: name }) => (
+      <AnchorButton key={file} icon="download" href={url}>{name}</AnchorButton>
     ))}
   </ButtonGroup>
 );
 
 DownloadButtons.propTypes = {
-  files: PropTypes.arrayOf(
+  documents: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string,
-      url: PropTypes.string,
+      template_name: PropTypes.string,
+      download_url: PropTypes.string,
+      template_file: PropTypes.string,
     }),
   ),
-  id: PropTypes.number,
 };
 
 DownloadButtons.defaultProps = {
-  files: [],
-  id: '',
+  documents: [],
 };
 
 export default DownloadButtons;

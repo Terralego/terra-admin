@@ -51,24 +51,26 @@ const getColsForWidth = width => {
 const GridList = ({ translate: t, classes, ids, data, basePath, width }) => (
   <div className={classes.root}>
     <MuiGridList cellHeight={180} cols={getColsForWidth(width)} className={classes.gridList}>
-      {ids.map(id => (
-        <GridListTile component={Link} key={id} to={linkToRecord(basePath, data[id].id)}>
-          {data[id].file && <img src={data[id].file.thumbnail} alt={data[id].properties.index} />}
-          <GridListTileBar
-            className={classes.tileBar}
-            title={data[id].properties.index}
-            subtitle={(
-              <span>
-                {data[id].owner.properties.name}
+      {ids.map(id => {
+        const { file, properties, owner, state, id: pictId } = data[id];
+        return (
+          <GridListTile component={Link} key={id} to={linkToRecord(basePath, pictId)}>
+            {file && <img src={file.thumbnail} alt={properties.index} />}
+            <GridListTileBar
+              className={classes.tileBar}
+              title={properties.index}
+              subtitle={(
+                <span>
+                  {owner.properties.name}
                 &nbsp;|&nbsp;
-                {t('resources.picture.fields.properties.state')}&nbsp;: {data[id].state}
-              </span>
+                  {t('resources.picture.fields.properties.state')}&nbsp;: {state}
+                </span>
             )}
-            actionIcon={<IconButton><EditIcon color="secondary" /></IconButton>}
-          />
-        </GridListTile>
-
-      ))}
+              actionIcon={<IconButton><EditIcon color="secondary" /></IconButton>}
+            />
+          </GridListTile>
+        );
+      })}
     </MuiGridList>
   </div>
 );

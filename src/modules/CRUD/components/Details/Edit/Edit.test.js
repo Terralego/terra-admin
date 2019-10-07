@@ -58,10 +58,12 @@ beforeEach(() => {
     feature: {},
     saveFeature: jest.fn(),
     updateControls: jest.fn(),
-    layer: {
-      name: 'foo',
-      id: 8,
-      geom_type: 0,
+    view: {
+      layer: {
+        name: 'foo',
+        id: 8,
+        geom_type: 0,
+      },
     },
     layerPaint: { id: 'fooComponentID' },
     paramLayer: 'fooLayer',

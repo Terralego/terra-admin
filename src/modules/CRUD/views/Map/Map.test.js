@@ -40,16 +40,16 @@ jest.mock('../../components/DetailsWrapper', () => ({ children }) => children);
 jest.mock('../../components/Details', () => () => <div>Details</div>);
 
 jest.mock('../../services/CRUD', () => ({
-  getLayer: (settings, layer) => ['layerTest', 'layerTest2'].includes(layer) && ({
-    id: 1,
-    tilejson: '/api/layer/1/tilejson',
+  getView: (settings, layer) => ['layerTest', 'layerTest2'].includes(layer) && ({
+    layer: {
+      id: 1,
+      tilejson: '/api/layer/1/tilejson',
+      name: 'Layer test',
+      geom_type: 1,
+      settings: {},
+    },
     name: 'Layer test',
-    created_at: '2019-04-17T12:22:54.568261+02:00',
-    updated_at: '2019-09-24T10:37:46.570327+02:00',
-    geom_type: 1,
-    settings: {},
-    displayName: 'Layer test',
-    schema: {
+    formSchema: {
       required: [
         'name',
       ],

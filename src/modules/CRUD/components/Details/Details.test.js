@@ -35,10 +35,12 @@ beforeEach(() => {
   props = {
     fetchFeature: jest.fn(),
     t: key => key,
-    layer: {
-      id: 8,
-      name: 'fooLayer',
-      schema: {
+    view: {
+      layer: {
+        id: 8,
+        name: 'fooLayer',
+      },
+      formSchema: {
         properties: {
           city: { type: 'boolean', title: 'City' },
         },
@@ -183,10 +185,13 @@ it('should not set state schema if its object is empty', () => {
         layer: 'layer1',
       },
     },
-    layer: {
-      id: 8,
-      name: 'layerWithoutSchema',
+    view: {
+      layer: {
+        id: 8,
+        name: 'layerWithoutSchema',
+      },
     },
+
   });
   instance.setState = jest.fn();
   instance.setSchema();

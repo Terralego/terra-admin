@@ -1,6 +1,6 @@
 import Api from '@terralego/core/modules/Api';
 
-import { fetchSettings, getLayer, getSources, getLayersPaints } from './CRUD';
+import { fetchSettings, getView, getSources, getLayersPaints } from './CRUD';
 import {
   POINT,
   LINESTRING,
@@ -74,7 +74,7 @@ it('should fetch settings', async () => {
 });
 
 it('should get the selected layer', () => {
-  expect(getLayer(settings, 'bar_bar')).toEqual({
+  expect(getView(settings, 'bar_bar')).toEqual({
     displayName: 'Bar bar',
     geom_type: 1,
     group: 'group3',
@@ -87,11 +87,11 @@ it('should get the selected layer', () => {
 });
 
 it('should not get the selected layer if layer array is empty', () => {
-  expect(getLayer([], 'bar_bar')).toEqual(false);
+  expect(getView([], 'bar_bar')).toEqual(false);
 });
 
 it('should return anything if the selected layer does not exist', () => {
-  expect(getLayer(settings, 'hello')).toEqual(false);
+  expect(getView(settings, 'hello')).toEqual(false);
 });
 
 fit('should get sources', () => {

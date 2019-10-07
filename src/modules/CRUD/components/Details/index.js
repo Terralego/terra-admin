@@ -2,7 +2,7 @@ import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 
 import { connectCRUDProvider } from '../../services/CRUDProvider';
-import { getLayer } from '../../services/CRUD';
+import { getView } from '../../services/CRUD';
 
 import Details from './Details';
 
@@ -24,7 +24,7 @@ export default withRouter(
       map,
       fetchFeature,
       feature: feature[id] || {},
-      layer: getLayer(settings, layer),
+      view: getView(settings, layer),
       hasError: !!error,
       errorMessage: message,
     };

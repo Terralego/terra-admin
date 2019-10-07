@@ -332,7 +332,7 @@ it('should set fit bounds', () => {
   expect(instance.props.map.resize).toHaveBeenCalled();
   expect(instance.props.map.fitBounds).toHaveBeenCalledWith(
     [[3, 4], [5, 6]],
-    { padding: { bottom: 20, left: 20, right: 150, top: 20 } },
+    { padding: { bottom: 20, left: 20, right: 150, top: 20 }, duration: 0 },
   );
 
   instance.dataTable.current = { offsetHeight: 125 };
@@ -342,7 +342,7 @@ it('should set fit bounds', () => {
   expect(instance.props.map.resize).toHaveBeenCalled();
   expect(instance.props.map.fitBounds).toHaveBeenCalledWith(
     [[1, 2], [3, 4]],
-    { padding: { bottom: 145, left: 20, right: 50, top: 20 } },
+    { padding: { bottom: 145, left: 20, right: 50, top: 20 }, duration: 0 },
   );
 });
 

@@ -506,7 +506,7 @@
         "properties.observations": "Observations",
         "properties.historial-data": "Données historiques",
         "properties.cultural-references": "Références culturelles",
-        "properties.theme_ids": "Thématiques",
+        "properties.themes": "Thématiques",
         "properties.keywords": "Mots-clés",
         "properties.landscape-entities": "Entités paysagères",
         "properties.related-elements": "Documents associés",

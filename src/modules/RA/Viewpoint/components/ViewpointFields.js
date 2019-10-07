@@ -145,7 +145,7 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
         {!waiting && (
           <AutocompleteArrayInput
             translateChoice={false}
-            source="properties.theme_ids"
+            source="properties.themes"
             choices={remoteChoices.themes}
           />
         )}
@@ -153,7 +153,7 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
         <TextInput source="properties.keywords" />
         <TextInput source="properties.landscape-entities" />
 
-        <FileField source="properties.related-elements" src="document" title="key" />
+        <FileField source="related" src="document" title="key" />
       </FormTab>
       )}
 

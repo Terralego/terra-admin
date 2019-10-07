@@ -10,14 +10,15 @@ jest.mock('@blueprintjs/core', () => ({
 
 
 const props = {
-  files: [{
-    name: 'FileName',
-    url: 'path/to/file/{id}',
+  documents: [{
+    template_name: 'FileName',
+    download_url: 'path/to/file/',
+    template_file: 'file1.pdf',
   }, {
-    name: 'FileName2',
-    url: 'path/to/file2/{id}',
+    template_name: 'FileName2',
+    download_url: 'path/to/file2/',
+    template_file: 'file2.pdf',
   }],
-  id: 3,
 };
 
 

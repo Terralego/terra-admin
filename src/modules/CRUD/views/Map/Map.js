@@ -162,7 +162,7 @@ export class Map extends React.Component {
     });
   }
 
-  setFitBounds = () => {
+  setFitBounds = ({ duration = 0 } = {}) => {
     const {
       map,
       match: { params: { layer, id } },
@@ -188,7 +188,7 @@ export class Map extends React.Component {
         left: 20,
       };
       map.resize();
-      map.fitBounds(getBounds(coords), { padding });
+      map.fitBounds(getBounds(coords), { padding, duration });
     }, 500);
   }
 

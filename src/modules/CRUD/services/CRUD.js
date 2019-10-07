@@ -11,6 +11,17 @@ import {
 export const ACTION_CREATE = 'create';
 export const ACTION_UPDATE = 'update';
 
+const snakeToCamel = str => str.replace(
+  /([-_][a-z])/g,
+  group => group.toUpperCase().substring(1),
+);
+
+const camelCaseKeys = obj => Object.keys(obj).reduce((props, key) => ({
+  ...props,
+  [snakeToCamel(key)]: obj[key],
+}), {});
+
+
 export const fetchSettings = () =>
   Api.request('crud/settings/');
 
@@ -37,34 +48,16 @@ const getDefaultPaintsByGeomType = geomType => {
   }
 };
 
-export const getLayer = ({ menu = [] }, name) => {
-  const layers = flattenMenu(menu);
-  if (!layers.length || !name) {
+export const getView = ({ menu = [] }, name) => {
+  const view = flattenMenu(menu);
+  if (!view.length || !name) {
     return false;
   }
-  const {
-    layer,
-    settings,
-    name: displayName,
-    form_schema: schema,
-    ui_schema: uiSchema,
-    templates,
-    extent,
-    feature_list_properties: featureListProperties,
-  } = flattenMenu(menu).find(item => item.layer.name === name) || {};
-  if (!layer) {
-    return false;
-  }
-  return {
-    ...layer,
-    settings,
-    displayName,
-    schema,
-    uiSchema,
-    templates,
-    extent,
-    featureListProperties,
-  };
+  const viewProps = view.find(({ layer }) => layer.name === name) || {};
+
+  return viewProps.layer
+    ? camelCaseKeys(viewProps)
+    : false;
 };
 
 export const getSources = ({ menu = [] }) =>
@@ -99,4 +92,4 @@ export const getLayersPaints = ({ menu = [] }) =>
       ];
   }, []);
 
-export default { fetchSettings, getLayer, getSources, getLayersPaints };
+export default { fetchSettings, getView, getSources, getLayersPaints };

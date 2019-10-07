@@ -36,7 +36,7 @@ class Edit extends React.Component {
     map: PropTypes.shape({}),
     feature: PropTypes.shape({}),
     saveFeature: PropTypes.func.isRequired,
-    layer: PropTypes.shape({}).isRequired,
+    view: PropTypes.shape({}).isRequired,
     layerPaint: PropTypes.shape({}).isRequired,
     paramLayer: PropTypes.string.isRequired,
     paramId: PropTypes.string.isRequired,
@@ -149,7 +149,7 @@ class Edit extends React.Component {
       feature: { geom },
       updateControls,
       action,
-      layer: { geom_type: geomType },
+      view: { layer: { geom_type: geomType } },
     } = this.props;
 
     const control = {
@@ -192,7 +192,7 @@ class Edit extends React.Component {
       return;
     }
 
-    const { layer: { geom_type: geomType } } = this.props;
+    const { view: { layer: { geom_type: geomType } } } = this.props;
     const { features } = map.draw.getAll();
 
     if (features.length > 1 && [POINT, LINESTRING, POLYGON].includes(geomType)) {
@@ -228,7 +228,7 @@ class Edit extends React.Component {
     const {
       getSettings,
       history: { push },
-      layer: { id: layerId },
+      view: { layer: { id: layerId } },
       paramId,
       paramLayer,
       saveFeature,
@@ -279,7 +279,7 @@ class Edit extends React.Component {
     const {
       t,
       action,
-      layer: { name, displayName = name, uiSchema = {} },
+      view: { layer: { name }, name: displayName = name, uiSchema = {} },
       paramLayer,
       paramId,
       displayAddFeature,

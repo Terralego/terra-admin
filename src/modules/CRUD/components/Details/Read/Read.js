@@ -58,7 +58,7 @@ const Read = ({
   match: { params: { layer: paramLayer, id: paramId } },
   schema: { title: schemaTitle, properties = {} },
   displayViewFeature,
-  layer: { templates, uiSchema: { 'ui:order': order } = {} },
+  view: { templates, uiSchema: { 'ui:order': order } = {} },
   feature: { id },
 }) => {
   if (!displayViewFeature) {
@@ -118,7 +118,7 @@ Read.propTypes = {
     properties: PropTypes.shape({}),
   }),
   displayViewFeature: PropTypes.bool,
-  layer: PropTypes.shape({
+  view: PropTypes.shape({
     templates: PropTypes.array,
   }),
   feature: PropTypes.shape({
@@ -138,7 +138,7 @@ Read.defaultProps = {
     properties: {},
   },
   displayViewFeature: true,
-  layer: {
+  view: {
     templates: [],
   },
   feature: {

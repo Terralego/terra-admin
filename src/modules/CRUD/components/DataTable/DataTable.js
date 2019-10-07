@@ -2,7 +2,7 @@ import React from 'react';
 import Table from '@terralego/core/modules/Table';
 import { withNamespaces } from 'react-i18next';
 
-import { getLayer } from '../../services/CRUD';
+import { getView } from '../../services/CRUD';
 import Header from './Header';
 import CellRender from './CellRender';
 import './styles.scss';
@@ -31,7 +31,7 @@ class DataTable extends React.Component {
 
   loadData = () => {
     const { getFeaturesList } = this.props;
-    const { id } = this.getLayer();
+    const { layer: { id } } = this.getView();
     if (!id) return;
     getFeaturesList(id);
     this.setState({
@@ -41,7 +41,7 @@ class DataTable extends React.Component {
 
   setData = () => {
     const { featuresList = [] } = this.props;
-    const { featureListProperties } = this.getLayer();
+    const { featureListProperties } = this.getView();
 
     const columns = Object.keys(featureListProperties).map(value => ({
       display: featureListProperties[value].selected,
@@ -67,9 +67,9 @@ class DataTable extends React.Component {
     });
   }
 
-  getLayer = () => {
+  getView = () => {
     const { settings, layerName } = this.props;
-    return getLayer(settings, layerName);
+    return getView(settings, layerName);
   }
 
 
@@ -87,7 +87,8 @@ class DataTable extends React.Component {
       onHoverCell = () => null,
     } = this.props;
 
-    const { name, displayName = name } = this.getLayer();
+    const { layer: { name }, name: displayName = name } = this.getView();
+
     const { data, columns, loading } = this.state;
 
     return (

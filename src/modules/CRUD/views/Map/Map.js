@@ -11,7 +11,7 @@ import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
-import { ACTION_CREATE, ACTION_UPDATE, getLayer, getSources, getLayersPaints } from '../../services/CRUD';
+import { ACTION_CREATE, ACTION_UPDATE, getView, getSources, getLayersPaints } from '../../services/CRUD';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
 
@@ -172,7 +172,7 @@ export class Map extends React.Component {
 
     if (!Object.keys(map).length) return;
 
-    const { extent: [w, s, e, n] } = getLayer(settings, layer);
+    const { extent: [w, s, e, n] } = getView(settings, layer);
     const coords = isTrueFeatureID(id) ? coordinates : [[w, s], [e, n]];
 
     if (!coords.length) return;
@@ -292,7 +292,7 @@ export class Map extends React.Component {
     const isDataLoaded = Object.keys(mapConfig).length > 1 && areSettingsLoaded;
     const areDetailsVisible = !!id;
 
-    if (areSettingsLoaded && layer && !getLayer(settings, layer)) {
+    if (areSettingsLoaded && layer && !getView(settings, layer)) {
       toast.displayError(t('CRUD.layer.errorNoLayer'));
       return <Redirect to={generateURI('layer')} />;
     }

@@ -1,4 +1,4 @@
-import { CREATE, UPDATE } from 'react-admin';
+import { CREATE } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 import { WMTS } from '../../modules/RA/DataSource';
 

@@ -10,29 +10,27 @@ import compose from '../../utils/compose';
 const DefaultActions = ({
   basePath,
   location: { state: { referrer } = {} },
-}) => {
-  return (
-    <CardActions>
-      {!referrer && (
-        <ListButton
-          basePath={basePath}
-          variant="outlined"
-          label="ra.action.back-to-list"
-        />
-      )}
-      {referrer && (
-        <Button
-          component={Link}
-          to={{
-            pathname: referrer,
-          }}
-          label="ra.action.back"
-        >
-          <IconArrowBack />
-        </Button>
-      )}
-    </CardActions>
-  );
-};
+}) => (
+  <CardActions>
+    {!referrer && (
+      <ListButton
+        basePath={basePath}
+        variant="outlined"
+        label="ra.action.back-to-list"
+      />
+    )}
+    {referrer && (
+      <Button
+        component={Link}
+        to={{
+          pathname: referrer,
+        }}
+        label="ra.action.back"
+      >
+        <IconArrowBack />
+      </Button>
+    )}
+  </CardActions>
+);
 
 export default compose(withRouter)(DefaultActions);

@@ -15,7 +15,6 @@ import { linkToRecord } from 'ra-core';
 /* eslint-enable */
 
 import compose from '../../../../utils/compose';
-import { restElement } from '@babel/types';
 
 const styles = theme => ({
   root: {
@@ -59,7 +58,6 @@ const GridList = ({
   width,
   location,
   viewpointId,
-  ...rest
 }) => (
   <div className={classes.root}>
     <MuiGridList

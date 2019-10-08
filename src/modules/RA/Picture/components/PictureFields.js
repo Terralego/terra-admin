@@ -44,8 +44,15 @@ const PictureFields = ({ edit, classes, mapConfig, ...props }) => (
         <SelectInput optionText="label" />
       </ReferenceInput>
       <TextInput source="properties.index" formClassName={classes.inline} />
-      <DateTimeInput source="date" showTime />
-      <DateInput source="date" />
+
+      <Br />
+
+      <ImageInput source="file" accept="image/*">
+        <ImageField source="thumbnail" />
+      </ImageInput>
+
+      <DateTimeInput source="date" formClassName={classes.inline} />
+      <DateInput source="date" formClassName={classes.inline} />
 
       <Br />
 
@@ -71,16 +78,10 @@ const PictureFields = ({ edit, classes, mapConfig, ...props }) => (
         formClassName={classes.inline}
       />
       <TextInput source="properties.meteo" />
-
       <Br />
 
       <TextInput source="remarks" validate={required()} />
       <LongTextInput source="properties.observations" />
-
-      <Br />
-      <ImageInput source="file" accept="image/*">
-        <ImageField source="thumbnail" />
-      </ImageInput>
     </FormTab>
 
     <FormTab label="resources.picture.tabs.repeat" path="repeat">
@@ -130,5 +131,5 @@ PictureFields.defaultProps = {
 
 export default compose(
   withMapConfig,
-  withStyles(styles)
+  withStyles(styles),
 )(PictureFields);

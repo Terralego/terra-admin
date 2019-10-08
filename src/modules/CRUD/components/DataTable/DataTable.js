@@ -31,7 +31,7 @@ class DataTable extends React.Component {
 
   loadData = () => {
     const { getFeaturesList } = this.props;
-    const { layer: { id } } = this.getView();
+    const { layer: { id } = {} } = this.getView();
     if (!id) return;
     getFeaturesList(id);
     this.setState({
@@ -87,7 +87,7 @@ class DataTable extends React.Component {
       onHoverCell = () => null,
     } = this.props;
 
-    const { layer: { name }, name: displayName = name } = this.getView();
+    const { layer: { name } = {}, name: displayName = name } = this.getView();
 
     const { data, columns, loading } = this.state;
 

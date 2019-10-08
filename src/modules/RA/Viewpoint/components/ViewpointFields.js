@@ -4,12 +4,8 @@ import Api from '@terralego/core/modules/Api';
 
 import {
   AutocompleteArrayInput,
-  Datagrid,
-  DateField,
-  EditButton,
   FileField,
   FormTab,
-  ImageField,
   LinearProgress,
   LongTextInput,
   NumberField,
@@ -17,9 +13,7 @@ import {
   ReferenceArrayField,
   SelectInput,
   TabbedForm,
-  TextField,
   TextInput,
-  ReferenceField,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
@@ -29,6 +23,7 @@ import { RES_PICTURE } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
+import GridListPictures from './GridListPictures';
 
 const styles = {
   inline: {
@@ -160,15 +155,7 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
       {edit && (
       <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
         <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} fullWidth>
-          <Datagrid rowClick="edit">
-            {/* Waiting for back-end api to manage it properly */}
-            {false && <ReferenceField source="owner_id" reference="users" />}
-            <TextField source="properties.meteo" />
-            <DateField source="date" />
-            <TextField source="state" />
-            <ImageField source="file.thumbnail" />
-            <EditButton />
-          </Datagrid>
+          <GridListPictures />
         </ReferenceArrayField>
       </FormTab>
       )}

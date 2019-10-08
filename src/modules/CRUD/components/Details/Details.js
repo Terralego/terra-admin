@@ -14,7 +14,7 @@ import './styles.scss';
 
 class Details extends React.Component {
   static propTypes = {
-    layer: PropTypes.shape({}).isRequired,
+    view: PropTypes.shape({}).isRequired,
     feature: PropTypes.shape({}),
     fetchFeature: PropTypes.func.isRequired,
     match: PropTypes.shape({
@@ -113,12 +113,12 @@ class Details extends React.Component {
 
   getData () {
     const {
-      layer,
+      view,
       fetchFeature,
       match: { params: { id: paramId } },
     } = this.props;
-    if (layer && paramId && !this.isCreateAction) {
-      const { id: layerId } = layer;
+    if (view && paramId && !this.isCreateAction) {
+      const { layer: { id: layerId } } = view;
       fetchFeature(layerId, paramId);
     }
   }
@@ -127,7 +127,7 @@ class Details extends React.Component {
     const {
       match: { params: { id: paramId } },
       feature: { properties },
-      layer: { schema = {} },
+      view: { formSchema: schema = {} },
     } = this.props;
     if (Object.keys(schema).length) {
       this.setState({
@@ -138,7 +138,7 @@ class Details extends React.Component {
             ...list,
             [prop]: {
               ...schema.properties[prop],
-              ...(properties && paramId !== ACTION_CREATE)
+              ...(properties && paramId !== ACTION_CREATE && typeof properties[prop] !== 'object')
                 ? { default: properties[prop] }
                 : {},
             },
@@ -152,7 +152,7 @@ class Details extends React.Component {
     const {
       match: { params: { action: paramAction, id: paramId } },
       updateControls,
-      layer,
+      view,
       feature,
     } = this.props;
     const { schema } = this.state;
@@ -163,11 +163,11 @@ class Details extends React.Component {
           schema={schema}
           updateControls={updateControls}
           action={paramAction || paramId}
-          layer={layer}
+          view={view}
         />
       );
     }
-    return <Read schema={schema} layer={layer} feature={feature} />;
+    return <Read feature={feature} />;
   }
 
   onSizeChange = () => {

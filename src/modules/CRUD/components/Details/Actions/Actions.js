@@ -10,8 +10,10 @@ class Actions extends React.Component {
   static propTypes = {
     paramLayer: PropTypes.string.isRequired,
     paramId: PropTypes.string,
-    layer: PropTypes.shape({
-      id: PropTypes.number,
+    view: PropTypes.shape({
+      layer: PropTypes.shape({
+        id: PropTypes.number,
+      }),
     }),
     t: PropTypes.func,
     deleteFeature: PropTypes.func,
@@ -28,8 +30,10 @@ class Actions extends React.Component {
     deleteFeature () { return undefined; },
     getSettings () { return undefined; },
     paramId: undefined,
-    layer: {
-      id: undefined,
+    view: {
+      layer: {
+        id: undefined,
+      },
     },
     history: {
       push () {},
@@ -45,7 +49,7 @@ class Actions extends React.Component {
       getSettings,
       paramLayer,
       paramId,
-      layer: { id: layerId },
+      view: { layer: { id: layerId } },
       deleteFeature,
       history: { push },
       t,

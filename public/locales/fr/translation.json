@@ -202,7 +202,8 @@
       "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
       "geometry": "Géométrie",
       "true": "Oui",
-      "false": "Non"
+      "false": "Non",
+      "other": "Autre"
     }
   },
   "help": {
@@ -535,6 +536,7 @@
         "geometry.coordinates[0]": "Longitude",
         "geometry.coordinates[1]": "Latitude",
         "properties.index": "Numéro d'ordre",
+        "properties.state": "Statut",
         "viewpoint": "Point de vue",
         "owner_id": "ID du photographe",
         "owner.properties.name": "Photographe",

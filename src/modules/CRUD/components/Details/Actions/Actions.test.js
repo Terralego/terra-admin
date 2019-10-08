@@ -40,8 +40,10 @@ beforeEach(() => {
     displayCancel: true,
     children: <div>Children component</div>,
     t: key => key,
-    layer: {
-      id: 10,
+    view: {
+      layer: {
+        id: 10,
+      },
     },
     history: {
       push: jest.fn(),

@@ -16,7 +16,7 @@ exports[`should render correctly 1`] = `
     <h2
       className="details__title"
     >
-      Cathedrale Saint-Caprais
+      Title of the feature
     </h2>
     <div>
       DownloadButtons
@@ -25,125 +25,157 @@ exports[`should render correctly 1`] = `
   <div
     className="details__content"
   >
-    <h3
-      className="details__subtitle"
-    >
-      Foo Title
-    </h3>
-    <ul
-      className="details__list"
-    >
-      <li
-        className="details__list-item"
-      >
-        <strong
-          className="details__list-label"
-        >
-          Ville
-        </strong>
-        <span
-          className="details__list-value"
-        >
-          <div
-            className="details__text"
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "Agen, Lot-et-Garonne, Nouvelle-Aquitaine",
-              }
-            }
-          />
+    <ul>
+      <li>
+        <span>
+          Name of the group
         </span>
+        <ul
+          className="details__list"
+        >
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              Numéro
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              2
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              Validation
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              CRUD.details.true
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              Available
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              CRUD.details.false
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              Array
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              1, 2, 3
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              EmptyValue
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "  ",
+                  }
+                }
+              />
+            </span>
+          </li>
+        </ul>
       </li>
-      <li
-        className="details__list-item"
-      >
-        <strong
-          className="details__list-label"
-        >
-          Nom
-        </strong>
-        <span
-          className="details__list-value"
-        >
-          <div
-            className="details__text"
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "Cathedrale Saint-Caprais",
-              }
-            }
-          />
+      <li>
+        <span>
+          CRUD.details.other
         </span>
-      </li>
-      <li
-        className="details__list-item"
-      >
-        <strong
-          className="details__list-label"
+        <ul
+          className="details__list"
         >
-          Description
-        </strong>
-        <span
-          className="details__list-value details__list-value--empty"
-        >
-          CRUD.details.noFeature
-        </span>
-      </li>
-      <li
-        className="details__list-item"
-      >
-        <strong
-          className="details__list-label"
-        >
-          Numéro
-        </strong>
-        <span
-          className="details__list-value"
-        >
-          2
-        </span>
-      </li>
-      <li
-        className="details__list-item"
-      >
-        <strong
-          className="details__list-label"
-        >
-          Validation
-        </strong>
-        <span
-          className="details__list-value"
-        >
-          CRUD.details.true
-        </span>
-      </li>
-      <li
-        className="details__list-item"
-      >
-        <strong
-          className="details__list-label"
-        >
-          Validation
-        </strong>
-        <span
-          className="details__list-value"
-        >
-          CRUD.details.false
-        </span>
-      </li>
-      <li
-        className="details__list-item"
-      >
-        <strong
-          className="details__list-label"
-        >
-          Labels
-        </strong>
-        <span
-          className="details__list-value"
-        >
-          PM 1979, PM 1981
-        </span>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              key without value
+            </strong>
+            <span
+              className="details__list-value details__list-value--empty"
+            >
+              CRUD.details.noFeature
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              Hello foo bar
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "Value hello foo bar",
+                  }
+                }
+              />
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              Contact
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "Foo contact",
+                  }
+                }
+              />
+            </span>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Tab, Tabs } from '@blueprintjs/core';
+import { Redirect, Link } from 'react-router-dom';
 import classnames from 'classnames';
-import { orderProperties } from 'react-jsonschema-form/lib/utils';
 
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
@@ -10,8 +10,8 @@ import DownloadButtons from '../DownloadButtons';
 import Actions from '../Actions';
 
 const NO_FEATURE = 'CRUD.details.noFeature';
-const emptyStringOrUndef = value => ['', undefined].includes(value);
 
+const emptyStringNullOrUndef = value => ['', null, undefined].includes(value);
 
 const isHTML = value => {
   const div = document.createElement('div');
@@ -30,7 +30,7 @@ const formattedProp = ({ value, t }) => {
       : t('CRUD.details.false');
   }
 
-  if (emptyStringOrUndef(value)) {
+  if (emptyStringNullOrUndef(value)) {
     return t(NO_FEATURE);
   }
 
@@ -53,59 +53,107 @@ const formattedProp = ({ value, t }) => {
   return value;
 };
 
-const Read = ({
-  t,
-  match: { params: { layer: paramLayer, id: paramId } },
-  schema: { title: schemaTitle, properties = {} },
-  displayViewFeature,
-  layer: { templates, uiSchema: { 'ui:order': order } = {} },
-  feature: { id },
-}) => {
-  if (!displayViewFeature) {
-    toast.displayError(t('CRUD.details.noAccess'));
-    return (<Redirect to={generateURI('layer', { layer: paramLayer })} />);
+
+class Read extends React.Component {
+  state = {
+    tabs: [],
   }
 
-  const { name: { default: title } = {} } = properties;
-  const hasProperties = !!Object.keys(properties).length;
+  componentDidMount () {
+    this.generatesTabs();
+  }
 
-  const orderedProperties = orderProperties(Object.keys(properties), order);
+  componentDidUpdate ({
+    feature: { display_properties: prevDisplayProperties },
+  }) {
+    const {
+      feature: { display_properties: displayProperties },
+    } = this.props;
+    if (prevDisplayProperties !== displayProperties) {
+      this.generatesTabs();
+    }
+  }
 
-  return (
-    <div className="details">
-      <div className="details__header">
-        <h2 className="details__title">{title || t(NO_FEATURE)}</h2>
-        <DownloadButtons
-          className="details__templates"
-          id={id}
-          files={templates}
-        />
-      </div>
-      {hasProperties && (
-        <div className="details__content">
-          {schemaTitle && (
-            <h3 className="details__subtitle">{schemaTitle}</h3>
-          )}
-          <ul className="details__list">
-            {orderedProperties.map(prop => (
-              <li key={prop} className="details__list-item">
-                <strong className="details__list-label">{properties[prop].title || prop}</strong>
-                <span className={classnames(
-                  'details__list-value',
-                  { 'details__list-value--empty': emptyStringOrUndef(properties[prop].default) },
-                )}
-                >
-                  {formattedProp({ value: properties[prop].default, t })}
-                </span>
-              </li>
-            ))}
-          </ul>
+  generatesTabs = () => {
+    const {
+      feature: { display_properties: displayProperties },
+    } = this.props;
+    this.setState({
+      tabs: Object.keys(displayProperties)
+        .map(tabs => ({ ...displayProperties[tabs] }))
+        .sort((a, b) => a.order - b.order),
+    });
+  }
+
+  renderPanel = properties => {
+    const { t } = this.props;
+    return (
+      <ul className="details__list">
+        {Object.keys(properties).map(name => (
+          <li key={name} className="details__list-item">
+            <strong className="details__list-label">{name}</strong>
+            <span className={classnames(
+              'details__list-value',
+              { 'details__list-value--empty': emptyStringNullOrUndef(properties[name]) },
+            )}
+            >
+              {formattedProp({ value: properties[name], t })}
+            </span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  render () {
+    const {
+      t,
+      match: { params: { layer: paramLayer, id: paramId } },
+      location: { hash },
+      displayViewFeature,
+      feature: { title: featureTitle, documents },
+    } = this.props;
+
+    if (!displayViewFeature) {
+      toast.displayError(t('CRUD.details.noAccess'));
+      return (<Redirect to={generateURI('layer', { layer: paramLayer })} />);
+    }
+
+    const { tabs } = this.state;
+    const hasProperties = !!tabs.length;
+
+    return (
+      <div className="details">
+        <div className="details__header">
+          <h2 className="details__title">{featureTitle || t(NO_FEATURE)}</h2>
+          <DownloadButtons
+            className="details__templates"
+            documents={documents}
+          />
         </div>
-      )}
-      <Actions paramId={paramId} paramLayer={paramLayer} displayUpdate displayDelete />
-    </div>
-  );
-};
+        {hasProperties && (
+          <div className="details__content">
+            <Tabs
+              id="tabs"
+              selectedTabId={hash.substring(1) || tabs[0].slug}
+            >
+              {tabs.map(({ title, slug = 'other', properties }) => (
+                <Tab
+                  key={slug}
+                  id={slug}
+                  title={<Link to={`#${slug}`}>{title || t('CRUD.details.other')}</Link>}
+                  panel={this.renderPanel(properties)}
+                />
+              ))}
+              <Tabs.Expander />
+            </Tabs>
+          </div>
+        )}
+        <Actions paramId={paramId} paramLayer={paramLayer} displayUpdate displayDelete />
+      </div>
+    );
+  }
+}
 
 Read.propTypes = {
   match: PropTypes.shape({
@@ -114,15 +162,14 @@ Read.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  schema: PropTypes.shape({
-    properties: PropTypes.shape({}),
+  location: PropTypes.shape({
+    hash: PropTypes.string,
   }),
   displayViewFeature: PropTypes.bool,
-  layer: PropTypes.shape({
-    templates: PropTypes.array,
-  }),
   feature: PropTypes.shape({
-    id: PropTypes.number,
+    title: PropTypes.string,
+    documents: PropTypes.array,
+    display_properties: PropTypes.shape({}),
   }),
   t: PropTypes.func,
 };
@@ -134,15 +181,14 @@ Read.defaultProps = {
       id: undefined,
     },
   },
-  schema: {
-    properties: {},
-  },
+  location: PropTypes.shape({
+    hash: undefined,
+  }),
   displayViewFeature: true,
-  layer: {
-    templates: [],
-  },
   feature: {
-    id: undefined,
+    title: '',
+    documents: [],
+    display_properties: {},
   },
   t: text => text,
 };

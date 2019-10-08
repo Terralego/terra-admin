@@ -8,12 +8,12 @@ jest.mock('@terralego/core/modules/Api', () => ({
 
 it('should fetch list of feature', () => {
   fetchFeaturesList('foo');
-  expect(Api.request).toHaveBeenCalledWith('layer/foo/feature/');
+  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/');
 });
 
 it('should fetch a feature', () => {
   fetchFeature('foo', '1337');
-  expect(Api.request).toHaveBeenCalledWith('layer/foo/feature/1337/');
+  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/1337/');
 });
 
 it('should delete a feature', () => {

@@ -1,10 +1,10 @@
 import Api from '@terralego/core/modules/Api';
 
 export const fetchFeaturesList = layerId =>
-  Api.request(`layer/${layerId}/feature/`);
+  Api.request(`crud/layer/${layerId}/features/`);
 
 export const fetchFeature = (layerId, featureId) =>
-  Api.request(`layer/${layerId}/feature/${featureId}/`);
+  Api.request(`crud/layer/${layerId}/features/${featureId}/`);
 
 const createFeature = (layerId, body) =>
   Api.request(`layer/${layerId}/feature/`, { method: 'POST', body });

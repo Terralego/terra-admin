@@ -138,7 +138,7 @@ class Details extends React.Component {
             ...list,
             [prop]: {
               ...schema.properties[prop],
-              ...(properties && paramId !== ACTION_CREATE)
+              ...(properties && paramId !== ACTION_CREATE && typeof properties[prop] !== 'object')
                 ? { default: properties[prop] }
                 : {},
             },
@@ -167,7 +167,7 @@ class Details extends React.Component {
         />
       );
     }
-    return <Read schema={schema} view={view} feature={feature} />;
+    return <Read feature={feature} />;
   }
 
   onSizeChange = () => {

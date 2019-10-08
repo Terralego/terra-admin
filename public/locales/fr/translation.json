@@ -202,7 +202,8 @@
       "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
       "geometry": "Géométrie",
       "true": "Oui",
-      "false": "Non"
+      "false": "Non",
+      "other": "Autre"
     }
   },
   "help": {

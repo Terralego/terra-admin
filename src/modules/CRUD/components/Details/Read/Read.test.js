@@ -4,8 +4,20 @@ import renderer from 'react-test-renderer';
 import Read from './Read';
 
 
+jest.mock('@blueprintjs/core', () => {
+  const Tabs = ({ children }) => <ul>{children}</ul>;
+  const Tab = ({ title, panel }) => <li>{title}{panel}</li>;
+  Tabs.Expander = () => null;
+
+  return {
+    Tabs,
+    Tab,
+  };
+});
+
 jest.mock('react-router-dom', () => ({
   Redirect: () => <div>Error because Redirect</div>,
+  Link: ({ children }) => <span>{children}</span>,
 }));
 
 jest.mock('../../../../../utils/toast', () => ({
@@ -25,61 +37,37 @@ jest.mock('../Actions', () => () => (<div>Actions</div>));
 const props = {
   t: text => text,
   match: { params: { layer: 'layerFoo', id: 'layerId' } },
-  schema: {
-    title: 'Foo Title',
-    properties: {
-      city: {
-        type: 'string',
-        title: 'Ville',
-        default: 'Agen, Lot-et-Garonne, Nouvelle-Aquitaine',
-      },
-      name: {
-        type: 'string',
-        title: 'Nom',
-        default: 'Cathedrale Saint-Caprais',
-      },
-      description: {
-        type: 'string',
-        title: 'Description',
-        default: '',
-      },
-      numero: {
-        type: 'integer',
-        title: 'Numéro',
-        default: 2,
-      },
-      validation: {
-        type: 'boolean',
-        title: 'Validation',
-        default: true,
-      },
-      available: {
-        type: 'boolean',
-        title: 'Validation',
-        default: false,
-      },
-      labels: {
-        type: 'array',
-        items: {
-          enum: [
-            'VPAH',
-            'PM 1979',
-            'PM 1981',
-            'PM 1991',
-            'PM 1992',
-          ],
-          type: 'string',
+  displayViewFeature: true,
+  location: {
+    hash: '',
+  },
+  feature: {
+    title: 'Title of the feature',
+    display_properties: {
+      'Group 1': {
+        title: 'Name of the group',
+        slug: 'slug-group',
+        order: 1,
+        pictogram: null,
+        properties: {
+          Numéro: 2,
+          Validation: true,
+          Available: false,
+          Array: [1, 2, 3],
+          EmptyValue: '  ',
         },
-        title: 'Labels',
-        uniqueItems: true,
-        default: ['PM 1979', 'PM 1981'],
+      },
+      __default__: {
+        title: '',
+        pictogram: null,
+        order: 9999,
+        properties: {
+          'key without value': null,
+          'Hello foo bar': 'Value hello foo bar',
+          Contact: 'Foo contact',
+        },
       },
     },
-  },
-  displayViewFeature: true,
-  layer: {},
-  feature: {
-    id: undefined,
   },
 };
 

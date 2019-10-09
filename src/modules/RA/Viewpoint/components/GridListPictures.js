@@ -66,7 +66,7 @@ const GridList = ({
       className={classes.gridList}
     >
       {ids.map(id => {
-        const { file, properties, owner, state, id: pictId } = data[id];
+        const { file, properties = {}, owner, state, id: pictId } = data[id] || {};
         return (
           <GridListTile
             component={Link}
@@ -82,19 +82,19 @@ const GridList = ({
             <GridListTileBar
               className={classes.tileBar}
               title={properties.index}
-              subtitle={
+              subtitle={(
                 <span>
                   {owner.properties.name}
                   &nbsp;|&nbsp;
                   {t('resources.picture.fields.properties.state')}&nbsp;:{' '}
                   {state}
                 </span>
-              }
-              actionIcon={
+              )}
+              actionIcon={(
                 <IconButton>
                   <EditIcon color="secondary" />
                 </IconButton>
-              }
+              )}
             />
           </GridListTile>
         );

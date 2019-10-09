@@ -19,6 +19,7 @@ import {
 
 import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
 
+import { withRouter } from 'react-router-dom';
 import { RES_VIEWPOINT } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
@@ -33,26 +34,20 @@ const styles = {
 
 const Br = () => <br />;
 
-const PictureFields = ({ edit, classes, mapConfig, ...props }) => (
-  <TabbedForm {...props}>
+const PictureFields = ({ edit, classes, mapConfig, location: { state: { referrer } = {} }, location, ...props }) => (
+  <TabbedForm {...props} redirect={referrer}>
     <FormTab label="resources.picture.tabs.metadata">
       <ReferenceInput
         source="viewpoint"
         reference={RES_VIEWPOINT}
         formClassName={classes.inline}
+        validate={required()}
       >
         <SelectInput optionText="label" />
       </ReferenceInput>
       <TextInput source="properties.index" formClassName={classes.inline} />
-
-      <Br />
-
-      <ImageInput source="file" accept="image/*">
-        <ImageField source="thumbnail" />
-      </ImageInput>
-
-      <DateTimeInput source="date" formClassName={classes.inline} />
-      <DateInput source="date" formClassName={classes.inline} />
+      <DateTimeInput source="date" showTime />
+      <DateInput source="date" validate={required()} />
 
       <Br />
 
@@ -82,6 +77,12 @@ const PictureFields = ({ edit, classes, mapConfig, ...props }) => (
 
       <TextInput source="remarks" validate={required()} />
       <LongTextInput source="properties.observations" />
+
+      <Br />
+
+      <ImageInput source="file" accept="image/*">
+        <ImageField source="thumbnail" />
+      </ImageInput>
     </FormTab>
 
     <FormTab label="resources.picture.tabs.repeat" path="repeat">
@@ -130,6 +131,7 @@ PictureFields.defaultProps = {
 };
 
 export default compose(
+  withRouter,
   withMapConfig,
   withStyles(styles),
 )(PictureFields);

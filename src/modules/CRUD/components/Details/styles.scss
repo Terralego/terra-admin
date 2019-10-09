@@ -128,7 +128,7 @@
     justify-content: flex-end;
     padding: 1rem 1rem 0;
     > * + * {
-      margin-left: 1rem;
+      margin-left: 1rem !important; // Cause of bootstrap override
       width: auto;
     }
     &-delete {
@@ -163,52 +163,12 @@
       overflow: auto;
     }
   }
+}
 
-
-  // Below from bootstrap
-  fieldset {
-    // Browsers set a default `min-width: min-content;` on fieldsets,
-    // unlike e.g. `<div>`s, which have `min-width: 0;` by default.
-    // So we reset that to ensure fieldsets behave more like a standard block element.
-    // See https://github.com/twbs/bootstrap/issues/12359
-    // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements 
-    min-width: 0;
-    // Reset the default outline behavior of fieldsets so they don't affect page layout.
-    padding: 0;
-    margin: 0;
-    border: 0;
-  }
-
+.bootstrap-inside {
+  @import "~bootstrap/dist/css/bootstrap.min";
   textarea {
     resize: vertical;
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .list-group {
-    margin-bottom: 1rem;
-  }
-
-  // Below from Bootstrap 3.3.6 because React-json-schema-form works fine with this version...
-  .checkbox,
-  .radio {
-    label {
-      min-height: 20px;
-      padding-left: 20px;
-      margin-bottom: 0;
-      font-weight: 400;
-      cursor: pointer;
-    }
-    input[type="checkbox"],
-    input[type="radio"] {
-      position: absolute;
-      margin-top: 2px;
-      margin-left: -20px;
-    }
   }
 }
 
@@ -223,10 +183,3 @@
     }
   }
 }
-
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/utilities";
-@import "~bootstrap/scss/list-group";
-@import "~bootstrap/scss/forms";

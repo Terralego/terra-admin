@@ -8,6 +8,7 @@ import dataProvider from '../../services/react-admin/dataProvider';
 import withResourceEndpoint from '../../services/react-admin/withResourceEndpoint';
 import enhanceDataProvider from '../../services/react-admin/enhanceDataProvider';
 import patchPictureDataProvider from '../../services/react-admin/patchPictureDataProvider';
+import toMultipart from '../../services/react-admin/toMultipart';
 
 import authProvider from '../../services/react-admin/authProvider';
 import i18nProvider from '../../services/react-admin/i18nProvider';
@@ -45,8 +46,9 @@ export const CustomAdmin = ({ locale, history, permissions, allowedModules = [] 
 
   const customDataProvider = compose(
     withResourceEndpoint,
-    enhanceDataProvider,
     patchPictureDataProvider,
+    toMultipart,
+    enhanceDataProvider,
   )(dataProvider);
 
   return (

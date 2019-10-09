@@ -322,7 +322,7 @@ class Edit extends React.Component {
         <div className="details__header">
           <h2 className="details__title">{mainTitle}</h2>
         </div>
-        <div className="details__content">
+        <div className="details__content bootstrap-inside">
           {properties
             ? (
               <Form

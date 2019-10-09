@@ -20,7 +20,7 @@ exports[`Snapshots should render correctly 1`] = `
     </h2>
   </div>
   <div
-    className="details__content"
+    className="details__content bootstrap-inside"
   >
     <form>
       <div>
@@ -45,7 +45,7 @@ exports[`Snapshots should render correctly without schema props 1`] = `
     </h2>
   </div>
   <div
-    className="details__content"
+    className="details__content bootstrap-inside"
   >
     <div>
       Actions buttons

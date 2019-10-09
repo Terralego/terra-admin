@@ -434,10 +434,14 @@ it('should change form', () => {
     },
   };
 
-  instance.setState = jest.fn();
+  let stateCallback;
+  instance.setState = jest.fn(callback => {
+    stateCallback = callback;
+  });
+  instance.updateSchema(props.schema);
   instance.changeForm({ formData: { city: 'Toulouse', geometryFromMap: false } });
 
-  expect(instance.setState).toHaveBeenCalledWith({
+  expect(stateCallback(instance.state)).toEqual({
     schema: {
       properties: {
         geometryFromMap: { default: true, title: 'CRUD.details.geometry', type: 'boolean' },

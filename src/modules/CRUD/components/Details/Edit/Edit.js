@@ -22,15 +22,17 @@ import {
   MULTI_POLYGON,
 } from '../../../../../utils/geom';
 
-function updateSchemaPropertiesValues (properties, formData) {
-  return Object.keys(properties).reduce((list, prop) => ({
+const updateSchemaPropertiesValues = (properties, formData) => (
+  Object.keys(properties).reduce((list, prop) => ({
     ...list,
     [prop]: {
       ...properties[prop],
-      default: formData[prop],
+      ...(properties[prop].type === 'object')
+        ? { properties: updateSchemaPropertiesValues(properties[prop].properties, formData[prop]) }
+        : { default: formData[prop] },
     },
-  }), {});
-}
+  }), {})
+);
 class Edit extends React.Component {
   static propTypes = {
     map: PropTypes.shape({}),
@@ -213,18 +215,21 @@ class Edit extends React.Component {
   }
 
   changeForm = ({ formData }) => {
-    const { schema, geom } = this.state;
     const { t } = this.props;
 
-    const properties = updateSchemaPropertiesValues(schema.properties, formData);
-    const geometryFromMap = { type: 'boolean', title: t('CRUD.details.geometry'), default: !!Object.keys(geom).length };
-
-    this.setState({
+    this.setState(({ schema, geom }) => ({
       schema: {
         ...schema,
-        properties: { ...properties, geometryFromMap },
+        properties: {
+          ...updateSchemaPropertiesValues(schema.properties, formData),
+          geometryFromMap: {
+            type: 'boolean',
+            title: t('CRUD.details.geometry'),
+            default: !!Object.keys(geom).length,
+          },
+        },
       },
-    });
+    }));
   }
 
   submitFeature = async ({ formData: { geometryFromMap, ...properties } }) => {

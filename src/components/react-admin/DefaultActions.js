@@ -9,21 +9,21 @@ import compose from '../../utils/compose';
 
 const DefaultActions = ({
   basePath,
-  location: { state: { referrer } = {} },
+  location: { state: { redirect } = {} },
 }) => (
   <CardActions>
-    {!referrer && (
+    {!redirect && (
       <ListButton
         basePath={basePath}
         variant="outlined"
         label="ra.action.back-to-list"
       />
     )}
-    {referrer && (
+    {redirect && (
       <Button
         component={Link}
         to={{
-          pathname: referrer,
+          pathname: redirect,
         }}
         label="ra.action.back"
       >

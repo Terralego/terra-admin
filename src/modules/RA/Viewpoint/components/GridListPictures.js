@@ -75,7 +75,7 @@ const GridList = ({
             to={{
               pathname: linkToRecord(basePath, pictId),
               state: {
-                referrer: location.pathname,
+                redirect: location.pathname,
               },
             }}
           >
@@ -108,7 +108,7 @@ const GridList = ({
           pathname: `/${RES_PICTURE}/create`,
           state: {
             record: { viewpoint: viewpointId },
-            referrer: location.pathname,
+            redirect: location.pathname,
           },
         }}
       >

@@ -34,10 +34,17 @@ const styles = {
 
 const Br = () => <br />;
 
-const PictureFields = ({ edit, classes, mapConfig, location: { state: { referrer } = {} }, location, ...props }) => (
+const PictureFields = ({
+  edit,
+  classes,
+  mapConfig,
+  location: { state: { redirect } = {} },
+  location,
+  ...props
+}) => (
   <TabbedForm
     {...props}
-    {...(referrer ? { redirect: referrer } : {})}
+    {...(redirect ? { redirect } : {})}
   >
     <FormTab label="resources.picture.tabs.metadata">
       <ReferenceInput

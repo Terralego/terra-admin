@@ -34,7 +34,9 @@ function updateSchemaPropertiesValues (properties, formData) {
 class Edit extends React.Component {
   static propTypes = {
     map: PropTypes.shape({}),
-    feature: PropTypes.shape({}),
+    feature: PropTypes.shape({
+      title: PropTypes.string,
+    }),
     saveFeature: PropTypes.func.isRequired,
     view: PropTypes.shape({}).isRequired,
     layerPaint: PropTypes.shape({}).isRequired,
@@ -54,7 +56,9 @@ class Edit extends React.Component {
 
   static defaultProps = {
     map: {},
-    feature: {},
+    feature: {
+      title: undefined,
+    },
     displayAddFeature: true,
     displayChangeFeature: true,
     updateControls () {},
@@ -284,6 +288,7 @@ class Edit extends React.Component {
       paramId,
       displayAddFeature,
       displayChangeFeature,
+      feature: { title },
     } = this.props;
 
     if (
@@ -294,7 +299,6 @@ class Edit extends React.Component {
       return (<Redirect to={generateURI('layer', { layer: paramLayer })} />);
     }
 
-    const { name: { default: title } = {} } = properties || {};
     const mainTitle = action === ACTION_CREATE
       ? t('CRUD.details.create', { layer: displayName })
       : (title || t('CRUD.details.noFeature'));

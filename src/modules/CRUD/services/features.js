@@ -7,13 +7,13 @@ export const fetchFeature = (layerId, featureId) =>
   Api.request(`crud/layer/${layerId}/features/${featureId}/`);
 
 const createFeature = (layerId, body) =>
-  Api.request(`layer/${layerId}/feature/`, { method: 'POST', body });
+  Api.request(`crud/layer/${layerId}/features/`, { method: 'POST', body });
 
 const updateFeature = (layerId, featureId, body) =>
-  Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'PUT', body });
+  Api.request(`crud/layer/${layerId}/features/${featureId}/`, { method: 'PUT', body });
 
 export const deleteFeature = (layerId, featureId) =>
-  Api.request(`layer/${layerId}/feature/${featureId}/`, { method: 'DELETE' });
+  Api.request(`crud/layer/${layerId}/features/${featureId}/`, { method: 'DELETE' });
 
 export const saveFeature = (layerId, featureId, body) => (
   featureId

@@ -18,17 +18,17 @@ it('should fetch a feature', () => {
 
 it('should delete a feature', () => {
   deleteFeature('foo', '1337');
-  expect(Api.request).toHaveBeenCalledWith('layer/foo/feature/1337/', { method: 'DELETE' });
+  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/1337/', { method: 'DELETE' });
 });
 
 it('should create a feature', () => {
   saveFeature('foo', false, { bar: 'bar' });
-  expect(Api.request).toHaveBeenCalledWith('layer/foo/feature/', { method: 'POST', body: { bar: 'bar' } });
+  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/', { method: 'POST', body: { bar: 'bar' } });
 });
 
 it('should update a feature', () => {
   saveFeature('foo', '1337', { bar: 'bar' });
-  expect(Api.request).toHaveBeenCalledWith('layer/foo/feature/1337/', { method: 'PUT', body: { bar: 'bar' } });
+  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/1337/', { method: 'PUT', body: { bar: 'bar' } });
 });
 
 it('should get bounds', () => {

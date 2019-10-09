@@ -16,7 +16,7 @@ exports[`Snapshots should render correctly 1`] = `
     <h2
       className="details__title"
     >
-      Title
+      Title of the feature
     </h2>
   </div>
   <div
@@ -41,7 +41,7 @@ exports[`Snapshots should render correctly without schema props 1`] = `
     <h2
       className="details__title"
     >
-      CRUD.details.noFeature
+      Title of the feature
     </h2>
   </div>
   <div

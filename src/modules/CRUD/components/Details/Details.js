@@ -14,8 +14,12 @@ import './styles.scss';
 
 class Details extends React.Component {
   static propTypes = {
-    view: PropTypes.shape({}).isRequired,
-    feature: PropTypes.shape({}),
+    view: PropTypes.shape({
+      formSchema: PropTypes.shape({}),
+    }),
+    feature: PropTypes.shape({
+      properties: PropTypes.shape({}),
+    }),
     fetchFeature: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -32,7 +36,12 @@ class Details extends React.Component {
   };
 
   static defaultProps = {
-    feature: {},
+    view: {
+      formSchema: {},
+    },
+    feature: {
+      properties: {},
+    },
     match: {
       params: {
         id: undefined,
@@ -85,7 +94,7 @@ class Details extends React.Component {
         },
       },
       feature,
-      feature: { properties } = {},
+      feature: { properties },
       detailsHasLoaded,
     } = this.props;
 
@@ -98,7 +107,7 @@ class Details extends React.Component {
     }
 
     if (
-      properties !== prevProperties
+      (properties !== prevProperties)
       || prevParamId !== paramId
       || prevParamAction !== paramAction
     ) {
@@ -123,29 +132,39 @@ class Details extends React.Component {
     }
   }
 
-  setSchema = () => {
+  buildSchema = (schemaProperties, properties = {}) => {
     const {
       match: { params: { id: paramId } },
-      feature: { properties },
+    } = this.props;
+    return Object.keys(schemaProperties).reduce((list, prop) => ({
+      ...list,
+      [prop]: {
+        ...schemaProperties[prop],
+        ...(schemaProperties[prop].type === 'object')
+          ? { properties: this.buildSchema(schemaProperties[prop].properties, properties[prop]) }
+          : {},
+        ...(paramId !== ACTION_CREATE && properties[prop] && schemaProperties[prop].type !== 'object')
+          ? { default: properties[prop] }
+          : {},
+      },
+    }), {});
+  }
+
+  setSchema = () => {
+    const {
+      feature: { properties = {} },
       view: { formSchema: schema = {} },
     } = this.props;
-    if (Object.keys(schema).length) {
-      this.setState({
-        schema: {
-          type: 'object',
-          ...schema,
-          properties: Object.keys(schema.properties).reduce((list, prop) => ({
-            ...list,
-            [prop]: {
-              ...schema.properties[prop],
-              ...(properties && paramId !== ACTION_CREATE && typeof properties[prop] !== 'object')
-                ? { default: properties[prop] }
-                : {},
-            },
-          }), {}),
-        },
-      });
+    if (!Object.keys(properties).length && !Object.keys(schema).length) {
+      return;
     }
+    this.setState({
+      schema: {
+        type: 'object',
+        ...schema,
+        properties: this.buildSchema(schema.properties, properties),
+      },
+    });
   }
 
   renderContent = () => {
@@ -164,6 +183,7 @@ class Details extends React.Component {
           updateControls={updateControls}
           action={paramAction || paramId}
           view={view}
+          feature={feature}
         />
       );
     }
@@ -189,7 +209,6 @@ class Details extends React.Component {
       toast.displayError(t('CRUD.details.errorNoFeature'));
       return <Redirect to={generateURI('layer', { layer: paramLayer })} />;
     }
-
     const isLoading = !Object.keys(feature).length && paramId !== ACTION_CREATE;
 
     return (

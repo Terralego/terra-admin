@@ -15,6 +15,7 @@ import { linkToRecord } from 'ra-core';
 /* eslint-enable */
 
 import compose from '../../../../utils/compose';
+import { RES_PICTURE } from '../../ra-modules';
 
 const styles = theme => ({
   root: {
@@ -104,7 +105,7 @@ const GridList = ({
         component={Link}
         key="add"
         to={{
-          pathname: '/picture/create',
+          pathname: `/${RES_PICTURE}/create`,
           state: {
             record: { viewpoint: viewpointId },
             referrer: location.pathname,

@@ -41,7 +41,6 @@ const ViewpointFields = ({
   edit,
   classes,
   mapConfig,
-  record: { id: viewpointId },
   record,
   ...props
 }) => {
@@ -203,7 +202,7 @@ const ViewpointFields = ({
             reference={RES_PICTURE}
             fullWidth
           >
-            <GridListPictures viewpointId={viewpointId} />
+            <GridListPictures viewpointId={record.id} />
           </ReferenceArrayField>
         </FormTab>
       )}

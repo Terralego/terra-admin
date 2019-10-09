@@ -55,7 +55,9 @@ beforeEach(() => {
   props = {
     settings: {},
     map: {},
-    feature: {},
+    feature: {
+      title: 'Title of the feature',
+    },
     saveFeature: jest.fn(),
     updateControls: jest.fn(),
     view: {
@@ -76,6 +78,12 @@ beforeEach(() => {
       properties: {
         city: { type: 'boolean', title: 'City' },
         name: { type: 'text', default: 'Title' },
+        group: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', title: 'Group name' },
+          },
+        },
       },
     },
     history: {
@@ -294,6 +302,12 @@ it('should update schema', () => {
         city: { title: 'City', type: 'boolean' },
         geometryFromMap: { default: false, title: 'CRUD.details.geometry', type: 'boolean' },
         name: { default: 'Title', type: 'text' },
+        group: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', title: 'Group name' },
+          },
+        },
       },
     },
   });

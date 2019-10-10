@@ -24,6 +24,7 @@ import { RES_VIEWPOINT } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
+import CustomToolbar from '../../../../components/react-admin/CustomToolbar';
 
 const styles = {
   inline: {
@@ -45,6 +46,8 @@ const PictureFields = ({
   <TabbedForm
     {...props}
     {...(redirect ? { redirect } : {})}
+
+    toolbar={<CustomToolbar />}
   >
     <FormTab label="resources.picture.tabs.metadata">
       <ReferenceInput

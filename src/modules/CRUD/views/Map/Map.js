@@ -81,7 +81,7 @@ export class Map extends React.Component {
   componentDidUpdate ({
     map: prevMap,
     settings: prevSettings,
-    match: { params: { layer: prevLayer, id: prevId } },
+    match: { params: { layer: prevLayer, id: prevId, action: prevAction } },
     feature: { geom: { coordinates: prevCoordinates } = {} },
   }) {
     const {
@@ -95,6 +95,9 @@ export class Map extends React.Component {
 
     if (settings !== prevSettings) {
       this.generateLayersToMap();
+    }
+
+    if (settings !== prevSettings || action !== prevAction || prevId !== id) {
       this.setInteractions();
     }
 
@@ -137,6 +140,7 @@ export class Map extends React.Component {
 
   setInteractions = () => {
     const {
+      match: { params: { id, action } },
       history: { push },
       displayViewFeature,
       settings,
@@ -147,15 +151,21 @@ export class Map extends React.Component {
     }
 
     const layers = getLayersPaints(settings);
-    const interactions = layers.map(interaction => ({
-      ...interaction,
-      interaction: INTERACTION_FN,
-      fn: ({
-        feature: { sourceLayer, properties: { _id: id } },
-      }) => {
-        push(generateURI('layer', { layer: sourceLayer, id }));
-      },
-    }));
+
+    const interactions = layers.map(interaction => {
+      if (action === ACTION_UPDATE || id === ACTION_CREATE) {
+        return interaction;
+      }
+      return {
+        ...interaction,
+        interaction: INTERACTION_FN,
+        fn: ({
+          feature: { sourceLayer, properties: { _id: propId } },
+        }) => {
+          push(generateURI('layer', { layer: sourceLayer, id: propId }));
+        },
+      };
+    });
 
     this.setState({
       interactions,

@@ -13,6 +13,17 @@ const NO_FEATURE = 'CRUD.details.noFeature';
 
 const emptyStringNullOrUndef = value => ['', null, undefined].includes(value);
 
+const haveStrictlySameValues = (arr1 = [], arr2 = []) => {
+  // @Todo: Memoize serialize function
+  const serialize = arr => [...arr].sort().join();
+  return serialize(arr1) === serialize(arr2);
+};
+
+const isTableObject = (arrayOfObjects = []) => {
+  const firstKeys = Object.keys(arrayOfObjects[0]);
+  return arrayOfObjects.every(item => haveStrictlySameValues(Object.keys(item), firstKeys));
+};
+
 const isHTML = value => {
   const div = document.createElement('div');
   const trimmedValue = value.trim();
@@ -48,6 +59,27 @@ const formattedProp = ({ value, t }) => {
 
   if (Array.isArray(value)) {
     if (value.some(v => typeof v === 'object')) {
+      if (isTableObject(value)) {
+        const columns = Object.keys(value[0]);
+        const rows = value.map(row => columns.map(col => row[col]));
+        return (
+          <table className="details__table">
+            <thead>
+              <tr>
+                {columns.map(th => <th key={th}>{th}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, i) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <tr key={i}>
+                  {row.map(td => <td key={td}>{td}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        );
+      }
       return formattedProp({ value: value.map(val => formattedProp({ value: val })).join('\n') });
     }
     return value.join(', ');

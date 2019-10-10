@@ -104,10 +104,56 @@ exports[`should render correctly 1`] = `
                 className="details__text"
                 dangerouslySetInnerHTML={
                   Object {
-                    "__html": "foo: Foo, bar: Bar",
+                    "__html": "foo: Foo, bar: Bar
+test: footest",
                   }
                 }
               />
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              ArrayOfObjectsToTable
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              <table
+                className="details__table"
+              >
+                <thead>
+                  <tr>
+                    <th>
+                      foo
+                    </th>
+                    <th>
+                      bar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      FooItem
+                    </td>
+                    <td>
+                      BarItem
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Foo2Item
+                    </td>
+                    <td>
+                      Bar2Item
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </span>
           </li>
           <li

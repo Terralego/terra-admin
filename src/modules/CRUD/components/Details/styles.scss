@@ -88,6 +88,16 @@
     }
   }
 
+  &__table {
+    width: calc(100% + 0.6rem + 2px);
+    margin: calc(-0.3rem - 1px);
+    border-collapse: collapse;
+    td, th {
+      border: 1px solid #ccc;
+      padding: 0.3rem;
+    }
+  }
+
   &__text {
     white-space: pre-wrap;
   }

@@ -67,7 +67,7 @@ const GridList = ({
       className={classes.gridList}
     >
       {ids.map(id => {
-        const { file, properties = {}, owner, state, id: pictId } = data[id] || {};
+        const { file, properties = {}, owner: { properties: ownerProperties = {} } = {}, state, id: pictId } = data[id] || {};
         return (
           <GridListTile
             component={Link}
@@ -85,7 +85,7 @@ const GridList = ({
               title={properties.index}
               subtitle={(
                 <span>
-                  {owner.properties.name}
+                  {ownerProperties.name}
                   &nbsp;|&nbsp;
                   {t('resources.picture.fields.properties.state')}&nbsp;:{' '}
                   {state}

@@ -24,6 +24,7 @@ import { change } from 'redux-form';
 import compose from '../../../../utils/compose';
 import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
+import JSONInput from '../../../../components/react-admin/JSONInput';
 import SourceFetcher from './SourceFetcher';
 import LegendItemsField from './LegendItemsField';
 import CustomLayer from './CustomLayer';
@@ -176,6 +177,8 @@ const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
           {({ formData }) => formData.minisheet_enable &&
             <LongTextInput source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
         </FormDataConsumer>
+
+        <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
       </FormTab>
 
       <FormTab label="datalayer.form.fields-settings" path="fields">

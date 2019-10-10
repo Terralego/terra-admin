@@ -81,12 +81,47 @@ exports[`should render correctly 1`] = `
             <strong
               className="details__list-label"
             >
-              Array
+              ArrayOfStrings
             </strong>
             <span
               className="details__list-value"
             >
               1, 2, 3
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              ArrayOfObjects
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "foo: Foo, bar: Bar",
+                  }
+                }
+              />
+            </span>
+          </li>
+          <li
+            className="details__list-item"
+          >
+            <strong
+              className="details__list-label"
+            >
+              Object
+            </strong>
+            <span
+              className="details__list-value"
+            >
+              foobar: foobar, foobarbar: foobarbar
             </span>
           </li>
           <li

@@ -47,7 +47,14 @@ const formattedProp = ({ value, t }) => {
   }
 
   if (Array.isArray(value)) {
+    if (value.some(v => typeof v === 'object')) {
+      return formattedProp({ value: value.map(val => formattedProp({ value: val })).join('\n') });
+    }
     return value.join(', ');
+  }
+
+  if (typeof value === 'object') {
+    return formattedProp({ value: Object.keys(value).map(key => `${key}: ${value[key]}`) });
   }
 
   return value;

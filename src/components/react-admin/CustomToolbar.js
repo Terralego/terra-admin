@@ -3,8 +3,6 @@ import { withRouter, Link } from 'react-router-dom';
 import { SaveButton, Toolbar, DeleteWithConfirmButton, Button } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
-
-
 import IconClose from '@material-ui/icons/Close'; // eslint-disable-line import/no-extraneous-dependencies
 
 import compose from '../../utils/compose';
@@ -20,9 +18,16 @@ const styles = {
 };
 
 
-const PostCreateToolbar = ({
+/**
+ * A custom toolbar that can be used in various form footer with
+ * default redirect aware actions:
+ * - A save button
+ * - A cancel button
+ * - A delete button
+ */
+const CustomToolbar = ({
   basePath,
-  location: { state: { redirect } = {} },
+  location: { state: { redirect } = {} } = {},
   classes,
   ...props
 }) => (
@@ -52,4 +57,4 @@ const PostCreateToolbar = ({
 export default compose(
   withRouter,
   withStyles(styles),
-)(PostCreateToolbar);
+)(CustomToolbar);

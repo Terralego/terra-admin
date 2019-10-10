@@ -1,15 +1,36 @@
 import React from 'react';
-
+import { withRouter, Link } from 'react-router-dom';
 import { CardActions, ListButton } from 'react-admin';
 
-const DefaultActions = ({ basePath }) => (
+import IconArrowBack from '@material-ui/icons/ArrowBack'; // eslint-disable-line import/no-extraneous-dependencies
+import Button from '@material-ui/core/Button'; // eslint-disable-line import/no-extraneous-dependencies
+
+import compose from '../../utils/compose';
+
+const DefaultActions = ({
+  basePath,
+  location: { state: { redirect } = {} },
+}) => (
   <CardActions>
-    <ListButton
-      basePath={basePath}
-      variant="outlined"
-      label="ra.action.back-to-list"
-    />
+    {!redirect && (
+      <ListButton
+        basePath={basePath}
+        variant="outlined"
+        label="ra.action.back-to-list"
+      />
+    )}
+    {redirect && (
+      <Button
+        component={Link}
+        to={{
+          pathname: redirect,
+        }}
+        label="ra.action.back"
+      >
+        <IconArrowBack />
+      </Button>
+    )}
   </CardActions>
 );
 
-export default DefaultActions;
+export default compose(withRouter)(DefaultActions);

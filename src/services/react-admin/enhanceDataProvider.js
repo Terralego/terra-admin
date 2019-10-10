@@ -36,46 +36,6 @@ const enhanceDataProvider = nextDataProvider => async (...args) => {
   }
 
   /**
-   * Manage file upload by converting query content to FormData()
-   */
-  if ([CREATE, UPDATE].includes(type) && resource === RES_DATASOURCE) {
-    const body = new FormData();
-
-    Object.keys(params.data).forEach(key => {
-      if (key === 'file') { return; }
-
-      let value = params.data[key];
-
-      if (typeof value === 'object') {
-        value = JSON.stringify(value, null, 2);
-      }
-
-      body.append(key, value);
-    });
-
-    if (params.data.file && params.data.file.rawFile) {
-      body.append('file', params.data.file.rawFile);
-    }
-
-    let response;
-
-    switch (type) {
-      case CREATE:
-        response = await Api.request(`${endpoint}/`, { method: 'POST', body });
-        return { data: response, id: response.id };
-
-      case UPDATE:
-        response = await Api.request(`${endpoint}/${params.id}/`, {
-          method: 'PATCH',
-          body,
-        });
-        return { data: response };
-
-      default:
-    }
-  }
-
-  /**
    * Manage file upload by converting file to base64.
    */
   if ([CREATE, UPDATE].includes(type) && resource === RES_VIEWPOINT) {

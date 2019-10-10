@@ -574,6 +574,11 @@
         "name": "Nom",
         "groups": "Groupes utilisateurs"
       }
+    },
+    "datalayer": {
+      "fields": {
+        "settings-widgets": "Configuration des widgets"
+      }
     }
   }
 }

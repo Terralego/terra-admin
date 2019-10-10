@@ -8,7 +8,7 @@ jest.mock('@terralego/core/modules/Api', () => ({
 
 it('should fetch list of feature', () => {
   fetchFeaturesList('foo');
-  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/');
+  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/?page_size=2000');
 });
 
 it('should fetch a feature', () => {

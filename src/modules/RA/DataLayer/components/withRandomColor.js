@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash.get';
 
+import { RES_DATASOURCE } from '../../ra-modules';
+
 const randomColor = seed => {
   const magicNumber = parseInt(seed.replace(/[^abcdef]/g, '1'), 16) * 100000000;
   const hexa = magicNumber.toString(16);
@@ -12,7 +14,7 @@ const randomColor = seed => {
 
 const mapStateToProps = (state, { withSource = '' }) => {
   const source = get(state, `form.record-form.values.${withSource}`);
-  const sourceData = get(state, `admin.resources.geosource.data.${source}`);
+  const sourceData = get(state, `admin.resources.${RES_DATASOURCE}.data.${source}`);
   const colorSeed = get(state, 'form.record-form.values.name', 'noname');
 
   return {

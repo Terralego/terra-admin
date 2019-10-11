@@ -59,7 +59,7 @@ const PictureFields = ({
         <SelectInput optionText="label" />
       </ReferenceInput>
       <TextInput source="properties.index" formClassName={classes.inline} />
-      <DateTimeInput source="date" showTime />
+      <DateTimeInput source="date" />
       <DateInput source="date" validate={required()} />
 
       {/* <Br />

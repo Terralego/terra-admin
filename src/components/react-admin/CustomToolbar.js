@@ -1,9 +1,16 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { SaveButton, Toolbar, DeleteWithConfirmButton, Button } from 'react-admin';
+import {
+  Button,
+  DeleteWithConfirmButton,
+  SaveButton,
+  Toolbar,
+} from 'react-admin';
 
-import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
-import IconClose from '@material-ui/icons/Close'; // eslint-disable-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
+import { withStyles } from '@material-ui/core/styles';
+import IconClose from '@material-ui/icons/Close';
+/* eslint-enable */
 
 import compose from '../../utils/compose';
 
@@ -16,7 +23,6 @@ const styles = {
     flex: 1,
   },
 };
-
 
 /**
  * A custom toolbar that can be used in various form footer with
@@ -32,27 +38,21 @@ const CustomToolbar = ({
   ...props
 }) => (
   <Toolbar {...props} className={classes.toolbar}>
-    <SaveButton
-      redirect={redirect || 'show'}
-      submitOnEnter
-    />
+    <SaveButton redirect={redirect || 'show'} submitOnEnter />
+
     <div className={classes.filler} />
+
     <Button
       component={Link}
-      to={{
-        pathname: redirect || basePath,
-      }}
+      to={{ pathname: redirect || basePath }}
       label="ra.action.cancel"
     >
       <IconClose />
     </Button>
 
-    <DeleteWithConfirmButton
-      redirect={redirect || 'show'}
-    />
+    <DeleteWithConfirmButton redirect={redirect || 'show'} />
   </Toolbar>
 );
-
 
 export default compose(
   withRouter,

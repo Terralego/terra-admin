@@ -77,6 +77,9 @@
       height: 100%;
       overflow: auto;
     }
+    .bp3-tab-list {
+      flex-wrap: wrap;
+    }
   }
 
   &__RTE {

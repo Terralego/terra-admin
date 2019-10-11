@@ -1,4 +1,33 @@
 
+2.6.0 / 2019-10-11
+==================
+
+  * Split DateTimeInput in two component DateInput & TimeInput
+  * Add Table view in Read component
+  * Change default redirect to list (show does not exist for now)
+  * Override undoable prop for DeleteWithConfirmButton
+  * Extract CancelButton component to avoid wrapping with fragment
+  * Sanitize props forwarded to Toolbar (remove withRouter() props)
+  * Replace Toolbar filler by an auto margin
+  * Reorganize Toolbar component (indents & spacings)
+  * Remove unrecognize showTime props
+  * Remove Remarks input from Picture create/edit form
+  * Disable owner/photographer management (comment out)
+  * Improve CSS for detail component
+  * Rise the page size of featureList
+  * Add some documentation
+  * Rewrite simplier default action
+  * Add redirect on delete button with new toolbar
+  * Fix error when owner is missing
+  * Set interactions only on READ views
+  * Rename referrer in redirect
+  * Can save image from viewpoints
+  * Add toMultipart dataprovider decorator
+  * Add referrer info for picture edition
+  * Add form tabs to Picture forms (Create & Edit)
+  * Patch dataProvider for picture resource
+  * Change some fields (owner & thumbnail) in Picture list view
+
 2.5.0 / 2019-10-10
 ==================
 

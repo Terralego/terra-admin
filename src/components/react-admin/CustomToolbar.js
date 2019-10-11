@@ -19,8 +19,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'flex-start',
   },
-  filler: {
-    flex: 1,
+  cancel: {
+    marginLeft: 'auto',
   },
 };
 
@@ -40,12 +40,11 @@ const CustomToolbar = ({
   <Toolbar {...props} className={classes.toolbar}>
     <SaveButton redirect={redirect || 'show'} submitOnEnter />
 
-    <div className={classes.filler} />
-
     <Button
       component={Link}
       to={{ pathname: redirect || basePath }}
       label="ra.action.cancel"
+      className={classes.cancel}
     >
       <IconClose />
     </Button>

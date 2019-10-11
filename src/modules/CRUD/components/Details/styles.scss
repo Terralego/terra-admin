@@ -71,6 +71,12 @@
     flex-direction: column;
     overflow: auto;
     padding: 0 1rem;
+    .bp3-tabs {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: auto;
+    }
   }
 
   &__RTE {
@@ -150,17 +156,22 @@
     flex-direction: column;
     height: 100%;
     margin: 0 -1rem;
-    > * {
-      margin-right: 1rem;
-      margin-left: 1rem;
-      margin-bottom: 1rem;
-      width: auto;
-    }
     > .form-group {
-      margin-left: 0;
-      margin-right: 0;
       padding: 0 1rem;
       overflow: auto;
+    }
+
+    fieldset fieldset legend {
+      font-size: 1rem;
+    }
+
+    .bp3-callout {
+      margin-bottom: 1rem;
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
     }
   }
 }

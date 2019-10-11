@@ -10,7 +10,10 @@ import {
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
-import { RES_VIEWPOINT, RES_USER } from '../../ra-modules';
+import {
+  RES_VIEWPOINT,
+  // RES_USER,
+} from '../../ra-modules';
 
 export const PictureList = props => (
   <List
@@ -29,12 +32,12 @@ export const PictureList = props => (
       <TextField source="properties.index" />
       <DateField source="date" />
 
-      <ReferenceField
+      {/* <ReferenceField
         source="owner.uuid"
         reference={RES_USER}
       >
         <TextField source="email" />
-      </ReferenceField>
+      </ReferenceField> */}
 
       <ImageField source="file.thumbnail" />
 

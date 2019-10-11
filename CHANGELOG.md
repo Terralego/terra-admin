@@ -1,4 +1,43 @@
 
+2.5.0 / 2019-10-10
+==================
+
+  * Add widgets configuration field in geolayer edit form
+  * Handle related documents
+  * Remove OPP entry
+  * Improve readability in GridPictureList
+  * Change some viewpoint wording
+  * Change pictures DataGrid into card ListGrid
+  * Use early return when Map is not loaded
+  * Change image thumbnail path
+  * Create and use withMapConfig() HOC in place of connectAppProvider()
+  * Remove an external dependency warning
+  * Setup ReferenceField for picture photographer (disabled for now)
+  * Display index instead of id, and point instead of geometry
+  * Get app config for Map from AppProvider
+  * Remove withViewpointIds detaProvider decorator as back-end api manage it properly
+  * Add Create et Edit for picture
+  * Remove export button from Picture list
+  * Add EditButton for Picture list
+  * Add missing 's' to resource views variable
+  * Create list view for Picture resource
+
+  * Improve READ component formatted props for arrays and object render values
+  * Fix updateSchemaPropertiesValues with recursion objects
+  * Use resource constant instead of raw string
+  * Build schemaForm with recursion
+  * Modify Read template to match with API call changed
+  * Make DownloadButtons component workable with the API breaking Changes
+  * Replace layer API call by crud/layer ones
+  * Set default value to getView
+  * Adapt CSS following the change of bootstrap version
+  * Downgrade Bootstrap package to 3.3.7 and call it
+  * Set fitBounds duration to 0 (no more animation)
+  * Refacto getLayer method to getView
+  * Build DataTable now with feature_list_properties key
+  * Get the extent of the layer by the API; no computation anymore
+  * Move the call of getFeatureList from views/Map to DataTable component
+
 2.4.0 / 2019-10-01
 ==================
 

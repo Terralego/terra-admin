@@ -30,13 +30,13 @@ export const PictureList = props => (
       <DateField source="date" />
 
       <ReferenceField
-        source="owner_id"
+        source="owner.uuid"
         reference={RES_USER}
       >
         <TextField source="email" />
       </ReferenceField>
 
-      <ImageField source="file" />
+      <ImageField source="file.thumbnail" />
 
       <EditButton />
     </Datagrid>

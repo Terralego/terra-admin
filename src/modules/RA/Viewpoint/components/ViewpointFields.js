@@ -37,7 +37,13 @@ const styles = {
 
 const Br = () => <br />;
 
-const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
+const ViewpointFields = ({
+  edit,
+  classes,
+  mapConfig,
+  record,
+  ...props
+}) => {
   const [remoteChoices, setRemoteChoices] = React.useState([]);
   const [waiting, setWaiting] = React.useState(false);
 
@@ -66,6 +72,7 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
           type: 'Point',
         },
       }}
+      record={record}
       {...props}
     >
       <FormTab label="resources.viewpoint.tabs.general">
@@ -76,7 +83,11 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
 
         <TextInput source="properties.voie" />
 
-        {waiting && <><LinearProgress /></>}
+        {waiting && (
+          <>
+            <LinearProgress />
+          </>
+        )}
         {!waiting && (
           <SelectInput
             translateChoice={false}
@@ -100,51 +111,66 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
       </FormTab>
 
       {edit && (
-      <FormTab label="resources.viewpoint.tabs.repeat" path="repeat">
-        <NumberField
-          source="point.coordinates[1]"
-          options={{ maximumFractionDigits: 6 }}
-          formClassName={classes.inline}
-        />
-        <NumberField
-          source="point.coordinates[0]"
-          options={{ maximumFractionDigits: 6 }}
-          formClassName={classes.inline}
-        />
+        <FormTab label="resources.viewpoint.tabs.repeat" path="repeat">
+          <NumberField
+            source="point.coordinates[1]"
+            options={{ maximumFractionDigits: 6 }}
+            formClassName={classes.inline}
+          />
+          <NumberField
+            source="point.coordinates[0]"
+            options={{ maximumFractionDigits: 6 }}
+            formClassName={classes.inline}
+          />
 
-        <Br />
+          <Br />
 
-        <TextInput source="properties.altitude" formClassName={classes.inline} />
-        <TextInput source="properties.hauteur" formClassName={classes.inline} />
-        <TextInput source="properties.orientation" formClassName={classes.inline} />
+          <TextInput
+            source="properties.altitude"
+            formClassName={classes.inline}
+          />
+          <TextInput
+            source="properties.hauteur"
+            formClassName={classes.inline}
+          />
+          <TextInput
+            source="properties.orientation"
+            formClassName={classes.inline}
+          />
 
-        <Br />
+          <Br />
 
-        <TextInput source="properties.focale_35mm" formClassName={classes.inline} />
-        <TextInput source="properties.focale_objectif" formClassName={classes.inline} />
+          <TextInput
+            source="properties.focale_35mm"
+            formClassName={classes.inline}
+          />
+          <TextInput
+            source="properties.focale_objectif"
+            formClassName={classes.inline}
+          />
 
-        <Br />
+          <Br />
 
-        <SelectInput source="properties.frequency" choices={[]} formClassName={classes.inline} />
-        <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
-        <LongTextInput source="properties.rephotographie" rows={4} rowsMax={30} />
+          <SelectInput source="properties.frequency" choices={[]} formClassName={classes.inline} />
+          <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
+          <LongTextInput source="properties.rephotographie" rows={4} rowsMax={30} />
 
-        <ArrayInput source="related">
-          <SimpleFormIterator>
-            <SelectInput
-              label="resources.viewpoint.fields.related.key"
-              source="key"
-              choices={[
-                { id: 'croquis', name: 'Croquis' },
-                { id: 'emplacement', name: 'Emplacement' },
-              ]}
-            />
-            <ImageInput label="resources.viewpoint.fields.related.document">
-              <ImageField source="document" />
-            </ImageInput>
-          </SimpleFormIterator>
-        </ArrayInput>
-      </FormTab>
+          <ArrayInput source="related">
+            <SimpleFormIterator>
+              <SelectInput
+                label="resources.viewpoint.fields.related.key"
+                source="key"
+                choices={[
+                  { id: 'croquis', name: 'Croquis' },
+                  { id: 'emplacement', name: 'Emplacement' },
+                ]}
+              />
+              <ImageInput label="resources.viewpoint.fields.related.document">
+                <ImageField source="document" />
+              </ImageInput>
+            </SimpleFormIterator>
+          </ArrayInput>
+        </FormTab>
       )}
       {edit && (
       <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
@@ -170,11 +196,15 @@ const ViewpointFields = ({ edit, classes, mapConfig, ...props }) => {
       )}
 
       {edit && (
-      <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
-        <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} fullWidth>
-          <GridListPictures />
-        </ReferenceArrayField>
-      </FormTab>
+        <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
+          <ReferenceArrayField
+            source="picture_ids"
+            reference={RES_PICTURE}
+            fullWidth
+          >
+            <GridListPictures viewpointId={record.id} />
+          </ReferenceArrayField>
+        </FormTab>
       )}
     </TabbedForm>
   );

@@ -1,7 +1,7 @@
 import Api from '@terralego/core/modules/Api';
 
 export const fetchFeaturesList = layerId =>
-  Api.request(`crud/layer/${layerId}/features/`);
+  Api.request(`crud/layer/${layerId}/features/?page_size=2000`);
 
 export const fetchFeature = (layerId, featureId) =>
   Api.request(`crud/layer/${layerId}/features/${featureId}/`);

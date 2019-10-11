@@ -24,6 +24,11 @@ const styles = {
   },
 };
 
+const sanitizeRestProps = ({
+  staticContext,
+  ...rest
+}) => rest;
+
 /**
  * A custom toolbar that can be used in various form footer with
  * default redirect aware actions:
@@ -37,7 +42,7 @@ const CustomToolbar = ({
   classes,
   ...props
 }) => (
-  <Toolbar {...props} className={classes.toolbar}>
+  <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
     <SaveButton redirect={redirect || 'show'} submitOnEnter />
 
     <Button

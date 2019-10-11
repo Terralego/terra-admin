@@ -88,7 +88,6 @@ const PictureFields = ({
       <TextInput source="properties.meteo" />
       <Br />
 
-      <TextInput source="remarks" validate={required()} />
       <LongTextInput source="properties.observations" />
 
       <Br />

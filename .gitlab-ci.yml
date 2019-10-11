@@ -18,7 +18,14 @@ deploy_staging:
     name: staging
     url: https://acir-front-staging.geo.paas.corp-cluster.com
   only:
-    - master
+    - tags
   script:
     - git-push ssh://dokku@geo.paas.corp-cluster.com/acir-front-staging
+    # prepare ssh access
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H "geo.paas.corp-cluster.com" >> ~/.ssh/known_hosts
+      # create tag
+    - ssh dokku@geo.paas.corp-cluster.com tags:create acir-front-staging $CI_COMMIT_TAG
   when: manual

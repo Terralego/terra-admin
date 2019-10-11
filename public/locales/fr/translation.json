@@ -542,7 +542,8 @@
         "viewpoint": "Point de vue",
         "owner_id": "ID du photographe",
         "owner.properties.name": "Photographe",
-        "file": "Photographie"
+        "file": "Photographie",
+        "time": "Heure"
       },
       "tabs": {
         "metadata": "Métadonnées",

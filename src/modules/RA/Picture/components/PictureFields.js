@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import {
   DateInput,
-  DateTimeInput,
   // DisabledInput,
   FormTab,
   ImageField,
@@ -25,6 +24,7 @@ import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
 import CustomToolbar from '../../../../components/react-admin/CustomToolbar';
+import TimeInput from '../../../../components/react-admin/TimeInput';
 
 const styles = {
   inline: {
@@ -59,8 +59,11 @@ const PictureFields = ({
         <SelectInput optionText="label" />
       </ReferenceInput>
       <TextInput source="properties.index" formClassName={classes.inline} />
-      <DateTimeInput source="date" />
-      <DateInput source="date" validate={required()} />
+
+      <Br />
+
+      <DateInput source="date" formClassName={classes.inline} />
+      <TimeInput source="date" label="resources.picture.fields.time" formClassName={classes.inline} />
 
       {/* <Br />
 

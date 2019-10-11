@@ -24,6 +24,17 @@ const styles = {
   },
 };
 
+const CancelButton = ({ redirect, className }) => (
+  <Button
+    component={Link}
+    to={{ pathname: redirect }}
+    label="ra.action.cancel"
+    className={className}
+  >
+    <IconClose />
+  </Button>
+);
+
 const sanitizeRestProps = ({
   staticContext,
   ...rest
@@ -44,16 +55,7 @@ const CustomToolbar = ({
 }) => (
   <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
     <SaveButton redirect={redirect || 'show'} submitOnEnter />
-
-    <Button
-      component={Link}
-      to={{ pathname: redirect || basePath }}
-      label="ra.action.cancel"
-      className={classes.cancel}
-    >
-      <IconClose />
-    </Button>
-
+    <CancelButton redirect={redirect || basePath} className={classes.cancel} />
     <DeleteWithConfirmButton redirect={redirect || 'show'} />
   </Toolbar>
 );

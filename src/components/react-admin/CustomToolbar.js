@@ -56,7 +56,7 @@ const CustomToolbar = ({
   <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
     <SaveButton redirect={redirect || 'show'} submitOnEnter />
     <CancelButton redirect={redirect || basePath} className={classes.cancel} />
-    <DeleteWithConfirmButton redirect={redirect || 'show'} />
+    <DeleteWithConfirmButton redirect={redirect || 'show'} undoable={null} />
   </Toolbar>
 );
 

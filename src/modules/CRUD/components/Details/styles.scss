@@ -80,6 +80,9 @@
     .bp3-tab-list {
       flex-wrap: wrap;
     }
+    .bp3-tab-panel {
+      overflow: auto;
+    }
   }
 
   &__RTE {

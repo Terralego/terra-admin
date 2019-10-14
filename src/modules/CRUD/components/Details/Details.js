@@ -127,8 +127,8 @@ class Details extends React.Component {
       match: { params: { id: paramId } },
     } = this.props;
     if (view && paramId && !this.isCreateAction) {
-      const { layer: { id: layerId } } = view;
-      fetchFeature(layerId, paramId);
+      const { featureEndpoint } = view;
+      fetchFeature(featureEndpoint, paramId);
     }
   }
 

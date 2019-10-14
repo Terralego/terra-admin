@@ -1,24 +1,31 @@
 import Api from '@terralego/core/modules/Api';
 
-export const fetchFeaturesList = layerId =>
-  Api.request(`crud/layer/${layerId}/features/?page_size=2000`);
+const sanitizeCustomEndpoint = str => {
+  if (str.startsWith('/api/')) {
+    return str.replace('/api/', '');
+  }
+  return str;
+};
 
-export const fetchFeature = (layerId, featureId) =>
-  Api.request(`crud/layer/${layerId}/features/${featureId}/`);
+export const fetchFeaturesList = endpoint =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}?page_size=2000`);
 
-const createFeature = (layerId, body) =>
-  Api.request(`crud/layer/${layerId}/features/`, { method: 'POST', body });
+export const fetchFeature = (endpoint, featureId) =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}/${featureId}/`);
 
-const updateFeature = (layerId, featureId, body) =>
-  Api.request(`crud/layer/${layerId}/features/${featureId}/`, { method: 'PUT', body });
+const createFeature = (endpoint, body) =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}/`, { method: 'POST', body });
 
-export const deleteFeature = (layerId, featureId) =>
-  Api.request(`crud/layer/${layerId}/features/${featureId}/`, { method: 'DELETE' });
+const updateFeature = (endpoint, featureId, body) =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}/${featureId}/`, { method: 'PUT', body });
 
-export const saveFeature = (layerId, featureId, body) => (
+export const deleteFeature = (endpoint, featureId) =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}/${featureId}/`, { method: 'DELETE' });
+
+export const saveFeature = (endpoint, featureId, body) => (
   featureId
-    ? updateFeature(layerId, featureId, body)
-    : createFeature(layerId, body)
+    ? updateFeature(endpoint, featureId, body)
+    : createFeature(endpoint, body)
 );
 
 export const updateOrSaveFeatureInFeaturesList = (featuresList, feature) => {

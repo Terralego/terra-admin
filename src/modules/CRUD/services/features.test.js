@@ -7,28 +7,28 @@ jest.mock('@terralego/core/modules/Api', () => ({
 }));
 
 it('should fetch list of feature', () => {
-  fetchFeaturesList('foo');
-  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/?page_size=2000');
+  fetchFeaturesList('/api/path/to/endpoint/features');
+  expect(Api.request).toHaveBeenCalledWith('path/to/endpoint/features?page_size=2000');
 });
 
 it('should fetch a feature', () => {
-  fetchFeature('foo', '1337');
-  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/1337/');
+  fetchFeature('/api/path/to/endpoint/features', '1337');
+  expect(Api.request).toHaveBeenCalledWith('path/to/endpoint/features/1337/');
 });
 
 it('should delete a feature', () => {
-  deleteFeature('foo', '1337');
-  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/1337/', { method: 'DELETE' });
+  deleteFeature('/api/path/to/endpoint/features', '1337');
+  expect(Api.request).toHaveBeenCalledWith('path/to/endpoint/features/1337/', { method: 'DELETE' });
 });
 
 it('should create a feature', () => {
-  saveFeature('foo', false, { bar: 'bar' });
-  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/', { method: 'POST', body: { bar: 'bar' } });
+  saveFeature('/api/path/to/endpoint/features', false, { bar: 'bar' });
+  expect(Api.request).toHaveBeenCalledWith('path/to/endpoint/features/', { method: 'POST', body: { bar: 'bar' } });
 });
 
 it('should update a feature', () => {
-  saveFeature('foo', '1337', { bar: 'bar' });
-  expect(Api.request).toHaveBeenCalledWith('crud/layer/foo/features/1337/', { method: 'PUT', body: { bar: 'bar' } });
+  saveFeature('/api/path/to/endpoint/features', '1337', { bar: 'bar' });
+  expect(Api.request).toHaveBeenCalledWith('path/to/endpoint/features/1337/', { method: 'PUT', body: { bar: 'bar' } });
 });
 
 it('should get bounds', () => {

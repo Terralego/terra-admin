@@ -31,9 +31,9 @@ class DataTable extends React.Component {
 
   loadData = () => {
     const { getFeaturesList } = this.props;
-    const { layer: { id } = {} } = this.getView();
-    if (!id) return;
-    getFeaturesList(id);
+    const { featureEndpoint } = this.getView();
+    if (!featureEndpoint) return;
+    getFeaturesList(featureEndpoint);
     this.setState({
       loading: true,
     });

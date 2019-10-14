@@ -237,7 +237,7 @@ class Edit extends React.Component {
     const {
       getSettings,
       history: { push },
-      view: { layer: { id: layerId } },
+      view: { featureEndpoint },
       paramId,
       paramLayer,
       saveFeature,
@@ -252,7 +252,7 @@ class Edit extends React.Component {
     });
 
     const savedFeature = await saveFeature(
-      layerId,
+      featureEndpoint,
       isActionUpdate ? paramId : false,
       { geom, properties },
     );

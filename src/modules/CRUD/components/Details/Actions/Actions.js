@@ -49,13 +49,13 @@ class Actions extends React.Component {
       getSettings,
       paramLayer,
       paramId,
-      view: { layer: { id: layerId } },
+      view: { featureEndpoint },
       deleteFeature,
       history: { push },
       t,
     } = this.props;
 
-    const deleted = await deleteFeature(layerId, paramId);
+    const deleted = await deleteFeature(featureEndpoint, paramId);
 
     toast.displayToaster(
       deleted ? { id: deleted } : {},

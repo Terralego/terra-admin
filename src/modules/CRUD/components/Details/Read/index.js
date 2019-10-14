@@ -12,7 +12,7 @@ export default withRouter(
   }) => {
     const permissions = authenticated ? user.permissions : [];
     return {
-      displayViewFeature: permissions.includes('geostore.view_feature'),
+      displayViewFeature: permissions.includes('terra_geocrud.can_view_feature'),
     };
   })(
     withNamespaces()(

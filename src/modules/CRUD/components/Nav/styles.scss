@@ -44,6 +44,12 @@
     min-width: 228px;
   }
 
+  &__group-name {
+    > .bp3-icon {
+      display: none;
+    }
+  }
+
   &__group-text,
   .bp3-button-text {
     position: relative;
@@ -82,8 +88,13 @@
       transition: opacity 0.2s 0.2s ease-in;
       width: auto;
     }
-    .CRUD-nav__group-name::before {
+    .CRUD-nav__group-name {
+      &::before {
       display: none;
+      }
+      > .bp3-icon {
+        display: inherit;
+      }
     }
   }
 }

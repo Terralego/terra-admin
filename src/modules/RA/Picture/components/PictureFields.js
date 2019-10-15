@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
   DateInput,
-  // DisabledInput,
+  DisabledInput,
   FormTab,
   ImageField,
   ImageInput,
@@ -65,14 +65,14 @@ const PictureFields = ({
       <DateInput source="date" formClassName={classes.inline} />
       <TimeInput source="date" label="resources.picture.fields.time" formClassName={classes.inline} />
 
-      {/* <Br />
+      <Br />
 
       {edit && (
         <DisabledInput
           source="owner.properties.name"
           formClassName={classes.inline}
         />
-      )} */}
+      )}
 
       <Br />
 

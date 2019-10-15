@@ -84,10 +84,6 @@ const PictureFields = ({
         source="properties.camera_model"
         formClassName={classes.inline}
       />
-      <TextInput
-        source="properties.focale_35mm"
-        formClassName={classes.inline}
-      />
       <TextInput source="properties.meteo" />
       <Br />
 

@@ -7,6 +7,7 @@ import userGroupViews from './UserGroup/views';
 // Visu
 import dataSourceViews from './DataSource/views';
 import dataLayerViews from './DataLayer/views';
+import sceneViews from './Scene/views';
 
 // OPP
 import viewpointViews from './Viewpoint/views';
@@ -24,6 +25,7 @@ export const RES_USERGROUP = 'usergroup';
 // Visu
 export const RES_DATASOURCE = 'datasource';
 export const RES_DATALAYER = 'datalayer';
+export const RES_VIEWS = 'view';
 
 // OPP
 export const RES_VIEWPOINT = 'viewpoint';
@@ -56,6 +58,12 @@ export const resources = [
     moduleName: 'DataLayer',
     endpoint: 'geolayer',
     ...dataLayerViews,
+  },
+  {
+    name: RES_VIEWS,
+    moduleName: 'DataLayer',
+    endpoint: 'geolayer/scene',
+    ...sceneViews,
   },
   {
     name: RES_VIEWPOINT,

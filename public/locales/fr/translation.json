@@ -543,6 +543,7 @@
         "owner_id": "ID du photographe",
         "owner.properties.name": "Photographe",
         "file": "Photographie",
+        "file.thumbnail": "Photographie",
         "time": "Heure"
       },
       "tabs": {

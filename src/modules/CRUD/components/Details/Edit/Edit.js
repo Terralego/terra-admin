@@ -170,7 +170,7 @@ class Edit extends React.Component {
 
   setSchema = () => {
     const {
-      feature: { properties, geom },
+      feature: { properties = {}, geom = {} },
       view: { formSchema: schema = {} },
       t,
     } = this.props;

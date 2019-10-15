@@ -15,7 +15,7 @@ import './styles.scss';
 class Details extends React.Component {
   static propTypes = {
     view: PropTypes.shape({
-      formSchema: PropTypes.shape({}),
+      featureEndpoint: PropTypes.string,
     }),
     feature: PropTypes.shape({
       properties: PropTypes.shape({}),
@@ -37,7 +37,7 @@ class Details extends React.Component {
 
   static defaultProps = {
     view: {
-      formSchema: {},
+      featureEndpoint: undefined,
     },
     feature: {
       properties: {},
@@ -56,10 +56,6 @@ class Details extends React.Component {
     t: text => text,
   }
 
-  state = {
-    schema: {},
-  }
-
   detailContent = React.createRef();
 
   componentDidMount () {
@@ -68,7 +64,6 @@ class Details extends React.Component {
       detailsHasLoaded,
     } = this.props;
     this.getData();
-    this.setSchema();
     if (paramId === ACTION_CREATE) {
       detailsHasLoaded();
     }
@@ -77,24 +72,20 @@ class Details extends React.Component {
   componentDidUpdate ({
     match: {
       params: {
-        action: prevParamAction,
         id: prevParamId,
         layer: prevParamlayer,
       },
     },
     feature: prevFeature,
-    feature: { properties: prevProperties },
   }) {
     const {
       match: {
         params: {
-          action: paramAction,
           id: paramId,
           layer: paramLayer,
         },
       },
       feature,
-      feature: { properties },
       detailsHasLoaded,
     } = this.props;
 
@@ -104,14 +95,6 @@ class Details extends React.Component {
 
     if (prevParamlayer !== paramLayer || prevParamId !== paramId) {
       this.getData();
-    }
-
-    if (
-      (properties !== prevProperties)
-      || prevParamId !== paramId
-      || prevParamAction !== paramAction
-    ) {
-      this.setSchema();
     }
   }
 
@@ -132,58 +115,18 @@ class Details extends React.Component {
     }
   }
 
-  buildSchema = (schemaProperties, properties = {}) => {
-    const {
-      match: { params: { id: paramId } },
-    } = this.props;
-    return Object.keys(schemaProperties).reduce((list, prop) => ({
-      ...list,
-      [prop]: {
-        ...schemaProperties[prop],
-        ...(schemaProperties[prop].type === 'object')
-          ? { properties: this.buildSchema(schemaProperties[prop].properties, properties[prop]) }
-          : {},
-        ...(paramId !== ACTION_CREATE && properties[prop] && schemaProperties[prop].type !== 'object')
-          ? { default: properties[prop] }
-          : {},
-      },
-    }), {});
-  }
-
-  setSchema = () => {
-    const {
-      feature: { properties = {} },
-      view: { formSchema: schema = {} },
-    } = this.props;
-    if (!Object.keys(properties).length && !Object.keys(schema).length) {
-      return;
-    }
-    this.setState({
-      schema: {
-        type: 'object',
-        ...schema,
-        properties: this.buildSchema(schema.properties, properties),
-      },
-    });
-  }
-
   renderContent = () => {
     const {
       match: { params: { action: paramAction, id: paramId } },
       updateControls,
-      view,
       feature,
     } = this.props;
-    const { schema } = this.state;
 
     if (paramId === ACTION_CREATE || paramAction === ACTION_UPDATE) {
       return (
         <Edit
-          schema={schema}
           updateControls={updateControls}
           action={paramAction || paramId}
-          view={view}
-          feature={feature}
         />
       );
     }

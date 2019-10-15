@@ -38,9 +38,16 @@ class Edit extends React.Component {
     map: PropTypes.shape({}),
     feature: PropTypes.shape({
       title: PropTypes.string,
+      properties: PropTypes.shape({}),
+      geom: PropTypes.shape({}),
     }),
     saveFeature: PropTypes.func.isRequired,
-    view: PropTypes.shape({}).isRequired,
+    view: PropTypes.shape({
+      formSchema: PropTypes.shape({}),
+      layer: PropTypes.shape({ name: PropTypes.string }),
+      name: PropTypes.string,
+      uiSchema: PropTypes.shape({}),
+    }),
     layerPaint: PropTypes.shape({}).isRequired,
     paramLayer: PropTypes.string.isRequired,
     paramId: PropTypes.string.isRequired,
@@ -49,7 +56,6 @@ class Edit extends React.Component {
     getSettings: PropTypes.func,
     displayAddFeature: PropTypes.bool,
     displayChangeFeature: PropTypes.bool,
-    schema: PropTypes.shape({}).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func,
     }),
@@ -60,6 +66,14 @@ class Edit extends React.Component {
     map: {},
     feature: {
       title: undefined,
+      properties: {},
+      geom: {},
+    },
+    view: {
+      formSchema: {},
+      layer: { name: undefined },
+      name: undefined,
+      uiSchema: {},
     },
     displayAddFeature: true,
     displayChangeFeature: true,
@@ -80,21 +94,42 @@ class Edit extends React.Component {
   }
 
   componentDidMount () {
-    this.initEdit();
+    this.setSchema();
+
+    const {
+      action,
+      feature: { geom },
+    } = this.props;
+
+    if (action !== ACTION_UPDATE || Object.keys(geom).length) {
+      this.initDraw();
+    }
   }
 
   componentDidUpdate ({
-    schema: prevSchema,
+    paramId: prevParamId,
+    action: prevAction,
     feature: prevFeature,
     map: prevMap,
+    view: prevView,
   }) {
-    const { feature, schema, map } = this.props;
+    const {
+      action,
+      paramId,
+      feature,
+      map,
+      view,
+    } = this.props;
     if (prevFeature !== feature || prevMap !== map) {
       this.initDraw();
     }
 
-    if (schema !== prevSchema) {
-      this.updateSchema(schema);
+    if (
+      prevView !== view
+      || prevParamId !== paramId
+      || prevAction !== action
+    ) {
+      this.setSchema();
     }
   }
 
@@ -115,32 +150,46 @@ class Edit extends React.Component {
     return id;
   }
 
-  initEdit = () => {
+  buildSchema = (schemaProperties, properties = {}) => {
     const {
-      schema,
-      feature: { geom = {} },
       action,
     } = this.props;
-
-    this.setState({
-      schema,
-      geom,
-    }, () => {
-      if (action !== ACTION_UPDATE || Object.keys(geom).length) {
-        this.initDraw();
-      }
-    });
+    return Object.keys(schemaProperties).reduce((list, prop) => ({
+      ...list,
+      [prop]: {
+        ...schemaProperties[prop],
+        ...(schemaProperties[prop].type === 'object')
+          ? { properties: this.buildSchema(schemaProperties[prop].properties, properties[prop]) }
+          : {},
+        ...(action !== ACTION_CREATE && properties[prop] && schemaProperties[prop].type !== 'object')
+          ? { default: properties[prop] }
+          : {},
+      },
+    }), {});
   }
 
-  updateSchema = schema => {
-    const { t } = this.props;
-    this.setState(({ geom }) => {
-      const geometryFromMap = { type: 'boolean', title: t('CRUD.details.geometry'), default: !!Object.keys(geom).length };
+  setSchema = () => {
+    const {
+      feature: { properties, geom },
+      view: { formSchema: schema = {} },
+      t,
+    } = this.props;
+    if (!Object.keys(properties).length && !Object.keys(schema).length) {
+      return;
+    }
+    this.setState(state => {
+      const geometryFromMap = {
+        type: 'boolean',
+        title: t('CRUD.details.geometry'),
+        default: !!Object.keys(state.geom).length,
+      };
       return {
+        geom,
         schema: {
+          type: 'object',
           ...schema,
           properties: {
-            ...schema.properties,
+            ...this.buildSchema(schema.properties, properties),
             geometryFromMap,
           },
         },
@@ -332,7 +381,7 @@ class Edit extends React.Component {
           <h2 className="details__title">{mainTitle}</h2>
         </div>
         <div className="details__content bootstrap-inside">
-          {properties
+          {Object.keys(properties).length
             ? (
               <Form
                 schema={schema}

@@ -176,51 +176,6 @@ it('should get data when changing param layer or id', () => {
   expect(instance.getData).toBeCalledTimes(2);
 });
 
-it('should not set state schema if its object is empty', () => {
-  const instance = new Details({
-    ...props,
-    match: {
-      params: {
-        id: 'id1',
-        layer: 'layer1',
-      },
-    },
-    view: {
-      layer: {
-        id: 8,
-        name: 'layerWithoutSchema',
-      },
-    },
-
-  });
-  instance.setState = jest.fn();
-  instance.setSchema();
-
-  expect(instance.setState).not.toHaveBeenCalled();
-});
-
-it('should set state schema', () => {
-  const instance = new Details({
-    ...props,
-    match: {
-      params: {
-        id: 'fooFeature',
-        layer: 'layer1',
-      },
-    },
-  });
-  instance.setState = jest.fn();
-  instance.setSchema();
-
-  expect(instance.setState).toHaveBeenCalledWith({
-    schema: {
-      properties: { city: { title: 'City', type: 'boolean' } },
-      type: 'object',
-    },
-  });
-});
-
-
 it('should change size', () => {
   const instance = new Details({
     ...props,

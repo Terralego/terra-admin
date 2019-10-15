@@ -573,7 +573,7 @@
       "fields": {
         "description": "Description",
         "name": "Nom",
-        "groups": "Groupes utilisateurs"
+        "settings.groups": "Groupes utilisateurs"
       }
     },
     "datalayer": {

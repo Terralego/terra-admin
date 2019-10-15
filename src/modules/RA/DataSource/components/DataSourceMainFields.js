@@ -22,7 +22,7 @@ const DataSourceMainFields = props => (
     />
     <LongTextInput source="description" defaultValue="" />
 
-    <ReferenceArrayInput source="groups" reference={RES_USERGROUP}>
+    <ReferenceArrayInput source="settings.groups" reference={RES_USERGROUP}>
       <SelectArrayInput optionText="name" />
     </ReferenceArrayInput>
   </FieldGroup>

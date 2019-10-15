@@ -57,14 +57,29 @@ beforeEach(() => {
     map: {},
     feature: {
       title: 'Title of the feature',
+      properties: {},
+      geom: {},
     },
     saveFeature: jest.fn(),
     updateControls: jest.fn(),
     view: {
+      name: 'foo',
       layer: {
-        name: 'foo',
+        name: 'layerFoo',
         id: 8,
         geom_type: 0,
+      },
+      formSchema: {
+        properties: {
+          city: { type: 'boolean', title: 'City' },
+          name: { type: 'text', default: 'Title' },
+          group: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', title: 'Group name' },
+            },
+          },
+        },
       },
     },
     layerPaint: { id: 'fooComponentID' },
@@ -74,18 +89,6 @@ beforeEach(() => {
     action: ACTION_UPDATE,
     displayAddFeature: true,
     displayChangeFeature: true,
-    schema: {
-      properties: {
-        city: { type: 'boolean', title: 'City' },
-        name: { type: 'text', default: 'Title' },
-        group: {
-          type: 'object',
-          properties: {
-            name: { type: 'string', title: 'Group name' },
-          },
-        },
-      },
-    },
     history: {
       push: jest.fn(),
     },
@@ -106,7 +109,10 @@ describe('Snapshots', () => {
     const tree = renderer.create((
       <Edit
         {...props}
-        schema={{}}
+        view={{
+          ...props.view,
+          formSchema: {},
+        }}
       />
     )).toJSON();
     expect(tree).toMatchSnapshot();
@@ -141,6 +147,7 @@ it('should init draw', () => {
   const instance = new Edit({
     ...props,
     feature: {
+      ...props.feature,
       geom: {
         type: 'Point',
         coordinates: [
@@ -152,9 +159,7 @@ it('should init draw', () => {
     action: ACTION_CREATE,
   });
   instance.initDraw = jest.fn();
-  instance.setState = jest.fn((_, callback) => {
-    callback();
-  });
+  instance.setState = jest.fn();
   instance.componentDidMount();
   expect(instance.initDraw).toHaveBeenCalled();
 });
@@ -163,6 +168,7 @@ it('should init draw when the feature or map props are changing', () => {
   const instance = new Edit({
     ...props,
     feature: {
+      ...props.feature,
       geom: {
         type: 'Point',
         coordinates: [
@@ -274,17 +280,20 @@ it('should update schema when the schema prop is changing', () => {
   const instance = new Edit({
     ...props,
   });
-  instance.updateSchema = jest.fn();
+  instance.setSchema = jest.fn();
   instance.componentDidUpdate({
     ...props,
-    schema: {
-      properties: {
-        city: { type: 'boolean', title: 'City' },
-        name: { type: 'text', default: 'Title' },
+    view: {
+      ...props.views,
+      formSchema: {
+        properties: {
+          city: { type: 'boolean', title: 'City' },
+          name: { type: 'text', default: 'Title' },
+        },
       },
     },
   });
-  expect(instance.updateSchema).toHaveBeenCalled();
+  expect(instance.setSchema).toHaveBeenCalled();
 });
 
 it('should update schema', () => {
@@ -295,8 +304,9 @@ it('should update schema', () => {
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  instance.updateSchema(props.schema);
+  instance.setSchema(props.schema);
   expect(stateCallback(instance.state)).toEqual({
+    geom: {},
     schema: {
       properties: {
         city: { title: 'City', type: 'boolean' },
@@ -309,6 +319,7 @@ it('should update schema', () => {
           },
         },
       },
+      type: 'object',
     },
   });
 });
@@ -438,7 +449,7 @@ it('should change form', () => {
   instance.setState = jest.fn(callback => {
     stateCallback = callback;
   });
-  instance.updateSchema(props.schema);
+  instance.setSchema(props.view.formSchema);
   instance.changeForm({ formData: { city: 'Toulouse', geometryFromMap: false } });
 
   expect(stateCallback(instance.state)).toEqual({

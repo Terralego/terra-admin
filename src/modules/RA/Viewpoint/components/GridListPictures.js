@@ -51,7 +51,7 @@ const getColsForWidth = width => {
 };
 
 const GridList = ({
-  translate: t,
+  // translate: t,
   classes,
   ids,
   data,
@@ -71,7 +71,7 @@ const GridList = ({
           file,
           properties = {},
           owner: { properties: ownerProperties = {} } = {},
-          state,
+          // state,
           id: pictId,
         } = data[id] || {};
         return (
@@ -92,9 +92,9 @@ const GridList = ({
               subtitle={(
                 <span>
                   {ownerProperties.name}
-                  &nbsp;|&nbsp;
+                  {/* &nbsp;|&nbsp;
                   {t('resources.picture.fields.properties.state')}&nbsp;:{' '}
-                  {state}
+                  {state} */}
                 </span>
               )}
               actionIcon={(

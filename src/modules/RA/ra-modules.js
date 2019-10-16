@@ -25,7 +25,7 @@ export const RES_USERGROUP = 'usergroup';
 // Visu
 export const RES_DATASOURCE = 'datasource';
 export const RES_DATALAYER = 'datalayer';
-export const RES_VIEWS = 'view';
+export const RES_VIEW = 'view';
 
 // OPP
 export const RES_VIEWPOINT = 'viewpoint';
@@ -60,7 +60,7 @@ export const resources = [
     ...dataLayerViews,
   },
   {
-    name: RES_VIEWS,
+    name: RES_VIEW,
     moduleName: 'DataLayer',
     endpoint: 'geolayer/scene',
     ...sceneViews,

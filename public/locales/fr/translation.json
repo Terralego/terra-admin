@@ -371,6 +371,7 @@
     },
     "form": {
       "name": "Nom",
+      "slug": "Slug",
       "category": "Catégorie",
       "icon": "Icône",
       "ordering": "Classement"

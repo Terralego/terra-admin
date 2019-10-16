@@ -15,7 +15,6 @@ export const SceneList = props => (
       order: 'ASC',
     }}
     exporter={false}
-    // filters={<ListFilters />}
     bulkActionButtons={<CommonBulkActionButtons />}
     {...props}
   >

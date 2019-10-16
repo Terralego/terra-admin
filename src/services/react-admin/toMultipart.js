@@ -1,7 +1,11 @@
 import { CREATE, UPDATE } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
-import { RES_DATASOURCE, RES_PICTURE } from '../../modules/RA/ra-modules';
+import {
+  RES_DATASOURCE,
+  RES_PICTURE,
+  RES_VIEW,
+} from '../../modules/RA/ra-modules';
 
 
 const toMultipart = nextDataProvider => async (...args) => {
@@ -11,11 +15,11 @@ const toMultipart = nextDataProvider => async (...args) => {
   /**
    * Manage file upload by converting query content to FormData()
    */
-  if ([CREATE, UPDATE].includes(type) && [RES_DATASOURCE, RES_PICTURE].includes(resource)) {
+  if ([CREATE, UPDATE].includes(type) && [RES_DATASOURCE, RES_PICTURE, RES_VIEW].includes(resource)) {
     const body = new FormData();
 
     Object.keys(params.data).forEach(key => {
-      if (key === 'file') { return; }
+      if (key === 'file' || key === 'custom_icon') { return; }
 
       let value = params.data[key];
 
@@ -28,6 +32,9 @@ const toMultipart = nextDataProvider => async (...args) => {
 
     if (params.data.file && params.data.file.rawFile) {
       body.append('file', params.data.file.rawFile);
+    }
+    if (params.data.custom_icon && params.data.custom_icon.rawFile) {
+      body.append('custom_icon', params.data.custom_icon.rawFile);
     }
 
     let response;

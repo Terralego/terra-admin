@@ -12,10 +12,13 @@ const toMultipart = nextDataProvider => async (...args) => {
   const [type, resource, params, meta = {}] = args;
   const { endpoint = resource } = meta;
 
+  const modules = [RES_DATASOURCE, RES_PICTURE, RES_VIEW];
+  const filenameProperties = ['file', 'custom_icon'];
+
   /**
    * Manage file upload by converting query content to FormData()
    */
-  if ([CREATE, UPDATE].includes(type) && [RES_DATASOURCE, RES_PICTURE, RES_VIEW].includes(resource)) {
+  if ([CREATE, UPDATE].includes(type) && modules.includes(resource)) {
     const body = new FormData();
 
     Object.keys(params.data).forEach(key => {
@@ -30,12 +33,11 @@ const toMultipart = nextDataProvider => async (...args) => {
       body.append(key, value);
     });
 
-    if (params.data.file && params.data.file.rawFile) {
-      body.append('file', params.data.file.rawFile);
-    }
-    if (params.data.custom_icon && params.data.custom_icon.rawFile) {
-      body.append('custom_icon', params.data.custom_icon.rawFile);
-    }
+    filenameProperties.forEach(filenameProperty => {
+      if (params.data[filenameProperty] && params.data[filenameProperty].rawFile) {
+        body.append(filenameProperty, params.data[filenameProperty].rawFile);
+      }
+    });
 
     let response;
 

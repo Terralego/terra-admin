@@ -4,7 +4,7 @@ let viewList = null;
 
 export const fetchViewList = async () => {
   if (viewList === null) {
-    const apiViews =  await Api.request('geolayer/view/');
+    const apiViews =  await Api.request('geolayer/scene/');
 
     // Object transformation from backend format
     // to frontend one.

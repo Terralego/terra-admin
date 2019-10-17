@@ -14,7 +14,7 @@ import {
   REDUX_FORM_NAME,
 } from 'react-admin';
 import {
-  convertToSlug,
+  toSlug,
   isObjectEmpty,
 } from '../../../../utils/react-admin/helper';
 
@@ -35,15 +35,15 @@ const SceneForm = ({ edit = false, ...props }) => {
                 label="view.form.name"
                 onChange={value => {
                   if (!value) return;
-                  const slugGenerated = convertToSlug(value.target.value);
-                  dispatch(change(REDUX_FORM_NAME, 'slug', slugGenerated));
+                  const slug = toSlug(value.target.value);
+                  dispatch(change(REDUX_FORM_NAME, 'slug', slug));
                 }}
                 {...rest}
               />
             )}
           </FormDataConsumer>
           <Br />
-          <DisabledInput
+          <TextInput
             source="slug"
             label="view.form.slug"
           />

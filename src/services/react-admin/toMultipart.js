@@ -22,7 +22,7 @@ const toMultipart = nextDataProvider => async (...args) => {
     const body = new FormData();
 
     Object.keys(params.data).forEach(key => {
-      if (key === 'file' || key === 'custom_icon') { return; }
+      if (filenameProperties.includes(key)) { return; }
 
       let value = params.data[key];
 

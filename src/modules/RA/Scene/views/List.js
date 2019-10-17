@@ -4,6 +4,7 @@ import {
   EditButton,
   List,
   TextField,
+  ImageField,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
@@ -21,7 +22,7 @@ export const SceneList = props => (
     <Datagrid rowClick="edit">
       <TextField source="name" label="view.form.name" />
       <TextField source="category" label="view.form.category" />
-      <TextField source="custom_icon" label="view.form.icon" />
+      <ImageField source="custom_icon" label="view.form.icon" />
       <EditButton />
     </Datagrid>
   </List>

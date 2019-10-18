@@ -31,7 +31,7 @@ jest.mock('@terralego/core/modules/Map', () => ({
   CONTROLS_TOP_RIGHT: 'top-right',
 }));
 
-jest.mock('../../components/Message', () => () => <div>No settings</div>);
+jest.mock('../../../../components/Message', () => () => <div>No settings</div>);
 
 jest.mock('../../components/DataTable', () => () => <div>Datatable</div>);
 

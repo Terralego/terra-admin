@@ -2,7 +2,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import CRUDProvider from './CRUDProvider';
-import mapUtils from './map';
 import crudUtils from './CRUD';
 import featuresUtils from './features';
 
@@ -10,13 +9,6 @@ jest.mock('react-ctx-connect', () => {
   const connect = () => jest.fn();
   return connect;
 });
-
-jest.mock('./map', () => ({
-  fetchMapConfig: () => ({
-    foo: 'foo',
-    bar: 'bar',
-  }),
-}));
 
 jest.mock('./CRUD', () => ({
   fetchSettings: () => ({
@@ -115,37 +107,6 @@ it('should set map', () => {
   instance.isUnmount = false;
   instance.setMap({ bar: 'bar' });
   expect(instance.setState).toHaveBeenCalledWith({ map: { bar: 'bar' } });
-});
-
-it('should get map config', async () => {
-  const instance = new CRUDProvider();
-  let stateCallback;
-  instance.setState = jest.fn(callback => {
-    stateCallback = callback;
-  });
-  await instance.getMapConfig();
-  expect(stateCallback({})).toEqual({
-    mapConfig: { foo: 'foo', bar: 'bar' },
-    errors: { mapConfig: undefined },
-  });
-});
-
-it('should not crash when no getting map config', async () => {
-  // eslint-disable-next-line import/no-named-as-default-member
-  mapUtils.fetchMapConfig = () => {
-    throw new Error('No fetching map');
-  };
-
-  const instance = new CRUDProvider();
-  let stateCallback;
-  instance.setState = jest.fn(callback => {
-    stateCallback = callback;
-  });
-  await instance.getMapConfig();
-  expect(stateCallback({})).toEqual({
-    mapConfig: {},
-    errors: { mapConfig: new Error('No fetching map') },
-  });
 });
 
 it('should get settings', async () => {

@@ -1,7 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
-import config from '../../services/mock-config.json';
 import { toast } from '../../../../utils/toast';
 import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
 import Map from './Map';
@@ -151,17 +150,31 @@ const settings = {
       },
     }],
   }],
-  config: {},
+  config: {
+    default: {
+      map: {
+        accessToken: 'ACCESSTOKEN',
+        backgroundStyle: [
+          {
+            label: 'Foo theme',
+            url: 'mapbox://styles/foo',
+          },
+        ],
+        center: [2, 46],
+        zoom: 5,
+        maxZoom: 18,
+        minZoom: 3,
+      },
+    },
+  },
 };
 
 let props;
 beforeEach(() => {
   props = {
     getSettings: jest.fn(),
-    getMapConfig: jest.fn(),
     getFeaturesList: jest.fn(),
     setMap: jest.fn(),
-    mapConfig: config,
     history: { push: () => null },
     t: key => key,
     settings,
@@ -210,7 +223,7 @@ describe('snapshots', () => {
     const tree = renderer.create((
       <Map
         {...props}
-        mapConfig={{}}
+        settings={{}}
       />
     )).toJSON();
     expect(tree).toMatchSnapshot();
@@ -258,7 +271,6 @@ it('should call several functions when mouting', () => {
   instance.loadFeatures = jest.fn();
   instance.componentDidMount();
   expect(instance.props.getSettings).toHaveBeenCalled();
-  expect(instance.props.getMapConfig).toHaveBeenCalled();
   expect(instance.generateLayersToMap).toHaveBeenCalled();
   expect(instance.setInteractions).toHaveBeenCalled();
 });
@@ -721,6 +733,22 @@ it('should generate layers to map', () => {
         type: 'vector',
         url: '/api/layer/2/tilejson',
       }],
+    },
+    mapConfig: {
+      accessToken: 'ACCESSTOKEN',
+      backgroundStyle: [
+        {
+          label: 'Foo theme',
+          url: 'mapbox://styles/foo',
+        },
+      ],
+      center: [
+        2,
+        46,
+      ],
+      maxZoom: 18,
+      minZoom: 3,
+      zoom: 5,
     },
   });
 });

@@ -29,7 +29,6 @@ export class Map extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func,
     }).isRequired,
-    getMapConfig: PropTypes.func.isRequired,
     getSettings: PropTypes.func.isRequired,
     setMap: PropTypes.func.isRequired,
     displayViewFeature: PropTypes.bool,
@@ -41,7 +40,6 @@ export class Map extends React.Component {
     }),
     settings: PropTypes.shape({}),
     map: PropTypes.shape({}),
-    mapConfig: PropTypes.shape({}),
     feature: PropTypes.shape({}),
   };
 
@@ -54,12 +52,12 @@ export class Map extends React.Component {
       },
     },
     map: {},
-    mapConfig: {},
     settings: undefined,
     feature: {},
   }
 
   state = {
+    mapConfig: {},
     interactions: [],
     customStyle: {},
     controls: [...DEFAULT_CONTROLS, CONTROL_CAPTURE_POSITION],
@@ -71,9 +69,8 @@ export class Map extends React.Component {
   dataTable = React.createRef();
 
   componentDidMount () {
-    const { getSettings, getMapConfig } = this.props;
+    const { getSettings } = this.props;
     getSettings();
-    getMapConfig();
     this.generateLayersToMap();
     this.setInteractions();
   }
@@ -271,18 +268,36 @@ export class Map extends React.Component {
       return;
     }
 
+    const {
+      config: {
+        default: {
+          map = {},
+        } = {},
+      } = {},
+    } = settings;
+
+    const mapConfig = Object.keys(map).reduce((keys, mapKey) => {
+      if (mapKey === 'mapbox_access_token') {
+        return { ...keys, accessToken: map[mapKey] };
+      }
+      if (mapKey === 'background_styles') {
+        return { ...keys, backgroundStyle: map[mapKey] };
+      }
+      return { ...keys, [mapKey]: map[mapKey] };
+    }, {});
+
     this.setState({
       customStyle: {
         sources: getSources(settings),
         layers: getLayersPaints(settings),
       },
+      mapConfig,
     });
   }
 
   render () {
-    const { customStyle, interactions, controls, tableSize } = this.state;
+    const { customStyle, interactions, controls, tableSize, mapConfig } = this.state;
     const {
-      mapConfig,
       mapIsResizing,
       settings,
       match: { params: { layer, id } },
@@ -298,8 +313,8 @@ export class Map extends React.Component {
       );
     }
 
-    const areSettingsLoaded = Object.keys(settings).length > 1;
-    const isDataLoaded = Object.keys(mapConfig).length > 1 && areSettingsLoaded;
+
+    const areSettingsLoaded = Object.keys(settings).length && Object.keys(mapConfig).length;
     const areDetailsVisible = !!id;
 
     if (areSettingsLoaded && layer && !getView(settings, layer)) {
@@ -309,7 +324,7 @@ export class Map extends React.Component {
 
     return (
       <>
-        {!isDataLoaded
+        {!areSettingsLoaded
           ? <Loading spinner />
           : (
             <>

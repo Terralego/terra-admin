@@ -29,11 +29,11 @@ class DataTable extends React.Component {
     }
   }
 
-  loadData = () => {
+  loadData = (querystring = {}) => {
     const { getFeaturesList } = this.props;
     const { featureEndpoint } = this.getView();
     if (!featureEndpoint) return;
-    getFeaturesList(featureEndpoint);
+    getFeaturesList(featureEndpoint, querystring);
     this.setState({
       loading: true,
     });

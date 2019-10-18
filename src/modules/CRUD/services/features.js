@@ -7,8 +7,11 @@ const sanitizeCustomEndpoint = str => {
   return str;
 };
 
-export const fetchFeaturesList = endpoint =>
-  Api.request(`${sanitizeCustomEndpoint(endpoint)}?page_size=2000`);
+export const fetchFeaturesList = (endpoint, querystring = {}) =>
+  Api.request(
+    `${sanitizeCustomEndpoint(endpoint)}`,
+    { querystring },
+  );
 
 export const fetchFeature = (endpoint, featureId) =>
   Api.request(`${sanitizeCustomEndpoint(endpoint)}/${featureId}/`);
@@ -27,16 +30,6 @@ export const saveFeature = (endpoint, featureId, body) => (
     ? updateFeature(endpoint, featureId, body)
     : createFeature(endpoint, body)
 );
-
-export const updateOrSaveFeatureInFeaturesList = (featuresList, feature) => {
-  const isFeatureAlreadyExisting = featuresList.some(({ identifier }) => (
-    identifier === feature.identifier
-  ));
-
-  return isFeatureAlreadyExisting
-    ? featuresList.map(item => (item.identifier === feature.identifier ? feature : item))
-    : [...featuresList, feature.identifier && feature].filter(Boolean);
-};
 
 export const updateFeatureIdentifier = (feature, newFeature) => ({
   ...feature,
@@ -79,6 +72,5 @@ export default {
   deleteFeature,
   saveFeature,
   getBounds,
-  updateOrSaveFeatureInFeaturesList,
   updateFeatureIdentifier,
 };

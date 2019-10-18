@@ -289,6 +289,7 @@ class Edit extends React.Component {
       view: { featureEndpoint },
       paramId,
       paramLayer,
+      getFeaturesList,
       saveFeature,
       action,
       t,
@@ -308,6 +309,7 @@ class Edit extends React.Component {
 
     if (savedFeature) {
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
+      getFeaturesList(featureEndpoint);
     } else {
       this.setState({
         loading: false,

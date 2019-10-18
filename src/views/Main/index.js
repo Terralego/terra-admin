@@ -7,7 +7,7 @@ import Main from './Main';
 export default
 withNamespaces()(
   withLocale(
-    connectAppProvider('env')(
+    connectAppProvider('env', 'errorSettings')(
       connectAuthProvider('authenticated')(
         Main,
       ),

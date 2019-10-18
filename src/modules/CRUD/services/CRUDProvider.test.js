@@ -25,15 +25,6 @@ jest.mock('./CRUD', () => ({
 }));
 
 jest.mock('./features', () => ({
-  updateOrSaveFeatureInFeaturesList: (featuresList, feature) => {
-    const isFeatureAlreadyExisting = featuresList.some(({ identifier }) => (
-      identifier === feature.identifier
-    ));
-
-    return isFeatureAlreadyExisting
-      ? featuresList.map(item => (item.identifier === feature.identifier ? feature : item))
-      : [...featuresList, feature.identifier && feature].filter(Boolean);
-  },
   updateFeatureIdentifier: (feature, newFeature) => ({
     ...feature,
     ...(newFeature.identifier
@@ -252,7 +243,6 @@ it('should get feature data', async () => {
         identifier: 1,
       },
     },
-    featuresList: [{ identifier: 2, foo: 'bar' }, { identifier: 1, foo: 'foo' }],
   });
 
   instance.state = {
@@ -275,7 +265,6 @@ it('should get feature data', async () => {
         identifier: 1,
       },
     },
-    featuresList: [{ identifier: 2, foo: 'bar' }, { identifier: 1, foo: 'foo' }],
   });
 });
 
@@ -297,7 +286,6 @@ it('should not crash when no getting feature data', async () => {
       featuresList: [],
     },
     feature: {},
-    featuresList: [],
   });
 });
 
@@ -324,10 +312,6 @@ it('should create feature', async () => {
     feature: {
       999: { displayName: 'Foo', foo: 'foo', identifier: '999' },
     },
-    featuresList: [
-      { displayName: 'myFeature', foo: 'foo', identifier: 'existingFeature' },
-      { displayName: 'Foo', foo: 'foo', identifier: '999' },
-    ],
   });
 });
 
@@ -342,15 +326,6 @@ it('should update feature', async () => {
     feature: {
       1000: { identifier: '1000', foo: 'foo', displayName: 'myFeature' },
     },
-    featuresList: [{
-      displayName: 'myFeature',
-      foo: 'foo',
-      identifier: '1000',
-    }, {
-      displayName: 'otherFeature',
-      foo: 'bar',
-      identifier: '123',
-    }],
   };
   let stateCallback;
   instance.setState = jest.fn(callback => {
@@ -365,10 +340,6 @@ it('should update feature', async () => {
     feature: {
       1000: { identifier: '1000', foo: 'bar', displayName: 'Foo' },
     },
-    featuresList: [
-      { identifier: '1000', foo: 'bar', displayName: 'Foo' },
-      { identifier: '123', foo: 'bar', displayName: 'otherFeature' },
-    ],
   });
 });
 
@@ -389,7 +360,6 @@ it('should not crash when no saving feature', async () => {
       featuresList: [],
     },
     feature: {},
-    featuresList: [],
   });
 });
 

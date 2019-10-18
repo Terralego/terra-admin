@@ -7,7 +7,6 @@ import {
   fetchFeature as fetchFeatureAction,
   saveFeature as saveFeatureAction,
   deleteFeature as deleteFeatureAction,
-  updateOrSaveFeatureInFeaturesList,
   updateFeatureIdentifier,
 } from './features';
 
@@ -112,10 +111,10 @@ export class CRUDProvider extends React.Component {
     return [...errorStore, { error, ...ids }];
   }
 
-  getFeaturesList = async layerId => {
+  getFeaturesList = async (layerId, querystring) => {
     const result = {};
     try {
-      const { results: featuresList } = await fetchFeaturesList(layerId);
+      const { results: featuresList } = await fetchFeaturesList(layerId, querystring);
       result.featuresList = featuresList;
     } catch (e) {
       result.error = e;
@@ -143,9 +142,8 @@ export class CRUDProvider extends React.Component {
 
     const { feature: newFeature = {}, error = {} } = result;
 
-    this.setState(({ errors, feature, featuresList }) => ({
+    this.setState(({ errors, feature }) => ({
       feature: updateFeatureIdentifier(feature, newFeature),
-      featuresList: updateOrSaveFeatureInFeaturesList(featuresList, newFeature),
       errors: {
         ...errors,
         feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),
@@ -166,9 +164,8 @@ export class CRUDProvider extends React.Component {
 
     const { feature: newFeature = {}, error = {} } = result;
 
-    this.setState(({ errors, feature, featuresList }) => ({
+    this.setState(({ errors, feature }) => ({
       feature: updateFeatureIdentifier(feature, newFeature),
-      featuresList: updateOrSaveFeatureInFeaturesList(featuresList, newFeature),
       errors: {
         ...errors,
         feature: this.getFormattedError({ error, ids: { layerId, featureId }, store: 'feature' }),

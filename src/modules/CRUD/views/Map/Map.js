@@ -6,7 +6,7 @@ import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/Inte
 import { DEFAULT_CONTROLS, CONTROL_CAPTURE, CONTROLS_TOP_RIGHT } from '@terralego/core/modules/Map';
 
 import Loading from '../../../../components/Loading';
-import Message from '../../components/Message';
+import Message from '../../../../components/Message';
 import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';

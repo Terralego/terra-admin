@@ -17,18 +17,26 @@ export class AppProvider extends React.Component {
   }
 
   async initState () {
-    const settings = await getSettings();
-    this.setState({ env: settings });
+    const result = {};
+    try {
+      const settings = await getSettings();
+      result.settings = settings;
+    } catch (e) {
+      result.error = e;
+    }
+    const { settings, error } = result;
+    this.setState({ env: settings, errorSettings: error });
   }
 
   render () {
     const { children } = this.props;
-    const { env } = this.state;
+    const { env, errorSettings } = this.state;
     const value = {
       env,
+      errorSettings,
     };
 
-    if (!env) return <Loading />;
+    if (!env && !errorSettings) return <Loading />;
 
     return (
       <Provider value={value}>

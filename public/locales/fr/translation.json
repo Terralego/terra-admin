@@ -8,7 +8,8 @@
       "link": "Accueil",
       "title_404": "Erreur 404 : Page introuvable.",
       "text_404": "Retourner à la page d'accueil : ",
-      "link_404": "Accueil"
+      "link_404": "Accueil",
+      "unableToLoadSettings": "Impossible de charger la configuration. Veuillez contacter un administrateur."
     },
     "modules": "Modules",
     "pagination": {

@@ -309,7 +309,10 @@ class Edit extends React.Component {
 
     if (savedFeature) {
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
-      getFeaturesList(featureEndpoint);
+      getFeaturesList(
+        featureEndpoint,
+        { querystring: { page_size: 2000 } },
+      );
     } else {
       this.setState({
         loading: false,

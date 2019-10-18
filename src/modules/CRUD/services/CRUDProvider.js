@@ -1,6 +1,5 @@
 import React from 'react';
 import connect from 'react-ctx-connect';
-import { fetchMapConfig } from './map';
 import { fetchSettings } from './CRUD';
 import {
   fetchFeaturesList,
@@ -33,27 +32,6 @@ export class CRUDProvider extends React.Component {
   }
 
   setMap = map => !this.isUnmount && this.setState({ map });
-
-  getMapConfig = async () => {
-    const result = {};
-    try {
-      const mapConfig = await fetchMapConfig();
-      result.mapConfig = mapConfig;
-    } catch (e) {
-      result.error = e;
-    }
-
-    const { mapConfig = {}, error } = result;
-    this.setState(({ errors }) => ({
-      mapConfig,
-      errors: {
-        ...errors,
-        mapConfig: error,
-      },
-    }));
-
-    return mapConfig;
-  };
 
   getSettings = async () => {
     const result = {};

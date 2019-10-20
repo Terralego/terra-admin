@@ -8,12 +8,13 @@ import {
   // SelectInput,
   // Filter,
   ReferenceField,
-  FunctionField,
 } from 'react-admin';
 
-import { RES_DATASOURCE } from '../../ra-modules';
+import {
+  RES_DATASOURCE,
+  RES_VIEW,
+} from '../../ra-modules';
 
-import withViewList from '../components/withViewList';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
 // const ListFilters = props => (
@@ -30,32 +31,28 @@ import CommonBulkActionButtons from '../../../../components/react-admin/CommonBu
 //   </Filter>
 // );
 
-export const DataLayerList = ({ viewList, ...props }) => {
-  const renderViewField = ({ view }) => {
-    const { name = view } = viewList.find(({ id }) => (+id === view)) || {};
-    return name;
-  };
-  return (
-    <List
-      sort={{
-        field: 'name',
-        order: 'ASC',
-      }}
-      exporter={false}
-    // filters={<ListFilters />}
-      bulkActionButtons={<CommonBulkActionButtons />}
-      {...props}
-    >
-      <Datagrid rowClick="edit">
-        <TextField source="name" label="datalayer.form.name" />
-        <FunctionField source="view" render={renderViewField} />
-        <ReferenceField source="source" reference={RES_DATASOURCE} label="datalayer.form.data-source">
-          <TextField source="name" />
-        </ReferenceField>
-        <EditButton />
-      </Datagrid>
-    </List>
-  );
-};
+export const DataLayerList = ({ viewList, ...props }) => (
+  <List
+    sort={{
+      field: 'name',
+      order: 'ASC',
+    }}
+    exporter={false}
+  // filters={<ListFilters />}
+    bulkActionButtons={<CommonBulkActionButtons />}
+    {...props}
+  >
+    <Datagrid rowClick="edit">
+      <TextField source="name" label="datalayer.form.name" />
+      <ReferenceField source="view.id" reference={RES_VIEW} label="datalayer.form.data-source">
+        <TextField source="name" />
+      </ReferenceField>
+      <ReferenceField source="source" reference={RES_DATASOURCE} label="datalayer.form.data-source">
+        <TextField source="name" />
+      </ReferenceField>
+      <EditButton />
+    </Datagrid>
+  </List>
+);
 
-export default withViewList(DataLayerList);
+export default DataLayerList;

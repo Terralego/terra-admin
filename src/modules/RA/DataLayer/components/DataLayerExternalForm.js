@@ -10,7 +10,6 @@ import {
 } from 'react-admin';
 
 import SourceFetcher from './SourceFetcher';
-import withViewList from './withViewList';
 import { RES_DATASOURCE } from '../../ra-modules';
 
 
@@ -51,4 +50,4 @@ const DataLayerExternalForm = ({ viewList, ...props }) => (
   </SimpleForm>
 );
 
-export default withViewList(DataLayerExternalForm);
+export default DataLayerExternalForm;

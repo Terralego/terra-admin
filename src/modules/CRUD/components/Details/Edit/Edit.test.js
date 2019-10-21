@@ -62,6 +62,8 @@ beforeEach(() => {
     },
     saveFeature: jest.fn(),
     updateControls: jest.fn(),
+    getFeaturesList: jest.fn(),
+    getSettings: jest.fn(),
     view: {
       name: 'foo',
       layer: {

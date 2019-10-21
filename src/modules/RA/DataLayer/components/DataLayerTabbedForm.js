@@ -90,9 +90,9 @@ const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
                 helperText={translate('datalayer.form.search.main-field.helpertext')}
               >
                 <SelectInput
-                  source="settings.filters.mainField"
+                  source="main_field"
                   label="datalayer.form.search.main-field.label"
-                  choices={formData.fields.map(({ label: name }) => ({ id: name, name }))}
+                  choices={formData.fields.map(({ label: name, id }) => ({ id, name }))}
                   fullWidth
                 />
               </FormGroup>

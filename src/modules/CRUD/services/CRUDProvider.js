@@ -33,10 +33,10 @@ export class CRUDProvider extends React.Component {
 
   setMap = map => !this.isUnmount && this.setState({ map });
 
-  getSettings = async () => {
+  getSettings = async endpoint => {
     const result = {};
     try {
-      const settings = await fetchSettings();
+      const settings = await fetchSettings(endpoint);
       result.settings = settings;
     } catch (e) {
       result.error = e;

@@ -173,7 +173,6 @@ let props;
 beforeEach(() => {
   props = {
     getSettings: jest.fn(),
-    getFeaturesList: jest.fn(),
     setMap: jest.fn(),
     history: { push: () => null },
     t: key => key,
@@ -183,6 +182,7 @@ beforeEach(() => {
     },
     feature: {},
     map: { notEmpty: {} },
+    settingsEndpoint: 'path/to/endpoint',
   };
 });
 

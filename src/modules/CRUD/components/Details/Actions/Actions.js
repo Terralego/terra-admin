@@ -21,6 +21,7 @@ class Actions extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func,
     }),
+    settingsEndpoint: PropTypes.string,
     displayUpdate: PropTypes.bool,
     displayDelete: PropTypes.bool,
     displayCancel: PropTypes.bool,
@@ -38,6 +39,7 @@ class Actions extends React.Component {
     history: {
       push () {},
     },
+    settingsEndpoint: undefined,
     displayUpdate: false,
     displayDelete: false,
     displayCancel: false,
@@ -52,6 +54,7 @@ class Actions extends React.Component {
       view: { featureEndpoint },
       deleteFeature,
       history: { push },
+      settingsEndpoint,
       t,
     } = this.props;
 
@@ -67,7 +70,7 @@ class Actions extends React.Component {
       return;
     }
 
-    await getSettings();
+    await getSettings(settingsEndpoint);
 
     push(generateURI('layer', { layer: paramLayer }));
   }

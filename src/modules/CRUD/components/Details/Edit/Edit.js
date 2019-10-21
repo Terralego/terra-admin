@@ -54,6 +54,7 @@ class Edit extends React.Component {
     action: PropTypes.oneOf([ACTION_CREATE, ACTION_UPDATE]).isRequired,
     updateControls: PropTypes.func,
     getSettings: PropTypes.func,
+    settingsEndpoint: PropTypes.string,
     displayAddFeature: PropTypes.bool,
     displayChangeFeature: PropTypes.bool,
     history: PropTypes.shape({
@@ -79,6 +80,7 @@ class Edit extends React.Component {
     displayChangeFeature: true,
     updateControls () {},
     getSettings () {},
+    settingsEndpoint: undefined,
     history: {
       push () {},
     },
@@ -292,6 +294,7 @@ class Edit extends React.Component {
       getFeaturesList,
       saveFeature,
       action,
+      settingsEndpoint,
       t,
     } = this.props;
 
@@ -325,7 +328,7 @@ class Edit extends React.Component {
       t(isActionUpdate ? 'CRUD.details.failUpdateFeature' : 'CRUD.details.failCreateFeature'),
     );
 
-    getSettings();
+    getSettings(settingsEndpoint);
   }
 
   validateForm = (formData, errors) => {

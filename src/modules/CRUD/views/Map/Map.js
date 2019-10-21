@@ -39,6 +39,7 @@ export class Map extends React.Component {
       }),
     }),
     settings: PropTypes.shape({}),
+    settingsEndpoint: PropTypes.string,
     map: PropTypes.shape({}),
     feature: PropTypes.shape({}),
   };
@@ -53,6 +54,7 @@ export class Map extends React.Component {
     },
     map: {},
     settings: undefined,
+    settingsEndpoint: undefined,
     feature: {},
   }
 
@@ -69,8 +71,8 @@ export class Map extends React.Component {
   dataTable = React.createRef();
 
   componentDidMount () {
-    const { getSettings } = this.props;
-    getSettings();
+    const { getSettings, settingsEndpoint } = this.props;
+    getSettings(settingsEndpoint);
     this.generateLayersToMap();
     this.setInteractions();
   }
@@ -128,7 +130,7 @@ export class Map extends React.Component {
       if (!layerId) {
         return;
       }
-      removeHighlight({
+      removeHighlight && removeHighlight({
         layerId,
         featureId: prevId,
       });

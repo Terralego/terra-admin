@@ -2,11 +2,18 @@ import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
+import { connectAppProvider } from '../../../../../components/AppProvider';
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
 import { getView, getLayersPaints } from '../../../services/CRUD';
 import compose from '../../../../../utils/compose';
 
 import Edit from './Edit';
+
+const appProvider = ({
+  env: { modules: { CRUD: { settings } } },
+}) => ({
+  settingsEndpoint: settings,
+});
 
 const authProvider = ({
   authenticated,
@@ -42,6 +49,7 @@ const CRUDPRovider = ({
 
 export default compose(
   withRouter,
+  connectAppProvider(appProvider),
   connectAuthProvider(authProvider),
   connectCRUDProvider(CRUDPRovider),
   withNamespaces(),

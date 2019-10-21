@@ -7,6 +7,7 @@ import {
   MULTI_LINESTRING,
   MULTI_POLYGON,
 } from '../../../utils/geom';
+import { sanitizeCustomEndpoint } from './utils';
 
 export const ACTION_CREATE = 'create';
 export const ACTION_UPDATE = 'update';
@@ -22,8 +23,8 @@ const camelCaseKeys = obj => Object.keys(obj).reduce((props, key) => ({
 }), {});
 
 
-export const fetchSettings = () =>
-  Api.request('crud/settings/');
+export const fetchSettings = endpoint =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}/`);
 
 
 const flattenMenu = menu => (

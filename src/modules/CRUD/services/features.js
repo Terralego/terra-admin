@@ -1,11 +1,5 @@
 import Api from '@terralego/core/modules/Api';
-
-const sanitizeCustomEndpoint = str => {
-  if (str.startsWith('/api/')) {
-    return str.replace('/api/', '');
-  }
-  return str;
-};
+import { sanitizeCustomEndpoint } from './utils';
 
 export const fetchFeaturesList = (endpoint, querystring = {}) =>
   Api.request(

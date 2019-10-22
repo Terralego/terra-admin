@@ -5,13 +5,7 @@ import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
 import Details from './Details';
 
 jest.mock('react-router-dom', () => ({
-  NavLink: ({ children }) => <div>{children}</div>,
   Redirect: () => <div>Error because Redirect</div>,
-}));
-
-jest.mock('@blueprintjs/core', () => ({
-  Icon: () => <div>Icon close</div>,
-  Button: () => <div>Button</div>,
 }));
 
 jest.mock('../../services/CRUD', () => ({
@@ -27,6 +21,7 @@ jest.mock('../../../../utils/toast', () => ({
   },
 }));
 
+jest.mock('./Metas', () => () => <div>Metas</div>);
 jest.mock('./Read', () => () => <div>Read</div>);
 jest.mock('./Edit', () => ({ action }) => <div>{action}</div>);
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink, Redirect } from 'react-router-dom';
-import { Icon, Button } from '@blueprintjs/core';
+import { Redirect } from 'react-router-dom';
 
 import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
 
+import Metas from './Metas';
 import Read from './Read';
 import Edit from './Edit';
 import './styles.scss';
@@ -156,18 +156,10 @@ class Details extends React.Component {
 
     return (
       <>
-        <div className="CRUD-details__actions">
-          <Button
-            minimal
-            icon={full ? 'minimize' : 'maximize'}
-            onClick={this.onSizeChange}
-          />
-          <NavLink to={generateURI('layer', { layer: paramLayer })}>
-            <span className="bp3-button bp3-minimal">
-              <Icon icon="cross" title={t('CRUD.details.close')} />
-            </span>
-          </NavLink>
-        </div>
+        <Metas
+          full={full}
+          onSizeChange={this.onSizeChange}
+        />
         <div ref={this.detailContent} className="CRUD-details__content">
           {isLoading
             ? <Loading spinner />

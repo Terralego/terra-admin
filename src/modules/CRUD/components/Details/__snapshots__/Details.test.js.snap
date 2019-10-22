@@ -8,21 +8,8 @@ exports[`Snapshots should redirect if there is an error 1`] = `
 
 exports[`Snapshots should render details Create correctly 1`] = `
 Array [
-  <div
-    className="CRUD-details__actions"
-  >
-    <div>
-      Button
-    </div>
-    <div>
-      <span
-        className="bp3-button bp3-minimal"
-      >
-        <div>
-          Icon close
-        </div>
-      </span>
-    </div>
+  <div>
+    Metas
   </div>,
   <div
     className="CRUD-details__content"
@@ -36,21 +23,8 @@ Array [
 
 exports[`Snapshots should render details Read correctly 1`] = `
 Array [
-  <div
-    className="CRUD-details__actions"
-  >
-    <div>
-      Button
-    </div>
-    <div>
-      <span
-        className="bp3-button bp3-minimal"
-      >
-        <div>
-          Icon close
-        </div>
-      </span>
-    </div>
+  <div>
+    Metas
   </div>,
   <div
     className="CRUD-details__content"
@@ -64,21 +38,8 @@ Array [
 
 exports[`Snapshots should render details Update correctly 1`] = `
 Array [
-  <div
-    className="CRUD-details__actions"
-  >
-    <div>
-      Button
-    </div>
-    <div>
-      <span
-        className="bp3-button bp3-minimal"
-      >
-        <div>
-          Icon close
-        </div>
-      </span>
-    </div>
+  <div>
+    Metas
   </div>,
   <div
     className="CRUD-details__content"
@@ -92,21 +53,8 @@ Array [
 
 exports[`Snapshots should render loading correctly 1`] = `
 Array [
-  <div
-    className="CRUD-details__actions"
-  >
-    <div>
-      Button
-    </div>
-    <div>
-      <span
-        className="bp3-button bp3-minimal"
-      >
-        <div>
-          Icon close
-        </div>
-      </span>
-    </div>
+  <div>
+    Metas
   </div>,
   <div
     className="CRUD-details__content"

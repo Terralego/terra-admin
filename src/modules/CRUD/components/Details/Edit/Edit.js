@@ -9,6 +9,7 @@ import RTEField from '../../../../../components/react-json-schemaForm/RTEField';
 import { ACTION_CREATE, ACTION_UPDATE } from '../../../services/CRUD';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
+import Header from '../Header';
 import Actions from '../Actions';
 import ErrorListTemplate from './ErrorListTemplate';
 
@@ -385,9 +386,7 @@ class Edit extends React.Component {
 
     return (
       <div className="details ">
-        <div className="details__header">
-          <h2 className="details__title">{mainTitle}</h2>
-        </div>
+        <Header title={mainTitle} />
         <div className="details__content bootstrap-inside">
           {Object.keys(properties).length
             ? (

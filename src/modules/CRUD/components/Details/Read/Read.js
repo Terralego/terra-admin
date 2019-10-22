@@ -6,7 +6,7 @@ import classnames from 'classnames';
 
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
-import DownloadButtons from '../DownloadButtons';
+import Header from '../Header';
 import Actions from '../Actions';
 
 const NO_FEATURE = 'CRUD.details.noFeature';
@@ -163,13 +163,7 @@ class Read extends React.Component {
 
     return (
       <div className="details">
-        <div className="details__header">
-          <h2 className="details__title">{featureTitle || t(NO_FEATURE)}</h2>
-          <DownloadButtons
-            className="details__templates"
-            documents={documents}
-          />
-        </div>
+        <Header title={featureTitle || t(NO_FEATURE)} documents={documents} />
         {hasProperties && (
           <div className="details__content">
             <Tabs

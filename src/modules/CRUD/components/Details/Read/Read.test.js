@@ -3,21 +3,8 @@ import renderer from 'react-test-renderer';
 
 import Read from './Read';
 
-
-jest.mock('@blueprintjs/core', () => {
-  const Tabs = ({ children }) => <ul>{children}</ul>;
-  const Tab = ({ title, panel }) => <li>{title}{panel}</li>;
-  Tabs.Expander = () => null;
-
-  return {
-    Tabs,
-    Tab,
-  };
-});
-
 jest.mock('react-router-dom', () => ({
   Redirect: () => <div>Error because Redirect</div>,
-  Link: ({ children }) => <span>{children}</span>,
 }));
 
 jest.mock('../../../../../utils/toast', () => ({
@@ -30,17 +17,15 @@ jest.mock('../../../config', () => ({
   generateURI: jest.fn(),
 }));
 
-jest.mock('../DownloadButtons', () => () => (<div>DownloadButtons</div>));
+jest.mock('../DownloadButtons', () => () => <div>DownloadButtons</div>);
 
-jest.mock('../Actions', () => () => (<div>Actions</div>));
+jest.mock('../Header', () => props => <div {...props}>Header</div>);
+jest.mock('./DefaultView', () => props => <div {...props}>Default view</div>);
 
 const props = {
   t: text => text,
-  match: { params: { layer: 'layerFoo', id: 'layerId' } },
+  match: { params: { layer: 'layerFoo' } },
   displayViewFeature: true,
-  location: {
-    hash: '',
-  },
   feature: {
     title: 'Title of the feature',
     display_properties: {

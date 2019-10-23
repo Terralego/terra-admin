@@ -10,7 +10,10 @@ import {
 } from 'react-admin';
 
 import SourceFetcher from './SourceFetcher';
-import { RES_DATASOURCE } from '../../ra-modules';
+import {
+  RES_DATASOURCE,
+  RES_VIEW,
+} from '../../ra-modules';
 
 
 const DataLayerExternalForm = ({ viewList, ...props }) => (
@@ -29,12 +32,16 @@ const DataLayerExternalForm = ({ viewList, ...props }) => (
 
 
     {viewList.length > 0 && (
-    <SelectInput
-      source="view"
-      label="datalayer.form.view"
-      choices={viewList}
-      validate={[required()]}
-    />
+      <ReferenceInput
+        source="view"
+        reference={RES_VIEW}
+        label="datalayer.form.view"
+        sort={{ field: 'name', order: 'ASC' }}
+        validate={[required()]}
+        perPage={100}
+      >
+        <SelectInput />
+      </ReferenceInput>
     )}
 
 

@@ -65,7 +65,7 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
         <ReferenceInput
           source="view.id"
           reference={RES_VIEW}
-          label="datalayer.form.data-source"
+          label="datalayer.form.view"
           sort={{ field: 'name', order: 'ASC' }}
           validate={defaultRequired}
           perPage={100}

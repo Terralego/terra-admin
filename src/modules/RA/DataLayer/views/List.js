@@ -44,7 +44,7 @@ export const DataLayerList = ({ viewList, ...props }) => (
   >
     <Datagrid rowClick="edit">
       <TextField source="name" label="datalayer.form.name" />
-      <ReferenceField source="view.id" reference={RES_VIEW} label="datalayer.form.data-source">
+      <ReferenceField source="view.id" reference={RES_VIEW} label="datalayer.form.view">
         <TextField source="name" />
       </ReferenceField>
       <ReferenceField source="source" reference={RES_DATASOURCE} label="datalayer.form.data-source">

@@ -30,11 +30,13 @@ import LegendItemsField from './LegendItemsField';
 import CustomLayer from './CustomLayer';
 import StyleField from './StyleField';
 
-import withViewList from './withViewList';
 import { required } from '../../../../utils/react-admin/validate';
 import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
-import { RES_DATASOURCE } from '../../ra-modules';
+import {
+  RES_DATASOURCE,
+  RES_VIEW,
+} from '../../ra-modules';
 
 const defaultRequired = required();
 
@@ -44,7 +46,7 @@ const styles = {
   },
 };
 
-const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
+const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
   <>
     <SourceFetcher />
     <TabbedForm {...props}>
@@ -60,14 +62,16 @@ const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
           <SelectInput />
         </ReferenceInput>
 
-        {viewList.length > 0 && (
-        <SelectInput
+        <ReferenceInput
           source="view"
+          reference={RES_VIEW}
           label="datalayer.form.view"
-          choices={viewList}
+          sort={{ field: 'name', order: 'ASC' }}
           validate={defaultRequired}
-        />
-        )}
+          perPage={100}
+        >
+          <SelectInput />
+        </ReferenceInput>
 
         <TextInput
           source="name"
@@ -261,5 +265,4 @@ const DataLayerTabbedForm = ({ classes, translate, viewList, ...props }) => (
 export default compose(
   withStyles(styles),
   translateRA,
-  withViewList,
 )(DataLayerTabbedForm);

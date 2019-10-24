@@ -1,21 +1,28 @@
 import { CREATE, UPDATE } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
-import { RES_DATASOURCE, RES_PICTURE } from '../../modules/RA/ra-modules';
+import {
+  RES_DATASOURCE,
+  RES_PICTURE,
+  RES_VIEW,
+} from '../../modules/RA/ra-modules';
 
 
 const toMultipart = nextDataProvider => async (...args) => {
   const [type, resource, params, meta = {}] = args;
   const { endpoint = resource } = meta;
 
+  const modules = [RES_DATASOURCE, RES_PICTURE, RES_VIEW];
+  const filenameProperties = ['file', 'custom_icon'];
+
   /**
    * Manage file upload by converting query content to FormData()
    */
-  if ([CREATE, UPDATE].includes(type) && [RES_DATASOURCE, RES_PICTURE].includes(resource)) {
+  if ([CREATE, UPDATE].includes(type) && modules.includes(resource)) {
     const body = new FormData();
 
     Object.keys(params.data).forEach(key => {
-      if (key === 'file') { return; }
+      if (filenameProperties.includes(key)) { return; }
 
       let value = params.data[key];
 
@@ -26,9 +33,11 @@ const toMultipart = nextDataProvider => async (...args) => {
       body.append(key, value);
     });
 
-    if (params.data.file && params.data.file.rawFile) {
-      body.append('file', params.data.file.rawFile);
-    }
+    filenameProperties.forEach(filenameProperty => {
+      if (params.data[filenameProperty] && params.data[filenameProperty].rawFile) {
+        body.append(filenameProperty, params.data[filenameProperty].rawFile);
+      }
+    });
 
     let response;
 

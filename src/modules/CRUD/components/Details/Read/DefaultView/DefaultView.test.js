@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import DefaultView from './Default';
+import DefaultView from './DefaultView';
 
 jest.mock('@blueprintjs/core', () => {
   const Tabs = ({ children }) => <ul>{children}</ul>;
@@ -15,7 +15,7 @@ jest.mock('@blueprintjs/core', () => {
 });
 
 jest.mock('react-router-dom', () => ({
-  Link: ({ children }) => <span>{children}</span>,
+  NavLink: ({ children }) => <span>{children}</span>,
 }));
 
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tab, Tabs } from '@blueprintjs/core';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
+import { generateURI } from '../../../../config';
 
 import Actions from '../../Actions';
 
@@ -140,8 +141,7 @@ class DefaultView extends React.Component {
   render () {
     const {
       t,
-      match: { params: { layer, id } },
-      location: { hash },
+      match: { params: { layer, id, action = 'read', section = 'data', category } },
     } = this.props;
 
     const { tabs } = this.state;
@@ -150,22 +150,19 @@ class DefaultView extends React.Component {
     return (
       <>
         {hasProperties && (
-          <div className="details__content">
-            <Tabs
-              id="tabs"
-              selectedTabId={hash.substring(1) || tabs[0].slug}
-            >
-              {tabs.map(({ title, slug = 'other', properties }) => (
-                <Tab
-                  key={slug}
-                  id={slug}
-                  title={<Link to={`#${slug}`}>{title || t('CRUD.details.other')}</Link>}
-                  panel={this.renderPanel(properties)}
-                />
-              ))}
-              <Tabs.Expander />
-            </Tabs>
-          </div>
+        <Tabs
+          selectedTabId={category || tabs[0].slug}
+        >
+          {tabs.map(({ title, slug = 'other', properties }) => (
+            <Tab
+              key={slug}
+              id={slug}
+              title={<NavLink to={generateURI('layer', { layer, id, action, section, category: slug })}>{title || t('CRUD.details.other')}</NavLink>}
+              panel={this.renderPanel(properties)}
+            />
+          ))}
+          <Tabs.Expander />
+        </Tabs>
         )}
         <Actions paramId={id} paramLayer={layer} displayUpdate displayDelete />
       </>
@@ -178,6 +175,10 @@ DefaultView.propTypes = {
     params: PropTypes.shape({
       layer: PropTypes.string,
       id: PropTypes.string,
+      action: PropTypes.string,
+      section: PropTypes.string,
+      category: PropTypes.string,
+
     }),
   }),
   location: PropTypes.shape({
@@ -192,6 +193,9 @@ DefaultView.defaultProps = {
     params: {
       layer: undefined,
       id: undefined,
+      action: undefined,
+      section: undefined,
+      category: undefined,
     },
   },
   location: PropTypes.shape({

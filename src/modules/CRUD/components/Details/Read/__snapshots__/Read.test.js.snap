@@ -6,7 +6,7 @@ exports[`should redirect 1`] = `
 </div>
 `;
 
-exports[`should render correctly 1`] = `
+exports[`should render AttachmentView correctly 1`] = `
 <div
   className="details"
 >
@@ -16,62 +16,95 @@ exports[`should render correctly 1`] = `
     Header
   </div>
   <div
-    properties={
-      Object {
-        "Group 1": Object {
-          "order": 1,
-          "pictogram": null,
-          "properties": Object {
-            "ArrayOfObjects": Array [
-              Object {
-                "bar": "Bar",
-                "foo": "Foo",
-              },
-              Object {
-                "test": "footest",
-              },
-            ],
-            "ArrayOfObjectsToTable": Array [
-              Object {
-                "bar": "BarItem",
-                "foo": "FooItem",
-              },
-              Object {
-                "bar": "Bar2Item",
-                "foo": "Foo2Item",
-              },
-            ],
-            "ArrayOfStrings": Array [
-              1,
-              2,
-              3,
-            ],
-            "Available": false,
-            "EmptyValue": "  ",
-            "Numéro": 2,
-            "Object": Object {
-              "foobar": "foobar",
-              "foobarbar": "foobarbar",
-            },
-            "Validation": true,
-          },
-          "slug": "slug-group",
-          "title": "Name of the group",
-        },
-        "__default__": Object {
-          "order": 9999,
-          "pictogram": null,
-          "properties": Object {
-            "Contact": "Foo contact",
-            "Hello foo bar": "Value hello foo bar",
-            "key without value": null,
-          },
-          "title": "",
-        },
-      }
-    }
+    section="attachmentFiles"
   >
-    Default view
+    Menu
+  </div>
+  <div
+    className="details__content"
+  >
+    <div>
+      Attachmentu view
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render defaultView correctly 1`] = `
+<div
+  className="details"
+>
+  <div
+    title="Title of the feature"
+  >
+    Header
+  </div>
+  <div
+    section="default"
+  >
+    Menu
+  </div>
+  <div
+    className="details__content"
+  >
+    <div
+      properties={
+        Object {
+          "Group 1": Object {
+            "order": 1,
+            "pictogram": null,
+            "properties": Object {
+              "ArrayOfObjects": Array [
+                Object {
+                  "bar": "Bar",
+                  "foo": "Foo",
+                },
+                Object {
+                  "test": "footest",
+                },
+              ],
+              "ArrayOfObjectsToTable": Array [
+                Object {
+                  "bar": "BarItem",
+                  "foo": "FooItem",
+                },
+                Object {
+                  "bar": "Bar2Item",
+                  "foo": "Foo2Item",
+                },
+              ],
+              "ArrayOfStrings": Array [
+                1,
+                2,
+                3,
+              ],
+              "Available": false,
+              "EmptyValue": "  ",
+              "Numéro": 2,
+              "Object": Object {
+                "foobar": "foobar",
+                "foobarbar": "foobarbar",
+              },
+              "Validation": true,
+            },
+            "slug": "slug-group",
+            "title": "Name of the group",
+          },
+          "__default__": Object {
+            "order": 9999,
+            "pictogram": null,
+            "properties": Object {
+              "Contact": "Foo contact",
+              "Hello foo bar": "Value hello foo bar",
+              "key without value": null,
+            },
+            "title": "",
+          },
+        }
+      }
+    >
+      Default view
+    </div>
   </div>
 </div>
 `;

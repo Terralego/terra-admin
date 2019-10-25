@@ -20,7 +20,9 @@ jest.mock('../../../config', () => ({
 jest.mock('../DownloadButtons', () => () => <div>DownloadButtons</div>);
 
 jest.mock('../Header', () => props => <div {...props}>Header</div>);
+jest.mock('../Menu', () => props => <div {...props}>Menu</div>);
 jest.mock('./DefaultView', () => props => <div {...props}>Default view</div>);
+jest.mock('./AttachmentView', () => props => <div {...props}>Attachmentu view</div>);
 
 const props = {
   t: text => text,
@@ -59,8 +61,18 @@ const props = {
   },
 };
 
+it('should redirect', () => {
+  const tree = renderer.create((
+    <Read
+      {...props}
+      displayViewFeature={false}
+    />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
 
-it('should render correctly', () => {
+
+it('should render defaultView correctly', () => {
   const tree = renderer.create((
     <Read
       {...props}
@@ -69,11 +81,11 @@ it('should render correctly', () => {
   expect(tree).toMatchSnapshot();
 });
 
-it('should redirect', () => {
+it('should render AttachmentView correctly', () => {
   const tree = renderer.create((
     <Read
       {...props}
-      displayViewFeature={false}
+      match={{ params: { layer: 'layerFoo', section: 'attachmentFiles' } }}
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();

@@ -502,6 +502,7 @@
   "resources": {
     "viewpoint": {
       "viewpoint-number": "Point de vue n°%{number}",
+      "viewpoint-no-number": "Pas d'id renseigné",
       "fields": {
         "label": "Nom du point de vue",
         "address": "Adresse",

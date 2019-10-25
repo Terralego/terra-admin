@@ -1,4 +1,38 @@
 
+2.7.0 / 2019-10-25
+==================
+
+  * Fix source in referenceInput to select view
+  * Call fetchSettings with custom endpoint as parameter
+  * Call getSettings method with settingsEndpoint parameter
+  * Move sanitizeCustomEndpoint method to a separate file
+  * Refacto HOC Details/Actions/index.js by using compose() method
+  * Refacto HOC Details/Edit/index.js by using compose() method
+  * Refacto HOC view/Map/index.js by using compose() method
+  * Set mapConfig driven by API (no more mock)
+  * Request the api for sorting columns in DataTable
+  * Call getFeaturesList each times is necessary instead of store it
+  * Display an Error message when the app cannot fetch api/settings
+  * Move Message component from modules/CRUD/components to /src/components
+  * Change source of input mainField
+  * Refacto fetch viewlist
+  * Update endpoint to fetch list of views
+  * Add Edit and Create View
+  * Re-enable picture owner name display on forms
+  * Hide status from viewpoint picture list
+  * Remove focal field from picture edit first tab
+  * Add "Photographie" translation in picture list
+  * Fix default value in setSchema method
+  * Add view list of views
+  * Change source managment for authorized groups
+  * Move schemaForm logic from Detail to Edit component
+  * Delete the font call which does not exist
+  * Allow scrolling only of content of read component
+  * Call features urls endpoint driven by views
+  * Change geocrud permissions by the new ones
+  * Do not display group name icon when minifying the menu
+  * Call glyphicons needed to display bootstrap icons
+
 2.6.0 / 2019-10-11
 ==================
 

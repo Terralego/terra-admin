@@ -209,7 +209,11 @@
         "default": "Informations",
         "attachmentFiles": "Pièces jointes",
         "attachmentImages": "Images"
-      }
+      },
+      "attachment": {
+        "noFiles": "Aucun document",
+        "createInfo": "(Crée le {{date}})"
+      } 
     }
   },
   "help": {

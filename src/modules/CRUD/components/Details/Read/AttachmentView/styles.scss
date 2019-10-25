@@ -1,0 +1,13 @@
+.attachment {
+  &__list {
+    margin: -1rem 0;
+    padding: 0;
+  }
+  &__item {
+    margin: 1rem 0;
+    list-style: none;
+  }
+  &__figure {
+    margin: 0;
+  }
+}

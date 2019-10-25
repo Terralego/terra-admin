@@ -25,6 +25,9 @@ export const saveFeature = (endpoint, featureId, body) => (
     : createFeature(endpoint, body)
 );
 
+export const fetchCustomEndpoint = endpoint =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}`);
+
 export const updateFeatureIdentifier = (feature, newFeature) => ({
   ...feature,
   ...(newFeature.identifier
@@ -65,6 +68,7 @@ export default {
   fetchFeature,
   deleteFeature,
   saveFeature,
+  fetchCustomEndpoint,
   getBounds,
   updateFeatureIdentifier,
 };

@@ -46,6 +46,12 @@ const getColsForWidth = width => {
   return 6;
 };
 
+const viewpointSubtitle = index => (
+  Number.isNaN(Number(index))
+    ? ['resources.viewpoint.viewpoint-no-number']
+    : ['resources.viewpoint.viewpoint-number', { number: index }]
+);
+
 const GridList = ({ translate: t, classes, ids, data, basePath, width }) => (
   <div className={classes.root}>
     <MuiGridList cellHeight={180} cols={getColsForWidth(width)} className={classes.gridList}>
@@ -55,7 +61,7 @@ const GridList = ({ translate: t, classes, ids, data, basePath, width }) => (
           <GridListTileBar
             className={classes.tileBar}
             title={data[id].label}
-            subtitle={<span>{t('resources.viewpoint.viewpoint-number', { number: id })}</span>}
+            subtitle={<span>{t(...viewpointSubtitle(data[id].properties.index))}</span>}
           />
         </GridListTile>
       ))}

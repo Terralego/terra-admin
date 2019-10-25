@@ -7,6 +7,7 @@ import {
   saveFeature as saveFeatureAction,
   deleteFeature as deleteFeatureAction,
   updateFeatureIdentifier,
+  fetchCustomEndpoint,
 } from './features';
 
 export const context = React.createContext({});
@@ -21,6 +22,7 @@ export class CRUDProvider extends React.Component {
     feature: {},
     mapConfig: {},
     errors: {
+      attachmentCategories: undefined,
       settings: undefined,
       featuresList: [],
       feature: [],
@@ -173,6 +175,60 @@ export class CRUDProvider extends React.Component {
     return feature;
   }
 
+  getAttachmentCategories = async endpoint => {
+    const { attachmentCategories } = this.state;
+    if (attachmentCategories) {
+      return attachmentCategories;
+    }
+    const result = {};
+    try {
+      const categories = await fetchCustomEndpoint(endpoint);
+      result.attachmentCategories = categories;
+    } catch (e) {
+      result.error = e;
+    }
+
+    const { attachmentCategories: nextAttachmentCategories, error } = result;
+
+    this.setState(({ errors }) => ({
+      attachmentCategories: nextAttachmentCategories,
+      errors: {
+        ...errors,
+        attachmentCategories: error,
+      },
+    }));
+
+    return nextAttachmentCategories;
+  }
+
+  getAttachment = async (endpoint, featureID, type) => {
+    const result = {};
+    try {
+      const attachement = await fetchCustomEndpoint(endpoint);
+      result.attachment = attachement;
+    } catch (e) {
+      result.error = e;
+    }
+
+    const { attachment, error } = result;
+
+    this.setState(({ errors, feature }) => ({
+      feature: {
+        ...feature,
+        [featureID]: {
+          ...feature[featureID],
+          [type]: attachment,
+        },
+      },
+      errors: {
+        ...errors,
+        attachmentCategories: error,
+      },
+    }));
+
+    return attachment;
+  }
+
   resizingMap = () => {
     const { map } = this.state;
     if (!map) return;
@@ -194,6 +250,8 @@ export class CRUDProvider extends React.Component {
       fetchFeature,
       saveFeature,
       deleteFeature,
+      getAttachmentCategories,
+      getAttachment,
       setMap,
       resizingMap,
     } = this;
@@ -205,6 +263,8 @@ export class CRUDProvider extends React.Component {
       fetchFeature,
       saveFeature,
       deleteFeature,
+      getAttachmentCategories,
+      getAttachment,
       setMap,
       resizingMap,
     };

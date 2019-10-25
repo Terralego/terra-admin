@@ -204,7 +204,12 @@
       "geometry": "Géométrie",
       "true": "Oui",
       "false": "Non",
-      "other": "Autre"
+      "other": "Autre",
+      "menu": {
+        "default": "Informations",
+        "attachmentFiles": "Pièces jointes",
+        "attachmentImages": "Images"
+      }
     }
   },
   "help": {

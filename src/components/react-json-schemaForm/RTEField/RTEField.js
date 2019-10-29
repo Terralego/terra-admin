@@ -59,12 +59,17 @@ export default class RTEField extends Component {
     });
   }
 
-  onTextChange = () => {
+  onTextChange = (delta, oldDelta, source) => {
+    const { schema: { maxLength } } = this.props;
     const value = this.editor.innerHTML === '<p><br></p>'
       ? ''
       : this.editor.innerHTML;
     this.RTEHiddenRef.current.value = value;
     this.updateFormData(value);
+
+    if (maxLength && this.quill.getLength() > maxLength && source === 'user') {
+      this.quill.deleteText(maxLength, Infinity);
+    }
   };
 
   updateFormData = value => {

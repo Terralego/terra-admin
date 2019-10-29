@@ -9,13 +9,13 @@ import compose from '../../../../../utils/compose';
 
 import Edit from './Edit';
 
-const appProvider = ({
+const appProviderGetter = ({
   env: { modules: { CRUD: { settings } } },
 }) => ({
   settingsEndpoint: settings,
 });
 
-const authProvider = ({
+const authProviderGetter = ({
   authenticated,
   user,
 }) => {
@@ -26,7 +26,7 @@ const authProvider = ({
   };
 };
 
-const CRUDPRovider = ({
+const CRUDPRoviderGetter = ({
   getSettings,
   getFeaturesList,
   settings,
@@ -45,12 +45,13 @@ const CRUDPRovider = ({
   layerPaint: getLayersPaints(settings).find(item => item['source-layer'] === layer) || {},
   paramLayer: layer,
   paramId: id,
+  featureError: featureError.find(({ featureId }) => featureId === id),
 });
 
 export default compose(
   withRouter,
-  connectAppProvider(appProvider),
-  connectAuthProvider(authProvider),
-  connectCRUDProvider(CRUDPRovider),
+  connectAppProvider(appProviderGetter),
+  connectAuthProvider(authProviderGetter),
+  connectCRUDProvider(CRUDPRoviderGetter),
   withNamespaces(),
 )(Edit);

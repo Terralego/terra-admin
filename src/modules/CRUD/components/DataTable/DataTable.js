@@ -16,10 +16,8 @@ class DataTable extends React.Component {
       columnIndex: 0,
       order: 'asc',
     },
-    querystring: {},
   }
 
-  columnsToCompare = [undefined, undefined];
 
   componentDidMount () {
     this.loadData();
@@ -30,21 +28,19 @@ class DataTable extends React.Component {
     if (prevLayerName !== layerName) {
       this.cleanData();
       this.loadData();
-      this.columnsToCompare = [undefined, undefined];
     }
     if (featuresList && prevFeaturesList !== featuresList) {
       this.setData();
     }
   }
 
-  loadData = (querystring = {}) => {
+  loadData = (querystring = { page_size: 2000 }) => {
     const { getFeaturesList } = this.props;
     const { featureEndpoint } = this.getView();
     if (!featureEndpoint) return;
     getFeaturesList(featureEndpoint, querystring);
     this.setState({
       loading: true,
-      querystring,
     });
   }
 
@@ -65,16 +61,12 @@ class DataTable extends React.Component {
       };
     });
 
-    const [, nextColumns = columns] = this.columnsToCompare;
-
     const data = featuresList.map(({ properties: props }) => columns.map(({ value }) => `${props[value] || ''}`));
     this.setState({
-      columns: nextColumns,
+      columns,
       data,
       loading: false,
     });
-
-    this.columnsToCompare = [nextColumns, nextColumns];
   }
 
   cleanData = () => {
@@ -88,54 +80,6 @@ class DataTable extends React.Component {
     return getView(settings, layerName);
   }
 
-  onHeaderChange = ({ index } = {}) => {
-    if (index === undefined) {
-      return;
-    }
-    const { columns } = this.state;
-    const [prevColumns = columns, nextColumns = columns] = this.columnsToCompare;
-    const cols = nextColumns.map((col, i) => (
-      (i === index)
-        ? { ...col, display: !col.display }
-        : col
-    ));
-    this.columnsToCompare = [prevColumns, cols];
-  }
-
-  onSort = ({ columnIndex, order }) => {
-    const {
-      querystring: prevQuerystring = {},
-      columns,
-    } = this.state;
-
-    if (!columns.length) {
-      return;
-    }
-
-    const [prevColumns = columns, nextColumns = columns] = this.columnsToCompare;
-
-    const prevColumnsDisplayed = prevColumns.filter(({ display }) => display === true);
-    const columnsDisplayed = nextColumns.filter(({ display }) => display === true);
-
-
-    if (prevColumnsDisplayed.length !== columnsDisplayed.length) {
-      this.columnsToCompare = [nextColumns, nextColumns];
-      return;
-    }
-
-    this.columnsToCompare = [nextColumns, nextColumns];
-
-    const querystring = {
-      ordering: `${order === 'asc' ? '' : '-'}properties__${columnsDisplayed[columnIndex].value}`,
-      page_size: 2000,
-    };
-
-    if (JSON.stringify(prevQuerystring) === JSON.stringify(querystring)) {
-      return;
-    }
-
-    this.loadData(querystring);
-  }
 
   resize = (tableSize = 'medium') => {
     const { onTableSizeChange } = this.props;
@@ -168,7 +112,7 @@ class DataTable extends React.Component {
                   layerName={displayName}
                   tableSize={tableSize}
                   resize={this.resize}
-                  onHeaderChange={this.onHeaderChange}
+
                 />
               )}
               locales={{

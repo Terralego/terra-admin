@@ -2,22 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Callout } from '@blueprintjs/core';
 
-const ErrorListTemplate = ({ errorSchema: { __errors, ...fields }, schema: { properties } }) => {
-  const errors = Object.keys(fields).reduce((list, item) => {
-    const { __errors: errorsItem } = fields[item];
-    return errorsItem.length
-      ? [...list, { title: properties[item].title, list: errorsItem }]
-      : list;
-  }, []);
+const getProperties = props => Object.keys(props).reduce((list, item) => {
+  const { type, properties, title } = props[item];
+  const customProperties = type === 'object'
+    ? getProperties(properties)
+    : { [item]: title };
+
+  return {
+    ...list,
+    ...customProperties,
+  };
+}, {});
+
+const ErrorListTemplate = ({ errors, schema: { properties: schemaProperties } }) => {
+  const properties = getProperties(schemaProperties);
+
+  const listErrors = errors.reduce((list, { stack }) => {
+    const [field, value] = stack.split(':');
+    const fieldName = properties[field];
+    const listValue = (fieldName in list)
+      ? [...list[fieldName], value.trim()]
+      : [value.trim()];
+    return {
+      ...list,
+      [fieldName]: listValue,
+    };
+  }, {});
 
   return (
     <Callout intent="danger">
       <ul>
-        {errors.map(({ title, list }) => (
-          <li key={title}>
-            {title} :
+        {Object.keys(listErrors).map(error => (
+          <li key={error}>
+            {error} :
             <ul>
-              {list.map(item => <li key={item}>{item}</li>)}
+              {listErrors[error].map(item => <li key={item}>{item}</li>)}
             </ul>
           </li>
         ))}

@@ -115,6 +115,7 @@ class Edit extends React.Component {
     feature: prevFeature,
     map: prevMap,
     view: prevView,
+    featureError: prevFeatureError,
   }) {
     const {
       action,
@@ -122,6 +123,8 @@ class Edit extends React.Component {
       feature,
       map,
       view,
+      featureError,
+      t,
     } = this.props;
     if (prevFeature !== feature || prevMap !== map) {
       this.initDraw();
@@ -133,6 +136,16 @@ class Edit extends React.Component {
       || prevAction !== action
     ) {
       this.setSchema();
+    }
+
+    if (prevFeatureError !== featureError) {
+      const { error: { data } } = featureError;
+      toast.displayError(
+        <div>
+          {t(this.isActionUpdate ? 'CRUD.details.failUpdateFeature' : 'CRUD.details.failCreateFeature')}
+          {Object.keys(data).map(item => <p key={item}>{item}: {data[item]}</p>)}
+        </div>,
+      );
     }
   }
 
@@ -169,6 +182,11 @@ class Edit extends React.Component {
           : {},
       },
     }), {});
+  }
+
+  isActionUpdate = () => {
+    const { action } = this.props;
+    return action === ACTION_UPDATE;
   }
 
   setSchema = () => {
@@ -294,12 +312,9 @@ class Edit extends React.Component {
       paramLayer,
       getFeaturesList,
       saveFeature,
-      action,
       settingsEndpoint,
       t,
     } = this.props;
-
-    const isActionUpdate = action === ACTION_UPDATE;
 
     this.setState({
       loading: true,
@@ -307,7 +322,7 @@ class Edit extends React.Component {
 
     const savedFeature = await saveFeature(
       featureEndpoint,
-      isActionUpdate ? paramId : false,
+      this.isActionUpdate ? paramId : false,
       { geom, properties },
     );
 
@@ -317,17 +332,16 @@ class Edit extends React.Component {
         featureEndpoint,
         { querystring: { page_size: 2000 } },
       );
+      toast.displayToaster(
+        { id: savedFeature.identifier },
+        t(this.isActionUpdate ? 'CRUD.details.successUpdateFeature' : 'CRUD.details.successCreateFeature'),
+      );
     } else {
       this.setState({
         loading: false,
       });
     }
 
-    toast.displayToaster(
-      { id: savedFeature ? savedFeature.identifier : false },
-      t(isActionUpdate ? 'CRUD.details.successUpdateFeature' : 'CRUD.details.successCreateFeature'),
-      t(isActionUpdate ? 'CRUD.details.failUpdateFeature' : 'CRUD.details.failCreateFeature'),
-    );
 
     getSettings(settingsEndpoint);
   }

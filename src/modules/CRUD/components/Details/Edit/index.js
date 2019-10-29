@@ -33,6 +33,9 @@ const CRUDPRoviderGetter = ({
   map,
   feature,
   saveFeature,
+  errors: {
+    feature: featureError,
+  },
 }, {
   match: { params: { layer, id } },
 }) => ({

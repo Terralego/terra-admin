@@ -30,11 +30,15 @@ export default class RTEField extends Component {
     const {
       formData,
       t,
+      uiSchema: {
+        'ui:placeholder': placeholder,
+      },
     } = this.props;
 
     this.quill = new Quill(this.RTERef.current, {
       modules: { clipboard: { matchVisual: false } },
       theme: 'snow',
+      placeholder,
     });
 
     this.quill.setContents(this.quill.clipboard.convert(formData));
@@ -74,13 +78,25 @@ export default class RTEField extends Component {
     const {
       id,
       required,
+      uiSchema: {
+        'ui:placeholder': placeholder,
+      },
     } = this.props;
 
     return (
       <div className="RTEField">
         <DefaultLabel {...this.props} />
-        <div id={id} ref={this.RTERef} className="RTEField__input" />
-        <input ref={this.RTEHiddenRef} required={required} className="RTEField__inputHidden" />
+        <div
+          id={id}
+          ref={this.RTERef}
+          className="RTEField__input"
+        />
+        <input
+          ref={this.RTEHiddenRef}
+          className="RTEField__inputHidden"
+          required={required}
+          placeholder={placeholder}
+        />
       </div>
     );
   }

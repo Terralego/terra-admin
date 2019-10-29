@@ -47,13 +47,6 @@ export default class RTEField extends Component {
     });
   }
 
-  componentDidUpdate ({ formData: prevFormData }) {
-    const { formData } = this.props;
-    if (formData !== prevFormData && prevFormData === undefined) {
-      this.quill.setContents(this.quill.clipboard.convert(formData));
-    }
-  }
-
   componentWillUnmount () {
     this.quill.off('text-change', this.onTextChange);
     this.quill = null;

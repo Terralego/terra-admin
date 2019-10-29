@@ -141,7 +141,7 @@ class DefaultView extends React.Component {
   render () {
     const {
       t,
-      match: { params: { layer, id, action = 'read', section = 'data', category } },
+      match: { params: { layer, id, action = 'read', section = 'default', category } },
     } = this.props;
 
     const { tabs } = this.state;

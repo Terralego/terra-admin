@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import Api from '@terralego/core/modules/Api';
 
 import {
+  minValue,
+  number,
   ArrayInput,
   AutocompleteArrayInput,
+  BooleanInput,
   FileField,
   FileInput as RAFileInput,
   FormTab,
   ImageField,
   ImageInput,
+  Labeled,
   LinearProgress,
   LongTextInput,
   NumberField,
@@ -18,11 +22,15 @@ import {
   SelectInput,
   SimpleFormIterator,
   TabbedForm,
+  TextField,
   TextInput,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
-import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
+import { withStyles } from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+/* eslint-enable */
 
 import { RES_PICTURE } from '../../ra-modules';
 
@@ -53,6 +61,51 @@ const SmartFileInput = props => {
     </InputComponent>
   );
 };
+
+function PictureRephotography (props) {
+  const { record, ...rest } = props;
+  return record && record.pictures && record.pictures.length && (
+    <>
+      <Labeled label="resources.viewpoint.fields.properties.altitude">
+        <TextField
+          label="resources.viewpoint.fields.properties.altitude"
+          source="pictures[0].properties.altitude"
+          record={record}
+          {...rest}
+        />
+      </Labeled>
+      <Labeled label="resources.viewpoint.fields.properties.hauteur">
+        <TextField
+          source="pictures[0].properties.hauteur"
+          record={record}
+          {...rest}
+        />
+      </Labeled>
+      <Labeled label="resources.viewpoint.fields.properties.orientation">
+        <TextField
+          record={record}
+          source="pictures[0].properties.orientation"
+          {...rest}
+        />
+      </Labeled>
+      <Br />
+      <Labeled label="resources.viewpoint.fields.properties.focale_35mm">
+        <TextField
+          record={record}
+          source="pictures[0].properties.focale_35mm"
+          {...rest}
+        />
+      </Labeled>
+      <Labeled label="resources.viewpoint.fields.properties.focale_objectif">
+        <TextField
+          record={record}
+          source="pictures[0].properties.focale_objectif"
+          {...rest}
+        />
+      </Labeled>
+    </>
+  );
+}
 
 const ViewpointFields = ({
   edit,
@@ -142,34 +195,29 @@ const ViewpointFields = ({
 
           <Br />
 
-          <TextInput
-            source="properties.altitude"
-            formClassName={classes.inline}
-          />
-          <TextInput
-            source="properties.hauteur"
-            formClassName={classes.inline}
-          />
-          <TextInput
-            source="properties.orientation"
-            formClassName={classes.inline}
-          />
+          <PictureRephotography />
 
           <Br />
 
           <TextInput
-            source="properties.focale_35mm"
+            source="properties.frequence"
+            validate={[
+              number('Une valeur numérique est requise'),
+              minValue(1, "La valeur doit être d'au moins 1 an"),
+            ]}
+            formClassName={classes.inline}
+            options={{
+              InputProps: {
+                endAdornment: (
+                  <InputAdornment position="end">années</InputAdornment>
+                ),
+              },
+            }}
+          />
+          <BooleanInput
+            source="properties.difficulte"
             formClassName={classes.inline}
           />
-          <TextInput
-            source="properties.focale_objectif"
-            formClassName={classes.inline}
-          />
-
-          <Br />
-
-          <SelectInput source="properties.frequency" choices={[]} formClassName={classes.inline} />
-          <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
           <LongTextInput source="properties.rephotographie" rows={4} rowsMax={30} />
 
           <ArrayInput source="related" fullWidth>
@@ -196,26 +244,26 @@ const ViewpointFields = ({
         </FormTab>
       )}
       {edit && (
-      <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
-        <RichTextInput source="properties.paysage" />
-        <RichTextInput source="properties.dynamiques" />
-        <LongTextInput source="properties.issues" />
-        <LongTextInput source="properties.observations" />
-        <LongTextInput source="properties.historial-data" />
-        <LongTextInput source="properties.cultural-references" />
+        <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
+          <RichTextInput source="properties.paysage" />
+          <RichTextInput source="properties.dynamiques" />
+          <LongTextInput source="properties.issues" />
+          <LongTextInput source="properties.observations" />
+          <LongTextInput source="properties.historial-data" />
+          <LongTextInput source="properties.cultural-references" />
 
-        {waiting && <><LinearProgress /></>}
-        {!waiting && (
-          <AutocompleteArrayInput
-            translateChoice={false}
-            source="properties.themes"
-            choices={remoteChoices.themes}
-          />
-        )}
+          {waiting && <><LinearProgress /></>}
+          {!waiting && (
+            <AutocompleteArrayInput
+              translateChoice={false}
+              source="properties.themes"
+              choices={remoteChoices.themes}
+            />
+          )}
 
-        <TextInput source="properties.keywords" />
-        <TextInput source="properties.landscape-entities" />
-      </FormTab>
+          <TextInput source="properties.keywords" />
+          <TextInput source="properties.landscape-entities" />
+        </FormTab>
       )}
 
       {edit && (

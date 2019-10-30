@@ -5,6 +5,8 @@ import Api from '@terralego/core/modules/Api';
 import {
   ArrayInput,
   AutocompleteArrayInput,
+  FileField,
+  FileInput as RAFileInput,
   FormTab,
   ImageField,
   ImageInput,
@@ -23,6 +25,9 @@ import RichTextInput from 'ra-input-rich-text';
 import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
 
 import { RES_PICTURE } from '../../ra-modules';
+
+import FreeAutocompleteInput
+  from '../../../../components/react-admin/FreeAutocompleteInput';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
@@ -36,6 +41,18 @@ const styles = {
 };
 
 const Br = () => <br />;
+
+const SmartFileInput = props => {
+  const { record: { document } } = props;
+  const isImage = document && document.split(':')[1].split('/')[0] === 'image';
+  const InputComponent = isImage ? ImageInput : RAFileInput;
+  const FieldComponent = isImage ? ImageField : FileField;
+  return (
+    <InputComponent {...props}>
+      <FieldComponent source="document" title="voir le fichier" target="_blank" />
+    </InputComponent>
+  );
+};
 
 const ViewpointFields = ({
   edit,
@@ -155,19 +172,25 @@ const ViewpointFields = ({
           <SelectInput source="properties.difficulty" choices={[]} formClassName={classes.inline} />
           <LongTextInput source="properties.rephotographie" rows={4} rowsMax={30} />
 
-          <ArrayInput source="related">
+          <ArrayInput source="related" fullWidth>
             <SimpleFormIterator>
-              <SelectInput
+              <FreeAutocompleteInput
                 label="resources.viewpoint.fields.related.key"
                 source="key"
                 choices={[
-                  { id: 'croquis', name: 'Croquis' },
-                  { id: 'emplacement', name: 'Emplacement' },
+                  { id: 'croquis', name: 'croquis' },
+                  { id: 'emplacement', name: 'emplacement' },
                 ]}
+                formClassName={classes.inline}
               />
-              <ImageInput label="resources.viewpoint.fields.related.document">
-                <ImageField source="document" />
-              </ImageInput>
+              <TextInput
+                label="resources.viewpoint.fields.related.label"
+                source="properties.label"
+                formClassName={classes.inline}
+              />
+              <SmartFileInput
+                label="resources.viewpoint.fields.related.document"
+              />
             </SimpleFormIterator>
           </ArrayInput>
         </FormTab>

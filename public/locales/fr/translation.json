@@ -537,6 +537,7 @@
         "related": "Documents associés",
         "related.document": "Fichier",
         "related.key": "Type",
+        "related.label": "Libellé",
         "point.coordinates[0]": "Longitude",
         "point.coordinates[1]": "Latitude"
       },

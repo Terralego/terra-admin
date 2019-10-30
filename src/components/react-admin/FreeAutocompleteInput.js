@@ -253,7 +253,7 @@ export class FreeAutocompleteInput extends React.Component {
             resource={resource}
             isRequired={isRequired}
           />
-)}
+        )}
         value={value}
         onChange={onChange}
         autoFocus={autoFocus}
@@ -489,8 +489,7 @@ export class FreeAutocompleteInput extends React.Component {
 }
 
 
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/require-default-props,react/forbid-prop-types */
 FreeAutocompleteInput.propTypes = {
   allowEmpty: PropTypes.bool,
   alwaysRenderSuggestions: PropTypes.bool, // used only for unit tests

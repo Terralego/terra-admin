@@ -5,6 +5,7 @@ import Api from '@terralego/core/modules/Api';
 import {
   minValue,
   number,
+  translate,
   ArrayInput,
   AutocompleteArrayInput,
   BooleanInput,
@@ -108,6 +109,7 @@ function PictureRephotography (props) {
 }
 
 const ViewpointFields = ({
+  translate: t,
   edit,
   classes,
   mapConfig,
@@ -202,14 +204,16 @@ const ViewpointFields = ({
           <TextInput
             source="properties.frequence"
             validate={[
-              number('Une valeur numérique est requise'),
-              minValue(1, "La valeur doit être d'au moins 1 an"),
+              number(),
+              minValue(1),
             ]}
             formClassName={classes.inline}
             options={{
               InputProps: {
                 endAdornment: (
-                  <InputAdornment position="end">années</InputAdornment>
+                  <InputAdornment position="end">
+                    {t('resources.viewpoint.fields.properties.frequence.suffix')}
+                  </InputAdornment>
                 ),
               },
             }}
@@ -290,6 +294,7 @@ ViewpointFields.defaultProps = {
 };
 
 export default compose(
+  translate,
   withMapConfig,
   withStyles(styles),
 )(ViewpointFields);

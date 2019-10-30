@@ -15,10 +15,6 @@ export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => (
     content={(
       <Menu>
         <MenuItem
-          icon="wrench"
-          text={t('common.account')}
-        />
-        <MenuItem
           className={Classes.MINIMAL}
           onClick={logoutAction}
           icon="log-out"

@@ -34,6 +34,40 @@ const updateSchemaPropertiesValues = (properties, formData) => (
     },
   }), {})
 );
+
+const extractClassnames = ({
+  content,
+  content: { props: { uiSchema: { classNames = '' } } },
+}) => {
+  const contentWithoutClassNames = {
+    ...content,
+    props: {
+      ...content.props,
+      uiSchema: {
+        ...content.props.uiSchema,
+        classNames: '',
+      },
+    },
+  };
+
+  return {
+    content: contentWithoutClassNames,
+    classNames,
+  };
+};
+
+const ObjectFieldTemplate = ({ title, description, properties }) => (
+  <fieldset>
+    {title && <legend>{title}</legend>}
+    {description}
+    <div className="row">
+      {properties.map(property => {
+        const { content, classNames } = extractClassnames(property);
+        return <div key={content.key} className={`col-xs-12 ${classNames}`}>{content}</div>;
+      })}
+    </div>
+  </fieldset>
+);
 class Edit extends React.Component {
   static propTypes = {
     map: PropTypes.shape({}),
@@ -414,6 +448,7 @@ class Edit extends React.Component {
                 onChange={this.changeForm}
                 validate={this.validateForm}
                 ErrorList={ErrorListTemplate}
+                ObjectFieldTemplate={ObjectFieldTemplate}
               >
                 <Actions {...actionsButtons}>
                   <SaveButton type="submit" />

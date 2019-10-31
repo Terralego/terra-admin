@@ -142,7 +142,7 @@ class Edit extends React.Component {
       const { error: { data } } = featureError;
       toast.displayError(
         <div>
-          {t(this.isActionUpdate ? 'CRUD.details.failUpdateFeature' : 'CRUD.details.failCreateFeature')}
+          {t(this.isActionUpdate() ? 'CRUD.details.failUpdateFeature' : 'CRUD.details.failCreateFeature')}
           {Object.keys(data).map(item => <p key={item}>{item}: {data[item]}</p>)}
         </div>,
       );
@@ -322,7 +322,7 @@ class Edit extends React.Component {
 
     const savedFeature = await saveFeature(
       featureEndpoint,
-      this.isActionUpdate ? paramId : false,
+      this.isActionUpdate() ? paramId : false,
       { geom, properties },
     );
 
@@ -334,7 +334,7 @@ class Edit extends React.Component {
       );
       toast.displayToaster(
         { id: savedFeature.identifier },
-        t(this.isActionUpdate ? 'CRUD.details.successUpdateFeature' : 'CRUD.details.successCreateFeature'),
+        t(this.isActionUpdate() ? 'CRUD.details.successUpdateFeature' : 'CRUD.details.successCreateFeature'),
       );
     } else {
       this.setState({

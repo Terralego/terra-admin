@@ -65,7 +65,10 @@ const SmartFileInput = props => {
 
 function PictureRephotography (props) {
   const { record, ...rest } = props;
-  return record && record.pictures && record.pictures.length && (
+  if (!record || !record.pictures || !record.pictures.length) {
+    return null;
+  }
+  return (
     <>
       <Labeled label="resources.viewpoint.fields.properties.altitude">
         <TextField

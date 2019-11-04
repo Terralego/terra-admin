@@ -4,8 +4,16 @@ import renderer from 'react-test-renderer';
 import DownloadButtons from './DownloadButtons';
 
 jest.mock('@blueprintjs/core', () => ({
-  ButtonGroup: ({ children }) => <ul>{children}</ul>,
-  AnchorButton: ({ children }) => <li>{children}</li>,
+  Popover: ({ children, ...props }) => <div {...props}>{children}</div>,
+  Menu: ({ children }) => <ul>{children}</ul>,
+  MenuItem: ({ children }) => <li>{children}</li>,
+  Button: ({ text }) => <div>{text}</div>,
+  Position: {
+    BOTTOM_RIGHT: 'bottom-right',
+  },
+  Classes: {
+    MINIMAL: 'MINIMAL',
+  },
 }));
 
 

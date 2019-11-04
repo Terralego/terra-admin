@@ -1,12 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-<ul>
-  <li>
-    FileName
-  </li>
-  <li>
-    FileName2
-  </li>
-</ul>
+<div
+  content={
+    <Menu>
+      <MenuItem
+        className="MINIMAL"
+        href="path/to/file/"
+        icon="document"
+        text="FileName"
+      />
+      <MenuItem
+        className="MINIMAL"
+        href="path/to/file2/"
+        icon="document"
+        text="FileName2"
+      />
+    </Menu>
+  }
+  position="bottom-right"
+>
+  <div>
+    CRUD.details.generatedDocuments
+  </div>
+</div>
 `;

@@ -204,6 +204,7 @@
       "true": "Oui",
       "false": "Non",
       "other": "Autre",
+      "generatedDocuments": "Documents générés",
       "menu": {
         "default": "Informations",
         "attachmentFiles": "Pièces jointes",

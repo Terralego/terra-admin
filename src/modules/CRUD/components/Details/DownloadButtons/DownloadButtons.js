@@ -1,13 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AnchorButton, ButtonGroup } from '@blueprintjs/core';
+import { Menu, MenuItem, Popover, Classes, Button, Position } from '@blueprintjs/core';
 
-const DownloadButtons = ({ documents, ...rest }) => documents.length > 0 && (
-  <ButtonGroup {...rest}>
-    {documents.map(({ download_url: url, template_file: file, template_name: name }) => (
-      <AnchorButton key={file} icon="download" href={url}>{name}</AnchorButton>
-    ))}
-  </ButtonGroup>
+const DownloadButtons = ({ documents, t }) => documents.length > 0 && (
+  <Popover
+    position={Position.BOTTOM_RIGHT}
+    content={(
+      <Menu>
+        {documents.map(({ download_url: url, template_file: file, template_name: name }) => (
+          <MenuItem
+            className={Classes.MINIMAL}
+            icon="document"
+            text={name}
+            key={file}
+            href={url}
+          />
+        ))}
+      </Menu>
+  )}
+  >
+    <Button icon="download" text={t('CRUD.details.generatedDocuments')} />
+  </Popover>
 );
 
 DownloadButtons.propTypes = {
@@ -18,10 +31,12 @@ DownloadButtons.propTypes = {
       template_file: PropTypes.string,
     }),
   ),
+  t: PropTypes.func,
 };
 
 DownloadButtons.defaultProps = {
   documents: [],
+  t: text => text,
 };
 
 export default DownloadButtons;

@@ -52,8 +52,9 @@
 
   &__header {
     display: flex;
-    flex-direction: column;
-    padding: 0 1rem;
+    padding: 1rem;
+    justify-content: space-between;
+    align-content: center;
   }
 
   &__menu {
@@ -61,12 +62,9 @@
   }
 
   &__title {
+    margin: 0;
     font-size: 1.2rem;
     font-weight: 300;
-  }
-
-  &__templates {
-    margin-bottom: 1rem;
   }
 
   &__content {

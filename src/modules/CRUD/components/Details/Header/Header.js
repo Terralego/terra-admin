@@ -7,7 +7,6 @@ const Header = ({ title, documents }) => (
     <h2 className="details__title">{title}</h2>
     {documents && (
       <DownloadButtons
-        className="details__templates"
         documents={documents}
       />
     )}

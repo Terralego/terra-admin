@@ -22,7 +22,6 @@ exports[`should render correctly with documents 1`] = `
     Title
   </h2>
   <div
-    className="details__templates"
     documents={
       Array [
         Object {

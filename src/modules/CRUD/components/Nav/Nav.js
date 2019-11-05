@@ -9,7 +9,7 @@ import NavIcon from './NavIcon';
 import './styles.scss';
 
 const sortByOrder = ({ order: orderA }, { order: orderB }) =>
-  (orderA !== null ? orderA : 0) - (orderB !== null ? orderB : 0);
+  (orderA !== null ? orderA : Infinity) - (orderB !== null ? orderB : Infinity);
 
 const getFilteredAndOrderedMenu = menu => menu && (
   menu.reduce((group, menuItem) => {

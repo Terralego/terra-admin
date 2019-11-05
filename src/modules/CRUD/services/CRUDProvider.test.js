@@ -394,7 +394,6 @@ it('should not crash when no deleting feature', async () => {
 });
 
 it('should resizing map', () => {
-  jest.useFakeTimers();
   const instance = new CRUDProvider();
   instance.setState = jest.fn();
   instance.resizingMap();
@@ -407,27 +406,5 @@ it('should resizing map', () => {
     },
   };
   instance.resizingMap();
-  expect(instance.setState).toHaveBeenCalledWith({ mapIsResizing: true });
-  jest.runAllTimers();
-  expect(instance.setState).toHaveBeenCalledWith({ mapIsResizing: false });
-});
-
-
-it('should not resizing map if the compononent unmounts', () => {
-  jest.useFakeTimers();
-  const instance = new CRUDProvider();
-  instance.setState = jest.fn();
-  instance.resizingMap();
-  expect(instance.setState).not.toHaveBeenCalled();
-
-  instance.state = {
-    ...instance.state,
-    map: {
-      resize: jest.fn(),
-    },
-  };
-  instance.resizingMap();
-  instance.isUnmount = true;
-  jest.runAllTimers();
-  expect(instance.setState).toHaveBeenCalledTimes(1);
+  expect(instance.state.map.resize).toHaveBeenCalled();
 });

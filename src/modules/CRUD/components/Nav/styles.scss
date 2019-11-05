@@ -3,7 +3,6 @@
   flex-direction: column;
   width: 64px;
   max-height: calc(100vh - 50px);
-  transition: width 0.2s ease-in; 
   
   &--active {
     width: 260px;
@@ -19,7 +18,6 @@
       flex: auto;
       position: relative;
       padding: 0 1rem 1rem;
-      transition: transform 0.2s ease-in;
     }
   }
 
@@ -85,7 +83,6 @@
     .CRUD-nav__group-text,
     .bp3-button-text {
       opacity: 1;
-      transition: opacity 0.2s 0.2s ease-in;
       width: auto;
     }
     .CRUD-nav__group-name {

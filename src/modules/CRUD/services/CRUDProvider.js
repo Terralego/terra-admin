@@ -232,12 +232,7 @@ export class CRUDProvider extends React.Component {
   resizingMap = () => {
     const { map } = this.state;
     if (!map) return;
-    this.setState({ mapIsResizing: true });
-    setTimeout(() => {
-      map.resize();
-      if (this.isUnmount) return;
-      this.setState({ mapIsResizing: false });
-    }, 300);
+    map.resize();
   }
 
   render () {

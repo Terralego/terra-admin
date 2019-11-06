@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should snapshot correctly 1`] = `
+<div
+  className="CRUD-nav__action"
+>
+  <div
+    className="CRUD-nav__link"
+  >
+    <span
+      className="CRUD-nav__item-content"
+    >
+      <span
+        className="bp3-button bp3-minimal"
+      >
+        <span
+          className=" bp3-icon"
+        >
+          <img
+            alt=""
+            className="CRUD-nav__icon"
+            src="path/to/picture"
+          />
+        </span>
+        <span
+          className="bp3-button-text"
+        >
+          foo
+        </span>
+      </span>
+    </span>
+  </div>
+  <div
+    className="CRUD-nav__add"
+  >
+    <span
+      className="CRUD-nav__item-content"
+    >
+      <span
+        className="bp3-button bp3-minimal"
+      >
+        <div>
+          add
+        </div>
+      </span>
+    </span>
+  </div>
+</div>
+`;

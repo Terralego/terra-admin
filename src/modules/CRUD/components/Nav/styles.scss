@@ -1,30 +1,48 @@
 .CRUD-nav {
   display: flex;
   flex-direction: column;
-  width: 64px;
+  width: 6rem;
   max-height: calc(100vh - 50px);
   
   &--active {
-    width: 260px;
+    width: 17rem;
+    .CRUD-nav__button {
+      text-align: right;
+      border: 0;
+      padding-right: 1.5rem;
+    }
   }
-
+  
   &__button {
     padding: 0.7rem 1rem 0;
-    text-align: right;
+    text-align: center;
   }
   
   &__menu {
     &#{&} {
       flex: auto;
       position: relative;
-      padding: 0 1rem 1rem;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem 1rem;
+      overflow: auto;
+      border-top: 1px solid #efefef;
     }
   }
 
-  .bp3-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 7px;
+  &__group,
+  &__item-content {
+    .bp3-icon {
+      width: 20px;
+      margin-right: 7px;
+    }
+  }
+
+  &__group-button {
+    width: 100%;
+  }
+
+  &__popover {
+    left:-20px;
   }
 
   &__icon {
@@ -32,26 +50,32 @@
   }
 
   &__group:not(:first-child) {
-    padding-top: 1rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #efefef;
   }
 
-  &__group-name,
+  &__list {
+    margin-left: 1rem !important;
+    border-left: 1px solid #efefef;
+    overflow: hidden;
+  }
+
+  &__item {
+    padding: 0.25rem 0.3rem;
+  }
+
+  &__action {
+    display: flex;
+  }
+  
   &__link {
     position: relative;
     display: inline-block;
-    min-width: 228px;
   }
 
-  &__group-name {
-    > .bp3-icon {
-      display: none;
-    }
-  }
-
-  &__group-text,
-  .bp3-button-text {
-    position: relative;
-    opacity: 0;
+  &__add {
+    margin-left: auto;
   }
 
   &__link {
@@ -65,32 +89,6 @@
       }
       .bp3-button-text {
         opacity: 1;
-      }
-    }
-  }
-
-  &__group-name::before {
-    position: absolute;
-    content: '';
-    top: 50%;
-    right: 0;
-    left: -1rem;
-    border-bottom: 1px solid #e8e8e8;
-    display: block;
-  }
-
-  &--active {
-    .CRUD-nav__group-text,
-    .bp3-button-text {
-      opacity: 1;
-      width: auto;
-    }
-    .CRUD-nav__group-name {
-      &::before {
-      display: none;
-      }
-      > .bp3-icon {
-        display: inherit;
       }
     }
   }

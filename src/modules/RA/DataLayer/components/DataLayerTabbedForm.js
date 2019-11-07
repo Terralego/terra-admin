@@ -104,6 +104,7 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
           }}
 
         </FormDataConsumer>
+        <BooleanInput source="active_by_default" />
 
         <LongTextInput source="description" label="datalayer.form.description" />
       </FormTab>

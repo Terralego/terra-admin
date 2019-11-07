@@ -606,7 +606,9 @@
     },
     "datalayer": {
       "fields": {
-        "settings-widgets": "Configuration des widgets"
+        "settings-widgets": "Configuration des widgets",
+        "active_by_default": "Afficher par défaut",
+        "active_by_default_pastpart": "Affiché par défaut"
       }
     }
   }

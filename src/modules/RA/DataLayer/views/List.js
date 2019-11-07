@@ -8,6 +8,7 @@ import {
   // SelectInput,
   // Filter,
   ReferenceField,
+  BooleanField,
 } from 'react-admin';
 
 import {
@@ -50,6 +51,7 @@ export const DataLayerList = ({ viewList, ...props }) => (
       <ReferenceField source="source" reference={RES_DATASOURCE} label="datalayer.form.data-source">
         <TextField source="name" />
       </ReferenceField>
+      <BooleanField source="active_by_default" label="resources.datalayer.fields.active_by_default_pastpart" />
       <EditButton />
     </Datagrid>
   </List>

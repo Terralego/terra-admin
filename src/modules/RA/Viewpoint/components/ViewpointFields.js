@@ -68,42 +68,43 @@ function PictureRephotography (props) {
   if (!record || !record.pictures || !record.pictures.length) {
     return null;
   }
+  const pictureRecord = record.pictures[record.pictures.length - 1];
   return (
     <>
       <Labeled label="resources.viewpoint.fields.properties.altitude">
         <TextField
           label="resources.viewpoint.fields.properties.altitude"
-          source="pictures[0].properties.altitude"
-          record={record}
+          source="properties.altitude"
+          record={pictureRecord}
           {...rest}
         />
       </Labeled>
       <Labeled label="resources.viewpoint.fields.properties.hauteur">
         <TextField
-          source="pictures[0].properties.hauteur"
-          record={record}
+          source="properties.hauteur"
+          record={pictureRecord}
           {...rest}
         />
       </Labeled>
       <Labeled label="resources.viewpoint.fields.properties.orientation">
         <TextField
-          record={record}
-          source="pictures[0].properties.orientation"
+          record={pictureRecord}
+          source="properties.orientation"
           {...rest}
         />
       </Labeled>
       <Br />
       <Labeled label="resources.viewpoint.fields.properties.focale_35mm">
         <TextField
-          record={record}
-          source="pictures[0].properties.focale_35mm"
+          record={pictureRecord}
+          source="properties.focale_35mm"
           {...rest}
         />
       </Labeled>
       <Labeled label="resources.viewpoint.fields.properties.focale_objectif">
         <TextField
-          record={record}
-          source="pictures[0].properties.focale_objectif"
+          record={pictureRecord}
+          source="properties.focale_objectif"
           {...rest}
         />
       </Labeled>

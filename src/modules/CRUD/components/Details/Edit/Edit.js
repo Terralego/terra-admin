@@ -364,7 +364,7 @@ class Edit extends React.Component {
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
       getFeaturesList(
         featureEndpoint,
-        { querystring: { page_size: 2000 } },
+        { page_size: 2000 },
       );
       toast.displayToaster(
         { id: savedFeature.identifier },

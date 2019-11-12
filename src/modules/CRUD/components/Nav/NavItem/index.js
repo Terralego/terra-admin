@@ -9,7 +9,7 @@ const authProviderGetter = ({
 }) => {
   const permissions = authenticated ? user.permissions : [];
   return {
-    displayAddFeature: permissions.includes('terra_geocrud.can_add_feature'),
+    displayAddFeature: permissions.includes('can_add_feature'),
   };
 };
 

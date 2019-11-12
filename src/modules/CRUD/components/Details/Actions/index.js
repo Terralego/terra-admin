@@ -21,8 +21,8 @@ const authProvider = ({
 }, { displayUpdate, displayDelete }) => {
   const permissions = authenticated ? user.permissions : [];
   return {
-    displayDelete: displayDelete && permissions.includes('terra_geocrud.can_delete_feature'),
-    displayUpdate: displayUpdate && permissions.includes('terra_geocrud.can_change_feature'),
+    displayDelete: displayDelete && permissions.includes('can_delete_feature'),
+    displayUpdate: displayUpdate && permissions.includes('can_change_feature'),
   };
 };
 

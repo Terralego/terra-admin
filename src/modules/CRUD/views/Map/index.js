@@ -20,7 +20,7 @@ const authProvider = ({
 }) => {
   const permissions = authenticated ? user.permissions : [];
   return {
-    displayViewFeature: permissions.includes('terra_geocrud.can_view_feature'),
+    displayViewFeature: permissions.includes('can_view_feature'),
   };
 };
 

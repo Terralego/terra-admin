@@ -1,4 +1,41 @@
 
+2.8.0 / 2019-11-12
+==================
+
+  * Fix params given to the queryString when fetching feature list
+  * Change permissions for geoCrud
+  * Display rephoto info for earliest picture
+  * Add datalayer `active_by_default` option
+  * Refacto nav component for CRUD
+  * Create NavGroup component
+  * Create NavItem component
+  * Add a default Icon for NavIcon
+  * Remove useless animation from collapsing menu
+  * Improve position of downdButtons component in the layout
+  * Display DownloadButtons as a dropdown
+  * Fix fatal error due to PictureRephotography
+  * Prevent img to break the layout
+  * Improve Grid templating for schema form
+  * Fix `this.isActionUpdate()` call method
+  * Hotfix a GridList issue
+  * Set rephotography properties as read-only from first picture
+  * Improve related documents handling
+  * Remove useless "my account" entry menu
+  * Manage recursive field errors
+  * Render an error more explicit when server can't save feature
+  * Use maxLength prop for RTEField
+  * Use placeholder props in RTEField
+  * Remove useless componentDidUpdate method from RTEField component
+  * Integrate Menu and Attachment view to Read component
+  * Create AttachmentView component for details
+  * Create a Menu component for details
+  * Revert DataTable sorting driven by API endpoint
+  * Display viewpoint index instead of technical id in list
+  * Use history everywhere to navigate instead of hash
+  * Separate Read's content from Read component
+  * Isolate Metas buttons from details to a dedicated component
+  * Isolate details Header to a dedicated component
+
 2.7.0 / 2019-10-25
 ==================
 

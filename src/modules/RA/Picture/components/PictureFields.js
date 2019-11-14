@@ -120,15 +120,15 @@ const PictureFields = ({
       <Br />
 
       <NumberInput
-        source="geometry.coordinates[1]"
+        source="properties.geometry.coordinates[1]"
         formClassName={classes.inline}
       />
       <NumberInput
-        source="geometry.coordinates[0]"
+        source="properties.geometry.coordinates[0]"
         formClassName={classes.inline}
       />
 
-      <MapPointInput source="geometry.coordinates" center={mapConfig.center} />
+      <MapPointInput source="properties.geometry.coordinates" center={mapConfig.center} />
     </FormTab>
   </TabbedForm>
 );

@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should redirect to the first layer 1`] = `
+<div
+  to="/CRUD/map/layerTest"
+>
+  Redirect
+</div>
+`;
+
 exports[`snapshots should display loading 1`] = `
 <div>
   Loading
@@ -15,7 +23,7 @@ exports[`snapshots should display no settings message 1`] = `
 exports[`snapshots should not display details when the feature id is not defined 1`] = `
 Array [
   <div
-    className="CRUD-table"
+    className="CRUD-table CRUD-table--active CRUD-table--medium"
   >
     <div>
       Datatable

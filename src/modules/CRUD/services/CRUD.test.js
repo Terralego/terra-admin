@@ -69,20 +69,28 @@ const settings = {
 };
 
 it('should fetch settings', async () => {
-  await fetchSettings();
+  await fetchSettings('api/crud/settings');
   expect(Api.request).toHaveBeenCalled();
 });
 
 it('should get the selected layer', () => {
   expect(getView(settings, 'bar_bar')).toEqual({
-    displayName: 'Bar bar',
-    geom_type: 1,
-    group: 'group3',
-    tilejson: 'group3.tilejson',
-    id: 9,
-    name: 'bar_bar',
-    schema: undefined,
-    uiSchema: undefined,
+    name: 'Bar bar',
+    id: 4,
+    layer: {
+      geom_type: 1,
+      group: 'group3',
+      tilejson: 'group3.tilejson',
+      id: 9,
+      name: 'bar_bar',
+    },
+    mapStyle:  {
+      paint:  {
+        'line-color': 'green',
+        'line-width': 3,
+      },
+      type: 'line',
+    },
   });
 });
 
@@ -94,7 +102,7 @@ it('should return anything if the selected layer does not exist', () => {
   expect(getView(settings, 'hello')).toEqual(false);
 });
 
-fit('should get sources', () => {
+it('should get sources', () => {
   expect(getSources(settings)).toEqual([
     { id: '6', type: 'vector', url: 'group1.tilejson' },
     { id: '7', type: 'vector', url: 'group1.tilejson' },
@@ -112,45 +120,45 @@ it('should not get sources', () => {
 
 it('should get layers paint', () => {
   expect(getLayersPaints(settings)).toEqual([{
-    id: 'terralego-foo-1',
+    id: 'terralego-foo-6',
     paint: { 'line-color': 'red', 'line-width': 3 },
-    source: 'group1',
+    source: '6',
     'source-layer': 'foo',
     type: 'line',
   }, {
-    id: 'terralego-bar-2',
+    id: 'terralego-bar-7',
     paint: { 'line-color': 'blue', 'line-width': 3 },
-    source: 'group1',
+    source: '7',
     'source-layer': 'bar',
     type: 'line',
   }, {
-    id: 'terralego-foo_foo-3',
+    id: 'terralego-foo_foo-8',
     paint: { 'line-color': 'yellow', 'line-width': 3 },
-    source: 'group2',
+    source: '8',
     'source-layer': 'foo_foo',
     type: 'line',
   }, {
-    id: 'terralego-bar_bar-4',
+    id: 'terralego-bar_bar-9',
     paint: { 'line-color': 'green', 'line-width': 3 },
-    source: 'group3',
+    source: '9',
     'source-layer': 'bar_bar',
     type: 'line',
   }, {
-    id: 'terralego-bar_foo_polygon-5',
+    id: 'terralego-bar_foo_polygon-11',
     paint: { 'fill-color': '#000' },
-    source: 'group1',
+    source: '11',
     'source-layer': 'bar_foo_polygon',
     type: 'fill',
   }, {
-    id: 'terralego-bar_foo_line-6',
+    id: 'terralego-bar_foo_line-12',
     paint: { 'line-color': '#000', 'line-width': 3 },
-    source: 'group1',
+    source: '12',
     'source-layer': 'bar_foo_line',
     type: 'line',
   }, {
-    id: 'terralego-bar_foo_point-7',
+    id: 'terralego-bar_foo_point-12',
     paint: { 'circle-color': '#000', 'circle-radius': 8 },
-    source: 'group1',
+    source: '12',
     'source-layer': 'bar_foo_point',
     type: 'circle',
   }]);

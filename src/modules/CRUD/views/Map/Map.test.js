@@ -6,7 +6,7 @@ import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
 import Map from './Map';
 
 jest.mock('react-router-dom', () => ({
-  Redirect: () => null,
+  Redirect: props => <div {...props}>Redirect</div>,
 }));
 
 jest.mock('@terralego/core/modules/Map/InteractiveMap', () => {
@@ -71,6 +71,7 @@ jest.mock('../../services/CRUD', () => ({
     templates: [],
     extent: [1, 2, 3, 4],
   }),
+  getFirstCrudViewName: () => 'layerTest',
   getSources: () => [{
     id: '1',
     type: 'vector',
@@ -203,7 +204,7 @@ describe('snapshots', () => {
     const tree = renderer.create((
       <Map
         {...props}
-        match={{ params: { id: 'foo' } }}
+        match={{ params: { id: 'foo', layer: 'layerTest' } }}
       />
     )).toJSON();
     expect(tree).toMatchSnapshot();
@@ -213,7 +214,7 @@ describe('snapshots', () => {
     const tree = renderer.create((
       <Map
         {...props}
-        match={{ params: { id: undefined } }}
+        match={{ params: { id: undefined, layer: 'layerTest' } }}
       />
     )).toJSON();
     expect(tree).toMatchSnapshot();
@@ -261,6 +262,16 @@ it('should redirect to the root view when trying to access to an unknown layer',
     />
   ));
   expect(toast.displayError).toHaveBeenCalled();
+});
+
+it('should redirect to the first layer', () => {
+  const tree = renderer.create((
+    <Map
+      {...props}
+      match={{ params: { id: '1', layer: undefined } }}
+    />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
 });
 
 it('should call several functions when mouting', () => {

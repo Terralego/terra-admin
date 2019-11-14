@@ -11,7 +11,7 @@ import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
-import { ACTION_CREATE, ACTION_UPDATE, getView, getSources, getLayersPaints } from '../../services/CRUD';
+import { ACTION_CREATE, ACTION_UPDATE, getView, getSources, getLayersPaints, getFirstCrudViewName } from '../../services/CRUD';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
 
@@ -319,9 +319,17 @@ export class Map extends React.Component {
     const areSettingsLoaded = Object.keys(settings).length && Object.keys(mapConfig).length;
     const areDetailsVisible = !!id;
 
-    if (areSettingsLoaded && layer && !getView(settings, layer)) {
-      toast.displayError(t('CRUD.layer.errorNoLayer'));
-      return <Redirect to={generateURI('layer')} />;
+    if (areSettingsLoaded) {
+      const firstCrudViewName = getFirstCrudViewName(settings);
+      const redirectArgs = firstCrudViewName ? { layer: firstCrudViewName } : {};
+      if (layer && !getView(settings, layer)) {
+        toast.displayError(t('CRUD.layer.errorNoLayer'));
+        return <Redirect to={generateURI('layer', redirectArgs)} />;
+      }
+      // Redirect to the first item of the menu when no one is selected
+      if (layer === undefined && firstCrudViewName) {
+        return <Redirect to={generateURI('layer', redirectArgs)} />;
+      }
     }
 
     return (

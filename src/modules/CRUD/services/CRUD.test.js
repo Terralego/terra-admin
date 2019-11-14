@@ -1,6 +1,6 @@
 import Api from '@terralego/core/modules/Api';
 
-import { fetchSettings, getView, getSources, getLayersPaints } from './CRUD';
+import { fetchSettings, getView, getSources, getLayersPaints, getFirstCrudViewName } from './CRUD';
 import {
   POINT,
   LINESTRING,
@@ -166,4 +166,12 @@ it('should get layers paint', () => {
 
 it('should not get layer paints', () => {
   expect(getLayersPaints([])).toEqual([]);
+});
+
+it('get first crud view name', () => {
+  expect(getFirstCrudViewName(settings)).toEqual('foo');
+});
+
+it('Don\'t get first crud view name', () => {
+  expect(getFirstCrudViewName({})).toEqual(undefined);
 });

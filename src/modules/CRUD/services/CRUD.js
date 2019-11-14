@@ -61,6 +61,11 @@ export const getView = ({ menu = [] }, name) => {
     : false;
 };
 
+export const getFirstCrudViewName = (settings = {}) => {
+  const { menu: [{ crud_views: [{ layer: { name } = {} } = {}] = [] } = {}] = [] } = settings;
+  return name;
+};
+
 export const getSources = ({ menu = [] }) =>
   flattenMenu(menu).reduce((sourceList, { layer }) => (
     (sourceList.some(({ id }) => id === `${layer.id}`))
@@ -93,4 +98,4 @@ export const getLayersPaints = ({ menu = [] }) =>
       ];
   }, []);
 
-export default { fetchSettings, getView, getSources, getLayersPaints };
+export default { fetchSettings, getView, getSources, getLayersPaints, getFirstCrudViewName };

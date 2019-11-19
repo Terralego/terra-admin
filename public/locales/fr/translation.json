@@ -264,6 +264,7 @@
       "use-by": "Utilisé par",
       "data": "Données",
       "label": "Libellé",
+      "name": "Nom",
       "fields": "Champs",
       "file": {
         "related-files": "Fichiers associés",

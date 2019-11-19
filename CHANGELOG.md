@@ -1,4 +1,11 @@
 
+2.9.0 / 2019-11-19
+==================
+
+  * Upgrade Terra-front to 1.10.1
+  * Redirect to the first menu item view if none is selected
+  * Fix viewpoint pictures repeat coordinates
+
 2.8.0 / 2019-11-12
 ==================
 

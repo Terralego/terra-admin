@@ -8,13 +8,13 @@ import compose from '../../../../utils/compose';
 
 import Map from './Map';
 
-const appProvider = ({
+const appProviderGetter = ({
   env: { modules: { CRUD: { settings } } },
 }) => ({
   settingsEndpoint: settings,
 });
 
-const authProvider = ({
+const authProviderGetter = ({
   authenticated,
   user,
 }) => {
@@ -24,7 +24,7 @@ const authProvider = ({
   };
 };
 
-const CRUDPRovider = ({
+const CRUDPRoviderGetter = ({
   getSettings,
   settings,
   setMap,
@@ -50,8 +50,8 @@ const CRUDPRovider = ({
 
 export default compose(
   withRouter,
-  connectAppProvider(appProvider),
-  connectAuthProvider(authProvider),
-  connectCRUDProvider(CRUDPRovider),
+  connectAppProvider(appProviderGetter),
+  connectAuthProvider(authProviderGetter),
+  connectCRUDProvider(CRUDPRoviderGetter),
   withNamespaces(),
 )(Map);

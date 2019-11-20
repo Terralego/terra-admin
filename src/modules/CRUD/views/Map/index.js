@@ -9,9 +9,19 @@ import compose from '../../../../utils/compose';
 import Map from './Map';
 
 const appProviderGetter = ({
-  env: { modules: { CRUD: { settings } } },
+  env: {
+    modules: { CRUD: { settings } },
+    BASE_LAYERS,
+  },
 }) => ({
   settingsEndpoint: settings,
+  backgroundStyle: BASE_LAYERS.map(style => {
+    const [label] = Object.keys(style);
+    return {
+      label,
+      url: style[label].url,
+    };
+  }),
 });
 
 const authProviderGetter = ({

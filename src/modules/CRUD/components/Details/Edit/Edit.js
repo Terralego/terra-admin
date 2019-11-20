@@ -150,6 +150,7 @@ class Edit extends React.Component {
     map: prevMap,
     view: prevView,
     featureError: prevFeatureError,
+    refreshingLayers: prevRefreshingLayers,
   }) {
     const {
       action,
@@ -158,9 +159,11 @@ class Edit extends React.Component {
       map,
       view,
       featureError,
+      refreshingLayers,
       t,
     } = this.props;
-    if (prevFeature !== feature || prevMap !== map) {
+
+    if (prevFeature !== feature || prevMap !== map || prevRefreshingLayers !== refreshingLayers) {
       this.initDraw();
     }
 

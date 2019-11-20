@@ -177,10 +177,12 @@ const ViewpointFields = ({
         <NumberInput
           source="point.coordinates[1]"
           formClassName={classes.inline}
+          defaultValue={mapConfig.center[1]}
         />
         <NumberInput
           source="point.coordinates[0]"
           formClassName={classes.inline}
+          defaultValue={mapConfig.center[0]}
         />
 
         <MapPointInput source="point.coordinates" center={mapConfig.center} />

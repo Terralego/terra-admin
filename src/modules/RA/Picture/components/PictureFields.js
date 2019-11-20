@@ -122,10 +122,12 @@ const PictureFields = ({
       <NumberInput
         source="properties.geometry.coordinates[1]"
         formClassName={classes.inline}
+        defaultValue={mapConfig.center[1]}
       />
       <NumberInput
         source="properties.geometry.coordinates[0]"
         formClassName={classes.inline}
+        defaultValue={mapConfig.center[0]}
       />
 
       <MapPointInput source="properties.geometry.coordinates" center={mapConfig.center} />

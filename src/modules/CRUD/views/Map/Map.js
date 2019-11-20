@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
 import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/InteractiveMap';
-import { DEFAULT_CONTROLS, CONTROL_CAPTURE, CONTROLS_TOP_RIGHT } from '@terralego/core/modules/Map';
+import {
+  DEFAULT_CONTROLS,
+  CONTROL_CAPTURE,
+  CONTROL_BACKGROUND_STYLES,
+  CONTROLS_TOP_RIGHT,
+} from '@terralego/core/modules/Map';
 
 import Loading from '../../../../components/Loading';
 import Message from '../../../../components/Message';
@@ -17,10 +22,13 @@ import { toast } from '../../../../utils/toast';
 
 import './styles.scss';
 
-export const CONTROL_CAPTURE_POSITION = {
+const CONTROL_LIST = [{
+  control: CONTROL_BACKGROUND_STYLES,
+  position: CONTROLS_TOP_RIGHT,
+}, {
   control: CONTROL_CAPTURE,
   position: CONTROLS_TOP_RIGHT,
-};
+}];
 
 const isTrueFeatureID = id => ![undefined, ACTION_CREATE].includes(id);
 
@@ -42,6 +50,12 @@ export class Map extends React.Component {
     settingsEndpoint: PropTypes.string,
     map: PropTypes.shape({}),
     feature: PropTypes.shape({}),
+    backgroundStyle: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        url: PropTypes.string,
+      }),
+    ),
   };
 
   static defaultProps = {
@@ -56,14 +70,16 @@ export class Map extends React.Component {
     settings: undefined,
     settingsEndpoint: undefined,
     feature: {},
+    backgroundStyle: [],
   }
 
   state = {
     mapConfig: {},
     interactions: [],
     customStyle: {},
-    controls: [...DEFAULT_CONTROLS, CONTROL_CAPTURE_POSITION],
+    controls: [...DEFAULT_CONTROLS, ...CONTROL_LIST],
     tableSize: 'medium', // 'minified', 'medium', 'full'
+    refreshingLayers: false,
   }
 
   details = React.createRef();
@@ -229,8 +245,13 @@ export class Map extends React.Component {
     });
   }
 
+  refreshLayers = () => {
+    this.displayCurrentLayer();
+    this.setState(({ refreshingLayers }) => ({ refreshingLayers: !refreshingLayers }));
+  }
+
   updateControls = controls => this.setState({
-    controls: [...controls, ...DEFAULT_CONTROLS, CONTROL_CAPTURE_POSITION],
+    controls: [...controls, ...DEFAULT_CONTROLS, ...CONTROL_LIST],
   })
 
   onTableSizeChange = tableSize => {
@@ -264,7 +285,7 @@ export class Map extends React.Component {
   }
 
   generateLayersToMap () {
-    const { settings } = this.props;
+    const { settings, backgroundStyle } = this.props;
 
     if (!Object.keys(settings).length) {
       return;
@@ -282,10 +303,7 @@ export class Map extends React.Component {
       if (mapKey === 'mapbox_access_token') {
         return { ...keys, accessToken: map[mapKey] };
       }
-      if (mapKey === 'background_styles') {
-        return { ...keys, backgroundStyle: map[mapKey] };
-      }
-      return { ...keys, [mapKey]: map[mapKey] };
+      return { ...keys, [mapKey]: map[mapKey], backgroundStyle };
     }, {});
 
     this.setState({
@@ -298,11 +316,19 @@ export class Map extends React.Component {
   }
 
   render () {
-    const { customStyle, interactions, controls, tableSize, mapConfig } = this.state;
+    const {
+      customStyle,
+      interactions,
+      controls,
+      tableSize,
+      mapConfig,
+      refreshingLayers,
+    } = this.state;
     const {
       mapIsResizing,
       settings,
       match: { params: { layer, id } },
+      backgroundStyle,
       t,
       errors,
     } = this.props;
@@ -342,6 +368,7 @@ export class Map extends React.Component {
                 {areDetailsVisible && (
                   <Details
                     updateControls={this.updateControls}
+                    refreshingLayers={refreshingLayers}
                   />
                 )}
               </DetailsWrapper>
@@ -369,14 +396,23 @@ export class Map extends React.Component {
                   { 'CRUD-map--is-resizing': mapIsResizing },
                 )}
               >
-                <InteractiveMap
-                  onMapLoaded={this.resetMap}
-                  {...mapConfig}
-                  customStyle={customStyle}
-                  interactions={interactions}
-                  controls={controls}
-                  onInit={this.interactiveMapInit}
-                />
+                {!!backgroundStyle.length && (
+                  <InteractiveMap
+                    onMapLoaded={this.resetMap}
+                    {...mapConfig}
+                    customStyle={customStyle}
+                    interactions={interactions}
+                    controls={controls}
+                    onInit={this.interactiveMapInit}
+                    onStyleChange={this.refreshLayers}
+                    translate={t}
+                  />
+                )}
+                {!backgroundStyle.length && (
+                  <Message intent="danger" className="CRUD-no-map">
+                    {t('CRUD.settings.unableToLoadMap')}
+                  </Message>
+                )}
               </div>
             </>
           )}

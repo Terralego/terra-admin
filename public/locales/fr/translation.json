@@ -45,6 +45,16 @@
       "error_generic": "Informations d'identification invalides"
     }
   },
+  "terralego": {
+    "map": {
+      "backgroundstyles_control": {
+        "button_label": "Fonds de carte"
+      },
+      "capture_control": {
+        "button_label": "Capture"
+      }
+    }
+  },
   "form": {
     "search": "Rechercher",
     "submit": "Envoyer",
@@ -161,7 +171,8 @@
       "unfoldMenu": "Déplier le menu"
     },
     "settings": {
-      "unableToLoad": "Impossible de charger la configuration du module. Veuillez contacter un administrateur."
+      "unableToLoad": "Impossible de charger la configuration du module. Veuillez contacter un administrateur.",
+      "unableToLoadMap": "Impossible de charger la configuration de la carte. Veuillez contacter un administrateur."
     },
     "table": {
       "title": "Liste de la couche : {{layerName}}",

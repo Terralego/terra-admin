@@ -27,6 +27,7 @@ jest.mock('@terralego/core/modules/Map', () => ({
     position: 'bottom-left',
   }],
   CONTROL_CAPTURE: 'CaptureControl',
+  CONTROL_BACKGROUND_STYLES: 'BackgroundStyleControl',
   CONTROLS_TOP_RIGHT: 'top-right',
 }));
 
@@ -155,12 +156,6 @@ const settings = {
     default: {
       map: {
         accessToken: 'ACCESSTOKEN',
-        backgroundStyle: [
-          {
-            label: 'Foo theme',
-            url: 'mapbox://styles/foo',
-          },
-        ],
         center: [2, 46],
         zoom: 5,
         maxZoom: 18,
@@ -184,6 +179,10 @@ beforeEach(() => {
     feature: {},
     map: { notEmpty: {} },
     settingsEndpoint: 'path/to/endpoint',
+    backgroundStyle: [{
+      label: 'Foo theme',
+      url: 'mapbox://styles/foo',
+    }],
   };
 });
 
@@ -617,6 +616,7 @@ it('should update controls', () => {
       { control: 'AttributionControl', position: 'bottom-right' },
       { control: 'NavigationControl', position: 'top-right' },
       { control: 'ScaleControl', position: 'bottom-left' },
+      { control: 'BackgroundStyleControl', position: 'top-right' },
       { control: 'CaptureControl', position: 'top-right' },
     ] },
   );

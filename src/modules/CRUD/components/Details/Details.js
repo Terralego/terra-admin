@@ -120,6 +120,7 @@ class Details extends React.Component {
       match: { params: { action: paramAction, id: paramId } },
       updateControls,
       feature,
+      refreshingLayers,
     } = this.props;
 
     if (paramId === ACTION_CREATE || paramAction === ACTION_UPDATE) {
@@ -127,6 +128,7 @@ class Details extends React.Component {
         <Edit
           updateControls={updateControls}
           action={paramAction || paramId}
+          refreshingLayers={refreshingLayers}
         />
       );
     }

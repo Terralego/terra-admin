@@ -241,10 +241,10 @@ export class Map extends React.Component {
   }
 
   onTableHoverCell = (featureId, hover = true) => {
-    const { match: { params: { layer } } } = this.props;
+    const { map, match: { params: { layer } } } = this.props;
     const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
     const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
-    if (!layerId) {
+    if (!layerId || !Object.keys(map).length) {
       return;
     }
     if (hover) {

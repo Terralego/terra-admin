@@ -661,6 +661,7 @@ describe('should add or remove highlight on table hover cell', () => {
   const instance = new Map({
     ...props,
     match: { params: { layer: 'layerTest' } },
+    map: { foo: 'foo' },
   });
   instance.state = {
     customStyle: {

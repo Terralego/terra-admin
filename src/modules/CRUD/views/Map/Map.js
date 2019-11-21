@@ -143,7 +143,7 @@ export class Map extends React.Component {
 
     if ((isTrueFeatureID(prevId) && !id) || action === ACTION_UPDATE) {
       const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer) || {};
-      if (!layerId) {
+      if (!layerId || !Object.keys(map).length) {
         return;
       }
       removeHighlight && removeHighlight({

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   List, Datagrid,
+  FunctionField,
   TextField,
   // TextInput,
   EditButton,
@@ -44,7 +45,21 @@ export const DataLayerList = ({ viewList, ...props }) => (
     {...props}
   >
     <Datagrid rowClick="edit">
-      <TextField source="name" label="datalayer.form.name" />
+      <FunctionField
+        source="name"
+        label="datalayer.form.name"
+        render={({ name }) => {
+          const parts = name.split('/');
+          const last = parts.pop();
+          return (
+            <>
+              <small>{parts.join('/')}/</small>
+              <br />
+              {last}
+            </>
+          );
+        }}
+      />
       <ReferenceField source="view" reference={RES_VIEW} label="datalayer.form.view" sortBy="group__view">
         <TextField source="name" />
       </ReferenceField>

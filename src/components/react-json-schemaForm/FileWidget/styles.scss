@@ -1,0 +1,9 @@
+.fileWidget {
+  &__field {
+    display: flex;
+    align-items: center;
+  }
+  &__input {
+    max-width: 100%;
+  }
+}

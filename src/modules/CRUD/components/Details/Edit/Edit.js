@@ -12,6 +12,7 @@ import { generateURI } from '../../../config';
 import Header from '../Header';
 import Actions from '../Actions';
 import ErrorListTemplate from './ErrorListTemplate';
+import FileWidget from '../../../../../components/react-json-schemaForm/FileWidget';
 
 import {
   ALL,
@@ -129,6 +130,12 @@ class Edit extends React.Component {
     },
     geom: {},
   }
+
+  widgets = {
+    FileWidget: props => (
+      <FileWidget {...props} />
+    ),
+  };
 
   componentDidMount () {
     this.setSchema();
@@ -447,6 +454,7 @@ class Edit extends React.Component {
                 fields={{
                   rte: RTEField,
                 }}
+                widgets={this.widgets}
                 onSubmit={this.submitFeature}
                 onChange={this.changeForm}
                 validate={this.validateForm}

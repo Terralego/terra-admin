@@ -55,9 +55,7 @@ class DataTable extends React.Component {
         sortable: true,
         value,
         label: title,
-        format: {
-          type,
-        },
+        format_type: type,
       };
     });
 

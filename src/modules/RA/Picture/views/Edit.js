@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Edit } from 'react-admin';
+import { withRouter } from 'react-router';
 
 import PictureFields from '../components/PictureFields';
 import DefaultActions from '../../../../components/react-admin/DefaultActions';
 
-export const PictureEdit = props => (
-  <Edit
-    {...props}
-    undoable={false}
-    actions={<DefaultActions />}
-  >
-    <PictureFields edit />
-  </Edit>
-);
+export const PictureEdit = props => {
+  const { location: { state: { redirect: redirectProp } = {} } } = props;
+  const [redirect] = useState(redirectProp);
 
-export default PictureEdit;
+  return (
+    <Edit
+      {...props}
+      undoable={false}
+      actions={<DefaultActions redirect={redirect} />}
+    >
+      <PictureFields edit redirect={redirect} />
+    </Edit>
+  );
+};
+
+export default withRouter(PictureEdit);

@@ -18,7 +18,6 @@ import {
 
 import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
 
-import { withRouter } from 'react-router-dom';
 import { RES_VIEWPOINT } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
@@ -39,14 +38,11 @@ const PictureFields = ({
   edit,
   classes,
   mapConfig,
-  location: { state: { redirect } = {} },
   location,
   ...props
 }) => (
   <TabbedForm
     {...props}
-    {...(redirect ? { redirect } : {})}
-
     toolbar={<CustomToolbar />}
   >
     <FormTab label="resources.picture.tabs.metadata">
@@ -144,7 +140,6 @@ PictureFields.defaultProps = {
 };
 
 export default compose(
-  withRouter,
   withMapConfig,
   withStyles(styles),
 )(PictureFields);

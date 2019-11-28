@@ -49,7 +49,7 @@ const sanitizeRestProps = ({
  */
 const CustomToolbar = ({
   basePath,
-  location: { state: { redirect } = {} } = {},
+  redirect,
   classes,
   ...props
 }) => (

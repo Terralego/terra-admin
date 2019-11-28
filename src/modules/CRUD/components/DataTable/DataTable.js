@@ -49,7 +49,7 @@ class DataTable extends React.Component {
     const { featureListProperties } = this.getView();
 
     const columns = Object.keys(featureListProperties).map(value => {
-      const { selected, title, type } = featureListProperties[value];
+      const { selected = false, title, type } = featureListProperties[value] || {};
       return {
         display: selected,
         sortable: true,

@@ -334,10 +334,10 @@ export class Map extends React.Component {
 
   generateLayersToMap () {
     const {
+      map,
       settings,
       match: { params: { layer } },
     } = this.props;
-
 
     const view = getView(settings, layer);
 
@@ -347,8 +347,8 @@ export class Map extends React.Component {
 
     const {
       layer: { id: layerId },
+      pictogram,
     } = getView(settings, layer);
-
 
     this.setState(({ customStyle: { sources: prevSources, layers: prevLayers } }) => {
       if (prevSources.find(({ id }) => id === `${layerId}`) && prevLayers.filter(({ source }) => source === `${layerId}`)) {
@@ -360,6 +360,15 @@ export class Map extends React.Component {
 
       const nextSource = sourcesFromSettings.find(({ id }) => id === `${layerId}`);
       const nextLayer = layersFromSettings.find(({ source }) => source === `${layerId}`);
+
+      const { layout: { 'icon-image': iconImage } = {} } = nextLayer;
+
+      if (iconImage) {
+        map.loadImage(pictogram, (error, image) => {
+          if (error) throw error;
+          map.addImage(iconImage, image);
+        });
+      }
 
       return {
         customStyle: {

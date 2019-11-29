@@ -273,16 +273,26 @@ it('should redirect to the first layer', () => {
   expect(tree).toMatchSnapshot();
 });
 
-it('should call several functions when mouting', () => {
+it('should get map config and set interactions when mouting if settings is filled', () => {
   const instance = new Map({ ...props, match: { params: { id: '1', layer: undefined } } });
-  instance.setState = jest.fn();
-  instance.generateLayersToMap = jest.fn();
+  instance.setMapConfig = jest.fn();
   instance.setInteractions = jest.fn();
   instance.loadFeatures = jest.fn();
   instance.componentDidMount();
-  expect(instance.props.getSettings).toHaveBeenCalled();
-  expect(instance.generateLayersToMap).toHaveBeenCalled();
+  expect(instance.props.getSettings).not.toHaveBeenCalled();
+  expect(instance.setMapConfig).toHaveBeenCalled();
   expect(instance.setInteractions).toHaveBeenCalled();
+});
+
+it('should else get settings when mouting', () => {
+  const instance = new Map({
+    ...props,
+    settings: {},
+    match: { params: { id: '1', layer: undefined } },
+  });
+
+  instance.componentDidMount();
+  expect(instance.props.getSettings).toHaveBeenCalled();
 });
 
 it('should not set interactions', () => {
@@ -314,17 +324,32 @@ it('should set interactions', () => {
   expect(instance.props.history.push).toHaveBeenCalled();
 });
 
-it('should generate layers and set interactions when settings are updated', () => {
+it('should set interactions when settings are updated', () => {
   const nextProps = {
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
   };
   const instance = new Map({ ...nextProps });
-  instance.generateLayersToMap = jest.fn();
   instance.setInteractions = jest.fn();
   instance.componentDidUpdate({ ...nextProps, settings: {} }, {});
-  expect(instance.generateLayersToMap).toHaveBeenCalled();
   expect(instance.setInteractions).toHaveBeenCalled();
+});
+
+fit('should generate layers and display current layer when settings are updated', () => {
+  const prevProps = {
+    ...props,
+    match: { params: { id: '1', layer: 'layerTest' } },
+  };
+  const nextProps = {
+    ...props,
+    match: { params: { id: '1', layer: 'layerTest2' } },
+  };
+  const instance = new Map({ ...prevProps });
+  instance.generateLayersToMap = jest.fn();
+  instance.displayCurrentLayer = jest.fn();
+  instance.componentDidUpdate({ ...nextProps }, {});
+  expect(instance.generateLayersToMap).toHaveBeenCalled();
+  expect(instance.displayCurrentLayer).toHaveBeenCalled();
 });
 
 it('should set fit bounds', () => {

@@ -67,7 +67,7 @@ export class Map extends React.Component {
       },
     },
     map: {},
-    settings: undefined,
+    settings: {},
     settingsEndpoint: undefined,
     feature: {},
     backgroundStyle: [],
@@ -76,7 +76,10 @@ export class Map extends React.Component {
   state = {
     mapConfig: {},
     interactions: [],
-    customStyle: {},
+    customStyle: {
+      sources: [],
+      layers: [],
+    },
     controls: [...DEFAULT_CONTROLS, ...CONTROL_LIST],
     tableSize: 'medium', // 'minified', 'medium', 'full'
     refreshingLayers: false,
@@ -87,10 +90,24 @@ export class Map extends React.Component {
   dataTable = React.createRef();
 
   componentDidMount () {
-    const { getSettings, settingsEndpoint } = this.props;
-    getSettings(settingsEndpoint);
-    this.generateLayersToMap();
-    this.setInteractions();
+    const {
+      getSettings,
+      settingsEndpoint,
+      settings,
+      map,
+      match: { params: { layer } },
+    } = this.props;
+
+    if (Object.keys(settings).length > 0) {
+      this.setMapConfig();
+      this.setInteractions();
+    } else {
+      getSettings(settingsEndpoint);
+    }
+
+    if (Object.keys(map).length > 0 && layer) {
+      this.generateLayersToMap();
+    }
   }
 
   componentDidUpdate ({
@@ -109,14 +126,15 @@ export class Map extends React.Component {
     const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
 
     if (settings !== prevSettings) {
-      this.generateLayersToMap();
+      this.setMapConfig();
     }
 
     if (settings !== prevSettings || action !== prevAction || prevId !== id) {
       this.setInteractions();
     }
 
-    if (layer !== prevLayer || map !== prevMap) {
+    if ((layer !== prevLayer || map !== prevMap) && Object.keys(map).length > 0) {
+      this.generateLayersToMap();
       this.displayCurrentLayer();
     }
 
@@ -217,6 +235,36 @@ export class Map extends React.Component {
     }, 500);
   }
 
+  setMapConfig () {
+    const {
+      settings,
+      backgroundStyle,
+    } = this.props;
+
+    if (!Object.keys(settings).length) {
+      return;
+    }
+
+    const {
+      config: {
+        default: {
+          map = {},
+        } = {},
+      } = {},
+    } = settings;
+
+    const mapConfig = Object.keys(map).reduce((keys, mapKey) => {
+      if (mapKey === 'mapbox_access_token') {
+        return { ...keys, accessToken: map[mapKey] };
+      }
+      return { ...keys, [mapKey]: map[mapKey], backgroundStyle };
+    }, {});
+
+    this.setState({
+      mapConfig,
+    });
+  }
+
   resetMap = map => {
     const { setMap } = this.props;
     setMap(map);
@@ -285,33 +333,40 @@ export class Map extends React.Component {
   }
 
   generateLayersToMap () {
-    const { settings, backgroundStyle } = this.props;
+    const {
+      settings,
+      match: { params: { layer } },
+    } = this.props;
 
-    if (!Object.keys(settings).length) {
+
+    const view = getView(settings, layer);
+
+    if (!Object.keys(settings).length || !layer || !view) {
       return;
     }
 
     const {
-      config: {
-        default: {
-          map = {},
-        } = {},
-      } = {},
-    } = settings;
+      layer: { id: layerId },
+    } = getView(settings, layer);
 
-    const mapConfig = Object.keys(map).reduce((keys, mapKey) => {
-      if (mapKey === 'mapbox_access_token') {
-        return { ...keys, accessToken: map[mapKey] };
+
+    this.setState(({ customStyle: { sources: prevSources, layers: prevLayers } }) => {
+      if (prevSources.find(({ id }) => id === `${layerId}`) && prevLayers.filter(({ source }) => source === `${layerId}`)) {
+        return null;
       }
-      return { ...keys, [mapKey]: map[mapKey], backgroundStyle };
-    }, {});
 
-    this.setState({
-      customStyle: {
-        sources: getSources(settings),
-        layers: getLayersPaints(settings),
-      },
-      mapConfig,
+      const sourcesFromSettings = getSources(settings);
+      const layersFromSettings = getLayersPaints(settings);
+
+      const nextSource = sourcesFromSettings.find(({ id }) => id === `${layerId}`);
+      const nextLayer = layersFromSettings.find(({ source }) => source === `${layerId}`);
+
+      return {
+        customStyle: {
+          sources: [...prevSources, nextSource],
+          layers: [...prevLayers, nextLayer],
+        },
+      };
     });
   }
 
@@ -340,7 +395,6 @@ export class Map extends React.Component {
         </Message>
       );
     }
-
 
     const areSettingsLoaded = Object.keys(settings).length && Object.keys(mapConfig).length;
     const areDetailsVisible = !!id;

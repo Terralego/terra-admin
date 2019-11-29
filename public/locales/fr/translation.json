@@ -164,7 +164,7 @@
     }
   },
   "CRUD": {
-    "project": "CRUD",
+    "project": "Éditeur de données",
     "nav": {
       "map": "Carte",
       "foldMenu": "Replier le menu",

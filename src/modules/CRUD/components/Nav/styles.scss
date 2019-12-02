@@ -72,13 +72,7 @@
   &__link {
     position: relative;
     display: inline-block;
-  }
-
-  &__add {
-    margin-left: auto;
-  }
-
-  &__link {
+    margin-right: auto;
     &:hover,
     &:focus {
       outline: none;

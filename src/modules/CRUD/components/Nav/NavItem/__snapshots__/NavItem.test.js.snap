@@ -31,19 +31,24 @@ exports[`should snapshot correctly 1`] = `
     </span>
   </div>
   <div
-    className="CRUD-nav__add"
+    boundary="window"
+    content="CRUD.details.create"
+    interactionKind="hover"
+    position="right"
   >
-    <span
-      className="CRUD-nav__item-content"
-    >
+    <div>
       <span
-        className="bp3-button bp3-minimal"
+        className="CRUD-nav__item-content"
       >
-        <div>
-          add
-        </div>
+        <span
+          className="bp3-button bp3-minimal"
+        >
+          <div>
+            add
+          </div>
+        </span>
       </span>
-    </span>
+    </div>
   </div>
 </div>
 `;

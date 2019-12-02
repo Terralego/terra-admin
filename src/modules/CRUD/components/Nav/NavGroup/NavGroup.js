@@ -35,12 +35,12 @@ const NavGroup = ({
                   interactionKind={PopoverInteractionKind.HOVER}
                   position={Position.LEFT}
                   boundary="window"
-                  content={<NavItem {...view} />}
+                  content={<NavItem {...view} minified />}
                 >
                   <NavIcon src={view.pictogram} />
                 </Popover>
               ) : (
-                <NavItem {...view} displayPictogram />
+                <NavItem {...view} />
               )}
             </li>
           ))}

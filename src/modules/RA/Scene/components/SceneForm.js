@@ -7,6 +7,7 @@ import {
   DisabledInput,
   ImageInput,
   ImageField,
+  NumberInput,
   SelectInput,
   SimpleForm,
   TextInput,
@@ -53,6 +54,8 @@ const SceneForm = ({ edit = false, ...props }) => {
           <TextInput source="name" label="view.form.name" />
           <Br />
           <TextInput source="slug" label="view.form.slug" />
+          <Br />
+          <NumberInput source="order" label="view.form.ordering" />
         </>
       )}
 

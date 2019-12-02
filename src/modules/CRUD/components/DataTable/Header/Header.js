@@ -15,24 +15,30 @@ const Header = ({
   onChange,
   match: { params: { layer } },
   displayAddFeature,
-}) => (
-  <div className="table-header">
-    <div className="table-header__title">
-      {t('CRUD.table.title', { layerName })}
-      {displayAddFeature && (
+}) => {
+  const popoverProps = {
+    interactionKind: PopoverInteractionKind.HOVER,
+    position: tableSize === 'full' ? Position.BOTTOM : Position.TOP,
+    boundary: 'window',
+  };
+  return (
+    <div className="table-header">
+      <div className="table-header__title">
+        {t('CRUD.table.title', { layerName })}
+        {displayAddFeature && (
         <NavLink className="table-header__create" to={generateURI('layer', { layer, action: 'create' })}>
           <span className="bp3-button">
-            <Icon icon="plus" />
+            <Icon icon="add" />
             <span className="bp3-button-text"> {t('CRUD.details.create')}</span>
           </span>
         </NavLink>
-      )}
-    </div>
-    <div>
-      {!!columns.length && tableSize !== 'minified' && (
+        )}
+      </div>
+      <div>
+        {!!columns.length && tableSize !== 'minified' && (
         <Popover
           content={t('CRUD.table.filterProps')}
-          interactionKind={PopoverInteractionKind.HOVER}
+          {...popoverProps}
         >
           <ColumnsSelector
             columns={columns}
@@ -44,32 +50,33 @@ const Header = ({
             }}
           />
         </Popover>
-      )}
-      <Popover
-        content={tableSize === 'minified' ? t('CRUD.table.showTable') : t('CRUD.table.hideTable')}
-        interactionKind={PopoverInteractionKind.HOVER}
-      >
-        <Button
-          onClick={() => resize(tableSize === 'minified' ? 'medium' : 'minified')}
-          icon={tableSize === 'minified' ? 'arrow-up' : 'arrow-down'}
-          minimal
-          intent={Intent.PRIMARY}
-        />
-      </Popover>
-      <Popover
-        content={tableSize === 'full' ? t('CRUD.table.minimize') : t('CRUD.table.maximize')}
-        interactionKind={PopoverInteractionKind.HOVER}
-      >
-        <Button
-          onClick={() => resize(tableSize === 'full' ? 'medium' : 'full')}
-          icon={tableSize === 'full' ? 'minimize' : 'maximize'}
-          minimal
-          active={tableSize === 'full'}
-          intent={Intent.PRIMARY}
-        />
-      </Popover>
+        )}
+        <Popover
+          content={tableSize === 'minified' ? t('CRUD.table.showTable') : t('CRUD.table.hideTable')}
+          {...popoverProps}
+        >
+          <Button
+            onClick={() => resize(tableSize === 'minified' ? 'medium' : 'minified')}
+            icon={tableSize === 'minified' ? 'arrow-up' : 'arrow-down'}
+            minimal
+            intent={Intent.PRIMARY}
+          />
+        </Popover>
+        <Popover
+          content={tableSize === 'full' ? t('CRUD.table.minimize') : t('CRUD.table.maximize')}
+          {...popoverProps}
+        >
+          <Button
+            onClick={() => resize(tableSize === 'full' ? 'medium' : 'full')}
+            icon={tableSize === 'full' ? 'minimize' : 'maximize'}
+            minimal
+            active={tableSize === 'full'}
+            intent={Intent.PRIMARY}
+          />
+        </Popover>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Header;

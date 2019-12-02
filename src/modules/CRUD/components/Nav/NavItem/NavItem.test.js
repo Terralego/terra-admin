@@ -9,6 +9,13 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('@blueprintjs/core', () => ({
   Icon: ({ icon }) => <div>{icon}</div>,
+  Popover: ({ children, ...props }) => <div {...props}>{children}</div>,
+  PopoverInteractionKind: {
+    HOVER: 'hover',
+  },
+  Position: {
+    RIGHT: 'right',
+  },
 }));
 
 jest.mock('../../../config', () => ({

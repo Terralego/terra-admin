@@ -1,3 +1,4 @@
+import { withNamespaces } from 'react-i18next';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import compose from '../../../../../utils/compose';
 
@@ -15,4 +16,5 @@ const authProviderGetter = ({
 
 export default compose(
   connectAuthProvider(authProviderGetter),
+  withNamespaces(),
 )(NavItem);

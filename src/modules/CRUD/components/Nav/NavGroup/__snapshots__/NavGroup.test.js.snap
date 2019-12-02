@@ -36,6 +36,7 @@ exports[`should collapse correctly 1`] = `
                   "name": "layerFoo",
                 }
               }
+              minified={true}
               name="Foo"
               order={1}
               pictogram={null}
@@ -64,6 +65,7 @@ exports[`should collapse correctly 1`] = `
                   "name": "layerBar",
                 }
               }
+              minified={true}
               name="Bar"
               order={4}
               pictogram="path/to/image.png"

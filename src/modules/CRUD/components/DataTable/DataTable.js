@@ -110,7 +110,7 @@ class DataTable extends React.Component {
                   layerName={displayName}
                   tableSize={tableSize}
                   resize={this.resize}
-
+                  loading={loading}
                 />
               )}
               locales={{

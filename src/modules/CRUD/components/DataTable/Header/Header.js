@@ -1,5 +1,14 @@
 import React from 'react';
-import { Intent, Position, Popover, PopoverInteractionKind, Button, Icon } from '@blueprintjs/core';
+import {
+  Button,
+  Icon,
+  Intent,
+  Position,
+  Popover,
+  PopoverInteractionKind,
+  Spinner,
+  Tag,
+} from '@blueprintjs/core';
 import ColumnsSelector from '@terralego/core/modules/Table/components/ColumnsSelector';
 import { NavLink } from 'react-router-dom';
 import { generateURI } from '../../../config';
@@ -15,12 +24,17 @@ const Header = ({
   onChange,
   match: { params: { layer } },
   displayAddFeature,
+  featuresList,
+  loading,
 }) => {
   const popoverProps = {
     interactionKind: PopoverInteractionKind.HOVER,
     position: tableSize === 'full' ? Position.BOTTOM : Position.TOP,
     boundary: 'window',
   };
+  const showLoader = Array.isArray(featuresList) && loading;
+  const showCount = Array.isArray(featuresList) && !loading;
+
   return (
     <div className="table-header">
       <div className="table-header__title">
@@ -34,6 +48,15 @@ const Header = ({
         </NavLink>
         )}
       </div>
+      {showLoader && <Spinner size="20" />}
+      {showCount && (
+        <Tag intent={Intent.PRIMARY} round>
+          {featuresList.length > 1
+            ? t('CRUD.table.results_plural', { count: featuresList.length })
+            : t('CRUD.table.results', { count: featuresList.length })
+          }
+        </Tag>
+      )}
       <div>
         {!!columns.length && tableSize !== 'minified' && (
         <Popover

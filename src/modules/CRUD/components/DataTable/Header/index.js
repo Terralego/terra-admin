@@ -1,19 +1,24 @@
 import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
+import { connectCRUDProvider } from '../../../services/CRUDProvider';
+import compose from '../../../../../utils/compose';
 
 import Header from './Header';
 
-export default withRouter(
-  connectAuthProvider(({
-    authenticated,
-    user,
-  }) => {
-    const permissions = authenticated ? user.permissions : [];
-    return {
-      displayAddFeature: permissions.includes('can_add_feature'),
-    };
-  })(
-    withNamespaces()(Header),
-  ),
-);
+const authProviderGetter = ({
+  authenticated,
+  user,
+}) => {
+  const permissions = authenticated ? user.permissions : [];
+  return {
+    displayAddFeature: permissions.includes('can_add_feature'),
+  };
+};
+
+export default compose(
+  withRouter,
+  connectAuthProvider(authProviderGetter),
+  connectCRUDProvider('featuresList'),
+  withNamespaces(),
+)(Header);

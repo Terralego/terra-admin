@@ -187,7 +187,9 @@
       "hideTable": "Cacher le tableau attributaire",
       "noFeature": "Aucun objet à afficher pour cette couche.",
       "readMessage": "<0>Voir</0> cet objet.",
-      "readOrUpdateMessage": "<0>Voir</0> ou <2>Modifier</2> cet objet."
+      "readOrUpdateMessage": "<0>Voir</0> ou <2>Modifier</2> cet objet.",
+      "results": "{{ count }} résultat",
+      "results_plural": "{{ count }} résultats"
     },
     "layer": {
       "errorNoLayer": "La couche recherchée n'existe pas"

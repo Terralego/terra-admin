@@ -23,12 +23,20 @@ const SourceFetcher = ({ dispatch, dataProvider, sourceId, fields = [] }) => {
 
     const fillFields = async () => {
       const { data: { _type: type, fields: sourceFields = [] } } = await load(sourceId);
-      const filledFields = sourceFields.map(({ id, name, label }) => ({
-        id,
-        name,
-        label,
-        ...fields.find(({ id: fieldId }) => id === fieldId) || {},
+      const fieldsFromSource = sourceFields.filter(
+        // All fields from source that are not in value
+        ({ id }) => !fields.some(({ id: fieldId }) => id === fieldId),
+      );
+      const fieldsFromValue = fields.map(field => ({
+        // Default field properties from source
+        ...sourceFields.find(({ id: fieldId }) => field.id === fieldId),
+        // Field properties from value
+        ...field,
       }));
+      const filledFields = [
+        ...fieldsFromSource,
+        ...fieldsFromValue,
+      ];
 
       dispatch(change(REDUX_FORM_NAME, 'fields', filledFields || null));
       dispatch(change(REDUX_FORM_NAME, 'external', type === WMTS));

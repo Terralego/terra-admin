@@ -23,6 +23,7 @@ import { change } from 'redux-form';
 
 import compose from '../../../../utils/compose';
 import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
+import DraggableFormIterator from '../../../../components/react-admin/DraggableFormIterator';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import JSONInput from '../../../../components/react-admin/JSONInput';
 import SourceFetcher from './SourceFetcher';
@@ -188,9 +189,22 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
 
       <FormTab label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
-          {({ formData }) => (
+          {({ formData, dispatch }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>
-              <CustomFormIterator disableAdd disableRemove>
+              <DraggableFormIterator
+                disableAdd
+                disableRemove
+                onSortEnd={(fields, oldIndex, newIndex) =>
+                  // This can be slow, so we limit the changes the indexes affected
+                  fields.forEach((item, index) => {
+                    const min = Math.min(oldIndex, newIndex);
+                    const max = Math.max(oldIndex, newIndex);
+                    if (index >= min && index <= max) {
+                      dispatch(change(REDUX_FORM_NAME, `${item}.order`, index));
+                    }
+                  })
+              }
+              >
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (
                     <LongTextInput source={getSource('label')} label={scopedFormData.name} fullWidth />
@@ -254,7 +268,7 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
                 </FormDataConsumer>
                 {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <React.Fragment />}
                 {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
-              </CustomFormIterator>
+              </DraggableFormIterator>
             </ArrayInput>
           )}
         </FormDataConsumer>

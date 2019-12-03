@@ -194,15 +194,10 @@ class Edit extends React.Component {
   }
 
   componentWillUnmount () {
-    const {
-      map,
-      updateControls,
-    } = this.props;
+    const { updateControls } = this.props;
     // Remove controlDraw from controls
     updateControls([]);
-    if (this.layerId && Object.keys(map).length) {
-      map.setFilter(this.layerId, ['all']);
-    }
+    this.setMapFilter(this.layerId, ['all']);
   }
 
   get layerId () {
@@ -291,19 +286,34 @@ class Edit extends React.Component {
     if (action === ACTION_UPDATE) {
       if (!geom || !Object.keys(map).length) return;
 
-      const listener = ({ control: addedControl }) => {
+      const onControlAdded = ({ control: addedControl }) => {
         if (addedControl !== control.control) {
           return;
         }
         map.draw.add(geom);
-        map.off('control_added', listener);
+        map.off('control_added', onControlAdded);
       };
-      map.on('control_added', listener);
-      if (this.layerId) {
-        map.setFilter(this.layerId, ['!=', '_id', paramId]);
-      }
+      map.on('control_added', onControlAdded);
+
+      this.setMapFilter(this.layerId, ['!=', '_id', paramId]);
     }
     updateControls([control]);
+  }
+
+  setMapFilter = (layerId, filter) => {
+    const { map } = this.props;
+
+    if (!Object.keys(map).length && !layerId) {
+      return;
+    }
+
+    const onSourceData = ({ isSourceLoaded }) => {
+      if (isSourceLoaded) {
+        map.off('sourcedata', onSourceData);
+        map.setFilter(layerId, filter);
+      }
+    };
+    map.on('sourcedata', onSourceData);
   }
 
   updateGeometry = ({ type, features: [{ geometry: geom, id }], target: map }) => {

@@ -231,7 +231,7 @@ it('should execute init draw', () => {
 });
 
 it('should execute init draw and define map draw', () => {
-  let listener;
+  let onControlAdded;
   const newProps = {
     ...props,
     feature: {
@@ -249,17 +249,18 @@ it('should execute init draw and define map draw', () => {
         add: jest.fn(),
       },
       on: (_, fn) => {
-        listener = fn;
+        onControlAdded = fn;
       },
       off: jest.fn(),
       setFilter: jest.fn(),
     },
   };
   const instance = new Edit({ ...newProps });
+  instance.setMapFilter = jest.fn();
   instance.initDraw();
-  listener({ control: CONTROL_DRAW });
+  onControlAdded({ control: CONTROL_DRAW });
   expect(instance.props.map.draw.add).toHaveBeenCalled();
-  listener({ control: 'plop' });
+  onControlAdded({ control: 'plop' });
   expect(newProps.updateControls).toHaveBeenCalledWith([{
     control: 'DrawControl',
     controls: {
@@ -526,18 +527,8 @@ it('should remove control when component will unmout', () => {
   const instance = new Edit({
     ...props,
   });
+  instance.setMapFilter = jest.fn();
   instance.componentWillUnmount();
   expect(instance.props.updateControls).toHaveBeenCalled();
-});
-
-it('should remove control and clean filter of the layer when component will unmout', () => {
-  const instance = new Edit({
-    ...props,
-    map: {
-      setFilter: jest.fn(),
-    },
-  });
-  instance.componentWillUnmount();
-  expect(instance.props.updateControls).toHaveBeenCalled();
-  expect(instance.props.map.setFilter).toHaveBeenCalled();
+  expect(instance.setMapFilter).toHaveBeenCalledWith('fooComponentID', ['all']);
 });

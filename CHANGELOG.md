@@ -1,4 +1,28 @@
 
+2.10.0 / 2019-12-03
+===================
+
+  * Add ordering field in scene
+  * Display all control of the map into the map
+  * Rename fr locale CRUD label
+  * Load icons for POI of the map
+  * Load sources and layers on demand
+  * Update @terralego/core package to 1.13.0
+  * Avoid to display a non existing column
+  * Fix redirect on pictures
+  * Fix format_type key for columns table
+  * Get BASE_LAYER from api/crud/settings and not api/settings anymore
+  * Call the custom file widget instead of the react-json-schemaForm
+  * Create custom file widget with an additional remove file feature
+  * Improve geolayer name column rendering
+  * Try to removeHighlight only if the map is loaded
+  * Improve login form FR wordings
+  * Add default value for lat/lng fields
+  * Use background styles for Map component
+  * Provide backgroundStyle prop from appProvider to Map component
+  * Avoid highlighting features if the map is not mounted yet
+  * Hande view order
+
 2.9.0 / 2019-11-19
 ==================
 

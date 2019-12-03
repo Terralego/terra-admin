@@ -19,6 +19,8 @@ import {
   isObjectEmpty,
 } from '../../../../utils/react-admin/helper';
 
+import TreeInput from './TreeInput';
+
 const Br = () => <br />;
 
 const SceneForm = ({ edit = false, ...props }) => {
@@ -57,6 +59,8 @@ const SceneForm = ({ edit = false, ...props }) => {
         </>
       )}
       <NumberInput source="order" label="view.form.ordering" />
+
+      <TreeInput source="tree" />
 
       <SelectInput
         label="view.form.category"

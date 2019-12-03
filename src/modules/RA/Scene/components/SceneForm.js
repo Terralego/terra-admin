@@ -60,7 +60,7 @@ const SceneForm = ({ edit = false, ...props }) => {
       )}
       <NumberInput source="order" label="view.form.ordering" />
 
-      <TreeInput source="tree" />
+      <TreeInput source="tree" fullWidth />
 
       <SelectInput
         label="view.form.category"

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SortableTree from 'react-sortable-tree';
+import SortableTree, { addNodeUnderParent, removeNodeAtPath } from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 
 import { addField, Labeled } from 'react-admin';
@@ -24,18 +24,45 @@ const treeInputStyle = {
  */
 const canNodeHaveChildren = ({ group = false }) => group;
 
-const generateNodeProps = ({ node, path }) => ({
-  title: (
-    <div>
-      {node.group ? 'Groupe : ' : 'Calque : '} {node.title}
-    </div>
-  ),
-  subtitle: <div>{JSON.stringify(path)}</div>,
-  style: {
-    border: '1px solid',
-    borderColor: node.group ? 'green' : 'transparent',
-  },
-});
+const generateNodeProps = (treeData, setTreeData) =>
+  ({ node: { title, group: isGroup }, path }) => {
+    const newSubItem = newNode => () => setTreeData(addNodeUnderParent({
+      treeData,
+      parentKey: path[path.length - 1],
+      expandParent: true,
+      getNodeKey: ({ treeIndex }) => treeIndex,
+      newNode,
+    }).treeData);
+
+    const newSubGroup = newSubItem({ title: 'New group', group: true });
+    const newSubLayer = newSubItem({ title: 'New layer' });
+
+    const deleteItem = () => setTreeData(removeNodeAtPath({
+      treeData,
+      path,
+      getNodeKey: ({ treeIndex }) => treeIndex,
+    }));
+
+    const nodeProps = {
+      title,
+      style: {
+        border: '1px solid',
+        borderColor: isGroup ? 'green' : 'transparent',
+      },
+      buttons: [
+        <Button onClick={deleteItem}>del</Button>,
+      ],
+    };
+
+    if (isGroup) {
+      nodeProps.buttons = [
+        ...nodeProps.buttons,
+        <Button onClick={newSubGroup}>+group</Button>,
+        <Button onClick={newSubLayer}>+layer</Button>,
+      ];
+    }
+    return nodeProps;
+  };
 
 const TreeInput = ({ input: { value, onChange }, source, ...props }) => {
   const addGroup = () => onChange([
@@ -56,8 +83,8 @@ const TreeInput = ({ input: { value, onChange }, source, ...props }) => {
             treeData={value}
             onChange={onChange}
             canNodeHaveChildren={canNodeHaveChildren}
-            generateNodeProps={generateNodeProps}
-            style={{ flex: '1 1 100%', minHeight: 400 }}
+            generateNodeProps={generateNodeProps(value, onChange)}
+            style={{ minHeight: 400 }}
           />
 
           <div>

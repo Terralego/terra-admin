@@ -7,17 +7,21 @@ import Header from './Header';
 import CellRender from './CellRender';
 import './styles.scss';
 
+const LOADING_COLUMN_WIDTHS = Array.from({ length: 10 }, () => 250);
+
 class DataTable extends React.Component {
   state = {
     data: [],
     columns: [],
-    loading: false,
+    loading: true,
     initialSort: {
       columnIndex: 0,
       order: 'asc',
     },
+    columnWidths: LOADING_COLUMN_WIDTHS,
   }
 
+  tableRef = React.createRef();
 
   componentDidMount () {
     this.loadData();
@@ -26,7 +30,6 @@ class DataTable extends React.Component {
   componentDidUpdate ({ layerName: prevLayerName, featuresList: prevFeaturesList }) {
     const { layerName, featuresList } = this.props;
     if (prevLayerName !== layerName) {
-      this.cleanData();
       this.loadData();
     }
     if (featuresList && prevFeaturesList !== featuresList) {
@@ -40,7 +43,9 @@ class DataTable extends React.Component {
     if (!featureEndpoint) return;
     getFeaturesList(featureEndpoint, querystring);
     this.setState({
+      data: [],
       loading: true,
+      columnWidths: LOADING_COLUMN_WIDTHS,
     });
   }
 
@@ -60,16 +65,17 @@ class DataTable extends React.Component {
     });
 
     const data = featuresList.map(({ properties: props }) => columns.map(({ value }) => `${props[value] || ''}`));
+    const displayedColumns = columns.filter(({ display }) => display === true);
+    const { current } = this.tableRef;
+    const columnWidth = (!columns.length && !current)
+      ? 250
+      : (current.offsetWidth - 50) / displayedColumns.length;
+
     this.setState({
       columns,
       data,
       loading: false,
-    });
-  }
-
-  cleanData = () => {
-    this.setState({
-      data: [],
+      columnWidths: displayedColumns.map(() => columnWidth),
     });
   }
 
@@ -95,15 +101,16 @@ class DataTable extends React.Component {
 
     const { layer: { name } = {}, name: displayName = name } = this.getView();
 
-    const { data, columns, loading, initialSort } = this.state;
+    const { data, columns, loading, initialSort, columnWidths } = this.state;
 
     return (
-      <div className="table-container">
-        {loading || data.length
+      <div className="table-container" ref={this.tableRef}>
+        {loading || columns.length
           ? (
             <Table
               columns={columns}
               data={data}
+              columnWidths={columnWidths}
               Header={props => (
                 <Header
                   {...props}

@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 /* eslint-enable */
 
 import NodeMenuButton from './NodeMenuButton';
+import NodeTitle from './NodeTitle';
 
 const treeInputStyle = {
   minWidth: '35em',
@@ -27,11 +28,11 @@ const treeInputStyle = {
 const canNodeHaveChildren = ({ group = false }) => group;
 
 const generateNodeProps = (treeData, setTreeData) =>
-  ({ node: { title, group: isGroup }, path }) => {
-    const menuProps = { treeData, setTreeData, path, isGroup };
+  ({ node, node: { group: isGroup }, path }) => {
+    const menuProps = { treeData, setTreeData, path, isGroup, node };
 
     return {
-      title,
+      title: <NodeTitle {...menuProps} />,
       style: {
         border: '1px solid',
         borderColor: isGroup ? 'green' : 'transparent',

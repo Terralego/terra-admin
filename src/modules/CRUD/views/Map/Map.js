@@ -133,17 +133,17 @@ export class Map extends React.Component {
       this.setInteractions();
     }
 
-    if ((layer !== prevLayer || map !== prevMap) && Object.keys(map).length > 0) {
+    if ((layer !== prevLayer || map !== prevMap || prevId !== id) && Object.keys(map).length > 0) {
       this.generateLayersToMap();
-      this.displayCurrentLayer();
     }
 
-    if (layer && (prevId !== id || layer !== prevLayer || map !== prevMap)) {
+    if (layer && (layer !== prevLayer || map !== prevMap)) {
       this.setFitBounds();
     }
 
     if (isTrueFeatureID(id) && prevCoordinates !== coordinates) {
       this.setFitBounds();
+      this.generateLayersToMap();
       if (action !== ACTION_UPDATE) {
         const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
         if (!layerId || !Object.keys(map).length) {
@@ -186,7 +186,7 @@ export class Map extends React.Component {
     const layers = getLayersPaints(settings);
 
     const interactions = layers.map(interaction => {
-      if (interaction['source-layer'] !== layer) {
+      if (interaction['source-layer'] !== layer || !interaction.main) {
         return false;
       }
       return {
@@ -281,15 +281,25 @@ export class Map extends React.Component {
   displayCurrentLayer = () => {
     const {
       map,
-      match: { params: { layer } },
+      settings,
+      match: { params: { layer, id } },
+      feature: { extra_geometries: extraGeometries = [] } = {},
     } = this.props;
+
+    const view = getView(settings, layer);
+
     const { customStyle: { layers = [] } } = this.state;
     if (!Object.keys(map).length || !layers.length) {
       return;
     }
-    layers.forEach(({ id, 'source-layer': sourceLayer }) => {
-      if (!map.getLayer(id)) return;
-      map.setLayoutProperty(id, 'visibility', sourceLayer === layer ? 'visible' : 'none');
+
+    layers.forEach(layerItem => {
+      if (!map.getLayer(layerItem.id)) return;
+      const conditionalDisplay = layerItem.source === `${view.layer.id}` && (isTrueFeatureID(id) || layerItem.main === true);
+      map.setLayoutProperty(layerItem.id, 'visibility', conditionalDisplay ? 'visible' : 'none');
+      if (isTrueFeatureID(id) && layerItem.main === false) {
+        map.setFilter(layerItem.id, ['in', '_id', ...extraGeometries]);
+      }
     });
   }
 
@@ -359,23 +369,25 @@ export class Map extends React.Component {
       const layersFromSettings = getLayersPaints(settings);
 
       const nextSource = sourcesFromSettings.find(({ id }) => id === `${layerId}`);
-      const nextLayer = layersFromSettings.find(({ source }) => source === `${layerId}`);
+      const nextLayers = layersFromSettings.filter(({ source }) => source === `${layerId}`);
 
-      const { layout: { 'icon-image': iconImage } = {} } = nextLayer;
-
-      if (iconImage) {
-        map.loadImage(pictogram, (error, image) => {
-          if (error) throw error;
-          map.addImage(iconImage, image);
-        });
-      }
+      nextLayers.forEach(({ layout: { 'icon-image': iconImage } = {} }) => {
+        if (iconImage) {
+          map.loadImage(pictogram, (error, image) => {
+            if (error) throw error;
+            map.addImage(iconImage, image);
+          });
+        }
+      });
 
       return {
         customStyle: {
           sources: [...prevSources, nextSource],
-          layers: [...prevLayers, nextLayer],
+          layers: [...prevLayers, ...nextLayers],
         },
       };
+    }, () => {
+      this.displayCurrentLayer();
     });
   }
 

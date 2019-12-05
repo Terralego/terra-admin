@@ -54,10 +54,9 @@ const SceneForm = ({ edit = false, ...props }) => {
           <TextInput source="name" label="view.form.name" />
           <Br />
           <TextInput source="slug" label="view.form.slug" />
-          <Br />
-          <NumberInput source="order" label="view.form.ordering" />
         </>
       )}
+      <NumberInput source="order" label="view.form.ordering" />
 
       <SelectInput
         label="view.form.category"

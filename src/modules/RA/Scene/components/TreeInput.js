@@ -47,11 +47,6 @@ const TreeInput = ({ input: { value, onChange }, source, ...props }) => {
     { title: 'New group name', group: true },
   ]);
 
-  const addLayer = () => onChange([
-    ...value,
-    { title: 'New layer name' },
-  ]);
-
   return (
     <Labeled label={source} {...props}>
       <>
@@ -62,11 +57,11 @@ const TreeInput = ({ input: { value, onChange }, source, ...props }) => {
             canNodeHaveChildren={canNodeHaveChildren}
             generateNodeProps={generateNodeProps(value, onChange)}
             style={{ minHeight: 400 }}
+            rowHeight={({ node: { group } }) => (group ? 84 : 62)}
           />
 
           <div>
-            <Button onClick={addGroup}>Add group</Button>
-            <Button onClick={addLayer}>Add layer</Button>
+            <Button onClick={addGroup}>Créer un groupe</Button>
           </div>
         </div>
       </>

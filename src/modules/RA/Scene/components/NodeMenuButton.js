@@ -3,12 +3,12 @@ import React from 'react';
 import {
   addNodeUnderParent,
   removeNodeAtPath,
-  changeNodeAtPath,
 } from 'react-sortable-tree';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import Button from '@material-ui/core/Button';
-import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -30,22 +30,16 @@ const style = {
   },
 };
 
-const NodeMenuButton = ({ treeData, setTreeData, path, isGroup, node }) => {
+const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [modalOpen, setModalOpen] = React.useState(false);
+  const [newLayer, setNewLayer] = React.useState(false);
+  const [newLayerProps, setNewLayerProps] = React.useState({});
 
   const handleClick = ({ currentTarget }) => setAnchorEl(currentTarget);
   const closeMenu = () => setAnchorEl(null);
 
-  const openModal = () => {
-    closeMenu();
-    setModalOpen(true);
-  };
-  const closeModal = () => setModalOpen(false);
-
   const newSubItem = newNode => () => {
     closeMenu();
-    closeModal();
     setTreeData(addNodeUnderParent({
       treeData,
       parentKey: path[path.length - 1],
@@ -57,7 +51,6 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup, node }) => {
 
   const deleteItem = () => {
     closeMenu();
-    closeModal();
     setTreeData(removeNodeAtPath({
       treeData,
       path,
@@ -65,52 +58,49 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup, node }) => {
     }));
   };
 
-  const editItem = newProperties => {
+  const openNewLayer = () => {
     closeMenu();
-    setTreeData(changeNodeAtPath({
-      treeData,
-      path,
-      getNodeKey: ({ treeIndex }) => treeIndex,
-      newNode: {
-        ...node,
-        ...newProperties,
-      },
-    }));
+    setNewLayer(true);
   };
 
-  const newSubGroup = newSubItem({ title: 'New group', group: true });
-  const newSubLayer = newSubItem({ title: 'New layer' });
+  const closeNewLayer = (doCreate = false) => () => {
+    if (doCreate && newLayerProps.geolayer) {
+      newSubItem(newLayerProps)();
+    }
+
+    /**
+     * Close modal
+     */
+    setNewLayer(false);
+
+    /**
+     * Reset stored properties
+     */
+    setNewLayerProps({});
+  };
 
   return (
     <>
-      <IconButton onClick={openModal}><EditIcon /></IconButton>
-
-      <Modal open={modalOpen} onClose={closeModal}>
-        <div style={style.modal}>
-          {isGroup && <Button onClick={newSubLayer}>Ajouter une couche</Button>}
-          {isGroup && <Button onClick={newSubGroup}>Ajouter un groupe</Button>}
-          <Button onClick={deleteItem}>Supprimer</Button>
-
-          {!isGroup && (
-            <div>
-              <GeolayerSelect
-                value={node.geolayer || ''}
-                onChange={editItem}
-              />
-            </div>
-          )}
-
-        </div>
-      </Modal>
-
-      <IconButton onClick={handleClick}><MoreVertIcon /></IconButton>
+      {isGroup && <IconButton onClick={openNewLayer}><AddIcon /></IconButton>}
+      {isGroup && <IconButton onClick={handleClick}><MoreVertIcon /></IconButton>}
+      {!isGroup && <IconButton onClick={deleteItem}><DeleteIcon /></IconButton>}
 
       <Menu anchorEl={anchorEl} onClose={closeMenu} open={!!anchorEl}>
-        {isGroup && <MenuItem onClick={newSubLayer}>Ajouter une couche</MenuItem>}
-        {isGroup && <MenuItem onClick={newSubGroup}>Ajouter un groupe</MenuItem>}
+        {isGroup && <MenuItem onClick={openNewLayer}>Ajouter une couche</MenuItem>}
+        {/* {isGroup && <MenuItem onClick={openModal}>Modifier</MenuItem>} */}
         <MenuItem onClick={deleteItem}>Supprimer</MenuItem>
-        <MenuItem onClick={openModal}>Editer</MenuItem>
       </Menu>
+
+      <Modal open={newLayer} onClose={closeNewLayer()}>
+        <div style={style.modal}>
+          <div>
+            <GeolayerSelect value={newLayerProps.geolayer || ''} onChange={setNewLayerProps} fullWidth />
+          </div>
+
+          <Button variant="outlined" color="primary" onClick={closeNewLayer(true)}>Valider</Button>
+          <Button variant="outlined" color="secondary" onClick={closeNewLayer(false)}>Annuler</Button>
+        </div>
+      </Modal>
     </>
   );
 };

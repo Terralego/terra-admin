@@ -18,13 +18,21 @@ const settings = {
         id: 1,
         name: 'Foo',
         layer: { id: 6, name: 'foo', tilejson: 'group1.tilejson', geom_type: LINESTRING },
-        map_style: { type: 'line', paint: { 'line-color': 'red', 'line-width': 3 } },
+        map_layers: [{
+          id_layer_vt: 'foo',
+          main: true,
+          style: { type: 'line', paint: { 'line-color': 'red', 'line-width': 3 } },
+        }],
       },
       {
         id: 2,
         name: 'Bar',
         layer: { id: 7, name: 'bar', tilejson: 'group1.tilejson', geom_type: LINESTRING },
-        map_style: { type: 'line', paint: { 'line-color': 'blue', 'line-width': 3 } },
+        map_layers: [{
+          id_layer_vt: 'bar',
+          main: true,
+          style: { type: 'line', paint: { 'line-color': 'blue', 'line-width': 3 } },
+        }],
       },
     ],
   }, {
@@ -33,13 +41,21 @@ const settings = {
         id: 3,
         name: 'Foo foo',
         layer: { id: 8, name: 'foo_foo', tilejson: 'group2.tilejson', geom_type: LINESTRING },
-        map_style: { type: 'line', paint: { 'line-color': 'yellow', 'line-width': 3 } },
+        map_layers: [{
+          id_layer_vt: 'foo_foo',
+          main: true,
+          style: { type: 'line', paint: { 'line-color': 'yellow', 'line-width': 3 } },
+        }],
       },
       {
         id: 4,
         name: 'Bar bar',
         layer: { id: 9, name: 'bar_bar', group: 'group3', tilejson: 'group3.tilejson', geom_type: LINESTRING },
-        map_style: { type: 'line', paint: { 'line-color': 'green', 'line-width': 3 } },
+        map_layers: [{
+          id_layer_vt: 'bar_bar',
+          main: true,
+          style: { type: 'line', paint: { 'line-color': 'green', 'line-width': 3 } },
+        }],
       },
     ],
   }, {
@@ -48,21 +64,41 @@ const settings = {
         id: 4,
         name: 'Foo bar',
         layer: { id: 10, name: 'foo_bar', tilejson: 'group2.tilejson', geom_type: 9999 },
+        map_layers: [{
+          id_layer_vt: 'bar_bar',
+          main: true,
+          style: { type: 'line', paint: { 'line-color': 'green', 'line-width': 3 } },
+        }],
       },
       {
         id: 5,
         name: 'Bar foo polygon',
         layer: { id: 11, name: 'bar_foo_polygon', tilejson: 'group1.tilejson', geom_type: POLYGON },
+        map_layers: [{
+          id_layer_vt: 'bar_foo_polygon',
+          main: true,
+          style: { type: 'fill', paint: { 'fill-color': 'green' } },
+        }],
       },
       {
         id: 6,
         name: 'Bar foo line',
         layer: { id: 12, name: 'bar_foo_line', tilejson: 'group1.tilejson', geom_type: LINESTRING },
+        map_layers: [{
+          id_layer_vt: 'bar_foo_line',
+          main: true,
+          style: { type: 'line', paint: { 'line-color': 'green', 'line-width': 3 } },
+        }],
       },
       {
         id: 7,
         name: 'Bar foo point',
         layer: { id: 12, name: 'bar_foo_point', tilejson: 'group1.tilejson', geom_type: POINT },
+        map_layers: [{
+          id_layer_vt: 'bar_foo_line',
+          main: true,
+          style: { type: 'circle', paint: { 'circle-color': 'green', 'circle-radius': 6 } },
+        }],
       },
     ],
   }],
@@ -84,13 +120,11 @@ it('should get the selected layer', () => {
       id: 9,
       name: 'bar_bar',
     },
-    mapStyle:  {
-      paint:  {
-        'line-color': 'green',
-        'line-width': 3,
-      },
-      type: 'line',
-    },
+    mapLayers: [{
+      id_layer_vt: 'bar_bar',
+      main: true,
+      style: { type: 'line', paint: { 'line-color': 'green', 'line-width': 3 } },
+    }],
   });
 });
 
@@ -119,49 +153,67 @@ it('should not get sources', () => {
 });
 
 it('should get layers paint', () => {
-  expect(getLayersPaints(settings)).toEqual([{
-    id: 'terralego-foo-6',
-    paint: { 'line-color': 'red', 'line-width': 3 },
-    source: '6',
-    'source-layer': 'foo',
-    type: 'line',
-  }, {
-    id: 'terralego-bar-7',
-    paint: { 'line-color': 'blue', 'line-width': 3 },
-    source: '7',
-    'source-layer': 'bar',
-    type: 'line',
-  }, {
-    id: 'terralego-foo_foo-8',
-    paint: { 'line-color': 'yellow', 'line-width': 3 },
-    source: '8',
-    'source-layer': 'foo_foo',
-    type: 'line',
-  }, {
-    id: 'terralego-bar_bar-9',
-    paint: { 'line-color': 'green', 'line-width': 3 },
-    source: '9',
-    'source-layer': 'bar_bar',
-    type: 'line',
-  }, {
-    id: 'terralego-bar_foo_polygon-11',
-    paint: { 'fill-color': '#000' },
-    source: '11',
-    'source-layer': 'bar_foo_polygon',
-    type: 'fill',
-  }, {
-    id: 'terralego-bar_foo_line-12',
-    paint: { 'line-color': '#000', 'line-width': 3 },
-    source: '12',
-    'source-layer': 'bar_foo_line',
-    type: 'line',
-  }, {
-    id: 'terralego-bar_foo_point-12',
-    paint: { 'circle-color': '#000', 'circle-radius': 8 },
-    source: '12',
-    'source-layer': 'bar_foo_point',
-    type: 'circle',
-  }]);
+  expect(getLayersPaints(settings)).toEqual([
+    {
+      id: 'CRUD-foo-6',
+      'source-layer': 'foo',
+      source: '6',
+      main: true,
+      type: 'line',
+      paint: { 'line-color': 'red', 'line-width': 3 },
+    }, {
+      id: 'CRUD-bar-7',
+      'source-layer': 'bar',
+      source: '7',
+      main: true,
+      type: 'line',
+      paint: { 'line-color': 'blue', 'line-width': 3 },
+    }, {
+      id: 'CRUD-foo_foo-8',
+      'source-layer': 'foo_foo',
+      source: '8',
+      main: true,
+      type: 'line',
+      paint: { 'line-color': 'yellow', 'line-width': 3 },
+    }, {
+      id: 'CRUD-bar_bar-9',
+      'source-layer': 'bar_bar',
+      source: '9',
+      main: true,
+      type: 'line',
+      paint: { 'line-color': 'green', 'line-width': 3 },
+    },
+    {
+      id: 'CRUD-bar_bar-10',
+      'source-layer': 'bar_bar',
+      source: '10',
+      main: true,
+      type: 'line',
+      paint: { 'line-color': 'green', 'line-width': 3 },
+    }, {
+      id: 'CRUD-bar_foo_polygon-11',
+      'source-layer': 'bar_foo_polygon',
+      source: '11',
+      main: true,
+      type: 'fill',
+      paint: { 'fill-color': 'green' },
+    },
+    {
+      id: 'CRUD-bar_foo_line-12',
+      'source-layer': 'bar_foo_line',
+      source: '12',
+      main: true,
+      type: 'line',
+      paint: { 'line-color': 'green', 'line-width': 3 },
+    }, {
+      id: 'CRUD-bar_foo_line-12',
+      'source-layer': 'bar_foo_line',
+      source: '12',
+      main: true,
+      type: 'circle',
+      paint: { 'circle-color': 'green', 'circle-radius': 6 },
+    },
+  ]);
 });
 
 it('should not get layer paints', () => {

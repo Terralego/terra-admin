@@ -349,7 +349,6 @@ fit('should generate layers and display current layer when settings are updated'
   instance.displayCurrentLayer = jest.fn();
   instance.componentDidUpdate({ ...nextProps }, {});
   expect(instance.generateLayersToMap).toHaveBeenCalled();
-  expect(instance.displayCurrentLayer).toHaveBeenCalled();
 });
 
 it('should set fit bounds', () => {

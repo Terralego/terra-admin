@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { addNodeUnderParent, removeNodeAtPath } from 'react-sortable-tree';
+import {
+  addNodeUnderParent,
+  removeNodeAtPath,
+  changeNodeAtPath,
+} from 'react-sortable-tree';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import Button from '@material-ui/core/Button';
@@ -11,6 +15,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Modal from '@material-ui/core/Modal';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 /* eslint-enable */
+
+import GeolayerSelect from './GeolayerSelect';
 
 const style = {
   modal: {
@@ -24,7 +30,7 @@ const style = {
   },
 };
 
-const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
+const NodeMenuButton = ({ treeData, setTreeData, path, isGroup, node }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -59,6 +65,19 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
     }));
   };
 
+  const editItem = newProperties => {
+    closeMenu();
+    setTreeData(changeNodeAtPath({
+      treeData,
+      path,
+      getNodeKey: ({ treeIndex }) => treeIndex,
+      newNode: {
+        ...node,
+        ...newProperties,
+      },
+    }));
+  };
+
   const newSubGroup = newSubItem({ title: 'New group', group: true });
   const newSubLayer = newSubItem({ title: 'New layer' });
 
@@ -71,6 +90,16 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
           {isGroup && <Button onClick={newSubLayer}>Ajouter une couche</Button>}
           {isGroup && <Button onClick={newSubGroup}>Ajouter un groupe</Button>}
           <Button onClick={deleteItem}>Supprimer</Button>
+
+          {!isGroup && (
+            <div>
+              <GeolayerSelect
+                value={node.geolayer || ''}
+                onChange={editItem}
+              />
+            </div>
+          )}
+
         </div>
       </Modal>
 

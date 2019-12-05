@@ -18,7 +18,7 @@ const NodeTitle = ({ treeData, setTreeData, path, node }) => {
       newNode: { ...node, title },
     }));
 
-  return <TextField onChange={handleChange} value={node.title} disabled={!node.group} />;
+  return <TextField onChange={handleChange} value={node.title} />;
 };
 
 export default NodeTitle;

@@ -100,13 +100,13 @@ export class Map extends React.Component {
 
     if (Object.keys(settings).length > 0) {
       this.setMapConfig();
-      this.setInteractions();
     } else {
       getSettings(settingsEndpoint);
     }
 
     if (Object.keys(map).length > 0 && layer) {
       this.generateLayersToMap();
+      this.setInteractions();
     }
   }
 
@@ -179,7 +179,11 @@ export class Map extends React.Component {
       settings,
     } = this.props;
 
-    const { layer: { id } } = getView(settings, layer);
+    const { layer: { id } = {} } = getView(settings, layer);
+
+    if (!id) {
+      return;
+    }
 
     const layers = getLayersPaints(settings);
 

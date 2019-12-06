@@ -61,12 +61,12 @@ export const getLayersPaints = ({ menu = [] }) =>
     },
   ) => ([
     ...layersList,
-    ...mapLayers.map(({ id_layer_vt: name, style, main }) => ({
+    ...mapLayers.map(({ id_layer_vt: name, style, ...props }) => ({
       id: `CRUD-${name}-${id}`,
       'source-layer': name,
       source: `${id}`,
-      main,
       ...style,
+      ...props,
     })),
   ]), []);
 

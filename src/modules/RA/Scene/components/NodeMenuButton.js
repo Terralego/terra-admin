@@ -87,6 +87,7 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
 
       <Menu anchorEl={anchorEl} onClose={closeMenu} open={!!anchorEl}>
         {isGroup && <MenuItem onClick={openNewLayer}>Ajouter une couche</MenuItem>}
+        {isGroup && <MenuItem onClick={newSubItem({ title: 'Groupe', group: true })}>Ajouter un sous-groupe</MenuItem>}
         {/* {isGroup && <MenuItem onClick={openModal}>Modifier</MenuItem>} */}
         <MenuItem onClick={deleteItem}>Supprimer</MenuItem>
       </Menu>

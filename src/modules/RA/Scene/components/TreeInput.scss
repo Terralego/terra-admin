@@ -1,0 +1,18 @@
+.rst__rowWrapper {
+  padding: .25em .25em .25em 0;
+}
+
+.treeGroup {
+  .rst__rowContents {
+    background-color: rgba(black, .1);
+  }
+
+  .rst__moveHandle {
+    background-image: url(../assets/FolderOpen.svg);
+    background-color: white;
+    background-size: 1.5em;
+    &:hover {
+      background-color: #f3f3f3;
+    }
+  }
+}

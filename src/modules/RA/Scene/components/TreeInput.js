@@ -1,5 +1,5 @@
 import React from 'react';
-
+import classnames from 'classnames';
 import SortableTree from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 
@@ -11,6 +11,9 @@ import Button from '@material-ui/core/Button';
 
 import NodeMenuButton from './NodeMenuButton';
 import NodeTitle from './NodeTitle';
+
+import './TreeInput.scss';
+
 
 const treeInputStyle = {
   minWidth: '35em',
@@ -33,10 +36,7 @@ const generateNodeProps = (treeData, setTreeData) =>
 
     return {
       title: <NodeTitle {...menuProps} />,
-      style: {
-        border: '1px solid',
-        borderColor: isGroup ? 'green' : 'transparent',
-      },
+      className: classnames({ treeGroup: isGroup }),
       buttons: [<NodeMenuButton {...menuProps} />],
     };
   };
@@ -57,7 +57,7 @@ const TreeInput = ({ input: { value, onChange }, source, ...props }) => {
             canNodeHaveChildren={canNodeHaveChildren}
             generateNodeProps={generateNodeProps(value, onChange)}
             style={{ minHeight: 400 }}
-            rowHeight={({ node: { group } }) => (group ? 84 : 62)}
+            rowHeight={52}
           />
 
           <div>

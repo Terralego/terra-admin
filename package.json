@@ -63,5 +63,10 @@
     "enzyme-adapter-react-16": "~1.14.0",
     "eslint-config-makina": "~1.0.1",
     "http-proxy-middleware": "^0.19.1"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\](?!dnd-core|react-dnd).+\\.(js|jsx|ts|tsx)$"
+    ]
   }
 }

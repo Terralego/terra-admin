@@ -13,32 +13,49 @@ import { generateURI } from '../../../config';
 
 const nav = [
   { section: 'default', text: 'CRUD.details.menu.default', icon: 'list-detail-view' },
-  { section: 'attachmentFiles', text: 'CRUD.details.menu.attachmentFiles', icon: 'paperclip' },
-  { section: 'attachmentImages', text: 'CRUD.details.menu.attachmentImages', icon: 'media' },
+  { section: 'attachmentFiles', text: 'CRUD.details.menu.attachmentFiles', icon: 'paperclip', disabled: true },
+  { section: 'attachmentImages', text: 'CRUD.details.menu.attachmentImages', icon: 'media', disabled: true },
 ];
+
+const MenuItem = ({
+  children,
+  section,
+  disabled,
+  params: { layer, id, action = 'read' },
+}) => {
+  if (!disabled) {
+    return (
+      <NavLink
+        key={section}
+        to={generateURI('layer', { layer, id, action, section })}
+      >
+        {children}
+      </NavLink>
+    );
+  }
+  return children;
+};
 
 const Menu = ({
   section,
-  match: { params: { layer, id, action = 'read' } },
+  match: { params },
   t,
 }) => (
   <Navbar className="details__menu">
     <NavbarGroup>
-      {nav.map(({ text, icon, section: itemSection }) => (
-        <NavLink
-          key={itemSection}
-          to={generateURI('layer', { layer, id, action, section: itemSection })}
-        >
-          <span className={classnames(
-            Classes.BUTTON,
-            Classes.MINIMAL,
-            { [Classes.ACTIVE]: itemSection === section },
-          )}
+      {nav.map(({ icon, text, ...props }) => (
+        <MenuItem params={params} {...props}>
+          <span className={classnames({
+            [Classes.BUTTON]: true,
+            [Classes.MINIMAL]: true,
+            [Classes.DISABLED]: props.disabled,
+            [Classes.ACTIVE]: props.section === section,
+          })}
           >
             {icon && <Icon icon={icon} />}
             <span className="bp3-button-text"> {t(text)}</span>
           </span>
-        </NavLink>
+        </MenuItem>
       ))}
     </NavbarGroup>
   </Navbar>

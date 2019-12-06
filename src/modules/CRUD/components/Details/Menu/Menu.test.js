@@ -15,6 +15,7 @@ jest.mock('@blueprintjs/core', () => ({
     BUTTON: 'btn',
     MINIMAL: 'minimal',
     ACTIVE: 'active',
+    DISABLED: 'disabled',
   },
 }));
 

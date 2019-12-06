@@ -14,6 +14,7 @@ class DataTable extends React.Component {
     data: [],
     columns: [],
     loading: true,
+    layer: undefined,
     initialSort: {
       columnIndex: 0,
       order: 'asc',
@@ -50,7 +51,7 @@ class DataTable extends React.Component {
   }
 
   setData = () => {
-    const { featuresList = [] } = this.props;
+    const { featuresList = [], layerName: layer } = this.props;
     const { featureListProperties } = this.getView();
 
     const columns = Object.keys(featureListProperties).map(value => {
@@ -72,6 +73,7 @@ class DataTable extends React.Component {
       : (current.offsetWidth - 50) / displayedColumns.length;
 
     this.setState({
+      layer,
       columns,
       data,
       loading: false,
@@ -92,7 +94,6 @@ class DataTable extends React.Component {
 
   render () {
     const {
-      layerName,
       t,
       tableSize,
       featuresList = [],
@@ -101,7 +102,7 @@ class DataTable extends React.Component {
 
     const { layer: { name } = {}, name: displayName = name } = this.getView();
 
-    const { data, columns, loading, initialSort, columnWidths } = this.state;
+    const { data, columns, loading, initialSort, columnWidths, layer } = this.state;
 
     return (
       <div className="table-container" ref={this.tableRef}>
@@ -130,7 +131,7 @@ class DataTable extends React.Component {
               renderCell={props => (
                 <CellRender
                   featuresList={featuresList}
-                  layer={layerName}
+                  layer={layer}
                   onHoverCell={onHoverCell}
                   {...props}
                 />

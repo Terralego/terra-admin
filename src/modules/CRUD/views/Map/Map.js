@@ -179,23 +179,34 @@ export class Map extends React.Component {
       settings,
     } = this.props;
 
-    if (!displayViewFeature) {
-      return;
-    }
+    const { layer: { id } } = getView(settings, layer);
 
     const layers = getLayersPaints(settings);
 
     const interactions = layers.map(interaction => {
-      if (interaction['source-layer'] !== layer || !interaction.main) {
+      if (interaction.source !== `${id}`) {
         return false;
       }
       return {
         ...interaction,
         interaction: INTERACTION_FN,
         fn: ({
+          feature,
           feature: { sourceLayer, properties: { _id: propId } },
+          event,
+          instance: { displayTooltip }, layerId,
         }) => {
-          push(generateURI('layer', { layer: sourceLayer, id: propId }));
+          displayTooltip({
+            layerId,
+            feature,
+            event,
+            template: `{% if name %}{{name}}{% else %}${interaction.title}{% endif %}`,
+            fixed: false,
+            unique: true,
+          });
+          if (interaction.main && displayViewFeature) {
+            push(generateURI('layer', { layer: sourceLayer, id: propId }));
+          }
         },
       };
     }).filter(Boolean);
@@ -271,10 +282,11 @@ export class Map extends React.Component {
     map.resize();
   }
 
-  interactiveMapInit = ({ addHighlight, removeHighlight }) => {
+  interactiveMapInit = ({ addHighlight, removeHighlight, popups }) => {
     this.setState({
       addHighlight,
       removeHighlight,
+      popups,
     });
   }
 
@@ -342,6 +354,12 @@ export class Map extends React.Component {
     }
   }
 
+  hideAllTooltip = () => {
+    const { popups } = this.state;
+    popups.forEach(({ popup }) => popup.remove());
+    popups.clear();
+  }
+
   generateLayersToMap () {
     const {
       map,
@@ -387,6 +405,7 @@ export class Map extends React.Component {
         },
       };
     }, () => {
+      this.hideAllTooltip();
       this.displayCurrentLayer();
     });
   }

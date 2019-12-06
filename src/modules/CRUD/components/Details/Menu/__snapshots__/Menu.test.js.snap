@@ -18,36 +18,32 @@ exports[`should render correctly 1`] = `
         </span>
       </span>
     </a>
-    <a>
+    <span
+      className="btn minimal disabled"
+    >
+      <div>
+        paperclip
+      </div>
       <span
-        className="btn minimal"
+        className="bp3-button-text"
       >
-        <div>
-          paperclip
-        </div>
-        <span
-          className="bp3-button-text"
-        >
-           
-          CRUD.details.menu.attachmentFiles
-        </span>
+         
+        CRUD.details.menu.attachmentFiles
       </span>
-    </a>
-    <a>
+    </span>
+    <span
+      className="btn minimal disabled"
+    >
+      <div>
+        media
+      </div>
       <span
-        className="btn minimal"
+        className="bp3-button-text"
       >
-        <div>
-          media
-        </div>
-        <span
-          className="bp3-button-text"
-        >
-           
-          CRUD.details.menu.attachmentImages
-        </span>
+         
+        CRUD.details.menu.attachmentImages
       </span>
-    </a>
+    </span>
   </div>
 </div>
 `;

@@ -44,7 +44,7 @@ const Menu = ({
   <Navbar className="details__menu">
     <NavbarGroup>
       {nav.map(({ icon, text, ...props }) => (
-        <MenuItem params={params} {...props}>
+        <MenuItem key={props.section} params={params} {...props}>
           <span className={classnames({
             [Classes.BUTTON]: true,
             [Classes.MINIMAL]: true,

@@ -183,11 +183,13 @@ class Edit extends React.Component {
     }
 
     if (prevFeatureError !== featureError) {
-      const { error: { data } } = featureError;
+      const { error: { data: errors = {} } = {} } = featureError || {};
       toast.displayError(
         <div>
           {t(this.isActionUpdate() ? 'CRUD.details.failUpdateFeature' : 'CRUD.details.failCreateFeature')}
-          {Object.keys(data).map(item => <p key={item}>{item}: {data[item]}</p>)}
+          {Object.entries(errors).map((([errorKey, errorValue]) =>
+            <p key={errorKey}>{errorKey}: {errorValue}</p>
+          ))}
         </div>,
       );
     }

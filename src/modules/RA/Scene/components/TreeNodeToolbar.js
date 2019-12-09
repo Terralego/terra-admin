@@ -35,9 +35,9 @@ const style = {
   },
 };
 
-const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
+const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [newLayer, setNewLayer] = React.useState(false);
+  const [displayLayerModal, setDisplayLayerModal] = React.useState(false);
   const [newLayerProps, setNewLayerProps] = React.useState({});
 
   const handleClick = ({ currentTarget }) => setAnchorEl(currentTarget);
@@ -63,12 +63,12 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
     }));
   };
 
-  const openNewLayer = () => {
+  const openNewLayerModal = () => {
     closeMenu();
-    setNewLayer(true);
+    setDisplayLayerModal(true);
   };
 
-  const closeNewLayer = (doCreate = false) => () => {
+  const closeNewLayerModal = (doCreate = false) => () => {
     if (doCreate && newLayerProps.geolayer) {
       newSubItem(newLayerProps)();
     }
@@ -76,7 +76,7 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
     /**
      * Close modal
      */
-    setNewLayer(false);
+    setDisplayLayerModal(false);
 
     /**
      * Reset stored properties
@@ -86,26 +86,26 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
 
   return (
     <>
-      {isGroup && <IconButton onClick={openNewLayer}><AddIcon /></IconButton>}
+      {isGroup && <IconButton onClick={openNewLayerModal}><AddIcon /></IconButton>}
       {isGroup && <IconButton onClick={handleClick}><MoreVertIcon /></IconButton>}
       {!isGroup && <IconButton onClick={deleteItem}><DeleteIcon /></IconButton>}
 
       <Menu anchorEl={anchorEl} onClose={closeMenu} open={!!anchorEl}>
-        {isGroup && <MenuItem onClick={openNewLayer}>Ajouter une couche</MenuItem>}
+        {isGroup && <MenuItem onClick={openNewLayerModal}>Ajouter une couche</MenuItem>}
         {isGroup && <MenuItem onClick={newSubItem({ title: 'Groupe', group: true })}>Ajouter un sous-groupe</MenuItem>}
         {/* {isGroup && <MenuItem onClick={openModal}>Modifier</MenuItem>} */}
         <MenuItem onClick={deleteItem}>Supprimer</MenuItem>
       </Menu>
 
-      <Modal open={newLayer} onClose={closeNewLayer()}>
+      <Modal open={displayLayerModal} onClose={closeNewLayerModal()}>
         <div style={style.modal}>
           <div>
             <GeolayerSelect value={newLayerProps.geolayer || ''} onChange={setNewLayerProps} fullWidth />
           </div>
 
           <div style={style.modalButtons}>
-            <Button variant="outlined" color="primary" onClick={closeNewLayer(true)}>Valider</Button>
-            <Button variant="outlined" color="secondary" onClick={closeNewLayer(false)}>Annuler</Button>
+            <Button variant="outlined" color="primary" onClick={closeNewLayerModal(true)}>Valider</Button>
+            <Button variant="outlined" color="secondary" onClick={closeNewLayerModal(false)}>Annuler</Button>
           </div>
         </div>
       </Modal>
@@ -113,4 +113,4 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
   );
 };
 
-export default NodeMenuButton;
+export default TreeNodeToolbar;

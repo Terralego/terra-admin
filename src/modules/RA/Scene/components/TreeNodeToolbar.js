@@ -46,7 +46,7 @@ const style = {
   },
 };
 
-const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup, node }) => {
+const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup, node, includeIds }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [displayLayerModal, setDisplayLayerModal] = React.useState(false);
   const [displaySettingsModal, setDisplaySettingsModal] = React.useState(false);
@@ -170,6 +170,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup, node }) => {
               value={newLayerProps.geolayer || ''}
               onChange={setNewLayerProps}
               excludeIds={excludeIds}
+              includeIds={includeIds}
               fullWidth
             />
           </div>

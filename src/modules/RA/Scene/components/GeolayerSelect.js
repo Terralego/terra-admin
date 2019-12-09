@@ -67,7 +67,7 @@ const GeolayerSelect = ({ dataProvider, onChange, ...props }) => {
   }
 
   return (
-    <FormControl>
+    <FormControl fullWidth>
       <InputLabel htmlFor="geolayer">Couche</InputLabel>
       <Select onChange={handleChoice} {...sanitizeRestProps(props)} name="geolayer">
         {geolayers.map(({ id, name }) => (

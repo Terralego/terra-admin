@@ -17,7 +17,7 @@ const sanitizeRestProps = ({
 }) => rest;
 
 const GeolayerSelect = ({ dataProvider, onChange, ...props }) => {
-  const [geolayers, setGeolayers] = React.useState([]);
+  const [geolayers, setGeolayers] = React.useState(null);
 
   const handleChoice = ({ target: { value } }) =>
     onChange({
@@ -48,7 +48,9 @@ const GeolayerSelect = ({ dataProvider, onChange, ...props }) => {
       /**
        * Store geolayers into state with only name & id props
        */
-      setGeolayers(data.map(({ name, id }) => ({ name, id })));
+      setGeolayers(data
+        .filter(({ group }) => !group)
+        .map(({ name, id }) => ({ name, id })));
     };
 
     getGeolayers();
@@ -62,8 +64,16 @@ const GeolayerSelect = ({ dataProvider, onChange, ...props }) => {
   /**
    * Display progress bar until we have geolayers
    */
-  if (!geolayers.length) {
+  if (!geolayers) {
     return <LinearProgress />;
+  }
+
+  if (!geolayers.length) {
+    return (
+      <div>
+        Toutes les couches existantes sont déjà associées.
+      </div>
+    );
   }
 
   return (

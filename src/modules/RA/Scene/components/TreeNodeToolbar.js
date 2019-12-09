@@ -4,6 +4,7 @@ import {
   addNodeUnderParent,
   removeNodeAtPath,
   changeNodeAtPath,
+  getFlatDataFromTree,
 } from 'react-sortable-tree';
 
 /* eslint-disable import/no-extraneous-dependencies */
@@ -138,6 +139,17 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup, node }) => {
     ? groupNewSettings.exclusive
     : node.exclusive;
 
+  const flatNodes = getFlatDataFromTree({
+    treeData,
+    ignoreCollapsed: false,
+    getNodeKey: ({ treeIndex }) => treeIndex,
+  });
+
+  const excludeIds = Array.from(flatNodes.reduce(
+    (set, { node: { geolayer } = {} }) => set.add(geolayer),
+    new Set(),
+  )).filter(Boolean);
+
   return (
     <>
       {isGroup && <IconButton onClick={openNewLayerModal}><AddIcon /></IconButton>}
@@ -154,7 +166,12 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup, node }) => {
       <Modal open={displayLayerModal} onClose={closeNewLayerModal()}>
         <div style={style.modal}>
           <div>
-            <GeolayerSelect value={newLayerProps.geolayer || ''} onChange={setNewLayerProps} fullWidth />
+            <GeolayerSelect
+              value={newLayerProps.geolayer || ''}
+              onChange={setNewLayerProps}
+              excludeIds={excludeIds}
+              fullWidth
+            />
           </div>
 
           <div style={style.modalButtons}>

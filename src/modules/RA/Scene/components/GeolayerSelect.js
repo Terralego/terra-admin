@@ -16,7 +16,7 @@ const sanitizeRestProps = ({
   ...rest
 }) => rest;
 
-const GeolayerSelect = ({ dataProvider, onChange, ...props }) => {
+const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], ...props }) => {
   const [geolayers, setGeolayers] = React.useState(null);
 
   const handleChoice = ({ target: { value } }) =>
@@ -49,7 +49,10 @@ const GeolayerSelect = ({ dataProvider, onChange, ...props }) => {
        * Store geolayers into state with only name & id props
        */
       setGeolayers(data
+        // Exclude layers already owned by a group
         .filter(({ group }) => !group)
+        // Exclude layers already in current tree
+        .filter(({ id }) => !excludeIds.includes(id))
         .map(({ name, id }) => ({ name, id })));
     };
 
@@ -59,7 +62,7 @@ const GeolayerSelect = ({ dataProvider, onChange, ...props }) => {
      * Cleanup function
      */
     return () => { mounted = false; };
-  }, [dataProvider]);
+  }, [dataProvider, excludeIds]);
 
   /**
    * Display progress bar until we have geolayers

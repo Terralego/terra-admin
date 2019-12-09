@@ -28,6 +28,11 @@ const style = {
     backgroundColor: 'white',
     padding: '1em',
   },
+  modalButtons: {
+    marginTop: '1em',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 };
 
 const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
@@ -98,8 +103,10 @@ const NodeMenuButton = ({ treeData, setTreeData, path, isGroup }) => {
             <GeolayerSelect value={newLayerProps.geolayer || ''} onChange={setNewLayerProps} fullWidth />
           </div>
 
-          <Button variant="outlined" color="primary" onClick={closeNewLayer(true)}>Valider</Button>
-          <Button variant="outlined" color="secondary" onClick={closeNewLayer(false)}>Annuler</Button>
+          <div style={style.modalButtons}>
+            <Button variant="outlined" color="primary" onClick={closeNewLayer(true)}>Valider</Button>
+            <Button variant="outlined" color="secondary" onClick={closeNewLayer(false)}>Annuler</Button>
+          </div>
         </div>
       </Modal>
     </>

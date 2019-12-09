@@ -3,11 +3,11 @@ import {
   List, Datagrid,
   FunctionField,
   TextField,
-  // TextInput,
+  TextInput,
   EditButton,
-  // ReferenceInput,
-  // SelectInput,
-  // Filter,
+  ReferenceInput,
+  SelectInput,
+  Filter,
   ReferenceField,
   BooleanField,
 } from 'react-admin';
@@ -19,19 +19,19 @@ import {
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
-// const ListFilters = props => (
-//   <Filter {...props}>
-//     <TextInput label="ra.action.search" source="q" alwaysOn />
+const ListFilters = props => (
+  <Filter {...props}>
+    <TextInput label="ra.action.search" source="search" alwaysOn />
 
-//     <ReferenceInput
-//       source="source"
-//       reference={RES_DATASOURCE}
-//       label="datalayer.form.data-source"
-//     >
-//       <SelectInput />
-//     </ReferenceInput>
-//   </Filter>
-// );
+    <ReferenceInput
+      source="source"
+      reference={RES_DATASOURCE}
+      label="datalayer.form.data-source"
+    >
+      <SelectInput />
+    </ReferenceInput>
+  </Filter>
+);
 
 export const DataLayerList = ({ viewList, ...props }) => (
   <List
@@ -40,7 +40,7 @@ export const DataLayerList = ({ viewList, ...props }) => (
       order: 'ASC',
     }}
     exporter={false}
-  // filters={<ListFilters />}
+    filters={<ListFilters />}
     bulkActionButtons={<CommonBulkActionButtons />}
     {...props}
   >

@@ -9,8 +9,8 @@ import { addField, Labeled } from 'react-admin';
 import Button from '@material-ui/core/Button';
 /* eslint-enable */
 
-import NodeMenuButton from './NodeMenuButton';
-import NodeTitle from './NodeTitle';
+import TreeNodeToolbar from './TreeNodeToolbar';
+import TreeNodeTitleInput from './TreeNodeTitleInput';
 
 import './TreeInput.scss';
 
@@ -35,9 +35,9 @@ const generateNodeProps = (treeData, setTreeData) =>
     const menuProps = { treeData, setTreeData, path, isGroup, node };
 
     return {
-      title: <NodeTitle {...menuProps} />,
+      title: <TreeNodeTitleInput {...menuProps} />,
       className: classnames({ treeGroup: isGroup }),
-      buttons: [<NodeMenuButton {...menuProps} />],
+      buttons: [<TreeNodeToolbar {...menuProps} />],
     };
   };
 

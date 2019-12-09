@@ -18,6 +18,11 @@ const NodeTitle = ({ treeData, setTreeData, path, node }) => {
       newNode: { ...node, title },
     }));
 
+  /* Only groups have editable labels */
+  if (!node.group) {
+    return node.title;
+  }
+
   return <TextField onChange={handleChange} value={node.title} />;
 };
 

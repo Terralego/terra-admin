@@ -158,7 +158,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup, node, includeId
 
       <Menu anchorEl={anchorEl} onClose={closeMenu} open={!!anchorEl}>
         {isGroup && <MenuItem onClick={openNewLayerModal}>Ajouter une couche</MenuItem>}
-        {isGroup && <MenuItem onClick={newSubItem({ title: 'Groupe', group: true })}>Ajouter un sous-groupe</MenuItem>}
+        {isGroup && <MenuItem onClick={newSubItem({ label: 'Groupe', group: true })}>Ajouter un sous-groupe</MenuItem>}
         {isGroup && <MenuItem onClick={openSettingsModal}>Paramètres</MenuItem>}
         <MenuItem onClick={deleteItem}>Supprimer</MenuItem>
       </Menu>

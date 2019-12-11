@@ -22,7 +22,7 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
   const handleChoice = ({ target: { value } }) =>
     onChange({
       geolayer: value,
-      title: geolayers.find(({ id }) => (value === id)).name,
+      label: geolayers.find(({ id }) => (value === id)).name,
     });
 
   React.useEffect(() => {

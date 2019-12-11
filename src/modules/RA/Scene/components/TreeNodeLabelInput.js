@@ -6,24 +6,24 @@ import { changeNodeAtPath } from 'react-sortable-tree';
 import TextField from '@material-ui/core/TextField';
 /* eslint-enable */
 
-const NodeTitle = ({ treeData, setTreeData, path, node }) => {
+const NodeLabel = ({ treeData, setTreeData, path, node }) => {
   /**
    * Change current node label in treeData
    */
-  const handleChange = ({ target: { value: title } }) =>
+  const handleChange = ({ target: { value: label } }) =>
     setTreeData(changeNodeAtPath({
       treeData,
       path,
       getNodeKey: ({ treeIndex }) => treeIndex,
-      newNode: { ...node, title },
+      newNode: { ...node, label },
     }));
 
   /* Only groups have editable labels */
   if (!node.group) {
-    return node.title;
+    return node.label;
   }
 
-  return <TextField onChange={handleChange} value={node.title} />;
+  return <TextField onChange={handleChange} value={node.label} />;
 };
 
-export default NodeTitle;
+export default NodeLabel;

@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 /* eslint-enable */
 
 import TreeNodeToolbar from './TreeNodeToolbar';
-import TreeNodeTitleInput from './TreeNodeTitleInput';
+import TreeNodeLabelInput from './TreeNodeLabelInput';
 
 import './TreeInput.scss';
 
@@ -35,7 +35,7 @@ const generateNodeProps = (treeData, setTreeData, includeIds) =>
     const menuProps = { treeData, setTreeData, path, isGroup, node, includeIds };
 
     return {
-      title: <TreeNodeTitleInput {...menuProps} />,
+      title: <TreeNodeLabelInput {...menuProps} />,
       className: classnames({ treeGroup: isGroup }),
       buttons: [<TreeNodeToolbar {...menuProps} />],
     };
@@ -79,7 +79,7 @@ const TreeInput = ({ input: { value, onChange }, source, ...props }) => {
 
   const addGroup = () => onChange([
     ...value,
-    { title: 'New group name', group: true },
+    { label: 'New group name', group: true },
   ]);
 
   return (

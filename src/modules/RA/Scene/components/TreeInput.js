@@ -54,7 +54,7 @@ const getLayerIdsFromTree = treeData => {
   )).filter(Boolean);
 };
 
-const TreeInput = ({ input: { value, onChange }, source, ...props }) => {
+const TreeInput = ({ input: { value, onChange }, ...props }) => {
   const [initialIdList, setInitialIdList] = React.useState();
   const [currentIdList, setCurrentIdList] = React.useState();
   const [removedIdList, setRemovedIdList] = React.useState();
@@ -83,7 +83,7 @@ const TreeInput = ({ input: { value, onChange }, source, ...props }) => {
   ]);
 
   return (
-    <Labeled label={source} {...props}>
+    <Labeled {...props}>
       <>
         <div style={treeInputStyle}>
           <SortableTree

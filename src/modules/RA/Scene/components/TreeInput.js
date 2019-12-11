@@ -14,12 +14,6 @@ import TreeNodeLabelInput from './TreeNodeLabelInput';
 
 import './TreeInput.scss';
 
-
-const treeInputStyle = {
-  minWidth: '35em',
-  minHeight: 400,
-};
-
 /**
  * Determine if node can have children or not
  * Currently, return true only if node have `group === true` property
@@ -85,7 +79,7 @@ const TreeInput = ({ input: { value, onChange }, ...props }) => {
   return (
     <Labeled {...props}>
       <>
-        <div style={treeInputStyle}>
+        <div className="rst__customWrapper">
           <SortableTree
             treeData={value}
             onChange={onChange}

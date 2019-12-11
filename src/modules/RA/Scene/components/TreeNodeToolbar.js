@@ -46,7 +46,7 @@ const style = {
   },
 };
 
-const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup, node, includeIds }) => {
+const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [displayLayerModal, setDisplayLayerModal] = React.useState(false);
   const [displaySettingsModal, setDisplaySettingsModal] = React.useState(false);
@@ -56,6 +56,8 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, isGroup, node, includeId
 
   const handleClick = ({ currentTarget }) => setAnchorEl(currentTarget);
   const closeMenu = () => setAnchorEl(null);
+
+  const isGroup = !!node.group;
 
   const newSubItem = newNode => () => {
     closeMenu();

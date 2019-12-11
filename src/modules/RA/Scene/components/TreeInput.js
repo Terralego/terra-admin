@@ -25,12 +25,12 @@ import './TreeInput.scss';
 const canNodeHaveChildren = ({ group = false }) => group;
 
 const generateNodeProps = (treeData, setTreeData, includeIds) =>
-  ({ node, node: { group: isGroup }, path }) => {
-    const menuProps = { treeData, setTreeData, path, isGroup, node, includeIds };
+  ({ node, path }) => {
+    const menuProps = { treeData, setTreeData, path, node, includeIds };
 
     return {
       title: <TreeNodeLabelInput {...menuProps} />,
-      className: classnames({ treeGroup: isGroup }),
+      className: classnames({ treeGroup: node.group }),
       buttons: [<TreeNodeToolbar {...menuProps} />],
     };
   };

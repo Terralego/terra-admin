@@ -60,7 +60,7 @@ export const DataLayerList = ({ viewList, ...props }) => (
           );
         }}
       />
-      <ReferenceField source="view" reference={RES_VIEW} label="datalayer.form.view" sortBy="group__view">
+      <ReferenceField source="view" reference={RES_VIEW} label="datalayer.form.view" sortBy="group__view__name">
         <TextField source="name" />
       </ReferenceField>
       <ReferenceField source="source" reference={RES_DATASOURCE} label="datalayer.form.data-source">

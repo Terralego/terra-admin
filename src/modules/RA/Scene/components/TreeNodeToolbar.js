@@ -46,6 +46,9 @@ const style = {
   },
 };
 
+/**
+ * <TreeNodeToolbar /> component
+ */
 const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [displayLayerModal, setDisplayLayerModal] = React.useState(false);
@@ -59,6 +62,9 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
 
   const isGroup = !!node.group;
 
+  /**
+   * Create a new node as child of current node
+   */
   const newSubItem = newNode => () => {
     closeMenu();
     setTreeData(addNodeUnderParent({
@@ -70,6 +76,9 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     }).treeData);
   };
 
+  /**
+   * Delete current node
+   */
   const deleteItem = () => {
     closeMenu();
     setTreeData(removeNodeAtPath({
@@ -79,6 +88,9 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     }));
   };
 
+  /**
+   * Edit current node by merging newProps with existing properties
+   */
   const editItem = newProps => {
     closeMenu();
     setTreeData(changeNodeAtPath({
@@ -93,47 +105,45 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
   };
 
   /**
-   * Actions for new layer modal
+   * Open modal for new layer node creation
    */
-
   const openNewLayerModal = () => {
     closeMenu();
     setDisplayLayerModal(true);
   };
 
+  /**
+   * Close modal for new layer node creation
+   */
   const closeNewLayerModal = (doCreate = false) => () => {
     if (doCreate && newLayerProps.geolayer) {
       newSubItem(newLayerProps)();
     }
 
-    /**
-     * Close modal
-     */
+    /* Close modal */
     setDisplayLayerModal(false);
 
-    /**
-     * Reset stored properties
-     */
+    /* Reset stored properties */
     setNewLayerProps({});
   };
 
   /**
-   * Actions for group settings modal
+   * Open modal for group settings
    */
-
   const openSettingsModal = () => {
     closeMenu();
     setDisplaySettingsModal(true);
   };
 
+  /**
+   * Close modal for group settings
+   */
   const closeSettingsModal = (doSave = false) => () => {
     if (doSave) {
       editItem(groupNewSettings);
     }
 
-    /**
-     * Close modal
-     */
+    /* Close modal */
     setDisplaySettingsModal(false);
   };
 
@@ -141,12 +151,18 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     ? groupNewSettings.exclusive
     : node.exclusive;
 
+  /**
+   * Array of all nodes in treeData
+   */
   const flatNodes = getFlatDataFromTree({
     treeData,
     ignoreCollapsed: false,
     getNodeKey: ({ treeIndex }) => treeIndex,
   });
 
+  /**
+   * Array of all geolayer ids in treeData
+   */
   const excludeIds = Array.from(flatNodes.reduce(
     (set, { node: { geolayer } = {} }) => set.add(geolayer),
     new Set(),

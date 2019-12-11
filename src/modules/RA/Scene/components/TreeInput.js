@@ -24,6 +24,9 @@ import './TreeInput.scss';
  */
 const canNodeHaveChildren = ({ group = false }) => group;
 
+/**
+ * Function generating object used by react-sortable-tree to draw tree nodes
+ */
 const generateNodeProps = (treeData, setTreeData, includeIds) =>
   ({ node, path }) => {
     const menuProps = { treeData, setTreeData, path, node, includeIds };
@@ -35,6 +38,9 @@ const generateNodeProps = (treeData, setTreeData, includeIds) =>
     };
   };
 
+/**
+ * Return an array of layer ids in given treeData
+ */
 const getLayerIdsFromTree = treeData => {
   const flatNodes = getFlatDataFromTree({
     treeData,
@@ -48,9 +54,17 @@ const getLayerIdsFromTree = treeData => {
   )).filter(Boolean);
 };
 
+/**
+ * <TreeInput /> component
+ */
 const TreeInput = ({ input: { value, onChange }, ...props }) => {
+  /* Array of geolayer ids in tree before any user modification */
   const [initialIdList, setInitialIdList] = React.useState();
+
+  /* Array of geolayer ids currently in tree */
   const [currentIdList, setCurrentIdList] = React.useState();
+
+  /* Array of geolayer ids that have been removed from tree */
   const [removedIdList, setRemovedIdList] = React.useState();
 
   React.useEffect(() => {
@@ -70,7 +84,9 @@ const TreeInput = ({ input: { value, onChange }, ...props }) => {
     setRemovedIdList(initialIdList.filter(id => !currentIdList.includes(id)));
   }, [initialIdList, currentIdList]);
 
-
+  /**
+   * Create a new group node
+   */
   const addGroup = () => onChange([
     ...value,
     { label: 'New group name', group: true },

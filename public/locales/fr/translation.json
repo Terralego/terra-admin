@@ -226,7 +226,7 @@
       "attachment": {
         "noFiles": "Aucun document",
         "createInfo": "(Crée le {{date}})"
-      } 
+      }
     }
   },
   "help": {
@@ -623,6 +623,11 @@
         "settings-widgets": "Configuration des widgets",
         "active_by_default": "Afficher par défaut",
         "active_by_default_pastpart": "Affiché par défaut"
+      }
+    },
+    "view": {
+      "fields": {
+        "config.tree": "Arbre des couches"
       }
     }
   }

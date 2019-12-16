@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import DataLayerTabbedForm from './DataLayerTabbedForm';
 import DataLayerExternalForm from './DataLayerExternalForm';
+import compose from '../../../../utils/compose';
 
 const sanitizeProps = ({
   staticContext,
@@ -23,4 +24,7 @@ const mapStateToProps = state => ({
   external: get(state, 'form.record-form.values.external'),
 });
 
-export default withRouter(connect(mapStateToProps)(DataLayerFormSelector));
+export default compose(
+  withRouter,
+  connect(mapStateToProps),
+)(DataLayerFormSelector);

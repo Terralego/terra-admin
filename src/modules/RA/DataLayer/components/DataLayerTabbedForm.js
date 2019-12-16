@@ -47,11 +47,17 @@ const styles = {
   },
 };
 
+const CustomFormTab = ({ hidden, ...props }) => (
+  hidden
+    ? null
+    : <FormTab hidden={hidden} {...props} />
+);
+
 const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
   <>
     <SourceFetcher />
     <TabbedForm {...props}>
-      <FormTab label="datalayer.form.definition">
+      <CustomFormTab label="datalayer.form.definition">
         <ReferenceInput
           source="source"
           reference={RES_DATASOURCE}
@@ -108,9 +114,9 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
         <BooleanInput source="active_by_default" />
 
         <LongTextInput source="description" label="datalayer.form.description" />
-      </FormTab>
+      </CustomFormTab>
 
-      <FormTab label="datalayer.form.style" path="style">
+      <CustomFormTab label="datalayer.form.style" path="style">
         <StyleField
           source="layer_style"
           withSource="source"
@@ -138,9 +144,9 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
           </CustomFormIterator>
         </ArrayInput>
 
-      </FormTab>
+      </CustomFormTab>
 
-      <FormTab label="datalayer.form.interactions" path="interactions">
+      <CustomFormTab label="datalayer.form.interactions" path="interactions">
         <FormDataConsumer>
           {({ dispatch }) => (
             <BooleanInput
@@ -185,9 +191,9 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
         </FormDataConsumer>
 
         <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
-      </FormTab>
+      </CustomFormTab>
 
-      <FormTab label="datalayer.form.fields-settings" path="fields">
+      <CustomFormTab label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData, dispatch }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>
@@ -272,7 +278,7 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
             </ArrayInput>
           )}
         </FormDataConsumer>
-      </FormTab>
+      </CustomFormTab>
     </TabbedForm>
   </>
 );

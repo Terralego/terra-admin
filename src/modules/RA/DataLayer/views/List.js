@@ -1,15 +1,17 @@
 import React from 'react';
 import {
-  List, Datagrid,
-  FunctionField,
-  TextField,
-  TextInput,
+  BooleanField,
+  BooleanInput,
+  Datagrid,
   EditButton,
+  Filter,
+  FunctionField,
+  List,
+  ReferenceField,
   ReferenceInput,
   SelectInput,
-  Filter,
-  ReferenceField,
-  BooleanField,
+  TextField,
+  TextInput,
 } from 'react-admin';
 
 import {
@@ -30,6 +32,20 @@ const ListFilters = props => (
     >
       <SelectInput />
     </ReferenceInput>
+    <ReferenceInput
+      source="group__view"
+      reference={RES_VIEW}
+      label="datalayer.form.view"
+    >
+      <SelectInput />
+    </ReferenceInput>
+    <BooleanInput
+      source="active_by_default"
+      label="resources.datalayer.fields.active_by_default_pastpart"
+    />
+    <BooleanInput source="table_enable" />
+    <BooleanInput source="popup_enable" />
+    <BooleanInput source="minisheet_enable" />
   </Filter>
 );
 

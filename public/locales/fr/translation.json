@@ -622,7 +622,10 @@
       "fields": {
         "settings-widgets": "Configuration des widgets",
         "active_by_default": "Afficher par défaut",
-        "active_by_default_pastpart": "Affiché par défaut"
+        "active_by_default_pastpart": "Affiché par défaut",
+        "table_enable": "Tableau de données affiché",
+        "popup_enable": "Fenêtre contextuelle affichée",
+        "minisheet_enable": "Minifiche affichée"
       }
     },
     "view": {

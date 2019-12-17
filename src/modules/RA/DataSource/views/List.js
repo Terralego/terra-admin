@@ -1,34 +1,45 @@
 import React from 'react';
 import {
-  List, Datagrid,
-  TextField,
-  // TextInput,
-  EditButton,
   CloneButton,
-  // SelectInput,
+  Datagrid,
+  EditButton,
+  Filter,
   FunctionField,
-  // Filter,
+  List,
+  SelectInput,
+  TextField,
+  TextInput,
 } from 'react-admin';
 
 import StatusChip from '../components/StatusChip';
 
 import {
-  sourceTypes,
   geomTypes,
-  // sourceTypeChoices,
+  geomTypeChoices,
+  sourceTypes,
+  sourceTypeChoices,
 } from '..';
-import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
+import CommonBulkActionButtons
+  from '../../../../components/react-admin/CommonBulkActionButtons';
 
-// const ListFilters = props => (
-//   <Filter {...props}>
-//     <TextInput label="ra.action.search" source="q" alwaysOn />
-//     <SelectInput
-//       source="type"
-//       label="datasource.form.type"
-//       choices={sourceTypeChoices}
-//     />
-//   </Filter>
-// );
+const ListFilters = props => (
+  <Filter {...props}>
+    <TextInput label="ra.action.search" source="q" alwaysOn />
+    <SelectInput
+      source="polymorphic_ctype__model"
+      label="datasource.form.data-type"
+      choices={sourceTypeChoices.map(({ id, name }) => ({
+        id: id.toLowerCase(),
+        name,
+      }))}
+    />
+    <SelectInput
+      source="geom_type"
+      label="datasource.form.geom-field"
+      choices={geomTypeChoices}
+    />
+  </Filter>
+);
 
 export const DataSourceList = props => (
   <List
@@ -37,14 +48,22 @@ export const DataSourceList = props => (
       order: 'ASC',
     }}
     exporter={false}
-    // filters={<ListFilters />}
+    filters={<ListFilters />}
     bulkActionButtons={<CommonBulkActionButtons />}
     {...props}
   >
     <Datagrid rowClick="edit">
       <TextField source="name" label="datasource.form.name" />
-      <FunctionField source="_type" label="datasource.form.data-type" render={({ _type: type }) => sourceTypes[type] || ''} />
-      <FunctionField source="geom_type" label="datasource.form.geom-field" render={({ geom_type: geomType }) => geomTypes[geomType] || ''} />
+      <FunctionField
+        source="_type"
+        label="datasource.form.data-type"
+        render={({ _type: type }) => sourceTypes[type] || ''}
+      />
+      <FunctionField
+        source="geom_type"
+        label="datasource.form.geom-field"
+        render={({ geom_type: geomType }) => geomTypes[geomType] || ''}
+      />
       <FunctionField
         source="status.state"
         label="datasource.form.status"

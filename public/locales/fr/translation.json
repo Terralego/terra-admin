@@ -627,6 +627,7 @@
     },
     "view": {
       "fields": {
+        "tree": "Arbre des couches",
         "config.tree": "Arbre des couches"
       }
     }

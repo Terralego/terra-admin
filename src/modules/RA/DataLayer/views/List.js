@@ -17,8 +17,6 @@ import {
   RES_VIEW,
 } from '../../ra-modules';
 
-import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
-
 const ListFilters = props => (
   <Filter {...props}>
     <TextInput label="ra.action.search" source="search" alwaysOn />
@@ -41,7 +39,7 @@ export const DataLayerList = ({ viewList, ...props }) => (
     }}
     exporter={false}
     filters={<ListFilters />}
-    bulkActionButtons={<CommonBulkActionButtons />}
+    bulkActionButtons={false}
     {...props}
   >
     <Datagrid rowClick="edit">

@@ -61,7 +61,8 @@ beforeEach(() => {
       geom: {},
     },
     saveFeature: jest.fn(),
-    updateControls: jest.fn(),
+    addControl: jest.fn(),
+    removeControl: jest.fn(),
     getFeaturesList: jest.fn(),
     getSettings: jest.fn(),
     view: {
@@ -213,7 +214,7 @@ it('should execute init draw', () => {
   };
   const instance = new Edit({ ...newProps });
   instance.initDraw();
-  expect(newProps.updateControls).toHaveBeenCalledWith([{
+  expect(newProps.addControl).toHaveBeenCalledWith({
     control: 'DrawControl',
     controls: {
       combine_features: false,
@@ -227,7 +228,7 @@ it('should execute init draw', () => {
     onDrawDelete: instance.updateGeometry,
     onDrawUpdate: instance.updateGeometry,
     position: 'top-left',
-  }]);
+  });
 });
 
 it('should execute init draw and define map draw', () => {
@@ -261,7 +262,7 @@ it('should execute init draw and define map draw', () => {
   onControlAdded({ control: CONTROL_DRAW });
   expect(instance.props.map.draw.add).toHaveBeenCalled();
   onControlAdded({ control: 'plop' });
-  expect(newProps.updateControls).toHaveBeenCalledWith([{
+  expect(newProps.addControl).toHaveBeenCalledWith({
     control: 'DrawControl',
     controls: {
       combine_features: false,
@@ -275,7 +276,7 @@ it('should execute init draw and define map draw', () => {
     onDrawDelete: instance.updateGeometry,
     onDrawUpdate: instance.updateGeometry,
     position: 'top-left',
-  }]);
+  });
 });
 
 
@@ -529,6 +530,6 @@ it('should remove control when component will unmout', () => {
   });
   instance.setMapFilter = jest.fn();
   instance.componentWillUnmount();
-  expect(instance.props.updateControls).toHaveBeenCalled();
-  expect(instance.setMapFilter).toHaveBeenCalledWith('fooComponentID', ['all']);
+  expect(instance.props.removeControl).toHaveBeenCalled();
+  expect(instance.setMapFilter).toHaveBeenCalledWith('fooComponentID', null);
 });

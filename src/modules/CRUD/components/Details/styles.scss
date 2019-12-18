@@ -1,8 +1,8 @@
 .CRUD-details {
   position: absolute;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  right:0.5rem;
+  top: 0;
+  bottom: 0;
+  right:0;
   width: 40%;
   min-width: 20rem;
   display: flex;
@@ -18,16 +18,14 @@
     transform: translateX(0);
 
     ~ .CRUD-map .interactive-map {
-      .mapboxgl-ctrl-top-right {
-        right: 20.5rem;
+      .mapboxgl-ctrl-top-right,
+      .mapboxgl-ctrl-bottom-right {
+        right: 20rem;
       }
     }
   }
 
   &--full {
-    top: 0;
-    bottom: 0;
-    right: 0;
     width: 100%;
     background: #fff;
     border-left: 1px solid #efefef;
@@ -39,6 +37,7 @@
 
   &__content {
     display: flex;
+    flex: auto;
     overflow: auto;
     margin: 0 0 1rem;
     justify-content: center;
@@ -153,14 +152,23 @@
 
   &__actions {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
-    padding: 1rem 1rem 0;
+    margin-top: auto;
+    padding: 1rem 0 0;
+    .bootstrap-inside & {
+      padding-right: 1rem;
+      padding-left: 1rem;
+    }
     > * + * {
       margin-left: 1rem !important; // Cause of bootstrap override
       width: auto;
     }
     &-delete {
       margin-right: auto;
+    }
+    &-cancel-text {
+      display: none;
     }
   }
 
@@ -178,6 +186,7 @@
     flex-direction: column;
     height: 100%;
     margin: 0 -1rem;
+    flex: auto;
     > .form-group {
       padding: 0 1rem;
       overflow: auto;
@@ -185,6 +194,18 @@
 
     fieldset fieldset legend {
       font-size: 1rem;
+    }
+
+    .field-array-of-object > legend {
+      // Copy of label styles from Bootstrap
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      input[type=date] {
+        padding-top: 0;
+      }
     }
 
     .bp3-callout {
@@ -217,9 +238,20 @@
   .CRUD-details {
     &--active {
       ~ .CRUD-map .interactive-map {
-        .mapboxgl-ctrl-top-right {
-          right: calc(40% + 0.3rem);
+        .mapboxgl-ctrl-top-right,
+        .mapboxgl-ctrl-bottom-right {
+          right: calc(40%);
         }
+      }
+    }
+  }
+}
+
+@media all and (min-width: 80em) {
+  .details {
+    &__actions {
+      &-cancel-text {
+        display: block;
       }
     }
   }

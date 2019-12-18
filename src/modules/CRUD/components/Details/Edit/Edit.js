@@ -88,7 +88,8 @@ class Edit extends React.Component {
     paramLayer: PropTypes.string.isRequired,
     paramId: PropTypes.string.isRequired,
     action: PropTypes.oneOf([ACTION_CREATE, ACTION_UPDATE]).isRequired,
-    updateControls: PropTypes.func,
+    addControl: PropTypes.func,
+    removeControl: PropTypes.func,
     getSettings: PropTypes.func,
     settingsEndpoint: PropTypes.string,
     displayAddFeature: PropTypes.bool,
@@ -114,7 +115,8 @@ class Edit extends React.Component {
     },
     displayAddFeature: true,
     displayChangeFeature: true,
-    updateControls () {},
+    addControl () {},
+    removeControl () {},
     getSettings () {},
     settingsEndpoint: undefined,
     history: {
@@ -196,10 +198,9 @@ class Edit extends React.Component {
   }
 
   componentWillUnmount () {
-    const { updateControls } = this.props;
-    // Remove controlDraw from controls
-    updateControls([]);
-    this.setMapFilter(this.layerId, ['all']);
+    const { removeControl } = this.props;
+    removeControl(CONTROL_DRAW);
+    this.setMapFilter(this.layerId, null);
   }
 
   get layerId () {
@@ -264,7 +265,7 @@ class Edit extends React.Component {
       map,
       paramId,
       feature: { geom },
-      updateControls,
+      addControl,
       action,
       view: { layer: { geom_type: geomType } },
     } = this.props;
@@ -299,7 +300,7 @@ class Edit extends React.Component {
 
       this.setMapFilter(this.layerId, ['!=', '_id', paramId]);
     }
-    updateControls([control]);
+    addControl(control);
   }
 
   setMapFilter = (layerId, filter) => {

@@ -324,9 +324,16 @@ export class Map extends React.Component {
     this.setState(({ refreshingLayers }) => ({ refreshingLayers: !refreshingLayers }));
   }
 
-  updateControls = controls => this.setState({
-    controls: [...controls, ...DEFAULT_CONTROLS, ...CONTROL_LIST],
-  })
+  addControl = control => this.setState(({ controls }) => {
+    if (controls.some(item => item.control === control.control)) {
+      return null;
+    }
+    return { controls: [control, ...controls] };
+  });
+
+  removeControl = control => this.setState(({ controls }) => (
+    { controls: controls.filter(item => item.control !== control) }
+  ));
 
   onTableSizeChange = tableSize => {
     this.setState({ tableSize });
@@ -465,7 +472,8 @@ export class Map extends React.Component {
               <DetailsWrapper detailsRef={this.details}>
                 {areDetailsVisible && (
                   <Details
-                    updateControls={this.updateControls}
+                    addControl={this.addControl}
+                    removeControl={this.removeControl}
                     refreshingLayers={refreshingLayers}
                   />
                 )}

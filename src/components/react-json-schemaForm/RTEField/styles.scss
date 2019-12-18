@@ -6,6 +6,20 @@
   transform: translate(-50%, -50%);
 }
 
+// Rewrite placeholder styles to keep itself in the "textarea"
+.ql-editor.ql-blank::before {
+  content: none;
+}
+
+.ql-editor.ql-blank::after {
+  color: rgba(0,0,0,0.6);
+  content: attr(data-placeholder);
+  font-style: italic;
+  pointer-events: none;
+  display: block;
+  margin-top: -1.72rem;
+}
+
 @supports (--custom: properties) {
   .ql-snow .ql-tooltip[data-mode="link"]::before {
     content: var(--quill-linkLabel);

@@ -29,7 +29,7 @@ exports[`should render correctly 1`] = `
         undo
       </li>
       <span
-        className="bp3-button-text"
+        className="bp3-button-text details__actions-cancel-text"
       >
         CRUD.details.cancel
       </span>

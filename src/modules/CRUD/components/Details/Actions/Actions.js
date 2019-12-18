@@ -126,7 +126,7 @@ class Actions extends React.Component {
           <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId })}>
             <span className="bp3-button">
               <Icon icon="undo" />
-              <span className="bp3-button-text">{t('CRUD.details.cancel')}</span>
+              <span className="bp3-button-text details__actions-cancel-text">{t('CRUD.details.cancel')}</span>
             </span>
           </NavLink>
         )}

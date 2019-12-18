@@ -13,18 +13,19 @@ import {fetchFilterOptions} from "../../ra-modules";
 
 const ListFilters = props => {
   const [cities, setCities] = React.useState([]);
+  const [themes, setThemes] = React.useState([]);
 
-  const setCitiesNames = async () => {
+  const setFiltersNames = async () => {
     const data = await fetchFilterOptions();
-    const citiesNames = data.cities.map(city => ({name: city, id: city}));
+    const cities = data.cities.map(city => ({name: city, id: city}));
+    const themes = data.themes.map(theme => ({name: theme, id: theme}));
 
-    setCities({
-      names: citiesNames,
-    });
+    setCities(cities);
+    setThemes(themes);
   };
 
   React.useEffect(() => {
-    setCitiesNames();
+    setFiltersNames();
   }, []);
 
   return (
@@ -33,7 +34,12 @@ const ListFilters = props => {
       <SelectInput
         source="commune"
         label="commune"
-        choices={cities.names}
+        choices={cities}
+      />
+      <SelectInput
+        source="themes"
+        label="themes"
+        choices={themes}
       />
     </Filter>
   );

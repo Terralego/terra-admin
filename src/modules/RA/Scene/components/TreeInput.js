@@ -7,6 +7,7 @@ import { addField, Labeled } from 'react-admin';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 /* eslint-enable */
 
 import TreeNodeToolbar from './TreeNodeToolbar';
@@ -95,7 +96,7 @@ const TreeInput = ({ input: { value, onChange }, ...props }) => {
   return (
     <Labeled {...props}>
       <>
-        <div className="rst__customWrapper">
+        <Paper className="rst__customWrapper">
           <SortableTree
             treeData={value}
             onChange={onChange}
@@ -108,7 +109,7 @@ const TreeInput = ({ input: { value, onChange }, ...props }) => {
           <div>
             <Button onClick={addGroup}>Créer un groupe</Button>
           </div>
-        </div>
+        </Paper>
       </>
     </Labeled>
   );

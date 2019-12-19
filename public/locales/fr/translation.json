@@ -631,7 +631,9 @@
     "view": {
       "fields": {
         "tree": "Arbre des couches",
-        "config.tree": "Arbre des couches"
+        "config.tree": "Arbre des couches",
+        "file": "Générer l'arbre à partir d'un fichier Excel",
+        "file-placeholder": "Déposer ici le fichier Excel pour générer l'arbre (l'arbre existant sera écrasé)."
       }
     }
   }

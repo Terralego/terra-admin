@@ -5,6 +5,8 @@ import { change } from 'redux-form';
 
 import {
   DisabledInput,
+  FileField,
+  FileInput,
   ImageInput,
   ImageField,
   NumberInput,
@@ -13,7 +15,9 @@ import {
   TextInput,
   FormDataConsumer,
   REDUX_FORM_NAME,
+  translate,
 } from 'react-admin';
+
 import {
   toSlug,
   isObjectEmpty,
@@ -23,7 +27,7 @@ import TreeInput from './TreeInput';
 
 const Br = () => <br />;
 
-const SceneForm = ({ edit = false, ...props }) => {
+const SceneForm = ({ edit = false, translate: t, ...props }) => {
   const { record } = props;
   return (
     <SimpleForm {...props}>
@@ -63,6 +67,14 @@ const SceneForm = ({ edit = false, ...props }) => {
       <TreeInput source="tree" fullWidth />
       {/* <TreeInput source="config.tree" fullWidth /> */}
 
+      <FileInput
+        source="file"
+        multiple={false}
+        placeholder={t('resources.view.fields.file-placeholder')}
+      >
+        <FileField source="file_data" title="title" />
+      </FileInput>
+
       <SelectInput
         label="view.form.category"
         source="category"
@@ -76,6 +88,7 @@ const SceneForm = ({ edit = false, ...props }) => {
           },
         ]}
       />
+
       <ImageInput source="custom_icon" label="view.form.icon">
         <ImageField source="url" />
       </ImageInput>
@@ -83,4 +96,4 @@ const SceneForm = ({ edit = false, ...props }) => {
   );
 };
 
-export default SceneForm;
+export default translate(SceneForm);

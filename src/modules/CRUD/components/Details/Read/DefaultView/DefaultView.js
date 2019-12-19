@@ -62,14 +62,14 @@ const formattedProp = ({ value, t }) => {
           <table className="details__table">
             <thead>
               <tr>
-                {columns.map(th => <th key={th}>{th}</th>)}
+                {columns.map(th => <th key={th}>{formattedProp({ value: th })}</th>)}
               </tr>
             </thead>
             <tbody>
               {rows.map((row, i) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <tr key={i}>
-                  {row.map(td => <td key={td}>{td}</td>)}
+                  {row.map(td => <td key={td}>{formattedProp({ value: td })}</td>)}
                 </tr>
               ))}
             </tbody>

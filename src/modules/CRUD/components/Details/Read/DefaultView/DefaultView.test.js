@@ -40,7 +40,10 @@ const props = {
         Available: false,
         ArrayOfStrings: [1, 2, 3],
         ArrayOfObjects: [{ foo: 'Foo', bar: 'Bar' }, { test: 'footest' }],
-        ArrayOfObjectsToTable: [{ foo: 'FooItem', bar: 'BarItem' }, { foo: 'Foo2Item', bar: 'Bar2Item' }],
+        ArrayOfObjectsToTable: [
+          { foo: 'FooItem', bar: 'BarItem', objectTest: { test: 'test' } },
+          { foo: 'Foo2Item', bar: 'Bar2Item', objectTest: { test: 'test2' } },
+        ],
         Object: { foobar: 'foobar', foobarbar: 'foobarbar' },
         EmptyValue: '  ',
       },

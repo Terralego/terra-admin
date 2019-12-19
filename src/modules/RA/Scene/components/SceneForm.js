@@ -33,7 +33,7 @@ const SceneForm = ({ edit = false, translate: t, ...props }) => {
     <SimpleForm {...props}>
       {edit && <DisabledInput source="id" />}
 
-      {isObjectEmpty(record) ? (
+      {isObjectEmpty(record) && (
         <>
           <FormDataConsumer>
             {({ dispatch, ...rest }) => (
@@ -55,7 +55,9 @@ const SceneForm = ({ edit = false, translate: t, ...props }) => {
             label="view.form.slug"
           />
         </>
-      ) : (
+      )}
+
+      {!isObjectEmpty(record) && (
         <>
           <TextInput source="name" label="view.form.name" />
           <Br />

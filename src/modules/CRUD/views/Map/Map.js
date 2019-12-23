@@ -6,8 +6,10 @@ import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/Inte
 import {
   DEFAULT_CONTROLS,
   CONTROL_CAPTURE,
+  CONTROL_CUSTOM,
   CONTROL_BACKGROUND_STYLES,
   CONTROLS_TOP_RIGHT,
+  CONTROLS_TOP_LEFT,
 } from '@terralego/core/modules/Map';
 
 import Loading from '../../../../components/Loading';
@@ -19,6 +21,7 @@ import { getBounds } from '../../services/features';
 import { ACTION_CREATE, ACTION_UPDATE, getView, getSources, getLayersPaints, getFirstCrudViewName } from '../../services/CRUD';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
+import LayersControl from './components/LayersControl';
 
 import './styles.scss';
 
@@ -113,7 +116,7 @@ export class Map extends React.Component {
   componentDidUpdate ({
     map: prevMap,
     settings: prevSettings,
-    match: { params: { layer: prevLayer, id: prevId } },
+    match: { params: { layer: prevLayer, id: prevId, action: prevAction } },
     feature: { geom: { coordinates: prevCoordinates } = {} },
   }) {
     const {
@@ -135,6 +138,10 @@ export class Map extends React.Component {
 
     if ((layer !== prevLayer || map !== prevMap || prevId !== id) && Object.keys(map).length > 0) {
       this.generateLayersToMap();
+    }
+
+    if (action !== prevAction) {
+      this.handleDisplayOfLayers();
     }
 
     if (layer && (layer !== prevLayer || map !== prevMap)) {
@@ -319,6 +326,43 @@ export class Map extends React.Component {
     });
   }
 
+  onChangeDisplayOfLayers = (layerId, display) => {
+    this.setState(({ customStyle }) => ({
+      customStyle: {
+        ...customStyle,
+        layers: customStyle.layers.map(customLayer => (
+          customLayer.id === layerId
+            ? { ...customLayer, displayOnMap: display }
+            : customLayer
+        )),
+      },
+    }));
+  }
+
+  handleDisplayOfLayers = () => {
+    const {
+      settings,
+      match: { params: { layer, id } },
+      t,
+    } = this.props;
+
+    const view = getView(settings, layer);
+    const { customStyle: { layers = [] } } = this.state;
+
+    if (!isTrueFeatureID(id)) {
+      this.removeControl(CONTROL_CUSTOM);
+    } else {
+      this.addControl({
+        control: CONTROL_CUSTOM,
+        position: CONTROLS_TOP_LEFT,
+        instance: LayersControl,
+        layers: layers.filter(({ source, main }) => source === `${view.layer.id}` && !main),
+        translate: t,
+        onChange: this.onChangeDisplayOfLayers,
+      });
+    }
+  }
+
   refreshLayers = () => {
     this.displayCurrentLayer();
     this.setState(({ refreshingLayers }) => ({ refreshingLayers: !refreshingLayers }));
@@ -326,14 +370,21 @@ export class Map extends React.Component {
 
   addControl = control => this.setState(({ controls }) => {
     if (controls.some(item => item.control === control.control)) {
-      return null;
+      return { controls: controls.map(item => (
+        (item.control === control.control)
+          ? control
+          : item
+      )) };
     }
-    return { controls: [control, ...controls] };
+    return { controls: [control, ...controls].sort((a, b) => a.control.localeCompare(b.control)) };
   });
 
-  removeControl = control => this.setState(({ controls }) => (
-    { controls: controls.filter(item => item.control !== control) }
-  ));
+  removeControl = control => this.setState(({ controls }) => {
+    if (controls.some(item => item.control === control.control)) {
+      return null;
+    }
+    return { controls: controls.filter(item => item.control !== control) };
+  });
 
   onTableSizeChange = tableSize => {
     this.setState({ tableSize });
@@ -398,7 +449,7 @@ export class Map extends React.Component {
       const layersFromSettings = getLayersPaints(settings);
 
       const nextSource = sourcesFromSettings.find(({ id }) => id === `${layerId}`);
-      const nextLayers = layersFromSettings.filter(({ source }) => source === `${layerId}`);
+      const nextLayers = layersFromSettings.filter(({ source }) => source === `${layerId}`).map(nextLayer => ({ ...nextLayer, displayOnMap: true }));
 
       nextLayers.forEach(({ layout: { 'icon-image': iconImage } = {} }) => {
         if (iconImage) {
@@ -418,6 +469,7 @@ export class Map extends React.Component {
     }, () => {
       this.hideAllTooltip();
       this.displayCurrentLayer();
+      this.handleDisplayOfLayers();
     });
   }
 

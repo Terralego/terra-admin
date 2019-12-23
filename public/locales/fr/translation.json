@@ -170,6 +170,13 @@
       "foldMenu": "Replier le menu",
       "unfoldMenu": "Déplier le menu"
     },
+    "map": {
+      "controls": {
+        "layers" : {
+          "label": "Affichage des couches"
+        }
+      }
+    },
     "settings": {
       "unableToLoad": "Impossible de charger la configuration du module. Veuillez contacter un administrateur.",
       "unableToLoadMap": "Impossible de charger la configuration de la carte. Veuillez contacter un administrateur."

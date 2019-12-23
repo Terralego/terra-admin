@@ -172,8 +172,12 @@ class Edit extends React.Component {
       t,
     } = this.props;
 
-    if (prevFeature !== feature || prevMap !== map || prevRefreshingLayers !== refreshingLayers) {
+    if (prevFeature !== feature || prevMap !== map) {
       this.initDraw();
+    }
+
+    if (prevRefreshingLayers !== refreshingLayers) {
+      this.setMapFilter(this.layerId, ['!=', '_id', paramId]);
     }
 
     if (

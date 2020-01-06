@@ -65,6 +65,15 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
 
       <TextInput source="slug" label="view.form.slug" formClassName={classes.inline} />
 
+      <SelectInput
+        label="view.form.category"
+        source="category"
+        choices={[
+          { id: 'map', name: 'map' },
+          { id: 'story', name: 'story' },
+        ]}
+      />
+
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
 
       <TreeInput source="tree" defaultValue={[]} fullWidth />
@@ -77,20 +86,6 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       >
         <FileField source="file_data" title="title" />
       </FileInput>
-
-      <SelectInput
-        label="view.form.category"
-        source="category"
-        choices={[
-          {
-            id: 'map',
-            name: 'map',
-          }, {
-            id: 'story',
-            name: 'story',
-          },
-        ]}
-      />
 
       <ImageInput source="custom_icon" label="view.form.icon">
         <ImageField source="url" />

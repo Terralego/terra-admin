@@ -73,8 +73,6 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
           type="text"
         />
 
-        <NumberInput source="order" label="datalayer.form.ordering" validate={defaultRequired} />
-
         <FormDataConsumer>
           {({ formData }) => {
             const hasFields = formData.fields && formData.fields.length;

@@ -66,8 +66,8 @@ const SceneForm = ({ edit = false, translate: t, ...props }) => {
       )}
       <NumberInput source="order" label="view.form.ordering" />
 
-      <TreeInput source="tree" fullWidth />
-      {/* <TreeInput source="config.tree" fullWidth /> */}
+      <TreeInput source="tree" defaultValue={[]} fullWidth />
+      {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
       <FileInput
         source="file"

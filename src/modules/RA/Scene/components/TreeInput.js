@@ -93,6 +93,10 @@ const TreeInput = ({ input: { value, onChange }, ...props }) => {
     { label: 'New group name', group: true },
   ]);
 
+  if (!value) {
+    return null;
+  }
+
   return (
     <Labeled {...props}>
       <>

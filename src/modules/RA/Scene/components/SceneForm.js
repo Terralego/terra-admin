@@ -66,11 +66,10 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       <TextInput source="slug" label="view.form.slug" formClassName={classes.inline} />
 
       <SelectInput
-        label="view.form.category"
         source="category"
         choices={[
-          { id: 'map', name: 'map' },
-          { id: 'story', name: 'story' },
+          { id: 'map', name: t('resources.view.fields.category-map') },
+          { id: 'story', name: t('resources.view.fields.category-story') },
         ]}
       />
 

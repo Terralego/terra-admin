@@ -1,7 +1,9 @@
 import React from 'react';
 
 /* eslint-disable import/no-extraneous-dependencies */
+import { withStyles } from '@material-ui/core/styles';
 import { change } from 'redux-form';
+/* eslint-enable */
 
 import {
   DisabledInput,
@@ -23,48 +25,45 @@ import {
   toSlug,
   isObjectEmpty,
 } from '../../../../utils/react-admin/helper';
+import compose from '../../../../utils/compose';
 
 import TreeInput from './TreeInput';
 
-const Br = () => <br />;
+const styles = {
+  inline: {
+    display: 'inline-block',
+    marginRight: '1em',
+  },
+};
 
-const SceneForm = ({ edit = false, translate: t, ...props }) => {
+const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
   const { record } = props;
   return (
     <SimpleForm {...props}>
       {edit && <DisabledInput source="id" />}
 
       {isObjectEmpty(record) && (
-        <>
-          <FormDataConsumer>
-            {({ dispatch, formData, ...rest }) => (
-              <TextInput
-                source="name"
-                label="view.form.name"
-                onChange={value => {
-                  if (!value) return;
-                  const slug = toSlug(value.target.value);
-                  dispatch(change(REDUX_FORM_NAME, 'slug', slug));
-                }}
-                {...rest}
-              />
-            )}
-          </FormDataConsumer>
-          <Br />
-          <TextInput
-            source="slug"
-            label="view.form.slug"
-          />
-        </>
+        <FormDataConsumer formClassName={classes.inline}>
+          {({ dispatch, formData, ...rest }) => (
+            <TextInput
+              source="name"
+              label="view.form.name"
+              onChange={value => {
+                if (!value) return;
+                const slug = toSlug(value.target.value);
+                dispatch(change(REDUX_FORM_NAME, 'slug', slug));
+              }}
+              {...rest}
+            />
+          )}
+        </FormDataConsumer>
       )}
 
       {!isObjectEmpty(record) && (
-        <>
-          <TextInput source="name" label="view.form.name" />
-          <Br />
-          <TextInput source="slug" label="view.form.slug" />
-        </>
+        <TextInput source="name" label="view.form.name" formClassName={classes.inline} />
       )}
+
+      <TextInput source="slug" label="view.form.slug" formClassName={classes.inline} />
 
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
 
@@ -100,4 +99,7 @@ const SceneForm = ({ edit = false, translate: t, ...props }) => {
   );
 };
 
-export default translate(SceneForm);
+export default compose(
+  translate,
+  withStyles(styles),
+)(SceneForm);

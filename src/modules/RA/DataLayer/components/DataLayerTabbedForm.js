@@ -34,10 +34,7 @@ import StyleField from './StyleField';
 import { required } from '../../../../utils/react-admin/validate';
 import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
-import {
-  RES_DATASOURCE,
-  RES_VIEW,
-} from '../../ra-modules';
+import { RES_DATASOURCE } from '../../ra-modules';
 
 const defaultRequired = required();
 
@@ -62,17 +59,6 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
           source="source"
           reference={RES_DATASOURCE}
           label="datalayer.form.data-source"
-          sort={{ field: 'name', order: 'ASC' }}
-          validate={defaultRequired}
-          perPage={100}
-        >
-          <SelectInput />
-        </ReferenceInput>
-
-        <ReferenceInput
-          source="view"
-          reference={RES_VIEW}
-          label="datalayer.form.view"
           sort={{ field: 'name', order: 'ASC' }}
           validate={defaultRequired}
           perPage={100}

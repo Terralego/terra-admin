@@ -5,7 +5,6 @@ import {
   Datagrid,
   EditButton,
   Filter,
-  FunctionField,
   List,
   ReferenceField,
   ReferenceInput,
@@ -59,21 +58,7 @@ export const DataLayerList = ({ viewList, ...props }) => (
     {...props}
   >
     <Datagrid rowClick="edit">
-      <FunctionField
-        source="name"
-        label="datalayer.form.name"
-        render={({ name }) => {
-          const parts = name.split('/');
-          const last = parts.pop();
-          return (
-            <>
-              <small>{parts.join('/')}/</small>
-              <br />
-              {last}
-            </>
-          );
-        }}
-      />
+      <TextField source="name" label="datalayer.form.name" />
       <ReferenceField source="view" reference={RES_VIEW} label="datalayer.form.view" sortBy="group__view__name">
         <TextField source="name" />
       </ReferenceField>

@@ -37,7 +37,7 @@ const SceneForm = ({ edit = false, translate: t, ...props }) => {
       {isObjectEmpty(record) && (
         <>
           <FormDataConsumer>
-            {({ dispatch, ...rest }) => (
+            {({ dispatch, formData, ...rest }) => (
               <TextInput
                 source="name"
                 label="view.form.name"

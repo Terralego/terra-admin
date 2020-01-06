@@ -652,6 +652,9 @@
     },
     "view": {
       "fields": {
+        "category": "Type de vue",
+        "category-map": "Carte",
+        "category-story": "Storytelling",
         "tree": "Arbre des couches",
         "config.tree": "Arbre des couches",
         "file": "Générer l'arbre à partir d'un fichier Excel",

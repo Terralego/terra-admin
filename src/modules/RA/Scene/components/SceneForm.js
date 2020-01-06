@@ -15,6 +15,7 @@ import {
   TextInput,
   FormDataConsumer,
   REDUX_FORM_NAME,
+  required,
   translate,
 } from 'react-admin';
 
@@ -64,7 +65,8 @@ const SceneForm = ({ edit = false, translate: t, ...props }) => {
           <TextInput source="slug" label="view.form.slug" />
         </>
       )}
-      <NumberInput source="order" label="view.form.ordering" />
+
+      <NumberInput source="order" label="view.form.ordering" validate={required()} />
 
       <TreeInput source="tree" defaultValue={[]} fullWidth />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}

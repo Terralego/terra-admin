@@ -22,6 +22,7 @@ const Header = ({
   t,
   columns,
   onChange,
+  onHeaderChange,
   match: { params: { layer } },
   displayAddFeature,
   featuresList,
@@ -65,7 +66,10 @@ const Header = ({
         >
           <ColumnsSelector
             columns={columns}
-            onChange={onChange}
+            onChange={props => {
+              onChange(props);
+              onHeaderChange(props);
+            }}
             position={Position.LEFT}
             locales={{
               displayAllColumns: t('CRUD.table.columnsDisplay'),

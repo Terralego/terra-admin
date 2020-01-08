@@ -1,4 +1,80 @@
 
+2.11.0 / 2020-01-08
+===================
+
+  * Add translation for scene type (category) values
+  * Move scene category field higher
+  * Put scene name & slug side by side
+  * Avoid forwarding `formData` prop to DOM element
+  * Remove DataLayer name parsing for list display
+  * Set order field from view (scene) form as mandatory
+  * Remove order input from DataLayer form
+  * Remove view (scene) selection from DataLayer form
+  * Avoid rendering TreeInput when given value is invalid
+  * Bump handlebars from 4.2.0 to 4.5.3
+  * Re-add missing url for package-lock resolved keys
+  * Use layer map control in detail view
+  * Create layers map Control
+  * Better display of features on Edit view
+  * Improve add/remove map controls actions
+  * Upgrade @terralego/core package to 1.15.0
+  * Add a border (Paper) around TreeInput
+  * Remove a ternary operator for JSX render
+  * Disable scene icon data alteration patch
+  * Allow uploading a file for scene tree generation
+  * Add a recursion to correctly display all nested formats
+  * Activate relevant filters and search on sources and layers
+  * Improve map's detail styles
+  * Disable bulk actions for geolayer list
+  * Do not display DeleteButton for layers owned by a view or a group
+  * Use compose() function for DataLayerFormSelector HOCs
+  * Add a custom wrapper to FormTab to avoid rendering hidden tabs
+  * Update react-admin to latest patch release
+  * Temporary change scene tree property position
+  * Do not forward isGroup prop as full node is already forwared
+  * Regroup TreeInput styles in same place
+  * Add translation for scene tree field
+  * Store scene tree data into config property (instead of root)
+  * Use label instead of title for scene tree nodes
+  * Manage list of removed and added ids to improve new layer choices
+  * Prevent layers from current tree to be added twice
+  * Disallow adding a layer already owned by a group
+  * Do not allow changing title of layers
+  * Create group settings modal
+  * Rename new layer modal state variables
+  * Rename some components to reflect better their roles
+  * Improve style of scene tree popin buttons
+  * Display geolayer selector properly
+  * Adjust scene tree groups look & feel
+  * Simplify process for adding layers to scene tree
+  * Add ability to attach a geolayer to a layer node in scene tree
+  * Use a modal window for editing scene tree nodes
+  * Allow editing title only for groups
+  * Add ability to change scene tree node titles
+  * Push TreeInput node actions in NodeMenuButton component
+  * Add TreeInput buttons for adding child items
+  * Create basic TreeInput for scenes
+  * Bypass react-dnd issue with Jest
+  * Add dependency to react-sortable-tree
+  * Prefer ordering by view name
+  * Uncomment filter on list view
+  * DraggableFormIterator for layer fields ordering
+  * Upgrade @terralego/core package to 1.14.3
+  * Prevent app to crash if the server render a 400 generic error
+  * Synchronize name of the layer and columns/data of datable
+  * Set interaction only on a layer view
+  * Add info tooltip when clicking on layer
+  * Fix test for Menu Details
+  * Fix missing order field on scene creation
+  * Disabled 'attachments' and 'images' tab link in detail view
+  * Display extra feature in detail feature view
+  * Set interaction to the map only if this is necessary
+  * Give all available space to the columns of the DataTable
+  * Upgrade @terralego/core package to 1.14.0
+  * Make sure all data are loaded in the map before filtering it
+  * Display count of feature in list
+  * Improve add feature button in Nav for UX purpose
+
 2.10.0 / 2019-12-03
 ===================
 

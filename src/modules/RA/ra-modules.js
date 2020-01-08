@@ -120,7 +120,7 @@ export const config = {
   ],
 };
 
-export const fetchFilterOptions = async () => Api.request('viewpoints/filters/');
+export const fetchFilterOptions = () => Api.request('viewpoints/filters/');
 
 export default {
   resources,

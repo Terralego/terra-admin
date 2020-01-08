@@ -14,64 +14,69 @@ import { connectAppProvider } from '../../../../components/AppProvider';
 
 
 const ListFilters = props => {
-  const [selectInputs, setSelectInputs] = React.useState([]);
+  const [filters, setFilters] = React.useState([]);
 
-  const setFilters = async () => {
+  const setFiltersList = async () => {
     const filterOptions = await fetchFilterOptions();
-    const terraOppSearchableProperties = props.properties;
 
-    const selectInputList = Object.keys(terraOppSearchableProperties).reduce(
-      (filters, filterName) => {
+    /*
+      To generate the select input list to render, first check that the filters in props.properties
+      are also set in the retrieved filter options from the backend. After that we can generate the
+      corresponding choices list to each select and generate its properties to be used on render.
+     */
+    const filterList = Object.keys(props.terraOppSearchableProperties).reduce(
+      (filtersList, filterName) => {
         if (filterName in filterOptions) {
-          const choices = filterOptions[filterName].map(value => ({ name: value, id: value }));
-          if (terraOppSearchableProperties[filterName].type === 'many') {
-            filters.push(
-              <SelectArrayInput
-                source={`properties__${terraOppSearchableProperties[filterName].json_key}`}
-                label={terraOppSearchableProperties[filterName].json_key}
-                choices={choices}
-                key={terraOppSearchableProperties[filterName].json_key}
-              />,
-            );
-          }
-          if (terraOppSearchableProperties[filterName].type === 'single') {
-            filters.push(
-              <SelectInput
-                source={`properties__${terraOppSearchableProperties[filterName].json_key}`}
-                label={terraOppSearchableProperties[filterName].json_key}
-                choices={choices}
-                key={terraOppSearchableProperties[filterName].json_key}
-              />,
-            );
-          }
+          filtersList.push({
+            choices: filterOptions[filterName].map(value => ({ name: value, id: value })),
+            type: props.terraOppSearchableProperties[filterName].type,
+            source: `properties__${props.terraOppSearchableProperties[filterName].json_key}`,
+            label: props.terraOppSearchableProperties[filterName].json_key,
+          });
         }
-        return filters;
+        return filtersList;
       }, [],
     );
 
-    setSelectInputs(selectInputList);
+    setFilters(filterList);
   };
 
   React.useEffect(() => {
-    setFilters();
+    setFiltersList();
   }, []);
 
   return (
     <Filter {...props}>
       <TextInput label="ra.action.search" source="search" alwaysOn />
-      {selectInputs}
+      {filters.map(({ type, ...filterProps }) => {
+        const SelectComponent = type === 'many'
+          ? SelectArrayInput
+          : SelectInput;
+
+        return (
+          <SelectComponent
+            {...filterProps}
+            key={filterProps.label}
+          />
+        );
+      })}
     </Filter>
   );
 };
 
-const ConnectedListFilters = connectAppProvider(({ env: { terraOppSearchableProperties } }) => ({
-  properties: terraOppSearchableProperties,
-}))(ListFilters);
+const withTerraOppSearchableProperties = WrappedComponent => (
+  connectAppProvider(({ env: { terraOppSearchableProperties } }) => (
+    { terraOppSearchableProperties }
+  ))(WrappedComponent)
+);
+
+const ListFiltersConnected = withTerraOppSearchableProperties(ListFilters);
+
 export const ViewpointList = props => (
   <List
     {...props}
     exporter={false}
-    filters={<ConnectedListFilters />}
+    filters={<ListFiltersConnected />}
     bulkActionButtons={<CommonBulkActionButtons />}
   >
     <GridList />

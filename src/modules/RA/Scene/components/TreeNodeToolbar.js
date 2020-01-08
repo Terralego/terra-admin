@@ -143,6 +143,9 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
       editItem(groupNewSettings);
     }
 
+    /* Reset modal settings */
+    setGroupNewSettings({});
+
     /* Close modal */
     setDisplaySettingsModal(false);
   };

@@ -18,11 +18,17 @@
   }
 
   .rst__moveHandle {
-    background-image: url(../assets/FolderOpen.svg);
+    background-image: url(../assets/CheckBox.svg);
     background-color: white;
     background-size: 1.5em;
     &:hover {
       background-color: #f3f3f3;
+    }
+  }
+
+  &Exclusive {
+    .rst__moveHandle {
+      background-image: url(../assets/RadioButton.svg);
     }
   }
 }

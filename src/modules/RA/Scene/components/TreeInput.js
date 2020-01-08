@@ -34,7 +34,10 @@ const generateNodeProps = (treeData, setTreeData, includeIds) =>
 
     return {
       title: <TreeNodeLabelInput {...menuProps} />,
-      className: classnames({ treeGroup: node.group }),
+      className: classnames({
+        treeGroup: node.group,
+        treeGroupExclusive: node.exclusive,
+      }),
       buttons: [<TreeNodeToolbar {...menuProps} />],
     };
   };

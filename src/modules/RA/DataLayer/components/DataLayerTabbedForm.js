@@ -32,9 +32,11 @@ import CustomLayer from './CustomLayer';
 import StyleField from './StyleField';
 
 import { required } from '../../../../utils/react-admin/validate';
+import { getLayerStyleDefaultValue, getShapeFromGeomType, POLYGON } from '../../../../utils/geom';
 import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
 import { RES_DATASOURCE } from '../../ra-modules';
+import withRandomColor from './withRandomColor';
 
 const defaultRequired = required();
 
@@ -50,10 +52,21 @@ const CustomFormTab = ({ hidden, ...props }) => (
     : <FormTab hidden={hidden} {...props} />
 );
 
-const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
+const DataLayerTabbedForm = ({
+  classes,
+  translate,
+  randomColor,
+  sourceData: { geom_type: geomType = POLYGON } = {},
+  ...props
+}) => (
   <>
     <SourceFetcher />
-    <TabbedForm {...props}>
+    <TabbedForm
+      defaultValue={{
+        layer_style: getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType)),
+      }}
+      {...props}
+    >
       <CustomFormTab label="datalayer.form.definition">
         <ReferenceInput
           source="source"
@@ -269,5 +282,6 @@ const DataLayerTabbedForm = ({ classes, translate, ...props }) => (
 
 export default compose(
   withStyles(styles),
+  withRandomColor,
   translateRA,
 )(DataLayerTabbedForm);

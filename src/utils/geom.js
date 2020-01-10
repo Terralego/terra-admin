@@ -20,11 +20,7 @@ export const getShapeFromGeomType = geomType => {
   }
 };
 
-export const getLayerStyleDefaultValue = ({
-  color,
-  geomType,
-  type = getShapeFromGeomType(geomType),
-}) => ({
+export const getLayerStyleDefaultValue = (color, type) => ({
   type,
   paint: {
     [`${type}-color`]: color,

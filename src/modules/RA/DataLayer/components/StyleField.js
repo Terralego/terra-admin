@@ -1,27 +1,8 @@
 import React from 'react';
 
 import { JSONInput } from '../../../../components/react-admin/JSONInput';
+import { getLayerStyleDefaultValue, POLYGON } from '../../../../utils/geom';
 import withRandomColor from './withRandomColor';
-
-const getType = geomtype => {
-  switch (geomtype) {
-    case 0:
-    case 4:
-      return 'circle';
-    case 1:
-    case 5:
-      return 'line';
-    default:
-      return 'fill';
-  }
-};
-
-const getDefaultValue = (color, type) => ({
-  type: getType(type),
-  paint: {
-    [`${getType(type)}-color`]: color,
-  },
-});
 
 const validate = value => {
   if (!value) {
@@ -38,13 +19,13 @@ const validate = value => {
 
 const StyleField = withRandomColor(({
   randomColor,
-  sourceData: { geom_type: type = 'fill' } = {},
+  sourceData: { geom_type: type = POLYGON } = {},
   ...props
 }) => (
   <JSONInput
     {...props}
     validate={validate}
-    defaultValue={getDefaultValue(randomColor, type)}
+    defaultValue={getLayerStyleDefaultValue(randomColor, type)}
   />
 ));
 

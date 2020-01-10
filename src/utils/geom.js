@@ -7,6 +7,30 @@ export const MULTI_LINESTRING = 5;
 export const MULTI_POLYGON = 6;
 export const GEOMETRY_COLLECTION = 7;
 
+export const getShapeFromGeomType = geomType => {
+  switch (geomType) {
+    case POINT:
+    case MULTI_POINT:
+      return 'circle';
+    case LINESTRING:
+    case MULTI_LINESTRING:
+      return 'line';
+    default:
+      return 'fill';
+  }
+};
+
+export const getLayerStyleDefaultValue = ({
+  color,
+  geomType,
+  type = getShapeFromGeomType(geomType),
+}) => ({
+  type,
+  paint: {
+    [`${type}-color`]: color,
+  },
+});
+
 export default {
   ALL,
   POINT,

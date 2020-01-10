@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { JSONInput } from '../../../../components/react-admin/JSONInput';
-import { getLayerStyleDefaultValue, POLYGON } from '../../../../utils/geom';
-import withRandomColor from './withRandomColor';
 
 const validate = value => {
   if (!value) {
@@ -17,17 +15,12 @@ const validate = value => {
   return undefined;
 };
 
-const StyleField = withRandomColor(({
-  randomColor,
-  sourceData: { geom_type: type = POLYGON } = {},
-  ...props
-}) => (
+const StyleField = props => (
   <JSONInput
     {...props}
     validate={validate}
-    defaultValue={getLayerStyleDefaultValue(randomColor, type)}
   />
-));
+);
 
 
 export default StyleField;

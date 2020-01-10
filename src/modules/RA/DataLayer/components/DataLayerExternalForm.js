@@ -16,7 +16,7 @@ import {
 } from '../../ra-modules';
 
 
-const DataLayerExternalForm = ({ viewList, ...props }) => (
+const DataLayerExternalForm = ({ viewList = [], ...props }) => (
   <SimpleForm {...props}>
     <SourceFetcher />
     <ReferenceInput

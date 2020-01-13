@@ -2,6 +2,7 @@ import React from 'react';
 import { Filter, SelectArrayInput, SelectInput, TextInput } from 'react-admin';
 
 import { fetchFilterOptions } from '../ra-modules';
+import { connectAppProvider } from '../../../components/AppProvider';
 
 
 export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
@@ -56,4 +57,10 @@ export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
   );
 };
 
-export default ListFilters;
+const withTerraOppSearchableProperties = WrappedComponent => (
+  connectAppProvider(({ env: { terraOppSearchableProperties } }) => (
+    { terraOppSearchableProperties }
+  ))(WrappedComponent)
+);
+
+export default withTerraOppSearchableProperties(ListFilters);

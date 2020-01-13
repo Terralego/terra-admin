@@ -13,7 +13,7 @@ import { fetchFilterOptions } from '../../ra-modules';
 import { connectAppProvider } from '../../../../components/AppProvider';
 
 
-const ListFilters = ({ terraOppSearchableProperties }) => {
+const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
   const [filters, setFilters] = React.useState([]);
 
   const setFiltersList = async () => {

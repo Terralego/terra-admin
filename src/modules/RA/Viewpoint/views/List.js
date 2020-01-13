@@ -16,34 +16,34 @@ import { connectAppProvider } from '../../../../components/AppProvider';
 const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
   const [filters, setFilters] = React.useState([]);
 
-  const setFiltersList = async () => {
-    const filterOptions = await fetchFilterOptions();
-
-    /*
-      To generate the select input list to render, first check that the filters in props.properties
-      are also set in the retrieved filter options from the backend. After that we can generate the
-      corresponding choices list to each select and generate its properties to be used on render.
-     */
-    const filterList = Object.keys(terraOppSearchableProperties).reduce(
-      (filtersList, filterName) => {
-        if (filterName in filterOptions) {
-          filtersList.push({
-            choices: filterOptions[filterName].map(value => ({ name: value, id: value })),
-            type: terraOppSearchableProperties[filterName].type,
-            source: `properties__${terraOppSearchableProperties[filterName].json_key}`,
-            label: terraOppSearchableProperties[filterName].json_key,
-          });
-        }
-        return filtersList;
-      }, [],
-    );
-
-    setFilters(filterList);
-  };
-
   React.useEffect(() => {
+    const setFiltersList = async () => {
+      const filterOptions = await fetchFilterOptions();
+
+      /*
+        To generate the select input list to render, first check that the filters in props.properties
+        are also set in the retrieved filter options from the backend. After that we can generate the
+        corresponding choices list to each select and generate its properties to be used on render.
+       */
+      const filterList = Object.keys(terraOppSearchableProperties).reduce(
+        (filtersList, filterName) => {
+          if (filterName in filterOptions) {
+            filtersList.push({
+              choices: filterOptions[filterName].map(value => ({ name: value, id: value })),
+              type: terraOppSearchableProperties[filterName].type,
+              source: `properties__${terraOppSearchableProperties[filterName].json_key}`,
+              label: terraOppSearchableProperties[filterName].json_key,
+            });
+          }
+          return filtersList;
+        }, [],
+      );
+
+      setFilters(filterList);
+    };
+
     setFiltersList();
-  }, []);
+  }, [terraOppSearchableProperties]);
 
   return (
     <Filter {...props}>

@@ -13,7 +13,7 @@ import { fetchFilterOptions } from '../../ra-modules';
 import { connectAppProvider } from '../../../../components/AppProvider';
 
 
-const ListFilters = props => {
+const ListFilters = ({ terraOppSearchableProperties }) => {
   const [filters, setFilters] = React.useState([]);
 
   const setFiltersList = async () => {
@@ -24,14 +24,14 @@ const ListFilters = props => {
       are also set in the retrieved filter options from the backend. After that we can generate the
       corresponding choices list to each select and generate its properties to be used on render.
      */
-    const filterList = Object.keys(props.terraOppSearchableProperties).reduce(
+    const filterList = Object.keys(terraOppSearchableProperties).reduce(
       (filtersList, filterName) => {
         if (filterName in filterOptions) {
           filtersList.push({
             choices: filterOptions[filterName].map(value => ({ name: value, id: value })),
-            type: props.terraOppSearchableProperties[filterName].type,
-            source: `properties__${props.terraOppSearchableProperties[filterName].json_key}`,
-            label: props.terraOppSearchableProperties[filterName].json_key,
+            type: terraOppSearchableProperties[filterName].type,
+            source: `properties__${terraOppSearchableProperties[filterName].json_key}`,
+            label: terraOppSearchableProperties[filterName].json_key,
           });
         }
         return filtersList;

@@ -18,7 +18,7 @@ const { Provider } = context;
 export class CRUDProvider extends React.Component {
   state = {
     settings: {},
-    featuresList: [],
+    featuresList: {},
     feature: {},
     mapConfig: {},
     errors: {
@@ -57,12 +57,11 @@ export class CRUDProvider extends React.Component {
     return settings;
   }
 
-  getFormattedError = props => {
-    const {
-      store,
-      error,
-      ids,
-    } = props;
+  getFormattedError = ({
+    store,
+    error,
+    ids,
+  }) => {
     const { errors: { [store]: errorStore } } = this.state;
 
     const propsFromIds = Object.keys(ids);
@@ -94,7 +93,7 @@ export class CRUDProvider extends React.Component {
   getFeaturesList = async (layerId, querystring) => {
     const result = {};
     try {
-      const { results: featuresList } = await fetchFeaturesList(layerId, querystring);
+      const featuresList = await fetchFeaturesList(layerId, querystring);
       result.featuresList = featuresList;
     } catch (e) {
       result.error = e;

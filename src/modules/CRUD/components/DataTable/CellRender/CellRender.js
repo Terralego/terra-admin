@@ -15,7 +15,7 @@ class CellRender extends React.Component {
   render () {
     const { isOpen } = this.state;
     const {
-      featuresList = [],
+      featuresList: { results = [] } = {},
       layer, children: contentCell,
       originalRowIndex,
       displayViewFeature,
@@ -23,9 +23,9 @@ class CellRender extends React.Component {
       onHoverCell = () => null,
     } = this.props;
 
-    const { identifier: id } = featuresList[originalRowIndex] || {};
+    const { identifier: id } = results[originalRowIndex] || {};
 
-    if (!featuresList.length || !id) {
+    if (!results.length || !id) {
       return contentCell;
     }
 

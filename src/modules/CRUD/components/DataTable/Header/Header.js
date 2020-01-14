@@ -25,7 +25,7 @@ const Header = ({
   onHeaderChange,
   match: { params: { layer } },
   displayAddFeature,
-  featuresList,
+  featuresList: { count } = {},
   loading,
 }) => {
   const popoverProps = {
@@ -33,8 +33,8 @@ const Header = ({
     position: tableSize === 'full' ? Position.BOTTOM : Position.TOP,
     boundary: 'window',
   };
-  const showLoader = Array.isArray(featuresList) && loading;
-  const showCount = Array.isArray(featuresList) && !loading;
+  const showLoader = count && loading;
+  const showCount = count && !loading;
 
   return (
     <div className="table-header">
@@ -52,10 +52,7 @@ const Header = ({
       {showLoader && <Spinner size="20" />}
       {showCount && (
         <Tag intent={Intent.PRIMARY} round>
-          {featuresList.length > 1
-            ? t('CRUD.table.results_plural', { count: featuresList.length })
-            : t('CRUD.table.results', { count: featuresList.length })
-          }
+          {t('CRUD.table.results', { count })}
         </Tag>
       )}
       <div>

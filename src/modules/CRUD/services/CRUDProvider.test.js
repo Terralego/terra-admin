@@ -153,7 +153,9 @@ it('should get list of features', async () => {
       featuresList: [],
       settings: undefined,
     },
-    featuresList: [{ featureID: 1 }, { featureID: 2 }],
+    featuresList: {
+      results: [{ featureID: 1 }, { featureID: 2 }],
+    },
   });
 });
 

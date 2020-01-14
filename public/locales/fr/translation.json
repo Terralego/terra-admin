@@ -211,7 +211,16 @@
       "readMessage": "<0>Voir</0> cet objet.",
       "readOrUpdateMessage": "<0>Voir</0> ou <2>Modifier</2> cet objet.",
       "results": "{{ count }} résultat",
+<<<<<<< HEAD
       "results_plural": "{{ count }} résultats"
+=======
+      "results_singular": "{{ count }} résultat",
+      "results_plural": "{{ count }} résultats",
+      "pagination" : {
+        "display": "Afficher",
+        "results": "résultats par page"
+      }
+>>>>>>> baca302... fixup! Store and use all the object response of the fetchFeaturesList
     },
     "layer": {
       "errorNoLayer": "La couche recherchée n'existe pas"

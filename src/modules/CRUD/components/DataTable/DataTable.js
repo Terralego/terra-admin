@@ -56,7 +56,7 @@ class DataTable extends React.Component {
   }
 
   setData = () => {
-    const { featuresList = [], layerName: layer } = this.props;
+    const { featuresList: { results = [] } = {}, layerName: layer } = this.props;
     const { featureListProperties } = this.getView();
 
     const columns = Object.keys(featureListProperties).map(value => {
@@ -72,7 +72,7 @@ class DataTable extends React.Component {
 
     const [, nextColumns = columns] = this.columnsToCompare;
 
-    const data = featuresList.map(({ properties: props }) => columns.map(({ value }) => `${props[value] || ''}`));
+    const data = results.map(({ properties: props }) => columns.map(({ value }) => `${props[value] || ''}`));
     const displayedColumns = columns.filter(({ display }) => display === true);
     const { current } = this.tableRef;
     const columnWidth = (!columns.length && !current)
@@ -154,7 +154,7 @@ class DataTable extends React.Component {
     const {
       t,
       tableSize,
-      featuresList = [],
+      featuresList,
       onHoverCell = () => null,
     } = this.props;
 

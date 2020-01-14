@@ -62,6 +62,9 @@
         bottom: 3rem;
       }
     }
+    .table-footer {
+      display: none;
+    }
   }
 
   .table-container {
@@ -72,11 +75,13 @@
     bottom: 0;
     left: 0;
     z-index: 10;
-    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
 
     .table {
       display: flex;
       flex-direction: column;
+      overflow: auto;
     }
   }
 }

@@ -5,6 +5,7 @@ import { withNamespaces } from 'react-i18next';
 import { getView } from '../../services/CRUD';
 import Header from './Header';
 import CellRender from './CellRender';
+import Footer from './Footer';
 import './styles.scss';
 
 const LOADING_COLUMN_WIDTHS = Array.from({ length: 10 }, () => 250);
@@ -112,6 +113,16 @@ class DataTable extends React.Component {
     this.columnsToCompare = [prevColumns, nextColumns];
   }
 
+  onPageChange = ({ selected = 0, nextPageSize } = {}) => {
+    const { querystring } = this.state;
+    const { pageSize } = this.props;
+    this.loadData({
+      ...querystring,
+      page_size: nextPageSize || pageSize,
+      page: selected + 1,
+    });
+  };
+
   onSort = ({ columnIndex, order }) => {
     const {
       querystring: prevQuerystring = {},
@@ -161,7 +172,7 @@ class DataTable extends React.Component {
 
     const { layer: { name } = {}, name: displayName = name } = this.getView();
 
-    const { data, columns, loading, initialSort, columnWidths, layer } = this.state;
+    const { data, columns, loading, initialSort, columnWidths, layer, querystring } = this.state;
 
     return (
       <div className="table-container" ref={this.tableRef}>
@@ -209,6 +220,12 @@ class DataTable extends React.Component {
               <p>{t('CRUD.table.noFeature')}</p>
             </div>
           )}
+        <Footer
+          featuresList={featuresList}
+          querystring={querystring}
+          onPageChange={this.onPageChange}
+          onPaginationSizeChange={this.onPaginationSizeChange}
+        />
       </div>
     );
   }

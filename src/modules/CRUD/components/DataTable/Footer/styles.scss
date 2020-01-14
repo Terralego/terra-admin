@@ -1,0 +1,23 @@
+@import "@blueprintjs/core/src/components/button/_common.scss";
+
+.table-footer {
+  &__form {
+    margin-right: auto !important;
+  }
+  &__label {
+    margin-bottom: 0 !important;
+  }
+  &__pagination {
+    li {
+      display: inline;
+      margin: 0.2rem;
+    }
+    .previous,
+    .next {
+      [aria-disabled="true"] {
+        @include pt-button-disabled();
+      }
+    }
+  }
+}
+

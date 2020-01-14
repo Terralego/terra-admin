@@ -1,17 +1,9 @@
 import DataTable from './DataTable';
 import { connectCRUDProvider } from '../../services/CRUDProvider';
+import { connectUserSettingsProvider } from '../../services/UserSettingsProvider';
+import compose from '../../../../utils/compose';
 
-const withCRUDProviderData = connectCRUDProvider(({
-  getFeaturesList,
-  featuresList,
-  settings,
-}, {
-  layerName,
-}) => ({
-  getFeaturesList,
-  featuresList,
-  settings,
-  layerName,
-}));
-
-export default withCRUDProviderData(DataTable);
+export default compose(
+  connectCRUDProvider('getFeaturesList', 'featuresList', 'settings'),
+  connectUserSettingsProvider('pageSize'),
+)(DataTable);

@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshots should not render anything 1`] = `null`;
+
+exports[`Snapshots should render correctly 1`] = `
+<nav
+  className="table-footer"
+>
+  <div
+    align="center"
+  >
+    <div
+      className="table-footer__form"
+    >
+      <span
+        className="table-footer__label inline"
+      >
+        CRUD.table.pagination.display
+        <select
+          aria-describedby="table-footer__results"
+          className="inline"
+          onChange={[Function]}
+          value={10}
+        >
+          <option
+            value={10}
+          >
+            10
+          </option>
+          <option
+            value={20}
+          >
+            20
+          </option>
+          <option
+            value={50}
+          >
+            50
+          </option>
+        </select>
+        <span
+          className="inline"
+          id="table-footer__results"
+        >
+           
+          CRUD.table.pagination.results
+        </span>
+      </span>
+    </div>
+    <div
+      containerClassName="table-footer__pagination"
+      forcePage={NaN}
+      marginPagesDisplayed={1}
+      nextLabel="common.pagination.next"
+      onPageChange={[Function]}
+      pageCount={1}
+      pageRangeDisplayed={1}
+      previousLabel="common.pagination.previous"
+    >
+      Pagination
+    </div>
+  </div>
+</nav>
+`;

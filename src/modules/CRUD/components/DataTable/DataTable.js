@@ -42,8 +42,8 @@ class DataTable extends React.Component {
     }
   }
 
-  loadData = (querystring = { page_size: 2000 }) => {
-    const { getFeaturesList } = this.props;
+  loadData = querystring => {
+    const { getFeaturesList, pageSize } = this.props;
     const { featureEndpoint } = this.getView();
     if (!featureEndpoint) return;
     getFeaturesList(featureEndpoint, querystring);
@@ -51,7 +51,7 @@ class DataTable extends React.Component {
       data: [],
       loading: true,
       columnWidths: LOADING_COLUMN_WIDTHS,
-      querystring,
+      querystring: querystring || { page_size: pageSize },
     });
   }
 
@@ -139,8 +139,9 @@ class DataTable extends React.Component {
     const suffix = columnsDisplayed[columnIndex].value;
 
     const querystring = {
+      ...prevQuerystring,
       ordering: `${prefix}properties__${suffix}`,
-      page_size: 2000,
+      page: 1,
     };
 
     if (JSON.stringify(prevQuerystring) === JSON.stringify(querystring)) {

@@ -85,6 +85,7 @@ class Edit extends React.Component {
       uiSchema: PropTypes.shape({}),
     }),
     layerPaint: PropTypes.shape({}).isRequired,
+    pageSize: PropTypes.number,
     paramLayer: PropTypes.string.isRequired,
     paramId: PropTypes.string.isRequired,
     action: PropTypes.oneOf([ACTION_CREATE, ACTION_UPDATE]).isRequired,
@@ -113,6 +114,7 @@ class Edit extends React.Component {
       name: undefined,
       uiSchema: {},
     },
+    pageSize: 10,
     displayAddFeature: true,
     displayChangeFeature: true,
     addControl () {},
@@ -369,6 +371,7 @@ class Edit extends React.Component {
       getSettings,
       history: { push },
       view: { featureEndpoint },
+      pageSize,
       paramId,
       paramLayer,
       getFeaturesList,
@@ -391,7 +394,7 @@ class Edit extends React.Component {
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
       getFeaturesList(
         featureEndpoint,
-        { page_size: 2000 },
+        { page_size: pageSize },
       );
       toast.displayToaster(
         { id: savedFeature.identifier },

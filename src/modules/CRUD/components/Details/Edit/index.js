@@ -4,7 +4,7 @@ import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
 import { connectAppProvider } from '../../../../../components/AppProvider';
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
-import { connectUserSettingsProvider } from '../../../services/UserSettingsProvider';
+import { withPageSize } from '../../../services/UserSettingsProvider';
 import { getView, getLayersPaints } from '../../../services/CRUD';
 import compose from '../../../../../utils/compose';
 
@@ -56,7 +56,7 @@ export default compose(
   withRouter,
   connectAppProvider(appProviderGetter),
   connectAuthProvider(authProviderGetter),
-  connectUserSettingsProvider('pageSize'),
   connectCRUDProvider(CRUDPRoviderGetter),
+  withPageSize(),
   withNamespaces(),
 )(Edit);

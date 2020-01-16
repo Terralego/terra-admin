@@ -290,6 +290,7 @@ class Edit extends React.Component {
         combine_features: false,
         uncombine_features: false,
       },
+      order: 2,
     };
 
     if (action === ACTION_UPDATE) {

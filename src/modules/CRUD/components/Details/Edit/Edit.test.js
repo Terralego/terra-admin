@@ -234,6 +234,7 @@ it('should execute init draw', () => {
 
 it('should execute init draw and define map draw', () => {
   let onControlAdded;
+  let onSourceData;
   const newProps = {
     ...props,
     feature: {
@@ -252,6 +253,7 @@ it('should execute init draw and define map draw', () => {
       },
       on: (_, fn) => {
         onControlAdded = fn;
+        onSourceData = fn;
       },
       off: jest.fn(),
       setFilter: jest.fn(),
@@ -261,6 +263,7 @@ it('should execute init draw and define map draw', () => {
   instance.setMapFilter = jest.fn();
   instance.initDraw();
   onControlAdded({ control: CONTROL_DRAW });
+  onSourceData({ isSourceLoaded: true });
   expect(instance.props.map.draw.add).toHaveBeenCalled();
   onControlAdded({ control: 'plop' });
   expect(newProps.addControl).toHaveBeenCalledWith({

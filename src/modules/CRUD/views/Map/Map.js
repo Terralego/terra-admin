@@ -36,6 +36,8 @@ const CONTROL_LIST = [{
 
 const isTrueFeatureID = id => ![undefined, ACTION_CREATE].includes(id);
 
+const sortByOrder = ({ order: a = 0 }, { order: b = 0 }) => a - b;
+
 export class Map extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
@@ -367,6 +369,7 @@ export class Map extends React.Component {
         layers: layers.filter(({ source, main }) => source === `${view.layer.id}` && !main),
         translate: t,
         onChange: this.onChangeDisplayOfLayers,
+        order: 1,
       });
     }
   }
@@ -384,7 +387,7 @@ export class Map extends React.Component {
           : item
       )) };
     }
-    return { controls: [control, ...controls].sort((a, b) => a.control.localeCompare(b.control)) };
+    return { controls: [control, ...controls].sort(sortByOrder) };
   });
 
   removeControl = control => this.setState(({ controls }) => {

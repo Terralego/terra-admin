@@ -228,6 +228,7 @@ it('should execute init draw', () => {
     onDrawDelete: instance.updateGeometry,
     onDrawUpdate: instance.updateGeometry,
     position: 'top-left',
+    order: 2,
   });
 });
 
@@ -276,6 +277,7 @@ it('should execute init draw and define map draw', () => {
     onDrawDelete: instance.updateGeometry,
     onDrawUpdate: instance.updateGeometry,
     position: 'top-left',
+    order: 2,
   });
 });
 

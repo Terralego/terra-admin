@@ -7,7 +7,6 @@ import {
   Popover,
   PopoverInteractionKind,
   Spinner,
-  Tag,
 } from '@blueprintjs/core';
 import ColumnsSelector from '@terralego/core/modules/Table/components/ColumnsSelector';
 import { NavLink } from 'react-router-dom';
@@ -33,35 +32,27 @@ const Header = ({
     position: tableSize === TABLE_FULL ? Position.BOTTOM : Position.TOP,
     boundary: 'window',
   };
-  const showLoader = count && loading;
-  const showCount = count && !loading;
-
   const resizeButtonsProps = [
     { action: TABLE_FULL, icon: 'maximize' },
     { action: TABLE_MEDIUM, icon: 'minimize' },
     { action: TABLE_MINIFIED, icon: 'minus', text: 'hide' },
   ];
 
-
   return (
     <div className="table-header">
       <div className="table-header__title">
-        {t('CRUD.table.title', { layerName })}
+        {!count && <Spinner className="table-header__spinner" size={Spinner.SIZE_SMALL} tagName="span" />}
+        <span>{t('CRUD.table.results', { count })}</span>
+        <strong>{layerName}</strong>
         {displayAddFeature && (
         <NavLink className="table-header__create" to={generateURI('layer', { layer, action: 'create' })}>
-          <span className="bp3-button">
+          <span className="bp3-button bp3-minimal">
             <Icon icon="add" />
             <span className="bp3-button-text"> {t('CRUD.details.create')}</span>
           </span>
         </NavLink>
         )}
       </div>
-      {showLoader && <Spinner size="20" />}
-      {showCount && (
-        <Tag intent={Intent.PRIMARY} round>
-          {t('CRUD.table.results', { count })}
-        </Tag>
-      )}
       <div>
         {!!columns.length && tableSize !== TABLE_MINIFIED && (
         <Popover

@@ -19,6 +19,7 @@ import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
 import { ACTION_CREATE, ACTION_UPDATE, getView, getSources, getLayersPaints, getFirstCrudViewName } from '../../services/CRUD';
+import { TABLE_MEDIUM, TABLE_FULL } from '../../services/UserSettingsProvider';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
 import LayersControl from './components/LayersControl';
@@ -51,6 +52,7 @@ export class Map extends React.Component {
     }),
     settings: PropTypes.shape({}),
     settingsEndpoint: PropTypes.string,
+    tableSize: PropTypes.string,
     map: PropTypes.shape({}),
     feature: PropTypes.shape({}),
     backgroundStyle: PropTypes.arrayOf(
@@ -72,6 +74,7 @@ export class Map extends React.Component {
     map: {},
     settings: {},
     settingsEndpoint: undefined,
+    tableSize: TABLE_MEDIUM,
     feature: {},
     backgroundStyle: [],
   }
@@ -84,7 +87,6 @@ export class Map extends React.Component {
       layers: [],
     },
     controls: [...DEFAULT_CONTROLS, ...CONTROL_LIST],
-    tableSize: 'medium', // 'minified', 'medium', 'full'
     refreshingLayers: false,
   }
 
@@ -118,12 +120,14 @@ export class Map extends React.Component {
     settings: prevSettings,
     match: { params: { layer: prevLayer, id: prevId, action: prevAction } },
     feature: { geom: { coordinates: prevCoordinates } = {} },
+    tableSize: prevTableSize,
   }) {
     const {
       settings,
       match: { params: { layer, id, action } },
       map,
       feature: { geom: { coordinates } = {} },
+      tableSize,
     } = this.props;
 
     const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
@@ -145,6 +149,10 @@ export class Map extends React.Component {
     }
 
     if (layer && (layer !== prevLayer || map !== prevMap)) {
+      this.setFitBounds();
+    }
+
+    if (tableSize !== prevTableSize && tableSize !== TABLE_FULL) {
       this.setFitBounds();
     }
 
@@ -386,13 +394,6 @@ export class Map extends React.Component {
     return { controls: controls.filter(item => item.control !== control) };
   });
 
-  onTableSizeChange = tableSize => {
-    this.setState({ tableSize });
-    if (tableSize !== 'full') {
-      this.setFitBounds();
-    }
-  }
-
   onTableHoverCell = (featureId, hover = true) => {
     const { map, match: { params: { layer } } } = this.props;
     const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
@@ -478,7 +479,6 @@ export class Map extends React.Component {
       customStyle,
       interactions,
       controls,
-      tableSize,
       mapConfig,
       refreshingLayers,
     } = this.state;
@@ -488,6 +488,7 @@ export class Map extends React.Component {
       match: { params: { layer, id } },
       backgroundStyle,
       t,
+      tableSize,
       errors,
     } = this.props;
 
@@ -541,8 +542,6 @@ export class Map extends React.Component {
                 )}
               >
                 <DataTable
-                  onTableSizeChange={this.onTableSizeChange}
-                  tableSize={tableSize}
                   layerName={layer}
                   onHoverCell={this.onTableHoverCell}
                 />

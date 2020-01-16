@@ -11,6 +11,8 @@ import {
 } from '@blueprintjs/core';
 import ColumnsSelector from '@terralego/core/modules/Table/components/ColumnsSelector';
 import { NavLink } from 'react-router-dom';
+
+import { TABLE_MINIFIED, TABLE_MEDIUM, TABLE_FULL } from '../../../services/UserSettingsProvider';
 import { generateURI } from '../../../config';
 
 import './styles.scss';
@@ -18,23 +20,28 @@ import './styles.scss';
 const Header = ({
   layerName,
   tableSize,
-  resize,
+  setTableSize,
   t,
   columns,
-  onChange,
   onHeaderChange,
   match: { params: { layer } },
   displayAddFeature,
   featuresList: { count } = {},
-  loading,
 }) => {
   const popoverProps = {
     interactionKind: PopoverInteractionKind.HOVER,
-    position: tableSize === 'full' ? Position.BOTTOM : Position.TOP,
+    position: tableSize === TABLE_FULL ? Position.BOTTOM : Position.TOP,
     boundary: 'window',
   };
   const showLoader = count && loading;
   const showCount = count && !loading;
+
+  const resizeButtonsProps = [
+    { action: TABLE_FULL, icon: 'maximize' },
+    { action: TABLE_MEDIUM, icon: 'minimize' },
+    { action: TABLE_MINIFIED, icon: 'minus', text: 'hide' },
+  ];
+
 
   return (
     <div className="table-header">
@@ -56,17 +63,14 @@ const Header = ({
         </Tag>
       )}
       <div>
-        {!!columns.length && tableSize !== 'minified' && (
+        {!!columns.length && tableSize !== TABLE_MINIFIED && (
         <Popover
           content={t('CRUD.table.filterProps')}
           {...popoverProps}
         >
           <ColumnsSelector
             columns={columns}
-            onChange={props => {
-              onChange(props);
-              onHeaderChange(props);
-            }}
+            onChange={onHeaderChange}
             position={Position.LEFT}
             locales={{
               displayAllColumns: t('CRUD.table.columnsDisplay'),
@@ -76,25 +80,25 @@ const Header = ({
         </Popover>
         )}
         <Popover
-          content={tableSize === 'minified' ? t('CRUD.table.showTable') : t('CRUD.table.hideTable')}
+          content={(
+            <div className="table-header__resize">
+              {resizeButtonsProps.map(({ action, icon, text = icon }) => (
+                <Button
+                  active={tableSize === action}
+                  key={action}
+                  icon={icon}
+                  minimal
+                  onClick={() => setTableSize(action)}
+                  text={t(`CRUD.table.${text}`)}
+                />
+              ))}
+            </div>
+            )}
           {...popoverProps}
         >
           <Button
-            onClick={() => resize(tableSize === 'minified' ? 'medium' : 'minified')}
-            icon={tableSize === 'minified' ? 'arrow-up' : 'arrow-down'}
+            icon="arrows-vertical"
             minimal
-            intent={Intent.PRIMARY}
-          />
-        </Popover>
-        <Popover
-          content={tableSize === 'full' ? t('CRUD.table.minimize') : t('CRUD.table.maximize')}
-          {...popoverProps}
-        >
-          <Button
-            onClick={() => resize(tableSize === 'full' ? 'medium' : 'full')}
-            icon={tableSize === 'full' ? 'minimize' : 'maximize'}
-            minimal
-            active={tableSize === 'full'}
             intent={Intent.PRIMARY}
           />
         </Popover>

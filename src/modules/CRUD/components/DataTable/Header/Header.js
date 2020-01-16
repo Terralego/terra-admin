@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import {
   Button,
   Icon,
@@ -96,6 +98,36 @@ const Header = ({
       </div>
     </div>
   );
+};
+
+Header.propTypes = {
+  layerName: PropTypes.string,
+  tableSize: PropTypes.string,
+  setTableSize: PropTypes.func,
+  t: PropTypes.func,
+  columns: PropTypes.arrayOf(PropTypes.object),
+  onHeaderChange: PropTypes.func,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      layer: PropTypes.string,
+    }),
+  }),
+  displayAddFeature: PropTypes.bool,
+  featuresList: PropTypes.shape({
+    count: PropTypes.number,
+  }),
+};
+
+Header.defaultProps = {
+  layerName: '',
+  tableSize: 'medium',
+  setTableSize: () => {},
+  t:  () => {},
+  columns: [],
+  onHeaderChange:  () => {},
+  match: {},
+  displayAddFeature: false,
+  featuresList: {},
 };
 
 export default Header;

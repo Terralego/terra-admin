@@ -197,7 +197,6 @@
       "unableToLoadMap": "Impossible de charger la configuration de la carte. Veuillez contacter un administrateur."
     },
     "table": {
-      "title": "Liste de la couche : {{layerName}}",
       "sortAsc": "Tri croissant",
       "sortDesc": "Tri décroissant",
       "filterProps": "Filtrer les propriétés",
@@ -209,9 +208,9 @@
       "noFeature": "Aucun objet à afficher pour cette couche.",
       "readMessage": "<0>Voir</0> cet objet.",
       "readOrUpdateMessage": "<0>Voir</0> ou <2>Modifier</2> cet objet.",
-      "results": "{{ count }} résultat",
-      "results_singular": "{{ count }} résultat",
-      "results_plural": "{{ count }} résultats",
+      "results": "{{ count }} résultat :",
+      "results_singular": "{{ count }} résultat :",
+      "results_plural": "{{ count }} résultats :",
       "pagination" : {
         "display": "Afficher",
         "results": "résultats par page"

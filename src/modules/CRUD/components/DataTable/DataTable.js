@@ -96,12 +96,6 @@ class DataTable extends React.Component {
     return getView(settings, layerName);
   }
 
-
-  resize = (tableSize = 'medium') => {
-    const { onTableSizeChange } = this.props;
-    onTableSizeChange(tableSize);
-  }
-
   onHeaderChange = ({ index } = {}) => {
     if (index === undefined) {
       return;
@@ -165,7 +159,6 @@ class DataTable extends React.Component {
   render () {
     const {
       t,
-      tableSize,
       featuresList,
       onHoverCell = () => null,
     } = this.props;
@@ -186,9 +179,6 @@ class DataTable extends React.Component {
                 <Header
                   {...props}
                   layerName={displayName}
-                  tableSize={tableSize}
-                  resize={this.resize}
-                  loading={loading}
                   onHeaderChange={this.onHeaderChange}
                 />
               )}
@@ -214,8 +204,6 @@ class DataTable extends React.Component {
               <Header
                 columns={[]}
                 layerName={displayName}
-                tableSize={tableSize}
-                resize={this.resize}
               />
               <p>{t('CRUD.table.noFeature')}</p>
             </div>

@@ -31,6 +31,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 /* eslint-disable import/no-extraneous-dependencies */
 
 import compose from '../../utils/compose';
+import './draggable.scss';
 
 const DragHandle = sortableHandle(() => <DragHandleIcon />);
 
@@ -112,7 +113,7 @@ const SortableList = SortableContainer(props => {
     addItem,
   } = props;
   return (
-    <ul className={classes.root}>
+    <ul className={classNames(classes.root, 'draggable-list')}>
       {submitFailed && error && <span>{error}</span>}
       <TransitionGroup>
         {items.map((item, index) =>

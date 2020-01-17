@@ -15,10 +15,22 @@ export class LayersControl extends AbstractMapControl {
     onChange: PropTypes.func.isRequired,
   }
 
+  componentDidMount () {
+    const { layers } = this.props;
+    layers.forEach(({ id, displayOnMap }) => {
+      this.setLayoutProperty(id, displayOnMap);
+    });
+  }
+
   onChange = ({ target: { value, checked } }) => {
-    const { onChange, map } = this.props;
+    const { onChange } = this.props;
     onChange(value, checked);
-    map.setLayoutProperty(value, 'visibility', checked ? 'visible' : 'none');
+    this.setLayoutProperty(value, checked);
+  }
+
+  setLayoutProperty = (layer, isVisible) => {
+    const { map } = this.props;
+    map.setLayoutProperty(layer, 'visibility', isVisible ? 'visible' : 'none');
   }
 
 

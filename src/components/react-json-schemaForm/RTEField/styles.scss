@@ -7,6 +7,9 @@
 }
 
 // Rewrite placeholder styles to keep itself in the "textarea"
+.ql-editor {
+  min-height: 2.5rem;
+}
 .ql-editor.ql-blank::before {
   content: none;
 }

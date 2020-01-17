@@ -84,10 +84,8 @@ export class Map extends React.Component {
   state = {
     mapConfig: {},
     interactions: [],
-    customStyle: {
-      sources: [],
-      layers: [],
-    },
+    sources: [],
+    layers: [],
     controls: [...DEFAULT_CONTROLS, ...CONTROL_LIST],
     refreshingLayers: false,
   }
@@ -132,7 +130,7 @@ export class Map extends React.Component {
       tableSize,
     } = this.props;
 
-    const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
+    const { layers, addHighlight, removeHighlight } = this.state;
 
     if (settings !== prevSettings) {
       this.setMapConfig();
@@ -321,7 +319,7 @@ export class Map extends React.Component {
 
     const view = getView(settings, layer);
 
-    const { customStyle: { layers = [] } } = this.state;
+    const { layers } = this.state;
     if (!Object.keys(map).length || !layers.length) {
       return;
     }
@@ -337,15 +335,12 @@ export class Map extends React.Component {
   }
 
   onChangeDisplayOfLayers = (layerId, display) => {
-    this.setState(({ customStyle }) => ({
-      customStyle: {
-        ...customStyle,
-        layers: customStyle.layers.map(customLayer => (
-          customLayer.id === layerId
-            ? { ...customLayer, displayOnMap: display }
-            : customLayer
-        )),
-      },
+    this.setState(({ layers }) => ({
+      layers: layers.map(layer => (
+        layer.id === layerId
+          ? { ...layer, displayOnMap: display }
+          : layer
+      )),
     }));
   }
 
@@ -357,7 +352,7 @@ export class Map extends React.Component {
     } = this.props;
 
     const view = getView(settings, layer);
-    const { customStyle: { layers = [] } } = this.state;
+    const { layers } = this.state;
 
     if (!isTrueFeatureID(id)) {
       this.removeControl(CONTROL_CUSTOM);
@@ -399,7 +394,7 @@ export class Map extends React.Component {
 
   onTableHoverCell = (featureId, hover = true) => {
     const { map, match: { params: { layer } } } = this.props;
-    const { customStyle: { layers = [] }, addHighlight, removeHighlight } = this.state;
+    const { layers, addHighlight, removeHighlight } = this.state;
     const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
     if (!layerId || !Object.keys(map).length) {
       return;
@@ -444,7 +439,7 @@ export class Map extends React.Component {
       pictogram,
     } = getView(settings, layer);
 
-    this.setState(({ customStyle: { sources: prevSources, layers: prevLayers } }) => {
+    this.setState(({ sources: prevSources, layers: prevLayers }) => {
       if (prevSources.find(({ id }) => id === `${layerId}`) && prevLayers.filter(({ source }) => source === `${layerId}`)) {
         return null;
       }
@@ -465,10 +460,8 @@ export class Map extends React.Component {
       });
 
       return {
-        customStyle: {
-          sources: [...prevSources, nextSource],
-          layers: [...prevLayers, ...nextLayers],
-        },
+        sources: [...prevSources, nextSource],
+        layers: [...prevLayers, ...nextLayers],
       };
     }, () => {
       this.hideAllTooltip();
@@ -479,7 +472,8 @@ export class Map extends React.Component {
 
   render () {
     const {
-      customStyle,
+      layers,
+      sources,
       interactions,
       controls,
       mapConfig,
@@ -560,7 +554,7 @@ export class Map extends React.Component {
                   <InteractiveMap
                     onMapLoaded={this.resetMap}
                     {...mapConfig}
-                    customStyle={customStyle}
+                    customStyle={{ layers, sources }}
                     interactions={interactions}
                     controls={controls}
                     onInit={this.interactiveMapInit}

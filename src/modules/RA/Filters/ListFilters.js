@@ -32,14 +32,21 @@ export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
   const [filters, setFilters] = React.useState([]);
 
   React.useEffect(() => {
+    let isMounted = true;
+
     const setFiltersList = async () => {
       const filterOptions = await fetchFilterOptions();
+
+      if (!isMounted) return;
+
       const newFilters = Object.entries(terraOppSearchableProperties)
         .reduce(reduceFilters(filterOptions), []);
       setFilters(newFilters);
     };
 
     setFiltersList();
+
+    return () => { isMounted = false; };
   }, [terraOppSearchableProperties]);
 
   return (

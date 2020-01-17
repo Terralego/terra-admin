@@ -499,6 +499,7 @@ export class Map extends React.Component {
 
     const areSettingsLoaded = Object.keys(settings).length && Object.keys(mapConfig).length;
     const areDetailsVisible = !!id;
+    const layersToMap = layers.map(({ displayOnMap, main, ...props }) => props);
 
     if (areSettingsLoaded) {
       const firstCrudViewName = getFirstCrudViewName(settings);
@@ -554,7 +555,7 @@ export class Map extends React.Component {
                   <InteractiveMap
                     onMapLoaded={this.resetMap}
                     {...mapConfig}
-                    customStyle={{ layers, sources }}
+                    customStyle={{ layers: layersToMap, sources }}
                     interactions={interactions}
                     controls={controls}
                     onInit={this.interactiveMapInit}

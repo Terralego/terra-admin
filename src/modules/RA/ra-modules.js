@@ -1,4 +1,5 @@
 import { ListGuesser, EditGuesser } from 'react-admin';
+import Api from '@terralego/core/modules/Api';
 
 // User
 import userViews from './User/views';
@@ -118,6 +119,8 @@ export const config = {
     },
   ],
 };
+
+export const fetchFilterOptions = () => Api.request('viewpoints/filters/');
 
 export default {
   resources,

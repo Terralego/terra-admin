@@ -16,7 +16,6 @@ import {
   sortableHandle,
 } from 'react-sortable-hoc';
 
-
 /* eslint-disable import/no-extraneous-dependencies */
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -33,7 +32,11 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import compose from '../../utils/compose';
 import './draggable.scss';
 
-const DragHandle = sortableHandle(() => <DragHandleIcon />);
+const DragHandle = sortableHandle(({ classes }) => (
+  <span className={classes.dragHandle}>
+    <DragHandleIcon />
+  </span>
+));
 
 const SortableItem = SortableElement((
   {
@@ -61,9 +64,8 @@ const SortableItem = SortableElement((
         variant="body1"
         className={classes.index}
       >
-        {index + 1}
-        <br />
-        <DragHandle />
+        <span>{index + 1}</span>
+        <DragHandle classes={classes} />
       </Typography>
       <section className={classes.form}>
         {Children.map(children, input => (
@@ -173,12 +175,23 @@ const styles = theme => ({
       transition: 'all 500ms ease-in',
     },
   },
+  dragHandle: {
+    cursor: 'row-resize',
+  },
+  fieldIndex: {
+    textAlign: 'center',
+    fontSize: '2em',
+  },
   index: {
     width: '3em',
-    paddingTop: '1em',
+    paddingTop: '2em',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
     [theme.breakpoints.down('sm')]: { display: 'none' },
   },
-  form: { flex: 2 },
+  form: { flex: 2, paddingLeft: '0.5em' },
   action: {
     paddingTop: '0.5em',
   },
@@ -254,6 +267,7 @@ export class DraggableFormIterator extends Component {
         addItem={this.addItem}
         {...this.props}
         onSortEnd={this.onSortEnd}
+        useDragHandle
       />
     ) : null;
   }

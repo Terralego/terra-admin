@@ -38,8 +38,8 @@ const DragHandle = sortableHandle(({ classes }) => (
   </span>
 ));
 
-const SortableItem = SortableElement((
-  {
+const SortableItem = SortableElement(
+  ({
     classes = {},
     sortIndex: index,
     children,
@@ -52,57 +52,48 @@ const SortableItem = SortableElement((
     source,
     item,
     translate,
-  },
-) => (
-  <CSSTransition
-    key={ids[index]}
-    timeout={500}
-    classNames="fade"
-  >
-    <li className={classes.line}>
-      <Typography
-        variant="body1"
-        className={classes.index}
-      >
-        <span>{index + 1}</span>
-        <DragHandle classes={classes} />
-      </Typography>
-      <section className={classes.form}>
-        {Children.map(children, input => (
-          <FormInput
-            basePath={input.props.basePath || basePath}
-            input={cloneElement(input, {
-              source: input.props.source
-                ? `${item}.${input.props.source}`
-                : item,
-              index,
-              label: input.props.label || input.props.source,
-            })}
-            record={(records && records[index]) || {}}
-            resource={resource}
-          />
-        ))}
-      </section>
-      {!disableRemove && (
-        <span className={classes.action}>
-          <Button
-            className={classNames(
-              'button-remove',
-              `button-remove-${source}-${index}`,
-            )}
-            size="small"
-            onClick={removeItem(index)}
-          >
-            <CloseIcon
-              className={classes.leftIcon}
+  }) => (
+    <CSSTransition key={ids[index]} timeout={500} classNames="fade">
+      <li className={classes.line}>
+        <Typography variant="body1" className={classes.index}>
+          <span>{index + 1}</span>
+          <DragHandle classes={classes} />
+        </Typography>
+        <section className={classes.form}>
+          {Children.map(children, input => (
+            <FormInput
+              basePath={input.props.basePath || basePath}
+              input={cloneElement(input, {
+                source: input.props.source
+                  ? `${item}.${input.props.source}`
+                  : item,
+                index,
+                label: input.props.label || input.props.source,
+              })}
+              record={(records && records[index]) || {}}
+              resource={resource}
             />
-            {translate('ra.action.remove')}
-          </Button>
-        </span>
-      )}
-    </li>
-  </CSSTransition>
-));
+          ))}
+        </section>
+        {!disableRemove && (
+          <span className={classes.action}>
+            <Button
+              className={classNames(
+                'button-remove',
+                `button-remove-${source}-${index}`,
+              )}
+              size="small"
+              onClick={removeItem(index)}
+            >
+              <CloseIcon className={classes.leftIcon} />
+              {translate('ra.action.remove')}
+            </Button>
+          </span>
+        )}
+      </li>
+    </CSSTransition>
+  ),
+);
 
 const SortableList = SortableContainer(props => {
   const {
@@ -118,18 +109,22 @@ const SortableList = SortableContainer(props => {
     <ul className={classNames(classes.root, 'draggable-list')}>
       {submitFailed && error && <span>{error}</span>}
       <TransitionGroup>
-        {items.map((item, index) =>
-          // eslint-disable-next-line react/no-array-index-key
-          <SortableItem {...props} key={`sortable-item-${index}`} item={item} index={index} sortIndex={index} />)}
+        {items.map((item, index) => (
+          <SortableItem
+            {...props}
+            // eslint-disable-next-line react/no-array-index-key
+            key={`sortable-item-${index}`}
+            item={item}
+            index={index}
+            sortIndex={index}
+          />
+        ))}
       </TransitionGroup>
       {!disableAdd && (
         <li className={classes.line}>
           <span className={classes.action}>
             <Button
-              className={classNames(
-                'button-add',
-                `button-add-${source}`,
-              )}
+              className={classNames('button-add', `button-add-${source}`)}
               size="small"
               onClick={addItem}
             >
@@ -218,9 +213,8 @@ export class DraggableFormIterator extends Component {
     // the fields prop which will always be empty for a new record.
     // Without it, our ids wouldn't match the default value and we would get key warnings
     // on the CssTransition element inside our render method
-    this.ids = this.nextId > 0
-      ? Array.from(Array(this.nextId).keys())
-      : [];
+    this.ids = this.nextId > 0 ? Array.from(Array(this.nextId).keys()) : [];
+    this.ids = Array.from({ length: this.nextId }, (_, index) => index);
   }
 
   onSortEnd = ({ oldIndex, newIndex }) => {
@@ -237,7 +231,6 @@ export class DraggableFormIterator extends Component {
     fields.remove(index);
   };
 
-
   addItem = () => {
     const { fields } = this.props;
     this.ids.push(this.nextId);
@@ -246,11 +239,7 @@ export class DraggableFormIterator extends Component {
   };
 
   render () {
-    const {
-      record,
-      source,
-      fields,
-    } = this.props;
+    const { record, source, fields } = this.props;
 
     if (this.ids.length !== fields.length) {
       this.ids = Object.keys([...Array(fields.length)]);
@@ -297,7 +286,4 @@ DraggableFormIterator.propTypes = {
   disableRemove: PropTypes.bool,
 };
 
-export default compose(
-  RAtranslate,
-  withStyles(styles),
-)(DraggableFormIterator);
+export default compose(RAtranslate, withStyles(styles))(DraggableFormIterator);

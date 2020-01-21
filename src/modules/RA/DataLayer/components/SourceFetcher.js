@@ -19,10 +19,14 @@ const SourceFetcher = ({ dispatch, dataProvider, sourceId, fields = [] }) => {
   const load = memo(async id => dataProvider(GET_ONE, RES_DATASOURCE, { id }));
 
   useEffect(() => {
-    if (!sourceId) return;
+    if (!sourceId) return () => {};
+
+    let isMounted = true;
 
     const fillFields = async () => {
       const { data: { _type: type, fields: sourceFields = [] } } = await load(sourceId);
+      if (!isMounted) return;
+
       const fieldsFromSource = sourceFields.filter(
         // All fields from source that are not in value
         ({ id }) => !fields.some(({ id: fieldId }) => id === fieldId),
@@ -43,7 +47,10 @@ const SourceFetcher = ({ dispatch, dataProvider, sourceId, fields = [] }) => {
     };
 
     fillFields();
+
+    return () => { isMounted = false; };
   }, [sourceId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return null;
 };
 

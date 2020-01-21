@@ -211,7 +211,7 @@ export class DraggableFormIterator extends Component {
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex !== newIndex) {
-      const { fields, onSortEnd } = this.props;
+      const { fields, onSortEnd = () => {} } = this.props;
       fields.move(oldIndex, newIndex);
       onSortEnd(fields, oldIndex, newIndex);
     }

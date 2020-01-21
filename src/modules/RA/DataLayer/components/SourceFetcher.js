@@ -15,48 +15,56 @@ import { WMTS } from '../../DataSource';
 import { RES_DATASOURCE } from '../../ra-modules';
 import compose from '../../../../utils/compose';
 
-const SourceFetcher = ({ dispatch, dataProvider, sourceId, fields = [] }) => {
+const SourceFetcher = ({ dispatch, dataProvider, sourceId, layerFields }) => {
   const load = memo(async id => dataProvider(GET_ONE, RES_DATASOURCE, { id }));
 
   useEffect(() => {
-    if (!sourceId) return () => {};
+    if (!sourceId || !layerFields) return undefined;
 
     let isMounted = true;
 
     const fillFields = async () => {
       const { data: { _type: type, fields: sourceFields = [] } } = await load(sourceId);
+
       if (!isMounted) return;
 
       const fieldsFromSource = sourceFields.filter(
         // All fields from source that are not in value
-        ({ id }) => !fields.some(({ id: fieldId }) => id === fieldId),
+        ({ id }) =>
+          !layerFields.some(layerField =>
+            id === layerField.sourceFieldId),
       );
-      const fieldsFromValue = fields.map(field => ({
+      const fieldsFromLayer = layerFields.map(layerField => ({
         // Default field properties from source
-        ...sourceFields.find(({ id: fieldId }) => field.id === fieldId),
+        ...sourceFields.find(({ id }) =>
+          layerField.sourceFieldId === id),
         // Field properties from value
-        ...field,
+        ...layerField,
       }));
+
       const filledFields = [
-        ...fieldsFromSource,
-        ...fieldsFromValue,
+        ...fieldsFromSource.map(sourceField => ({ sourceFieldId: sourceField.id, ...sourceField })),
+        ...fieldsFromLayer,
       ];
 
-      dispatch(change(REDUX_FORM_NAME, 'fields', filledFields || null));
+      // Prevent rerender on equality
+      if (JSON.stringify(filledFields) !== JSON.stringify(layerFields)) {
+        dispatch(change(REDUX_FORM_NAME, 'fields', filledFields || null));
+      }
       dispatch(change(REDUX_FORM_NAME, 'external', type === WMTS));
     };
 
     fillFields();
 
     return () => { isMounted = false; };
-  }, [sourceId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [sourceId, layerFields]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return null;
 };
 
 const mapStateToProps = state => ({
   sourceId: get(state, 'form.record-form.values.source'),
-  fields: get(state, 'form.record-form.values.fields'),
+  layerFields: get(state, 'form.record-form.values.fields'),
 });
 
 export default compose(

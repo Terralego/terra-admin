@@ -32,8 +32,8 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import compose from '../../utils/compose';
 import './draggable.scss';
 
-const DragHandle = sortableHandle(({ classes }) => (
-  <span className={classes.dragHandle}>
+const DragHandle = sortableHandle(props => (
+  <span {...props}>
     <DragHandleIcon />
   </span>
 ));
@@ -57,7 +57,7 @@ const SortableItem = SortableElement(
       <li className={classes.line}>
         <Typography variant="body1" className={classes.index}>
           <span>{index + 1}</span>
-          <DragHandle classes={classes} />
+          <DragHandle className={classes.dragHandle} />
         </Typography>
         <section className={classes.form}>
           {Children.map(children, input => (

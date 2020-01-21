@@ -198,23 +198,15 @@ const styles = theme => ({
 export class DraggableFormIterator extends Component {
   constructor (props) {
     super(props);
-    this.setIds();
-  }
 
-  setIds () {
     const { fields, defaultValue } = this.props;
-    // we need a unique id for each field for a proper enter/exit animation
-    // but redux-form doesn't provide one (cf https://github.com/erikras/redux-form/issues/2735)
-    // so we keep an internal map between the field position and an autoincrement id
-    const defaultId = defaultValue ? defaultValue.length : 0;
-    this.nextId = fields.length ? fields.length : defaultId;
 
     // We check whether we have a defaultValue (which must be an array) before checking
     // the fields prop which will always be empty for a new record.
     // Without it, our ids wouldn't match the default value and we would get key warnings
     // on the CssTransition element inside our render method
-    this.ids = this.nextId > 0 ? Array.from(Array(this.nextId).keys()) : [];
-    this.ids = Array.from({ length: this.nextId }, (_, index) => index);
+    const defaultId = defaultValue ? defaultValue.length : 0;
+    this.nextId = fields.length ? fields.length : defaultId;
   }
 
   onSortEnd = ({ oldIndex, newIndex }) => {
@@ -241,8 +233,12 @@ export class DraggableFormIterator extends Component {
   render () {
     const { record, source, fields } = this.props;
 
-    if (this.ids.length !== fields.length) {
-      this.ids = Object.keys([...Array(fields.length)]);
+
+    if (!this.ids || this.ids.length !== fields.length) {
+      // we need a unique id for each field for a proper enter/exit animation
+      // but redux-form doesn't provide one (cf https://github.com/erikras/redux-form/issues/2735)
+      // so we keep an internal map between the field position and an autoincrement id
+      this.ids = [...Array(this.nextId).keys()];
     }
 
     const records = get(record, source);

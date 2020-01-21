@@ -25,6 +25,7 @@ const Header = ({
   t,
   columns,
   onHeaderChange,
+  onChange,
   match: { params: { layer } },
   displayAddFeature,
   featuresList: { count } = {},
@@ -63,7 +64,10 @@ const Header = ({
         >
           <ColumnsSelector
             columns={columns}
-            onChange={onHeaderChange}
+            onChange={props => {
+              onChange(props);
+              onHeaderChange(props);
+            }}
             position={Position.LEFT}
             locales={{
               displayAllColumns: t('CRUD.table.columnsDisplay'),
@@ -106,6 +110,7 @@ Header.propTypes = {
   setTableSize: PropTypes.func,
   t: PropTypes.func,
   columns: PropTypes.arrayOf(PropTypes.object),
+  onChange: PropTypes.func,
   onHeaderChange: PropTypes.func,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -124,6 +129,7 @@ Header.defaultProps = {
   setTableSize: () => {},
   t:  () => {},
   columns: [],
+  onChange:  () => {},
   onHeaderChange:  () => {},
   match: {},
   displayAddFeature: false,

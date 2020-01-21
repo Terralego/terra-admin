@@ -192,21 +192,11 @@ const DataLayerTabbedForm = ({
 
       <CustomFormTab label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
-          {({ formData, dispatch }) => (
+          {({ formData }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>
               <DraggableFormIterator
                 disableAdd
                 disableRemove
-                onSortEnd={(fields, oldIndex, newIndex) =>
-                  // This can be slow, so we limit the changes the indexes affected
-                  fields.forEach((item, index) => {
-                    const min = Math.min(oldIndex, newIndex);
-                    const max = Math.max(oldIndex, newIndex);
-                    if (index >= min && index <= max) {
-                      dispatch(change(REDUX_FORM_NAME, `${item}.order`, index));
-                    }
-                  })
-              }
               >
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (

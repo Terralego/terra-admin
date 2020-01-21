@@ -273,7 +273,7 @@ DraggableFormIterator.propTypes = {
   className: PropTypes.string,
   fields: PropTypes.object,
   meta: PropTypes.object,
-  record: PropTypes.object.isRequired,
+  record: PropTypes.object,
   source: PropTypes.string,
   resource: PropTypes.string,
   translate: PropTypes.func,

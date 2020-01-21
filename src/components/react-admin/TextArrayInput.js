@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 import { withNamespaces } from 'react-i18next';
 
 const sanitizeRestProps = ({
-  tReady, reportNS, defaultNS, i18nOptions, ...rest
+  tReady, reportNS, defaultNS, i18nOptions, validate, ...rest
 }) => rest;
 
 const add = input => addedChip => {

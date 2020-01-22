@@ -28,22 +28,28 @@ const SourceFetcher = ({ dispatch, dataProvider, sourceId, layerFields }) => {
 
       if (!isMounted) return;
 
-      const fieldsFromSource = sourceFields.filter(
-        // All fields from source that are not in value
-        ({ id }) =>
+      // Convert source fields to layer fields
+      const sourceFieldMapped = sourceFields.map(({ id, ...sourceField }) =>
+        ({ field: id, sourceFieldId: id, ...sourceField }));
+
+      // All fields from source that are not in value
+      const fieldsFromSource = sourceFieldMapped.filter(
+        ({ field }) =>
           !layerFields.some(layerField =>
-            id === layerField.sourceFieldId),
+            field === layerField.field),
       );
+
+      // Update existing layer fields from source
       const fieldsFromLayer = layerFields.map(layerField => ({
         // Default field properties from source
-        ...sourceFields.find(({ id }) =>
-          layerField.sourceFieldId === id),
-        // Field properties from value
+        ...sourceFieldMapped.find(({ field }) =>
+          layerField.field === field),
+        // Field properties from layer
         ...layerField,
       }));
 
       const filledFields = [
-        ...fieldsFromSource.map(sourceField => ({ sourceFieldId: sourceField.id, ...sourceField })),
+        ...fieldsFromSource,
         ...fieldsFromLayer,
       ];
 

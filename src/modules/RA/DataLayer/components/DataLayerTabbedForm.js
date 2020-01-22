@@ -100,7 +100,7 @@ const DataLayerTabbedForm = ({
                 <SelectInput
                   source="main_field"
                   label="datalayer.form.search.main-field.label"
-                  choices={formData.fields.map(({ label: name, id }) => ({ id, name }))}
+                  choices={formData.fields.map(({ label: name, field: id }) => ({ id, name }))}
                   fullWidth
                 />
               </FormGroup>

@@ -133,12 +133,11 @@ class DataTable extends React.Component {
     const prevColumnsDisplayed = prevColumns.filter(displayed);
     const columnsDisplayed = nextColumns.filter(displayed);
 
+    this.columnsToCompare = [nextColumns, nextColumns];
+
     if (prevColumnsDisplayed.length !== columnsDisplayed.length) {
-      this.columnsToCompare = [nextColumns, nextColumns];
       return;
     }
-
-    this.columnsToCompare = [nextColumns, nextColumns];
 
     const prefix = order === 'asc' ? '' : '-';
     const suffix = columnsDisplayed[columnIndex].value;

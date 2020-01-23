@@ -337,15 +337,17 @@ it('should delete feature', async () => {
         identifier: '100',
       },
     },
-    featuresList: [{
-      displayName: 'Bar',
-      foo: 'bar',
-      identifier: '1000',
-    }, {
-      displayName: 'Foo',
-      foo: 'foo',
-      identifier: '100',
-    }],
+    featuresList: {
+      results: [{
+        displayName: 'Bar',
+        foo: 'bar',
+        identifier: '1000',
+      }, {
+        displayName: 'Foo',
+        foo: 'foo',
+        identifier: '100',
+      }],
+    },
   };
   let stateCallback;
   instance.setState = jest.fn(callback => {
@@ -354,11 +356,13 @@ it('should delete feature', async () => {
   await instance.deleteFeature('foo', '100');
   expect(stateCallback(instance.state)).toEqual({
     feature: {},
-    featuresList: [{
-      displayName: 'Bar',
-      foo: 'bar',
-      identifier: '1000',
-    }],
+    featuresList: {
+      results: [{
+        displayName: 'Bar',
+        foo: 'bar',
+        identifier: '1000',
+      }],
+    },
   });
 });
 
@@ -366,15 +370,17 @@ it('should not crash when no deleting feature', async () => {
   const instance = new CRUDProvider();
   instance.state = {
     ...instance.state,
-    featuresList: [{
-      displayName: 'Bar',
-      foo: 'bar',
-      identifier: '1000',
-    }, {
-      displayName: 'Foo',
-      foo: 'foo',
-      identifier: '100',
-    }],
+    featuresList: {
+      results: [{
+        displayName: 'Bar',
+        foo: 'bar',
+        identifier: '1000',
+      }, {
+        displayName: 'Foo',
+        foo: 'foo',
+        identifier: '100',
+      }],
+    },
   };
   let stateCallback;
   instance.setState = jest.fn(callback => {
@@ -383,15 +389,17 @@ it('should not crash when no deleting feature', async () => {
   await instance.deleteFeature('foo', '123');
   expect(stateCallback(instance.state)).toEqual({
     feature: {},
-    featuresList: [{
-      displayName: 'Bar',
-      foo: 'bar',
-      identifier: '1000',
-    }, {
-      displayName: 'Foo',
-      foo: 'foo',
-      identifier: '100',
-    }],
+    featuresList: {
+      results: [{
+        displayName: 'Bar',
+        foo: 'bar',
+        identifier: '1000',
+      }, {
+        displayName: 'Foo',
+        foo: 'foo',
+        identifier: '100',
+      }],
+    },
   });
 });
 

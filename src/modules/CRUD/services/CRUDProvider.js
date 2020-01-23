@@ -166,9 +166,12 @@ export class CRUDProvider extends React.Component {
 
     this.setState(({ featuresList, feature: { [feature]: deletedFeature, ...rest } }) => ({
       feature: rest,
-      featuresList: deletedFeature
-        ? featuresList.filter(({ identifier }) => identifier !== featureId)
-        : featuresList,
+      featuresList: {
+        ...featuresList,
+        results: deletedFeature
+          ? featuresList.results.filter(({ identifier }) => identifier !== featureId)
+          : featuresList.results,
+      },
     }));
 
     return feature;

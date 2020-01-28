@@ -214,7 +214,8 @@
       "pagination" : {
         "display": "Afficher",
         "results": "résultats par page"
-      }
+      },
+      "search": "Rechercher dans la table"
     },
     "layer": {
       "errorNoLayer": "La couche recherchée n'existe pas"

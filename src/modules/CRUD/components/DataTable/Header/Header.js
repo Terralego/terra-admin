@@ -40,11 +40,12 @@ const Header = ({
     { action: TABLE_MEDIUM, icon: 'minimize' },
     { action: TABLE_MINIFIED, icon: 'minus', text: 'hide' },
   ];
+  const displayTableFeatures = !!columns.length && tableSize !== TABLE_MINIFIED;
 
   return (
     <div className="table-header">
       <div className="table-header__title">
-        {!count && <Spinner className="table-header__spinner" size={Spinner.SIZE_SMALL} tagName="span" />}
+        {count === undefined && <Spinner className="table-header__spinner" size={Spinner.SIZE_SMALL} tagName="span" />}
         <span>{t('CRUD.table.results', { count })}</span>
         <strong>{layerName}</strong>
         {displayAddFeature && (

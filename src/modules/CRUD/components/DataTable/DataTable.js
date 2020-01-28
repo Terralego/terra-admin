@@ -1,6 +1,5 @@
 import React from 'react';
 import Table from '@terralego/core/modules/Table';
-import { withNamespaces } from 'react-i18next';
 
 import { getView } from '../../services/CRUD';
 import Header from './Header';
@@ -218,4 +217,4 @@ class DataTable extends React.Component {
   }
 }
 
-export default withNamespaces()(DataTable);
+export default DataTable;

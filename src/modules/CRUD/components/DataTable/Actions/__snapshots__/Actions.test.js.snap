@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="table-header__actions"
+>
+  <div
+    boundary="window"
+    content={
+      <div
+        className="table-header__resize"
+      >
+        <Button
+          active={false}
+          icon="maximize"
+          minimal={true}
+          onClick={[Function]}
+          text="CRUD.table.maximize"
+        />
+        <Button
+          active={true}
+          icon="minimize"
+          minimal={true}
+          onClick={[Function]}
+          text="CRUD.table.minimize"
+        />
+        <Button
+          active={false}
+          icon="minus"
+          minimal={true}
+          onClick={[Function]}
+          text="CRUD.table.hide"
+        />
+      </div>
+    }
+    interactionKind="hover"
+    position="top"
+  >
+    <button
+      icon="arrows-vertical"
+      intent="primary"
+      minimal={true}
+      type="button"
+    />
+  </div>
+</div>
+`;

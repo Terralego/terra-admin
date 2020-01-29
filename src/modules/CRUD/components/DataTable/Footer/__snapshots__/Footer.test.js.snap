@@ -15,7 +15,11 @@ exports[`Snapshots should render correctly 1`] = `
       <span
         className="table-footer__label inline"
       >
-        CRUD.table.pagination.display
+        <span
+          className="table-footer__display"
+        >
+          CRUD.table.pagination.display
+        </span>
         <select
           aria-describedby="table-footer__results"
           className="inline"
@@ -39,7 +43,7 @@ exports[`Snapshots should render correctly 1`] = `
           </option>
         </select>
         <span
-          className="inline"
+          className="table-footer__results"
           id="table-footer__results"
         >
            

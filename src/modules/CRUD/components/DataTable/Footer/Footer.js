@@ -56,7 +56,7 @@ const Footer = ({
       <NavbarGroup align={Alignment.CENTER}>
         <div className="table-footer__form">
           <Label className={`table-footer__label ${Classes.INLINE}`}>
-            {t('CRUD.table.pagination.display')}
+            <span className="table-footer__display">{t('CRUD.table.pagination.display')}</span>
             <Select
               className={Classes.INLINE}
               aria-describedby="table-footer__results"
@@ -68,7 +68,7 @@ const Footer = ({
               options={[10, 20, 50]}
               value={pageSize}
             />
-            <span className={Classes.INLINE} id="table-footer__results"> {t('CRUD.table.pagination.results')}</span>
+            <span id="table-footer__results" className="table-footer__results"> {t('CRUD.table.pagination.results')}</span>
           </Label>
         </div>
         <ReactPaginate

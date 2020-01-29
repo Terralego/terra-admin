@@ -1,19 +1,28 @@
 @import "@blueprintjs/core/src/components/button/_common.scss";
 
 .table-footer {
+  padding-left: 0;
+  &__display {
+    display: none;
+  }
+  &__results {
+    display: none;
+  }
   &__form {
     margin-right: auto !important;
   }
   &__label {
+    display: flex;
     margin-bottom: 0 !important;
   }
   &__pagination {
     li {
-      display: inline;
+      display: none;
       margin: 0.2rem;
     }
     .previous,
     .next {
+      display: inline;
       [aria-disabled="true"] {
         @include pt-button-disabled();
       }
@@ -21,3 +30,23 @@
   }
 }
 
+@media all and (min-width: 42em) {
+  .table-footer {
+    &__results {
+      display: inline;
+    }
+  }
+}
+
+@media all and (min-width: 66em) {
+  .table-footer {
+    &__display {
+      display: inline;
+    }
+    &__pagination {
+      li {
+        display: inline;
+      }
+    }
+  }
+}

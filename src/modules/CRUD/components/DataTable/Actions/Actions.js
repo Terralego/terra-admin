@@ -11,6 +11,7 @@ import {
 import ColumnsSelector from '@terralego/core/modules/Table/components/ColumnsSelector';
 
 import { TABLE_MINIFIED, TABLE_MEDIUM, TABLE_FULL } from '../../../services/UserSettingsProvider';
+import Search from '../Search';
 
 const Actions = ({
   columns,
@@ -35,23 +36,26 @@ const Actions = ({
   return (
     <div className="table-header__actions">
       {displayTableFilters && (
-        <Popover
-          content={t('CRUD.table.filterProps')}
-          {...popoverProps}
-        >
-          <ColumnsSelector
-            columns={columns}
-            onChange={props => {
-              onChange(props);
-              onHeaderChange(props);
-            }}
-            position={Position.LEFT}
-            locales={{
-              displayAllColumns: t('CRUD.table.columnsDisplay'),
-              hideAllColumns: t('CRUD.table.columnsHide'),
-            }}
-          />
-        </Popover>
+        <>
+          <Search />
+          <Popover
+            content={t('CRUD.table.filterProps')}
+            {...popoverProps}
+          >
+            <ColumnsSelector
+              columns={columns}
+              onChange={props => {
+                onChange(props);
+                onHeaderChange(props);
+              }}
+              position={Position.LEFT}
+              locales={{
+                displayAllColumns: t('CRUD.table.columnsDisplay'),
+                hideAllColumns: t('CRUD.table.columnsHide'),
+              }}
+            />
+          </Popover>
+        </>
       )}
       <Popover
         content={(

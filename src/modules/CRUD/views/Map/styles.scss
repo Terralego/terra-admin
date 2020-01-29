@@ -42,6 +42,7 @@
   transition: height .2s ease-in;
   display: flex;
   margin-top: auto;
+  overflow: hidden;
   &--medium {
     height: calc(100% / 3);
     ~ .CRUD-map .interactive-map {

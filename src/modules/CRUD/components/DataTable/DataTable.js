@@ -20,7 +20,6 @@ class DataTable extends React.Component {
       order: 'asc',
     },
     columnWidths: LOADING_COLUMN_WIDTHS,
-    querystring: {},
   }
 
   tableRef = React.createRef();
@@ -42,16 +41,16 @@ class DataTable extends React.Component {
     }
   }
 
-  loadData = querystring => {
-    const { getFeaturesList, pageSize } = this.props;
+  loadData = tableFilters => {
+    const { getFeaturesList, pageSize, setTableFilters } = this.props;
     const { featureEndpoint } = this.getView();
     if (!featureEndpoint) return;
-    getFeaturesList(featureEndpoint, querystring);
+    getFeaturesList(featureEndpoint, tableFilters);
+    setTableFilters(tableFilters || { page_size: pageSize });
     this.setState({
       data: [],
       loading: true,
       columnWidths: LOADING_COLUMN_WIDTHS,
-      querystring: querystring || { page_size: pageSize },
     });
   }
 
@@ -107,19 +106,19 @@ class DataTable extends React.Component {
   }
 
   onPageChange = ({ selected = 0, nextPageSize } = {}) => {
-    const { querystring } = this.state;
-    const { pageSize } = this.props;
+    const { pageSize, tableFilters } = this.props;
     this.loadData({
-      ...querystring,
+      ...tableFilters,
       page_size: nextPageSize || pageSize,
       page: selected + 1,
     });
   };
 
   onSort = ({ columnIndex, order }) => {
+    const { columns } = this.state;
+
     const {
-      querystring: prevQuerystring = {},
-      columns,
+      tableFilters: prevTableFilters,
     } = this.state;
 
     if (!columns.length) {
@@ -141,17 +140,17 @@ class DataTable extends React.Component {
     const prefix = order === 'asc' ? '' : '-';
     const suffix = columnsDisplayed[columnIndex].value;
 
-    const querystring = {
-      ...prevQuerystring,
+    const tableFilters = {
+      ...prevTableFilters,
       ordering: `${prefix}properties__${suffix}`,
       page: 1,
     };
 
-    if (JSON.stringify(prevQuerystring) === JSON.stringify(querystring)) {
+    if (JSON.stringify(prevTableFilters) === JSON.stringify(tableFilters)) {
       return;
     }
 
-    this.loadData(querystring);
+    this.loadData(tableFilters);
   }
 
   render () {
@@ -163,7 +162,7 @@ class DataTable extends React.Component {
 
     const { layer: { name } = {}, name: displayName = name } = this.getView();
 
-    const { data, columns, loading, initialSort, columnWidths, layer, querystring } = this.state;
+    const { data, columns, loading, initialSort, columnWidths, layer } = this.state;
 
     return (
       <div className="table-container" ref={this.tableRef}>
@@ -176,8 +175,8 @@ class DataTable extends React.Component {
               Header={props => (
                 <Header
                   {...props}
-                  layerName={displayName}
                   onHeaderChange={this.onHeaderChange}
+                  layerName={displayName}
                 />
               )}
               locales={{
@@ -208,7 +207,6 @@ class DataTable extends React.Component {
           )}
         <Footer
           featuresList={featuresList}
-          querystring={querystring}
           onPageChange={this.onPageChange}
           onPaginationSizeChange={this.onPaginationSizeChange}
         />

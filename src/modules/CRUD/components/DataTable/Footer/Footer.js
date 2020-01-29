@@ -35,7 +35,7 @@ const Footer = ({
   featuresList: { count = 0, previous = null, next = null } = {},
   onPageChange,
   pageSize,
-  querystring: { page },
+  tableFilters: { page },
   setPageSize,
   t,
 }) => {
@@ -100,7 +100,7 @@ Footer.propTypes = {
   }),
   onPageChange: PropTypes.func,
   pageSize: PropTypes.number,
-  querystring: PropTypes.shape({
+  tableFilters: PropTypes.shape({
     page: PropTypes.number,
   }),
   setPageSize: PropTypes.func,
@@ -111,7 +111,7 @@ Footer.defaultProps = {
   featuresList: {},
   onPageChange: () => {},
   pageSize: 10,
-  querystring: {},
+  tableFilters: {},
   setPageSize: () => {},
   t: text => text,
 };

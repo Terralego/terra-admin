@@ -2,10 +2,17 @@ import React from 'react';
 import { Edit } from 'react-admin';
 
 import DataLayerFormSelector from '../components/DataLayerFormSelector';
+import DefaultActions from '../../../../components/react-admin/DefaultActions';
 
 export const DataLayerEdit = props => (
-  <Edit undoable={false} {...props}>
-    <DataLayerFormSelector />
+  <Edit
+    undoable={false}
+    {...props}
+    actions={<DefaultActions />}
+  >
+    <DataLayerFormSelector
+      withSource="source"
+    />
   </Edit>
 );
 

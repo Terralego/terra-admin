@@ -46,6 +46,7 @@ const styles = {
   },
 };
 
+// Best performance when tabs have heavy content and produce multiple render
 const CustomFormTab = ({ hidden, ...props }) => (
   hidden
     ? null
@@ -62,12 +63,10 @@ const DataLayerTabbedForm = ({
   <>
     <SourceFetcher />
     <TabbedForm
-      defaultValue={{
-        layer_style: getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType)),
-      }}
       {...props}
     >
       <CustomFormTab label="datalayer.form.definition">
+
         <ReferenceInput
           source="source"
           reference={RES_DATASOURCE}
@@ -111,9 +110,26 @@ const DataLayerTabbedForm = ({
         <BooleanInput source="active_by_default" />
 
         <LongTextInput source="description" label="datalayer.form.description" />
+
+        <FormDataConsumer>
+          {({ formData }) =>
+            formData.source && (
+            <TextInput
+              type="hidden"
+              label=""
+              source="layer_style"
+              defaultValue={() => ({
+                layer_style: getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType)),
+              })}
+            />
+            )
+          }
+        </FormDataConsumer>
+
       </CustomFormTab>
 
       <CustomFormTab label="datalayer.form.style" path="style">
+
         <StyleField
           source="layer_style"
           withSource="source"

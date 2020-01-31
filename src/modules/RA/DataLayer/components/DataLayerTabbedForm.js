@@ -47,7 +47,7 @@ const styles = {
 };
 
 // Best performance when tabs have heavy content and produce multiple render
-const CustomFormTab = ({ hidden, ...props }) => (
+const LazyFormTab = ({ hidden, ...props }) => (
   hidden
     ? null
     : <FormTab hidden={hidden} {...props} />
@@ -65,7 +65,7 @@ const DataLayerTabbedForm = ({
     <TabbedForm
       {...props}
     >
-      <CustomFormTab label="datalayer.form.definition">
+      <LazyFormTab label="datalayer.form.definition">
 
         <ReferenceInput
           source="source"
@@ -126,9 +126,9 @@ const DataLayerTabbedForm = ({
           }
         </FormDataConsumer>
 
-      </CustomFormTab>
+      </LazyFormTab>
 
-      <CustomFormTab label="datalayer.form.style" path="style">
+      <LazyFormTab label="datalayer.form.style" path="style">
 
         <StyleField
           source="layer_style"
@@ -157,9 +157,9 @@ const DataLayerTabbedForm = ({
           </CustomFormIterator>
         </ArrayInput>
 
-      </CustomFormTab>
+      </LazyFormTab>
 
-      <CustomFormTab label="datalayer.form.interactions" path="interactions">
+      <LazyFormTab label="datalayer.form.interactions" path="interactions">
         <FormDataConsumer>
           {({ dispatch }) => (
             <BooleanInput
@@ -204,9 +204,9 @@ const DataLayerTabbedForm = ({
         </FormDataConsumer>
 
         <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
-      </CustomFormTab>
+      </LazyFormTab>
 
-      <CustomFormTab label="datalayer.form.fields-settings" path="fields">
+      <LazyFormTab label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>
@@ -281,7 +281,7 @@ const DataLayerTabbedForm = ({
             </ArrayInput>
           )}
         </FormDataConsumer>
-      </CustomFormTab>
+      </LazyFormTab>
     </TabbedForm>
   </>
 );

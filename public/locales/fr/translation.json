@@ -489,6 +489,10 @@
         "all_missing": "Impossible de trouver des données de références.",
         "many_missing": "Au moins une des références associées semble ne plus être disponible.",
         "single_missing": "La référence associée ne semble plus disponible."
+      },
+      "style_field": {
+        "empty_object": "L'objet ne doit pas être vide.",
+        "missing_property": "La propriété \"%{property}\" est absente."
       }
     },
     "message": {

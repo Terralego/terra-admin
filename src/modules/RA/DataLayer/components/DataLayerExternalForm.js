@@ -15,6 +15,8 @@ import {
   RES_VIEW,
 } from '../../ra-modules';
 
+import compose from '../../../../utils/compose';
+
 
 const DataLayerExternalForm = ({ viewList = [], ...props }) => (
   <SimpleForm {...props}>
@@ -57,4 +59,11 @@ const DataLayerExternalForm = ({ viewList = [], ...props }) => (
   </SimpleForm>
 );
 
-export default DataLayerExternalForm;
+
+const PropsSanitizer = WrappedComponent =>
+  ({ withSource, ...props }) => (<WrappedComponent {...props} />);
+
+
+export default compose(
+  PropsSanitizer,
+)(DataLayerExternalForm);

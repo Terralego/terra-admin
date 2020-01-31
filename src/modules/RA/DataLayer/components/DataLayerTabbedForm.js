@@ -286,8 +286,12 @@ const DataLayerTabbedForm = ({
   </>
 );
 
+const PropsSanitizer = WrappedComponent =>
+  ({ withSource, ...props }) => (<WrappedComponent {...props} />);
+
 export default compose(
   withStyles(styles),
   withRandomColor,
   translateRA,
+  PropsSanitizer,
 )(DataLayerTabbedForm);

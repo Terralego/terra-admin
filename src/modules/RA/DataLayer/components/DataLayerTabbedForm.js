@@ -113,14 +113,13 @@ const DataLayerTabbedForm = ({
 
         <FormDataConsumer>
           {({ formData }) =>
+            // Allow to initialize default value even if next tab is not yet loaded
             formData.source && (
             <TextInput
               type="hidden"
               label=""
               source="layer_style"
-              defaultValue={() => ({
-                layer_style: getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType)),
-              })}
+              defaultValue={getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType))}
             />
             )
           }
@@ -134,6 +133,7 @@ const DataLayerTabbedForm = ({
           source="layer_style"
           withSource="source"
           label="datalayer.form.styles.mainstyle"
+          defaultValue={getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType))}
           fullWidth
         />
 

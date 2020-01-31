@@ -9,9 +9,6 @@ const validate = value => {
   if (!value.type) {
     return 'type not found';
   }
-  if (!value.paint) {
-    return 'paint not found';
-  }
   return undefined;
 };
 

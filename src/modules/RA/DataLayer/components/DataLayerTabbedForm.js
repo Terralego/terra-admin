@@ -48,9 +48,7 @@ const styles = {
 
 // Best performance when tabs have heavy content and produce multiple render
 const LazyFormTab = ({ hidden, ...props }) => (
-  hidden
-    ? null
-    : <FormTab hidden={hidden} {...props} />
+  hidden ? null : <FormTab {...props} />
 );
 
 const DataLayerTabbedForm = ({

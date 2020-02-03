@@ -529,21 +529,6 @@ export class Map extends React.Component {
                   />
                 )}
               </DetailsWrapper>
-              <div
-                ref={this.dataTable}
-                className={classnames(
-                  {
-                    'CRUD-table': true,
-                    'CRUD-table--active': layer && !areDetailsVisible,
-                    [`CRUD-table--${tableSize}`]: layer && !areDetailsVisible,
-                  },
-                )}
-              >
-                <DataTable
-                  layerName={layer}
-                  onHoverCell={this.onTableHoverCell}
-                />
-              </div>
 
               <div
                 className={classnames(
@@ -568,6 +553,22 @@ export class Map extends React.Component {
                     {t('CRUD.settings.unableToLoadMap')}
                   </Message>
                 )}
+              </div>
+
+              <div
+                ref={this.dataTable}
+                className={classnames(
+                  {
+                    'CRUD-table': true,
+                    'CRUD-table--active': layer && !areDetailsVisible,
+                    [`CRUD-table--${tableSize}`]: layer && !areDetailsVisible,
+                  },
+                )}
+              >
+                <DataTable
+                  layerName={layer}
+                  onHoverCell={this.onTableHoverCell}
+                />
               </div>
             </>
           )}

@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 50px);
+  transform: translateX(101%);
   transform: translateX(calc(100% + 0.5rem));
   transition: transform 0.2s ease-in;
   background: rgba(255,255,255,0.9);

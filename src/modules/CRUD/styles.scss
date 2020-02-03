@@ -1,8 +1,8 @@
 // Override default layout style
 .CRUD {
-  min-height: 100%;
+  height: 100%;
   .nav-layout {
-    flex: auto;
+    flex: 1 0 auto;
     height: 100%;
     &__nav {
       padding: 0;

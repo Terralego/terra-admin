@@ -6,6 +6,8 @@
 }
 
 .CRUD-map {
+  flex-grow: 1;
+  
   .interactive-map {
     position: absolute;
     top: 0;

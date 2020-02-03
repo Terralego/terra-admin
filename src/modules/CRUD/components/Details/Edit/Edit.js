@@ -377,6 +377,7 @@ class Edit extends React.Component {
   submitFeature = async ({ formData: { geometryFromMap, ...properties } }) => {
     const { geom } = this.state;
     const {
+      feature: { geom: prevGeom },
       getSettings,
       history: { push },
       view: { featureEndpoint },
@@ -401,10 +402,12 @@ class Edit extends React.Component {
 
     if (savedFeature) {
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
-      getFeaturesList(
-        featureEndpoint,
-        { page_size: pageSize },
-      );
+      if (prevGeom !== geom) {
+        getFeaturesList(
+          featureEndpoint,
+          { page_size: pageSize },
+        );
+      }
       toast.displayToaster(
         { id: savedFeature.identifier },
         t(this.isActionUpdate() ? 'CRUD.details.successUpdateFeature' : 'CRUD.details.successCreateFeature'),

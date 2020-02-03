@@ -119,7 +119,7 @@ class DataTable extends React.Component {
 
     const {
       tableFilters: prevTableFilters,
-    } = this.state;
+    } = this.props;
 
     if (!columns.length) {
       return;

@@ -85,7 +85,9 @@ class Edit extends React.Component {
       uiSchema: PropTypes.shape({}),
     }),
     layerPaint: PropTypes.shape({}).isRequired,
-    pageSize: PropTypes.number,
+    tableFilters: PropTypes.shape({
+      page_size: PropTypes.number,
+    }),
     paramLayer: PropTypes.string.isRequired,
     paramId: PropTypes.string.isRequired,
     action: PropTypes.oneOf([ACTION_CREATE, ACTION_UPDATE]).isRequired,
@@ -114,7 +116,9 @@ class Edit extends React.Component {
       name: undefined,
       uiSchema: {},
     },
-    pageSize: 10,
+    tableFilters: {
+      page_size: 10,
+    },
     displayAddFeature: true,
     displayChangeFeature: true,
     addControl () {},
@@ -381,7 +385,7 @@ class Edit extends React.Component {
       getSettings,
       history: { push },
       view: { featureEndpoint },
-      pageSize,
+      tableFilters,
       paramId,
       paramLayer,
       getFeaturesList,
@@ -405,7 +409,7 @@ class Edit extends React.Component {
       if (prevGeom !== geom) {
         getFeaturesList(
           featureEndpoint,
-          { page_size: pageSize },
+          { page_size: tableFilters.page_size },
         );
       }
       toast.displayToaster(

@@ -42,11 +42,12 @@ class DataTable extends React.Component {
   }
 
   loadData = tableFilters => {
-    const { getFeaturesList, pageSize, setTableFilters } = this.props;
+    const { getFeaturesList, tableFilters: prevTableFilters, setTableFilters } = this.props;
     const { featureEndpoint } = this.getView();
     if (!featureEndpoint) return;
-    getFeaturesList(featureEndpoint, tableFilters);
-    setTableFilters(tableFilters || { page_size: pageSize });
+    const filters = tableFilters || prevTableFilters;
+    getFeaturesList(featureEndpoint, filters);
+    setTableFilters(filters);
     this.setState({
       data: [],
       loading: true,
@@ -106,10 +107,10 @@ class DataTable extends React.Component {
   }
 
   onPageChange = ({ selected = 0, nextPageSize } = {}) => {
-    const { pageSize, tableFilters } = this.props;
+    const { tableFilters } = this.props;
     this.loadData({
       ...tableFilters,
-      page_size: nextPageSize || pageSize,
+      page_size: nextPageSize || tableFilters.page_size,
       page: selected + 1,
     });
   };
@@ -142,6 +143,7 @@ class DataTable extends React.Component {
 
     const tableFilters = {
       ...prevTableFilters,
+      page_size: prevTableFilters.page_size || 10,
       ordering: `${prefix}properties__${suffix}`,
       page: 1,
     };

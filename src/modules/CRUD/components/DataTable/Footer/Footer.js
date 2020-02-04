@@ -34,9 +34,7 @@ const getCurrentPage = (prevPage, nextPage) => {
 const Footer = ({
   featuresList: { count = 0, previous = null, next = null } = {},
   onPageChange,
-  pageSize,
-  tableFilters: { page },
-  setPageSize,
+  tableFilters: { page, page_size: pageSize },
   t,
 }) => {
   const prevPage = getPageFromUrl(previous);
@@ -62,7 +60,6 @@ const Footer = ({
               aria-describedby="table-footer__results"
               onChange={({ target: { value } }) => {
                 const nextPageSize = Number(value);
-                setPageSize(nextPageSize);
                 onPageChange({ nextPageSize });
               }}
               options={[10, 20, 50]}
@@ -99,20 +96,17 @@ Footer.propTypes = {
     next: PropTypes.string,
   }),
   onPageChange: PropTypes.func,
-  pageSize: PropTypes.number,
   tableFilters: PropTypes.shape({
     page: PropTypes.number,
+    page_size: PropTypes.number,
   }),
-  setPageSize: PropTypes.func,
   t: PropTypes.func,
 };
 
 Footer.defaultProps = {
   featuresList: {},
   onPageChange: () => {},
-  pageSize: 10,
   tableFilters: {},
-  setPageSize: () => {},
   t: text => text,
 };
 

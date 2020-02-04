@@ -38,9 +38,10 @@ beforeEach(() => {
     t: text => text,
     featuresList: { count: 10, previous: '1', next: '3' },
     onPageChange: () => {},
-    pageSize: 10,
+    tableFilters: {
+      page_size: 10,
+    },
     querystring: {},
-    setPageSize: () => {},
   };
 });
 

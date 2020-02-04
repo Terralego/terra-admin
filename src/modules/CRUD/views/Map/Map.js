@@ -532,8 +532,11 @@ export class Map extends React.Component {
 
               <div
                 className={classnames(
-                  'CRUD-map',
-                  { 'CRUD-map--is-resizing': mapIsResizing },
+                  {
+                    'CRUD-map': true,
+                    'CRUD-map--is-resizing': mapIsResizing,
+                    [`CRUD-map--with-table-${tableSize}`]: layer && !areDetailsVisible,
+                  },
                 )}
               >
                 {!!backgroundStyle.length && (

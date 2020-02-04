@@ -29,6 +29,25 @@
       filter: blur(1rem);
     }
   }
+
+  &--with-table {
+    &-medium {
+      .interactive-map {
+        .mapboxgl-ctrl-bottom-left,
+        .mapboxgl-ctrl-bottom-right {
+          bottom: calc(100% / 3);
+        }
+      }
+    }
+    &-minified {
+      .interactive-map {
+        .mapboxgl-ctrl-bottom-left,
+        .mapboxgl-ctrl-bottom-right {
+          bottom: 3rem;
+        }
+      }
+    }
+  }
 }
 
 .CRUD-no-map {
@@ -47,24 +66,12 @@
   overflow: hidden;
   &--medium {
     height: calc(100% / 3);
-    ~ .CRUD-map .interactive-map {
-      .mapboxgl-ctrl-bottom-left,
-      .mapboxgl-ctrl-bottom-right {
-        bottom: calc(100% / 3);
-      }
-    }
   }
   &--full {
     height: 100%;
   }
   &--minified {
     height: 3rem;
-    ~ .CRUD-map .interactive-map {
-      .mapboxgl-ctrl-bottom-left,
-      .mapboxgl-ctrl-bottom-right {
-        bottom: 3rem;
-      }
-    }
     .table-header + *,
     .table-footer {
       display: none;

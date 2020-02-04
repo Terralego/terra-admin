@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import connect from 'react-ctx-connect';
 
 export const context = React.createContext({});
@@ -13,9 +13,23 @@ export const withTableSize = () => connectUserSettingsProvider('tableSize', 'set
 
 const { Provider } = context;
 
+const userSettings = JSON.parse(localStorage.getItem('CRUDUserSettings')) || {};
+export const getUserSetting = key => userSettings[key];
+
 export const UserSettingsProvider = ({ children }) => {
-  const [tableSize, setTableSize] = useState(TABLE_MEDIUM);
-  const [tableFilters, setTableFilters] = useState({});
+  const [tableFilters, setTableFilters] = useState(getUserSetting('tableFilters') || {
+    page_size: 10,
+  });
+  const [tableSize, setTableSize] = useState(getUserSetting('tableSize') || TABLE_MEDIUM);
+
+
+  useEffect(() => {
+    localStorage.setItem('CRUDUserSettings', JSON.stringify({
+      ...userSettings,
+      tableFilters,
+      tableSize,
+    }));
+  }, [tableFilters, tableSize]);
 
   const value = {
     tableSize,

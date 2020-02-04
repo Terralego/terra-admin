@@ -12,6 +12,8 @@ import {
   FormDataConsumer,
   REDUX_FORM_NAME,
   translate as translateRA,
+  withDataProvider,
+  GET_ONE,
 } from 'react-admin';
 import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
@@ -37,6 +39,7 @@ import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
 import { RES_DATASOURCE } from '../../ra-modules';
 import withRandomColor from './withRandomColor';
+import { WMTS } from '../../DataSource';
 
 const defaultRequired = required();
 
@@ -51,30 +54,52 @@ const LazyFormTab = ({ hidden, ...props }) => (
   hidden ? null : <FormTab {...props} />
 );
 
+
+const initFieldFromSource = (formData, dispatch, dataProvider) =>
+  async (_, sourceId) => {
+    const { data: { _type: type, fields: sourceFields = [] } } = await dataProvider(GET_ONE, RES_DATASOURCE, { id: sourceId });
+
+    const layerFields = formData.fields || [];
+    const sourceFieldMapped = sourceFields.map(({ id, ...sourceField }) => {
+      const layerField = layerFields.find(({ field }) => field === id) || {};
+      return { field: id, sourceFieldId: id, ...sourceField, ...layerField };
+    });
+
+    dispatch(change(REDUX_FORM_NAME, 'fields', sourceFieldMapped));
+    dispatch(change(REDUX_FORM_NAME, 'external', type === WMTS));
+  };
+
+
 const DataLayerTabbedForm = ({
   classes,
   translate,
   randomColor,
   sourceData: { geom_type: geomType = POLYGON } = {},
+  dataProvider,
   ...props
 }) => (
   <>
-    <SourceFetcher />
     <TabbedForm
       {...props}
     >
-      <LazyFormTab label="datalayer.form.definition">
-
-        <ReferenceInput
-          source="source"
-          reference={RES_DATASOURCE}
-          label="datalayer.form.data-source"
-          sort={{ field: 'name', order: 'ASC' }}
-          validate={defaultRequired}
-          perPage={100}
-        >
-          <SelectInput />
-        </ReferenceInput>
+      <LazyFormTab
+        label="datalayer.form.definition"
+      >
+        <FormDataConsumer>
+          {({ formData, dispatch }) => (
+            <ReferenceInput
+              source="source"
+              reference={RES_DATASOURCE}
+              label="datalayer.form.data-source"
+              sort={{ field: 'name', order: 'ASC' }}
+              validate={defaultRequired}
+              perPage={100}
+              onChange={initFieldFromSource(formData, dispatch, dataProvider)}
+            >
+              <SelectInput />
+            </ReferenceInput>
+          )}
+        </FormDataConsumer>
 
         <TextInput
           source="name"
@@ -292,4 +317,5 @@ export default compose(
   withRandomColor,
   translateRA,
   PropsSanitizer,
+  withDataProvider,
 )(DataLayerTabbedForm);

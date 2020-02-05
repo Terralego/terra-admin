@@ -54,7 +54,6 @@ const DataLayerExternalForm = ({ viewList = [], ...props }) => (
       type="text"
     />
 
-    <NumberInput source="order" label="datalayer.form.ordering" validate={[required()]} />
     <LongTextInput source="description" label="datalayer.form.description" />
   </SimpleForm>
 );

@@ -4,12 +4,11 @@ import {
   TextInput,
   LongTextInput,
   SelectInput,
-  NumberInput,
   ReferenceInput,
   required,
 } from 'react-admin';
 
-import SourceFetcher from './SourceFetcher';
+import FieldUpdater from './FieldUpdater';
 import {
   RES_DATASOURCE,
   RES_VIEW,
@@ -20,7 +19,7 @@ import compose from '../../../../utils/compose';
 
 const DataLayerExternalForm = ({ viewList = [], ...props }) => (
   <SimpleForm {...props}>
-    <SourceFetcher />
+    <FieldUpdater />
     <ReferenceInput
       source="source"
       reference={RES_DATASOURCE}

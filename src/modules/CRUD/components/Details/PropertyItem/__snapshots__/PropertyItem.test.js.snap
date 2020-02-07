@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<ul>
+  <li
+    className="details__list-item"
+  >
+    <strong
+      className="details__list-label"
+    >
+      Numéro
+    </strong>
+    <span
+      className="details__list-value"
+    >
+      2
+    </span>
+  </li>
+  <li
+    className="details__list-item"
+  >
+    <strong
+      className="details__list-label"
+    >
+      Validation
+    </strong>
+    <span
+      className="details__list-value"
+    >
+      CRUD.details.true
+    </span>
+  </li>
+  <li
+    className="details__list-item"
+  >
+    <strong
+      className="details__list-label"
+    >
+      Available
+    </strong>
+    <span
+      className="details__list-value"
+    >
+      CRUD.details.false
+    </span>
+  </li>
+  <li
+    className="details__list-item"
+  >
+    <strong
+      className="details__list-label"
+    >
+      ArrayOfStrings
+    </strong>
+    <span
+      className="details__list-value"
+    >
+      1, 2, 3
+    </span>
+  </li>
+  <li
+    className="details__list-item"
+  >
+    <strong
+      className="details__list-label"
+    >
+      ArrayOfObjects
+    </strong>
+    <span
+      className="details__list-value"
+    >
+      <div
+        className="details__text"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "foo: Foo, bar: Bar
+test: footest",
+          }
+        }
+      />
+    </span>
+  </li>
+  <li
+    className="details__list-item"
+  >
+    <strong
+      className="details__list-label"
+    >
+      ArrayOfObjectsToTable
+    </strong>
+    <span
+      className="details__list-value"
+    >
+      <table
+        className="details__table"
+      >
+        <thead>
+          <tr>
+            <th>
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "foo",
+                  }
+                }
+              />
+            </th>
+            <th>
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "bar",
+                  }
+                }
+              />
+            </th>
+            <th>
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "objectTest",
+                  }
+                }
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "FooItem",
+                  }
+                }
+              />
+            </td>
+            <td>
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "BarItem",
+                  }
+                }
+              />
+            </td>
+            <td>
+              test: test
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "Foo2Item",
+                  }
+                }
+              />
+            </td>
+            <td>
+              <div
+                className="details__text"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "Bar2Item",
+                  }
+                }
+              />
+            </td>
+            <td>
+              test: test2
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </span>
+  </li>
+  <li
+    className="details__list-item"
+  >
+    <strong
+      className="details__list-label"
+    >
+      Object
+    </strong>
+    <span
+      className="details__list-value"
+    >
+      foobar: foobar, foobarbar: foobarbar
+    </span>
+  </li>
+  <li
+    className="details__list-item"
+  >
+    <strong
+      className="details__list-label"
+    >
+      EmptyValue
+    </strong>
+    <span
+      className="details__list-value"
+    >
+      <div
+        className="details__text"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": " ",
+          }
+        }
+      />
+    </span>
+  </li>
+</ul>
+`;

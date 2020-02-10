@@ -360,6 +360,11 @@
       "all-fields-available": " Tous les champs disponibles",
       "show": "Afficher dans le tableau",
       "exportable": "Exportable",
+      "compare-url": {
+        "title": "URL de comparaison",
+        "help-title": "Modèle d'URL de comparaison",
+        "help-text": "Ce modèle permet de générer l'URL de comparaison qui est disponible dans le tableau lorsque l'on sélectionne plusieurs éléments. Ajoutez « {{ids}} » à l'emplacement où la liste des identifiants sélectionnés doit-être insérée."
+      },
       "popup": {
         "display-on-hover": "Afficher une fenêtre contextuelle",
         "min-zoom": "Zoom minimum",

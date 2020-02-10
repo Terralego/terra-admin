@@ -210,6 +210,13 @@ const DataLayerTabbedForm = ({
         </FormDataConsumer>
 
         <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
+
+        <TextInput
+          label="datalayer.form.compare-url.title"
+          source="settings.compare"
+        />
+        <HelpContent title="datalayer.form.compare-url.help-title" content="datalayer.form.compare-url.help-text" />
+
       </LazyFormTab>
 
       <LazyFormTab label="datalayer.form.fields-settings" path="fields">

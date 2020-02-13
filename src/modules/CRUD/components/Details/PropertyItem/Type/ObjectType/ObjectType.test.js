@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import ObjectType from './ObjectType';
 
 jest.mock('..', () => props => <div {...props} />);
-
+jest.mock('../../NoValue', () => () => <div>No value</div>);
 
 const props = {
   display_value: {

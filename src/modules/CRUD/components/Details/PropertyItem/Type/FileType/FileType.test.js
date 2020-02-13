@@ -2,6 +2,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import FileType from './FileType';
 
+jest.mock('../../NoValue', () => () => <div>No value</div>);
+
 const props = {
   display_value: {
     url: 'http://file.pdf',

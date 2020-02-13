@@ -8,11 +8,10 @@ import NoValue from '../../NoValue';
 const ArrayType = ({
   display_value: displayValue,
   schema,
-  t,
   ui_schema: uiSchema = {},
 }) => {
   if (displayValue === null || !displayValue.length) {
-    return <NoValue t={t} />;
+    return <NoValue />;
   }
 
   const { items: { properties, type } } = schema;
@@ -73,7 +72,6 @@ ArrayType.propTypes = {
       type: PropTypes.string,
     }),
   }),
-  t: PropTypes.func,
   ui_schema: PropTypes.shape({
     items: PropTypes.shape({
       'ui:order': PropTypes.array,
@@ -88,7 +86,6 @@ ArrayType.defaultProps = {
       type: undefined,
     },
   },
-  t: text => text,
   ui_schema: {
     items: {
       'ui:order': [],

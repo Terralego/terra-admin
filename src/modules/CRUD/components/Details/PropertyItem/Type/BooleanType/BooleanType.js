@@ -7,7 +7,7 @@ const BooleanType = ({
   t,
 }) => {
   if (displayValue === null) {
-    return <NoValue t={t} />;
+    return <NoValue />;
   }
   return (
     displayValue

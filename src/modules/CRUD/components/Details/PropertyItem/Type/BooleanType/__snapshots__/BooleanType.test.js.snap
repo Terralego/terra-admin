@@ -3,11 +3,9 @@
 exports[`should render correctly false 1`] = `"CRUD.details.false"`;
 
 exports[`should render correctly nothing 1`] = `
-<span
-  className="details__list-value--empty"
->
-  CRUD.details.noValue
-</span>
+<div>
+  No value
+</div>
 `;
 
 exports[`should render correctly true 1`] = `"CRUD.details.true"`;

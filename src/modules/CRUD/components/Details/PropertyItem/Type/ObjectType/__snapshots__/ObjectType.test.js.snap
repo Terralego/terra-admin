@@ -1,11 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly nothing 1`] = `
-<span
-  className="details__list-value--empty"
->
-  CRUD.details.noValue
-</span>
+<div>
+  No value
+</div>
 `;
 
 exports[`should render correctly object 1`] = `

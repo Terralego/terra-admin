@@ -13,9 +13,9 @@ const isHTML = value => {
   return div.firstChild.nodeType === Node.ELEMENT_NODE;
 };
 
-const StringType = ({ display_value: displayValue, t }) => {
+const StringType = ({ display_value: displayValue }) => {
   if (displayValue === null) {
-    return <NoValue t={t} />;
+    return <NoValue />;
   }
   return (
     <div
@@ -31,12 +31,10 @@ const StringType = ({ display_value: displayValue, t }) => {
 
 StringType.propTypes = {
   display_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  t: PropTypes.func,
 };
 
 StringType.defaultProps = {
   display_value: undefined,
-  t: text => text,
 };
 
 export default StringType;

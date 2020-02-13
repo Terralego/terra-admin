@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import ArrayType from './ArrayType';
 
 jest.mock('..', () => props => <div {...props} />);
+jest.mock('../../NoValue', () => () => <div>No value</div>);
 
 const arrayStringsProps = {
   display_value: ['Chemin du Puy-en-Velay', 'Chemin des Piémonts '],

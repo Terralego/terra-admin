@@ -138,9 +138,7 @@ exports[`should render correctly array of objects as table 1`] = `
 exports[`should render correctly array of strings 1`] = `"Chemin du Puy-en-Velay, Chemin des Piémonts "`;
 
 exports[`should render correctly nothing 1`] = `
-<span
-  className="details__list-value--empty"
->
-  CRUD.details.noValue
-</span>
+<div>
+  No value
+</div>
 `;

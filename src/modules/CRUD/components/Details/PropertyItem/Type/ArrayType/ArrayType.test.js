@@ -5,6 +5,7 @@ import ArrayType from './ArrayType';
 
 jest.mock('..', () => props => <div {...props} />);
 jest.mock('../../NoValue', () => () => <div>No value</div>);
+jest.mock('./ArrayOfObjects', () => props => <div {...props} />);
 
 const arrayStringsProps = {
   display_value: ['Chemin du Puy-en-Velay', 'Chemin des Piémonts '],
@@ -56,24 +57,11 @@ describe('should render correctly', () => {
     )).toJSON();
     expect(tree).toMatchSnapshot();
   });
-  it('array of objects as table', () => {
-    const tree = renderer.create((
-      <ArrayType {...arrayObjectsProps} />
-    )).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
   it('array of objects', () => {
     const tree = renderer.create((
       <ArrayType
         {...arrayObjectsProps}
-        display_value={[{
-          date: '2019',
-          source: 'Requalification du site',
-        }, {
-          date: '2018',
-          source: 'Réfection toiture',
-          foo: 'foo',
-        }]}
+
       />
     )).toJSON();
     expect(tree).toMatchSnapshot();

@@ -5,101 +5,34 @@ Array [
   <ul>
     <li>
       <span>
-        Name of the group
-      </span>
-      <ul
-        className="details__list"
-      >
-        <div
-          name="Numéro"
-          value={2}
-        />
-        <div
-          name="Validation"
-          value={true}
-        />
-        <div
-          name="Available"
-          value={false}
-        />
-        <div
-          name="ArrayOfStrings"
-          value={
-            Array [
-              1,
-              2,
-              3,
-            ]
-          }
-        />
-        <div
-          name="ArrayOfObjects"
-          value={
-            Array [
-              Object {
-                "bar": "Bar",
-                "foo": "Foo",
-              },
-              Object {
-                "test": "footest",
-              },
-            ]
-          }
-        />
-        <div
-          name="ArrayOfObjectsToTable"
-          value={
-            Array [
-              Object {
-                "bar": "BarItem",
-                "foo": "FooItem",
-                "objectTest": Object {
-                  "test": "test",
-                },
-              },
-              Object {
-                "bar": "Bar2Item",
-                "foo": "Foo2Item",
-                "objectTest": Object {
-                  "test": "test2",
-                },
-              },
-            ]
-          }
-        />
-        <div
-          name="Object"
-          value={
-            Object {
-              "foobar": "foobar",
-              "foobarbar": "foobarbar",
-            }
-          }
-        />
-        <div
-          name="EmptyValue"
-          value="  "
-        />
-      </ul>
-    </li>
-    <li>
-      <span>
         CRUD.details.other
       </span>
       <ul
         className="details__list"
       >
         <div
-          name="key without value"
-          value={null}
+          value={
+            Object {
+              "display_value": "Value of foo",
+              "title": "Foo",
+            }
+          }
         />
         <div
-          name="Hello foo bar"
-          value="Value hello foo bar"
+          value={
+            Object {
+              "display_value": "Value of bar",
+              "title": "Bar",
+            }
+          }
         />
         <div
-          name="Contact"
-          value="Foo contact"
+          value={
+            Object {
+              "display_value": "Value of foo and bar",
+              "title": "Foo and Bar",
+            }
+          }
         />
       </ul>
     </li>

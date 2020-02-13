@@ -31,33 +31,15 @@ const props = {
   feature: {
     title: 'Title of the feature',
     display_properties: {
-      'Group 1': {
-        title: 'Name of the group',
-        slug: 'slug-group',
-        order: 1,
-        pictogram: null,
-        properties: {
-          Numéro: 2,
-          Validation: true,
-          Available: false,
-          ArrayOfStrings: [1, 2, 3],
-          ArrayOfObjects: [{ foo: 'Foo', bar: 'Bar' }, { test: 'footest' }],
-          ArrayOfObjectsToTable: [{ foo: 'FooItem', bar: 'BarItem' }, { foo: 'Foo2Item', bar: 'Bar2Item' }],
-          Object: { foobar: 'foobar', foobarbar: 'foobarbar' },
-          EmptyValue: '  ',
-        },
-      },
-      __default__: {
-        title: '',
-        pictogram: null,
-        order: 9999,
-        properties: {
-          'key without value': null,
-          'Hello foo bar': 'Value hello foo bar',
-          Contact: 'Foo contact',
-        },
-      },
+      foo: 'foo',
     },
+    new_display_properties: {
+      foo: 'foo',
+    },
+    documents: [{
+      file1: 'file1',
+      file2: 'file2',
+    }],
   },
 };
 

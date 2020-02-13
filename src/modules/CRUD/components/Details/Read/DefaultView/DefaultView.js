@@ -38,8 +38,8 @@ class DefaultView extends React.Component {
 
   renderPanel = properties => (
     <ul className="details__list">
-      {Object.keys(properties).map(name => (
-        <PropertyItem key={name} name={name} value={properties[name]} />
+      {Object.entries(properties).map(([key, value]) => (
+        <PropertyItem key={key} value={value} />
       ))}
     </ul>
   )

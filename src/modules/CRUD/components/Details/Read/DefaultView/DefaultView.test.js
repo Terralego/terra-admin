@@ -30,32 +30,10 @@ const props = {
   },
   properties: {
     'Group 1': {
-      title: 'Name of the group',
-      slug: 'slug-group',
-      order: 1,
-      pictogram: null,
       properties: {
-        Numéro: 2,
-        Validation: true,
-        Available: false,
-        ArrayOfStrings: [1, 2, 3],
-        ArrayOfObjects: [{ foo: 'Foo', bar: 'Bar' }, { test: 'footest' }],
-        ArrayOfObjectsToTable: [
-          { foo: 'FooItem', bar: 'BarItem', objectTest: { test: 'test' } },
-          { foo: 'Foo2Item', bar: 'Bar2Item', objectTest: { test: 'test2' } },
-        ],
-        Object: { foobar: 'foobar', foobarbar: 'foobarbar' },
-        EmptyValue: '  ',
-      },
-    },
-    __default__: {
-      title: '',
-      pictogram: null,
-      order: 9999,
-      properties: {
-        'key without value': null,
-        'Hello foo bar': 'Value hello foo bar',
-        Contact: 'Foo contact',
+        foo: { display_value: 'Value of foo', title: 'Foo' },
+        bar: { display_value: 'Value of bar', title: 'Bar' },
+        foobar: { display_value: 'Value of foo and bar', title: 'Foo and Bar' },
       },
     },
   },

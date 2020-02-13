@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BooleanType from './BooleanType';
+import FileType from './FileType';
 import StringType from './StringType';
 
 export const TYPES = {
   boolean: BooleanType,
+  file: FileType,
+  image: FileType,
   number: StringType,
   string: StringType,
 };
@@ -20,14 +23,23 @@ export const getComponent = type => {
   return () => null;
 };
 
+export const getRightType = (schemaType, type) => {
+  if (['file', 'image'].includes(type)) {
+    return type;
+  }
+  return schemaType || type;
+};
+
 const Type = props => {
   const {
     schema: {
-      type,
+      type: schemaType,
     },
+    type,
   } = props;
 
-  const Component = getComponent(type);
+  const rightType = getRightType(schemaType, type);
+  const Component = getComponent(rightType);
 
   return (
     <Component {...props} />
@@ -41,6 +53,7 @@ Type.propTypes = {
     type: PropTypes.string,
   }),
   t: PropTypes.func,
+  type: PropTypes.string,
 };
 
 Type.defaultProps = {
@@ -49,6 +62,7 @@ Type.defaultProps = {
     type: '',
   },
   t: text => text,
+  type: '',
 };
 
 export default Type;

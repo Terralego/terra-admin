@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ArrayType from './ArrayType';
 import BooleanType from './BooleanType';
 import FileType from './FileType';
 import ObjectType from './ObjectType';
 import StringType from './StringType';
 
 export const TYPES = {
+  array: ArrayType,
   boolean: BooleanType,
   file: FileType,
   image: FileType,

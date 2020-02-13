@@ -4,11 +4,13 @@ import { shallow } from 'enzyme';
 
 import Type, { getComponent, getRightType } from './Type';
 
+import ArrayType from './ArrayType';
 import BooleanType from './BooleanType';
 import FileType from './FileType';
 import ObjectType from './ObjectType';
 import StringType from './StringType';
 
+jest.mock('./ArrayType', () => jest.fn().mockName('ArrayType'));
 jest.mock('./BooleanType', () => jest.fn().mockName('BooleanType'));
 jest.mock('./FileType', () => jest.fn().mockName('FileType'));
 jest.mock('./ObjectType', () => jest.fn().mockName('ObjectType'));
@@ -40,6 +42,18 @@ describe('should get the right type', () => {
 });
 
 describe('should call the appropriate component', () => {
+  it('Array', () => {
+    const wrapper = shallow((
+      <Type
+        display_value={['array', 'value']}
+        schema={{
+          type: 'array',
+        }}
+        type="string"
+      />
+    ));
+    expect(wrapper.matchesElement(<ArrayType />)).toBe(true);
+  });
   it('Boolean', () => {
     const wrapper = shallow((
       <Type

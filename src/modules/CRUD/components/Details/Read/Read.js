@@ -16,7 +16,8 @@ const Read = ({
   feature: {
     title = t('CRUD.details.noFeature'),
     documents,
-    display_properties: properties,
+    display_properties: oldProperties,
+    new_display_properties: properties = oldProperties,
   },
 }) => {
   if (!displayViewFeature) {
@@ -50,6 +51,7 @@ Read.propTypes = {
     title: PropTypes.string,
     documents: PropTypes.array,
     display_properties: PropTypes.shape({}),
+    new_display_properties: PropTypes.shape({}),
   }),
   t: PropTypes.func,
 };
@@ -66,6 +68,7 @@ Read.defaultProps = {
     title: '',
     documents: [],
     display_properties: {},
+    new_display_properties: {},
   },
   t: text => text,
 };

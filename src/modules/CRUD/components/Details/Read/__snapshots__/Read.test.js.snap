@@ -11,6 +11,14 @@ exports[`should render AttachmentView correctly 1`] = `
   className="details"
 >
   <div
+    documents={
+      Array [
+        Object {
+          "file1": "file1",
+          "file2": "file2",
+        },
+      ]
+    }
     title="Title of the feature"
   >
     Header
@@ -35,6 +43,14 @@ exports[`should render defaultView correctly 1`] = `
   className="details"
 >
   <div
+    documents={
+      Array [
+        Object {
+          "file1": "file1",
+          "file2": "file2",
+        },
+      ]
+    }
     title="Title of the feature"
   >
     Header
@@ -50,56 +66,7 @@ exports[`should render defaultView correctly 1`] = `
     <div
       properties={
         Object {
-          "Group 1": Object {
-            "order": 1,
-            "pictogram": null,
-            "properties": Object {
-              "ArrayOfObjects": Array [
-                Object {
-                  "bar": "Bar",
-                  "foo": "Foo",
-                },
-                Object {
-                  "test": "footest",
-                },
-              ],
-              "ArrayOfObjectsToTable": Array [
-                Object {
-                  "bar": "BarItem",
-                  "foo": "FooItem",
-                },
-                Object {
-                  "bar": "Bar2Item",
-                  "foo": "Foo2Item",
-                },
-              ],
-              "ArrayOfStrings": Array [
-                1,
-                2,
-                3,
-              ],
-              "Available": false,
-              "EmptyValue": "  ",
-              "Numéro": 2,
-              "Object": Object {
-                "foobar": "foobar",
-                "foobarbar": "foobarbar",
-              },
-              "Validation": true,
-            },
-            "slug": "slug-group",
-            "title": "Name of the group",
-          },
-          "__default__": Object {
-            "order": 9999,
-            "pictogram": null,
-            "properties": Object {
-              "Contact": "Foo contact",
-              "Hello foo bar": "Value hello foo bar",
-              "key without value": null,
-            },
-            "title": "",
-          },
+          "foo": "foo",
         }
       }
     >

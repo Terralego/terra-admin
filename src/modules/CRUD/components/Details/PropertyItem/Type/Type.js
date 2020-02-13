@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import BooleanType from './BooleanType';
 import StringType from './StringType';
 
 export const TYPES = {
+  boolean: BooleanType,
   number: StringType,
   string: StringType,
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import BooleanType from './BooleanType';
 
+jest.mock('../../NoValue', () => () => <div>No value</div>);
 
 describe('should render correctly', () => {
   it('true', () => {

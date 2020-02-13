@@ -56,7 +56,6 @@ Type.propTypes = {
   schema: PropTypes.shape({
     type: PropTypes.string,
   }),
-  t: PropTypes.func,
   type: PropTypes.string,
 };
 
@@ -65,7 +64,6 @@ Type.defaultProps = {
   schema: {
     type: '',
   },
-  t: text => text,
   type: '',
 };
 

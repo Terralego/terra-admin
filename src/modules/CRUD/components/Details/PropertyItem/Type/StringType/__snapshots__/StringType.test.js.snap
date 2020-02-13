@@ -12,11 +12,9 @@ exports[`should render correctly HTML 1`] = `
 `;
 
 exports[`should render correctly nothing 1`] = `
-<span
-  className="details__list-value--empty"
->
-  CRUD.details.noValue
-</span>
+<div>
+  No value
+</div>
 `;
 
 exports[`should render correctly number 1`] = `

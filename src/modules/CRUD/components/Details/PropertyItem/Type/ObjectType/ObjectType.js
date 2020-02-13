@@ -8,14 +8,13 @@ import NoValue from '../../NoValue';
 const ObjectType = ({
   display_value: displayValue,
   schema: { properties },
-  t,
   ui_schema: uiSchema,
   ui_schema: {
     'ui:order': UIOrder = [],
   } = {},
 }) => {
   if (displayValue === null) {
-    return <NoValue t={t} />;
+    return <NoValue />;
   }
 
   const orderedValue = getObjectOrderedValue(displayValue, UIOrder);
@@ -48,7 +47,6 @@ ObjectType.propTypes = {
   schema: PropTypes.shape({
     properties: PropTypes.shape({}),
   }),
-  t: PropTypes.func,
   ui_schema: PropTypes.shape({
     'ui:order': PropTypes.array,
   }),
@@ -59,7 +57,6 @@ ObjectType.defaultProps = {
   schema: {
     properties: {},
   },
-  t: text => text,
   ui_schema: {
     'ui:order': [],
   },

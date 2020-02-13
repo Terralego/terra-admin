@@ -7,12 +7,11 @@ const FileType = ({
   schema: {
     title,
   },
-  t,
   type,
 }) => {
   const { url } = displayValue;
   if (!url) {
-    return <NoValue t={t} />;
+    return <NoValue />;
   }
   if (type === 'image') {
     return <img src={url} alt={title} />;
@@ -36,7 +35,6 @@ FileType.propTypes = {
   schema: PropTypes.shape({
     title: PropTypes.string,
   }),
-  t: PropTypes.func,
   type: PropTypes.string,
 };
 
@@ -48,7 +46,6 @@ FileType.defaultProps = {
   schema: {
     title: '',
   },
-  t: text => text,
   type: 'file',
 };
 

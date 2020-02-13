@@ -2,6 +2,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import StringType from './StringType';
 
+jest.mock('../../NoValue', () => () => <div>No value</div>);
+
 describe('should render correctly', () => {
   it('number', () => {
     const tree = renderer.create((

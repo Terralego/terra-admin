@@ -6,10 +6,12 @@ import Type, { getComponent, getRightType } from './Type';
 
 import BooleanType from './BooleanType';
 import FileType from './FileType';
+import ObjectType from './ObjectType';
 import StringType from './StringType';
 
 jest.mock('./BooleanType', () => jest.fn().mockName('BooleanType'));
 jest.mock('./FileType', () => jest.fn().mockName('FileType'));
+jest.mock('./ObjectType', () => jest.fn().mockName('ObjectType'));
 jest.mock('./StringType', () => jest.fn().mockName('StringType'));
 
 jest.spyOn(global.console, 'warn');
@@ -85,6 +87,18 @@ describe('should call the appropriate component', () => {
       />
     ));
     expect(wrapper.matchesElement(<StringType />)).toBe(true);
+  });
+  it('Object component', () => {
+    const wrapper = shallow((
+      <Type
+        display_value={{ foo: 'foo', bar: 'bar' }}
+        schema={{
+          type: 'object',
+        }}
+        type="string"
+      />
+    ));
+    expect(wrapper.matchesElement(<ObjectType />)).toBe(true);
   });
   it('String component', () => {
     const wrapper = shallow((

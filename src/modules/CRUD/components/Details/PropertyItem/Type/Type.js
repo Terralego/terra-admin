@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import BooleanType from './BooleanType';
 import FileType from './FileType';
+import ObjectType from './ObjectType';
 import StringType from './StringType';
 
 export const TYPES = {
@@ -10,6 +11,7 @@ export const TYPES = {
   file: FileType,
   image: FileType,
   number: StringType,
+  object: ObjectType,
   string: StringType,
 };
 

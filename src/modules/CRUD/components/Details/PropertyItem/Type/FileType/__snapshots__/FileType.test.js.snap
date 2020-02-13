@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly file 1`] = `
+<a
+  href="http://file.pdf"
+  rel="download noopener noreferrer"
+  target="_blank"
+>
+  Name of the file
+</a>
+`;
+
+exports[`should render correctly image 1`] = `
+<img
+  alt="Name of the file"
+  src="http://file.pdf"
+/>
+`;
+
+exports[`should render correctly nothing 1`] = `
+<span
+  className="details__list-value--empty"
+>
+  CRUD.details.noValue
+</span>
+`;

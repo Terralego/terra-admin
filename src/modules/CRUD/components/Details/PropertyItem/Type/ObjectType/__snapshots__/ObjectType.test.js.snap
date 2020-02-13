@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly nothing 1`] = `
+<span
+  className="details__list-value--empty"
+>
+  CRUD.details.noValue
+</span>
+`;
+
+exports[`should render correctly object 1`] = `
+<div
+  className="details__Object"
+>
+  <div
+    className="details__Object-group"
+  >
+    <div
+      className="details__Object-key"
+    >
+      Date
+       :
+    </div>
+    <div
+      className="details__Object-value"
+    >
+      <div
+        display_value="2019"
+        schema={
+          Object {
+            "format": "date",
+            "title": "Date",
+            "type": "string",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="details__Object-group"
+  >
+    <div
+      className="details__Object-key"
+    >
+      Source
+       :
+    </div>
+    <div
+      className="details__Object-value"
+    >
+      <div
+        display_value="Requalification du site"
+        schema={
+          Object {
+            "title": "Source",
+            "type": "string",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;

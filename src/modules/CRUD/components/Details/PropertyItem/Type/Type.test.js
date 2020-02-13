@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 
 import Type, { getComponent } from './Type';
 
+import BooleanType from './BooleanType';
 import StringType from './StringType';
 
 jest.mock('./StringType', () => jest.fn().mockName('StringType'));
@@ -25,6 +26,18 @@ it('should not get component', () => {
 });
 
 describe('should call the appropriate component', () => {
+  it('Boolean', () => {
+    const wrapper = shallow((
+      <Type
+        display_value={false}
+        schema={{
+          type: 'boolean',
+        }}
+        type="string"
+      />
+    ));
+    expect(wrapper.matchesElement(<BooleanType />)).toBe(true);
+  });
   it('Number component', () => {
     const wrapper = shallow((
       <Type

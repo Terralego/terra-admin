@@ -224,7 +224,7 @@
       "create": "Ajouter {{layer}}",
       "update": "Modifier",
       "delete": "Supprimer",
-      "noFeature": "Non renseigné",
+      "noValue": "Non renseigné",
       "save": "Sauvegarder",
       "close": "Fermer",
       "cancel": "Annuler",

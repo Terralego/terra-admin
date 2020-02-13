@@ -1,4 +1,4 @@
-import { getObjectOrderedValue, sanitizeCustomEndpoint } from './utils';
+import { getObjectOrderedValue, isTableObject, sanitizeCustomEndpoint } from './utils';
 
 it('should get object with ordered value', () => {
   const arrayOrder = ['1', 'two', 'E', '4'];
@@ -13,6 +13,23 @@ it('should get object with ordered value', () => {
     two: { foo: 'foo two' },
     E: { foo: 'foo E' },
     4: { foo: 'foo 4' },
+  });
+});
+
+describe('check if the object could be a table', () => {
+  it('should', () => {
+    const arr = [
+      { foo: 'foo1', bar: 'bar1', foobar: 'foobar1' },
+      { foo: 'foo2', bar: 'bar2', foobar: 'foobar2' },
+    ];
+    expect(isTableObject(arr)).toBe(true);
+  });
+  it('should not', () => {
+    const arr = [
+      { foo: 'foo1', bar: 'bar1' },
+      { foo: 'foo2', bar: 'bar2', foobar: 'foobar2' },
+    ];
+    expect(isTableObject(arr)).toBe(false);
   });
 });
 

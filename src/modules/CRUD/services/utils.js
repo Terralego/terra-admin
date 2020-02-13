@@ -10,6 +10,14 @@ export const getObjectOrderedValue = (objectValues, arrayOrder = []) => {
   ), {});
 };
 
+export const isTableObject = (arrayOfObjects = []) => {
+  if (!arrayOfObjects.length) {
+    return false;
+  }
+  const firstKeys = Object.keys(arrayOfObjects[0]).join();
+  return arrayOfObjects.every(obj => Object.keys(obj).join() === firstKeys);
+};
+
 export const sanitizeCustomEndpoint = str => {
   if (str.startsWith('/api/')) {
     return str.replace('/api/', '');
@@ -17,4 +25,4 @@ export const sanitizeCustomEndpoint = str => {
   return str;
 };
 
-export default { getObjectOrderedValue, sanitizeCustomEndpoint };
+export default { getObjectOrderedValue, isTableObject, sanitizeCustomEndpoint };

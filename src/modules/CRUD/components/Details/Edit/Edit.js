@@ -208,8 +208,6 @@ class Edit extends React.Component {
   }
 
   componentWillUnmount () {
-    const { removeControl } = this.props;
-    removeControl(CONTROL_DRAW);
     this.setMapFilter(this.layerId, null);
   }
 
@@ -307,6 +305,7 @@ class Edit extends React.Component {
 
         const onSourceData = ({ isSourceLoaded }) => {
           if (isSourceLoaded) {
+            map.setFilter(this.layerId, ['!=', '_id', paramId]);
             map.off('sourcedata', onSourceData);
             map.draw.add(geom);
           }
@@ -315,15 +314,12 @@ class Edit extends React.Component {
         map.off('control_added', onControlAdded);
       };
       map.on('control_added', onControlAdded);
-
-      this.setMapFilter(this.layerId, ['!=', '_id', paramId]);
     }
-
     addControl(control);
   }
 
   setMapFilter = (layerId, filter) => {
-    const { map } = this.props;
+    const { map, removeControl } = this.props;
 
     if (!Object.keys(map).length && !layerId) {
       return;
@@ -333,6 +329,7 @@ class Edit extends React.Component {
       if (isSourceLoaded) {
         map.off('sourcedata', onSourceData);
         map.setFilter(layerId, filter);
+        filter === null && removeControl(CONTROL_DRAW);
       }
     };
     map.on('sourcedata', onSourceData);
@@ -405,6 +402,7 @@ class Edit extends React.Component {
     );
 
     if (savedFeature) {
+      this.setMapFilter(this.layerId, null);
       push(generateURI('layer', { layer: paramLayer, id: savedFeature.identifier }));
       if (prevGeom !== geom) {
         getFeaturesList(

@@ -482,9 +482,11 @@ it('should submit form', async () => {
     geom: { coordinates: [1.0602676121518189, 47.36944181389896], type: 'Point' },
   };
   instance.setState = jest.fn();
+  instance.setMapFilter = jest.fn();
   instance.submitFeature({ formData: { city: 'Toulouse', geometryFromMap: false } });
   await true;
   expect(instance.setState).toHaveBeenCalledTimes(1);
+  expect(instance.setMapFilter).toHaveBeenCalledWith('fooComponentID', null);
   expect(instance.props.history.push).toHaveBeenCalled();
 });
 
@@ -529,12 +531,11 @@ it('should not validate form', () => {
   expect(instance.validateForm({}, errors)).toEqual(errors);
 });
 
-it('should remove control when component will unmout', () => {
+it('should set filter to null when component will unmout', () => {
   const instance = new Edit({
     ...props,
   });
   instance.setMapFilter = jest.fn();
   instance.componentWillUnmount();
-  expect(instance.props.removeControl).toHaveBeenCalled();
   expect(instance.setMapFilter).toHaveBeenCalledWith('fooComponentID', null);
 });

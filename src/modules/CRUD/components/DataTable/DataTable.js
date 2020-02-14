@@ -31,9 +31,9 @@ class DataTable extends React.Component {
   }
 
   componentDidUpdate ({ layerName: prevLayerName, featuresList: prevFeaturesList }) {
-    const { layerName, featuresList } = this.props;
+    const { layerName, featuresList, tableFilters } = this.props;
     if (prevLayerName !== layerName) {
-      this.loadData();
+      this.loadData({ ...tableFilters, page: 1, search: '', ordering: '' });
       this.columnsToCompare = [undefined, undefined];
     }
     if (featuresList && prevFeaturesList !== featuresList) {

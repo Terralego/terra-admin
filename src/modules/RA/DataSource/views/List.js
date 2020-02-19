@@ -24,7 +24,7 @@ import CommonBulkActionButtons
 
 const ListFilters = props => (
   <Filter {...props}>
-    <TextInput label="ra.action.search" source="q" alwaysOn />
+    <TextInput label="ra.action.search" source="search" alwaysOn />
     <SelectInput
       source="polymorphic_ctype__model"
       label="datasource.form.data-type"
@@ -35,7 +35,7 @@ const ListFilters = props => (
     />
     <SelectInput
       source="geom_type"
-      label="datasource.form.geom-field"
+      label="datasource.form.geometry"
       choices={geomTypeChoices}
     />
   </Filter>
@@ -57,11 +57,12 @@ export const DataSourceList = props => (
       <FunctionField
         source="_type"
         label="datasource.form.data-type"
+        sortable={false}
         render={({ _type: type }) => sourceTypes[type] || ''}
       />
       <FunctionField
         source="geom_type"
-        label="datasource.form.geom-field"
+        label="datasource.form.geometry"
         render={({ geom_type: geomType }) => geomTypes[geomType] || ''}
       />
       <FunctionField

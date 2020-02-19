@@ -16,7 +16,7 @@ const DataLayerFormToolbar = React.memo(props => {
       {...props}
     >
       <SaveButton submitOnEnter />
-      {canDelete && <DeleteButton />}
+      {canDelete && <DeleteButton undoable={false} />}
     </Toolbar>
   );
 });

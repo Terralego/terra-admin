@@ -297,7 +297,7 @@
       "data-type": "Type de données",
       "geometry": "Type de géométrie",
       "geom-field": "Champ geométrie auto-détecté",
-      "geom-field-help": "Indiquer le champ de la géométrie de la donnée(ex: geom, the_geom, geometry..).",
+      "geom-field-help": "Indiquer le champ de la géométrie de la donnée (ex: geom, the_geom, geometry...).",
       "uid-field": "Champ de l'identifiant unique",
       "uid-field-help": "Indiquer le champs correspondant à l'identifiant unique de la donnée (ex: gid, id..).",
       "use-by": "Utilisé par",

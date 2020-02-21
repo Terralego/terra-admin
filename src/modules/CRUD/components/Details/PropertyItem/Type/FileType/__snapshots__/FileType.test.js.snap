@@ -6,13 +6,13 @@ exports[`should render correctly file 1`] = `
   rel="download noopener noreferrer"
   target="_blank"
 >
-  Name of the file
+  file.pdf
 </a>
 `;
 
 exports[`should render correctly image 1`] = `
 <img
-  alt="Name of the file"
+  alt="file.pdf"
   src="http://file.pdf"
 />
 `;

@@ -11,7 +11,7 @@
   transform: translateX(101%);
   transform: translateX(calc(100% + 0.5rem));
   transition: transform 0.2s ease-in;
-  background: rgba(255,255,255,0.9);
+  background: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 3;
   
@@ -28,7 +28,6 @@
 
   &--full {
     width: 100%;
-    background: #fff;
     border-left: 1px solid #efefef;
   }
   
@@ -38,8 +37,8 @@
 
   &__content {
     display: flex;
-    flex: auto;
-    overflow: auto;
+    flex: 1 1 auto;
+    overflow-y: auto;
     margin: 0 0 1rem;
     justify-content: center;
   }
@@ -49,6 +48,7 @@
   flex: auto;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 
   &__header {
     display: flex;
@@ -72,18 +72,19 @@
     flex: auto;
     flex-direction: column;
     overflow: auto;
-    padding: 0 1rem;
     .bp3-tabs {
       display: flex;
       flex-direction: column;
       height: 100%;
-      overflow: auto;
+      overflow-y: auto;
     }
     .bp3-tab-list {
       flex-wrap: wrap;
+      padding: 0 1rem;
     }
     .bp3-tab-panel {
-      overflow: auto;
+      flex-grow: 1;
+      overflow-y: auto;
     }
   }
 
@@ -97,9 +98,12 @@
   }
 
   &__table {
-    width: calc(100% + 0.6rem + 2px);
-    margin: calc(-0.3rem - 1px);
-    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
     td, th {
       border: 1px solid #ccc;
       padding: 0.3rem;
@@ -115,37 +119,57 @@
   }
 
   &__list {
-    display: table;
-    flex: auto;
-    width: 100%;
     padding: 0;
     margin: 0;
-    border-collapse: collapse;
-    max-height: 100%;
+    height: 100%;
   }
 
   &__list-item {
-    display: table-row;
-
-    &:nth-child(odd) {
-      background: #efefef;
-    }
-
-    > * {
-      display: table-cell;
-      padding: 0.3rem;
-      border: 1px solid #ccc;
-    }
-
-    img {
-      max-width: 100%;
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    &:hover,
+    &--active {
+      background: #e9f1f5;
+    } 
+    &--inactive {
+      opacity: 0.6;
     }
   }
 
+  &__list-label {
+    display: block;
+    padding-bottom: 0.1rem;
+    color: #5b7080;
+  }
+
   &__list-value {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  
+    padding-bottom: 1rem;
+  }
+
+  &__list-edit {
+    display: none;
+    right: 0;
+    top: 0;
+    position: absolute;
+  }
+
+  &__list-edit-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  &__list-item:hover &__list-edit {
+    display: block;
+  }
+
+  &__list-item--active &__list-edit {
+    display: block;
+    left: 0;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    background: #e9f1f5;
+    z-index: 1;
   }
 
   &__actions {
@@ -153,11 +177,7 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     margin-top: auto;
-    padding: 1rem 0 0;
-    .bootstrap-inside & {
-      padding-right: 1rem;
-      padding-left: 1rem;
-    }
+    padding: 1rem 1rem 0;
     > * + * {
       margin-left: 1rem !important; // Cause of bootstrap override
       width: auto;
@@ -179,7 +199,7 @@
     }
   }
 
-  form {
+  form:not[class] {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -227,6 +247,7 @@
 }
 .bootstrap-inside {
   @import "~bootstrap/dist/css/bootstrap.min";
+  padding: 0 1rem;
   textarea {
     resize: vertical;
   }

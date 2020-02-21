@@ -1,20 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly 1`] = `
+exports[`should render correctly active item 1`] = `
 <li
-  className="details__list-item"
+  className="details__list-item details__list-item--active"
 >
-  <strong
+  <span
     className="details__list-label"
   >
     Foo
-  </strong>
-  <span
+  </span>
+  <div
     className="details__list-value"
   >
     <div
       title="Foo"
-    />
+    >
+      Type
+    </div>
+  </div>
+  <div
+    editedItem="bar"
+    name="bar"
+    title="Foo"
+  >
+    Edit
+  </div>
+</li>
+`;
+
+exports[`should render correctly inactive item 1`] = `
+<li
+  className="details__list-item details__list-item--inactive"
+>
+  <span
+    className="details__list-label"
+  >
+    Foo
   </span>
+  <div
+    className="details__list-value"
+  >
+    <div
+      title="Foo"
+    >
+      Type
+    </div>
+  </div>
+  <div
+    editedItem="bar"
+    name="test"
+    title="Foo"
+  >
+    Edit
+  </div>
 </li>
 `;

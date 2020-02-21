@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Tab, Tabs } from '@blueprintjs/core';
 import { NavLink } from 'react-router-dom';
@@ -7,66 +7,39 @@ import { generateURI } from '../../../../config';
 import PropertyList from '../../PropertyList';
 import Actions from '../../Actions';
 
-class DefaultView extends React.Component {
-  state = {
-    tabs: [],
+const DefaultView = ({
+  match: { params: { layer, id, action = 'read', section = 'default', category } },
+  properties,
+  t,
+}) => {
+  const tabs = useMemo(() => Object.values(properties)
+    .map(propsValues => ({ ...propsValues }))
+    .sort((a, b) => a.order - b.order),
+  [properties]);
+
+  if (!tabs.length) {
+    return null;
   }
 
-  componentDidMount () {
-    this.generatesTabs();
-  }
-
-  componentDidUpdate ({
-    properties: prevProperties,
-  }) {
-    const { properties } = this.props;
-    if (prevProperties !== properties) {
-      this.generatesTabs();
-    }
-  }
-
-  generatesTabs = () => {
-    const {
-      properties,
-    } = this.props;
-    this.setState({
-      tabs: Object.keys(properties)
-        .map(tabs => ({ ...properties[tabs] }))
-        .sort((a, b) => a.order - b.order),
-    });
-  }
-
-  render () {
-    const {
-      t,
-      match: { params: { layer, id, action = 'read', section = 'default', category } },
-    } = this.props;
-
-    const { tabs } = this.state;
-    const hasProperties = !!tabs.length;
-
-    return (
-      <>
-        {hasProperties && (
-        <Tabs
-          selectedTabId={category || tabs[0].slug}
-        >
-          {tabs.map(({ title = t('CRUD.details.other'), slug = 'other', properties }) => (
-            <Tab
-              key={slug}
-              id={slug}
-              title={<NavLink to={generateURI('layer', { layer, id, action, section, category: slug })}>{title}</NavLink>}
-              panel={<PropertyList properties={properties} />}
-            />
-          ))}
-          <Tabs.Expander />
-        </Tabs>
-        )}
-        <Actions paramId={id} paramLayer={layer} displayUpdate displayDelete />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Tabs
+        selectedTabId={category || tabs[0].slug}
+      >
+        {tabs.map(({ title, slug = 'other', properties: propertiesFromTab }) => (
+          <Tab
+            key={slug}
+            id={slug}
+            title={<NavLink to={generateURI('layer', { layer, id, action, section, category: slug })}>{title || t('CRUD.details.other')}</NavLink>}
+            panel={<PropertyList properties={propertiesFromTab} />}
+          />
+        ))}
+        <Tabs.Expander />
+      </Tabs>
+      <Actions paramId={id} paramLayer={layer} displayUpdate displayDelete />
+    </>
+  );
+};
 
 DefaultView.propTypes = {
   match: PropTypes.shape({
@@ -76,7 +49,6 @@ DefaultView.propTypes = {
       action: PropTypes.string,
       section: PropTypes.string,
       category: PropTypes.string,
-
     }),
   }),
   location: PropTypes.shape({

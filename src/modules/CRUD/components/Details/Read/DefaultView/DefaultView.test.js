@@ -41,10 +41,13 @@ const props = {
 
 
 it('should render correctly', () => {
-  const tree = renderer.create((
-    <DefaultView
-      {...props}
-    />
-  )).toJSON();
-  expect(tree).toMatchSnapshot();
+  let tree;
+  renderer.act(() => {
+    tree = renderer.create((
+      <DefaultView
+        {...props}
+      />
+    ));
+  });
+  expect(tree.toJSON()).toMatchSnapshot();
 });

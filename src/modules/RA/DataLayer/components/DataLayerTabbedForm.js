@@ -299,6 +299,7 @@ const DataLayerTabbedForm = ({
                   }}
                 </FormDataConsumer>
                 {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <React.Fragment />}
+                {console.log(formData.fields.map(obj => Object.values(obj).filter(array => array.map(arr => arr.filter(shown => shown))))) || formData.fields.map(obj => Object.values(obj).shown) && <BooleanInput source="display" label="Afficher ce champs par défaut" />}
                 {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
               </DraggableFormIterator>
             </ArrayInput>

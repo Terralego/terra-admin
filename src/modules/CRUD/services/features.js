@@ -13,15 +13,15 @@ export const fetchFeature = (endpoint, featureId) =>
 const createFeature = (endpoint, body) =>
   Api.request(`${sanitizeCustomEndpoint(endpoint)}/`, { method: 'POST', body });
 
-const updateFeature = (endpoint, featureId, body) =>
-  Api.request(`${sanitizeCustomEndpoint(endpoint)}/${featureId}/`, { method: 'PUT', body });
+const updateFeature = (endpoint, featureId, body, method = 'PUT') =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}/${featureId}/`, { method, body });
 
 export const deleteFeature = (endpoint, featureId) =>
   Api.request(`${sanitizeCustomEndpoint(endpoint)}/${featureId}/`, { method: 'DELETE' });
 
-export const saveFeature = (endpoint, featureId, body) => (
+export const saveFeature = (endpoint, featureId, body, method) => (
   featureId
-    ? updateFeature(endpoint, featureId, body)
+    ? updateFeature(endpoint, featureId, body, method)
     : createFeature(endpoint, body)
 );
 

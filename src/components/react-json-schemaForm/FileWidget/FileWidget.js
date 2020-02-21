@@ -39,7 +39,7 @@ function FilesInfo (props) {
     return null;
   }
   return (
-    <ul className="file-info">
+    <ul className="fileWidget__info">
       {filesInfo.map((fileInfo, key) => {
         const { name, size, type } = fileInfo;
         return (
@@ -55,7 +55,7 @@ function FilesInfo (props) {
 
 function extractFileInfo (dataURLs) {
   return dataURLs
-    .filter(dataURL => typeof dataURL !== 'undefined')
+    .filter(Boolean)
     .map(dataURL => {
       const { blob, name } = dataURItoBlob(dataURL);
       return {

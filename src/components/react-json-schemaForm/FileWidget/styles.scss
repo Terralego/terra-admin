@@ -6,4 +6,9 @@
   &__input {
     max-width: 100%;
   }
+  &__info {
+    strong {
+      word-break: break-all;
+    }
+  }
 }

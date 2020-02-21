@@ -132,10 +132,10 @@ export class CRUDProvider extends React.Component {
     return Object.keys(newFeature).length > 0 && newFeature;
   }
 
-  saveFeature = async (layerId, featureId, data) => {
+  saveFeature = async (layerId, featureId, data, method = 'PUT') => {
     const result = {};
     try {
-      const feature = await saveFeatureAction(layerId, featureId, data);
+      const feature = await saveFeatureAction(layerId, featureId, data, method);
       result.feature = feature;
     } catch (e) {
       result.error = e;

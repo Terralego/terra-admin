@@ -2,7 +2,7 @@
 
 exports[`should render correctly 1`] = `
 <span
-  className="details__list-value--empty"
+  className="CRUD-no-value"
 >
   CRUD.details.noValue
 </span>

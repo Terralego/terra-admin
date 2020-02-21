@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './styles.scss';
 
 const NoValue = ({ t }) => (
-  <span className="details__list-value--empty">{t('CRUD.details.noValue')}</span>
+  <span className="CRUD-no-value">{t('CRUD.details.noValue')}</span>
 );
 
 NoValue.propTypes = {

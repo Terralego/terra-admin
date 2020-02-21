@@ -4,7 +4,7 @@ import { Tab, Tabs } from '@blueprintjs/core';
 import { NavLink } from 'react-router-dom';
 import { generateURI } from '../../../../config';
 
-import PropertyItem from '../../PropertyItem';
+import PropertyList from '../../PropertyList';
 import Actions from '../../Actions';
 
 class DefaultView extends React.Component {
@@ -36,14 +36,6 @@ class DefaultView extends React.Component {
     });
   }
 
-  renderPanel = properties => (
-    <ul className="details__list">
-      {Object.entries(properties).map(([key, value]) => (
-        <PropertyItem key={key} value={value} />
-      ))}
-    </ul>
-  )
-
   render () {
     const {
       t,
@@ -59,12 +51,12 @@ class DefaultView extends React.Component {
         <Tabs
           selectedTabId={category || tabs[0].slug}
         >
-          {tabs.map(({ title, slug = 'other', properties }) => (
+          {tabs.map(({ title = t('CRUD.details.other'), slug = 'other', properties }) => (
             <Tab
               key={slug}
               id={slug}
-              title={<NavLink to={generateURI('layer', { layer, id, action, section, category: slug })}>{title || t('CRUD.details.other')}</NavLink>}
-              panel={this.renderPanel(properties)}
+              title={<NavLink to={generateURI('layer', { layer, id, action, section, category: slug })}>{title}</NavLink>}
+              panel={<PropertyList properties={properties} />}
             />
           ))}
           <Tabs.Expander />

@@ -11,6 +11,9 @@ Array [
         className="details__list"
       >
         <div
+          editedItem=""
+          name="foo"
+          setEditedItem={[Function]}
           value={
             Object {
               "display_value": "Value of foo",
@@ -19,6 +22,9 @@ Array [
           }
         />
         <div
+          editedItem=""
+          name="bar"
+          setEditedItem={[Function]}
           value={
             Object {
               "display_value": "Value of bar",
@@ -27,6 +33,9 @@ Array [
           }
         />
         <div
+          editedItem=""
+          name="foobar"
+          setEditedItem={[Function]}
           value={
             Object {
               "display_value": "Value of foo and bar",

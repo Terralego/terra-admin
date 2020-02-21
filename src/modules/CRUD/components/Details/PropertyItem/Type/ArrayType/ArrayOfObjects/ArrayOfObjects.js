@@ -27,32 +27,34 @@ const ArrayOfObjects = ({
   const { properties = {}, type } = schemaItems;
   const columns = Object.entries(orderedValue[0]);
   return (
-    <table className="details__table">
-      <thead>
-        <tr>
-          {columns.map(([key, value]) => (
-            <th key={key}>{properties[key].title || value}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {orderedValue.map((row, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <tr key={i}>
-            {Object.entries(row).map(([key, value]) => (
-              <td key={key}>
-                <Type
-                  display_value={value}
-                  schema={properties[key]}
-                  ui_schema={uiSchemaItems[key]}
-                  type={type[key]}
-                />
-              </td>
+    <div className="details__table">
+      <table>
+        <thead>
+          <tr>
+            {columns.map(([key, value]) => (
+              <th key={key}>{properties[key].title || value}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {orderedValue.map((row, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+            <tr key={i}>
+              {Object.entries(row).map(([key, value]) => (
+                <td key={key}>
+                  <Type
+                    display_value={value}
+                    schema={properties[key]}
+                    ui_schema={uiSchemaItems[key]}
+                    type={type[key]}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

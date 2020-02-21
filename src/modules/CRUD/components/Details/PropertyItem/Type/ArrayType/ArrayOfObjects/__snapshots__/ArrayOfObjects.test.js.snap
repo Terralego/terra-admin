@@ -67,70 +67,72 @@ Array [
 `;
 
 exports[`should render correctly array of objects as table 1`] = `
-<table
+<div
   className="details__table"
 >
-  <thead>
-    <tr>
-      <th>
-        Date
-      </th>
-      <th>
-        Source
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <div
-          display_value="2019"
-          schema={
-            Object {
-              "format": "date",
-              "title": "Date",
-              "type": "string",
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Date
+        </th>
+        <th>
+          Source
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div
+            display_value="2019"
+            schema={
+              Object {
+                "format": "date",
+                "title": "Date",
+                "type": "string",
+              }
             }
-          }
-        />
-      </td>
-      <td>
-        <div
-          display_value="Requalification du site"
-          schema={
-            Object {
-              "title": "Source",
-              "type": "string",
+          />
+        </td>
+        <td>
+          <div
+            display_value="Requalification du site"
+            schema={
+              Object {
+                "title": "Source",
+                "type": "string",
+              }
             }
-          }
-        />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div
-          display_value="2018"
-          schema={
-            Object {
-              "format": "date",
-              "title": "Date",
-              "type": "string",
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div
+            display_value="2018"
+            schema={
+              Object {
+                "format": "date",
+                "title": "Date",
+                "type": "string",
+              }
             }
-          }
-        />
-      </td>
-      <td>
-        <div
-          display_value="Réfection toiture"
-          schema={
-            Object {
-              "title": "Source",
-              "type": "string",
+          />
+        </td>
+        <td>
+          <div
+            display_value="Réfection toiture"
+            schema={
+              Object {
+                "title": "Source",
+                "type": "string",
+              }
             }
-          }
-        />
-      </td>
-    </tr>
-  </tbody>
-</table>
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 `;

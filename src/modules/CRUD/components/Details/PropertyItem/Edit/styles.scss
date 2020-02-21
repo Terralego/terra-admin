@@ -8,6 +8,9 @@
     margin: 0;
     padding: 0;
   }
+  .panel-danger {
+    display: none;
+  }
   .control-label {
     display: block;
     margin-bottom: 0.2rem;
@@ -62,6 +65,10 @@
   }
   .help-block {
     opacity: 0.8;
+  }
+  .error-detail {
+    padding: 0.2rem 0 0 1rem;
+    color: red;
   }
   .field-array {
     legend {

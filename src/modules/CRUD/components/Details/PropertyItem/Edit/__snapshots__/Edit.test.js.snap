@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly can edit 1`] = `
+<div
+  className="details__list-edit"
+>
+  <button
+    className="details__list-edit-button"
+    disabled={false}
+    icon="small-cross"
+    minimal={true}
+    onClick={[Function]}
+  />
+  <form
+    className="CRUD-edit"
+    disabled={false}
+    fields={
+      Object {
+        "rte": [Function],
+      }
+    }
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "properties": Object {
+          "somePropertieName": Object {
+            "default": "null",
+            "somePropertieName": Object {
+              "foo": "foo",
+            },
+          },
+        },
+        "type": "object",
+      }
+    }
+    uiSchema={
+      Object {
+        "somePropertieName": Object {},
+      }
+    }
+    widgets={
+      Object {
+        "FileWidget": [Function],
+      }
+    }
+  >
+    <button
+      className="CRUD-edit__submit"
+      loading={false}
+      type="submit"
+    >
+      CRUD.details.save
+    </button>
+  </form>
+</div>
+`;
+
+exports[`should render correctly can't edit 1`] = `
+<div
+  className="details__list-edit"
+>
+  <button
+    className="details__list-edit-button"
+    disabled={true}
+    icon="edit"
+    minimal={true}
+    onClick={[Function]}
+  />
+</div>
+`;

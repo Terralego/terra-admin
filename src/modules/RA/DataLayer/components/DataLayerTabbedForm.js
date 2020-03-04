@@ -143,6 +143,16 @@ const DataLayerTabbedForm = ({
           fullWidth
         />
 
+        <NumberInput
+          source="settings.default_opacity"
+          label="datalayer.form.styles.default_opacity"
+          step={5}
+          defaultValue={100}
+          min={0}
+          max={100}
+          validate={defaultRequired}
+        />
+
         <ArrayInput source="custom_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
           <CustomFormIterator>
             <CustomLayer />

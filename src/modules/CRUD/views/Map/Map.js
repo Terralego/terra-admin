@@ -487,6 +487,10 @@ export class Map extends React.Component {
       t,
       tableSize,
       errors,
+      i18n: {
+        language,
+        store: { data: { [language]: { translation: { terralego: { map: mapLocale } } } } },
+      },
     } = this.props;
 
     if (errors.settings) {
@@ -549,6 +553,7 @@ export class Map extends React.Component {
                     onInit={this.interactiveMapInit}
                     onStyleChange={this.refreshLayers}
                     translate={t}
+                    locale={mapLocale}
                   />
                 )}
                 {!backgroundStyle.length && (

@@ -8,7 +8,7 @@ import {
   Position,
 } from '@blueprintjs/core';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => (
   <Popover
@@ -33,4 +33,4 @@ export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => (
   </Popover>
 );
 
-export default connectAuthProvider('user', 'logoutAction')(withNamespaces()(UserDropdown));
+export default connectAuthProvider('user', 'logoutAction')(withTranslation()(UserDropdown));

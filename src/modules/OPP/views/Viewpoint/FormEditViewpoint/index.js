@@ -4,7 +4,7 @@ import {
   Card,
   H3,
 } from '@blueprintjs/core';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import EditMetadata from './EditMetadata';
 import AddPicture from './AddPicture';
@@ -39,4 +39,4 @@ export const FormEditViewpoint = ({
   </>
 );
 
-export default withNamespaces()(FormEditViewpoint);
+export default withTranslation()(FormEditViewpoint);

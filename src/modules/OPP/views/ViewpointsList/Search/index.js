@@ -1,5 +1,5 @@
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Search } from './Search';
 
-export default (withNamespaces()(Search));
+export default (withTranslation()(Search));

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import Card from '@material-ui/core/Card';
@@ -18,4 +18,4 @@ export const AttributeMessage = ({ t }) => (
   </Card>
 );
 
-export default withNamespaces()(AttributeMessage);
+export default withTranslation()(AttributeMessage);

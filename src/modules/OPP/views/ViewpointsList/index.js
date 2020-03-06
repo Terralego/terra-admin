@@ -1,4 +1,4 @@
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { connectOppProvider } from '../../services/OppProvider';
 import ViewpointsList from './ViewpointsList';
@@ -9,4 +9,4 @@ export default connectOppProvider({
   errorCode: 'errors.code',
   getPaginatedViewpointsAction: 'getPaginatedViewpointsAction',
   getFirstPageFilteredViewpointsAction: 'getFirstPageFilteredViewpointsAction',
-})(withNamespaces()(ViewpointsList));
+})(withTranslation()(ViewpointsList));

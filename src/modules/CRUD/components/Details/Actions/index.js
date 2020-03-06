@@ -1,4 +1,4 @@
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
@@ -43,5 +43,5 @@ export default compose(
   connectAppProvider(appProvider),
   connectAuthProvider(authProvider),
   connectCRUDProvider(CRUDPRovider),
-  withNamespaces(),
+  withTranslation(),
 )(Actions);

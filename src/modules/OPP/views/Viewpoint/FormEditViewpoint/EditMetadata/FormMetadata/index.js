@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'react-final-form';
 import { Button, FormGroup, InputGroup, Intent, Overlay } from '@blueprintjs/core';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import InputMap from '../../../../../components/InputMap';
 
@@ -116,4 +116,4 @@ export class FormMetadata extends React.Component {
   }
 }
 
-export default withNamespaces()(FormMetadata);
+export default withTranslation()(FormMetadata);

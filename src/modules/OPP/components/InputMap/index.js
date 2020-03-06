@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import mapboxgl from 'mapbox-gl';
 import { Map } from '@terralego/core';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { connectAppProvider } from '../../../../components/AppProvider';
 
@@ -71,4 +71,4 @@ export class InputMap extends React.Component {
 
 export default connectAppProvider(({ env: { configMap } }) => ({
   configMap,
-}))(withNamespaces()(InputMap));
+}))(withTranslation()(InputMap));

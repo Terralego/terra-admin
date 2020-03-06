@@ -8,7 +8,7 @@ import {
 } from '@blueprintjs/core';
 import { DateInput } from '@blueprintjs/datetime';
 import { Form, Field } from 'react-final-form';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import localeUtils from '@terralego/core/utils/localeUtils';
 
@@ -117,4 +117,4 @@ export class AddPicture extends React.Component {
   }
 }
 
-export default withNamespaces()(AddPicture);
+export default withTranslation()(AddPicture);

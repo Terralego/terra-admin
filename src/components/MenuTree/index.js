@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { MenuItem } from '@blueprintjs/core';
 
 export const MenuTree = ({ t, href, items = [], label }) => {
@@ -24,4 +24,4 @@ export const MenuTree = ({ t, href, items = [], label }) => {
   );
 };
 
-export default withNamespaces()(MenuTree);
+export default withTranslation()(MenuTree);

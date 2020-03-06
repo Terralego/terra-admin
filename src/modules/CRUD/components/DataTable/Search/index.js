@@ -1,4 +1,4 @@
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
 import { withTableFilters } from '../../../services/UserSettingsProvider';
@@ -26,5 +26,5 @@ export default compose(
   withRouter,
   connectCRUDProvider(CRUDPRoviderGetter),
   withTableFilters(),
-  withNamespaces(),
+  withTranslation(),
 )(Search);

@@ -6,7 +6,7 @@ import {
   Button,
 } from '@blueprintjs/core';
 import { NavLink } from 'react-router-dom';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import iconPoi from '../../images/icon_poi.svg';
 import logo from '../../images/logo_DEAL.png';
@@ -61,4 +61,4 @@ export const Nav = ({ t }) => (
 
 );
 
-export default withNamespaces()(Nav);
+export default withTranslation()(Nav);

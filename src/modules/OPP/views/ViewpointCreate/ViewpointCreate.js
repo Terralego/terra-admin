@@ -2,7 +2,7 @@ import React from 'react';
 import {
   H3,
 } from '@blueprintjs/core';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Form } from 'react-final-form';
 import { withRouter } from 'react-router-dom';
 
@@ -57,4 +57,4 @@ export class ViewpointCreate extends React.Component {
   }
 }
 
-export default withRouter(withNamespaces()(ViewpointCreate));
+export default withRouter(withTranslation()(ViewpointCreate));

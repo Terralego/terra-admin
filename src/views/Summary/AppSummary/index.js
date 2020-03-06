@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { NavLink } from 'react-router-dom';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Tree } from '@blueprintjs/core';
 import compose from '../../../utils/compose';
@@ -69,7 +69,7 @@ AppSummary.propTypes = {
 };
 
 export default compose(
-  withNamespaces(),
+  withTranslation(),
   withPermissions,
   withEnabledModules,
 )(AppSummary);

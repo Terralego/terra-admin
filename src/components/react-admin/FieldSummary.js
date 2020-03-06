@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import FieldSample from './FieldSample';
 
@@ -14,4 +14,4 @@ const FieldSummary = ({ t, record, record: { name, label, type } }) => (
   </div>
 );
 
-export default withNamespaces()(FieldSummary);
+export default withTranslation()(FieldSummary);

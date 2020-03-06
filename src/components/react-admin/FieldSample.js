@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -23,4 +23,4 @@ const FieldSample = ({ t, record: { sample }, ...rest }) => (sample
   : <div />
 );
 
-export default withNamespaces()(FieldSample);
+export default withTranslation()(FieldSample);

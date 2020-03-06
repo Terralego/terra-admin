@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
 const SimpleNav = ({ config: { nav, path }, t }) => (
@@ -12,4 +12,4 @@ const SimpleNav = ({ config: { nav, path }, t }) => (
   </ul>
 );
 
-export default withNamespaces()(SimpleNav);
+export default withTranslation()(SimpleNav);

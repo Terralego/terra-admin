@@ -7,7 +7,7 @@ import {
   Intent,
 } from '@blueprintjs/core';
 import { DateInput } from '@blueprintjs/datetime';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Field } from 'react-final-form';
 
 import localeUtils from '@terralego/core/utils/localeUtils';
@@ -180,4 +180,4 @@ export class FormCreate extends React.Component {
   }
 }
 
-export default withNamespaces()(FormCreate);
+export default withTranslation()(FormCreate);

@@ -1,4 +1,4 @@
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { connectAppProvider } from '../../../components/AppProvider';
 import { getComponentsByEnabledModules } from '../../../services/modules';
 import { MenuDropdown } from './MenuDropdown';
@@ -12,6 +12,6 @@ const componentsToDisplay = ({ env: { enabled_modules: modules } }) => ({
 
 export default compose(
   connectAppProvider(componentsToDisplay),
-  withNamespaces(),
+  withTranslation(),
   withEnabledModules,
 )(MenuDropdown);

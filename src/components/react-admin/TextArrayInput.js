@@ -3,7 +3,7 @@ import React from 'react';
 import ChipInput from 'material-ui-chip-input';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Field } from 'redux-form';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 const sanitizeRestProps = ({
   tReady, reportNS, defaultNS, i18nOptions, validate, ...rest
@@ -37,4 +37,4 @@ export const TextArrayInput = ({ t, source, label, ...rest }) => (
   />
 );
 
-export default withNamespaces()(TextArrayInput);
+export default withTranslation()(TextArrayInput);

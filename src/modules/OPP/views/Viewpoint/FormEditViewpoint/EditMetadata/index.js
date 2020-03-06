@@ -3,7 +3,7 @@ import {
   H3,
 } from '@blueprintjs/core';
 import { Form } from 'react-final-form';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { validateEdit } from './validateFormMetadata';
 import FormMetadata from './FormMetadata';
@@ -41,4 +41,4 @@ export class EditMetadata extends React.Component {
   }
 }
 
-export default withNamespaces()(EditMetadata);
+export default withTranslation()(EditMetadata);

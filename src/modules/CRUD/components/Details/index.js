@@ -1,5 +1,5 @@
 import { withRouter } from 'react-router-dom';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { connectCRUDProvider } from '../../services/CRUDProvider';
 import { getView } from '../../services/CRUD';
@@ -29,6 +29,6 @@ export default withRouter(
       errorMessage: message,
     };
   })(
-    withNamespaces()(Details),
+    withTranslation()(Details),
   ),
 );

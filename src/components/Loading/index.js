@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Spinner } from '@blueprintjs/core';
 
 export const Loading = ({ t, text = 'common.loading', spinner }) => (
@@ -11,4 +11,4 @@ export const Loading = ({ t, text = 'common.loading', spinner }) => (
   </div>
 );
 
-export default withNamespaces()(Loading);
+export default withTranslation()(Loading);

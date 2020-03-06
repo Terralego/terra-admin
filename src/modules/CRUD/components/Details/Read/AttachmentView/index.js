@@ -1,5 +1,5 @@
 import { withRouter } from 'react-router-dom';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { connectCRUDProvider } from '../../../../services/CRUDProvider';
 import compose from '../../../../../../utils/compose';
 
@@ -28,5 +28,5 @@ const CRUDPRoviderGetter = ({
 export default compose(
   withRouter,
   connectCRUDProvider(CRUDPRoviderGetter),
-  withNamespaces(),
+  withTranslation(),
 )(AttachmentView);

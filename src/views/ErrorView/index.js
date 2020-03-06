@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { H1 } from '@blueprintjs/core';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 const ErrorView = ({ t, error: { code } }) => (
   <div>
@@ -12,4 +12,4 @@ const ErrorView = ({ t, error: { code } }) => (
   </div>
 );
 
-export default withNamespaces()(ErrorView);
+export default withTranslation()(ErrorView);

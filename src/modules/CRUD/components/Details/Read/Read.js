@@ -7,6 +7,7 @@ import { generateURI } from '../../../config';
 import Header from '../Header';
 import Menu from '../Menu';
 import DefaultView from './DefaultView';
+import GeomView from './GeomView';
 import AttachmentView from './AttachmentView';
 
 const Read = ({
@@ -16,24 +17,35 @@ const Read = ({
   feature: {
     title = t('CRUD.details.noFeature'),
     documents,
+    geometries,
     display_properties: oldProperties,
     new_display_properties: properties = oldProperties,
   },
+  ...rest
 }) => {
   if (!displayViewFeature) {
     toast.displayError(t('CRUD.details.noAccess'));
     return (<Redirect to={generateURI('layer', { layer })} />);
   }
 
+  const getView = () => {
+    switch (section) {
+      case 'attachmentImages':
+      case 'attachmentFiles':
+        return <AttachmentView />;
+      case 'geometries':
+        return <GeomView geometries={geometries} {...rest} />;
+      default:
+        return <DefaultView properties={properties} />;
+    }
+  };
+
   return (
     <div className="details">
       <Header title={title} documents={documents} />
       <Menu section={section} />
       <div className="details__content">
-        {section === 'default'
-          ? <DefaultView properties={properties} />
-          : <AttachmentView />
-        }
+        {getView()}
       </div>
     </div>
   );

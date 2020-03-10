@@ -22,7 +22,8 @@ jest.mock('../DownloadButtons', () => () => <div>DownloadButtons</div>);
 jest.mock('../Header', () => props => <div {...props}>Header</div>);
 jest.mock('../Menu', () => props => <div {...props}>Menu</div>);
 jest.mock('./DefaultView', () => props => <div {...props}>Default view</div>);
-jest.mock('./AttachmentView', () => props => <div {...props}>Attachmentu view</div>);
+jest.mock('./AttachmentView', () => props => <div {...props}>Attachment view</div>);
+jest.mock('./GeomView', () => props => <div {...props}>Geom view</div>);
 
 const props = {
   t: text => text,

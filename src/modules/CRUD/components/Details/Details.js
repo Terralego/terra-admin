@@ -138,7 +138,13 @@ class Details extends React.Component {
         />
       );
     }
-    return <Read feature={feature} />;
+    return (
+      <Read
+        addControl={addControl}
+        feature={feature}
+        removeControl={removeControl}
+      />
+    );
   }
 
   onSizeChange = () => {

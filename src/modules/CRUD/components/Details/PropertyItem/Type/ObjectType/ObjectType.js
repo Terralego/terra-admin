@@ -20,15 +20,15 @@ const ObjectType = ({
   const orderedValue = getObjectOrderedValue(displayValue, UIOrder);
 
   return (
-    <div className="details__Object">
+    <div className="details__object">
       {Object.keys(orderedValue).map(value => {
         const { title = value } = properties[value] || {};
         return (
-          <div className="details__Object-group" key={title}>
-            <div className="details__Object-key">
+          <div className="details__object-group" key={title}>
+            <div className="details__object-key">
               {title} :
             </div>
-            <div className="details__Object-value">
+            <div className="details__object-value">
               <Type
                 display_value={orderedValue[value]}
                 schema={properties[value]}

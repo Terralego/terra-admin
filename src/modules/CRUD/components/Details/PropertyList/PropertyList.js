@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import PropertyItem from '../PropertyItem';
 
-const PropertyList = ({ properties }) => {
+const PropertyList = ({ properties, ...props }) => {
   const [editedItem, setEditedItem] = useState('');
   return (
     <ul className="details__list">
@@ -13,6 +13,7 @@ const PropertyList = ({ properties }) => {
           value={value}
           editedItem={editedItem}
           setEditedItem={setEditedItem}
+          {...props}
         />
       ))}
     </ul>

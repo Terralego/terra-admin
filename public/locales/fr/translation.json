@@ -240,6 +240,7 @@
       "generatedDocuments": "Documents générés",
       "menu": {
         "default": "Informations",
+        "geometries": "Géométries",
         "attachmentFiles": "Pièces jointes",
         "attachmentImages": "Images"
       },

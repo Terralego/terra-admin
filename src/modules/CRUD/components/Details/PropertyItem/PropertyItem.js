@@ -11,11 +11,11 @@ const PropertyItem = ({
   value,
   ...props
 }) => {
-  const { editedItem, name } = props;
-  const isCurrentEditedItem = editedItem === name;
   if (!canViewFeature) {
     return null;
   }
+  const { editedItem, name } = props;
+  const isCurrentEditedItem = editedItem === name;
   return (
     <li className={classnames({
       'details__list-item': true,

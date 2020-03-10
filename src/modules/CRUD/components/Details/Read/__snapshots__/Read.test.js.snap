@@ -32,7 +32,7 @@ exports[`should render AttachmentView correctly 1`] = `
     className="details__content"
   >
     <div>
-      Attachmentu view
+      Attachment view
     </div>
   </div>
 </div>

@@ -18,6 +18,21 @@ exports[`should render correctly 1`] = `
         </span>
       </span>
     </a>
+    <a>
+      <span
+        className="btn minimal"
+      >
+        <div>
+          map-marker
+        </div>
+        <span
+          className="bp3-button-text"
+        >
+           
+          CRUD.details.menu.geometries
+        </span>
+      </span>
+    </a>
     <span
       className="btn minimal disabled"
     >

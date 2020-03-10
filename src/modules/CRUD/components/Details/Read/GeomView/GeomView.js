@@ -69,6 +69,7 @@ const getJSONSchemaFromGeom = (
       type: 'object',
     },
     ui_schema: {
+      'ui:field': 'geometry',
       coordinates: getUISchemaCoordinates(coordinates),
       type: {
         'ui:widget': 'hidden',

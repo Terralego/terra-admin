@@ -253,6 +253,15 @@
   "help": {
     "block-heading": "Conseils :"
   },
+  "jsonSchema": {
+    "geometryField": {
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "title": "Géométrie de type :",
+      "helper-edit": "Modifiez la géométrie à l'aide des boutons disponibles sur la carte.",
+      "helper-save": "Une fois terminée, enregistrez en cliquant sur le bouton \"Sauvegarder\"."
+    }
+  },
   "user": {
     "project": "Utilisateurs",
     "nav": {

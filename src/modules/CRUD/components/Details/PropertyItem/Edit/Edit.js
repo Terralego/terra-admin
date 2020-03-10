@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import Form from 'react-jsonschema-form';
@@ -19,46 +19,87 @@ const sanitizeValue = (type, value) => {
   return value;
 };
 
-const Edit = ({
-  editedItem,
-  name,
-  setEditedItem,
-  schema,
-  t,
-  ui_schema: uiSchema,
-  value,
-  ...rest
-}) => {
+const submitFeature = props => async ({ formData }) => {
+  const {
+    view: { featureEndpoint },
+    isGeom,
+    isMounted,
+    getSettings,
+    match: { params: { id } },
+    method,
+    name,
+    onRead,
+    url,
+    saveFeature,
+    setDefaultValue,
+    setEditedItem,
+    setLoading,
+    settingsEndpoint,
+  } = props;
+
+  const endpoint = url ? url.replace(featureEndpoint, '') : id;
+
+  const [[propKey, propValue]] = Object.entries(formData);
+
+  const valueOrEmptyString = propValue === undefined ? '' : propValue;
+
+  setLoading(true);
+
+  const body = !isGeom
+    ? { properties: { [propKey]: valueOrEmptyString } }
+    : { geom: valueOrEmptyString };
+
+  setDefaultValue(propValue);
+
+  await saveFeature(
+    featureEndpoint,
+    endpoint,
+    body,
+    method,
+  );
+
+  if (!isMounted.current) return;
+
+  setLoading(false);
+  setEditedItem('');
+  onRead(name);
+  getSettings(settingsEndpoint);
+};
+
+const Edit = props => {
+  const {
+    editedItem,
+    name,
+    onEdit,
+    onRead,
+    setEditedItem,
+    schema,
+    schema: { type: schemaType },
+    t,
+    ui_schema: uiSchema,
+    value,
+  } = props;
+
+  const isMounted = useRef(true);
+
   const isCurrentEditedItem = editedItem === name;
   const canEdit =  ['', name].includes(editedItem);
   const [loading, setLoading] = useState(false);
-  const [defaultValue, setDefaultValue] = useState(sanitizeValue(schema.type, value));
+  const [defaultValue, setDefaultValue] = useState(sanitizeValue(schemaType, value));
 
+  useEffect(() => {
+    isCurrentEditedItem && !loading ? onEdit(name) : onRead(name);
+  }, [isCurrentEditedItem, loading, name, onEdit, onRead]);
 
-  const submitFeature = async ({ formData }) => {
-    const {
-      match: { params: { id } },
-      saveFeature,
-      view: { featureEndpoint },
-    } = rest;
+  useEffect(() => {
+    isMounted.current = true;
+    return () => { isMounted.current = false; };
+  }, []);
 
-    const [[propKey, propValue]] = Object.entries(formData);
+  useEffect(() => {
+    setDefaultValue(sanitizeValue(schemaType, value));
+  }, [schemaType, value]);
 
-    const valueOrEmptyString = propValue === undefined ? '' : propValue;
-
-    setDefaultValue(propValue);
-    setLoading(true);
-
-    await saveFeature(
-      featureEndpoint,
-      id,
-      { properties: { [propKey]: valueOrEmptyString } },
-      'PATCH',
-    );
-
-    setLoading(false);
-    setEditedItem('');
-  };
 
   return (
     <div className="details__list-edit">
@@ -74,7 +115,9 @@ const Edit = ({
         className="CRUD-edit"
         disabled={loading}
         fields={{ rte: RTEField }}
-        onSubmit={submitFeature}
+        onSubmit={
+          submitFeature({ isMounted, setDefaultValue, setEditedItem, setLoading, ...props })
+        }
         uiSchema={{ [name]: { ...uiSchema } }}
         schema={{
           type: 'object',
@@ -102,12 +145,21 @@ const Edit = ({
 
 Edit.propTypes = {
   editedItem: PropTypes.string,
+  // eslint-disable-next-line react/no-unused-prop-types
+  isGeom: PropTypes.bool,
+  // eslint-disable-next-line react/no-unused-prop-types
+  getSettings: PropTypes.func,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
     }),
   }),
+  // eslint-disable-next-line react/no-unused-prop-types
+  method: PropTypes.oneOf(['PATCH', 'POST', 'PUT']),
+  onEdit: PropTypes.func,
+  onRead: PropTypes.func,
   name: PropTypes.string,
+  // eslint-disable-next-line react/no-unused-prop-types
   saveFeature: PropTypes.func,
   setEditedItem: PropTypes.func,
   schema: PropTypes.shape({
@@ -125,11 +177,16 @@ Edit.propTypes = {
 
 Edit.defaultProps = {
   editedItem: '',
+  isGeom: false,
+  getSettings: () => {},
   match: {
     params: {
       id: undefined,
     },
   },
+  method: 'PATCH',
+  onEdit: () => {},
+  onRead: () => {},
   name: undefined,
   saveFeature: () => {},
   setEditedItem: () => {},

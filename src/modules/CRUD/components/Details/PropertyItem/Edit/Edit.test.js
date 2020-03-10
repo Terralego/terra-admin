@@ -16,6 +16,7 @@ const props = {
       id: 'someFeatureID',
     },
   },
+  method: 'PATCH',
   name: 'somePropertieName',
   saveFeature: () => true,
   setEditedItem:  text => text,

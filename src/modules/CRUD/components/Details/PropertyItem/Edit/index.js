@@ -1,5 +1,6 @@
 import { withRouter } from 'react-router-dom';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
+import { connectAppProvider } from '../../../../../../components/AppProvider';
 import { connectCRUDProvider } from '../../../../services/CRUDProvider';
 import { getView } from '../../../../services/CRUD';
 
@@ -7,9 +8,15 @@ import Edit from './Edit';
 
 import compose from '../../../../../../utils/compose';
 
+const appProviderGetter = ({
+  env: { modules: { CRUD: { settings } } },
+}) => ({
+  settingsEndpoint: settings,
+});
+
 const CRUDPRoviderGetter = ({
+  getSettings,
   settings,
-  feature,
   saveFeature,
   errors: {
     feature: featureError,
@@ -17,14 +24,15 @@ const CRUDPRoviderGetter = ({
 }, {
   match: { params: { layer, id } },
 }) => ({
-  feature: feature[id] || {},
+  featureError: featureError.find(({ featureId }) => featureId === id),
+  getSettings,
   saveFeature,
   view: getView(settings, layer),
-  featureError: featureError.find(({ featureId }) => featureId === id),
 });
 
 export default compose(
   withRouter,
+  connectAppProvider(appProviderGetter),
   connectCRUDProvider(CRUDPRoviderGetter),
-  withNamespaces(),
+  withTranslation(),
 )(Edit);

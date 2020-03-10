@@ -19,7 +19,7 @@ const ArrayType = props => {
 };
 
 ArrayType.propTypes = {
-  display_value: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})])),
+  display_value: PropTypes.arrayOf(PropTypes.any),
   schema: PropTypes.shape({
     items: PropTypes.shape({
       type: PropTypes.string,

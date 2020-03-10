@@ -8,19 +8,19 @@ exports[`should render correctly nothing 1`] = `
 
 exports[`should render correctly object 1`] = `
 <div
-  className="details__Object"
+  className="details__object"
 >
   <div
-    className="details__Object-group"
+    className="details__object-group"
   >
     <div
-      className="details__Object-key"
+      className="details__object-key"
     >
       Date
        :
     </div>
     <div
-      className="details__Object-value"
+      className="details__object-value"
     >
       <div
         display_value="2019"
@@ -35,16 +35,16 @@ exports[`should render correctly object 1`] = `
     </div>
   </div>
   <div
-    className="details__Object-group"
+    className="details__object-group"
   >
     <div
-      className="details__Object-key"
+      className="details__object-key"
     >
       Source
        :
     </div>
     <div
-      className="details__Object-value"
+      className="details__object-value"
     >
       <div
         display_value="Requalification du site"

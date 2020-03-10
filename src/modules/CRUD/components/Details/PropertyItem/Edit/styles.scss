@@ -46,7 +46,8 @@
     &[type=number] {
       @include pt-input();
     }
-    &[disabled] {
+    &:disabled,
+    &:read-only {
       @include pt-input-disabled();
     }
     @include pt-input-placeholder();
@@ -78,7 +79,7 @@
     .array-item,
     .array-item-add {
       display: flex;
-      margin: 0;
+      margin: 0.5rem 0 0;
       // Fields
       .col-xs-9 {
         flex-grow: 1;
@@ -86,7 +87,6 @@
       // Controls
       .col-xs-3 {
         flex-shrink: 0;
-        padding-top: 1.3rem;
       }
       .btn {
         @include pt-button-base();
@@ -122,6 +122,9 @@
           display: none;
         }
       }
+    }
+    .field-array-of-object .array-item-toolbox {
+      padding-top: 1.3rem;
     }
   }
   &__submit {

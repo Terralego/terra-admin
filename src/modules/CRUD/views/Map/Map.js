@@ -87,6 +87,7 @@ export class Map extends React.Component {
     sources: [],
     layers: [],
     controls: [...DEFAULT_CONTROLS, ...CONTROL_LIST],
+    popups: [],
     refreshingLayers: false,
   }
 
@@ -210,19 +211,8 @@ export class Map extends React.Component {
         ...interaction,
         interaction: INTERACTION_FN,
         fn: ({
-          feature,
           feature: { sourceLayer, properties: { _id: propId } },
-          event,
-          instance: { displayTooltip }, layerId,
         }) => {
-          displayTooltip({
-            layerId,
-            feature,
-            event,
-            template: `{% if name %}{{name}}{% else %}${interaction.title}{% endif %}`,
-            fixed: false,
-            unique: true,
-          });
           if (interaction.main && displayViewFeature) {
             push(generateURI('layer', { layer: sourceLayer, id: propId }));
           }

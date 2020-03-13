@@ -2,8 +2,26 @@ import React, { useState } from 'react';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
-const PointField = ({ idSchema: { coordinates: { $ids } }, formData, onChange, t }) => {
+const Label = ({ name, required }) => (
+  <>
+    <span>{name}</span>
+    {required && <span>*</span>}
+  </>
+);
+
+const PointField = ({
+  idSchema: { coordinates: { $ids } },
+  formData,
+  onChange,
+  t,
+  schema: {
+    required = [],
+  },
+  disabled,
+}) => {
   const [coords, setCoords] = useState(formData.coordinates);
+  const isRequired = required.includes('coordinates');
+
 
   const handleChange = index => ({ target: { value } }) => {
     const coordinates = [...coords];
@@ -17,14 +35,18 @@ const PointField = ({ idSchema: { coordinates: { $ids } }, formData, onChange, t
       {['latitude', 'longitude'].map((name, index) => (
         <FormGroup
           key={name}
-          label={t(`jsonSchema.geometryField.${name}`)}
+          label={(
+            <Label name={t(`jsonSchema.geometryField.${name}`)} required={isRequired} />
+          )}
           labelFor={`${$ids}-${index}`}
         >
           <InputGroup
             id={`${$ids}-${index}`}
-            type="number"
+            disabled={disabled}
             defaultValue={coords[index]}
             onChange={handleChange(index)}
+            required={isRequired}
+            type="number"
           />
         </FormGroup>
       ))}

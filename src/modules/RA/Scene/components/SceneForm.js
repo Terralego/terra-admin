@@ -1,7 +1,9 @@
 import React from 'react';
+import get from 'lodash/get';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';
+
 import { change } from 'redux-form';
 /* eslint-enable */
 
@@ -34,6 +36,20 @@ const styles = {
     display: 'inline-block',
     marginRight: '1em',
   },
+};
+
+const sanitizeProps = ({ dispatch, basePath, formClassName, ...rest }) => rest;
+
+const ReportField = ({ record, source, className, label, ...rest }) => {
+  const value = get(record, source);
+  return (
+    <>
+      <h2>{label}</h2>
+      <ul {...sanitizeProps(rest)}>
+        {value.map(line => (<li key={line}>{line}</li>))}
+      </ul>
+    </>
+  );
 };
 
 const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
@@ -78,6 +94,10 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       <TreeInput source="tree" defaultValue={[]} fullWidth />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
+      <ImageInput source="custom_icon" label="view.form.icon">
+        <ImageField source="url" />
+      </ImageInput>
+
       <FileInput
         source="file"
         multiple={false}
@@ -86,9 +106,13 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
         <FileField source="file_data" title="title" />
       </FileInput>
 
-      <ImageInput source="custom_icon" label="view.form.icon">
-        <ImageField source="url" />
-      </ImageInput>
+      <FormDataConsumer formClassName={classes.inline}>
+        {({ formData, ...rest }) =>
+          (!formData.config || formData.config.report) &&
+          (<ReportField label={t('view.form.import-report')} source="config.report" {...rest} />)
+        }
+      </FormDataConsumer>
+
     </SimpleForm>
   );
 };

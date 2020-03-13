@@ -23,7 +23,7 @@ exports[`should render correctly 1`] = `
         className="btn minimal"
       >
         <div>
-          map-marker
+          polygon-filter
         </div>
         <span
           className="bp3-button-text"

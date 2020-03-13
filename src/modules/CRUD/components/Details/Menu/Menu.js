@@ -13,7 +13,7 @@ import { generateURI } from '../../../config';
 
 const nav = [
   { section: 'default', text: 'CRUD.details.menu.default', icon: 'list-detail-view' },
-  { section: 'geometries', text: 'CRUD.details.menu.geometries', icon: 'map-marker' },
+  { section: 'geometries', text: 'CRUD.details.menu.geometries', icon: 'polygon-filter' },
   { section: 'attachmentFiles', text: 'CRUD.details.menu.attachmentFiles', icon: 'paperclip', disabled: true },
   { section: 'attachmentImages', text: 'CRUD.details.menu.attachmentImages', icon: 'media', disabled: true },
 ];

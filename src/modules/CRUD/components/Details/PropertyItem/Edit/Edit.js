@@ -85,6 +85,7 @@ const Edit = props => {
 
   const isCurrentEditedItem = editedItem === name;
   const canEdit =  ['', name].includes(editedItem);
+  const isEdited = canEdit && isCurrentEditedItem;
   const [loading, setLoading] = useState(false);
   const [defaultValue, setDefaultValue] = useState(sanitizeValue(schemaType, value));
 
@@ -106,10 +107,11 @@ const Edit = props => {
     <div className="details__list-edit">
       <Button
         className="details__list-edit-button"
-        icon={canEdit && isCurrentEditedItem ? 'small-cross' : 'edit'}
+        icon={isEdited ? 'small-cross' : 'edit'}
         disabled={!canEdit}
         onClick={() => setEditedItem(canEdit && !isCurrentEditedItem ? name : '')}
         minimal
+        title={isEdited ? t('CRUD.details.cancel') : t('CRUD.details.update')}
       />
       {isCurrentEditedItem && (
       <Form

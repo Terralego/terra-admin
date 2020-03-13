@@ -10,6 +10,7 @@ exports[`should render correctly can edit 1`] = `
     icon="small-cross"
     minimal={true}
     onClick={[Function]}
+    title="CRUD.details.cancel"
   />
   <form
     className="CRUD-edit"
@@ -66,6 +67,7 @@ exports[`should render correctly can't edit 1`] = `
     icon="edit"
     minimal={true}
     onClick={[Function]}
+    title="CRUD.details.update"
   />
 </div>
 `;

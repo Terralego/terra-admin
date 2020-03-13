@@ -434,7 +434,8 @@
       "slug": "Slug",
       "category": "Catégorie",
       "icon": "Icône",
-      "ordering": "Classement"
+      "ordering": "Classement",
+      "import-report": "Rapport d'importation"
     }
   },
   "ra": {

@@ -255,11 +255,35 @@
   },
   "jsonSchema": {
     "geometryField": {
+      "type": {
+        "Point": {
+          "singular":"un point"
+        },
+        "LineString": {
+          "singular":"un tracé"
+        },
+        "Polygon": {
+          "singular":"une zone"
+        },
+        "MultiPoint": {
+          "singular":"des points"
+        },
+        "MultiLineString": {
+          "singular":"un ou des tracés"
+        },
+        "MultiPolygon": {
+          "singular":"une ou des zones"
+        },
+        "GeometryCollection": {
+          "singular":"une ou des géométrie"
+        }
+      },
+      "title": "Coordonnées (WGS84 décimal)",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "title": "Géométrie de type :",
-      "helper-edit": "Modifiez la géométrie à l'aide des boutons disponibles sur la carte.",
-      "helper-save": "Une fois terminée, enregistrez en cliquant sur le bouton \"Sauvegarder\"."
+      "helper-create": "Dessinez $t(jsonSchema.geometryField.type.{{type}}.singular) à l'aide des boutons disponibles sur la carte.",
+      "helper-edit": "Modifiez $t(jsonSchema.geometryField.type.{{type}}.singular) à l'aide des boutons disponibles sur la carte.",
+      "save": "Une fois terminée, enregistrez en cliquant sur le bouton de soumission."
     }
   },
   "user": {

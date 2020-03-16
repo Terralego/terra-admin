@@ -42,6 +42,8 @@ const sanitizeProps = ({ dispatch, basePath, formClassName, ...rest }) => rest;
 
 const ReportField = ({ record, source, className, label, ...rest }) => {
   const value = get(record, source);
+  if (!value) return null;
+
   return (
     <>
       <h2>{label}</h2>

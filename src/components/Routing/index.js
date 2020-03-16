@@ -12,13 +12,14 @@ export class Routing extends React.Component {
 
   componentDidMount () {
     const { routes } = this.props;
-    this.setState({ routes: routes.map(({ import: Import, redirect, ...route }) => {
+    this.setState({ routes: routes.map(({ import: Import, redirect, provider: Provider, ...route }) => {
       if (!Import && !redirect) throw new Error('Route needs a mandatory `import` or `redirect` attribute');
       return {
         ...route,
         redirect,
         key: route.path,
         Component: Import ? lazy(Import) : () => null,
+        Provider: Provider ? lazy(Provider) : () => null,
       };
     }) });
   }
@@ -28,7 +29,7 @@ export class Routing extends React.Component {
 
     return (
       <Switch>
-        {routes.map(({ Component, redirect, ...route }) => (
+        {routes.map(({ Component, Provider, redirect, ...route }) => (
           redirect
             ? (<Redirect exact key={route.key} from={route.path} to={redirect} />)
             : (
@@ -37,7 +38,9 @@ export class Routing extends React.Component {
                 {...route}
               >
                 <Suspense fallback={<Loading />}>
-                  <Component />
+                  <Provider>
+                    <Component />
+                  </Provider>
                 </Suspense>
               </Route>
             )

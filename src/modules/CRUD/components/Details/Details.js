@@ -28,8 +28,6 @@ class Details extends React.Component {
         action: PropTypes.string,
       }),
     }),
-    addControl: PropTypes.func,
-    removeControl: PropTypes.func,
     hasError: PropTypes.bool,
     errorMessage: PropTypes.string,
     detailsHasLoaded: PropTypes.func,
@@ -51,8 +49,6 @@ class Details extends React.Component {
         action: undefined,
       },
     },
-    addControl () {},
-    removeControl () {},
     hasError: false,
     errorMessage: '',
     detailsHasLoaded () {},
@@ -122,8 +118,6 @@ class Details extends React.Component {
   renderContent = () => {
     const {
       match: { params: { action: paramAction, id: paramId } },
-      addControl,
-      removeControl,
       feature,
       refreshingLayers,
     } = this.props;
@@ -131,19 +125,13 @@ class Details extends React.Component {
     if (paramId === ACTION_CREATE || paramAction === ACTION_UPDATE) {
       return (
         <Edit
-          addControl={addControl}
-          removeControl={removeControl}
           action={paramAction || paramId}
           refreshingLayers={refreshingLayers}
         />
       );
     }
     return (
-      <Read
-        addControl={addControl}
-        feature={feature}
-        removeControl={removeControl}
-      />
+      <Read feature={feature} />
     );
   }
 

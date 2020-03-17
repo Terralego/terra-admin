@@ -4,6 +4,7 @@ import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
 import { connectAppProvider } from '../../../../../components/AppProvider';
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
+import { connectMapProvider } from '../../../views/Map/MapProvider';
 import { withTableFilters } from '../../../services/UserSettingsProvider';
 import { getView, getLayersPaints } from '../../../services/CRUD';
 import compose from '../../../../../utils/compose';
@@ -57,6 +58,7 @@ export default compose(
   connectAppProvider(appProviderGetter),
   connectAuthProvider(authProviderGetter),
   connectCRUDProvider(CRUDPRoviderGetter),
+  connectMapProvider('addControl', 'removeControl'),
   withTableFilters(),
   withTranslation(),
 )(Edit);

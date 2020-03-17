@@ -302,15 +302,8 @@ class Edit extends React.Component {
         if (addedControl !== control.control) {
           return;
         }
-
-        const onSourceData = ({ isSourceLoaded }) => {
-          if (isSourceLoaded) {
-            map.setFilter(this.layerId, ['!=', '_id', paramId]);
-            map.off('sourcedata', onSourceData);
-            map.draw.add(geom);
-          }
-        };
-        map.on('sourcedata', onSourceData);
+        map.setFilter(this.layerId, ['!=', '_id', paramId]);
+        map.draw.add(geom);
         map.off('control_added', onControlAdded);
       };
       map.on('control_added', onControlAdded);

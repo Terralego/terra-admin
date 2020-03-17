@@ -4,11 +4,7 @@ import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
 import InteractiveMap, { INTERACTION_FN } from '@terralego/core/modules/Map/InteractiveMap';
 import {
-  DEFAULT_CONTROLS,
-  CONTROL_CAPTURE,
   CONTROL_CUSTOM,
-  CONTROL_BACKGROUND_STYLES,
-  CONTROLS_TOP_RIGHT,
   CONTROLS_TOP_LEFT,
 } from '@terralego/core/modules/Map';
 
@@ -26,17 +22,8 @@ import LayersControl from './components/LayersControl';
 
 import './styles.scss';
 
-const CONTROL_LIST = [{
-  control: CONTROL_BACKGROUND_STYLES,
-  position: CONTROLS_TOP_RIGHT,
-}, {
-  control: CONTROL_CAPTURE,
-  position: CONTROLS_TOP_RIGHT,
-}];
 
 const isTrueFeatureID = id => ![undefined, ACTION_CREATE].includes(id);
-
-const sortByOrder = ({ order: a = 0 }, { order: b = 0 }) => a - b;
 
 export class Map extends React.Component {
   static propTypes = {
@@ -86,7 +73,6 @@ export class Map extends React.Component {
     interactions: [],
     sources: [],
     layers: [],
-    controls: [...DEFAULT_CONTROLS, ...CONTROL_LIST],
     popups: [],
     refreshingLayers: false,
   }
@@ -336,6 +322,8 @@ export class Map extends React.Component {
 
   handleDisplayOfLayers = () => {
     const {
+      addControl,
+      removeControl,
       settings,
       match: { params: { layer, id } },
       t,
@@ -345,9 +333,9 @@ export class Map extends React.Component {
     const { layers } = this.state;
 
     if (!isTrueFeatureID(id)) {
-      this.removeControl(CONTROL_CUSTOM);
+      removeControl(CONTROL_CUSTOM);
     } else {
-      this.addControl({
+      addControl({
         control: CONTROL_CUSTOM,
         position: CONTROLS_TOP_LEFT,
         instance: LayersControl,
@@ -363,24 +351,6 @@ export class Map extends React.Component {
     this.displayCurrentLayer();
     this.setState(({ refreshingLayers }) => ({ refreshingLayers: !refreshingLayers }));
   }
-
-  addControl = control => this.setState(({ controls }) => {
-    if (controls.some(item => item.control === control.control)) {
-      return { controls: controls.map(item => (
-        (item.control === control.control)
-          ? control
-          : item
-      )) };
-    }
-    return { controls: [control, ...controls].sort(sortByOrder) };
-  });
-
-  removeControl = control => this.setState(({ controls }) => {
-    if (controls.some(item => item.control === control.control)) {
-      return null;
-    }
-    return { controls: controls.filter(item => item.control !== control) };
-  });
 
   onTableHoverCell = (featureId, hover = true) => {
     const { map, match: { params: { layer } } } = this.props;
@@ -465,11 +435,11 @@ export class Map extends React.Component {
       layers,
       sources,
       interactions,
-      controls,
       mapConfig,
       refreshingLayers,
     } = this.state;
     const {
+      controls,
       mapIsResizing,
       settings,
       match: { params: { layer, id } },
@@ -517,8 +487,6 @@ export class Map extends React.Component {
               <DetailsWrapper detailsRef={this.details}>
                 {areDetailsVisible && (
                   <Details
-                    addControl={this.addControl}
-                    removeControl={this.removeControl}
                     refreshingLayers={refreshingLayers}
                   />
                 )}

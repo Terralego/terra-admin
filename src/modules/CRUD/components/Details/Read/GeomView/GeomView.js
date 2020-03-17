@@ -210,12 +210,14 @@ const GeomView = ({
       geometries,
       setGeomValues,
     });
-  }, [addControl, geometries, layerPaints, map]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geometries, layerPaints, map]);
 
   const onRead = useCallback(name => {
     removeControl(CONTROL_DRAW);
     resetStyle(map, layerPaints, name);
-  }, [layerPaints, map, removeControl]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layerPaints, map]);
 
   useEffect(() => () => {
     removeControl(CONTROL_DRAW);
@@ -223,7 +225,9 @@ const GeomView = ({
     Object.keys(geometries).forEach(name => {
       resetStyle(map, layerPaints, name);
     });
-  }, [geometries, layerPaints, map, removeControl]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geometries, layerPaints, map]);
+
 
   return (
     <PropertyList

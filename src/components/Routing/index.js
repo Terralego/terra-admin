@@ -22,7 +22,7 @@ export class Routing extends React.Component {
           redirect,
           key: route.path,
           Component: Import ? lazy(Import) : () => null,
-          Provider: Provider ? lazy(Provider) : () => null,
+          Provider: Provider ? lazy(Provider) : ({ children }) => children,
         };
       }),
     });

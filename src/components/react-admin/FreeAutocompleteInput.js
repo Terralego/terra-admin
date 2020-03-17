@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 /* eslint-disable import/no-extraneous-dependencies */
-import get from 'lodash/get';
+import get from 'lodash.get';
 import isEqual from 'lodash/isEqual';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';

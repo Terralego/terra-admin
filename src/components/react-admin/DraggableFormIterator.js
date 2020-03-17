@@ -23,7 +23,7 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/AddCircleOutline';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 import CloseIcon from '@material-ui/icons/RemoveCircleOutline';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import { translate as RAtranslate } from 'ra-core';
 import FormInput from 'ra-ui-materialui/lib/form/FormInput';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';

@@ -12,16 +12,20 @@ export class Routing extends React.Component {
 
   componentDidMount () {
     const { routes } = this.props;
-    this.setState({ routes: routes.map(({ import: Import, redirect, provider: Provider, ...route }) => {
-      if (!Import && !redirect) throw new Error('Route needs a mandatory `import` or `redirect` attribute');
-      return {
-        ...route,
-        redirect,
-        key: route.path,
-        Component: Import ? lazy(Import) : () => null,
-        Provider: Provider ? lazy(Provider) : () => null,
-      };
-    }) });
+    this.setState({
+      routes: routes.map(({ import: Import, redirect, provider: Provider, ...route }) => {
+        if (!Import && !redirect) {
+          throw new Error('Route needs a mandatory `import` or `redirect` attribute');
+        }
+        return {
+          ...route,
+          redirect,
+          key: route.path,
+          Component: Import ? lazy(Import) : () => null,
+          Provider: Provider ? lazy(Provider) : () => null,
+        };
+      }),
+    });
   }
 
   render () {

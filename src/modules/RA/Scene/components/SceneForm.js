@@ -1,5 +1,5 @@
 import React from 'react';
-import get from 'lodash/get';
+import get from 'lodash.get';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';

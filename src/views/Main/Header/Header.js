@@ -27,7 +27,7 @@ const Logo = ({
   return <img className="main-header__logo" src={src} alt={alt} />;
 };
 
-export const Header = ({ authenticated, ...props }) => (
+export const Header = ({ authenticated, heading, ...props }) => (
   <header className="main-header">
     <Navbar className={Classes.DARK}>
       <NavbarGroup align="left">
@@ -37,6 +37,12 @@ export const Header = ({ authenticated, ...props }) => (
           </NavLink>
         </NavbarHeading>
       </NavbarGroup>
+      {heading && (
+        <NavbarGroup>
+          { /* eslint-disable-next-line react/no-danger */ }
+          <div dangerouslySetInnerHTML={{ __html: heading }} />
+        </NavbarGroup>
+      )}
       {authenticated && (
         <NavbarGroup align="right">
           <MenuDropdown />

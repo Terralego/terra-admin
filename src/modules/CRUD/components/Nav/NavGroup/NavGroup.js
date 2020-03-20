@@ -20,7 +20,7 @@ const NavGroup = ({
         alignText="left"
         onClick={() => toggleGroup(!open)}
         icon={<NavIcon isGroup src={groupPictogram} />}
-        rightIcon={open ? 'small-minus' : 'small-plus'}
+        rightIcon={open ? 'chevron-up' : 'chevron-down'}
         minimal
         text={navCollapsed ? '' : groupName}
       />

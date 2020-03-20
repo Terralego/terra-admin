@@ -14,7 +14,7 @@ exports[`should collapse correctly 1`] = `
     }
     minimal={true}
     onClick={[Function]}
-    rightIcon="small-plus"
+    rightIcon="chevron-down"
     text=""
   />
   <div
@@ -100,7 +100,7 @@ exports[`should snapshot correctly 1`] = `
     }
     minimal={true}
     onClick={[Function]}
-    rightIcon="small-plus"
+    rightIcon="chevron-down"
   />
   <div
     isOpen={false}

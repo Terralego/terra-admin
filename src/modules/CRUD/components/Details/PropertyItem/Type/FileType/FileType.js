@@ -8,45 +8,37 @@ const getFileName = src => {
   return decodeURIComponent(url.split('/').pop());
 };
 
-const FileType = props => {
-  const {
-    display_value: displayValue,
-    schema: {
-      title,
-    },
-    type,
-  } = props;
-  const { url } = displayValue;
+const FileType = ({
+  display_value: { url, thumbnail },
+  schema: { title },
+  type,
+}) => {
   if (!url) {
     return <NoValue />;
   }
+
+  const text = getFileName(url) || title;
+
+  if (type === 'image') {
+    return <img key={thumbnail} src={thumbnail} alt={text} />;
+  }
+
   return (
-    <>
-      {url.map((src => {
-        const text = getFileName(src) || title;
-        return (
-          (type === 'image')
-            ? <img key={src} src={src} alt={text} />
-            : (
-              <a
-                key={src}
-                href={src}
-                rel="download noopener noreferrer"
-                target="_blank"
-              >
-                {text}
-              </a>
-            )
-        );
-      }))}
-    </>
+    <a
+      key={url}
+      href={url}
+      rel="download noopener noreferrer"
+      target="_blank"
+    >
+      {text}
+    </a>
   );
 };
 
 FileType.propTypes = {
   display_value: PropTypes.shape({
     thumbnail: PropTypes.string,
-    url: PropTypes.arrayOf(PropTypes.string),
+    url: PropTypes.string,
   }),
   schema: PropTypes.shape({
     title: PropTypes.string,

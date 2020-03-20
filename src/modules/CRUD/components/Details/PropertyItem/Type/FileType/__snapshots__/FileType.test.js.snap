@@ -13,7 +13,7 @@ exports[`should render correctly file 1`] = `
 exports[`should render correctly image 1`] = `
 <img
   alt="file.pdf"
-  src="http://file.pdf"
+  src="http://file_thumb.jpg"
 />
 `;
 

@@ -7,6 +7,7 @@ jest.mock('../../NoValue', () => () => <div>No value</div>);
 const props = {
   display_value: {
     url: 'http://file.pdf',
+    thumbnail: 'http://file_thumb.jpg',
   },
   schema: { title: 'Name of the file' },
 };

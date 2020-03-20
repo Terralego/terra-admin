@@ -1,0 +1,185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display menu when user is authenticated 1`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <span>
+            main.title
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      align="right"
+    >
+      <div />
+      <div />
+    </div>
+  </div>
+</header>
+`;
+
+exports[`should display text or logo should display alt 1`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <span>
+            Company name
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`should display text or logo should display alt 2`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <span>
+            Company name
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`should display text or logo should display default title 1`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <span>
+            main.title
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`should display text or logo should display default title 2`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <span>
+            main.title
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`should display text or logo should display logo 1`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <img
+            alt="Company name"
+            className="main-header__logo"
+            src="path/to/logo.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`should display text or logo should display title 1`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <span>
+            Foo Title
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`should display text or logo should display title 2`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <span>
+            Foo Title
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+`;

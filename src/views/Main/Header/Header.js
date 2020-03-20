@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import {
   Navbar,
@@ -7,15 +8,20 @@ import {
   Classes,
 } from '@blueprintjs/core';
 
-import './header.scss';
 import UserDropdown from '../UserDropdown';
 import MenuDropdown from '../MenuDropdown';
 
-const logo = ({ title, logo: { src = false, alt = title }, t }) => {
+import './header.scss';
+
+const Logo = ({
+  t,
+  title = t('main.title'),
+  logo: {
+    src = undefined,
+    alt = title,
+  },
+}) => {
   if (!src) {
-    if (!alt) {
-      return <span>{t('main.title')}</span>;
-    }
     return <span>{alt}</span>;
   }
   return <img className="main-header__logo" src={src} alt={alt} />;
@@ -27,7 +33,7 @@ export const Header = ({ authenticated, ...props }) => (
       <NavbarGroup align="left">
         <NavbarHeading>
           <NavLink to="/">
-            {logo(props)}
+            <Logo {...props} />
           </NavLink>
         </NavbarHeading>
       </NavbarGroup>
@@ -40,5 +46,23 @@ export const Header = ({ authenticated, ...props }) => (
     </Navbar>
   </header>
 );
+
+Header.propTypes = {
+  t: PropTypes.func,
+  title: PropTypes.string,
+  logo: PropTypes.shape({
+    src: PropTypes.string,
+    alt: PropTypes.string,
+  }),
+};
+
+Header.defaultProps = {
+  t: text => text,
+  title: undefined,
+  logo: {
+    src: undefined,
+    alt: undefined,
+  },
+};
 
 export default Header;

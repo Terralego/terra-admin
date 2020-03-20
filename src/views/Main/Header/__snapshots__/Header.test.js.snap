@@ -1,5 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should display heading 1`] = `
+<header
+  className="main-header"
+>
+  <div
+    className="DARK"
+  >
+    <div
+      align="left"
+    >
+      <div>
+        <div>
+          <span>
+            main.title
+          </span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<h1>Heading text</h1>",
+          }
+        }
+      />
+    </div>
+  </div>
+</header>
+`;
+
 exports[`should display menu when user is authenticated 1`] = `
 <header
   className="main-header"

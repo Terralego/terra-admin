@@ -100,6 +100,17 @@ describe('should display text or logo', () => {
   });
 });
 
+
+it('should display heading', () => {
+  const tree = renderer.create((
+    <Header
+      t={text => text}
+      heading="<h1>Heading text</h1>"
+    />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
 it('should display menu when user is authenticated', () => {
   const tree = renderer.create((
     <Header

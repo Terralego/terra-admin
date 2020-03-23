@@ -3,6 +3,10 @@
 .CRUD-edit {
   display: flex;
   align-items: flex-end;
+  &--vertical {
+    flex-direction: column;
+    align-items: stretch;
+  }
   fieldset {
     border: 0;
     margin: 0;
@@ -129,5 +133,8 @@
   }
   &__submit {
     flex-shrink: 0;
+    .details__list-create & {
+      margin: 1rem 0.5rem 0 auto;
+    }
   }
 }

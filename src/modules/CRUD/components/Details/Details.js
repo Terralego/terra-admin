@@ -10,6 +10,7 @@ import { toast } from '../../../../utils/toast';
 import Metas from './Metas';
 import Read from './Read';
 import Edit from './Edit';
+import Create from './Create';
 import './styles.scss';
 
 class Details extends React.Component {
@@ -122,7 +123,11 @@ class Details extends React.Component {
       refreshingLayers,
     } = this.props;
 
-    if (paramId === ACTION_CREATE || paramAction === ACTION_UPDATE) {
+    if (paramId === ACTION_CREATE) {
+      return <Create />;
+    }
+
+    if (paramAction === ACTION_UPDATE) {
       return (
         <Edit
           action={paramAction || paramId}

@@ -22,6 +22,7 @@ jest.mock('../../../../utils/toast', () => ({
 }));
 
 jest.mock('./Metas', () => () => <div>Metas</div>);
+jest.mock('./Create', () => () => <div>Create</div>);
 jest.mock('./Read', () => () => <div>Read</div>);
 jest.mock('./Edit', () => ({ action }) => <div>{action}</div>);
 

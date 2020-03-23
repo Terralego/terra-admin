@@ -8,6 +8,7 @@ jest.mock('@blueprintjs/core', () => ({
   Button: ({ children, ...props }) => <button {...props}>{children}</button>,
 }));
 jest.mock('react-jsonschema-form', () => ({ children, ...props }) => <form {...props}>{children}</form>);
+jest.mock('../../../../../../components/react-json-schemaForm/GeometryField', () => props => <div {...props} />);
 
 const props = {
   editedItem: '',

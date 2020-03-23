@@ -3,8 +3,6 @@
 exports[`should render correctly 1`] = `
 <div
   isGeom={true}
-  onEdit={[Function]}
-  onRead={[Function]}
   properties={
     Object {
       "extraLayer1": Object {
@@ -121,7 +119,16 @@ exports[`should render correctly 1`] = `
           "properties": Object {
             "coordinates": Object {
               "items": Object {
-                "type": "number",
+                "items": Object {
+                  "items": Object {
+                    "items": Object {
+                      "type": "number",
+                    },
+                    "type": "array",
+                  },
+                  "type": "array",
+                },
+                "type": "array",
               },
               "type": "array",
             },
@@ -140,6 +147,27 @@ exports[`should render correctly 1`] = `
         "type": "object",
         "ui_schema": Object {
           "coordinates": Object {
+            "items": Object {
+              "items": Object {
+                "items": Object {
+                  "ui:options": Object {
+                    "addable": false,
+                    "orderable": false,
+                    "removable": false,
+                  },
+                },
+                "ui:options": Object {
+                  "addable": false,
+                  "orderable": false,
+                  "removable": false,
+                },
+              },
+              "ui:options": Object {
+                "addable": false,
+                "orderable": false,
+                "removable": false,
+              },
+            },
             "ui:options": Object {
               "addable": false,
               "orderable": false,

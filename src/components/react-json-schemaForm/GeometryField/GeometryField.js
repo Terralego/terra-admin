@@ -66,29 +66,21 @@ const getGeometries = ({
 };
 
 
-const GeometryField = props => {
-  const {
-    addControl,
-    feature,
-    formData,
-    layerPaints,
-    map,
-    match: { params },
-    removeControl,
-    name,
-    settings,
-    t,
-    ...rest
-  } = props;
-
+const GeometryField = ({
+  addControl,
+  feature,
+  formData,
+  layerPaints,
+  map,
+  match: { params },
+  removeControl,
+  name,
+  settings,
+  t,
+  ...rest
+}) => {
   const geometries = useMemo(() => (
-    getGeometries(({
-      feature,
-      formData,
-      params,
-      name,
-      settings,
-    }))
+    getGeometries(({ feature, formData, params, name, settings }))
   ), [feature, formData, params, name, settings]);
 
   const [geomValues, setGeomValues] = useState(geometries);
@@ -115,13 +107,11 @@ const GeometryField = props => {
     const { features } = target.draw.getAll();
 
     if (features.length > 1 && [POINT, LINESTRING, POLYGON].includes(geomValues.geom_type)) {
-      target.draw.delete(
-        features.reduce((list, item) => (
-          item.id !== id
-            ? [...list, item.id]
-            : list
-        ), []),
-      );
+      const otherFeaturesIds = features.reduce((list, item) => (
+        item.id === id ? list : [...list, item.id]
+      ), []);
+
+      target.draw.delete(otherFeaturesIds);
     }
 
     setGeomValues(prevGeomValues => ({

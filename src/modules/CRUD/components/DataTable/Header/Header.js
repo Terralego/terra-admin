@@ -28,7 +28,7 @@ const Header = ({
       <span>{t('CRUD.table.results', { count })}</span>
       <strong>{layerName}</strong>
       {displayAddFeature && (
-        <NavLink className="table-header__create" to={generateURI('layer', { layer, action: 'create' })}>
+        <NavLink className="table-header__create" to={generateURI('layer', { layer, id: 'create' })}>
           <span className="bp3-button bp3-minimal">
             <Icon icon="add" />
             <span className="bp3-button-text"> {t('CRUD.details.create')}</span>

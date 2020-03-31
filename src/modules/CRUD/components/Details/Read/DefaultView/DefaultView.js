@@ -8,7 +8,7 @@ import PropertyList from '../../PropertyList';
 import Actions from '../../Actions';
 
 const DefaultView = ({
-  match: { params: { layer, id, action = 'read', section = 'default', category } },
+  match: { params: { layer, id, section = 'default', category } },
   properties,
   t,
 }) => {
@@ -30,7 +30,7 @@ const DefaultView = ({
           <Tab
             key={slug}
             id={slug}
-            title={<NavLink to={generateURI('layer', { layer, id, action, section, category: slug })}>{title || t('CRUD.details.other')}</NavLink>}
+            title={<NavLink to={generateURI('layer', { layer, id, section, category: slug })}>{title || t('CRUD.details.other')}</NavLink>}
             panel={<PropertyList properties={propertiesFromTab} />}
           />
         ))}

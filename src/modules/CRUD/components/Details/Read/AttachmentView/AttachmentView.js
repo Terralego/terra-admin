@@ -38,7 +38,7 @@ const AttachmentView = ({
     attachmentFiles,
     attachmentImages,
   },
-  match: { params: { layer, id, action, section, category } },
+  match: { params: { layer, id, section, category } },
   t,
 }) => {
   const attachmentEndpoint = section === 'attachmentFiles' ? fileEndpoint : pictureEndpoint;
@@ -101,7 +101,7 @@ const AttachmentView = ({
         <Tab
           key={categoryId}
           id={name}
-          title={<NavLink to={generateURI('layer', { layer, id, action, section, category: name })}>{name}</NavLink>}
+          title={<NavLink to={generateURI('layer', { layer, id, section, category: name })}>{name}</NavLink>}
           panel={(
             <ul className="attachment__list">
               {attachments.map(({

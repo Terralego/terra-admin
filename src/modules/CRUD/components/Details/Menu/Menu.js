@@ -22,13 +22,13 @@ const MenuItem = ({
   children,
   section,
   disabled,
-  params: { layer, id, action = 'read' },
+  params: { layer, id },
 }) => {
   if (!disabled) {
     return (
       <NavLink
         key={section}
-        to={generateURI('layer', { layer, id, action, section })}
+        to={generateURI('layer', { layer, id, section })}
       >
         {children}
       </NavLink>

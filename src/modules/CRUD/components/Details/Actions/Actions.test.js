@@ -35,9 +35,7 @@ beforeEach(() => {
   props = {
     paramLayer: 'LayerFoo',
     paramId: 'featureFoo',
-    displayUpdate: true,
     displayDelete: true,
-    displayCancel: true,
     children: <div>Children component</div>,
     t: key => key,
     view: {

@@ -48,7 +48,6 @@ Array [
   </ul>,
   <div
     displayDelete={true}
-    displayUpdate={true}
     paramId="layerId"
     paramLayer="layerFoo"
   >

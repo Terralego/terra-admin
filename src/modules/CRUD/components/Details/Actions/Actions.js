@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import { Icon, Button, Popover, H5, PopoverInteractionKind, Classes } from '@blueprintjs/core';
+import { Button, Popover, H5, PopoverInteractionKind, Classes } from '@blueprintjs/core';
 
 import { generateURI } from '../../../config';
 import { toast } from '../../../../../utils/toast';
@@ -22,9 +21,7 @@ class Actions extends React.Component {
       push: PropTypes.func,
     }),
     settingsEndpoint: PropTypes.string,
-    displayUpdate: PropTypes.bool,
     displayDelete: PropTypes.bool,
-    displayCancel: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -40,9 +37,7 @@ class Actions extends React.Component {
       push () {},
     },
     settingsEndpoint: undefined,
-    displayUpdate: false,
     displayDelete: false,
-    displayCancel: false,
     t: text => text,
   }
 
@@ -77,11 +72,7 @@ class Actions extends React.Component {
 
   render () {
     const {
-      paramLayer,
-      paramId,
-      displayUpdate,
       displayDelete,
-      displayCancel,
       children,
       t,
     } = this.props;
@@ -91,7 +82,6 @@ class Actions extends React.Component {
           <Popover
             popoverClassName={Classes.POPOVER_CONTENT_SIZING}
             interactionKind={PopoverInteractionKind.CLICK}
-            className="details__actions-delete"
             content={(
               <div className="details__confirm">
                 <H5>{t('CRUD.details.confirmDeletion')}</H5>
@@ -113,22 +103,6 @@ class Actions extends React.Component {
           >
             <Button icon="trash" intent="danger" text={t('CRUD.details.delete')} />
           </Popover>
-        )}
-        {displayUpdate && (
-          <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId, action: 'update' })}>
-            <span className="bp3-button bp3-intent-primary">
-              <Icon icon="edit" />
-              <span className="bp3-button-text">{t('CRUD.details.update')}</span>
-            </span>
-          </NavLink>
-        )}
-        {displayCancel && (
-          <NavLink to={generateURI('layer', { layer: paramLayer, id: paramId })}>
-            <span className="bp3-button">
-              <Icon icon="undo" />
-              <span className="bp3-button-text details__actions-cancel-text">{t('CRUD.details.cancel')}</span>
-            </span>
-          </NavLink>
         )}
         {children}
       </div>

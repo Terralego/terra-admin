@@ -10,6 +10,5 @@ export default connectAuthProvider(({
   const permissions = authenticated ? user.permissions : [];
   return {
     displayViewFeature: permissions.includes('can_view_feature'),
-    displayUpdateFeature: permissions.includes('can_change_feature'),
   };
 })(CellRender);

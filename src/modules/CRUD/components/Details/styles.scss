@@ -202,19 +202,9 @@
   &__actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin-top: auto;
     padding: 1rem 1rem 0;
-    > * + * {
-      margin-left: 1rem !important; // Cause of bootstrap override
-      width: auto;
-    }
-    &-delete {
-      margin-right: auto;
-    }
-    &-cancel-text {
-      display: none;
-    }
   }
 
   &__confirm-content {
@@ -288,16 +278,6 @@
         .mapboxgl-ctrl-bottom-right {
           right: calc(40%);
         }
-      }
-    }
-  }
-}
-
-@media all and (min-width: 80em) {
-  .details {
-    &__actions {
-      &-cancel-text {
-        display: block;
       }
     }
   }

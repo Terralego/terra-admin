@@ -8,34 +8,6 @@ exports[`should render correctly 1`] = `
     <div />
   </div>
   <div>
-    <span
-      className="bp3-button bp3-intent-primary"
-    >
-      <li>
-        edit
-      </li>
-      <span
-        className="bp3-button-text"
-      >
-        CRUD.details.update
-      </span>
-    </span>
-  </div>
-  <div>
-    <span
-      className="bp3-button"
-    >
-      <li>
-        undo
-      </li>
-      <span
-        className="bp3-button-text details__actions-cancel-text"
-      >
-        CRUD.details.cancel
-      </span>
-    </span>
-  </div>
-  <div>
     Children component
   </div>
 </div>

@@ -5,9 +5,7 @@ import Form from 'react-jsonschema-form';
 import { getJSONSchemaFromGeom } from '../../../services/utils';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
-import RTEField from '../../../../../components/react-json-schemaForm/RTEField';
-import GeometryField from '../../../../../components/react-json-schemaForm/GeometryField';
-import TableField from '../../../../../../components/react-json-schemaForm/TableField';
+import customFields from '../../../../../components/react-json-schemaForm';
 import Header from '../Header';
 
 /**
@@ -159,7 +157,7 @@ const Create = props => {
           disabled={loading}
           schema={schema}
           uiSchema={uiSchema}
-          fields={{ rte: RTEField, geometry: GeometryField, table: TableField }}
+          fields={customFields}
           onSubmit={handleSubmit}
         >
           <Button

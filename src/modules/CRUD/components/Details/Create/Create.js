@@ -7,6 +7,7 @@ import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import RTEField from '../../../../../components/react-json-schemaForm/RTEField';
 import GeometryField from '../../../../../components/react-json-schemaForm/GeometryField';
+import TableField from '../../../../../../components/react-json-schemaForm/TableField';
 import Header from '../Header';
 
 /**
@@ -158,7 +159,7 @@ const Create = props => {
           disabled={loading}
           schema={schema}
           uiSchema={uiSchema}
-          fields={{ rte: RTEField, geometry: GeometryField }}
+          fields={{ rte: RTEField, geometry: GeometryField, table: TableField }}
           onSubmit={handleSubmit}
         >
           <Button

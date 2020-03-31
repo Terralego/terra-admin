@@ -19,6 +19,7 @@ exports[`should render correctly can edit 1`] = `
       Object {
         "geometry": [Function],
         "rte": [Function],
+        "table": [Function],
       }
     }
     onSubmit={[Function]}

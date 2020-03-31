@@ -58,6 +58,7 @@
   }
   select {
     @include pt-input();
+    padding-right: 1rem;
     // Background below is the base 64 transformation of:
     // <svg viewBox="0 0 10 10">
     //   <polygon fill="#5c7080" points="5 0, 10 4, 0 4"/>

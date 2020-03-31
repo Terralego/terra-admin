@@ -7,11 +7,13 @@ import Type from '../../Type';
 const ArrayOfObjects = ({
   display_value: displayValue,
   schema: { items: schemaItems },
-  ui_schema: { items: uiSchemaItems = {} } = {},
+  ui_schema: { items: uiSchemaItems = {}, 'ui:field': uiField } = {},
 }) => {
+  const { properties = {}, type } = schemaItems;
+
   const orderedValue = displayValue.map(value => getObjectOrderedValue(value, uiSchemaItems['ui:order']));
 
-  if (!isTableObject(orderedValue)) {
+  if (uiField !== 'table' && !isTableObject(orderedValue)) {
     return displayValue.map((value, i) => (
       <Type
         // eslint-disable-next-line react/no-array-index-key
@@ -24,26 +26,33 @@ const ArrayOfObjects = ({
     ));
   }
 
-  const { properties = {}, type } = schemaItems;
-  const columns = Object.entries(orderedValue[0]);
+  const columns = Object.entries(getObjectOrderedValue(properties, uiSchemaItems['ui:order']));
+
   return (
     <div className="details__table">
       <table>
         <thead>
           <tr>
-            {columns.map(([key, value]) => (
-              <th key={key}>{properties[key].title || value}</th>
-            ))}
+            {columns.map(([key, value]) => {
+              const title =  properties[key].title || value;
+              const { 'ui:help': help } =  uiSchemaItems[key] || {};
+              return (
+                <th key={key}>
+                  {title}
+                  {help && <span className="details__table-help">({help})</span>}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
           {orderedValue.map((row, i) => (
           // eslint-disable-next-line react/no-array-index-key
             <tr key={i}>
-              {Object.entries(row).map(([key, value]) => (
+              {columns.map(([key]) => (
                 <td key={key}>
                   <Type
-                    display_value={value}
+                    display_value={row[key]}
                     schema={properties[key]}
                     ui_schema={uiSchemaItems[key]}
                     type={type[key]}

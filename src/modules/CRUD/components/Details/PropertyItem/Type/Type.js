@@ -18,6 +18,7 @@ export const TYPES = {
   object: ObjectType,
   rte: StringType,
   string: StringType,
+  table: ArrayType,
 };
 
 export const getComponent = type => {

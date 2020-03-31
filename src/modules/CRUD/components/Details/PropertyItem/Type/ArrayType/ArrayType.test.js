@@ -48,6 +48,13 @@ const arrayObjectsProps = {
       type: 'object',
     },
   },
+  ui_schema: {
+    items: {
+      date: {
+        'ui:help': 'YYYY/MM/DD format',
+      },
+    },
+  },
 };
 
 describe('should render correctly', () => {

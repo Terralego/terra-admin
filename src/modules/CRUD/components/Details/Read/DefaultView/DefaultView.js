@@ -36,7 +36,7 @@ const DefaultView = ({
         ))}
         <Tabs.Expander />
       </Tabs>
-      <Actions paramId={id} paramLayer={layer} displayUpdate displayDelete />
+      <Actions paramId={id} paramLayer={layer} displayDelete />
     </>
   );
 };

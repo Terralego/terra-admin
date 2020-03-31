@@ -18,11 +18,10 @@ const appProvider = ({
 const authProvider = ({
   authenticated,
   user,
-}, { displayUpdate, displayDelete }) => {
+}, { displayDelete }) => {
   const permissions = authenticated ? user.permissions : [];
   return {
     displayDelete: displayDelete && permissions.includes('can_delete_feature'),
-    displayUpdate: displayUpdate && permissions.includes('can_change_feature'),
   };
 };
 

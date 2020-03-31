@@ -19,7 +19,6 @@ class CellRender extends React.Component {
       layer, children: contentCell,
       originalRowIndex,
       displayViewFeature,
-      displayUpdateFeature,
       onHoverCell = () => null,
     } = this.props;
 
@@ -61,42 +60,20 @@ class CellRender extends React.Component {
               interactionKind={PopoverInteractionKind.CLICK}
               position={Position.TOP}
               isOpen={isOpen}
-              content={
-            displayUpdateFeature ? (
-              <Trans
-                i18nKey="CRUD.table.readOrUpdateMessage"
-              >
-                <NavLink
-                  className={Classes.POPOVER_DISMISS}
-                  to={generateURI('layer', { layer, id })}
-                  onClick={() => this.togglePopover(false)}
+              content={(
+                <Trans
+                  i18nKey="CRUD.table.readMessage"
                 >
-                Read
-                </NavLink>
-                or
-                <NavLink
-                  className={Classes.POPOVER_DISMISS}
-                  to={generateURI('layer', { layer, id, action: 'update' })}
-                  onClick={() => this.togglePopover(false)}
-                >
-                Update
-                </NavLink>
-                this feature
-              </Trans>
-            ) : (
-              <Trans
-                i18nKey="rando.table.readMessage"
-              >
-                <NavLink
-                  className={Classes.POPOVER_DISMISS}
-                  to={generateURI('layer', { layer, id })}
-                  onClick={() => this.togglePopover(false)}
-                >
+                  <NavLink
+                    className={Classes.POPOVER_DISMISS}
+                    to={generateURI('layer', { layer, id })}
+                    onClick={() => this.togglePopover(false)}
+                  >
               Read
-                </NavLink>
+                  </NavLink>
               this feature
-              </Trans>
-            )}
+                </Trans>
+)}
             >
               <CellTarget />
             </Popover>

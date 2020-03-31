@@ -197,8 +197,8 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
           </div>
 
           <div style={style.modalButtons}>
-            <Button variant="outlined" color="primary" onClick={closeNewLayerModal(true)}>Valider</Button>
             <Button variant="outlined" color="secondary" onClick={closeNewLayerModal(false)}>Annuler</Button>
+            <Button variant="outlined" color="primary" onClick={closeNewLayerModal(true)}>Valider</Button>
           </div>
         </div>
       </Modal>

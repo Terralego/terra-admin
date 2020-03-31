@@ -19,6 +19,7 @@
     "jsoneditor-react": "~1.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
+    "lodash.uniqby": "^4.7.0",
     "mapbox-gl": "^0.53.0",
     "memoize-one": "~5.1.1",
     "node-sass": "~4.12.0",

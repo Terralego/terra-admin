@@ -6,7 +6,7 @@ const Map = () => import('./views/Map');
 const path = '/CRUD';
 const routes = [
   {
-    path: `${path}/map/:layer?/:id?/:action?/:section?/:category?`,
+    path: `${path}/map/:layer?/:id?/:section?/:category?`,
     import: Map,
     name: 'layer',
     provider: MapProvider,

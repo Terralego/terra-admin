@@ -1,0 +1,25 @@
+.tableField {
+  padding-bottom: 0.8rem;
+  &__tr {
+    position: relative;
+  }
+  &__td {
+    padding: 0.7rem 0.3rem !important;
+  }
+  &__td-action {
+    border: 0 !important;
+    padding: 0 !important;
+    vertical-align: middle;
+  }
+  &__insert {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    z-index: 1;
+    > span {
+      background: #fff;
+      border-radius: 50%;
+    }
+  }
+}

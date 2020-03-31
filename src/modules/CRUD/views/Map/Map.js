@@ -14,7 +14,7 @@ import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
-import { ACTION_CREATE, ACTION_UPDATE, getView, getSources, getLayersPaints, getFirstCrudViewName } from '../../services/CRUD';
+import { ACTION_CREATE, getView, getSources, getLayersPaints, getFirstCrudViewName } from '../../services/CRUD';
 import { TABLE_MEDIUM, TABLE_FULL } from '../../services/UserSettingsProvider';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
@@ -146,22 +146,20 @@ export class Map extends React.Component {
     if (isTrueFeatureID(id) && prevCoordinates !== coordinates) {
       this.setFitBounds();
       this.generateLayersToMap();
-      if (action !== ACTION_UPDATE) {
-        const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
-        if (!layerId || !Object.keys(map).length) {
-          return;
-        }
-        addHighlight({
-          layerId,
-          featureId: id,
-          highlightColor: 'red',
-          unique: true,
-          source,
-        });
+      const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
+      if (!layerId || !Object.keys(map).length) {
+        return;
       }
+      addHighlight({
+        layerId,
+        featureId: id,
+        highlightColor: 'red',
+        unique: true,
+        source,
+      });
     }
 
-    if ((isTrueFeatureID(prevId) && !id) || action === ACTION_UPDATE) {
+    if (isTrueFeatureID(prevId) && !id) {
       const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer) || {};
       if (!layerId || !Object.keys(map).length) {
         return;

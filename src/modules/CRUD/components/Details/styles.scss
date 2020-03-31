@@ -254,22 +254,6 @@
   }
 }
 
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot');
-  src: url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
-       url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff') format('woff'),
-       url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
-       url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
-.bootstrap-inside {
-  @import "~bootstrap/dist/css/bootstrap.min";
-  padding: 0 1rem;
-  textarea {
-    resize: vertical;
-  }
-}
-
 @media all and (min-width: 66em) {
   .CRUD-details {
     &--active {

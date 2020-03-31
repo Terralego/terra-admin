@@ -36,21 +36,6 @@ Array [
 ]
 `;
 
-exports[`Snapshots should render details Update correctly 1`] = `
-Array [
-  <div>
-    Metas
-  </div>,
-  <div
-    className="CRUD-details__content"
-  >
-    <div>
-      update
-    </div>
-  </div>,
-]
-`;
-
 exports[`Snapshots should render loading correctly 1`] = `
 Array [
   <div>

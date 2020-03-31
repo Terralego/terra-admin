@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
+import { ACTION_CREATE } from '../../services/CRUD';
 import Loading from '../../../../components/Loading';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
 
 import Metas from './Metas';
 import Read from './Read';
-import Edit from './Edit';
 import Create from './Create';
 import './styles.scss';
 
@@ -118,23 +117,14 @@ class Details extends React.Component {
 
   renderContent = () => {
     const {
-      match: { params: { action: paramAction, id: paramId } },
+      match: { params: { id } },
       feature,
-      refreshingLayers,
     } = this.props;
 
-    if (paramId === ACTION_CREATE) {
+    if (id === ACTION_CREATE) {
       return <Create />;
     }
 
-    if (paramAction === ACTION_UPDATE) {
-      return (
-        <Edit
-          action={paramAction || paramId}
-          refreshingLayers={refreshingLayers}
-        />
-      );
-    }
     return (
       <Read feature={feature} />
     );

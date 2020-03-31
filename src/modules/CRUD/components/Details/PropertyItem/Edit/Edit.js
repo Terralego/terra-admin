@@ -4,6 +4,7 @@ import { Button } from '@blueprintjs/core';
 import Form from 'react-jsonschema-form';
 import RTEField from '../../../../../../components/react-json-schemaForm/RTEField';
 import GeometryField from '../../../../../../components/react-json-schemaForm/GeometryField';
+import TableField from '../../../../../../components/react-json-schemaForm/TableField';
 import FileWidget from '../../../../../../components/react-json-schemaForm/FileWidget';
 import './styles.scss';
 
@@ -117,7 +118,7 @@ const Edit = props => {
       <Form
         className="CRUD-edit"
         disabled={loading}
-        fields={{ rte: RTEField, geometry: GeometryField }}
+        fields={{ rte: RTEField, geometry: GeometryField, table: TableField }}
         onSubmit={
           submitFeature({ isMounted, setDefaultValue, setEditedItem, setLoading, ...props })
         }

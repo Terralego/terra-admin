@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
+import { ACTION_CREATE } from '../../services/CRUD';
 
 import Details from './Details';
 
@@ -10,7 +10,6 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../services/CRUD', () => ({
   ACTION_CREATE: 'create',
-  ACTION_UPDATE: 'update',
 }));
 
 jest.mock('../../../../components/Loading', () => () => <div>Loading</div>);
@@ -24,7 +23,6 @@ jest.mock('../../../../utils/toast', () => ({
 jest.mock('./Metas', () => () => <div>Metas</div>);
 jest.mock('./Create', () => () => <div>Create</div>);
 jest.mock('./Read', () => () => <div>Read</div>);
-jest.mock('./Edit', () => ({ action }) => <div>{action}</div>);
 
 let props;
 beforeEach(() => {
@@ -100,22 +98,6 @@ describe('Snapshots', () => {
           params: {
             id: ACTION_CREATE,
             layer: 'fooLayer',
-          },
-        }}
-      />
-    )).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('should render details Update correctly', () => {
-    const tree = renderer.create((
-      <Details
-        {...props}
-        match={{
-          params: {
-            id: 'fooId',
-            layer: 'fooLayer',
-            action: ACTION_UPDATE,
           },
         }}
       />

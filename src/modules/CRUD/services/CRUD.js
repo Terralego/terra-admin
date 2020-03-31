@@ -2,7 +2,6 @@ import Api from '@terralego/core/modules/Api';
 import { sanitizeCustomEndpoint } from './utils';
 
 export const ACTION_CREATE = 'create';
-export const ACTION_UPDATE = 'update';
 
 const snakeToCamel = str => str.replace(
   /([-_][a-z])/g,

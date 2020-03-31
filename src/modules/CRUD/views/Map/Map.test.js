@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import { toast } from '../../../../utils/toast';
-import { ACTION_CREATE, ACTION_UPDATE } from '../../services/CRUD';
+import { ACTION_CREATE } from '../../services/CRUD';
 import Map from './Map';
 
 jest.mock('react-router-dom', () => ({
@@ -101,7 +101,6 @@ jest.mock('../../services/CRUD', () => ({
       'line-width': 8,
     },
   }],
-  ACTION_UPDATE: 'update',
 }));
 
 jest.mock('../../../../utils/toast', () => ({
@@ -527,7 +526,7 @@ it('should not addLight current feature if layers array is empty', () => {
 it('should remove highlight', () => {
   const instance = new Map({
     ...props,
-    match: { params: { id: '1', layer: 'layerTest', action: ACTION_UPDATE } },
+    match: { params: { id: '1', layer: 'layerTest' } },
     feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {
@@ -557,7 +556,7 @@ it('should remove highlight', () => {
 it('should not remove highlight if layers array is empty', () => {
   const instance = new Map({
     ...props,
-    match: { params: { id: '1', layer: 'layerTest', action: ACTION_UPDATE } },
+    match: { params: { id: '1', layer: 'layerTest' } },
     feature: { id: '1', geom: { coordinates: [1, 2] } },
   });
   instance.state = {

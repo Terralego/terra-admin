@@ -2,11 +2,15 @@ import React from 'react';
 
 import { LinearProgress, withDataProvider, GET_LIST } from 'react-admin';
 
+import debounce from 'lodash.debounce';
+import uniqBy from 'lodash.uniqby';
+
 /* eslint-disable import/no-extraneous-dependencies */
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 /* eslint-enable */
 
 import { RES_DATALAYER } from '../../ra-modules';
@@ -15,6 +19,50 @@ const sanitizeRestProps = ({
   dispatch,
   ...rest
 }) => rest;
+
+const PER_PAGE = 100;
+const MAX_NON_NATIVE_SELECT = 500;
+
+/**
+ * Get all layers accross pagination.
+ * @param {*} dataProvider The dataproviver instance
+ * @param {*} filter optionnal filter
+ */
+const getAllPaginatedLayer = async (dataProvider, mounted, filter = {}) => {
+  /**
+   * Generate the dataProvider query.
+   * @param {int} page to retreive.
+   */
+  const genLayerQuery = page => ({
+    pagination: { page, perPage: PER_PAGE },
+    sort: { field: 'name', order: 'ASC' },
+    filter,
+  });
+
+  // Get first layer to know total
+  const { total, data: dataFirstPage } =
+    await dataProvider(GET_LIST, RES_DATALAYER, genLayerQuery(1));
+
+  const pageCount = Math.ceil(total / PER_PAGE);
+
+  // Launch query for all next pages
+  const promises = Array.from({ length: pageCount - 1 }, async (_, index) => {
+    const { data } = await dataProvider(GET_LIST, RES_DATALAYER, genLayerQuery(index + 2));
+    return data;
+  });
+
+  if (!mounted.current) return [];
+
+  const result = [
+    dataFirstPage,
+    ...(await Promise.all(promises)),
+  ];
+
+  // We need uniqBy here as the back send many times the same layer
+  // as order by name fails on some instance with lot of element with same name
+  // We should find another way to order. (Id ?).
+  return uniqBy(result.flat(1), ({ id }) => id);
+};
 
 const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = [], ...props }) => {
   const [geolayers, setGeolayers] = React.useState(null);
@@ -26,51 +74,48 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
     });
 
   React.useEffect(() => {
-    let mounted = true;
+    const mounted = { current: true };
 
-    const getGeolayers = async () => {
+    const getGeolayers = debounce(async () => {
       /**
        * Get geolayers from API
        */
-      const { data } = await dataProvider(GET_LIST, RES_DATALAYER, {
-        pagination: { page: 1, perPage: 999 },
-        sort: { field: 'name', order: 'ASC' },
-        filter: {},
-      });
+
+      const allLayers = await getAllPaginatedLayer(dataProvider, mounted);
 
       /**
        * Do not set state if component is unmounted
        */
-      if (!mounted) {
+      if (!mounted.current) {
         return;
       }
 
       /**
        * Store geolayers into state with only name & id props
        */
-      setGeolayers(data
-        .filter(({ group, id }) => {
+      setGeolayers(allLayers
+        .filter(({ view, id }) => {
           // Include layers that have just been removed from tree
           if (includeIds.includes(id)) {
             return true;
           }
 
-          // Exclude layers already owned by a group, or already in current tree
-          if (group || excludeIds.includes(id)) {
+          // Exclude layers already owned by a view, or already in current tree
+          if (view || excludeIds.includes(id)) {
             return false;
           }
 
           return true;
         })
         .map(({ name, id }) => ({ name, id })));
-    };
+    }, 300);
 
     getGeolayers();
 
     /**
      * Cleanup function
      */
-    return () => { mounted = false; };
+    return () => { mounted.current = false; };
   }, [dataProvider, excludeIds, includeIds]);
 
   /**
@@ -91,11 +136,24 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
   return (
     <FormControl fullWidth>
       <InputLabel htmlFor="geolayer">Couche</InputLabel>
+
+      {/* Do we have too many element to have perf issues ? */}
+      { (geolayers.length > MAX_NON_NATIVE_SELECT) && (
+      <NativeSelect onChange={handleChoice} {...sanitizeRestProps(props)} name="geolayer">
+        {geolayers.map(({ id, name }) => (
+          <option key={id} value={id}>{name}({id})</option>
+        ))}
+      </NativeSelect>
+      )}
+
+      { (geolayers.length <= MAX_NON_NATIVE_SELECT) && (
       <Select onChange={handleChoice} {...sanitizeRestProps(props)} name="geolayer">
         {geolayers.map(({ id, name }) => (
-          <MenuItem key={id} value={id}>{name}</MenuItem>
+          <MenuItem key={id} value={id}>{name}({id})</MenuItem>
         ))}
       </Select>
+      )}
+
     </FormControl>
   );
 };

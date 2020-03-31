@@ -32,6 +32,15 @@ exports[`should render correctly array of objects 1`] = `
       },
     }
   }
+  ui_schema={
+    Object {
+      "items": Object {
+        "date": Object {
+          "ui:help": "YYYY/MM/DD format",
+        },
+      },
+    }
+  }
 />
 `;
 

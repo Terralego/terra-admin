@@ -40,7 +40,7 @@ const NavItem = ({ name, pictogram, layer, minified, displayAddFeature, t }) => 
     </NavLink>
     {displayAddFeature && (
       <NavAddFeature withPopover={!minified} t={t}>
-        <NavLink to={generateURI('layer', { layer: layer.name, action: 'create' })}>
+        <NavLink to={generateURI('layer', { layer: layer.name, id: 'create' })}>
           <span className="CRUD-nav__item-content">
             <span className="bp3-button bp3-minimal">
               <Icon icon="add" color="#666" />

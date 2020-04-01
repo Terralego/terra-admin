@@ -68,6 +68,16 @@
     }
   }
 
+  &__delete-feature {
+    .bp3-icon {
+      display: block;
+      margin-right: 0;
+    }
+    .bp3-button-text {
+      display: none;
+    }
+  }
+
   &__title {
     margin: 0;
     font-size: 1.2rem;
@@ -276,6 +286,19 @@
   .CRUD-details {
     .details__menu {
       .bp3-icon {
+        display: block;
+      }
+    }
+  }
+}
+
+@media all and (min-width: 115em) {
+  .CRUD-details {
+    .details__delete-feature {
+      .bp3-icon {
+        margin-right: 7px;
+      }
+      .bp3-button-text {
         display: block;
       }
     }

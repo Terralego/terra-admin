@@ -238,6 +238,7 @@
       "menu": {
         "default": "Informations",
         "geometries": "Géométries",
+        "attachment": "Documents annexes",
         "attachmentFiles": "Pièces jointes",
         "attachmentImages": "Images"
       },

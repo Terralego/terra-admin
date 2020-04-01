@@ -14,15 +14,14 @@ import { generateURI } from '../../../config';
 const nav = [
   { section: 'default', text: 'CRUD.details.menu.default', icon: 'list-detail-view' },
   { section: 'geometries', text: 'CRUD.details.menu.geometries', icon: 'polygon-filter' },
-  { section: 'attachmentFiles', text: 'CRUD.details.menu.attachmentFiles', icon: 'paperclip', disabled: true },
-  { section: 'attachmentImages', text: 'CRUD.details.menu.attachmentImages', icon: 'media', disabled: true },
+  { section: 'attachment', text: 'CRUD.details.menu.attachment', icon: 'paperclip', disabled: true },
 ];
 
 const MenuItem = ({
   children,
   section,
   disabled,
-  params: { layer, id },
+  match: { params: { id, layer } },
 }) => {
   if (!disabled) {
     return (
@@ -39,13 +38,13 @@ const MenuItem = ({
 
 const Menu = ({
   section,
-  match: { params },
+  match,
   t,
 }) => (
   <Navbar className="details__menu">
     <NavbarGroup>
       {nav.map(({ icon, text, ...props }) => (
-        <MenuItem key={props.section} params={params} {...props}>
+        <MenuItem key={props.section} match={match} {...props}>
           <span className={classnames({
             [Classes.BUTTON]: true,
             [Classes.MINIMAL]: true,
@@ -63,7 +62,7 @@ const Menu = ({
 );
 
 Menu.propTypes = {
-  section: PropTypes.oneOf(['default', 'geometries', 'attachmentFiles', 'attachmentImages']),
+  section: PropTypes.oneOf(['default', 'geometries', 'attachment']),
   match: PropTypes.shape({
     params: PropTypes.shape({
       layer: PropTypes.string,
@@ -80,7 +79,6 @@ Menu.defaultProps = {
     params: {
       layer: undefined,
       id: undefined,
-      action: 'read',
     },
   },
   t: text => text,

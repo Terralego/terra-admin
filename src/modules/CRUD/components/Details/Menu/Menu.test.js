@@ -26,7 +26,7 @@ jest.mock('../../../config', () => ({
 
 const props = {
   section: 'default',
-  match: { params: { layer: 'layerFoo', id: 'featureFoo', action: 'read' } },
+  match: { params: { layer: 'layerFoo', id: 'featureFoo' } },
 };
 
 it('should render correctly', () => {

@@ -43,20 +43,7 @@ exports[`should render correctly 1`] = `
         className="bp3-button-text"
       >
          
-        CRUD.details.menu.attachmentFiles
-      </span>
-    </span>
-    <span
-      className="btn minimal disabled"
-    >
-      <div>
-        media
-      </div>
-      <span
-        className="bp3-button-text"
-      >
-         
-        CRUD.details.menu.attachmentImages
+        CRUD.details.menu.attachment
       </span>
     </span>
   </div>

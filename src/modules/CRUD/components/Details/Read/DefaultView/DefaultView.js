@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import { generateURI } from '../../../../config';
 
 import PropertyList from '../../PropertyList';
-import Actions from '../../Actions';
 
 const DefaultView = ({
   match: { params: { layer, id, section = 'default', category } },
@@ -36,7 +35,6 @@ const DefaultView = ({
         ))}
         <Tabs.Expander />
       </Tabs>
-      <Actions paramId={id} paramLayer={layer} displayDelete />
     </>
   );
 };

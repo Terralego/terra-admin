@@ -1,57 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-Array [
-  <ul>
-    <li>
-      <span>
-        CRUD.details.other
-      </span>
-      <ul
-        className="details__list"
-      >
-        <div
-          editedItem=""
-          name="foo"
-          setEditedItem={[Function]}
-          value={
-            Object {
-              "display_value": "Value of foo",
-              "title": "Foo",
-            }
+<ul>
+  <li>
+    <span>
+      CRUD.details.other
+    </span>
+    <ul
+      className="details__list"
+    >
+      <div
+        editedItem=""
+        name="foo"
+        setEditedItem={[Function]}
+        value={
+          Object {
+            "display_value": "Value of foo",
+            "title": "Foo",
           }
-        />
-        <div
-          editedItem=""
-          name="bar"
-          setEditedItem={[Function]}
-          value={
-            Object {
-              "display_value": "Value of bar",
-              "title": "Bar",
-            }
+        }
+      />
+      <div
+        editedItem=""
+        name="bar"
+        setEditedItem={[Function]}
+        value={
+          Object {
+            "display_value": "Value of bar",
+            "title": "Bar",
           }
-        />
-        <div
-          editedItem=""
-          name="foobar"
-          setEditedItem={[Function]}
-          value={
-            Object {
-              "display_value": "Value of foo and bar",
-              "title": "Foo and Bar",
-            }
+        }
+      />
+      <div
+        editedItem=""
+        name="foobar"
+        setEditedItem={[Function]}
+        value={
+          Object {
+            "display_value": "Value of foo and bar",
+            "title": "Foo and Bar",
           }
-        />
-      </ul>
-    </li>
-  </ul>,
-  <div
-    displayDelete={true}
-    paramId="layerId"
-    paramLayer="layerFoo"
-  >
-    Actions
-  </div>,
-]
+        }
+      />
+    </ul>
+  </li>
+</ul>
 `;

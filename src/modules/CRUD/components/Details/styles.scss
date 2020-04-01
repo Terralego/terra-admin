@@ -199,14 +199,6 @@
     z-index: 1;
   }
 
-  &__actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-top: auto;
-    padding: 1rem 1rem 0;
-  }
-
   &__confirm-content {
     display: flex;
     justify-content: flex-end;

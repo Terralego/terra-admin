@@ -11,6 +11,9 @@ jest.mock('@blueprintjs/core', () => ({
   NavbarGroup: ({ children }) => <div>{children}</div>,
   Navbar: ({ children }) => <div>{children}</div>,
   Icon: ({ icon }) => <div>{icon}</div>,
+  Alignment: {
+    RIGHT: 'right',
+  },
   Classes: {
     BUTTON: 'btn',
     MINIMAL: 'minimal',
@@ -23,6 +26,7 @@ jest.mock('../../../config', () => ({
   generateURI: jest.fn(),
 }));
 
+jest.mock('../DeleteFeature', () => ({ children, ...props }) => <div {...props}>{children}</div>);
 
 const props = {
   section: 'default',

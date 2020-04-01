@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import {
+  Alignment,
   Classes,
   Navbar,
   NavbarGroup,
@@ -10,6 +11,7 @@ import {
 } from '@blueprintjs/core';
 
 import { generateURI } from '../../../config';
+import DeleteFeature from '../DeleteFeature';
 
 const nav = [
   { section: 'default', text: 'CRUD.details.menu.default', icon: 'list-detail-view' },
@@ -57,6 +59,9 @@ const Menu = ({
           </span>
         </MenuItem>
       ))}
+    </NavbarGroup>
+    <NavbarGroup align={Alignment.RIGHT}>
+      <DeleteFeature />
     </NavbarGroup>
   </Navbar>
 );

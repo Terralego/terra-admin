@@ -18,9 +18,7 @@ jest.mock('react-router-dom', () => ({
   NavLink: ({ children }) => <span>{children}</span>,
 }));
 
-
 jest.mock('../../PropertyItem', () => props => <div {...props} />);
-jest.mock('../../Actions', () => props => <div {...props}>Actions</div>);
 
 const props = {
   t: text => text,

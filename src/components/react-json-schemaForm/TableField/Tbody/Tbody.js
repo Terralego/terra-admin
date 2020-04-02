@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 import { getObjectOrderedValue } from '../../../../modules/CRUD/services/utils';
 import Field from  '../Field';

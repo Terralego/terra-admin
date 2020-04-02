@@ -13,6 +13,7 @@ exports[`should render correctly can edit 1`] = `
     title="CRUD.details.cancel"
   />
   <form
+    ErrorList={[Function]}
     className="CRUD-edit"
     disabled={false}
     fields={

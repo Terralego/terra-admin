@@ -6,6 +6,7 @@ import { getJSONSchemaFromGeom } from '../../../services/utils';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import customFields from '../../../../../components/react-json-schemaForm';
+import ErrorListTemplate from '../../../../../components/react-json-schemaForm/ErrorListTemplate';
 import Header from '../Header';
 
 /**
@@ -155,6 +156,7 @@ const Create = props => {
         <Form
           className="CRUD-edit CRUD-edit--vertical"
           disabled={loading}
+          ErrorList={ErrorListTemplate}
           schema={schema}
           uiSchema={uiSchema}
           fields={customFields}

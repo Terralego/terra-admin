@@ -4,6 +4,7 @@ import { Button } from '@blueprintjs/core';
 import Form from 'react-jsonschema-form';
 import customFields from '../../../../../../components/react-json-schemaForm';
 import FileWidget from '../../../../../../components/react-json-schemaForm/FileWidget';
+import ErrorListTemplate from '../../../../../../components/react-json-schemaForm/ErrorListTemplate';
 import './styles.scss';
 
 const widgets = {
@@ -117,6 +118,7 @@ const Edit = props => {
         className="CRUD-edit"
         disabled={loading}
         fields={customFields}
+        ErrorList={ErrorListTemplate}
         onSubmit={
           submitFeature({ isMounted, setDefaultValue, setEditedItem, setLoading, ...props })
         }

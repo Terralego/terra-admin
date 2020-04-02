@@ -2,6 +2,8 @@
 
 .CRUD-edit {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   align-items: flex-end;
   &--vertical {
     flex-direction: column;
@@ -12,8 +14,8 @@
     margin: 0;
     padding: 0;
   }
-  .panel-danger {
-    display: none;
+  .error-list {
+    margin: 0.5rem 1.5rem 1rem 0;
   }
   .control-label {
     display: block;
@@ -131,6 +133,9 @@
     .field-array-of-object .array-item-toolbox {
       padding-top: 1.3rem;
     }
+  }
+  .field-error .form-control {
+    border: 1px solid #c23030;
   }
   &__submit {
     flex-shrink: 0;

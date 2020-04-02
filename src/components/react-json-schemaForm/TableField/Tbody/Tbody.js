@@ -20,6 +20,7 @@ const Tbody = ({
   uiSchema: {
     items: uiSchemaItems,
   },
+  errorSchema,
 }) => {
   const [data, setData] = useState(formData);
 
@@ -68,19 +69,24 @@ const Tbody = ({
     <tbody>
       {data.map((item, index) => (
         <tr key={uuid()} className="tableField__tr">
-          {Object.keys(orderedValues).map(key => (
-            <td className="tableField__td" key={key}>
-              <Field
-                disabled={disabled}
-                formData={item[key]}
-                onChange={handleChange(index, key)}
-                registry={registry}
-                required={required.includes(key)}
-                schema={properties[key]}
-                uiSchema={{ 'ui:options': { label: false } }}
-              />
-            </td>
-          ))}
+          {Object.keys(orderedValues).map(key => {
+            const { [key]: error = {} } = errorSchema[index] || {};
+            const { 'ui:help': uiHelp, ...uiSchemaItem } = uiSchemaItems[key];
+            return (
+              <td className="tableField__td" key={key}>
+                <Field
+                  disabled={disabled}
+                  errorSchema={error}
+                  formData={item[key]}
+                  onChange={handleChange(index, key)}
+                  registry={registry}
+                  required={required.includes(key)}
+                  schema={properties[key]}
+                  uiSchema={{ ...uiSchemaItem, 'ui:options': { label: false } }}
+                />
+              </td>
+            );
+          })}
           <td className="tableField__td-action">
             <div>
               <Button
@@ -121,6 +127,7 @@ const Tbody = ({
 Tbody.propTypes = {
   disabled: PropTypes.bool,
   formData: PropTypes.arrayOf(PropTypes.shape({})),
+  errorSchema: PropTypes.shape({}),
   schema: PropTypes.shape({
     items: PropTypes.shape({
       properties: PropTypes.shape({}),
@@ -137,6 +144,7 @@ Tbody.propTypes = {
 
 Tbody.defaultProps = {
   disabled: false,
+  errorSchema: {},
   formData: [],
   schema: {
     items: {

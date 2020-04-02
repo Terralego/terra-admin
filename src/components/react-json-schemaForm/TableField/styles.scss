@@ -2,6 +2,9 @@
   padding-bottom: 0.8rem;
   &__tr {
     position: relative;
+    // Workaround hack to simulate position:relative on <tr> tag for some browsers
+    // https://github.com/w3c/csswg-drafts/issues/1899
+    transform: scale(1);
   }
   &__td {
     padding: 0.7rem 0.3rem !important;

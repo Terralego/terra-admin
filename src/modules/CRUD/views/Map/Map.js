@@ -22,7 +22,7 @@ import LayersControl from './components/LayersControl';
 
 import './styles.scss';
 
-
+const CUSTOM_LAYER_WEIGHT = 850;
 const isTrueFeatureID = id => ![undefined, ACTION_CREATE].includes(id);
 
 export class Map extends React.Component {
@@ -406,7 +406,10 @@ export class Map extends React.Component {
       const layersFromSettings = getLayersPaints(settings);
 
       const nextSource = sourcesFromSettings.find(({ id }) => id === `${layerId}`);
-      const nextLayers = layersFromSettings.filter(({ source }) => source === `${layerId}`).map(nextLayer => ({ ...nextLayer, displayOnMap: true }));
+      const nextLayers = layersFromSettings
+        .filter(({ source }) => source === `${layerId}`)
+        .reverse()
+        .map(nextLayer => ({ ...nextLayer, displayOnMap: true, weight: CUSTOM_LAYER_WEIGHT }));
 
       nextLayers.forEach(({ layout: { 'icon-image': iconImage } = {} }) => {
         if (iconImage) {

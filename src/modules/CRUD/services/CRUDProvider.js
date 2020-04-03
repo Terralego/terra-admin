@@ -29,6 +29,10 @@ export class CRUDProvider extends React.Component {
     },
   };
 
+  dataTableRef = React.createRef();
+
+  detailsRef = React.createRef();
+
   componentWillUnmount () {
     this.isUnmount = true;
   }
@@ -241,6 +245,8 @@ export class CRUDProvider extends React.Component {
     const { children } = this.props;
 
     const {
+      dataTableRef,
+      detailsRef,
       getMapConfig,
       getSettings,
       getFeaturesList,
@@ -254,6 +260,8 @@ export class CRUDProvider extends React.Component {
     } = this;
     const value = {
       ...this.state,
+      dataTableRef,
+      detailsRef,
       getMapConfig,
       getSettings,
       getFeaturesList,

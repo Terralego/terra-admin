@@ -77,10 +77,6 @@ export class Map extends React.Component {
     refreshingLayers: false,
   }
 
-  details = React.createRef();
-
-  dataTable = React.createRef();
-
   componentDidMount () {
     const {
       getSettings,
@@ -209,8 +205,10 @@ export class Map extends React.Component {
     });
   }
 
-  setFitBounds = ({ duration = 0 } = {}) => {
+  setFitBounds = () => {
     const {
+      dataTableRef,
+      detailsRef,
       map,
       match: { params: { layer, id } },
       settings,
@@ -224,8 +222,8 @@ export class Map extends React.Component {
 
     if (!coords.length) return;
 
-    const { current: detail } = this.details;
-    const { current: dataTable } = this.dataTable;
+    const { current: detail } = detailsRef;
+    const { current: dataTable } = dataTableRef;
 
     setTimeout(() => {
       const padding = {
@@ -235,7 +233,7 @@ export class Map extends React.Component {
         left: 20,
       };
       map.resize();
-      map.fitBounds(getBounds(coords), { padding, duration });
+      map.fitBounds(getBounds(coords), { padding, duration: 0 });
     }, 500);
   }
 
@@ -445,6 +443,8 @@ export class Map extends React.Component {
     } = this.state;
     const {
       controls,
+      dataTableRef,
+      detailsRef,
       mapIsResizing,
       settings,
       match: { params: { layer, id } },
@@ -489,7 +489,7 @@ export class Map extends React.Component {
           ? <Loading spinner />
           : (
             <>
-              <DetailsWrapper detailsRef={this.details}>
+              <DetailsWrapper detailsRef={detailsRef}>
                 {areDetailsVisible && (
                   <Details
                     refreshingLayers={refreshingLayers}
@@ -527,7 +527,7 @@ export class Map extends React.Component {
               </div>
 
               <div
-                ref={this.dataTable}
+                ref={dataTableRef}
                 className={classnames(
                   {
                     'CRUD-table': true,

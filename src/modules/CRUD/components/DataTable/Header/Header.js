@@ -61,9 +61,15 @@ Header.propTypes = {
 Header.defaultProps = {
   layerName: '',
   t:  () => {},
-  match: {},
+  match: {
+    params: {
+      layer: undefined,
+    },
+  },
   displayAddFeature: false,
-  featuresList: {},
+  featuresList: {
+    count: undefined,
+  },
 };
 
 export default Header;

@@ -298,13 +298,15 @@ export class Map extends React.Component {
       return;
     }
 
-    const geometriesIdentifiers = Object.values(geometries).map(({ identifier }) => identifier);
+    const geometriesIdentifiers = Object.values(geometries)
+      .map(({ identifier }) => identifier)
+      .filter(Boolean);
 
     layers.forEach(layerItem => {
       if (!map.getLayer(layerItem.id)) return;
       const conditionalDisplay = layerItem.source === `${view.layer.id}` && (isTrueFeatureID(id) || layerItem.main === true);
       map.setLayoutProperty(layerItem.id, 'visibility', conditionalDisplay ? 'visible' : 'none');
-      if (isTrueFeatureID(id) && layerItem.main === false) {
+      if (geometriesIdentifiers.length && isTrueFeatureID(id) && layerItem.main === false) {
         map.setFilter(layerItem.id, ['in', '_id', ...geometriesIdentifiers]);
       }
     });

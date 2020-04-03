@@ -29,6 +29,8 @@ const authProviderGetter = ({
 };
 
 const CRUDPRoviderGetter = ({
+  dataTableRef,
+  detailsRef,
   getSettings,
   settings,
   settings: {
@@ -46,6 +48,8 @@ const CRUDPRoviderGetter = ({
     },
   },
 }) => ({
+  dataTableRef,
+  detailsRef,
   getSettings,
   settings,
   setMap,

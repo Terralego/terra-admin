@@ -288,7 +288,7 @@ export class Map extends React.Component {
       map,
       settings,
       match: { params: { layer, id } },
-      feature: { extra_geometries: extraGeometries = [] } = {},
+      feature: { geometries = {} } = {},
     } = this.props;
 
     const view = getView(settings, layer);
@@ -298,12 +298,14 @@ export class Map extends React.Component {
       return;
     }
 
+    const geometriesIdentifiers = Object.values(geometries).map(({ identifier }) => identifier);
+
     layers.forEach(layerItem => {
       if (!map.getLayer(layerItem.id)) return;
       const conditionalDisplay = layerItem.source === `${view.layer.id}` && (isTrueFeatureID(id) || layerItem.main === true);
       map.setLayoutProperty(layerItem.id, 'visibility', conditionalDisplay ? 'visible' : 'none');
       if (isTrueFeatureID(id) && layerItem.main === false) {
-        map.setFilter(layerItem.id, ['in', '_id', ...extraGeometries]);
+        map.setFilter(layerItem.id, ['in', '_id', ...geometriesIdentifiers]);
       }
     });
   }

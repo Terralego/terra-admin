@@ -281,7 +281,7 @@
       "longitude": "Longitude",
       "helper-create": "Dessinez $t(jsonSchema.geometryField.type.{{type}}.singular) à l'aide des boutons disponibles sur la carte.",
       "helper-edit": "Modifiez $t(jsonSchema.geometryField.type.{{type}}.singular) à l'aide des boutons disponibles sur la carte.",
-      "save": "Une fois terminée, enregistrez en cliquant sur le bouton de soumission."
+      "save": "Une fois terminé, enregistrez en cliquant sur le bouton de soumission."
     },
     "panelError": {
       "title": "Votre saisie comporte des erreurs"

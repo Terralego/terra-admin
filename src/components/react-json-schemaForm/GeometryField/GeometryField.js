@@ -90,7 +90,7 @@ const GeometryField = ({
     setGeomValues(geometries);
   // Disabling `geometries` because it's only necessary updating value on mount
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  }, [params, formData.type]);
 
   const updateGeometryFromMap = useCallback(({
     features: [{ id }],

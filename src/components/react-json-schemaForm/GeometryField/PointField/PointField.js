@@ -54,7 +54,7 @@ const PointField = ({
     const [latitude = '', longitude = ''] = coordinates;
     refLatitude.current.value = latitude;
     refLongitude.current.value = longitude;
-    refLatitude.current.focus();
+    refLongitude.current.focus();
   }, [coordinates]);
 
   return (

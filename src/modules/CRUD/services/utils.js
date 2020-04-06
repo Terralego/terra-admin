@@ -89,7 +89,10 @@ export const getJSONSchemaFromGeom = (
 ) => {
   const type = geomTypes[geomType];
   const value = geom || { type, coordinates: [] };
-  const { coordinates } = geom || { coordinates: getDefaultCoordinatesByGeomType(geomType) };
+  const { coordinates } = geom || {};
+  const coordinatesCalculated = coordinates && coordinates.length
+    ? coordinates
+    : getDefaultCoordinatesByGeomType(geomType);
   return {
     ...rest,
     display_value: value,
@@ -101,7 +104,7 @@ export const getJSONSchemaFromGeom = (
           title: 'Type',
         },
         coordinates: {
-          items: getSchemaCoordinates(coordinates),
+          items: getSchemaCoordinates(coordinatesCalculated),
           type: 'array',
         },
       },
@@ -111,7 +114,7 @@ export const getJSONSchemaFromGeom = (
     },
     ui_schema: {
       'ui:field': 'geometry',
-      coordinates: getUISchemaCoordinates(coordinates),
+      coordinates: getUISchemaCoordinates(coordinatesCalculated),
       type: {
         'ui:widget': 'hidden',
       },

@@ -46,11 +46,12 @@ const resetStyle = (map, layerPaints, name) => {
  */
 const getGeometries = ({
   feature,
-  formData: { coordinates, type },
+  formData,
   params: { id, layer },
   name,
   settings,
 }) => {
+  const { coordinates = [], type } = formData || {};
   if (id === ACTION_CREATE) {
     const { layer: { name: layerName, ...rest }, featureEndpoint } = getView(settings, layer);
     return {
@@ -92,21 +93,26 @@ const GeometryField = ({
   }, [params]);
 
   const updateGeometryFromMap = useCallback(({
-    features: [{ geometry, id }],
+    features: [{ id }],
     target,
     type,
   }) => {
     if (type === 'draw.delete') {
       setGeomValues(prevGeomValues => ({
         ...prevGeomValues,
-        geom: null,
+        geom: {
+          ...prevGeomValues.geom,
+          coordinates: [],
+        },
       }));
       return;
     }
 
+    const isMultiGeometry = ![POINT, LINESTRING, POLYGON].includes(geomValues.geom_type);
+
     const { features } = target.draw.getAll();
 
-    if (features.length > 1 && [POINT, LINESTRING, POLYGON].includes(geomValues.geom_type)) {
+    if (features.length > 1 && !isMultiGeometry) {
       const otherFeaturesIds = features.reduce((list, item) => (
         item.id === id ? list : [...list, item.id]
       ), []);
@@ -114,9 +120,14 @@ const GeometryField = ({
       target.draw.delete(otherFeaturesIds);
     }
 
+    const coordinates = features.map(({ geometry: { coordinates: c } }) => c);
+
     setGeomValues(prevGeomValues => ({
       ...prevGeomValues,
-      geom: geometry,
+      geom: {
+        ...prevGeomValues.geom,
+        coordinates: type === 'draw.create' && isMultiGeometry ? coordinates : coordinates[0],
+      },
     }));
   }, [geomValues.geom_type]);
 

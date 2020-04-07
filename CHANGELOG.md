@@ -1,4 +1,27 @@
 
+2.12.0 / 2020-04-07
+===================
+
+  Use command `git log --oneline 2.11.0..2.12.0` to list all changes.
+
+  Package upgrades only:
+
+  * Upgrade @terralego/core package to 1.20.0
+  * Import `uuid` as recommended by the package
+  * Remove Bootstrap from packages
+  * Install uuid package
+  * Upgrade react-jsonschema-form package to 1.8.1
+  * Add @mapbox/geojson-extent to package dependencies list
+  * Upgrade react-i18next package to 11.3.3
+  * Upgrade @terralego/core package to 1.18.0
+  * Update i18next package to 19.3.2
+  * Install react-app-polyfill package to the project
+  * Add lodash.debounce package to the list of dependencies
+  * Update @terralego/core to 1.17.3
+  * Update @terralego/core package to 1.17.2
+  * Install query-string package
+  * Update react-paginate package to 6.3.2
+
 2.11.0 / 2020-01-08
 ===================
 

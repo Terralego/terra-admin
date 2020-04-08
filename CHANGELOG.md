@@ -1,4 +1,10 @@
 
+2.14.0 / 2020-04-08
+===================
+
+  * Upgrade react-scripts from 3.2.0 to 3.4.1
+  * Upgrade required nodejs version from v10 to v12
+
 2.13.0 / 2020-04-07
 ===================
 

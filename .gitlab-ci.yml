@@ -54,7 +54,7 @@ Build:
     - mkdir ./tmp
     - mv ./build ./tmp/admin
     - mv ./tmp/admin/_* ./tmp
-    - npm i -g netlify-cli
+    - npm i -g netlify-cli@2.40
     - npx netlify deploy --site=$SITE_ID --auth=$NETLIFY_ACCESS_TOKEN  --dir=./tmp --prod
 
 Deploy Dev (force): &deploy_predev

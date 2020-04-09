@@ -47,8 +47,8 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       source="coordinates"
       label="datasource.form.coordinates.coordinates-field"
       choices={[
-        { id: 'one column', name: 'En une colonne' },
-        { id: 'two columns', name: 'En deux colonnes' },
+        { id: 'one column', name: t('datasource.form.coordinates.onecolumn-field') },
+        { id: 'two columns', name: t('datasource.form.coordinates.twocolumns-field') },
       ]}
     />
     <TextInput
@@ -144,16 +144,15 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     />
 
     <CheckboxGroupInput
-      source="options-field"
-      label="datasource.form.options-field"
+      source="optionscsv"
+      label="datasource.form.optionscsv.options-field"
       options={{
         checked: true,
       }}
       choices={[
-        { id: 'headers', name: 'Entêtes à la première ligne' },
+        { id: 'headers', name: t('datasource.form.optionscsv.headers-field') },
         {
-          id: 'ignore columns',
-          name: 'Ignorer les colonnes à null',
+          id: 'ignore columns', name: t('datasource.form.optionscsv.ignorenull-field'),
         },
       ]}
     />

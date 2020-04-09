@@ -345,7 +345,6 @@
       "definition": "Définition",
       "data-type": "Type de données",
       "encoding-field": "Encodage",
-      "options-field": "Options",
       "delimiter-field": "Délimiteur",
       "decimal-separator-field": "Séparateur décimal",
       "number_lines-to-ignore-field": "Nombre de lignes à ignorer",
@@ -372,7 +371,15 @@
         "longitude-field": "Champ X / longitude",
         "order-coordinates-field": "Choisir l'ordre des coordonnées",
         "latlong-field": "Champ coordonnées",
-        "separator-coordinates-field": "Séparateur de coordonnées"
+        "separator-coordinates-field": "Séparateur de coordonnées",
+        "onecolumn-field": "En une colonne",
+        "twocolumns-field": "En deux colonnes"
+      },
+
+      "optionscsv": {
+        "options-field": "Options",
+        "headers-field": "Entête à la première ligne",
+        "ignorenull-field": "Ignore les colonnes à null"
       },
       "request": {
         "host-server": "Serveur hôte",

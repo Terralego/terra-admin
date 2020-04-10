@@ -35,7 +35,7 @@
     "react-admin-color-input": "~1.0.9",
     "react-app-polyfill": "^1.0.6",
     "react-ctx-connect": "~1.0.2",
-    "react-dom": "~16.9.0",
+    "react-dom": "~16.13.1",
     "react-final-form": "~4.1.0",
     "react-helmet": "^5.2.1",
     "react-i18next": "~11.3.4",

@@ -64,7 +64,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "enzyme": "~3.10.0",
+    "enzyme": "~3.11.0",
     "enzyme-adapter-react-16": "~1.14.0",
     "eslint-config-makina": "~1.0.2",
     "http-proxy-middleware": "^0.19.1"

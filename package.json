@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "~3.25.0",
-    "@blueprintjs/datetime": "~3.13.0",
+    "@blueprintjs/datetime": "~3.16.0",
     "@blueprintjs/icons": "~3.10.0",
     "@mapbox/geojson-extent": "^0.3.2",
     "@terralego/core": "~1.20.2",

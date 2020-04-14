@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 /* eslint-disable import/no-extraneous-dependencies */
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -10,7 +9,7 @@ import PendingIcon from '@material-ui/icons/History';
 /* eslint-enable */
 
 const renderTooltipContent = ({ state = '' } = {}) => {
-  let Icon = React.Fragment;
+  let Icon;
 
   switch (state) {
     case 'FAILURE':
@@ -41,9 +40,7 @@ const StatusChip = ({ status, status: { state } = {} }) => (
         <Chip label={renderTooltipContent(status)} style={{ marginRight: '1em' }} />
       </Tooltip>
     )
-    : (
-      <React.Fragment />
-    )
+    : <></>
 );
 
 export default StatusChip;

@@ -69,9 +69,9 @@ class CellRender extends React.Component {
                     to={generateURI('layer', { layer, id })}
                     onClick={() => this.togglePopover(false)}
                   >
-              Read
+                    Read
                   </NavLink>
-              this feature
+                  this feature
                 </Trans>
 )}
             >

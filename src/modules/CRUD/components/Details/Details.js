@@ -160,8 +160,7 @@ class Details extends React.Component {
         <div ref={this.detailContent} className="CRUD-details__content">
           {isLoading
             ? <Loading spinner />
-            : this.renderContent()
-          }
+            : this.renderContent()}
         </div>
       </>
     );

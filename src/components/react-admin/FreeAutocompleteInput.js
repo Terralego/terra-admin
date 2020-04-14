@@ -67,7 +67,8 @@ export class FreeAutocompleteInput extends React.Component {
 
   anchorEl = null;
 
-  componentWillMount () {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount () {
     const { choices, limitChoicesToValue, input } = this.props;
     const { value } = input;
     const selectedItem = this.getSelectedItem(
@@ -85,7 +86,8 @@ export class FreeAutocompleteInput extends React.Component {
     });
   }
 
-  componentWillReceiveProps (nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { choices: nextChoices, input, limitChoicesToValue } = nextProps;
     const { inputValue } = this.state;
     const { choices } = this.props;

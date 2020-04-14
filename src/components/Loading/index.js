@@ -6,8 +6,7 @@ export const Loading = ({ t, text = 'common.loading', spinner }) => (
   <div className="loading">
     {spinner
       ? <Spinner />
-      : <span>{t(text)}</span>
-    }
+      : <span>{t(text)}</span>}
   </div>
 );
 

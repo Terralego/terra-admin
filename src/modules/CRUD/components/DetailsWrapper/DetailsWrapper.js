@@ -27,7 +27,8 @@ class DetailsWrapper extends React.Component {
           'CRUD-details',
           { 'CRUD-details--active': children && childrenHasLoaded },
           { 'CRUD-details--full': full },
-        )}
+        )
+}
       >
         {children && React.Children.map(children, child => React.cloneElement(child, {
           detailsHasLoaded: () => this.hasLoaded(),

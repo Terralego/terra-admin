@@ -127,8 +127,7 @@ const DataLayerTabbedForm = ({
               source="layer_style"
               defaultValue={getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType))}
             />
-            )
-          }
+            )}
         </FormDataConsumer>
 
       </LazyFormTab>
@@ -298,13 +297,13 @@ const DataLayerTabbedForm = ({
                     );
                   }}
                 </FormDataConsumer>
-                {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <React.Fragment />}
+                {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <></>}
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (
                     scopedFormData.shown && <BooleanInput source={getSource('display')} label="Afficher ce champs par défaut" />
                   )}
                 </FormDataConsumer>
-                {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <React.Fragment />}
+                {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <></>}
               </DraggableFormIterator>
             </ArrayInput>
           )}

@@ -69,8 +69,8 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
 
   const handleChoice = ({ target: { value } }) =>
     onChange({
-      geolayer: value,
-      label: geolayers.find(({ id }) => (value === id)).name,
+      geolayer: Number(value),
+      label: geolayers.find(({ id }) => (Number(value) === id)).name,
     });
 
   React.useEffect(() => {
@@ -141,7 +141,7 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
       { (geolayers.length > MAX_NON_NATIVE_SELECT) && (
       <NativeSelect onChange={handleChoice} {...sanitizeRestProps(props)} name="geolayer">
         {geolayers.map(({ id, name }) => (
-          <option key={id} value={id}>{name}({id})</option>
+          <option key={id} value={id}>{name} ({id})</option>
         ))}
       </NativeSelect>
       )}
@@ -149,7 +149,7 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
       { (geolayers.length <= MAX_NON_NATIVE_SELECT) && (
       <Select onChange={handleChoice} {...sanitizeRestProps(props)} name="geolayer">
         {geolayers.map(({ id, name }) => (
-          <MenuItem key={id} value={id}>{name}({id})</MenuItem>
+          <MenuItem key={id} value={id}>{name} ({id})</MenuItem>
         ))}
       </Select>
       )}

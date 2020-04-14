@@ -40,8 +40,7 @@ export const Main = ({
       <div className="main-container">
         {authenticated
           ? <Content />
-          : <LoginForm translate={t} />
-    }
+          : <LoginForm translate={t} />}
       </div>
     </div>
   );

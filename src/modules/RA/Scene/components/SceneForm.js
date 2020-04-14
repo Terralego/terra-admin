@@ -111,8 +111,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       <FormDataConsumer formClassName={classes.inline}>
         {({ formData, ...rest }) =>
           (!formData.config || formData.config.report) &&
-          (<ReportField label={t('view.form.import-report')} source="config.report" {...rest} />)
-        }
+          (<ReportField label={t('view.form.import-report')} source="config.report" {...rest} />)}
       </FormDataConsumer>
 
     </SimpleForm>

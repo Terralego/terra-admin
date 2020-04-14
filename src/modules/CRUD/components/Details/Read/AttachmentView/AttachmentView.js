@@ -121,8 +121,7 @@ const AttachmentView = ({
                           <img src={thumbnail} alt="" />
                           <figcaption>{legend} <small>{CREATE_INFO}</small></figcaption>
                         </figure>
-                      )
-                    }
+                      )}
                   </li>
                 );
               })}

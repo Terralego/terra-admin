@@ -238,11 +238,11 @@
       "menu": {
         "default": "Informations",
         "geometries": "Géométries",
-        "attachment": "Documents annexes",
-        "attachmentFiles": "Pièces jointes",
-        "attachmentImages": "Images"
+        "attachments": "Documents annexes"
       },
       "attachment": {
+        "files": "Documents",
+        "images": "Images",
         "noFiles": "Aucun document",
         "createInfo": "(Crée le {{date}})"
       }

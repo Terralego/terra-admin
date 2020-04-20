@@ -16,48 +16,31 @@ import DeleteFeature from '../DeleteFeature';
 const nav = [
   { section: 'default', text: 'CRUD.details.menu.default', icon: 'list-detail-view' },
   { section: 'geometries', text: 'CRUD.details.menu.geometries', icon: 'polygon-filter' },
-  { section: 'attachment', text: 'CRUD.details.menu.attachment', icon: 'paperclip', disabled: true },
+  { section: 'attachments', text: 'CRUD.details.menu.attachments', icon: 'paperclip' },
 ];
-
-const MenuItem = ({
-  children,
-  section,
-  disabled,
-  match: { params: { id, layer } },
-}) => {
-  if (!disabled) {
-    return (
-      <NavLink
-        key={section}
-        to={generateURI('layer', { layer, id, section })}
-      >
-        {children}
-      </NavLink>
-    );
-  }
-  return children;
-};
 
 const Menu = ({
   section,
-  match,
+  match: { params: { id, layer } },
   t,
 }) => (
   <Navbar className="details__menu">
     <NavbarGroup>
       {nav.map(({ icon, text, ...props }) => (
-        <MenuItem key={props.section} match={match} {...props}>
+        <NavLink
+          key={props.section}
+          to={generateURI('layer', { layer, id, section: props.section })}
+        >
           <span className={classnames({
             [Classes.BUTTON]: true,
             [Classes.MINIMAL]: true,
-            [Classes.DISABLED]: props.disabled,
             [Classes.ACTIVE]: props.section === section,
           })}
           >
             {icon && <Icon icon={icon} />}
             <span className="bp3-button-text"> {t(text)}</span>
           </span>
-        </MenuItem>
+        </NavLink>
       ))}
     </NavbarGroup>
     <NavbarGroup align={Alignment.RIGHT}>
@@ -67,7 +50,7 @@ const Menu = ({
 );
 
 Menu.propTypes = {
-  section: PropTypes.oneOf(['default', 'geometries', 'attachment']),
+  section: PropTypes.oneOf(['default', 'geometries', 'attachments']),
   match: PropTypes.shape({
     params: PropTypes.shape({
       layer: PropTypes.string,

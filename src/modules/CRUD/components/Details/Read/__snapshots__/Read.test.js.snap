@@ -31,8 +31,14 @@ exports[`should render AttachmentView correctly 1`] = `
   <div
     className="details__content"
   >
-    <div>
-      Attachment view
+    <div
+      properties={
+        Object {
+          "foo": "foo",
+        }
+      }
+    >
+      Default view
     </div>
   </div>
 </div>

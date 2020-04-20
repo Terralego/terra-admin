@@ -29,8 +29,7 @@ const Read = ({
 
   const getView = () => {
     switch (section) {
-      case 'attachmentImages':
-      case 'attachmentFiles':
+      case 'attachments':
         return <AttachmentView />;
       case 'geometries':
         return <GeomView geometries={geometries} {...rest} />;

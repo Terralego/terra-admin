@@ -18,13 +18,6 @@ export const LATIN1 = 'LATIN1';
 export const EPSG4326 = 'EPSG_4326';
 export const EPSG2154 = 'EPSG_2154';
 export const EPSG3857 = 'EPSG_3857';
-export const COMMA = 'COMMA';
-export const SEMICOLON = 'SEMICOLON';
-export const TAB = 'TAB';
-export const COLUMN = 'COLUMN';
-export const SPACE = 'SPACE';
-export const QUOTATIONMARK = 'QUOTATION_MARK';
-export const POINTS = 'POINT';
 
 const typesToChoices = types => Object.entries(types)
   .map(([id, name]) => ({ id, name }));
@@ -71,34 +64,3 @@ export const scrTypes = {
   [EPSG3857]: 'EPSG:3857 - WGS 84 / Pseudo-Mercator',
 };
 export const fieldSCRChoices = typesToChoices(scrTypes);
-
-export const separatorTypes = {
-  [COMMA]: 'Virgule',
-  [SEMICOLON]: 'Point-virgule',
-  [TAB]: 'Tab',
-  [COLUMN]: 'Colonne',
-  [SPACE]: 'Espace',
-};
-export const fieldSeparatorChoices = typesToChoices(separatorTypes);
-
-export const delimiterTypes = {
-  [QUOTATIONMARK]: 'Guillemet',
-};
-export const fieldDelimiterChoices = typesToChoices(delimiterTypes);
-
-export const decimalseparatorTypes = {
-  [POINTS]: 'Point',
-};
-export const fieldDecimalSeparatorChoices = typesToChoices(
-  decimalseparatorTypes,
-);
-
-export const coordinatesseparatorTypes = {
-  [COMMA]: 'Virgule',
-  [SEMICOLON]: 'Point-virgule',
-  [POINTS]: 'Point',
-  [SPACE]: 'Espace',
-};
-export const fieldCoordinatesSeparatorChoices = typesToChoices(
-  coordinatesseparatorTypes,
-);

@@ -15,10 +15,6 @@ import {
 import {
   fieldEncodingChoices,
   fieldSCRChoices,
-  fieldSeparatorChoices,
-  fieldDelimiterChoices,
-  fieldDecimalSeparatorChoices,
-  fieldCoordinatesSeparatorChoices,
 } from '..';
 
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
@@ -29,14 +25,14 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       source="file"
       label="datasource.form.file.related-files"
       multiple={false}
-      placeholder={t('datasource.form.file.placeholder-csv')}
+      placeholder={t('datasource.form.file.placeholderCSV')}
     >
       <FileField source="file_data" title="title" />
     </FileInput>
 
     <SelectInput
-      source="encoding-field"
-      label="datasource.form.encoding-field"
+      source="encoding_field"
+      label="datasource.form.optionsCSV.encodingField"
       validate={[required()]}
       choices={fieldEncodingChoices}
       format={v => `${v}`}
@@ -44,28 +40,28 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     />
 
     <RadioButtonGroupInput
-      source="coordinates"
-      label="datasource.form.coordinates.coordinates-field"
+      source="coordinates_field"
+      label="datasource.form.coordinates.coordinatesField"
       choices={[
-        { id: 'one column', name: t('datasource.form.coordinates.onecolumn-field') },
-        { id: 'two columns', name: t('datasource.form.coordinates.twocolumns-field') },
+        { id: 'one column', name: t('datasource.form.coordinates.onecolumnField') },
+        { id: 'two columns', name: t('datasource.form.coordinates.twocolumnsField') },
       ]}
     />
     <TextInput
-      source="coordinates"
+      source="latitude_field"
       type="text"
-      label="datasource.form.coordinates.latitude-field"
+      label="datasource.form.coordinates.latitudeField"
     />
 
     <TextInput
-      source="longitude-field"
+      source="longitude_field"
       type="text"
-      label="datasource.form.coordinates.longitude-field"
+      label="datasource.form.coordinates.longitudeField"
     />
 
     <RadioButtonGroupInput
-      source="coordinates"
-      label="datasource.form.coordinates.order-coordinates-field"
+      source="order_coordinates_field"
+      label="datasource.form.coordinates.orderCoordinatesField"
       choices={[
         { id: 'xy', name: 'X / Y' },
         { id: 'yx', name: 'Y / X' },
@@ -73,23 +69,28 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     />
 
     <TextInput
-      source="coordinates"
+      source="latlong_field"
       type="text"
-      label="datasource.form.coordinates.latlong-field"
+      label="datasource.form.coordinates.latlongField"
     />
 
     <SelectInput
-      source="coordinates"
-      label="datasource.form.coordinates.separator-coordinates-field"
+      source="separator_coordinates_field"
+      label="datasource.form.coordinates.separatorCoordinatesField"
       validate={[required()]}
-      choices={fieldCoordinatesSeparatorChoices}
+      choices={[
+        { id: 'comma', name: t('datasource.form.optionsCSV.separator.comma') },
+        { id: 'semicolon', name: t('datasource.form.optionsCSV.separator.semicolon') },
+        { id: 'point', name: t('datasource.form.optionsCSV.separator.point') },
+        { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
+      ]}
       format={v => `${v}`}
       parse={v => +v}
     />
 
     <SelectInput
-      source="scr-field"
-      label="datasource.form.scr-field"
+      source="scr_field"
+      label="datasource.form.optionsCSV.scrField"
       defaultValue="EPSG:4326 - WGS 84"
       validate={[required()]}
       choices={fieldSCRChoices}
@@ -107,52 +108,65 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     />
 
     <SelectInput
-      source="separator-field"
-      label="datasource.form.separator-field"
+      source="separator_field"
+      label="datasource.form.optionsCSV.separatorField"
       defaultValue="Point-virgule"
       validate={[required()]}
-      choices={fieldSeparatorChoices}
+      choices={[
+        { id: 'comma', name: t('datasource.form.optionsCSV.separator.comma') },
+        { id: 'semicolon', name: t('datasource.form.optionsCSV.separator.semicolon') },
+        { id: 'tab', name: t('datasource.form.optionsCSV.separator.tab') },
+        { id: 'column', name: t('datasource.form.optionsCSV.separator.column') },
+        { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
+      ]}
       format={v => `${v}`}
       parse={v => +v}
     />
 
     <SelectInput
-      source="delimiter-field"
-      label="datasource.form.delimiter-field"
-      defaultValue="Guillemet"
+      source="delimiter_field"
+      label="datasource.form.optionsCSV.delimiterField"
+      defaultValue="Guillemets"
       validate={[required()]}
-      choices={fieldDelimiterChoices}
+      choices={[
+        { id: 'quotationmark', name: t('datasource.form.optionsCSV.separator.quotationmark') },
+      ]}
       format={v => `${v}`}
       parse={v => +v}
     />
 
     <SelectInput
-      source="decimal-separator-field"
-      label="datasource.form.decimal-separator-field"
+      source="decimal_separator_field"
+      label="datasource.form.optionsCSV.decimalSeparatorField"
       defaultValue="Point"
       validate={[required()]}
-      choices={fieldDecimalSeparatorChoices}
+      choices={[
+        { id: 'comma', name: t('datasource.form.optionsCSV.separator.comma') },
+        { id: 'semicolon', name: t('datasource.form.optionsCSV.separator.semicolon') },
+        { id: 'point', name: t('datasource.form.optionsCSV.separator.point') },
+        { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
+      ]}
       format={v => `${v}`}
       parse={v => +v}
     />
 
     <NumberInput
-      source="number_lines-to-ignore-field"
-      label="datasource.form.number_lines-to-ignore-field"
+      source="number_lines_to_ignore_field"
+      label="datasource.form.optionsCSV.numberLinesToIgnoreField"
       defaultValue={0}
       step={1}
     />
 
     <CheckboxGroupInput
-      source="optionscsv"
-      label="datasource.form.optionscsv.options-field"
+      source="options_csv"
+      label="datasource.form.optionsCSV.optionsField"
       options={{
         checked: true,
       }}
       choices={[
-        { id: 'headers', name: t('datasource.form.optionscsv.headers-field') },
+        { id: 'headers', name: t('datasource.form.optionsCSV.headersField') },
         {
-          id: 'ignore columns', name: t('datasource.form.optionscsv.ignorenull-field'),
+          id: 'ignore columns', name: t('datasource.form.optionsCSV.ignoreNullField'),
         },
       ]}
     />

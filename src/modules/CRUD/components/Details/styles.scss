@@ -53,6 +53,7 @@
     padding: 1rem;
     justify-content: space-between;
     align-content: center;
+    flex-shrink: 0;
   }
 
   &__menu {

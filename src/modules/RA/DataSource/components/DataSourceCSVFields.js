@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React from 'react';
 import {
   FileInput,
@@ -7,6 +8,7 @@ import {
   SelectInput,
   CheckboxGroupInput,
   RadioButtonGroupInput,
+  FormDataConsumer,
   translate,
   required,
 } from 'react-admin';
@@ -43,55 +45,74 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       source="coordinates_field"
       label="datasource.form.coordinates.coordinatesField"
       choices={[
-        { id: 'one column', name: t('datasource.form.coordinates.onecolumnField') },
-        { id: 'two columns', name: t('datasource.form.coordinates.twocolumnsField') },
-      ]}
-    />
-    <TextInput
-      source="latitude_field"
-      type="text"
-      label="datasource.form.coordinates.latitudeField"
-    />
-
-    <TextInput
-      source="longitude_field"
-      type="text"
-      label="datasource.form.coordinates.longitudeField"
-    />
-
-    <RadioButtonGroupInput
-      source="order_coordinates_field"
-      label="datasource.form.coordinates.orderCoordinatesField"
-      choices={[
-        { id: 'xy', name: 'X / Y' },
-        { id: 'yx', name: 'Y / X' },
+        { id: 'one_column', name: t('datasource.form.coordinates.onecolumnField') },
+        { id: 'two_columns', name: t('datasource.form.coordinates.twocolumnsField') },
       ]}
     />
 
-    <TextInput
-      source="latlong_field"
-      type="text"
-      label="datasource.form.coordinates.latlongField"
-    />
+    <FormDataConsumer>
+      {({ formData }) => {
+        if (formData.coordinates_field && formData.coordinates_field === 'one_column') {
+          return (
+            <>
+              <RadioButtonGroupInput
+                source="order_coordinates_field"
+                label="datasource.form.coordinates.orderCoordinatesField"
+                choices={[
+                  { id: 'xy', name: 'X / Y' },
+                  { id: 'yx', name: 'Y / X' },
+                ]}
+              />
+              <TextInput
+                source="latlong_field"
+                type="text"
+                label="datasource.form.coordinates.latlongField"
+              />
+              <SelectInput
+                source="separator_coordinates_field"
+                label="datasource.form.coordinates.separatorCoordinatesField"
+                defaultValue="comma"
+                validate={[required()]}
+                choices={[
+                  { id: 'comma', name: t('datasource.form.optionsCSV.separator.comma') },
+                  { id: 'semicolon', name: t('datasource.form.optionsCSV.separator.semicolon') },
+                  { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
+                ]}
+                format={v => `${v}`}
+                parse={v => +v}
+              />
+            </>
+          );
+        }
+      }}
+    </FormDataConsumer>
 
-    <SelectInput
-      source="separator_coordinates_field"
-      label="datasource.form.coordinates.separatorCoordinatesField"
-      validate={[required()]}
-      choices={[
-        { id: 'comma', name: t('datasource.form.optionsCSV.separator.comma') },
-        { id: 'semicolon', name: t('datasource.form.optionsCSV.separator.semicolon') },
-        { id: 'point', name: t('datasource.form.optionsCSV.separator.point') },
-        { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
-      ]}
-      format={v => `${v}`}
-      parse={v => +v}
-    />
+    <FormDataConsumer>
+      {({ formData }) => {
+        if (formData.coordinates_field && formData.coordinates_field === 'two_columns') {
+          return (
+            <>
+              <TextInput
+                source="latitude_field"
+                type="text"
+                label="datasource.form.coordinates.latitudeField"
+              />
+              <TextInput
+                source="longitude_field"
+                type="text"
+                label="datasource.form.coordinates.longitudeField"
+              />
+            </>
+          );
+        }
+      }}
+    </FormDataConsumer>
+
 
     <SelectInput
       source="scr_field"
       label="datasource.form.optionsCSV.scrField"
-      defaultValue="EPSG:4326 - WGS 84"
+      defaultValue="EPSG_4326"
       validate={[required()]}
       choices={fieldSCRChoices}
       format={v => `${v}`}
@@ -110,7 +131,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     <SelectInput
       source="separator_field"
       label="datasource.form.optionsCSV.separatorField"
-      defaultValue="Point-virgule"
+      defaultValue="semicolon"
       validate={[required()]}
       choices={[
         { id: 'comma', name: t('datasource.form.optionsCSV.separator.comma') },
@@ -126,7 +147,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     <SelectInput
       source="delimiter_field"
       label="datasource.form.optionsCSV.delimiterField"
-      defaultValue="Guillemets"
+      defaultValue="quotationmark"
       validate={[required()]}
       choices={[
         { id: 'quotationmark', name: t('datasource.form.optionsCSV.separator.quotationmark') },
@@ -138,7 +159,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     <SelectInput
       source="decimal_separator_field"
       label="datasource.form.optionsCSV.decimalSeparatorField"
-      defaultValue="Point"
+      defaultValue="point"
       validate={[required()]}
       choices={[
         { id: 'comma', name: t('datasource.form.optionsCSV.separator.comma') },
@@ -160,9 +181,6 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     <CheckboxGroupInput
       source="options_csv"
       label="datasource.form.optionsCSV.optionsField"
-      options={{
-        checked: true,
-      }}
       choices={[
         { id: 'headers', name: t('datasource.form.optionsCSV.headersField') },
         {

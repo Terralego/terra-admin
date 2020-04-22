@@ -71,7 +71,7 @@ const Tbody = ({
         <tr key={uuid()} className="tableField__tr">
           {Object.keys(orderedValues).map(key => {
             const { [key]: error = {} } = errorSchema[index] || {};
-            const { 'ui:help': uiHelp, ...uiSchemaItem } = uiSchemaItems[key];
+            const { [key]: { 'ui:help': uiHelp, ...uiSchemaItem } = {} } = uiSchemaItems;
             return (
               <td className="tableField__td" key={key}>
                 <Field

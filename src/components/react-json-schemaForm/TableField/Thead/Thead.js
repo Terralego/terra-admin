@@ -19,7 +19,7 @@ const Thead = ({
     <thead>
       <tr>
         {Object.entries(orderedValue).map(([key, { title }]) => {
-          const { 'ui:help': help } = uiSchemaItems[key];
+          const { [key]: { 'ui:help': help } = {} } = uiSchemaItems;
           return (
             <th key={key}>
               {title}

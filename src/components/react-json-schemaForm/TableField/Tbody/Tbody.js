@@ -14,11 +14,11 @@ const Tbody = ({
   schema: {
     items: {
       properties,
-      required,
-    },
+      required = [],
+    } = {},
   },
   uiSchema: {
-    items: uiSchemaItems,
+    items: uiSchemaItems = {},
   },
   errorSchema,
 }) => {
@@ -154,7 +154,7 @@ Tbody.defaultProps = {
   },
   registry: {},
   uiSchema: {
-    items: [],
+    items: {},
   },
 };
 export default Tbody;

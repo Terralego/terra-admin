@@ -14,9 +14,22 @@
 .attachment-item {
   padding: 0;
   position: relative;
+  transition: opacity 0.8s;
+
+  &--loading > * {
+    opacity: 0.1;
+  }
 
   &__figure {
     margin: 0;
+  }
+
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
   }
   
   &__file {

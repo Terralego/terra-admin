@@ -1,80 +1,53 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import classnames from 'classnames';
-import Loading from '../../../../../../../components/Loading';
+import { getView } from '../../../../../services/CRUD';
 
-import Attachment from '../Attachment';
-import Picture from '../Picture';
-import Figcaption from '../Figcaption';
-import DeleteAttachment from '../DeleteAttachment';
+import AttachmentItem from '../AttachmentItem';
 
 import './styles.scss';
 
 const AttachmentList = ({
   attachments,
   className,
-  featureEndpoint,
   fetchFeature,
-  history,
-  location,
-  match: { params: { id: paramId } },
   name,
-  staticContext,
+  settings,
   ...props
 }) => {
   const [isDeleting, setDeleting] = useState(null);
+  const { id: paramId, layer: paramLayer } = useParams();
 
   const updateData = useCallback(async () => {
-    fetchFeature(featureEndpoint, paramId);
-  }, [featureEndpoint, fetchFeature, paramId]);
+    const { featureEndpoint } = getView(settings, paramLayer);
+    await fetchFeature(featureEndpoint, paramId);
+  }, [fetchFeature, paramId, paramLayer, settings]);
 
-  const Component = name === 'attachments' ? Attachment : Picture;
+  const sanitizeAttachments = useMemo(() => (
+    attachments.map(({
+      action_url: endpoint,
+      legend: label,
+      created_at: createdAt,
+      updated_at: updatedAt,
+      ...rest
+    }) => ({
+      endpoint,
+      label,
+      name,
+      isLoading: rest.id === isDeleting,
+      key: rest.id,
+      setDeleting,
+      updateData,
+      ...rest,
+    }))
+  ), [attachments, isDeleting, name, updateData]);
+
   return (
     <ul className={classnames('attachment-list', className)} {...props}>
-      {attachments.map(({
-        action_url: endpoint,
-        category,
-        id,
-        file,
-        legend: label,
-        thumbnail,
-      }) => {
-        const isLoading = id === isDeleting;
-        return (
-          <li
-            className={classnames({
-              'attachment-list__item': true,
-              'attachment-item': true,
-              'attachment-item--loading': isLoading,
-            })}
-            key={id}
-          >
-            {isLoading && <Loading className="attachment-item__Loading" spinner />}
-            <figure className="attachment-item__figure">
-              <Component
-                className="attachment-item__file"
-                file={file}
-                label={label}
-                thumbnail={thumbnail}
-              />
-              <Figcaption
-                category={category}
-                endpoint={endpoint}
-                label={label}
-                updateData={updateData}
-              />
-            </figure>
-            <DeleteAttachment
-              endpoint={endpoint}
-              id={id}
-              label={label}
-              loading={isLoading}
-              setDeleting={setDeleting}
-              updateData={updateData}
-            />
-          </li>
-        );
-      })}
+      {sanitizeAttachments.map(attachmentProps => (
+        <AttachmentItem className="attachment-list__item" {...attachmentProps} />
+      ))}
     </ul>
   );
 };
@@ -82,13 +55,17 @@ const AttachmentList = ({
 AttachmentList.propTypes = {
   attachments: PropTypes.arrayOf(PropTypes.shape({})),
   className: PropTypes.string,
+  fetchFeature: PropTypes.func,
   name: PropTypes.oneOf(['attachments', 'pictures']),
+  settings: PropTypes.shape({}),
 };
 
 AttachmentList.defaultProps = {
   attachments: [],
   className: '',
+  fetchFeature: () => {},
   name: 'attachments',
+  settings: {},
 };
 
 export default AttachmentList;

@@ -139,7 +139,7 @@ export class Map extends React.Component {
       this.setFitBounds();
     }
 
-    if (isTrueFeatureID(id) && prevCoordinates !== coordinates) {
+    if (isTrueFeatureID(id) && JSON.stringify(prevCoordinates) !== JSON.stringify(coordinates)) {
       this.setFitBounds();
       this.generateLayersToMap();
       const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};

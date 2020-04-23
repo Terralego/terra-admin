@@ -254,8 +254,7 @@
           "select": "Choisir une catégorie",
           "input": "Saisir une catégorie",
           "new": "+ Nouvelle catégorie"
-        },
-        "createInfo": "(Crée le {{date}})"
+        }
       }
     }
   },

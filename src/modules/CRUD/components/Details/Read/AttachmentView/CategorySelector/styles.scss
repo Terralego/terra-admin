@@ -1,0 +1,29 @@
+.category-selector {
+  display: flex;
+  padding: 0 15px;
+  height: 64px;
+  background-color: #fafafa;
+  align-items: center;
+  text-align: left;
+  
+  &__inner {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  &__submit {
+    margin-left: 1rem;
+  }
+  
+  .bp3-form-group {
+    flex: 1;
+    margin: 0
+  }
+  .bp3-form-content {
+    flex: 1;
+  }
+  .bp3-html-select {
+    width: 100%;
+  }
+}

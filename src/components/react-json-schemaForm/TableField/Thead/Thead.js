@@ -7,11 +7,11 @@ const Thead = ({
   schema: {
     items: {
       properties,
-      required,
+      required = [],
     },
   },
   uiSchema: {
-    items: uiSchemaItems,
+    items: uiSchemaItems = {},
   },
 }) => {
   const orderedValue = getObjectOrderedValue(properties, uiSchemaItems['ui:order']);
@@ -55,7 +55,7 @@ Thead.defaultProps = {
     },
   },
   uiSchema: {
-    items: [],
+    items: {},
   },
 };
 

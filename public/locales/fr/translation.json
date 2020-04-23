@@ -244,6 +244,12 @@
       },
       "attachment": {
         "noFiles": "Aucun document",
+        "category" : {
+          "helper": "Les fichiers iront dans cette catégorie",
+          "select": "Choisir une catégorie",
+          "input": "Saisir une catégorie",
+          "new": "+ Nouvelle catégorie"
+        },
         "createInfo": "(Crée le {{date}})"
       }
     }

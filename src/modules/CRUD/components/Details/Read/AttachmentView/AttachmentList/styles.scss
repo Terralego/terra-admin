@@ -52,4 +52,12 @@
     top: 0;
     right: 0;
   }
+
+  &__bt-delete {
+    background: rgba(255, 255, 255, 0.6) !important;
+    &:hover,
+    &:focus {
+      background: #fff !important;
+    }
+  }
 }

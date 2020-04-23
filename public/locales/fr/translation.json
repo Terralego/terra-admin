@@ -241,6 +241,8 @@
         "attachments": "Documents annexes"
       },
       "attachment": {
+        "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer le fichier {{name}} ? Cette action est irrévocable.",
+        "delete": "Supprimer le fichier",
         "files": "Documents",
         "images": "Images",
         "noFiles": "Aucun document",

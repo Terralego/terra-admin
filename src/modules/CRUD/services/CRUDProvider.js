@@ -10,6 +10,8 @@ import {
   fetchCustomEndpoint,
 } from './features';
 
+import { saveAttachmentCategories } from './attachments';
+
 export const context = React.createContext({});
 export const connectCRUDProvider = connect(context);
 
@@ -207,32 +209,60 @@ export class CRUDProvider extends React.Component {
     return nextAttachmentCategories;
   }
 
-  getAttachment = async (endpoint, featureID, type) => {
+  createAttachmentCategories = async name => {
     const result = {};
     try {
-      const attachement = await fetchCustomEndpoint(endpoint);
-      result.attachment = attachement;
+      const category = await saveAttachmentCategories(name);
+      result.category = category;
     } catch (e) {
       result.error = e;
     }
 
-    const { attachment, error } = result;
+    const { category: newCategory = {}, error = {} } = result;
 
-    this.setState(({ errors, feature }) => ({
-      feature: {
-        ...feature,
-        [featureID]: {
-          ...feature[featureID],
-          [type]: attachment,
-        },
+    this.setState(({ errors, attachmentCategories }) => ({
+      attachmentCategories: {
+        ...attachmentCategories,
+        newCategory,
       },
       errors: {
         ...errors,
-        attachmentCategories: error,
+        attachmentCategories: {
+          ...attachmentCategories.error,
+          error,
+        },
       },
     }));
 
-    return attachment;
+    return Object.keys(newCategory).length > 0 && newCategory;
+  }
+
+  findOrCreateAttachmentCategory = async category => {
+    const { name, id } = category;
+    if (id !== null) {
+      return category;
+    }
+    const {
+      attachmentCategories,
+      settings: {
+        config: {
+          attachment_categories: endpoint,
+        },
+      },
+    } = this.state;
+    let categories = attachmentCategories;
+    if (!categories) {
+      const { results } = await this.getAttachmentCategories(endpoint);
+      categories = results;
+    }
+    const categoryInList = categories.find(({ name: categoryName }) => (
+      categoryName.toLowerCase() === name.trim().toLowerCase()
+    ));
+    if (categoryInList !== undefined) {
+      return categoryInList;
+    }
+    const newCategory = await this.createAttachmentCategories({ name });
+    return newCategory;
   }
 
   resizingMap = () => {
@@ -254,7 +284,7 @@ export class CRUDProvider extends React.Component {
       saveFeature,
       deleteFeature,
       getAttachmentCategories,
-      getAttachment,
+      findOrCreateAttachmentCategory,
       setMap,
       resizingMap,
     } = this;
@@ -269,7 +299,7 @@ export class CRUDProvider extends React.Component {
       saveFeature,
       deleteFeature,
       getAttachmentCategories,
-      getAttachment,
+      findOrCreateAttachmentCategory,
       setMap,
       resizingMap,
     };

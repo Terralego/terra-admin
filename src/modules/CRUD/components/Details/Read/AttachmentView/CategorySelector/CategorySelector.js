@@ -11,11 +11,13 @@ const CategorySelector = ({ attachments, attachment, onChange, onSubmit, t }) =>
       .filter(Boolean)
   ), [attachment, attachments]);
 
-  const [selectValue, setSelectValue] = useState(options[0].name);
+  const [defaultOption = {}] = options;
+
+  const [selectValue, setSelectValue] = useState(defaultOption.name || '');
 
   const [inputValue, setInputValue] = useState('');
 
-  const [selectedCategory, setSelectedCategory] = useState(options[0]);
+  const [selectedCategory, setSelectedCategory] = useState(defaultOption);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 

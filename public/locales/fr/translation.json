@@ -243,6 +243,7 @@
       "attachment": {
         "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer le fichier {{name}} ? Cette action est irrévocable.",
         "delete": "Supprimer le fichier",
+        "empty": "Aucun fichier repertorié pour cet object",
         "figcaptionCancel" : "Annuler la modification",
         "figcaptionEdit" : "Modifier la légende",
         "figcaptionSubmit" : "Valider la légende",

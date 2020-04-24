@@ -4,6 +4,7 @@ import { Tab, Tabs } from '@blueprintjs/core';
 import { NavLink } from 'react-router-dom';
 import { generateURI } from '../../../../config';
 
+import ImportFile from './ImportFile';
 import CategoryList from './CategoryList';
 import './styles.scss';
 
@@ -29,7 +30,10 @@ const AttachmentView = ({
           id={tab.name}
           title={<NavLink to={generateURI('layer', { layer, id, section, category: tab.name })}>{tab.label}</NavLink>}
           panel={(
-            <CategoryList {...tab} />
+            <>
+              <ImportFile {...tab} />
+              <CategoryList {...tab} />
+            </>
           )}
         />
       ))}

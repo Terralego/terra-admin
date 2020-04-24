@@ -8,3 +8,6 @@ export const saveAttachment = attachmentRequest;
 
 export const deleteAttachment = endpoint =>
   attachmentRequest(endpoint, {}, 'DELETE');
+
+export const saveAttachmentCategories = body =>
+  Api.request('crud/attachment-categories/', { method: 'POST', body });

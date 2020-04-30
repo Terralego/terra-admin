@@ -38,7 +38,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       validate={[required()]}
       choices={fieldEncodingChoices}
       format={v => `${v}`}
-      parse={v => +v}
+      parse={v => v}
     />
 
     <RadioButtonGroupInput
@@ -69,7 +69,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
                 label="datasource.form.coordinates.latlongField"
               />
               <SelectInput
-                source="separator_coordinates_field"
+                source="F"
                 label="datasource.form.coordinates.separatorCoordinatesField"
                 defaultValue="comma"
                 validate={[required()]}
@@ -79,7 +79,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
                   { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
                 ]}
                 format={v => `${v}`}
-                parse={v => +v}
+                parse={v => v}
               />
             </>
           );
@@ -108,7 +108,6 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       }}
     </FormDataConsumer>
 
-
     <SelectInput
       source="scr_field"
       label="datasource.form.optionsCSV.scrField"
@@ -116,7 +115,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       validate={[required()]}
       choices={fieldSCRChoices}
       format={v => `${v}`}
-      parse={v => +v}
+      parse={v => v}
     />
 
     <TextInput
@@ -141,7 +140,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
         { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
       ]}
       format={v => `${v}`}
-      parse={v => +v}
+      parse={v => v}
     />
 
     <SelectInput
@@ -153,7 +152,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
         { id: 'quotationmark', name: t('datasource.form.optionsCSV.separator.quotationmark') },
       ]}
       format={v => `${v}`}
-      parse={v => +v}
+      parse={v => v}
     />
 
     <SelectInput
@@ -168,7 +167,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
         { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
       ]}
       format={v => `${v}`}
-      parse={v => +v}
+      parse={v => v}
     />
 
     <NumberInput

@@ -30,7 +30,7 @@ const CRUDPRoviderGetter = ({
     fetchFeature,
     imageAllowedFileTypes,
     fileAllowedFileTypes: null,
-    maxFileSize: typeof maxFileSize === 'number' ? maxFileSize * 8 : null, // `* 8` is the conversion from octet to bytes
+    maxFileSize: typeof maxFileSize === 'number' ? maxFileSize * 8 : null, // `* 8` is the conversion from bytes to bits
   };
 };
 

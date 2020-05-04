@@ -1,6 +1,6 @@
 import en from '@uppy/locales/src/en_US';
 import fr from '@uppy/locales/src/fr_FR';
-// More locales here https://github.com/transloadit/uppy/tree/master/packages/%40uppy/locales/src
+// See https://uppy.io/docs/locales/#List-of-locale-packs for more locales
 
 const locales = {
   en,

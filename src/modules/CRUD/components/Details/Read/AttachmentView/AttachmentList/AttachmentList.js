@@ -14,6 +14,8 @@ const AttachmentList = ({
   editable,
   fetchFeature,
   name,
+  onSelection,
+  selectable,
   settings,
   ...props
 }) => {
@@ -38,7 +40,6 @@ const AttachmentList = ({
       label,
       name,
       isLoading: rest.id === isDeleting,
-      key: rest.id,
       setDeleting,
       updateData,
       ...rest,
@@ -47,9 +48,21 @@ const AttachmentList = ({
 
   return (
     <ul className={classnames('attachment-list', className)} {...props}>
-      {sanitizeAttachments.map(attachmentProps => (
-        <AttachmentItem className="attachment-list__item" {...attachmentProps} />
-      ))}
+      {sanitizeAttachments.map(attachmentProps => {
+        const { id } = attachmentProps;
+        const wrapperProps = { className: 'attachment-list__item', key: id };
+        if (!selectable) {
+          return <AttachmentItem {...wrapperProps} {...attachmentProps} />;
+        }
+        return (
+          <li {...wrapperProps}>
+            <label htmlFor={`attachment-${id}`}>
+              <input name="attachment" type="radio" id={`attachment-${id}`} onClick={() => onSelection(attachmentProps.image || attachmentProps.file)} />
+              <AttachmentItem component="div" {...attachmentProps} />
+            </label>
+          </li>
+        );
+      })}
     </ul>
   );
 };
@@ -60,6 +73,8 @@ AttachmentList.propTypes = {
   editable: PropTypes.bool,
   fetchFeature: PropTypes.func,
   name: PropTypes.oneOf(['attachments', 'pictures']),
+  onSelection: PropTypes.func,
+  selectable: PropTypes.bool,
   settings: PropTypes.shape({}),
 };
 
@@ -69,6 +84,8 @@ AttachmentList.defaultProps = {
   editable: false,
   fetchFeature: () => {},
   name: 'attachments',
+  onSelection: () => {},
+  selectable: false,
   settings: {},
 };
 

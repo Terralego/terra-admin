@@ -109,8 +109,8 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     </FormDataConsumer>
 
     <SelectInput
-      source="scr"
-      label="datasource.form.optionsCSV.scr"
+      source="coordinate_reference_system"
+      label="datasource.form.optionsCSV.coordinateReferenceSystem"
       defaultValue="EPSG_4326"
       validate={[required()]}
       choices={fieldSCRChoices}

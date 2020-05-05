@@ -383,7 +383,7 @@
 
         },
         "encoding": "Encodage",
-        "scr": "CSR de la géométrie",
+        "coordinateReferenceSystem": "Système de coordonnées de référence",
         "fieldSeparator": "Séparateur de champ",
         "charDelimiter": "Séparateur de texte",
         "charDelimiterHelp": "Les chaines de caracteres peuvent inclure le séparateur de colonne, ce dernier sera ignoré/lu comme du texte",

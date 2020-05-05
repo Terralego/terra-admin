@@ -33,8 +33,8 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     </FileInput>
 
     <SelectInput
-      source="encoding_field"
-      label="datasource.form.optionsCSV.encodingField"
+      source="encoding"
+      label="datasource.form.optionsCSV.encoding"
       validate={[required()]}
       choices={fieldEncodingChoices}
       format={v => `${v}`}
@@ -45,8 +45,8 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       source="coordinates_field"
       label="datasource.form.coordinates.coordinatesField"
       choices={[
-        { id: 'one_column', name: t('datasource.form.coordinates.onecolumnField') },
-        { id: 'two_columns', name: t('datasource.form.coordinates.twocolumnsField') },
+        { id: 'one_column', name: t('datasource.form.coordinates.onecolumn') },
+        { id: 'two_columns', name: t('datasource.form.coordinates.twocolumns') },
       ]}
     />
 
@@ -56,7 +56,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
           return (
             <>
               <RadioButtonGroupInput
-                source="order_coordinates_field"
+                source="coordinates_field_count"
                 label="datasource.form.coordinates.orderCoordinatesField"
                 choices={[
                   { id: 'xy', name: 'X / Y' },
@@ -69,8 +69,8 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
                 label="datasource.form.coordinates.latlongField"
               />
               <SelectInput
-                source="F"
-                label="datasource.form.coordinates.separatorCoordinatesField"
+                source="coordinates_separator"
+                label="datasource.form.coordinates.coordinatesSeparator"
                 defaultValue="comma"
                 validate={[required()]}
                 choices={[
@@ -109,8 +109,8 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     </FormDataConsumer>
 
     <SelectInput
-      source="scr_field"
-      label="datasource.form.optionsCSV.scrField"
+      source="scr"
+      label="datasource.form.optionsCSV.scr"
       defaultValue="EPSG_4326"
       validate={[required()]}
       choices={fieldSCRChoices}
@@ -128,15 +128,15 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     />
 
     <SelectInput
-      source="separator_field"
-      label="datasource.form.optionsCSV.separatorField"
+      source="field_separator"
+      label="datasource.form.optionsCSV.fieldSeparator"
       defaultValue="semicolon"
       validate={[required()]}
       choices={[
         { id: 'comma', name: t('datasource.form.optionsCSV.separator.comma') },
         { id: 'semicolon', name: t('datasource.form.optionsCSV.separator.semicolon') },
         { id: 'tab', name: t('datasource.form.optionsCSV.separator.tab') },
-        { id: 'column', name: t('datasource.form.optionsCSV.separator.column') },
+        { id: 'colon', name: t('datasource.form.optionsCSV.separator.colon') },
         { id: 'space', name: t('datasource.form.optionsCSV.separator.space') },
       ]}
       format={v => `${v}`}
@@ -144,20 +144,22 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     />
 
     <SelectInput
-      source="delimiter_field"
-      label="datasource.form.optionsCSV.delimiterField"
-      defaultValue="quotationmark"
+      source="char_delimiter"
+      label="datasource.form.optionsCSV.charDelimiter"
+      helperText={t('datasource.form.optionsCSV.charDelimiterHelp')}
+      defaultValue="doublequote"
       validate={[required()]}
       choices={[
-        { id: 'quotationmark', name: t('datasource.form.optionsCSV.separator.quotationmark') },
+        { id: 'doublequote', name: t('datasource.form.optionsCSV.separator.doublequote') },
+        { id: 'simplequote', name: t('datasource.form.optionsCSV.separator.simplequote') },
       ]}
       format={v => `${v}`}
       parse={v => v}
     />
 
     <SelectInput
-      source="decimal_separator_field"
-      label="datasource.form.optionsCSV.decimalSeparatorField"
+      source="decimal_separator"
+      label="datasource.form.optionsCSV.decimalSeparator"
       defaultValue="point"
       validate={[required()]}
       choices={[
@@ -171,19 +173,19 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
     />
 
     <NumberInput
-      source="number_lines_to_ignore_field"
-      label="datasource.form.optionsCSV.numberLinesToIgnoreField"
+      source="number_lines_to_ignore"
+      label="datasource.form.optionsCSV.numberLinesToIgnore"
       defaultValue={0}
       step={1}
     />
 
     <CheckboxGroupInput
       source="options_csv"
-      label="datasource.form.optionsCSV.optionsField"
+      label="datasource.form.optionsCSV.options"
       choices={[
-        { id: 'headers', name: t('datasource.form.optionsCSV.headersField') },
+        { id: 'headers', name: t('datasource.form.optionsCSV.headers') },
         {
-          id: 'ignore columns', name: t('datasource.form.optionsCSV.ignoreNullField'),
+          id: 'ignore columns', name: t('datasource.form.optionsCSV.ignoreNull'),
         },
       ]}
     />

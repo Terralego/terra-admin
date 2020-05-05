@@ -360,14 +360,14 @@
         "placeholderCSV": "Déposez ici le fichier CSV"
       },
       "coordinates": {
-        "coordinatesField": "Champ coordonnées",
+        "coordinatesField": "Nom du champ de coordonnées",
         "latitudeField": "Champ Y / latitude",
         "longitudeField": "Champ X / longitude",
         "orderCoordinatesField": "Choisir l'ordre des coordonnées",
-        "latlongField": "Champ coordonnées",
-        "separatorCoordinatesField": "Séparateur de coordonnées",
-        "onecolumnField": "En une colonne",
-        "twocolumnsField": "En deux colonnes"
+        "latlongField": "Nom du champ de coordonnées",
+        "coordinatesSeparator": "Séparateur de coordonnées",
+        "onecolumn": "En une colonne",
+        "twocolumns": "En deux colonnes"
       },
 
       "optionsCSV": {
@@ -377,18 +377,21 @@
           "point": "Point",
           "space": "Espace",
           "tab": "Tabulation",
-          "column": "Colonne",
-          "quotationmark": "Guillemets"
+          "colon": "Deux-points",
+          "simplequote": "Guillemets simples",
+          "doublequote": "Guillemets doubles"
+
         },
-        "encodingField": "Encodage",
-        "scrField": "CSR de la géométrie",
-        "separatorField": "Séparateur",
-        "delimiterField": "Délimiteur",
-        "decimalSeparatorField": "Séparateur décimal",
-        "optionsField": "Options",
-        "numberLinesToIgnoreField": "Nombre de lignes à ignorer",
-        "headersField": "Entête à la première ligne",
-        "ignoreNullField": "Ignore les colonnes à null"
+        "encoding": "Encodage",
+        "scr": "CSR de la géométrie",
+        "fieldSeparator": "Séparateur de champ",
+        "charDelimiter": "Séparateur de texte",
+        "charDelimiterHelp": "Les chaines de caracteres peuvent inclure le séparateur de colonne, ce dernier sera ignoré/lu comme du texte",
+        "decimalSeparator": "Séparateur décimal",
+        "options": "Options",
+        "numberLinesToIgnore": "Nombre de lignes à ignorer",
+        "headers": "Entête à la première ligne",
+        "ignoreNull": "Ignorer les colonnes à null"
       },
 
       "request": {

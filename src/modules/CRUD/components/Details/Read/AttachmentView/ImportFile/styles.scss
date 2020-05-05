@@ -6,7 +6,7 @@
   margin: 1rem 0;
   text-align: center;
   &--opened {
-    border-top: 1px solid #eaeaea;
+    border: 1px solid #eaeaea;
     background: #fafafa;
   }
   .uppy-Root {
@@ -20,7 +20,7 @@
     background: none;
     margin: auto;
     border-radius: inherit;
-    border-top: 0;
+    border: 0;
   }
 
   .uppy-Dashboard-innerWrap {
@@ -29,7 +29,7 @@
 
   .uppy-DashboardContent-bar {
     margin-top: 0.5rem;
-    border-top: 1px solid #eaeaea;
+    border: 1px solid #eaeaea;
   }
 
   .uppy-size--md .uppy-Dashboard-files {

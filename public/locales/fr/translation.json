@@ -300,6 +300,10 @@
     },
     "panelError": {
       "title": "Votre saisie comporte des erreurs"
+    },
+    "RTEField": {
+      "close": "Fermer",
+      "pick-image": "Sélectionnez une image"
     }
   },
   "user": {

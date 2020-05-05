@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Quill from 'quill';
 
 import DefaultLabel from '../DefaultLabel';
+import PictureSelector from './PictureSelector';
 import './styles.scss';
 
 export default class RTEField extends Component {
@@ -26,6 +27,10 @@ export default class RTEField extends Component {
 
   RTEHiddenRef = React.createRef();
 
+  state = {
+    openAttachments: false,
+  }
+
   componentDidMount () {
     const {
       formData,
@@ -36,10 +41,22 @@ export default class RTEField extends Component {
     } = this.props;
 
     this.quill = new Quill(this.RTERef.current, {
-      modules: { clipboard: { matchVisual: false } },
+      modules: {
+        clipboard: { matchVisual: false },
+        toolbar: [
+          [{ header: [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'link'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['image'],
+          ['clean'],
+        ],
+      },
       theme: 'snow',
       placeholder,
     });
+
+    const toolbar = this.quill.getModule('toolbar');
+    toolbar.addHandler('image', this.handleOpenAttachment);
 
     this.quill.setContents(this.quill.clipboard.convert(formData));
 
@@ -79,6 +96,27 @@ export default class RTEField extends Component {
     }
   };
 
+  handleOpenAttachment = () => {
+    this.setState({ openAttachments: true });
+  };
+
+  handleCloseAttachment = () => {
+    this.setState({ openAttachments: false });
+  }
+
+  handleSubmitAttachment = value => {
+    this.handleCloseAttachment();
+    this.quill.focus();
+    const { index, length } = this.quill.getSelection() || {};
+    if (!index && !value) {
+      return;
+    }
+    if (length) {
+      this.quill.deleteText(index, length);
+    }
+    this.quill.insertEmbed(index, 'image', value);
+  }
+
   render () {
     const {
       id,
@@ -87,6 +125,8 @@ export default class RTEField extends Component {
         'ui:placeholder': placeholder,
       },
     } = this.props;
+
+    const { openAttachments } = this.state;
 
     return (
       <div className="RTEField">
@@ -102,6 +142,12 @@ export default class RTEField extends Component {
           required={required}
           placeholder={placeholder}
         />
+        {openAttachments && (
+          <PictureSelector
+            onClose={this.handleCloseAttachment}
+            onSubmit={this.handleSubmitAttachment}
+          />
+        )}
       </div>
     );
   }

@@ -1,0 +1,38 @@
+.picture-selector {
+  width: 40%;
+  min-width: 26rem;
+  left: 50%;
+  margin: 10vh 0;
+  transform: translateX(-50%);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    h5 {
+      margin: 0 1rem 0 0;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    margin: 2rem -20px -20px;
+    padding: 20px;
+    justify-content: right;
+    background: #dfdfdf;
+    border-radius: 0 0 3px 3px;
+  }
+
+  .bp3-navbar {
+    margin-right: -20px;
+    margin-left: -20px;
+    padding: 0 20px;
+    width: auto;
+  }
+
+  .attachment-list {
+    margin: 0 -0.5rem;
+  }
+}

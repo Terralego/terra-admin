@@ -5,6 +5,7 @@ import { saveAttachment } from '../../../../../services/attachments';
 
 const Figcaption = ({
   category,
+  editable,
   endpoint,
   label,
   updateData,
@@ -66,7 +67,7 @@ const Figcaption = ({
   return (
     <figcaption className="attachment-item__figcaption">
       <span className="attachment-item__figcaption-text">{label}</span>
-      {endpoint && (
+      {editable && endpoint && (
         <Button
           className="attachment-item__figcaption-edit"
           icon="edit"
@@ -81,6 +82,7 @@ const Figcaption = ({
 
 Figcaption.propTypes = {
   category: PropTypes.number,
+  editable: PropTypes.bool,
   endpoint: PropTypes.string,
   label: PropTypes.string,
   t: PropTypes.func,
@@ -89,6 +91,7 @@ Figcaption.propTypes = {
 
 Figcaption.defaultProps = {
   category: undefined,
+  editable: false,
   endpoint: undefined,
   label: '',
   t: () => {},

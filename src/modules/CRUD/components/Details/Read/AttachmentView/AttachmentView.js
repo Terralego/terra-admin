@@ -32,7 +32,7 @@ const AttachmentView = ({
           panel={(
             <>
               <ImportFile {...tab} />
-              <CategoryList {...tab} />
+              <CategoryList {...tab} editable />
             </>
           )}
         />

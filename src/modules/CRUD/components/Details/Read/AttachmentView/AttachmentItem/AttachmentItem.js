@@ -11,6 +11,7 @@ import DeleteAttachment from '../DeleteAttachment';
 const AttachmentItem = ({
   category,
   component: Component,
+  editable,
   endpoint,
   className,
   id,
@@ -41,19 +42,22 @@ const AttachmentItem = ({
         />
         <Figcaption
           category={category}
+          editable={editable}
           endpoint={endpoint}
           label={label}
           updateData={updateData}
         />
       </figure>
-      <DeleteAttachment
-        endpoint={endpoint}
-        id={id}
-        label={label}
-        loading={isLoading}
-        setDeleting={setDeleting}
-        updateData={updateData}
-      />
+      {editable && (
+        <DeleteAttachment
+          endpoint={endpoint}
+          id={id}
+          label={label}
+          loading={isLoading}
+          setDeleting={setDeleting}
+          updateData={updateData}
+        />
+      )}
     </Component>
   );
 };
@@ -61,6 +65,7 @@ const AttachmentItem = ({
 AttachmentItem.propTypes = {
   category: PropTypes.number,
   component: PropTypes.string,
+  editable: PropTypes.bool,
   endpoint: PropTypes.string,
   className: PropTypes.string,
   id: PropTypes.number,
@@ -74,6 +79,7 @@ AttachmentItem.propTypes = {
 };
 
 AttachmentItem.defaultProps = {
+  editable: false,
   endpoint: undefined,
   category: null,
   component: 'li',

@@ -5,7 +5,7 @@ import Message from '../../../../../../../components/Message';
 
 import AttachmentList from '../AttachmentList';
 
-const CategoryList = ({ categories, name, t }) => {
+const CategoryList = ({ categories, editable, name, t }) => {
   const categoryListFilled = useMemo(() =>
     categories.filter(category => category[name].length > 0),
   [categories, name]);
@@ -27,7 +27,11 @@ const CategoryList = ({ categories, name, t }) => {
               <Navbar.Heading>{category.name}</Navbar.Heading>
             </Navbar.Group>
           </Navbar>
-          <AttachmentList attachments={attachments} name={name} />
+          <AttachmentList
+            attachments={attachments}
+            editable={editable}
+            name={name}
+          />
         </Fragment>
       ))}
     </>
@@ -35,14 +39,16 @@ const CategoryList = ({ categories, name, t }) => {
 };
 
 CategoryList.propTypes = {
-  name: PropTypes.oneOf(['attachments', 'pictures']),
   categories: PropTypes.arrayOf(PropTypes.shape({})),
+  editable: PropTypes.bool,
+  name: PropTypes.oneOf(['attachments', 'pictures']),
   t: PropTypes.func,
 };
 
 CategoryList.defaultProps = {
-  name: 'attachments',
   categories: [],
+  editable: false,
+  name: 'attachments',
   t: () => {},
 };
 

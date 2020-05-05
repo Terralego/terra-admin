@@ -11,6 +11,7 @@ import './styles.scss';
 const AttachmentList = ({
   attachments,
   className,
+  editable,
   fetchFeature,
   name,
   settings,
@@ -32,6 +33,7 @@ const AttachmentList = ({
       updated_at: updatedAt,
       ...rest
     }) => ({
+      editable,
       endpoint,
       label,
       name,
@@ -41,7 +43,7 @@ const AttachmentList = ({
       updateData,
       ...rest,
     }))
-  ), [attachments, isDeleting, name, updateData]);
+  ), [attachments, editable, isDeleting, name, updateData]);
 
   return (
     <ul className={classnames('attachment-list', className)} {...props}>
@@ -55,6 +57,7 @@ const AttachmentList = ({
 AttachmentList.propTypes = {
   attachments: PropTypes.arrayOf(PropTypes.shape({})),
   className: PropTypes.string,
+  editable: PropTypes.bool,
   fetchFeature: PropTypes.func,
   name: PropTypes.oneOf(['attachments', 'pictures']),
   settings: PropTypes.shape({}),
@@ -63,6 +66,7 @@ AttachmentList.propTypes = {
 AttachmentList.defaultProps = {
   attachments: [],
   className: '',
+  editable: false,
   fetchFeature: () => {},
   name: 'attachments',
   settings: {},

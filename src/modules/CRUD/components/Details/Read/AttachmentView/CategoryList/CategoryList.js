@@ -5,7 +5,7 @@ import Message from '../../../../../../../components/Message';
 
 import AttachmentList from '../AttachmentList';
 
-const CategoryList = ({ categories, editable, name, t }) => {
+const CategoryList = ({ categories, editable, name, onSelection, selectable, t }) => {
   const categoryListFilled = useMemo(() =>
     categories.filter(category => category[name].length > 0),
   [categories, name]);
@@ -30,6 +30,8 @@ const CategoryList = ({ categories, editable, name, t }) => {
           <AttachmentList
             attachments={attachments}
             editable={editable}
+            selectable={selectable}
+            onSelection={onSelection}
             name={name}
           />
         </Fragment>
@@ -42,6 +44,8 @@ CategoryList.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.shape({})),
   editable: PropTypes.bool,
   name: PropTypes.oneOf(['attachments', 'pictures']),
+  onSelection: PropTypes.func,
+  selectable: PropTypes.bool,
   t: PropTypes.func,
 };
 
@@ -49,6 +53,8 @@ CategoryList.defaultProps = {
   categories: [],
   editable: false,
   name: 'attachments',
+  onSelection: () => {},
+  selectable: false,
   t: () => {},
 };
 

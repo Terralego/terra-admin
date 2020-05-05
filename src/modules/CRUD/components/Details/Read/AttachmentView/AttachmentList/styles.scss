@@ -6,8 +6,22 @@
   margin: 0;
   
   &__item {
+    position: relative;
     margin: 1rem 0.5rem;
     width: calc(33.333% - 1rem);
+
+    label {
+      cursor: pointer;
+    }
+
+    input[type=radio] {
+      position: absolute;
+      bottom: 0;
+      opacity: 0;
+      &:checked + .attachment-item .attachment-item__file {
+        border: 1px solid yellow;
+      } 
+    }
   }
 }
 

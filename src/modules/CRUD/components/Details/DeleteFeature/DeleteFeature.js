@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popover, H5, PopoverInteractionKind, Classes } from '@blueprintjs/core';
 
+import ConfirmDeletion from '../../../../../components/ConfirmDeletion';
 import { generateURI } from '../../../config';
 import { toast } from '../../../../../utils/toast';
 
@@ -39,38 +39,11 @@ const DeleteFeature = ({
   }
 
   return (
-    <Popover
-      popoverClassName={Classes.POPOVER_CONTENT_SIZING}
-      interactionKind={PopoverInteractionKind.CLICK}
-      content={(
-        <div className="details__confirm">
-          <H5>{t('CRUD.details.confirmDeletion')}</H5>
-          {/* eslint-disable-next-line react/no-danger */}
-          <p dangerouslySetInnerHTML={{ __html: t('CRUD.details.confirmDeletionText', { name: `<strong>${title}</strong>` }) }} />
-          <div className="details__confirm-content">
-            <Button
-              className={Classes.POPOVER_DISMISS}
-              text={t('CRUD.details.cancel')}
-            />
-            <Button
-              className={Classes.POPOVER_DISMISS}
-              intent="danger"
-              onClick={handleDeleteFeature}
-              text={t('CRUD.details.delete', { name: objectName })}
-            />
-          </div>
-        </div>
-      )}
-    >
-      <Button
-        className="details__delete-feature"
-        icon="trash"
-        intent="danger"
-        minimal
-        text={t('CRUD.details.delete', { name: objectName })}
-        title={t('CRUD.details.delete', { name: objectName })}
-      />
-    </Popover>
+    <ConfirmDeletion
+      confirmationText={t('CRUD.details.confirmDeletionText', { name: `<strong>${title}</strong>` })}
+      onDelete={handleDeleteFeature}
+      submitText={t('common.delete', { name: objectName })}
+    />
   );
 };
 

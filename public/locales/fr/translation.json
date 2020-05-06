@@ -219,12 +219,10 @@
     "details": {
       "create": "Ajouter {{layer}}",
       "update": "Modifier",
-      "delete": "Supprimer {{name}}",
       "noValue": "Non renseigné",
       "save": "Sauvegarder",
       "close": "Fermer",
       "cancel": "Annuler",
-      "confirmDeletion": "Confirmer la suppression",
       "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer l'objet {{name}} ? Cette action est irrévocable.",
       "errorNoFeature": "L'objet recherché n'existe pas",
       "errorNoGeometry": "Il est obligatoire de positionner un objet sur la carte",

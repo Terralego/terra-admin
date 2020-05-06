@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Classes, H5, Popover, PopoverInteractionKind } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import { deleteAttachment } from '../../../../../services/attachments';
+import ConfirmDeletion from '../../../../../../../components/ConfirmDeletion';
 
 const DeleteAttachment = ({
   endpoint,
@@ -27,33 +28,14 @@ const DeleteAttachment = ({
   }, [endpoint, id, setDeleting, updateData]);
 
   return (
-    <Popover
+    <ConfirmDeletion
       className="attachment-item__delete"
+      confirmationText={t('CRUD.details.confirmDeletionText', { name: `<strong>${label}</strong>` })}
       disabled={loading}
-      popoverClassName={Classes.POPOVER_CONTENT_SIZING}
-      interactionKind={PopoverInteractionKind.CLICK}
-      content={(
-        <div className="details__confirm">
-          <H5>{t('CRUD.details.confirmDeletion')}</H5>
-          {/* eslint-disable-next-line react/no-danger */}
-          <p dangerouslySetInnerHTML={{ __html: t('CRUD.details.attachment.confirmDeletionText', { name: `<strong>${label}</strong>` }) }} />
-          <div className="details__confirm-content">
-            <Button
-              className={Classes.POPOVER_DISMISS}
-              text={t('CRUD.details.cancel')}
-            />
-            <Button
-              className={Classes.POPOVER_DISMISS}
-              intent="danger"
-              onClick={handleDelete}
-              text={t('CRUD.details.delete')}
-            />
-          </div>
-        </div>
-      )}
+      onDelete={handleDelete}
     >
       <Button disabled={loading} className="attachment-item__bt-delete" icon="small-cross" minimal title={t('CRUD.details.attachment.delete')} />
-    </Popover>
+    </ConfirmDeletion>
   );
 };
 

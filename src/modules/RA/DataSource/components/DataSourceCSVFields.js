@@ -1,12 +1,12 @@
 /* eslint-disable consistent-return */
 import React from 'react';
 import {
+  BooleanInput,
   FileInput,
   FileField,
   TextInput,
   NumberInput,
   SelectInput,
-  CheckboxGroupInput,
   RadioButtonGroupInput,
   FormDataConsumer,
   translate,
@@ -179,15 +179,14 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       step={1}
     />
 
-    <CheckboxGroupInput
-      source="options_csv"
-      label="datasource.form.optionsCSV.options"
-      choices={[
-        { id: 'headers', name: t('datasource.form.optionsCSV.headers') },
-        {
-          id: 'ignore columns', name: t('datasource.form.optionsCSV.ignoreNull'),
-        },
-      ]}
+    <h4>{t('datasource.form.optionsCSV.options')}</h4>
+    <BooleanInput
+      source="header"
+      label="datasource.form.optionsCSV.headers"
+    />
+    <BooleanInput
+      source="ignore_columns"
+      label="datasource.form.optionsCSV.ignoreNull"
     />
   </FieldGroup>
 );

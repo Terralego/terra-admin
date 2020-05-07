@@ -56,6 +56,14 @@
     flex-shrink: 0;
   }
 
+  &__header-title {
+    display: flex;
+    align-items: center;
+    button {
+      margin-right: 0.2rem;
+    }
+  }
+
   &__menu {
     height: auto;
     padding: 0.5rem 1rem;

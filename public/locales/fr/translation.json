@@ -236,6 +236,7 @@
       "false": "Non",
       "other": "Autre",
       "generatedDocuments": "Documents générés",
+      "fitBoundButton": "Centrer la carte sur \"{{name}}\"",
       "menu": {
         "default": "Informations",
         "geometries": "Géométries",

@@ -1,26 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-<div
+<header
   className="details__header"
 >
-  <h2
-    className="details__title"
+  <div
+    className="details__header-title"
   >
-    Title
-  </h2>
-</div>
+    <div
+      title="Title"
+    >
+      FitBoundButton
+    </div>
+    <h2
+      className="details__title"
+    >
+      Title
+    </h2>
+  </div>
+</header>
 `;
 
 exports[`should render correctly with documents 1`] = `
-<div
+<header
   className="details__header"
 >
-  <h2
-    className="details__title"
+  <div
+    className="details__header-title"
   >
-    Title
-  </h2>
+    <div
+      title="Title"
+    >
+      FitBoundButton
+    </div>
+    <h2
+      className="details__title"
+    >
+      Title
+    </h2>
+  </div>
   <div
     documents={
       Array [
@@ -34,5 +52,5 @@ exports[`should render correctly with documents 1`] = `
   >
     DownloadButtons
   </div>
-</div>
+</header>
 `;

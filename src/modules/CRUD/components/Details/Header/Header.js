@@ -1,19 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
+import FitBoundButton from '../FitBoundButton';
 import DownloadButtons from '../DownloadButtons';
 
-const Header = ({ title, documents }) => (
-  <div className="details__header">
-    <h2 className="details__title">{title}</h2>
+const Header = ({ className, documents, title, ...props }) => (
+  <header className={classnames('details__header', className)} {...props}>
+    <div className="details__header-title">
+      <FitBoundButton title={title} />
+      <h2 className="details__title">{title}</h2>
+    </div>
     {documents && (
       <DownloadButtons
         documents={documents}
       />
     )}
-  </div>
+  </header>
 );
 
 Header.propTypes = {
+  className: PropTypes.string,
   title: PropTypes.string.isRequired,
   documents: PropTypes.arrayOf(
     PropTypes.shape({
@@ -25,6 +32,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
+  className: '',
   documents: undefined,
 };
 

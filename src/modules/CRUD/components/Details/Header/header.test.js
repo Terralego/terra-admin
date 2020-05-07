@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 
 import Header from './Header';
 
+jest.mock('../FitBoundButton', () => props => <div {...props}>FitBoundButton</div>);
 jest.mock('../DownloadButtons', () => props => <div {...props}>DownloadButtons</div>);
 
 

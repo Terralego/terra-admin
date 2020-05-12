@@ -10,7 +10,7 @@ import DataSourceMainFields from '../components/DataSourceMainFields';
 import DataSourceFileFields from '../components/DataSourceFileFields';
 import DataSourceDbFields from '../components/DataSourceDbFields';
 import DataSourceWMTSField from '../components/DataSourceWMTSField';
-
+import DataSourceCSVFields from '../components/DataSourceCSVFields';
 import DefaultActions from '../../../../components/react-admin/DefaultActions';
 
 import {
@@ -18,6 +18,7 @@ import {
   GEOJSON,
   SHP,
   WMTS,
+  CSV,
   sourceTypeChoices,
 } from '..';
 
@@ -56,6 +57,11 @@ export const DataSourceCreate = props => (
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
           type === SQL && <DataSourceDbFields {...rest} />}
+      </FormDataConsumer>
+
+      <FormDataConsumer>
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === CSV && <DataSourceCSVFields {...rest} type={type} />}
       </FormDataConsumer>
     </SimpleForm>
   </Create>

@@ -15,6 +15,7 @@ import {
 import DataSourceMainFields from './DataSourceMainFields';
 import DataSourceFileFields from './DataSourceFileFields';
 import DataSourceWMTSField from './DataSourceWMTSField';
+import DataSourceCSVFields from './DataSourceCSVFields';
 import FieldSample from '../../../../components/react-admin/FieldSample';
 import AttributeMessage from './AttributeMessage';
 import DataSourceDbFields from './DataSourceDbFields';
@@ -23,6 +24,7 @@ import {
   GEOJSON,
   SHP,
   WMTS,
+  CSV,
   fieldTypeChoices,
 } from '..';
 
@@ -46,6 +48,11 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
         {({ formData: { _type: type } = {}, ...rest }) =>
           type === SQL && <DataSourceDbFields {...rest} />}
       </FormDataConsumer>
+
+      <FormDataConsumer>
+        {({ formData: { _type: type } = {}, ...rest }) =>
+          type === CSV && <DataSourceCSVFields {...rest} type={type} />}
+      </FormDataConsumer>
     </FormTab>
 
     {/* Fields */}
@@ -68,7 +75,6 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => (
         </SimpleFormIterator>
       </ArrayInput>
     </FormTab>
-
   </TabbedForm>
 );
 

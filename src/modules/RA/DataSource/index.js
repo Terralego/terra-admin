@@ -12,6 +12,19 @@ export const GEOJSON = 'GeoJSONSource';
 export const SQL = 'PostGISSource';
 export const WMTS = 'WMTSSource';
 export const SHP = 'ShapefileSource';
+export const CSV = 'CSVSource';
+export const UTF8 = 'UTF8';
+export const LATIN1 = 'LATIN1';
+export const EPSG4326 = 'EPSG_4326';
+export const EPSG2154 = 'EPSG_2154';
+export const EPSG3857 = 'EPSG_3857';
+export const COMMA = 'COMMA';
+export const SEMICOLON = 'SEMICOLON';
+export const TAB = 'TAB';
+export const COLUMN = 'COLUMN';
+export const SPACE = 'SPACE';
+export const QUOTATIONMARK = 'QUOTATION_MARK';
+export const POINTS = 'POINT';
 
 const typesToChoices = types => Object.entries(types)
   .map(([id, name]) => ({ id, name }));
@@ -21,6 +34,7 @@ export const sourceTypes = {
   [SHP]: 'Shapefile',
   [SQL]: 'PostGIS',
   [WMTS]: 'WMTS',
+  [CSV]: 'CSV',
 };
 export const sourceTypeChoices = typesToChoices(sourceTypes);
 
@@ -44,3 +58,47 @@ export const fieldTypes = {
   5: 'Undefined',
 };
 export const fieldTypeChoices = typesToChoices(fieldTypes);
+
+export const encodingTypes = {
+  [UTF8]: 'UTF-8',
+  [LATIN1]: 'Latin-1',
+};
+export const fieldEncodingChoices = typesToChoices(encodingTypes);
+
+export const scrTypes = {
+  [EPSG4326]: 'EPSG:4326 - WGS 84',
+  [EPSG2154]: 'EPSG:2154 - RGF93 / Lambert 93',
+  [EPSG3857]: 'EPSG:3857 - WGS 84 / Pseudo-Mercator',
+};
+export const fieldSCRChoices = typesToChoices(scrTypes);
+
+export const separatorTypes = {
+  [COMMA]: 'Virgule',
+  [SEMICOLON]: 'Point-virgule',
+  [TAB]: 'Tab',
+  [COLUMN]: 'Colonne',
+  [SPACE]: 'Espace',
+};
+export const fieldSeparatorChoices = typesToChoices(separatorTypes);
+
+export const delimiterTypes = {
+  [QUOTATIONMARK]: 'Guillemet',
+};
+export const fieldDelimiterChoices = typesToChoices(delimiterTypes);
+
+export const decimalseparatorTypes = {
+  [POINTS]: 'Point',
+};
+export const fieldDecimalSeparatorChoices = typesToChoices(
+  decimalseparatorTypes,
+);
+
+export const coordinatesseparatorTypes = {
+  [COMMA]: 'Virgule',
+  [SEMICOLON]: 'Point-virgule',
+  [POINTS]: 'Point',
+  [SPACE]: 'Espace',
+};
+export const fieldCoordinatesSeparatorChoices = typesToChoices(
+  coordinatesseparatorTypes,
+);

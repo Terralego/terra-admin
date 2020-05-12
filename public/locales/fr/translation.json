@@ -344,6 +344,13 @@
       "help1": "Une fois le type de la donnée déterminé, il n'est pas possible de le changer",
       "definition": "Définition",
       "data-type": "Type de données",
+      "encoding-field": "Encodage",
+      "options-field": "Options",
+      "delimiter-field": "Délimiteur",
+      "decimal-separator-field": "Séparateur décimal",
+      "number_lines-to-ignore-field": "Nombre de lignes à ignorer",
+      "scr-field": "CSR de la géométrie",
+      "separator-field": "Séparateur",
       "geometry": "Type de géométrie",
       "geom-field": "Champ geométrie auto-détecté",
       "geom-field-help": "Indiquer le champ de la géométrie de la donnée (ex. : geom, the_geom, geometry, etc.).",
@@ -356,7 +363,16 @@
       "fields": "Champs",
       "file": {
         "related-files": "Fichiers associés",
-        "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile"
+        "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile",
+        "placeholder-csv": "Déposez ici le CSV"
+      },
+      "coordinates": {
+        "coordinates-field": "Champ coordonnées",
+        "latitude-field": "Champ Y/latitude",
+        "longitude-field": "Champ X/longitude",
+        "order-coordinates-field": "Choisir l'ordre des coordonnées",
+        "latlong-field": "Champ coordonnées",
+        "separator-coordinates-field": "Séparateur de coordonnées"
       },
       "request": {
         "host-server": "Serveur hôte",

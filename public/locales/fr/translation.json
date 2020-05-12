@@ -53,7 +53,7 @@
       "backgroundstyles_control": {
         "button_label": "Fonds de carte"
       },
-      "draw_control" : {
+      "draw_control": {
         "point": "Point",
         "polygon": "Polygone",
         "line": "Ligne",
@@ -184,7 +184,7 @@
     },
     "map": {
       "controls": {
-        "layers" : {
+        "layers": {
           "label": "Affichage des couches"
         }
       }
@@ -207,7 +207,7 @@
       "results": "{{ count }} résultat :",
       "results_singular": "{{ count }} résultat :",
       "results_plural": "{{ count }} résultats :",
-      "pagination" : {
+      "pagination": {
         "display": "Afficher",
         "results": "résultats par page"
       },
@@ -271,25 +271,25 @@
     "geometryField": {
       "type": {
         "Point": {
-          "singular":"un point"
+          "singular": "un point"
         },
         "LineString": {
-          "singular":"un tracé"
+          "singular": "un tracé"
         },
         "Polygon": {
-          "singular":"une zone"
+          "singular": "une zone"
         },
         "MultiPoint": {
-          "singular":"des points"
+          "singular": "des points"
         },
         "MultiLineString": {
-          "singular":"un ou des tracés"
+          "singular": "un ou des tracés"
         },
         "MultiPolygon": {
-          "singular":"une ou des zones"
+          "singular": "une ou des zones"
         },
         "GeometryCollection": {
-          "singular":"une ou des géométrie"
+          "singular": "une ou des géométrie"
         }
       },
       "title": "Coordonnées (WGS84 décimal)",
@@ -364,12 +364,12 @@
       "file": {
         "related-files": "Fichiers associés",
         "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile",
-        "placeholder-csv": "Déposez ici le CSV"
+        "placeholder-csv": "Déposez ici le fichier CSV"
       },
       "coordinates": {
         "coordinates-field": "Champ coordonnées",
-        "latitude-field": "Champ Y/latitude",
-        "longitude-field": "Champ X/longitude",
+        "latitude-field": "Champ Y / latitude",
+        "longitude-field": "Champ X / longitude",
         "order-coordinates-field": "Choisir l'ordre des coordonnées",
         "latlong-field": "Champ coordonnées",
         "separator-coordinates-field": "Séparateur de coordonnées"
@@ -675,8 +675,8 @@
         "properties.orientation": "Orientation",
         "properties.focale_35mm": "Focale 35 mm",
         "properties.focale_objectif": "Focale de l'objectif",
-        "properties.camera_brand":"Marque de l'appareil photo",
-        "properties.camera_model":"Modèle de l'appareil photo",
+        "properties.camera_brand": "Marque de l'appareil photo",
+        "properties.camera_model": "Modèle de l'appareil photo",
         "properties.observations": "Observations",
         "properties.geometry.coordinates[0]": "Longitude",
         "properties.geometry.coordinates[1]": "Latitude",

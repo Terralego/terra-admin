@@ -15,6 +15,7 @@ const AttachmentItem = ({
   endpoint,
   className,
   id,
+  image,
   isLoading,
   file,
   label,
@@ -37,6 +38,7 @@ const AttachmentItem = ({
         <AttachmentType
           className="attachment-item__file"
           file={file}
+          image={image}
           label={label}
           thumbnail={thumbnail}
         />

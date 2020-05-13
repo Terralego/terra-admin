@@ -252,6 +252,7 @@
         "figcaptionSubmit" : "Valider la légende",
         "files": "Documents",
         "images": "Images",
+        "openImage": "Ouvrir l'image dans une nouvelle fenêtre",
         "label": "Légende",
         "loadFiles": "Charger un ou des fichiers",
         "noFiles": "Aucun document",

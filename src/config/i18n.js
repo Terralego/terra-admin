@@ -10,11 +10,10 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next) // if not using I18nextProvider
   .init({
-    lng: 'fr',
     backend: {
       loadPath: `${PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
     },
-    fallbackLng: 'fr',
+    fallbackLng: 'en',
     debug: false,
 
     interpolation: {

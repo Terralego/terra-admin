@@ -10,6 +10,7 @@ import {
 
 import UserDropdown from '../UserDropdown';
 import MenuDropdown from '../MenuDropdown';
+import LangDropdown from '../LangDropdown';
 
 import './header.scss';
 
@@ -49,6 +50,9 @@ export const Header = ({ authenticated, heading, ...props }) => (
           <UserDropdown />
         </NavbarGroup>
       )}
+      <NavbarGroup align="right">
+        <LangDropdown />
+      </NavbarGroup>
     </Navbar>
   </header>
 );

@@ -5,13 +5,13 @@
     "confirmDeletion": "Confirm deletion",
     "delete": "Delete {{name}}",
     "error": {
-      "title": "An error occured. ",
-      "text": "Back to home : ",
+      "title": "An error occurred. ",
+      "text": "Back to home: ",
       "link": "Home",
-      "title_404": "Error 404 : Page not found.",
-      "text_404": "Back to home : ",
+      "title_404": "Error 404: Page not found.",
+      "text_404": "Back to home: ",
       "link_404": "Home",
-      "unableToLoadSettings": "Unable to load configuration. Contact your administrator."
+      "unableToLoadSettings": "Unable to load settings. Please contact your administrator."
     },
     "modules": "Modules",
     "pagination": {
@@ -19,7 +19,7 @@
       "next": "Next"
     },
     "languages": "Languages",
-    "loading": "Loading …",
+    "loading": "Loading…",
     "logout": "Log out"
   },
   "quill": {
@@ -164,7 +164,7 @@
       "typology": "Landscape typologies",
       "photographer": "Photographer",
       "viewpoint-name": "Viewpoint name",
-      "no-result": "This search has no results..",
+      "no-result": "This search has no results.",
       "error": {
         "server": "Unavailable service."
       },
@@ -172,7 +172,7 @@
         "notification": "Action has been correctly executed.",
         "notification_edit": "Viewpoint {{name, uppercase}} has been edited.",
         "notification_create": "Viewpoint {{name}} has been created.",
-        "notification_add-picture": "A picture has been add to viewpoint : {{name}}."
+        "notification_add-picture": "A picture has been add to viewpoint: {{name}}."
       }
     }
   },
@@ -191,8 +191,8 @@
       }
     },
     "settings": {
-      "unableToLoad": "Unable to load configuration. Please contact your administrator.",
-      "unableToLoadMap": "Unable to load map configuration. Please contact your administrator."
+      "unableToLoad": "Unable to load settings. Please contact your administrator.",
+      "unableToLoadMap": "Unable to load map settings. Please contact your administrator."
     },
     "table": {
       "sortAsc": "Sort asc.",
@@ -225,7 +225,7 @@
       "close": "Close",
       "cancel": "Cancel",
       "confirmDeletionText": "Are you sure to want to delete {{name}} ? This can't be cancelled.",
-      "errorNoFeature": "This feature does not exists",
+      "errorNoFeature": "This feature does not exist",
       "errorNoGeometry": "Geometry on map is required",
       "successCreateFeature": "Feature has been created.",
       "failCreateFeature": "Unable to create feature :",

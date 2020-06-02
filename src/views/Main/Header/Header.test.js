@@ -16,6 +16,7 @@ jest.mock('@blueprintjs/core', () => ({
 }));
 jest.mock('../UserDropdown', () => props => <div {...props} />);
 jest.mock('../MenuDropdown', () => props => <div {...props} />);
+jest.mock('../LangDropdown', () => props => <div {...props} />);
 
 
 describe('should display text or logo', () => {

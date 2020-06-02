@@ -229,538 +229,538 @@
       "errorNoGeometry": "Geometry on map is required",
       "successCreateFeature": "Feature has been created.",
       "failCreateFeature": "Unable to create feature :",
-      "successDeleteFeature": "L'objet a été supprimé avec succès",
-      "failDeleteFeature": "L'objet n'a pu être supprimé",
-      "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
-      "geometry": "Géométrie",
-      "true": "Oui",
-      "false": "Non",
-      "other": "Autre",
-      "generatedDocuments": "Documents générés",
-      "fitBoundButton": "Centrer la carte sur \"{{name}}\"",
+      "successDeleteFeature": "Feature has been successfully deleted.",
+      "failDeleteFeature": "Feature has not been deleted.",
+      "noAccess": "You are not allowed to access this resource.",
+      "geometry": "Geometry",
+      "true": "Yes",
+      "false": "No",
+      "other": "Other",
+      "generatedDocuments": "Generated documents",
+      "fitBoundButton": "Center map to \"{{name}}\"",
       "menu": {
         "default": "Informations",
-        "geometries": "Géométries",
-        "attachments": "Documents annexes"
+        "geometries": "Geometries",
+        "attachments": "Attachments"
       },
       "attachment": {
-        "allowedFileTypes": "Fichiers ({{files}}) autorisés",
-        "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer le fichier {{name}} ? Cette action est irrévocable.",
-        "delete": "Supprimer le fichier",
-        "empty": "Aucun fichier repertorié pour cet objet",
-        "figcaptionCancel" : "Annuler la modification",
-        "figcaptionEdit" : "Modifier la légende",
-        "figcaptionSubmit" : "Valider la légende",
-        "files": "Documents",
+        "allowedFileTypes": "Files ({{files}}) allowed",
+        "confirmDeletionText": "Are you sure you want to delete {{name}} ? This can't be canceled.",
+        "delete": "Delete file",
+        "empty": "No file for this feature",
+        "figcaptionCancel" : "Cancel",
+        "figcaptionEdit" : "Edit legend",
+        "figcaptionSubmit" : "Submit legend",
+        "files": "Files",
         "images": "Images",
-        "openImage": "Ouvrir l'image dans une nouvelle fenêtre",
-        "label": "Légende",
-        "loadFiles": "Charger un ou des fichiers",
-        "noFiles": "Aucun document",
+        "openImage": "Show image in newwindow",
+        "label": "Legend",
+        "loadFiles": "Load file(s)",
+        "noFiles": "No file",
         "category" : {
-          "helper": "Les fichiers iront dans cette catégorie",
-          "select": "Choisir une catégorie",
-          "input": "Saisir une catégorie",
-          "new": "+ Nouvelle catégorie"
+          "helper": "Files will be linked to this category",
+          "select": "Select category",
+          "input": "Set category",
+          "new": "+ New category"
         }
       }
     }
   },
   "help": {
-    "block-heading": "Conseils :"
+    "block-heading": "Advices :"
   },
   "jsonSchema": {
     "geometryField": {
       "type": {
         "Point": {
-          "singular": "un point"
+          "singular": "a point"
         },
         "LineString": {
-          "singular": "un tracé"
+          "singular": "a line"
         },
         "Polygon": {
-          "singular": "une zone"
+          "singular": "an area"
         },
         "MultiPoint": {
-          "singular": "des points"
+          "singular": "some points"
         },
         "MultiLineString": {
-          "singular": "un ou des tracés"
+          "singular": "some lines"
         },
         "MultiPolygon": {
-          "singular": "une ou des zones"
+          "singular": "some areas"
         },
         "GeometryCollection": {
-          "singular": "une ou des géométrie"
+          "singular": "some geometries"
         }
       },
-      "title": "Coordonnées (WGS84 décimal)",
+      "title": "Coordinates (decimal WGS84)",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "helper-create": "Dessinez $t(jsonSchema.geometryField.type.{{type}}.singular) à l'aide des boutons disponibles sur la carte.",
-      "helper-edit": "Modifiez $t(jsonSchema.geometryField.type.{{type}}.singular) à l'aide des boutons disponibles sur la carte.",
-      "save": "Une fois terminé, enregistrez en cliquant sur le bouton de soumission."
+      "helper-create": "Draw $t(jsonSchema.geometryField.type.{{type}}.singular) with available button on map.",
+      "helper-edit": "Edit $t(jsonSchema.geometryField.type.{{type}}.singular) with available button on map.",
+      "save": "Once edited, save by cubmit button."
     },
     "panelError": {
-      "title": "Votre saisie comporte des erreurs"
+      "title": "You input has some errors"
     },
     "RTEField": {
-      "close": "Fermer",
-      "pick-image": "Sélectionnez une image"
+      "close": "Close",
+      "pick-image": "Select picture"
     }
   },
   "user": {
-    "project": "Utilisateurs",
+    "project": "Users",
     "nav": {
-      "list": "Liste des utilisateurs"
+      "list": "User list"
     },
     "form": {
       "id": "Id",
       "email": "Email",
       "uuid": "Uuid",
-      "superuser": "Superutilisateur",
-      "active": "Actif",
+      "superuser": "Super user",
+      "active": "Active",
       "permissions": "Permissions",
-      "additional-information": "Information supplémentaire",
-      "password": "Mot de passe"
+      "additional-information": "Additional informations",
+      "password": "Password"
     },
     "help": {
-      "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",
-      "is_superuser": "Le mode \"Superutilisateur\" donne  tous les droits d'administration",
-      "is_active": "Le mode \"Actif\" rend disponible le profil de l'utilisateur"
+      "superuser-create-user": "Only superuser can create user.",
+      "is_superuser": "\"Super user\" give all administration rights",
+      "is_active": "\"Active\" mode set if user could connect."
     }
   },
   "usergroup": {
-    "project": "Groupes d'utilisateurs",
+    "project": "User groups",
     "nav": {
-      "list": "Groupes d'utilisateurs"
+      "list": "User groups"
     }
   },
   "datasource": {
-    "project": "Entrepôt de données",
+    "project": "Data store",
     "nav": {
-      "list": "Sources de données"
+      "list": "Data sources"
     },
     "form": {
-      "read-only": "Cette source de données n'est pas modifiable.",
-      "help1": "Une fois le type de la donnée déterminé, il n'est pas possible de le changer",
-      "definition": "Définition",
-      "data-type": "Type de données",
-      "geometry": "Type de géométrie",
-      "geom-field": "Champ geométrie auto-détecté",
-      "geom-field-help": "Indiquer le champ de la géométrie de la donnée (ex. : geom, the_geom, geometry, etc.).",
-      "uid-field": "Champ de l'identifiant unique",
-      "uid-field-help": "Indiquer le champs correspondant à l'identifiant unique de la donnée (ex: gid, id..).",
-      "use-by": "Utilisé par",
-      "data": "Données",
-      "label": "Libellé",
-      "name": "Nom",
-      "fields": "Champs",
+      "read-only": "THis data source can't be edited.",
+      "help1": "Once data type is set, you can't change it",
+      "definition": "Definition",
+      "data-type": "Data type",
+      "geometry": "Geometry type",
+      "geom-field": "Auto-detected geometry field",
+      "geom-field-help": "Set geometry field (ex. : geom, the_geom, geometry, etc.).",
+      "uid-field": "Unique ID field",
+      "uid-field-help": "Set field representing unique field id (ex: gid, id..).",
+      "use-by": "Used by",
+      "data": "Data",
+      "label": "Label",
+      "name": "Name",
+      "fields": "Fields",
       "file": {
-        "related-files": "Fichiers associés",
-        "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile",
-        "placeholderCSV": "Déposez ici le fichier CSV"
+        "related-files": "Linked files",
+        "placeholder": "Drop here GeoJSON or zipped shapefile.",
+        "placeholderCSV": "Drop here CSV file."
       },
       "coordinates": {
-        "coordinatesField": "Nom du champ de coordonnées",
-        "latitudeField": "Champ Y / latitude",
-        "longitudeField": "Champ X / longitude",
-        "orderCoordinatesField": "Choisir l'ordre des coordonnées",
-        "latlongField": "Nom du champ de coordonnées",
-        "coordinatesSeparator": "Séparateur de coordonnées",
-        "onecolumn": "En une colonne",
-        "twocolumns": "En deux colonnes"
+        "coordinatesField": "Coordinates field name",
+        "latitudeField": "Field Y / latitude",
+        "longitudeField": "Field X / longitude",
+        "orderCoordinatesField": "Set coordinates order",
+        "latlongField": "Corrdinate field name",
+        "coordinatesSeparator": "Coordinates separator",
+        "onecolumn": "In one column",
+        "twocolumns": "In two columns"
       },
 
       "optionsCSV": {
         "separator": {
-          "comma": "Virgule",
-          "semicolon": "Point-virgule",
+          "comma": "Comma",
+          "semicolon": "Semi colon",
           "point": "Point",
-          "space": "Espace",
+          "space": "Space",
           "tab": "Tabulation",
-          "colon": "Deux-points",
-          "simplequote": "Guillemets simples",
-          "doublequote": "Guillemets doubles"
+          "colon": "Colo,",
+          "simplequote": "Simple quote",
+          "doublequote": "Double quote"
 
         },
-        "encoding": "Encodage",
-        "coordinateReferenceSystem": "Système de coordonnées de référence",
-        "fieldSeparator": "Séparateur de champ",
-        "charDelimiter": "Séparateur de texte",
-        "charDelimiterHelp": "Les chaines de caracteres peuvent inclure le séparateur de colonne, ce dernier sera ignoré/lu comme du texte",
-        "decimalSeparator": "Séparateur décimal",
+        "encoding": "Encoding",
+        "coordinateReferenceSystem": "Coordinate Reference System",
+        "fieldSeparator": "Field separator",
+        "charDelimiter": "Character delimiter",
+        "charDelimiterHelp": "Character strings should include peuvent inclure Field separator, this should be ignored/read as text",
+        "decimalSeparator": "Decimal separator",
         "options": "Options",
-        "numberLinesToIgnore": "Nombre de lignes à ignorer",
-        "headers": "Entête à la première ligne",
-        "ignoreNull": "Ignorer les colonnes à null"
+        "numberLinesToIgnore": "Number lines to ignore",
+        "headers": "First line headers",
+        "ignoreNull": "Ignore null columns"
       },
 
       "request": {
-        "host-server": "Serveur hôte",
-        "host-port": "Port hôte",
-        "database-name": "Nom de la base de données",
-        "user-name": "Nom de l'utilisateur",
-        "user-password": "Mot de passe de l'utilisateur",
-        "query": "Requête",
-        "query-help": "Exemple de requete PostGis : SELECT * FROM tm2_espace_activite (ne pas rajouter de \";\")",
+        "host-server": "Host",
+        "host-port": "Port",
+        "database-name": "Database",
+        "user-name": "User name",
+        "user-password": "Password",
+        "query": "Query",
+        "query-help": "PostGis query example : SELECT * FROM tm2_espace_activite (don't add ending \";\")",
         "refresh": {
-          "name": "Actualiser",
-          "never": "Jamais",
-          "hourly": "Toutes les heures",
-          "daily": "Quotidiennement",
-          "weekly": "Hebdomadaire",
-          "monthly": "Mensuel"
+          "name": "Refgresh",
+          "never": "Never",
+          "hourly": "Hourly",
+          "daily": "Daily",
+          "weekly": "Weekly",
+          "monthly": "Monthly"
         }
       },
-      "include-field-tiles": "Inclure ce champ dans les tuiles vectorielles",
-      "status": "Statut",
-      "min-zoom": "Zoom minimum",
-      "max-zoom": "Zoom maximum",
-      "tile-size": "Taille des tuiles",
-      "wmts-url": "Adresse de la source WMTS"
+      "include-field-tiles": "Include this field in vector tiles",
+      "status": "Status",
+      "min-zoom": "Min. Zoom",
+      "max-zoom": "Max. Zoom",
+      "tile-size": "Tile size",
+      "wmts-url": "WMTS source url"
     },
     "edit": {
-      "refresh": "Actualiser les données",
-      "message": "Il est nécessaire d'inclure des champs dans les tuiles vectorielles pour qu'ils soient également disponibles dans les popups et les mini-fiches."
+      "refresh": "Refresh data",
+      "message": "You need to include fields in vector tiles if you want to make them available in popups and mini-sheets."
     }
   },
   "datalayer": {
-    "project": "Visualiseur",
+    "project": "Viewer",
     "nav": {
-      "list": "Couches de données"
+      "list": "Data layers"
     },
     "form": {
-      "name": "Nom",
-      "data-source": "Source des données",
-      "definition": "Définition",
-      "fields-settings": "Configuration des champs",
-      "view": "Vue",
-      "ordering": "Classement",
+      "name": "Name",
+      "data-source": "Data source",
+      "definition": "Definition",
+      "fields-settings": "Fields configuration",
+      "view": "View",
+      "ordering": "Ordering",
       "description": "Description",
       "style": "Style",
-      "layer-style": "Style de la couche",
+      "layer-style": "Layer style",
       "interactions": "Interactions",
-      "allow-display-data-table": " Permettre l'affichage du tableau de données",
-      "allow-export-data": " Permettre l'export des données",
-      "all-data-available": " Toutes les données disponibles",
-      "all-fields-available": " Tous les champs disponibles",
-      "show": "Afficher dans le tableau",
+      "allow-display-data-table": " Allow display data table",
+      "allow-export-data": " Allow export data",
+      "all-data-available": " All available data",
+      "all-fields-available": " All available fields",
+      "show": "Show in table",
       "exportable": "Exportable",
       "compare-url": {
-        "title": "URL de comparaison",
-        "help-title": "Modèle d'URL de comparaison",
-        "help-text": "Ce modèle permet de générer l'URL de comparaison qui est disponible dans le tableau lorsque l'on sélectionne plusieurs éléments. Ajoutez « {{ids}} » à l'emplacement où la liste des identifiants sélectionnés doit-être insérée."
+        "title": "Comparison URL",
+        "help-title": "Comparison URL template",
+        "help-text": "This template allow to generate comparison URL available in table when you select many elements. Add « {{ids}} » where identifier list should be inserted."
       },
       "popup": {
-        "display-on-hover": "Afficher une fenêtre contextuelle",
-        "min-zoom": "Zoom minimum",
-        "max-zoom": "Zoom maximum",
-        "template": "Modèle de la fenêtre contextuelle"
+        "display-on-hover": "Show contextual window",
+        "min-zoom": "Min. Zoom",
+        "max-zoom": "Max. Zoom",
+        "template": "Contextual window template"
       },
       "minisheet": {
-        "display-on-click": "Afficher la minifiche",
-        "template": "Modèle de la minifiche",
-        "pick-highlight-color": "Sélectionner une couleur de surbrillance"
+        "display-on-click": "Show mini-sheet",
+        "template": "Mini-sheet template",
+        "pick-highlight-color": "Select over lighting color"
       },
-      "filter": "Filtre",
-      "allow-filtering-field": "Permettre de filter par le champ",
-      "text": "Texte",
-      "data-sample": "Extrait des données",
+      "filter": "Filter",
+      "allow-filtering-field": "Allow to filter by field",
+      "text": "Text",
+      "data-sample": "Data sample",
       "type": {
-        "label": "Type de filtrage",
-        "single": "Une seule valeur",
-        "many": "Plusieurs valeurs",
-        "range": "Une étendue de valeurs",
-        "values": "Proposer une liste définie de valeurs pour le filtrage",
-        "values_optional": "Proposer une liste définie de valeurs pour le filtrage (optionnel)",
+        "label": "Filter type",
+        "single": "One value",
+        "many": "Some values",
+        "range": "Value range",
+        "values": "Set a defined value list to filter",
+        "values_optional": "Set a defined value list to filter (optional)",
         "range_format": {
-          "label": "Format du filtre",
-          "number": "Numérique",
+          "label": "Filter format",
+          "number": "Numeric",
           "date": "Dates"
         },
         "fetch": {
-          "label": "Proposer toutes les valeurs disponibles en base de données pour le filtrage"
+          "label": "Propose all values available in database to filter"
         }
       },
-      "legends": "Afficher une ou plusieurs légendes",
+      "legends": "Show legend(s)",
       "legend": {
-        "title": "Titre de la légende",
-        "template": "Contenu mis en page de la légende (optionnel)",
-        "items": "Items de la légende (Optionnel)",
+        "title": "Legend title",
+        "template": "Legend content template (optional)",
+        "items": "Legend items (Optional)",
         "help": {
-          "title": "3 élements nécessaires dans la légende :",
-          "text": "<ul><li>label : nom</li><li>shape : type de symbole (square pour les polygone et les lignes, circle pour les points)</li><li>color : HEX, RGB ou nom</li></ul><p>Exemple:</p><pre>\n[{\n  \"label\": \"communes\",\n  \"shape\": \"square\",\n  \"color\": \"red\"\n}]\n</pre>"
+          "title": "3 required elements in legend :",
+          "text": "<ul><li>label : name</li><li>shape : symbol (square for polygons and lines, circle for points)</li><li>color : HEX, RGB or name</li></ul><p>Example:</p><pre>\n[{\n  \"label\": \"cities\",\n  \"shape\": \"square\",\n  \"color\": \"red\"\n}]\n</pre>"
         }
       },
       "search": {
         "main-field": {
-          "label": "Champ principal",
-          "helpertext": "Choisissez le champ affiché par défaut. Celui-ci apparaitra dans les résultats de recherche par exemple."
+          "label": "Main field",
+          "helpertext": "Set selected field by default. This will be showed in search results for example."
         }
       },
       "styles": {
-        "default_opacity": "Opacité par défaut (en %)",
-        "mainstyle": "Style principal",
-        "secondarylabels": "Styles secondaires",
-        "style": "Configuration du style"
+        "default_opacity": "Default opacity (in %)",
+        "mainstyle": "Main style",
+        "secondarylabels": "Secondary styles",
+        "style": "Style configuration"
       }
     }
   },
   "view": {
-    "project": "Visualiseur",
+    "project": "Viewer",
     "nav": {
-      "list": "Vue"
+      "list": "View"
     },
     "form": {
-      "name": "Nom",
+      "name": "Name",
       "slug": "Slug",
-      "category": "Catégorie",
-      "icon": "Icône",
-      "ordering": "Classement",
-      "import-report": "Rapport d'importation"
+      "category": "Category",
+      "icon": "Icon",
+      "ordering": "Ordering",
+      "import-report": "Import reporting"
     }
   },
   "ra": {
     "nav": {
-      "user_list": "Liste des utilisateurs",
-      "usergroup_list": "Liste des groupes utilisateurs",
-      "datalayer_list": "Liste des couches",
-      "datasource_list": "Liste des sources de données",
-      "view_list": "Liste des vues",
-      "viewpoint_list": "Liste des points de vue",
-      "picture_list": "Liste des photographies",
-      "campaign_list": "Liste des campagnes"
+      "user_list": "User list",
+      "usergroup_list": "User group list",
+      "datalayer_list": "Layer list",
+      "datasource_list": "Data source list",
+      "view_list": "View list",
+      "viewpoint_list": "Viewpoint list",
+      "picture_list": "Picture list",
+      "campaign_list": "Campaign list"
     },
     "action": {
-      "add_filter": "Ajouter un filtre",
-      "add": "Ajouter",
-      "back": "Retour",
-      "back-to-list": "Retour à la liste",
-      "bulk_actions": "%{smart_count} selectionné |||| %{smart_count} selectionnés",
-      "cancel": "Annuler",
-      "clear_input_value": "Vider le champ",
-      "clone": "Dupliquer",
-      "confirm": "Confirmer",
-      "create": "Créer",
-      "delete": "Supprimer",
-      "edit": "Éditer",
-      "export": "Exporter",
-      "list": "Liste",
-      "refresh": "Actualiser",
-      "remove_filter": "Supprimer ce filtre",
-      "remove": "Supprimer",
-      "save": "Enregistrer",
-      "search": "Rechercher",
-      "show": "Afficher",
-      "sort": "Trier",
-      "undo": "Annuler"
+      "add_filter": "Add a filter",
+      "add": "Add",
+      "back": "Back",
+      "back-to-list": "Back to list",
+      "bulk_actions": "%{smart_count} selected |||| %{smart_count} selected",
+      "cancel": "Cancel",
+      "clear_input_value": "Clear field",
+      "clone": "Clone",
+      "confirm": "Confirm",
+      "create": "Create",
+      "delete": "Delete",
+      "edit": "Edit",
+      "export": "Export",
+      "list": "List",
+      "refresh": "Refresh",
+      "remove_filter": "Remove this filter",
+      "remove": "Remove",
+      "save": "Save",
+      "search": "Search",
+      "show": "Show",
+      "sort": "Sort",
+      "undo": "Cancel"
     },
     "boolean": {
-      "true": "Oui",
-      "false": "Non"
+      "true": "Yes",
+      "false": "No"
     },
     "page": {
-      "create": "Créer %{name}",
-      "dashboard": "Tableau de bord",
+      "create": "Create %{name}",
+      "dashboard": "Dashboard",
       "edit": "%{name} #%{id}",
-      "error": "Un problème est survenu",
+      "error": "An error has occured",
       "list": "%{name}",
-      "loading": "Chargement",
-      "not_found": "Page manquante",
+      "loading": "Loading",
+      "not_found": "Page not found",
       "show": "%{name} #%{id}"
     },
     "input": {
       "file": {
-        "upload_several": "Déposez les fichiers à envoyer, ou cliquez pour en sélectionner.",
-        "upload_single": "Déposez le fichier à envoyer, ou cliquez pour le sélectionner."
+        "upload_several": "Drop files to send, or click to select them.",
+        "upload_single": "Drop file to send, or click to select them."
       },
       "image": {
-        "upload_several": "Déposez les images à envoyer, ou cliquez pour en sélectionner.",
-        "upload_single": "Déposez l'image à envoyer, ou cliquez pour la sélectionner."
+        "upload_several": "Drop images to send, or click to select them.",
+        "upload_single": "Drop image to send, or click to select them."
       },
       "references": {
-        "all_missing": "Impossible de trouver des données de références.",
-        "many_missing": "Au moins une des références associées semble ne plus être disponible.",
-        "single_missing": "La référence associée ne semble plus disponible."
+        "all_missing": "Unable to find referential data.",
+        "many_missing": "At least one referential data is not available anymore.",
+        "single_missing": "Linked referential is not availble anymore."
       },
       "style_field": {
-        "empty_object": "L'objet ne doit pas être vide.",
-        "missing_property": "La propriété \"%{property}\" est absente."
+        "empty_object": "Object should not be empty.",
+        "missing_property": "Property \"%{property}\" is missing."
       }
     },
     "message": {
-      "about": "Au sujet de",
-      "are_you_sure": "Êtes-vous sûr ?",
-      "bulk_delete_content": "Êtes-vous sûr(e) de vouloir supprimer cet élément ? |||| Êtes-vous sûr(e) de vouloir supprimer ces %{smart_count} éléments ?",
-      "bulk_delete_title": "Supprimer %{name} |||| Supprimer %{smart_count} %{name}",
-      "delete_content": "Êtes-vous sûr(e) de vouloir supprimer cet élément ?",
-      "delete_title": "Supprimer %{name} #%{id}",
-      "details": "Détails",
-      "error": "En raison d'une erreur côté navigateur, votre requête n'a pas pu aboutir.",
-      "invalid_form": "Le formulaire n'est pas valide. Vérifiez votre saisie.",
-      "loading": "La page est en cours de chargement, merci de bien vouloir patienter.",
-      "no": "Non",
-      "not_found": "L'URL saisie est incorrecte, ou vous avez suivi un mauvais lien.",
-      "yes": "Oui"
+      "about": "About",
+      "are_you_sure": "Are you sure ?",
+      "bulk_delete_content": "Are you sure to want to delete this element ? |||| Are you sure to want to delete this %{smart_count} elements ?",
+      "bulk_delete_title": "Delete %{name} |||| Delete %{smart_count} %{name}",
+      "delete_content": "Are you sure to want to delete this element ?",
+      "delete_title": "Delete %{name} #%{id}",
+      "details": "Details",
+      "error": "Due to a browser error, your request can't be send.",
+      "invalid_form": "Invalid form. Check your inputs.",
+      "loading": "Page is loading, thanks to wait a while more.",
+      "no": "No",
+      "not_found": "URL seems to be wrong, or bad link.",
+      "yes": "Yes"
     },
     "navigation": {
-      "no_results": "Aucun résultat",
-      "no_more_results": "La page numéro %{page} est en dehors des limites. Essayez la page précédente.",
-      "page_out_of_boundaries": "La page %{page} est en dehors des limites",
-      "page_out_from_end": "Fin de la pagination",
-      "page_out_from_begin": "La page doit être supérieure à 1",
-      "page_range_info": "%{offsetBegin}-%{offsetEnd} sur %{total}",
-      "page_rows_per_page": "Lignes par page :",
-      "next": "Suivant",
-      "prev": "Précédent"
+      "no_results": "No results",
+      "no_more_results": "Page number %{page} is out of limits. Try with previous page.",
+      "page_out_of_boundaries": "Page %{page} if out of limits",
+      "page_out_from_end": "Pagination end",
+      "page_out_from_begin": "Page should be greater than 1",
+      "page_range_info": "%{offsetBegin}-%{offsetEnd} on %{total}",
+      "page_rows_per_page": "Lines per page :",
+      "next": "Next",
+      "prev": "Previous"
     },
     "auth": {
-      "user_menu": "Profil",
-      "username": "Identifiant",
-      "password": "Mot de passe",
-      "sign_in": "Connexion",
-      "sign_in_error": "Échec de l'authentification, merci de réessayer",
-      "logout": "Déconnexion"
+      "user_menu": "Profile",
+      "username": "Identifier",
+      "password": "Password",
+      "sign_in": "Sign in",
+      "sign_in_error": "Authentication error, Please try again",
+      "logout": "Log out"
     },
     "notification": {
-      "updated": "Élément mis à jour |||| %{smart_count} élements mis à jour",
-      "created": "Élément créé",
-      "deleted": "Élément supprimé |||| %{smart_count} élements supprimés",
-      "bad_item": "Élément inconnu",
-      "item_doesnt_exist": "L'élément n'existe pas",
-      "http_error": "Erreur de communication avec le serveur",
-      "data_provider_error": "Erreur dans le dataProvider. Plus de détails dans la console.",
-      "canceled": "Action annulée",
-      "logged_out": "Votre session a pris fin, veuillez vous reconnecter."
+      "updated": "Updated element |||| %{smart_count} updated elements",
+      "created": "Created element",
+      "deleted": "Deleted element |||| %{smart_count} deleted elements",
+      "bad_item": "Unknown element",
+      "item_doesnt_exist": "Element does not exist.",
+      "http_error": "Request error with server",
+      "data_provider_error": "Data provider error. More details in console.",
+      "canceled": "Canceled action",
+      "logged_out": "Your session has expired, please log in again."
     },
     "validation": {
-      "required": "Ce champ est requis",
-      "minLength": "Minimum %{min} caractères",
-      "maxLength": "Maximum %{max} caractères",
+      "required": "This field is required",
+      "minLength": "%{min} characters minimum",
+      "maxLength": "%{max} characters maximum",
       "minValue": "Minimum %{min}",
       "maxValue": "Maximum %{max}",
-      "number": "Doit être un nombre",
-      "email": "Doit être un email",
-      "oneOf": "Doit être au choix: %{options}",
-      "regex": "Doit respecter un format spécifique (regexp): %{pattern}"
+      "number": "Should be a number",
+      "email": "Should be a valid email",
+      "oneOf": "Should be: %{options}",
+      "regex": "Should check a specific format (regexp): %{pattern}"
     }
   },
   "resources": {
     "viewpoint": {
-      "viewpoint-number": "Point de vue n°%{number}",
-      "viewpoint-no-number": "Pas d'id renseigné",
+      "viewpoint-number": "Viewpoint n°%{number}",
+      "viewpoint-no-number": "No identifier set",
       "fields": {
-        "label": "Nom du point de vue",
-        "address": "Adresse",
-        "properties.index": "Numéro du point de vue",
-        "properties.voie": "Voie",
-        "properties.commune": "Commune",
-        "properties.altitude": "Altitude",
-        "properties.hauteur": "Hauteur de l'œil",
-        "properties.orientation": "Orientation",
-        "properties.focale_35mm": "Focale 35 mm",
-        "properties.focale_objectif": "Focale de l'objectif",
-        "properties.frequence": "Fréquence de rephotographie",
-        "properties.frequence.suffix": "années",
-        "properties.difficulte": "Difficulté à reproduire",
-        "properties.rephotographie": "Observations de rephotographie",
-        "properties.paysage": "Description du paysage",
-        "properties.dynamiques": "Dynamiques en cours",
-        "properties.issues": "Enjeux",
+        "label": "Viewpoint name",
+        "address": "Address",
+        "properties.index": "Viewpoint index",
+        "properties.voie": "Street",
+        "properties.commune": "City",
+        "properties.altitude": "Elevation",
+        "properties.hauteur": "Eye elevation",
+        "properties.orientation": "Direction",
+        "properties.focale_35mm": "Lens 35 mm",
+        "properties.focale_objectif": "Camera lens",
+        "properties.frequence": "Picture frequence",
+        "properties.frequence.suffix": "years",
+        "properties.difficulte": "Difficulties to reproduce",
+        "properties.rephotographie": "Picture again observations",
+        "properties.paysage": "Landscape description",
+        "properties.dynamiques": "Dynamics",
+        "properties.issues": "Goals",
         "properties.observations": "Observations",
-        "properties.historial-data": "Données historiques",
-        "properties.cultural-references": "Références culturelles",
-        "properties.themes": "Thématiques",
-        "properties.keywords": "Mots-clés",
-        "properties.landscape-entities": "Entités paysagères",
-        "related": "Documents associés",
-        "related.document": "Fichier",
+        "properties.historial-data": "Historial data",
+        "properties.cultural-references": "Cultural references",
+        "properties.themes": "Themes",
+        "properties.keywords": "Keywords",
+        "properties.landscape-entities": "Landscape entities",
+        "related": "Linked documents",
+        "related.document": "File",
         "related.key": "Type",
-        "related.label": "Libellé",
+        "related.label": "Label",
         "point.coordinates[0]": "Longitude",
         "point.coordinates[1]": "Latitude"
       },
       "tabs": {
-        "general": "Informations principales",
-        "repeat": "Rephotographie",
-        "landscape": "Paysage",
-        "pictures": "Photographies"
+        "general": "Main informations",
+        "repeat": "Repeat",
+        "landscape": "Landscape",
+        "pictures": "Pictures"
       }
     },
     "picture": {
       "fields": {
-        "label": "Nom du point de vue",
-        "properties.altitude": "Altitude",
-        "properties.meteo": "Conditions météo",
-        "properties.hauteur": "Hauteur de l'œil",
-        "properties.orientation": "Orientation",
-        "properties.focale_35mm": "Focale 35 mm",
-        "properties.focale_objectif": "Focale de l'objectif",
-        "properties.camera_brand": "Marque de l'appareil photo",
-        "properties.camera_model": "Modèle de l'appareil photo",
+        "label": "Viewpoint label",
+        "properties.altitude": "Elevation",
+        "properties.meteo": "Weather",
+        "properties.hauteur": "Eye elevation",
+        "properties.orientation": "Direction",
+        "properties.focale_35mm": "Lens 35 mm",
+        "properties.focale_objectif": "Camera lens",
+        "properties.camera_brand": "Camera brand",
+        "properties.camera_model": "Camera model",
         "properties.observations": "Observations",
         "properties.geometry.coordinates[0]": "Longitude",
         "properties.geometry.coordinates[1]": "Latitude",
-        "properties.index": "Numéro d'ordre",
-        "properties.state": "Statut",
-        "viewpoint": "Point de vue",
-        "owner_id": "ID du photographe",
-        "owner.properties.name": "Photographe",
-        "file": "Photographie",
-        "file.thumbnail": "Photographie",
-        "time": "Heure"
+        "properties.index": "Ordering index",
+        "properties.state": "Status",
+        "viewpoint": "Viewpoint",
+        "owner_id": "Owner ID",
+        "owner.properties.name": "Owner",
+        "file": "Picture",
+        "file.thumbnail": "Picture",
+        "time": "Hour"
       },
       "tabs": {
-        "metadata": "Métadonnées",
-        "repeat": "Rephotographie"
+        "metadata": "Meta data",
+        "repeat": "Repeat"
       }
     },
     "user": {
       "fields": {
         "id": "Id",
-        "email": "Adresse e-mail",
+        "email": "Mail address",
         "uuid": "Uuid",
-        "groups": "Groupes de l'utilisateur",
-        "password": "Mot de passe",
-        "is_superuser": "Superutilisateur",
-        "is_active": "Actif",
+        "groups": "User groups",
+        "password": "Password",
+        "is_superuser": "Super user",
+        "is_active": "Active",
         "permissions": "Permissions"
       }
     },
     "usergroup": {
       "fields": {
         "id": "Id",
-        "name": "Nom du groupe",
-        "users": "Utilisateurs dans le groupe"
+        "name": "Group name",
+        "users": "Users in group"
       }
     },
     "datasource": {
       "fields": {
         "description": "Description",
-        "name": "Nom",
-        "settings.groups": "Groupes utilisateurs"
+        "name": "Name",
+        "settings.groups": "User groups"
       }
     },
     "datalayer": {
       "fields": {
-        "settings-widgets": "Configuration des widgets",
-        "active_by_default": "Afficher par défaut",
-        "active_by_default_pastpart": "Affiché par défaut",
-        "table_enable": "Tableau de données affiché",
-        "popup_enable": "Fenêtre contextuelle affichée",
-        "minisheet_enable": "Minifiche affichée"
+        "settings-widgets": "Widget configuration",
+        "active_by_default": "Show by default",
+        "active_by_default_pastpart": "Shown by default",
+        "table_enable": "Shown data table",
+        "popup_enable": "Show contextual window",
+        "minisheet_enable": "Shown mini-sheet"
       }
     },
     "view": {
       "fields": {
-        "category": "Type de vue",
-        "category-map": "Carte",
+        "category": "View type",
+        "category-map": "Map",
         "category-story": "Storytelling",
-        "tree": "Arbre des couches",
-        "config.tree": "Arbre des couches",
-        "file": "Générer l'arbre à partir d'un fichier Excel",
-        "file-placeholder": "Déposer ici le fichier Excel pour générer l'arbre (l'arbre existant sera écrasé)."
+        "tree": "Layer tree",
+        "config.tree": "Layer tree",
+        "file": "Generate tree from Excel file",
+        "file-placeholder": "Drop here Excel file to generate tree (Existing tree will be crushed)."
       }
     }
   }

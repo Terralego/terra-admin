@@ -224,7 +224,7 @@
       "save": "Save",
       "close": "Close",
       "cancel": "Cancel",
-      "confirmDeletionText": "Are you sure to want to delete {{name}} ? This can't be cancelled.",
+      "confirmDeletionText": "Are you sure to want to delete {{name}}? This can't be cancelled.",
       "errorNoFeature": "This feature does not exist",
       "errorNoGeometry": "Geometry on map is required",
       "successCreateFeature": "Feature has been created.",
@@ -245,7 +245,7 @@
       },
       "attachment": {
         "allowedFileTypes": "Files ({{files}}) allowed",
-        "confirmDeletionText": "Are you sure you want to delete {{name}} ? This can't be canceled.",
+        "confirmDeletionText": "Are you sure you want to delete {{name}}? This can't be canceled.",
         "delete": "Delete file",
         "empty": "No file for this feature",
         "figcaptionCancel" : "Cancel",
@@ -253,10 +253,10 @@
         "figcaptionSubmit" : "Submit legend",
         "files": "Files",
         "images": "Images",
-        "openImage": "Show image in newwindow",
+        "openImage": "Show image in new window",
         "label": "Legend",
         "loadFiles": "Load file(s)",
-        "noFiles": "No file",
+        "noFiles": "No files",
         "category" : {
           "helper": "Files will be linked to this category",
           "select": "Select category",
@@ -302,7 +302,7 @@
       "save": "Once edited, save by cubmit button."
     },
     "panelError": {
-      "title": "You input has some errors"
+      "title": "Your input has some errors"
     },
     "RTEField": {
       "close": "Close",
@@ -342,7 +342,7 @@
       "list": "Data sources"
     },
     "form": {
-      "read-only": "THis data source can't be edited.",
+      "read-only": "This data source can't be edited.",
       "help1": "Once data type is set, you can't change it",
       "definition": "Definition",
       "data-type": "Data type",
@@ -379,7 +379,7 @@
           "point": "Point",
           "space": "Space",
           "tab": "Tabulation",
-          "colon": "Colo,",
+          "colon": "Colon",
           "simplequote": "Simple quote",
           "doublequote": "Double quote"
 
@@ -388,7 +388,7 @@
         "coordinateReferenceSystem": "Coordinate Reference System",
         "fieldSeparator": "Field separator",
         "charDelimiter": "Character delimiter",
-        "charDelimiterHelp": "Character strings should include peuvent inclure Field separator, this should be ignored/read as text",
+        "charDelimiterHelp": "Character strings should include Field separator, this should be ignored/read as text",
         "decimalSeparator": "Decimal separator",
         "options": "Options",
         "numberLinesToIgnore": "Number lines to ignore",
@@ -450,7 +450,7 @@
       "compare-url": {
         "title": "Comparison URL",
         "help-title": "Comparison URL template",
-        "help-text": "This template allow to generate comparison URL available in table when you select many elements. Add « {{ids}} » where identifier list should be inserted."
+        "help-text": "This template allows to generate comparison URL available in table when you select many elements. Add « {{ids}} » where identifier list should be inserted."
       },
       "popup": {
         "display-on-hover": "Show contextual window",
@@ -582,7 +582,7 @@
       "references": {
         "all_missing": "Unable to find referential data.",
         "many_missing": "At least one referential data is not available anymore.",
-        "single_missing": "Linked referential is not availble anymore."
+        "single_missing": "Linked referential is not available anymore."
       },
       "style_field": {
         "empty_object": "Object should not be empty.",
@@ -591,10 +591,10 @@
     },
     "message": {
       "about": "About",
-      "are_you_sure": "Are you sure ?",
-      "bulk_delete_content": "Are you sure to want to delete this element ? |||| Are you sure to want to delete this %{smart_count} elements ?",
+      "are_you_sure": "Are you sure?",
+      "bulk_delete_content": "Are you sure to want to delete this element? |||| Are you sure to want to delete this %{smart_count} elements?",
       "bulk_delete_title": "Delete %{name} |||| Delete %{smart_count} %{name}",
-      "delete_content": "Are you sure to want to delete this element ?",
+      "delete_content": "Are you sure to want to delete this element?",
       "delete_title": "Delete %{name} #%{id}",
       "details": "Details",
       "error": "Due to a browser error, your request can't be send.",
@@ -683,7 +683,7 @@
       },
       "tabs": {
         "general": "Main informations",
-        "repeat": "Repeat",
+        "repeat": "Rephotography",
         "landscape": "Landscape",
         "pictures": "Pictures"
       }
@@ -713,7 +713,7 @@
       },
       "tabs": {
         "metadata": "Meta data",
-        "repeat": "Repeat"
+        "repeat": "Rephotography"
       }
     },
     "user": {

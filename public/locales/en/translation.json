@@ -605,7 +605,7 @@
       "yes": "Yes"
     },
     "navigation": {
-      "no_results": "No results",
+      "no_results": "No result",
       "no_more_results": "Page number %{page} is out of limits. Try with previous page.",
       "page_out_of_boundaries": "Page %{page} if out of limits",
       "page_out_from_end": "Pagination end",

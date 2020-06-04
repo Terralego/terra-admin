@@ -32,8 +32,8 @@
   "auth": {
     "loginform": {
       "email": {
-        "invalid": "Invalid mail",
-        "helper": "Enter your mail address",
+        "invalid": "Invalid email",
+        "helper": "Enter your email address",
         "label": "Email",
         "info": "required",
         "placeholder": "Email"

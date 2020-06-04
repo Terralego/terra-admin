@@ -620,7 +620,7 @@
       "username": "Identifier",
       "password": "Password",
       "sign_in": "Sign in",
-      "sign_in_error": "Authentication error, Please try again",
+      "sign_in_error": "Authentication fails, please try again",
       "logout": "Log out"
     },
     "notification": {

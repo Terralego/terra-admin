@@ -631,7 +631,7 @@
       "item_doesnt_exist": "Element does not exist.",
       "http_error": "Request error with server",
       "data_provider_error": "Data provider error. More details in console.",
-      "canceled": "Canceled action",
+      "canceled": "Action canceled",
       "logged_out": "Your session has expired, please log in again."
     },
     "validation": {

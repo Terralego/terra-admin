@@ -760,7 +760,7 @@
         "tree": "Layer tree",
         "config.tree": "Layer tree",
         "file": "Generate tree from Excel file",
-        "file-placeholder": "Drop here Excel file to generate tree (Existing tree will be crushed)."
+        "file-placeholder": "Drop here Excel file to generate tree (Existing tree will be replaced)."
       }
     }
   }

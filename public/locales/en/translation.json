@@ -156,7 +156,7 @@
       "picture": "Picture",
       "picture-id": "picture ID",
       "date": "Date",
-      "date-format": "JJ/MM/AAAA",
+      "date-format": "MM/DD/YYYY",
       "municipalities": "Cities",
       "themes": "Themes",
       "keywords": "Keyword",

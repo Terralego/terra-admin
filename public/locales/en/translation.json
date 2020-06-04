@@ -719,7 +719,7 @@
     "user": {
       "fields": {
         "id": "Id",
-        "email": "Mail address",
+        "email": "Email",
         "uuid": "Uuid",
         "groups": "User groups",
         "password": "Password",

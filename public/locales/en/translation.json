@@ -89,8 +89,8 @@
       "invalid-date": "Invalid date"
     },
     "range": {
-      "placeholder-start-date": "JJ/MM/AAAA",
-      "placeholder-end-date": "JJ/MM/AAAA"
+      "placeholder-start-date": "MM/DD/YYYY",
+      "placeholder-end-date": "MM/DD/YYYY"
     }
   },
   "opp": {

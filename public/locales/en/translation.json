@@ -98,7 +98,7 @@
       "viewpoints": "Viewpoints",
       "compaign": "Compaigns"
     },
-    "project": "Photographic Landscape Observatory",
+    "project": "Landscapes Photographic Observatory",
     "viewpoint": {
       "edit": {
         "add-picture": "$t(common.add) a picture",

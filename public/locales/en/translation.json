@@ -63,7 +63,7 @@
       "capture_control": {
         "button_label": "Capture"
       },
-      "NavigationControl.ResetBearing": "Orient to the north",
+      "NavigationControl.ResetBearing": "Reset orientation",
       "NavigationControl.ZoomIn": "Zoom in",
       "NavigationControl.ZoomOut": "Zoom out"
     }

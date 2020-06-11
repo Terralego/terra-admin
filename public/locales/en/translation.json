@@ -170,7 +170,7 @@
       },
       "success": {
         "notification": "Action is successful.",
-        "notification_edit": "Viewpoint {{name, uppercase}} has been edited.",
+        "notification_edit": "Viewpoint {{name, uppercase}} has been updated.",
         "notification_create": "Viewpoint {{name}} has been created.",
         "notification_add-picture": "A picture has been add to viewpoint: {{name}}."
       }

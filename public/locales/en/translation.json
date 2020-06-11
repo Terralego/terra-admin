@@ -299,7 +299,7 @@
       "longitude": "Longitude",
       "helper-create": "Draw $t(jsonSchema.geometryField.type.{{type}}.singular) with available button on map.",
       "helper-edit": "Edit $t(jsonSchema.geometryField.type.{{type}}.singular) with available button on map.",
-      "save": "Once edited, save by cubmit button."
+      "save": "Once edited, click on submit button."
     },
     "panelError": {
       "title": "Your input has some errors"

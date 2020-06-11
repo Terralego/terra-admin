@@ -594,7 +594,7 @@
       "are_you_sure": "Are you sure?",
       "bulk_delete_content": "Are you sure to want to delete this element? |||| Are you sure to want to delete this %{smart_count} elements?",
       "bulk_delete_title": "Delete %{name} |||| Delete %{smart_count} %{name}",
-      "delete_content": "Are you sure to want to delete this element?",
+      "delete_content": "Do you really want to delete this element?",
       "delete_title": "Delete %{name} #%{id}",
       "details": "Details",
       "error": "Due to a browser error, your request can't be send.",

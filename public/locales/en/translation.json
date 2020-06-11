@@ -480,7 +480,7 @@
           "date": "Dates"
         },
         "fetch": {
-          "label": "Propose all values available in database to filter"
+          "label": "Propose all values available from database"
         }
       },
       "legends": "Show legend(s)",

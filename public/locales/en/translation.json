@@ -599,7 +599,7 @@
       "details": "Details",
       "error": "Due to a browser error, your request can't be send.",
       "invalid_form": "Invalid form. Check your inputs.",
-      "loading": "Page is loading, thanks to wait a while more.",
+      "loading": "Page is loading, thanks for waiting",
       "no": "No",
       "not_found": "URL seems to be wrong, or bad link.",
       "yes": "Yes"

@@ -203,7 +203,7 @@
       "maximize": "Maximize",
       "minimize": "Minimize",
       "hide": "Hide",
-      "noFeature": "No feature to show in this layer.",
+      "noFeature": "No feature in this layer.",
       "readMessage": "<0>Show</0> this feature.",
       "results": "{{ count }} results :",
       "results_singular": "{{ count }} result :",

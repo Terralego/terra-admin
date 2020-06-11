@@ -366,7 +366,7 @@
         "latitudeField": "Field Y / latitude",
         "longitudeField": "Field X / longitude",
         "orderCoordinatesField": "Set coordinates order",
-        "latlongField": "Corrdinate field name",
+        "latlongField": "Coordinate field name",
         "coordinatesSeparator": "Coordinates separator",
         "onecolumn": "In one column",
         "twocolumns": "In two columns"

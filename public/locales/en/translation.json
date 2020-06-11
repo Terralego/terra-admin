@@ -342,7 +342,7 @@
       "list": "Data sources"
     },
     "form": {
-      "read-only": "This data source can't be edited.",
+      "read-only": "This data source can't be modified.",
       "help1": "Once data type is set, you can't change it",
       "definition": "Definition",
       "data-type": "Data type",

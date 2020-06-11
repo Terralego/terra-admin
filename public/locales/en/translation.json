@@ -470,7 +470,7 @@
       "type": {
         "label": "Filter type",
         "single": "One value",
-        "many": "Some values",
+        "many": "Many values",
         "range": "Value range",
         "values": "Set a defined value list to filter",
         "values_optional": "Set a defined value list to filter (optional)",

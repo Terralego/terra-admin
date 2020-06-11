@@ -601,7 +601,7 @@
       "invalid_form": "Invalid form. Check your inputs.",
       "loading": "Page is loading, thanks for waiting",
       "no": "No",
-      "not_found": "URL seems to be wrong, or bad link.",
+      "not_found": "URL seems to be invalid or link is broken.",
       "yes": "Yes"
     },
     "navigation": {

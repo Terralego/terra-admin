@@ -302,7 +302,7 @@
       "save": "Once edited, click on submit button."
     },
     "panelError": {
-      "title": "Your input has some errors"
+      "title": "Your input contains errors"
     },
     "RTEField": {
       "close": "Close",

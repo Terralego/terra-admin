@@ -267,7 +267,7 @@
     }
   },
   "help": {
-    "block-heading": "Advices :"
+    "block-heading": "Advices:"
   },
   "jsonSchema": {
     "geometryField": {

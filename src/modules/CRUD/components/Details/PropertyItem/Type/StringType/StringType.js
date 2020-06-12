@@ -30,11 +30,11 @@ const StringType = ({ display_value: displayValue }) => {
 };
 
 StringType.propTypes = {
-  display_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  display_value: PropTypes.string,
 };
 
 StringType.defaultProps = {
-  display_value: undefined,
+  display_value: null,
 };
 
 export default StringType;

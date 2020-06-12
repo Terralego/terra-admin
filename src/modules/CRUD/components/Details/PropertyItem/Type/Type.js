@@ -6,6 +6,7 @@ import BooleanType from './BooleanType';
 import FileType from './FileType';
 import GeometryType from './GeometryType';
 import ObjectType from './ObjectType';
+import NumberType from './NumberType';
 import StringType from './StringType';
 
 export const TYPES = {
@@ -14,7 +15,8 @@ export const TYPES = {
   file: FileType,
   geometry: GeometryType,
   image: FileType,
-  number: StringType,
+  integer: NumberType,
+  number: NumberType,
   object: ObjectType,
   rte: StringType,
   string: StringType,

@@ -27,11 +27,6 @@ exports[`should display heading 1`] = `
         }
       />
     </div>
-    <div
-      align="right"
-    >
-      <div />
-    </div>
   </div>
 </header>
 `;
@@ -60,11 +55,6 @@ exports[`should display menu when user is authenticated 1`] = `
       <div />
       <div />
     </div>
-    <div
-      align="right"
-    >
-      <div />
-    </div>
   </div>
 </header>
 `;
@@ -86,11 +76,6 @@ exports[`should display text or logo should display alt 1`] = `
           </span>
         </div>
       </div>
-    </div>
-    <div
-      align="right"
-    >
-      <div />
     </div>
   </div>
 </header>
@@ -114,11 +99,6 @@ exports[`should display text or logo should display alt 2`] = `
         </div>
       </div>
     </div>
-    <div
-      align="right"
-    >
-      <div />
-    </div>
   </div>
 </header>
 `;
@@ -141,11 +121,6 @@ exports[`should display text or logo should display default title 1`] = `
         </div>
       </div>
     </div>
-    <div
-      align="right"
-    >
-      <div />
-    </div>
   </div>
 </header>
 `;
@@ -167,11 +142,6 @@ exports[`should display text or logo should display default title 2`] = `
           </span>
         </div>
       </div>
-    </div>
-    <div
-      align="right"
-    >
-      <div />
     </div>
   </div>
 </header>
@@ -197,11 +167,6 @@ exports[`should display text or logo should display logo 1`] = `
         </div>
       </div>
     </div>
-    <div
-      align="right"
-    >
-      <div />
-    </div>
   </div>
 </header>
 `;
@@ -224,11 +189,6 @@ exports[`should display text or logo should display title 1`] = `
         </div>
       </div>
     </div>
-    <div
-      align="right"
-    >
-      <div />
-    </div>
   </div>
 </header>
 `;
@@ -250,11 +210,6 @@ exports[`should display text or logo should display title 2`] = `
           </span>
         </div>
       </div>
-    </div>
-    <div
-      align="right"
-    >
-      <div />
     </div>
   </div>
 </header>

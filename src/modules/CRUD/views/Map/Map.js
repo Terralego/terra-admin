@@ -453,8 +453,9 @@ export class Map extends React.Component {
       tableSize,
       errors,
       i18n: {
+        getResourceBundle,
         language,
-        store: { data: { [language]: { translation: { terralego: { map: mapLocale } } } } },
+        store: { options: { fallbackLng } },
       },
     } = this.props;
 
@@ -482,6 +483,8 @@ export class Map extends React.Component {
         return <Redirect to={generateURI('layer', redirectArgs)} />;
       }
     }
+
+    const { terralego: { map: mapLocale } } = getResourceBundle(language) || getResourceBundle(language.split('-')[0]) || getResourceBundle(fallbackLng[0]);
 
     return (
       <>

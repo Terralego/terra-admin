@@ -8,12 +8,14 @@ import ArrayType from './ArrayType';
 import BooleanType from './BooleanType';
 import FileType from './FileType';
 import ObjectType from './ObjectType';
+import NumberType from './NumberType';
 import StringType from './StringType';
 
 jest.mock('./ArrayType', () => jest.fn().mockName('ArrayType'));
 jest.mock('./BooleanType', () => jest.fn().mockName('BooleanType'));
 jest.mock('./FileType', () => jest.fn().mockName('FileType'));
 jest.mock('./ObjectType', () => jest.fn().mockName('ObjectType'));
+jest.mock('./NumberType', () => jest.fn().mockName('NumberType'));
 jest.mock('./StringType', () => jest.fn().mockName('StringType'));
 
 jest.spyOn(global.console, 'warn');
@@ -93,6 +95,18 @@ describe('should call the appropriate component', () => {
   it('Number component', () => {
     const wrapper = shallow((
       <Type
+        display_value={42.5}
+        schema={{
+          type: 'number',
+        }}
+        type="string"
+      />
+    ));
+    expect(wrapper.matchesElement(<NumberType />)).toBe(true);
+  });
+  it('Integer component', () => {
+    const wrapper = shallow((
+      <Type
         display_value={42}
         schema={{
           type: 'number',
@@ -100,7 +114,7 @@ describe('should call the appropriate component', () => {
         type="string"
       />
     ));
-    expect(wrapper.matchesElement(<StringType />)).toBe(true);
+    expect(wrapper.matchesElement(<NumberType />)).toBe(true);
   });
   it('Object component', () => {
     const wrapper = shallow((

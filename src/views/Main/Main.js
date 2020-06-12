@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { LoginForm } from '@terralego/core/modules/Auth';
+import { useTranslation } from 'react-i18next';
 import Helmet from 'react-helmet';
 
 import Header from './Header';
@@ -12,15 +14,22 @@ import './styles.scss';
 export const Main = ({
   authenticated,
   locale,
-  env: { title = 'Terralego Admin', favicon } = {},
-  errorSettings,
-  t,
+  env: { title = 'Terralego Admin', favicon, language } = {},
+  errorSettings: { message: errorMessage },
 }) => {
-  if (errorSettings) {
+  const { i18n, t } = useTranslation();
+
+
+  useEffect(() => {
+    if (!language) return;
+    i18n.changeLanguage(language);
+  }, [i18n, language]);
+
+  if (errorMessage) {
     return (
       <Message intent="danger">
         <p>{t('common.error.unableToLoadSettings')}</p>
-        {errorSettings.message}
+        {errorMessage}
       </Message>
     );
   }
@@ -44,6 +53,30 @@ export const Main = ({
       </div>
     </div>
   );
+};
+
+Main.propTypes = {
+  authenticated: PropTypes.bool,
+  locale: PropTypes.string,
+  env: PropTypes.shape({
+    title: PropTypes.string,
+    favicon: PropTypes.string,
+  }),
+  errorSettings: PropTypes.shape({
+    message: PropTypes.string,
+  }),
+};
+
+Main.defaultProps = {
+  authenticated: false,
+  locale: 'en',
+  env: {
+    title: 'Terralego Admin',
+    favicon: undefined,
+  },
+  errorSettings: {
+    message: undefined,
+  },
 };
 
 export default Main;

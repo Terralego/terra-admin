@@ -4,7 +4,7 @@ const enabledModulesGetter = ({ env: { enabled_modules: enabledModules } }) => (
 export const withEnabledModules = connectAppProvider(enabledModulesGetter);
 
 
-const mapConfigGetter = ({ env: { configMap } }) => ({ mapConfig: configMap });
+const mapConfigGetter = ({ env: { map, configMap = map } }) => ({ mapConfig: configMap });
 export const withMapConfig = connectAppProvider(mapConfigGetter);
 
 export default {

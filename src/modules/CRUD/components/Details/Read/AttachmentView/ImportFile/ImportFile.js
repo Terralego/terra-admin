@@ -7,7 +7,7 @@ import { buildHeaders } from '@terralego/core/modules/Api';
 
 import XHRUpload from '@uppy/xhr-upload';
 import classNames from 'classnames';
-import locales from './uppy-locales';
+import { getLocale } from './uppy-locales';
 
 import UppySetCategoryBeforeUpload from './UppySetCategoryBeforeUpload';
 import CategorySelector from '../CategorySelector';
@@ -45,7 +45,7 @@ class ImportFile extends React.Component {
     const allowedFileTypes = name ===  'attachments' ? fileAllowedFileTypes : imageAllowedFileTypes;
     const dropPasteAndAllowedFileTypes = allowedFileTypes ? t('CRUD.details.attachment.allowedFileTypes', { files: allowedFileTypes }) : '';
 
-    const locale = locales[language];
+    const locale = getLocale(language);
 
     this.uppy = Uppy({
       restrictions: {

@@ -44,7 +44,9 @@ export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
       setFilters(newFilters);
     };
 
-    setFiltersList();
+    if (terraOppSearchableProperties) {
+      setFiltersList();
+    }
 
     return () => { isMounted = false; };
   }, [terraOppSearchableProperties]);

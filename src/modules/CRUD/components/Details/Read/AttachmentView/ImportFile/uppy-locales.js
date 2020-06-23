@@ -8,4 +8,6 @@ const locales = {
   default: en,
 };
 
+export const getLocale = language => locales[language] || locales[language.split('-')[0]] || locales.default;
+
 export default locales;

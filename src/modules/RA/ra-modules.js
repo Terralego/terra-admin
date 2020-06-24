@@ -1,4 +1,4 @@
-import { ListGuesser, EditGuesser } from 'react-admin';
+// import { ListGuesser, EditGuesser } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
 // User
@@ -14,10 +14,10 @@ import sceneViews from './Scene/views';
 import viewpointViews from './Viewpoint/views';
 import pictureViews from './Picture/views';
 
-const guessers = {
-  edit: EditGuesser,
-  list: ListGuesser,
-};
+// const guessers = {
+//   edit: EditGuesser,
+//   list: ListGuesser,
+// };
 
 // User
 export const RES_USER = 'user';
@@ -78,12 +78,14 @@ export const resources = [
     endpoint: 'pictures',
     ...pictureViews,
   },
-  {
-    name: RES_CAMPAIGN,
-    moduleName: 'OPP',
-    endpoint: 'campaigns',
-    ...guessers,
-  },
+  // Deactivacte campaign list module
+  // cf https://github.com/Terralego/terra-admin/issues/260
+  // {
+  //   name: RES_CAMPAIGN,
+  //   moduleName: 'OPP',
+  //   endpoint: 'campaigns',
+  //   ...guessers,
+  // },
 ];
 
 const byModule = (...modules) => ({ moduleName }) => modules.includes(moduleName);

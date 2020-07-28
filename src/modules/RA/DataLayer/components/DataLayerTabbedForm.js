@@ -176,6 +176,7 @@ const DataLayerTabbedForm = ({
               fullWidth
             />
             <HelpContent title="datalayer.form.legend.help.title" content="datalayer.form.legend.help.text" />
+            <BooleanInput source="stackedCircles" label="datalayer.form.legend.stackedCircles" />
           </CustomFormIterator>
         </ArrayInput>
 

@@ -104,6 +104,7 @@ const DataLayerTabbedForm = ({
               >
                 <SelectInput
                   source="main_field"
+                  allowEmpty
                   label="datalayer.form.search.main-field.label"
                   choices={formData.fields.map(({ label: name, field: id }) => ({ id, name }))}
                   fullWidth

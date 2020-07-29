@@ -143,6 +143,12 @@ const DataLayerTabbedForm = ({
           fullWidth
         />
 
+        <JSONInput
+          source="layer_style_wizard"
+          label="Wizard style"
+          fullWidth
+        />
+
         <NumberInput
           source="settings.default_opacity"
           label="datalayer.form.styles.default_opacity"

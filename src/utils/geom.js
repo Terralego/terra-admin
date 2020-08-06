@@ -6,6 +6,7 @@ export const MULTI_POINT = 4;
 export const MULTI_LINESTRING = 5;
 export const MULTI_POLYGON = 6;
 export const GEOMETRY_COLLECTION = 7;
+export const GEOM_UNDEFINED = '8';
 
 export const getShapeFromGeomType = geomType => {
   switch (geomType) {
@@ -15,17 +16,24 @@ export const getShapeFromGeomType = geomType => {
     case LINESTRING:
     case MULTI_LINESTRING:
       return 'line';
+    case GEOM_UNDEFINED:
+      return null;
     default:
       return 'fill';
   }
 };
 
-export const getLayerStyleDefaultValue = (color, type) => ({
-  type,
-  paint: {
-    [`${type}-color`]: color,
-  },
-});
+export const getLayerStyleDefaultValue = (color, type) => {
+  if (!type) {
+    return {};
+  }
+  return {
+    type,
+    paint: {
+      [`${type}-color`]: color,
+    },
+  };
+};
 
 export default {
   ALL,

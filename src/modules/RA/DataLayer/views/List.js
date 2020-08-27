@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BooleanField,
   BooleanInput,
+  CloneButton,
   Datagrid,
   EditButton,
   Filter,
@@ -67,6 +68,7 @@ export const DataLayerList = ({ viewList, ...props }) => (
       </ReferenceField>
       <BooleanField source="active_by_default" label="resources.datalayer.fields.active_by_default_pastpart" />
       <EditButton />
+      <CloneButton />
     </Datagrid>
   </List>
 );

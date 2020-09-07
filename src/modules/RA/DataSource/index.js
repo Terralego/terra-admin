@@ -49,6 +49,7 @@ export const fieldTypes = {
   3: 'Float',
   4: 'Boolean',
   5: 'Undefined',
+  6: 'Date',
 };
 export const fieldTypeChoices = typesToChoices(fieldTypes);
 

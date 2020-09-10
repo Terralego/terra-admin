@@ -95,22 +95,10 @@ const GeometryField = ({
   const updateGeometryFromMap = useCallback(({
     features: [{ id }],
     target,
-    type,
   }) => {
-    if (type === 'draw.delete') {
-      setGeomValues(prevGeomValues => ({
-        ...prevGeomValues,
-        geom: {
-          ...prevGeomValues.geom,
-          coordinates: [],
-        },
-      }));
-      return;
-    }
+    const { features } = target.draw.getAll();
 
     const isMultiGeometry = ![POINT, LINESTRING, POLYGON].includes(geomValues.geom_type);
-
-    const { features } = target.draw.getAll();
 
     if (features.length > 1 && !isMultiGeometry) {
       const otherFeaturesIds = features.reduce((list, item) => (
@@ -120,13 +108,17 @@ const GeometryField = ({
       target.draw.delete(otherFeaturesIds);
     }
 
-    const coordinates = features.map(({ geometry: { coordinates: c } }) => c);
+    const coordinates = features.reduce((list, { geometry }) => (
+      (geometry.type.startsWith('Multi'))
+        ? [...list, ...geometry.coordinates]
+        : [...list, geometry.coordinates]
+    ), []);
 
     setGeomValues(prevGeomValues => ({
       ...prevGeomValues,
       geom: {
         ...prevGeomValues.geom,
-        coordinates: type === 'draw.create' && isMultiGeometry ? coordinates : coordinates[0],
+        coordinates,
       },
     }));
   }, [geomValues.geom_type]);

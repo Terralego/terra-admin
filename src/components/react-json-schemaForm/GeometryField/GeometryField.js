@@ -143,8 +143,8 @@ const GeometryField = ({
         line_string: [ALL, LINESTRING, MULTI_LINESTRING].includes(geomType),
         polygon:  [ALL, POLYGON, MULTI_POLYGON].includes(geomType),
         trash: true,
-        combine_features: false,
-        uncombine_features: false,
+        combine_features: [ALL, MULTI_POINT, MULTI_LINESTRING, MULTI_POLYGON],
+        uncombine_features: [ALL, MULTI_POINT, MULTI_LINESTRING, MULTI_POLYGON],
       },
       order: 2,
     };

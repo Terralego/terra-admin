@@ -55,10 +55,12 @@
         "button_label": "Fonds de carte"
       },
       "draw_control": {
+        "combine": "Grouper",
+        "line": "Ligne",
         "point": "Point",
         "polygon": "Polygone",
-        "line": "Ligne",
-        "trash": "Supprimer"
+        "trash": "Supprimer",
+        "uncombine": "Dégrouper"
       },
       "capture_control": {
         "button_label": "Capture"

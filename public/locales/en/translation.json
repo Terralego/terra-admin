@@ -55,10 +55,12 @@
         "button_label": "Map base layers"
       },
       "draw_control": {
+        "combine": "Combine",
+        "line": "Line",
         "point": "Point",
         "polygon": "Polygon",
-        "line": "Line",
-        "trash": "Delete"
+        "trash": "Delete",
+        "uncombine": "Uncombine"
       },
       "capture_control": {
         "button_label": "Capture"

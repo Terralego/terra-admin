@@ -27,6 +27,7 @@ export const RES_USERGROUP = 'usergroup';
 export const RES_DATASOURCE = 'datasource';
 export const RES_DATALAYER = 'datalayer';
 export const RES_VIEW = 'view';
+export const RES_BASELAYER = 'baselayer';
 
 // OPP
 export const RES_VIEWPOINT = 'viewpoint';
@@ -86,6 +87,11 @@ export const resources = [
   //   endpoint: 'campaigns',
   //   ...guessers,
   // },
+  {
+    name: RES_BASELAYER,
+    moduleName: 'BaseLayer',
+    endpoint: 'baselayer',
+  },
 ];
 
 const byModule = (...modules) => ({ moduleName }) => modules.includes(moduleName);

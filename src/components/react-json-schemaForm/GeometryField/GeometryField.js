@@ -66,6 +66,19 @@ const getGeometries = ({
   return { layerName: name, ...featureName };
 };
 
+const getCoordinatesFromGeometries = features => {
+  const featuresHasCompositesType = features
+    .filter((item, index, array) => array.indexOf(item) === index).length === 2;
+
+  if (featuresHasCompositesType) {
+    return features.reduce((list, { geometry: { type, coordinates } }) => (
+      (type.startsWith('Multi'))
+        ? [...list, ...coordinates]
+        : [...list, coordinates]
+    ), []);
+  }
+  return features.flatMap(({ geometry: { coordinates } }) => coordinates);
+};
 
 const GeometryField = ({
   addControl,
@@ -108,17 +121,11 @@ const GeometryField = ({
       target.draw.delete(otherFeaturesIds);
     }
 
-    const coordinates = features.reduce((list, { geometry }) => (
-      (geometry.type.startsWith('Multi'))
-        ? [...list, ...geometry.coordinates]
-        : [...list, geometry.coordinates]
-    ), []);
-
     setGeomValues(prevGeomValues => ({
       ...prevGeomValues,
       geom: {
         ...prevGeomValues.geom,
-        coordinates,
+        coordinates: getCoordinatesFromGeometries(features),
       },
     }));
   }, [geomValues.geom_type]);

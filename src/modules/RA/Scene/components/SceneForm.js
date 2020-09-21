@@ -8,7 +8,6 @@ import { change } from 'redux-form';
 /* eslint-enable */
 
 import {
-  DisabledInput,
   FileField,
   FileInput,
   ImageInput,
@@ -58,7 +57,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
   const { record } = props;
   return (
     <SimpleForm {...props}>
-      {edit && <DisabledInput source="id" />}
+      {edit && <TextInput disabled source="id" />}
 
       {isObjectEmpty(record) && (
         <FormDataConsumer formClassName={classes.inline}>

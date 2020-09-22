@@ -49,7 +49,7 @@
     "react-i18next": "^11.3.5",
     "react-jsonschema-form": "^1.8.1",
     "react-mapbox-gl": "^4.8.6",
-    "react-paginate": "^6.3.2",
+    "react-paginate": "^6.5.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",

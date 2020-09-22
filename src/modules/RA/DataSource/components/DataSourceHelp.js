@@ -11,7 +11,7 @@ const Help = ({ translate: t }) => (
   <>
     <Card>
       <CardContent>
-        <Typography variant="subheading" gutterBottom>{t('help.block-heading')}</Typography>
+        <Typography variant="subtitle1" gutterBottom>{t('help.block-heading')}</Typography>
         <Typography color="textSecondary" paragraph>{t('datasource.form.help1')}</Typography>
       </CardContent>
     </Card>

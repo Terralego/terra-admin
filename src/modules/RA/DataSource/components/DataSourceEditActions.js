@@ -35,7 +35,7 @@ const DataSourceEditActions = ({
     <StatusChip status={status} />
     <RefreshButton
       color="primary"
-      variant="raised"
+      variant="contained"
       label="datasource.edit.refresh"
       onClick={() => dataProvider('REFRESH', RES_DATASOURCE, { id })}
     />

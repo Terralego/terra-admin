@@ -179,7 +179,10 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => (
       step={1}
     />
 
-    <h4>{t('datasource.form.optionsCSV.options')}</h4>
+    <>
+      <h4>{t('datasource.form.optionsCSV.options')}</h4>
+    </>
+
     <BooleanInput
       source="use_header"
       label="datasource.form.optionsCSV.headers"

@@ -67,6 +67,26 @@ const DisplayDataTableField = () => {
   );
 };
 
+const SourceField = ({ formData, dataProvider }) => {
+  const form = useForm();
+  return (
+    <>
+      <ReferenceInput
+        source="source"
+        reference={RES_DATASOURCE}
+        label="datalayer.form.data-source"
+        sort={{ field: 'name', order: 'ASC' }}
+        validate={defaultRequired}
+        perPage={100}
+        onChange={({ target: { value: sourceId } }) =>
+          updateFieldFromSource(formData.fields, form, dataProvider, sourceId)}
+      >
+        <SelectInput />
+      </ReferenceInput>
+    </>
+  );
+};
+
 const DataLayerTabbedForm = ({
   classes,
   translate,
@@ -82,20 +102,7 @@ const DataLayerTabbedForm = ({
     >
       <LazyFormTab label="datalayer.form.definition">
         <FormDataConsumer>
-          {({ formData, dispatch }) => (
-            <ReferenceInput
-              source="source"
-              reference={RES_DATASOURCE}
-              label="datalayer.form.data-source"
-              sort={{ field: 'name', order: 'ASC' }}
-              validate={defaultRequired}
-              perPage={100}
-              onChange={(_, sourceId) =>
-                updateFieldFromSource(formData.fields, dispatch, dataProvider, sourceId)}
-            >
-              <SelectInput />
-            </ReferenceInput>
-          )}
+          {formDataProps => <SourceField {...formDataProps} dataProvider={dataProvider} />}
         </FormDataConsumer>
 
         <TextInput

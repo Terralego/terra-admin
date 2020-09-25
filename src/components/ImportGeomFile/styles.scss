@@ -1,0 +1,30 @@
+.importGeomFile {
+  &__info {
+    margin: 1rem 0;
+  }
+  &__canDelete {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+.importGeomFileOverlay {
+
+  .bp3-overlay-content {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__content {
+    border: solid #efefef; 
+    border-width: 1px 0;
+    padding: 0 0 1rem;
+  }
+
+  &__actions {
+    display: flex;
+    padding: 1rem 0 0;
+    justify-content: space-between;
+  }
+}

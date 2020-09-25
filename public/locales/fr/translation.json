@@ -95,6 +95,21 @@
       "placeholder-end-date": "JJ/MM/AAAA"
     }
   },
+  "importGeomFile": {
+    "accept": "Format acceptés : {{accept}}",
+    "intro1": "Lors de la sélection du fichier, il sera analysé, et vous serez prévenu s'il est compatible avec le type de géométrie courant.",
+    "intro2": "Dès la validation de l'importation, il vous sera présenté sur la carte avant de l'enregistrer.",
+    "intro3": "Si vous avez débuté un tracé avant la validation de l'importation, il sera <1>remplacé</1>.",
+    "nothingToImport": "Aucun tracé de {{fileName}} ne peut être importé.",
+    "readyToImport": "Le tracé de {{fileName}} est prêt à être importé.",
+    "readyToImport_plural": "les tracés de {{fileName}} sont prêts à être importés.",
+    "submit": "Valider la sélection",
+    "title": "Importer un fichier",
+    "unableToImport": "Les données du fichier <1>{{fileName}}</1> n'ont pas pu être récupéré.",
+    "warnGeomOtherType": "Le fichier contient d'autres types de géométries qui ont été ignorés.",
+    "warnGeomSameType": "Le fichier contient d'autres géométries du même type. Seul le premier a été sélectionné.",
+    "warnNoGeomFound": "Le fichier ne contient pas de géométries du type demandé."
+  },
   "opp": {
     "nav": {
       "viewpoints": "Les points de vue",

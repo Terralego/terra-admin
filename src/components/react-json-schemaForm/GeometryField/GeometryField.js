@@ -13,8 +13,13 @@ import {
   MULTI_POLYGON,
 } from '../../../utils/geom';
 
+import { getBounds } from '../../../modules/CRUD/services/features';
+
+import ImportGeomFile from '../../ImportGeomFile';
+
 import PointField from './PointField';
 import DefaultField from './DefaultField';
+import './styles.scss';
 
 const getLayerPaintId = (layerPaints, name) => {
   const { id } = layerPaints.find(({ 'source-layer': source }) => source === name) || {};
@@ -82,6 +87,7 @@ const getCoordinatesFromGeometries = features => {
 
 const GeometryField = ({
   addControl,
+  detailsRef,
   feature,
   formData,
   layerPaints,
@@ -130,6 +136,31 @@ const GeometryField = ({
     }));
   }, [geomValues.geom_type]);
 
+  const importDraw = useCallback(features => {
+    map.draw.deleteAll();
+    features.forEach(feat => map.draw.add(feat));
+    const coords = features.flatMap(({ geometry: { coordinates } }) => coordinates);
+    const { current: detail } = detailsRef;
+    map
+      .resize()
+      .fitBounds(getBounds(coords), {
+        padding: {
+          top: 20,
+          right: detail.offsetWidth + 50,
+          bottom:  20,
+          left: 20,
+        },
+        duration: 0,
+      });
+
+    setGeomValues(prevGeomValues => ({
+      ...prevGeomValues,
+      geom: {
+        ...prevGeomValues.geom,
+        coordinates: getCoordinatesFromGeometries(features),
+      },
+    }));
+  }, [detailsRef, map]);
 
   const setMapControls = useCallback(({
     layerPaintId,
@@ -191,6 +222,8 @@ const GeometryField = ({
     <fieldset>
       <legend>{t('jsonSchema.geometryField.title')}</legend>
       <div className="form-group field">
+        <ImportGeomFile geomType={geomValues.geom_type} onSubmit={importDraw} />
+        <p className="form-group__or">{t('jsonSchema.geometryField.or')}</p>
         <TypeField {...rest} formData={geomValues.geom || formData} t={t} />
       </div>
     </fieldset>

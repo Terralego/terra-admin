@@ -288,6 +288,7 @@
   },
   "jsonSchema": {
     "geometryField": {
+      "or": "ou",
       "type": {
         "Point": {
           "singular": "un point"
@@ -311,6 +312,7 @@
           "singular": "une ou des géométrie"
         }
       },
+      "label": "Saisir les coordonnées :",
       "title": "Coordonnées (WGS84 décimal)",
       "latitude": "Latitude",
       "longitude": "Longitude",

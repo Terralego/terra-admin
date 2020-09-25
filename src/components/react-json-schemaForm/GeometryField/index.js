@@ -7,8 +7,8 @@ import { getLayersPaints } from '../../../modules/CRUD/services/CRUD';
 
 import GeometryField from './GeometryField';
 
-const CRUDPRoviderGetter = ({ feature, map, settings }) =>
-  ({ feature, map, settings, layerPaints: getLayersPaints(settings) });
+const CRUDPRoviderGetter = ({ detailsRef, feature, map, settings }) =>
+  ({ detailsRef, feature, map, settings, layerPaints: getLayersPaints(settings) });
 
 export default compose(
   withRouter,

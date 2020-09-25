@@ -59,6 +59,7 @@ const PointField = ({
 
   return (
     <div>
+      <legend>{t('jsonSchema.geometryField.label')}</legend>
       {['latitude', 'longitude'].map((name, index) => {
         const ref = !index ? refLatitude : refLongitude;
         const { current } = ref;

@@ -44,16 +44,17 @@ export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
     polyglotI18nProvider(i18nProviderLegacy, `${locale}`.substr(0, 2)), [locale]);
 
   // Keep only allowedModules
-  const enabledResources = resources.filter(({ moduleName, requiredPermissions }) => {
-    if (!allowedModules.includes(moduleName)) {
-      return false;
-    }
-    if (requiredPermissions && !permissions.includes[requiredPermissions]) {
-      return false;
-    }
+  const enabledResources = React.useMemo(() =>
+    resources.filter(({ moduleName, requiredPermissions }) => {
+      if (!allowedModules.includes(moduleName)) {
+        return false;
+      }
+      if (requiredPermissions && !permissions.includes[requiredPermissions]) {
+        return false;
+      }
 
-    return true;
-  });
+      return true;
+    }), [allowedModules, permissions]);
 
   if (!enabledResources.length) {
     return null;

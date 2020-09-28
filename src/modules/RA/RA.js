@@ -40,6 +40,9 @@ const customDataProvider = compose(
 export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
   const history = useHistory();
 
+  const i18nProvider = React.useMemo(() =>
+    polyglotI18nProvider(i18nProviderLegacy, `${locale}`.substr(0, 2)), [locale]);
+
   // Keep only allowedModules
   const enabledResources = resources.filter(({ moduleName, requiredPermissions }) => {
     if (!allowedModules.includes(moduleName)) {
@@ -55,8 +58,6 @@ export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
   if (!enabledResources.length) {
     return null;
   }
-
-  const i18nProvider = polyglotI18nProvider(i18nProviderLegacy, `${locale}`.substr(0, 2));
 
   return (
     <Admin

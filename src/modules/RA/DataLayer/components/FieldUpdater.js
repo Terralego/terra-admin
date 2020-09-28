@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import get from 'lodash.get';
 /* eslint-disable import/no-extraneous-dependencies */
-import { connect } from 'react-redux';
-import { useForm } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 /* eslint-enable */
 import {
   withDataProvider,
@@ -64,8 +62,10 @@ export const updateFieldFromSource = async (layerFields, form, dataProvider, sou
   }
 };
 
-const FieldUpdater = ({ dataProvider, sourceId, layerFields }) => {
+const FieldUpdater = ({ dataProvider }) => {
   const form = useForm();
+  const { input: { value: sourceId } } = useField('source');
+  const { input: { value: layerFields } } = useField('fields');
 
   // Update fields from source
   useEffect(() => {
@@ -103,13 +103,7 @@ const FieldUpdater = ({ dataProvider, sourceId, layerFields }) => {
   return null;
 };
 
-const mapStateToProps = state => ({
-  sourceId: get(state, 'form.record-form.values.source'),
-  layerFields: get(state, 'form.record-form.values.fields'),
-});
-
 const ConnectedFieldUpdater = compose(
-  connect(mapStateToProps),
   withDataProvider,
 )(FieldUpdater);
 

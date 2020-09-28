@@ -30,6 +30,13 @@ const sanitizeProps = ({
   ...rest
 }) => rest;
 
+const customDataProvider = compose(
+  withResourceEndpoint,
+  patchPictureDataProvider,
+  toMultipart,
+  enhanceDataProvider,
+)(dataProvider);
+
 export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
   const history = useHistory();
 
@@ -48,13 +55,6 @@ export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
   if (!enabledResources.length) {
     return null;
   }
-
-  const customDataProvider = compose(
-    withResourceEndpoint,
-    patchPictureDataProvider,
-    toMultipart,
-    enhanceDataProvider,
-  )(dataProvider);
 
   const i18nProvider = polyglotI18nProvider(i18nProviderLegacy, `${locale}`.substr(0, 2));
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { Admin, Resource } from 'react-admin';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -30,7 +30,9 @@ const sanitizeProps = ({
   ...rest
 }) => rest;
 
-export const CustomAdmin = ({ locale, history, permissions, allowedModules = [] }) => {
+export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
+  const history = useHistory();
+
   // Keep only allowedModules
   const enabledResources = resources.filter(({ moduleName, requiredPermissions }) => {
     if (!allowedModules.includes(moduleName)) {
@@ -74,7 +76,6 @@ export const CustomAdmin = ({ locale, history, permissions, allowedModules = [] 
 const componentsToDisplay = ({ env: { enabled_modules: allowedModules } }) => ({ allowedModules });
 
 export default compose(
-  withRouter,
   withLocale,
   withPermissions,
   connectAppProvider(componentsToDisplay),

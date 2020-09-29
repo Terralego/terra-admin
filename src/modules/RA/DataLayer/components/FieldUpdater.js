@@ -72,7 +72,7 @@ const FieldUpdater = ({ dataProvider }) => {
     if (!sourceId || !layerFields) return;
 
     const fillFields = async () => {
-      // We should avoid dispatch call if component is unmount
+      // We should avoid update call if component is unmount
       await updateFieldFromSource(layerFields, form, dataProvider, sourceId);
     };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popover, H5, PopoverInteractionKind, Classes } from '@blueprintjs/core';
+import { Button, Popover, H5, PopoverInteractionKind, Classes, Tooltip } from '@blueprintjs/core';
 
 const ConfirmDeletion = ({
   t,
@@ -39,13 +39,16 @@ const ConfirmDeletion = ({
     {...props}
   >
     {children || (
-      <Button
-        className="details__delete-feature"
-        icon="trash"
-        intent="danger"
-        minimal
-        text={submitText}
-      />
+      <Tooltip
+        content={submitText}
+      >
+        <Button
+          className="details__delete-feature"
+          icon="trash"
+          intent="danger"
+          minimal
+        />
+      </Tooltip>
     )}
   </Popover>
 );

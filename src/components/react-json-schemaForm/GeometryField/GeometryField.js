@@ -222,7 +222,11 @@ const GeometryField = ({
     <fieldset>
       <legend>{t('jsonSchema.geometryField.title')}</legend>
       <div className="form-group field">
-        <ImportGeomFile geomType={geomValues.geom_type} onSubmit={importDraw} />
+        <ImportGeomFile
+          geomType={geomValues.geom_type}
+          hasDraws={!!geomValues.geom.coordinates.length}
+          onSubmit={importDraw}
+        />
         <p className="form-group__or">{t('jsonSchema.geometryField.or')}</p>
         <TypeField {...rest} formData={geomValues.geom || formData} t={t} />
       </div>

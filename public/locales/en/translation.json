@@ -99,7 +99,7 @@
     "accept": "Accepted format: {{accept}}",
     "intro1": "When selecting the file, it will be analyzed, and you will be warned if it is compatible with the current geometry type.",
     "intro2": "As soon as the import is validated, it will be presented to you on the map before saving it.",
-    "intro3": "If you started drawing before validating the import, it will be <1>replaced</1>.",
+    "intro3": "You started drawing. It will be <1>replaced</1> by validating the import.",
     "nothingToImport": "No one geometry from {{fileName}} could be imported.",
     "readyToImport": "{{fileName}} geometry is ready to be imported.",
     "readyToImport_plural": "{{fileName}} geometries are ready to be imported.",

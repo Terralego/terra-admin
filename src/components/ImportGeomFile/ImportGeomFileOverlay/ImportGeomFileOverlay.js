@@ -68,7 +68,12 @@ const getFeatures = (geom, geomType, t) => {
   };
 };
 
-const ImportGeomFileOverlay = ({ geomType, onChange, acceptedExtensions: extensions }) => {
+const ImportGeomFileOverlay = ({
+  acceptedExtensions: extensions,
+  geomType,
+  hasDraws,
+  onChange,
+}) => {
   const [geojson, setGeojson] = useState({});
   const [fileName, setFileName] = useState(null);
 
@@ -117,12 +122,14 @@ const ImportGeomFileOverlay = ({ geomType, onChange, acceptedExtensions: extensi
       <Callout className="importGeomFile__info" intent={Intent.PRIMARY}>
         <p>{t('importGeomFile.intro1')}</p>
         <p>{t('importGeomFile.intro2')}</p>
-        <Callout intent={Intent.WARNING}>
-          <Trans i18nKey="importGeomFile.intro3">
-            If you started drawing before validating the import,
-            it will be <strong>replaced</strong>.
-          </Trans>
-        </Callout>
+        {hasDraws && (
+          <Callout intent={Intent.WARNING}>
+            <Trans i18nKey="importGeomFile.intro3">
+              You started drawing.
+              It will be <strong>replaced</strong> by validating the import.
+            </Trans>
+          </Callout>
+        )}
       </Callout>
 
       <FormGroup
@@ -172,12 +179,14 @@ const ImportGeomFileOverlay = ({ geomType, onChange, acceptedExtensions: extensi
 
 ImportGeomFileOverlay.propTypes = {
   acceptedExtensions: PropTypes.arrayOf(PropTypes.string),
+  hasDraws: PropTypes.bool,
   geomType: PropTypes.number,
   onChange: PropTypes.func,
 };
 
 ImportGeomFileOverlay.defaultProps = {
   acceptedExtensions: ['gpx'],
+  hasDraws: false,
   geomType: undefined,
   onChange () {},
 };

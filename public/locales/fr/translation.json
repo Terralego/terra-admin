@@ -99,7 +99,7 @@
     "accept": "Format acceptés : {{accept}}",
     "intro1": "Lors de la sélection du fichier, il sera analysé, et vous serez prévenu s'il est compatible avec le type de géométrie courant.",
     "intro2": "Dès la validation de l'importation, il vous sera présenté sur la carte avant de l'enregistrer.",
-    "intro3": "Si vous avez débuté un tracé avant la validation de l'importation, il sera <1>remplacé</1>.",
+    "intro3": "Vous avez débuté un tracé. Il sera <1>remplacé</1> lors de la validation de l'importation.",
     "nothingToImport": "Aucun tracé de {{fileName}} ne peut être importé.",
     "readyToImport": "Le tracé de {{fileName}} est prêt à être importé.",
     "readyToImport_plural": "les tracés de {{fileName}} sont prêts à être importés.",

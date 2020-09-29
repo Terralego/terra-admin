@@ -75,7 +75,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
 
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
 
-      <TreeInput source="tree" defaultValue={[]} fullWidth />
+      <TreeInput source="tree" fullWidth />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
       <ImageInput source="custom_icon" label="view.form.icon">

@@ -103,6 +103,7 @@ const Create = props => {
       formSchema: { properties: schemaProperties } = {},
       uiSchema: uiSchemaProperties,
       layer: { geom_type: geomType, name },
+      objectName = name,
     },
     saveFeature,
     t,
@@ -147,7 +148,7 @@ const Create = props => {
   }, [featureEndpoint, name, push, saveFeature, t]);
 
 
-  const title = t('CRUD.details.create', { layer: name });
+  const title = t('CRUD.details.create', { layer: objectName });
 
   return (
     <div className="details ">

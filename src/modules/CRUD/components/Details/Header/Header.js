@@ -11,11 +11,9 @@ const Header = ({ className, documents, title, ...props }) => (
       <FitBoundButton title={title} />
       <h2 className="details__title">{title}</h2>
     </div>
-    {documents && (
-      <DownloadButtons
-        documents={documents}
-      />
-    )}
+    <DownloadButtons
+      documents={documents}
+    />
   </header>
 );
 

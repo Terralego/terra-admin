@@ -18,6 +18,9 @@ exports[`should render correctly 1`] = `
       Title
     </h2>
   </div>
+  <div>
+    DownloadButtons
+  </div>
 </header>
 `;
 

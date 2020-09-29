@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-/* eslint-disable import/no-extraneous-dependencies */
+
 import { useField, useForm } from 'react-final-form';
-/* eslint-enable */
 import {
   withDataProvider,
   GET_ONE,

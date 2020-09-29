@@ -6,7 +6,6 @@ import {
   withDataProvider,
 } from 'react-admin';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { withStyles } from '@material-ui/core/styles';
 
 import StatusChip from './StatusChip';

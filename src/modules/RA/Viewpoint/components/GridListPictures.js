@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { translate } from 'react-admin';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import MuiGridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
@@ -11,8 +10,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconContentAdd from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
-import { linkToRecord } from 'ra-core';
-/* eslint-enable */
+
+import { linkToRecord } from 'ra-core'; // eslint-disable-line import/no-extraneous-dependencies
 
 import compose from '../../../../utils/compose';
 import { RES_PICTURE } from '../../ra-modules';

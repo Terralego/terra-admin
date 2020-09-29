@@ -7,7 +7,6 @@ import {
   getFlatDataFromTree,
 } from 'react-sortable-tree';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -19,7 +18,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Modal from '@material-ui/core/Modal';
 import Switch from '@material-ui/core/Switch';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-/* eslint-enable */
 
 import GeolayerSelect from './GeolayerSelect';
 

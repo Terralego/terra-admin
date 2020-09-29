@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   TabbedForm,
   TextInput,
@@ -14,11 +15,7 @@ import {
 } from 'react-admin';
 import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
-
-/* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';
-// import { change } from 'redux-form';
-/* eslintenable import/no-extraneous-dependencies */
 import { useForm } from 'react-final-form';
 
 import compose from '../../../../utils/compose';

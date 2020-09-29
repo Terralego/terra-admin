@@ -27,10 +27,8 @@ import {
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
-/* eslint-enable */
 
 import { RES_PICTURE } from '../../ra-modules';
 

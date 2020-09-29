@@ -60,7 +60,7 @@ const SortableItem = SortableElement(
           <DragHandle className={classes.dragHandle} />
         </Typography>
         <section className={classes.form}>
-          {Children.map(children, input => (
+          {Children.map(children, input => input && (
             <FormInput
               basePath={input.props.basePath || basePath}
               input={cloneElement(input, {

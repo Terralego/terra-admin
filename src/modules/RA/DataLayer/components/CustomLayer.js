@@ -32,7 +32,7 @@ export const CustomLayer = ({ resource, source }) => (
             fullWidth
           />
         )
-        : <></>
+        : null
       )}
     </FormDataConsumer>
   </FieldGroup>

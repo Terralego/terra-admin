@@ -38,7 +38,7 @@ const StatusChip = ({ status, status: { state } = {} }) => (
         <Chip label={renderTooltipContent(status)} style={{ marginRight: '1em' }} />
       </Tooltip>
     )
-    : <></>
+    : null
 );
 
 export default StatusChip;

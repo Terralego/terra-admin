@@ -60,7 +60,7 @@
     display: flex;
     align-items: center;
     button {
-      margin-right: 0.2rem;
+      margin-right: 0.5rem;
     }
   }
 
@@ -294,19 +294,6 @@
   .CRUD-details {
     .details__menu {
       .bp3-icon {
-        display: block;
-      }
-    }
-  }
-}
-
-@media all and (min-width: 115em) {
-  .CRUD-details {
-    .details__delete-feature {
-      .bp3-icon {
-        margin-right: 7px;
-      }
-      .bp3-button-text {
         display: block;
       }
     }

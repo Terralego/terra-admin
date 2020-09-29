@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@blueprintjs/core';
+import { Button, Tooltip } from '@blueprintjs/core';
 
 import { getBounds } from '../../../services/features';
 
@@ -23,13 +23,19 @@ const FitBoundButton = ({ coordinates, detailsRef, map, t, title }) => {
       });
   }, [coordinates, detailsRef, map]);
 
+  if (!coordinates.length) {
+    return null;
+  }
+
   return (
-    <Button
-      icon="map-marker"
-      onClick={handleClick}
-      minimal
-      title={t('CRUD.details.fitBoundButton', { name: title })}
-    />
+    <Tooltip
+      content={t('CRUD.details.fitBoundButton', { name: title })}
+    >
+      <Button
+        icon="locate"
+        onClick={handleClick}
+      />
+    </Tooltip>
   );
 };
 

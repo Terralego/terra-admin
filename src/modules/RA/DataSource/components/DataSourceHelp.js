@@ -1,11 +1,9 @@
 import React from 'react';
 import { translate } from 'react-admin';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-/* eslint-enable */
 
 const Help = ({ translate: t }) => (
   <>

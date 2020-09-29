@@ -87,6 +87,10 @@
     "eslint-plugin-react-hooks": "~2.3.0",
     "http-proxy-middleware": "^0.19.1"
   },
+  "peerDependencies": {
+    "@material-ui/core": "*",
+    "@material-ui/icons": "*"
+  },
   "jest": {
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\](?!dnd-core|react-dnd).+\\.(js|jsx|ts|tsx)$"

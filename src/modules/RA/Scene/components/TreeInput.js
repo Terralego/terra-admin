@@ -5,10 +5,8 @@ import 'react-sortable-tree/style.css';
 
 import { addField, Labeled } from 'react-admin';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-/* eslint-enable */
 
 import TreeNodeToolbar from './TreeNodeToolbar';
 import TreeNodeLabelInput from './TreeNodeLabelInput';

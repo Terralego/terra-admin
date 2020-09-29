@@ -14,7 +14,7 @@ import {
   required,
 } from 'react-admin';
 
-import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
+import { withStyles } from '@material-ui/core/styles';
 
 import { RES_VIEWPOINT } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';

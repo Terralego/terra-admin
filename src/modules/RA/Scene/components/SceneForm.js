@@ -5,8 +5,6 @@ import get from 'lodash.get';
 import { withStyles } from '@material-ui/core/styles';
 /* eslint-enable */
 
-import { useForm } from 'react-final-form';
-
 import {
   FileField,
   FileInput,
@@ -21,13 +19,11 @@ import {
   translate,
 } from 'react-admin';
 
-import {
-  toSlug,
-  isObjectEmpty,
-} from '../../../../utils/react-admin/helper';
+import { isObjectEmpty } from '../../../../utils/react-admin/helper';
 import compose from '../../../../utils/compose';
 
 import TreeInput from './TreeInput';
+import SceneFormNameField from './SceneFormNameField';
 
 const styles = {
   inline: {
@@ -54,26 +50,13 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
 
 const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
   const { record } = props;
-  const form = useForm();
+
   return (
     <SimpleForm {...props}>
       {edit && <TextInput disabled source="id" />}
 
       {isObjectEmpty(record) && (
-        <FormDataConsumer formClassName={classes.inline}>
-          {({ formData, ...rest }) => (
-            <TextInput
-              source="name"
-              label="view.form.name"
-              onChange={value => {
-                if (!value) return;
-                const slug = toSlug(value.target.value);
-                form.change('slug', slug);
-              }}
-              {...rest}
-            />
-          )}
-        </FormDataConsumer>
+        <SceneFormNameField formClassName={classes.inline} />
       )}
 
       {!isObjectEmpty(record) && (

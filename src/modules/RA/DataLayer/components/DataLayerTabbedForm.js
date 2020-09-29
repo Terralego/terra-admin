@@ -124,7 +124,7 @@ const DataLayerTabbedForm = ({
           {({ formData }) => {
             const hasFields = formData.fields && formData.fields.length;
             if (!hasFields) {
-              return <></>;
+              return null;
             }
 
             return (
@@ -318,13 +318,13 @@ const DataLayerTabbedForm = ({
                     );
                   }}
                 </FormDataConsumer>
-                {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <></>}
+                {formData.table_enable && <BooleanInput source="shown" label="datalayer.form.show" />}
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (
                     scopedFormData.shown && <BooleanInput source={getSource('display')} label="Afficher ce champs par défaut" />
                   )}
                 </FormDataConsumer>
-                {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <></>}
+                {formData.table_export_enable && <BooleanInput source="exportable" label="datalayer.form.exportable" />}
               </DraggableFormIterator>
             </ArrayInput>
           )}

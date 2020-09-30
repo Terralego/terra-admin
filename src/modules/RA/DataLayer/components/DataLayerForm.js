@@ -8,11 +8,11 @@ import {
   SelectInput,
   NumberInput,
   ArrayInput,
-  ReferenceInput,
   FormDataConsumer,
   translate as translateRA,
   withDataProvider,
 } from 'react-admin';
+
 import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
 import { withStyles } from '@material-ui/core/styles';
@@ -23,7 +23,7 @@ import CustomFormIterator from '../../../../components/react-admin/CustomFormIte
 import DraggableFormIterator from '../../../../components/react-admin/DraggableFormIterator';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import JSONInput from '../../../../components/react-admin/JSONInput';
-import FieldUpdater, { updateFieldFromSource } from './FieldUpdater';
+import FieldUpdater from './FieldUpdater';
 
 import LegendItemsField from './LegendItemsField';
 import CustomLayer from './CustomLayer';
@@ -33,9 +33,9 @@ import { required } from '../../../../utils/react-admin/validate';
 import { getLayerStyleDefaultValue, getShapeFromGeomType, POLYGON } from '../../../../utils/geom';
 import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
-import { RES_DATASOURCE } from '../../ra-modules';
 import withRandomColor from './withRandomColor';
 import DataLayerFormSwitcher from './DataLayerFormSwitcher';
+import DataLayerSourceField from './DataLayerSourceField';
 
 const defaultRequired = required();
 
@@ -62,26 +62,6 @@ const DisplayDataTableField = () => {
         form.change('table_export_enable', false);
       }}
     />
-  );
-};
-
-const SourceField = ({ formData, dataProvider, external = false }) => {
-  const form = useForm();
-  return (
-    <ReferenceInput
-      source="source"
-      reference={RES_DATASOURCE}
-      label="datalayer.form.data-source"
-      sort={{ field: 'name', order: 'ASC' }}
-      validate={defaultRequired}
-      perPage={100}
-      onChange={({ target: { value: sourceId } }) => {
-        if (external) { return; }
-        updateFieldFromSource(formData.fields, form, dataProvider, sourceId);
-      }}
-    >
-      <SelectInput />
-    </ReferenceInput>
   );
 };
 
@@ -112,8 +92,13 @@ const DataLayerForm = ({
     <TabbedForm {...props}>
       <LazyFormTab label="datalayer.form.definition">
         <FormDataConsumer>
-          {formDataProps =>
-            <SourceField {...formDataProps} dataProvider={dataProvider} external={external} />}
+          {formDataProps => (
+            <DataLayerSourceField
+              {...formDataProps}
+              dataProvider={dataProvider}
+              external={external}
+            />
+          )}
         </FormDataConsumer>
         <DataLayerFormSwitcher onSwitch={setExternal} />
 

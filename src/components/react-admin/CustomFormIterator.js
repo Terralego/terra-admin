@@ -71,7 +71,7 @@ const styles = theme => ({
     paddingTop: '0.5em',
   },
   leftIcon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(),
   },
 });
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   TextInput,
-  LongTextInput,
   SelectInput,
   translate,
   required,
@@ -26,7 +25,8 @@ const DataSourceDbFields = ({ translate: t, ...props }) => (
     <TextInput source="db_name" type="text" label="datasource.form.request.database-name" />
     <TextInput source="db_username" type="text" label="datasource.form.request.user-name" />
     <TextInput source="db_password" type="password" label="datasource.form.request.user-password" />
-    <LongTextInput
+    <TextInput
+      multiline
       source="query"
       type="text"
       label="datasource.form.request.query"

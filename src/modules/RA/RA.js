@@ -1,6 +1,9 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { Admin, Resource } from 'react-admin';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import polyglotI18nProvider from 'ra-i18n-polyglot';
 
 import compose from '../../utils/compose';
 
@@ -11,7 +14,7 @@ import patchPictureDataProvider from '../../services/react-admin/patchPictureDat
 import toMultipart from '../../services/react-admin/toMultipart';
 
 import authProvider from '../../services/react-admin/authProvider';
-import i18nProvider from '../../services/react-admin/i18nProvider';
+import i18nProviderLegacy from '../../services/react-admin/i18nProvider';
 
 import { withLocale } from '../../components/Locale';
 import RALayout from '../../components/react-admin/Layout';
@@ -27,34 +30,39 @@ const sanitizeProps = ({
   ...rest
 }) => rest;
 
-export const CustomAdmin = ({ locale, history, permissions, allowedModules = [] }) => {
-  // Keep only allowedModules
-  const enabledResources = resources.filter(({ moduleName, requiredPermissions }) => {
-    if (!allowedModules.includes(moduleName)) {
-      return false;
-    }
-    if (requiredPermissions && !permissions.includes[requiredPermissions]) {
-      return false;
-    }
+const customDataProvider = compose(
+  withResourceEndpoint,
+  patchPictureDataProvider,
+  toMultipart,
+  enhanceDataProvider,
+)(dataProvider);
 
-    return true;
-  });
+export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
+  const history = useHistory();
+
+  const i18nProvider = React.useMemo(() =>
+    polyglotI18nProvider(i18nProviderLegacy, `${locale}`.substr(0, 2)), [locale]);
+
+  // Keep only allowedModules
+  const enabledResources = React.useMemo(() =>
+    resources.filter(({ moduleName, requiredPermissions }) => {
+      if (!allowedModules.includes(moduleName)) {
+        return false;
+      }
+      if (requiredPermissions && !permissions.includes[requiredPermissions]) {
+        return false;
+      }
+
+      return true;
+    }), [allowedModules, permissions]);
 
   if (!enabledResources.length) {
     return null;
   }
 
-  const customDataProvider = compose(
-    withResourceEndpoint,
-    patchPictureDataProvider,
-    toMultipart,
-    enhanceDataProvider,
-  )(dataProvider);
-
   return (
     <Admin
-      appLayout={RALayout}
-      locale={`${locale}`.substr(0, 2)}
+      layout={RALayout}
       history={history}
       dataProvider={customDataProvider}
       authProvider={authProvider}
@@ -70,7 +78,6 @@ export const CustomAdmin = ({ locale, history, permissions, allowedModules = [] 
 const componentsToDisplay = ({ env: { enabled_modules: allowedModules } }) => ({ allowedModules });
 
 export default compose(
-  withRouter,
   withLocale,
   withPermissions,
   connectAppProvider(componentsToDisplay),

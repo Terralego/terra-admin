@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  CardActions,
+  TopToolbar,
   ListButton,
   RefreshButton,
   withDataProvider,
 } from 'react-admin';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { withStyles } from '@material-ui/core/styles';
 
 import StatusChip from './StatusChip';
@@ -25,7 +24,7 @@ const DataSourceEditActions = ({
   basePath,
   classes,
 }) => (
-  <CardActions>
+  <TopToolbar>
     <ListButton
       basePath={basePath}
       variant="outlined"
@@ -35,11 +34,11 @@ const DataSourceEditActions = ({
     <StatusChip status={status} />
     <RefreshButton
       color="primary"
-      variant="raised"
+      variant="contained"
       label="datasource.edit.refresh"
       onClick={() => dataProvider('REFRESH', RES_DATASOURCE, { id })}
     />
-  </CardActions>
+  </TopToolbar>
 );
 
 export default compose(

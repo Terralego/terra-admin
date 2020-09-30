@@ -5,13 +5,11 @@ import { LinearProgress, withDataProvider, GET_LIST } from 'react-admin';
 import debounce from 'lodash.debounce';
 import uniqBy from 'lodash.uniqby';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
-/* eslint-enable */
 
 import { RES_DATALAYER } from '../../ra-modules';
 

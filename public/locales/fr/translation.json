@@ -574,7 +574,8 @@
       "search": "Rechercher",
       "show": "Afficher",
       "sort": "Trier",
-      "undo": "Annuler"
+      "undo": "Annuler",
+      "unselect": "Désélectionner"
     },
     "boolean": {
       "true": "Oui",

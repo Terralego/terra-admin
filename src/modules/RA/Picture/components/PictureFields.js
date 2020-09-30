@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 
 import {
   DateInput,
-  DisabledInput,
   FormTab,
   ImageField,
   ImageInput,
-  LongTextInput,
   NumberInput,
   ReferenceInput,
   SelectInput,
@@ -16,7 +14,7 @@ import {
   required,
 } from 'react-admin';
 
-import { withStyles } from '@material-ui/core/styles'; // eslint-disable-line import/no-extraneous-dependencies
+import { withStyles } from '@material-ui/core/styles';
 
 import { RES_VIEWPOINT } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
@@ -64,7 +62,8 @@ const PictureFields = ({
       <Br />
 
       {edit && (
-        <DisabledInput
+        <TextInput
+          disabled
           source="owner.properties.name"
           formClassName={classes.inline}
         />
@@ -83,7 +82,7 @@ const PictureFields = ({
       <TextInput source="properties.meteo" />
       <Br />
 
-      <LongTextInput source="properties.observations" />
+      <TextInput multiline source="properties.observations" />
 
       <Br />
 

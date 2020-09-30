@@ -16,7 +16,6 @@ import {
   ImageInput,
   Labeled,
   LinearProgress,
-  LongTextInput,
   NumberField,
   NumberInput,
   ReferenceArrayField,
@@ -28,10 +27,8 @@ import {
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
-/* eslint-enable */
 
 import { RES_PICTURE } from '../../ra-modules';
 
@@ -228,7 +225,7 @@ const ViewpointFields = ({
             source="properties.difficulte"
             formClassName={classes.inline}
           />
-          <LongTextInput source="properties.rephotographie" rows={4} rowsMax={30} />
+          <TextInput multiline source="properties.rephotographie" rows={4} rowsMax={30} />
 
           <ArrayInput source="related" fullWidth>
             <SimpleFormIterator>
@@ -257,10 +254,10 @@ const ViewpointFields = ({
         <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
           <RichTextInput source="properties.paysage" />
           <RichTextInput source="properties.dynamiques" />
-          <LongTextInput source="properties.issues" />
-          <LongTextInput source="properties.observations" />
-          <LongTextInput source="properties.historial-data" />
-          <LongTextInput source="properties.cultural-references" />
+          <TextInput multiline source="properties.issues" />
+          <TextInput multiline source="properties.observations" />
+          <TextInput multiline source="properties.historial-data" />
+          <TextInput multiline source="properties.cultural-references" />
 
           {waiting && <><LinearProgress /></>}
           {!waiting && (

@@ -2,9 +2,7 @@ import React from 'react';
 
 import { changeNodeAtPath } from 'react-sortable-tree';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import TextField from '@material-ui/core/TextField';
-/* eslint-enable */
 
 const NodeLabel = ({ treeData, setTreeData, path, node }) => {
   /**

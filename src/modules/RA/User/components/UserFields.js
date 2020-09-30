@@ -4,7 +4,6 @@ import {
   TextInput,
   SimpleForm,
   BooleanInput,
-  DisabledInput,
   ReferenceArrayInput,
   SelectArrayInput,
 } from 'react-admin';
@@ -16,8 +15,8 @@ import { RES_USERGROUP } from '../../ra-modules';
 
 const UserFields = ({ edit = false, ...props }) => (
   <SimpleForm {...props}>
-    {edit && <DisabledInput source="id" />}
-    {edit && <DisabledInput source="uuid" />}
+    {edit && <TextInput disabled source="id" />}
+    {edit && <TextInput disabled source="uuid" />}
 
     <TextInput source="email" type="email" />
     {!edit && <TextInput source="password" type="password" />}

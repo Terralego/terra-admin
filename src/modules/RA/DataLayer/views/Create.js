@@ -1,7 +1,7 @@
 import React from 'react';
 import { Create } from 'react-admin';
 
-import DataLayerFormSelector from '../components/DataLayerFormSelector';
+import DataLayerForm from '../components/DataLayerForm';
 import DefaultActions from '../../../../components/react-admin/DefaultActions';
 
 export const DataLayerCreate = props => (
@@ -9,9 +9,7 @@ export const DataLayerCreate = props => (
     {...props}
     actions={<DefaultActions />}
   >
-    <DataLayerFormSelector
-      withSource="source"
-    />
+    <DataLayerForm withSource="source" />
   </Create>
 );
 

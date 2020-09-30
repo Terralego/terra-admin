@@ -1,14 +1,9 @@
 import React from 'react';
 import get from 'lodash.get';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';
 
-import { change } from 'redux-form';
-/* eslint-enable */
-
 import {
-  DisabledInput,
   FileField,
   FileInput,
   ImageInput,
@@ -18,18 +13,15 @@ import {
   SimpleForm,
   TextInput,
   FormDataConsumer,
-  REDUX_FORM_NAME,
   required,
   translate,
 } from 'react-admin';
 
-import {
-  toSlug,
-  isObjectEmpty,
-} from '../../../../utils/react-admin/helper';
+import { isObjectEmpty } from '../../../../utils/react-admin/helper';
 import compose from '../../../../utils/compose';
 
 import TreeInput from './TreeInput';
+import SceneFormNameField from './SceneFormNameField';
 
 const styles = {
   inline: {
@@ -56,25 +48,13 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
 
 const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
   const { record } = props;
+
   return (
     <SimpleForm {...props}>
-      {edit && <DisabledInput source="id" />}
+      {edit && <TextInput disabled source="id" />}
 
       {isObjectEmpty(record) && (
-        <FormDataConsumer formClassName={classes.inline}>
-          {({ dispatch, formData, ...rest }) => (
-            <TextInput
-              source="name"
-              label="view.form.name"
-              onChange={value => {
-                if (!value) return;
-                const slug = toSlug(value.target.value);
-                dispatch(change(REDUX_FORM_NAME, 'slug', slug));
-              }}
-              {...rest}
-            />
-          )}
-        </FormDataConsumer>
+        <SceneFormNameField formClassName={classes.inline} />
       )}
 
       {!isObjectEmpty(record) && (
@@ -93,7 +73,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
 
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
 
-      <TreeInput source="tree" defaultValue={[]} fullWidth />
+      <TreeInput source="tree" fullWidth />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
       <ImageInput source="custom_icon" label="view.form.icon">

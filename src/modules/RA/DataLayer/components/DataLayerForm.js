@@ -75,7 +75,7 @@ const DataLayerForm = ({
 
   return (
     <TabbedForm {...props}>
-      <LazyFormTab label="datalayer.form.definition">
+      <LazyFormTab label="datalayer.form.definition" path="general">
         <FormDataConsumer>
           {formDataProps => (
             <DataLayerSourceField
@@ -129,7 +129,7 @@ const DataLayerForm = ({
 
       </LazyFormTab>
 
-      <LazyFormTab disabled={external} label="datalayer.form.style" path="style">
+      <LazyFormTab disabled={external} label="datalayer.form.styles.tab" path="style">
 
         <StyleField
           source="layer_style"
@@ -141,7 +141,7 @@ const DataLayerForm = ({
 
         <JSONInput
           source="layer_style_wizard"
-          label="Wizard style"
+          label="datalayer.form.styles.wizard_style"
           fullWidth
         />
 
@@ -161,7 +161,11 @@ const DataLayerForm = ({
           </CustomFormIterator>
         </ArrayInput>
 
-        <ArrayInput source="legends" label="datalayer.form.legends" fullWidth>
+      </LazyFormTab>
+
+      <LazyFormTab disabled={external} label="datalayer.form.legend.tab" path="legend">
+
+        <ArrayInput source="legends" label="datalayer.form.legend.legends" fullWidth>
           <CustomFormIterator>
             <TextInput multiline source="title" label="datalayer.form.legend.title" />
             <TextInput multiline source="content" label="datalayer.form.legend.template" />
@@ -178,7 +182,116 @@ const DataLayerForm = ({
 
       </LazyFormTab>
 
-      <LazyFormTab disabled={external} label="datalayer.form.interactions" path="interactions">
+      <LazyFormTab disabled={external} label="datalayer.form.popup.tab" path="popup">
+        <BooleanInput source="popup_enable" label="datalayer.form.popup.display-on-hover" />
+
+        <FormDataConsumer fullWidth>
+          {({ formData, ...rest }) => formData.popup_enable && (
+          <FieldGroup {...rest}>
+            <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={0} step={1} />
+            <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={24} step={1} />
+            <TextInput multiline source="popup_template" label="datalayer.form.popup.template" />
+          </FieldGroup>
+          )}
+        </FormDataConsumer>
+
+      </LazyFormTab>
+
+
+      <LazyFormTab disabled={external} label="datalayer.form.minisheet.tab" path="minisheet">
+
+        <BooleanInput source="minisheet_enable" label="datalayer.form.minisheet.display-on-click" />
+
+        <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
+
+        <FormDataConsumer>
+          {({ formData }) => formData.minisheet_enable && (
+          <>
+            <TextInput multiline source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />
+            <TextInput
+              label="datalayer.form.compare-url.title"
+              source="settings.compare"
+            />
+            <HelpContent title="datalayer.form.compare-url.help-title" content="datalayer.form.compare-url.help-text" />
+          </>
+          )}
+        </FormDataConsumer>
+
+      </LazyFormTab>
+
+
+      <LazyFormTab disabled={external} label="datalayer.form.filter.tab" path="filter">
+        <ArrayInput source="fields" label="datalayer.form.filter.all-fields-available" fullWidth>
+          <DraggableFormIterator
+            disableAdd
+            disableRemove
+          >
+            <FormDataConsumer>
+              {({ scopedFormData = {}, getSource }) => (
+                <TextInput multiline source={getSource('label')} label={scopedFormData.name} fullWidth />
+              )}
+            </FormDataConsumer>
+            <BooleanInput
+              source="filter_enable"
+              label="datalayer.form.filter.allow-filtering-field"
+              fullWidth
+            />
+            <FormDataConsumer>
+              {({
+                scopedFormData: {
+                  filter_enable: filterEnable,
+                  filter_settings: { type: filterType, fetchValues: filterFetch } = {},
+                } = {},
+                getSource,
+              }) => {
+                if (!filterEnable) return null;
+
+                return (
+                  <>
+                    <SelectInput
+                      source={getSource('filter_settings.type')}
+                      choices={[
+                        { id: 'single', name: 'datalayer.form.filter.type.single' },
+                        { id: 'many', name: 'datalayer.form.filter.type.many' },
+                        { id: 'range', name: 'datalayer.form.filter.type.range' },
+                      ]}
+                      label="datalayer.form.type.label"
+                      validate={defaultRequired}
+                    />
+                    {filterType && (
+                      <BooleanInput
+                        source={getSource('filter_settings.fetchValues')}
+                        label="datalayer.form.filter.type.fetch.label"
+                        fullWidth
+                      />
+                    )}
+                    {(filterType && !filterFetch) && (
+                      <TextArrayInput
+                        source={getSource('filter_settings.values')}
+                        label={`datalayer.form.filter.type.values${filterType === 'many' ? '' : '_optional'}`}
+                        validate={filterType === 'many' ? defaultRequired : undefined}
+                        fullWidth
+                      />
+                    )}
+                    {filterType === 'range' && (
+                      <SelectInput
+                        source={getSource('filter_settings.format')}
+                        label="datalayer.form.filter.type.range_format.label"
+                        choices={[
+                          { id: 'number', name: 'datalayer.form.filter.type.range_format.number' },
+                          { id: 'date', name: 'datalayer.form.filter.type.range_format.date' },
+                        ]}
+                      />
+                    )}
+                  </>
+                );
+              }}
+            </FormDataConsumer>
+          </DraggableFormIterator>
+        </ArrayInput>
+      </LazyFormTab>
+
+      <LazyFormTab disabled={external} label="datalayer.form.table.tab" path="table">
         <FormDataConsumer>
           {formDataProps => <DataLayerDataTableField {...formDataProps} />}
         </FormDataConsumer>
@@ -187,7 +300,7 @@ const DataLayerForm = ({
           {({ formData }) => (
             <BooleanInput
               source="table_export_enable"
-              label="datalayer.form.allow-export-data"
+              label="datalayer.form.table.allow-export-data"
               options={{
                 disabled: !formData.table_enable,
               }}
@@ -195,38 +308,9 @@ const DataLayerForm = ({
           )}
         </FormDataConsumer>
 
-        <BooleanInput source="popup_enable" label="datalayer.form.popup.display-on-hover" />
-        <FormDataConsumer fullWidth>
-          {({ formData, ...rest }) => formData.popup_enable && (
-            <FieldGroup {...rest}>
-              <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={0} step={1} />
-              <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={24} step={1} />
-              <TextInput multiline source="popup_template" label="datalayer.form.popup.template" />
-            </FieldGroup>
-          )}
-        </FormDataConsumer>
-
-        <BooleanInput source="minisheet_enable" label="datalayer.form.minisheet.display-on-click" />
-        <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
-        <FormDataConsumer>
-          {({ formData }) => formData.minisheet_enable &&
-            <TextInput multiline source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
-        </FormDataConsumer>
-
-        <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
-
-        <TextInput
-          label="datalayer.form.compare-url.title"
-          source="settings.compare"
-        />
-        <HelpContent title="datalayer.form.compare-url.help-title" content="datalayer.form.compare-url.help-text" />
-
-      </LazyFormTab>
-
-      <LazyFormTab disabled={external} label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData }) => (
-            <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>
+            <ArrayInput source="fields" label="datalayer.form.filter.all-fields-available" fullWidth>
               <DraggableFormIterator
                 disableAdd
                 disableRemove
@@ -236,74 +320,25 @@ const DataLayerForm = ({
                     <TextInput multiline source={getSource('label')} label={scopedFormData.name} fullWidth />
                   )}
                 </FormDataConsumer>
-                <BooleanInput
-                  source="filter_enable"
-                  label="datalayer.form.allow-filtering-field"
-                  fullWidth
-                />
-                <FormDataConsumer>
-                  {({
-                    scopedFormData: {
-                      filter_enable: filterEnable,
-                      filter_settings: { type: filterType, fetchValues: filterFetch } = {},
-                    } = {},
-                    getSource,
-                  }) => {
-                    if (!filterEnable) return null;
 
-                    return (
-                      <>
-                        <SelectInput
-                          source={getSource('filter_settings.type')}
-                          choices={[
-                            { id: 'single', name: 'datalayer.form.type.single' },
-                            { id: 'many', name: 'datalayer.form.type.many' },
-                            { id: 'range', name: 'datalayer.form.type.range' },
-                          ]}
-                          label="datalayer.form.type.label"
-                          validate={defaultRequired}
-                        />
-                        {filterType && (
-                          <BooleanInput
-                            source={getSource('filter_settings.fetchValues')}
-                            label="datalayer.form.type.fetch.label"
-                            fullWidth
-                          />
-                        )}
-                        {(filterType && !filterFetch) && (
-                          <TextArrayInput
-                            source={getSource('filter_settings.values')}
-                            label={`datalayer.form.type.values${filterType === 'many' ? '' : '_optional'}`}
-                            validate={filterType === 'many' ? defaultRequired : undefined}
-                            fullWidth
-                          />
-                        )}
-                        {filterType === 'range' && (
-                          <SelectInput
-                            source={getSource('filter_settings.format')}
-                            label="datalayer.form.type.range_format.label"
-                            choices={[
-                              { id: 'number', name: 'datalayer.form.type.range_format.number' },
-                              { id: 'date', name: 'datalayer.form.type.range_format.date' },
-                            ]}
-                          />
-                        )}
-                      </>
-                    );
-                  }}
-                </FormDataConsumer>
-                {formData.table_enable && <BooleanInput source="shown" label="datalayer.form.show" />}
+                {formData.table_enable && <BooleanInput source="shown" label="datalayer.form.table.show" />}
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (
                     scopedFormData.shown && <BooleanInput source={getSource('display')} label="Afficher ce champs par défaut" />
                   )}
                 </FormDataConsumer>
-                {formData.table_export_enable && <BooleanInput source="exportable" label="datalayer.form.exportable" />}
+                {formData.table_export_enable && <BooleanInput source="exportable" label="datalayer.form.table.exportable" />}
               </DraggableFormIterator>
             </ArrayInput>
           )}
         </FormDataConsumer>
       </LazyFormTab>
+
+
+      <LazyFormTab disabled={external} label="datalayer.form.widget.tab" path="other">
+        <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
+      </LazyFormTab>
+
       <FormTab label="fieldUpdater" style={{ display: 'none' }}>
         <FieldUpdater />
         <DataLayerFormSwitcher onSwitch={setExternal} />

@@ -457,53 +457,62 @@
       "view": "Vue",
       "ordering": "Classement",
       "description": "Description",
-      "style": "Style",
-      "layer-style": "Style de la couche",
       "interactions": "Interactions",
-      "allow-display-data-table": " Permettre l'affichage du tableau de données",
-      "allow-export-data": " Permettre l'export des données",
       "all-data-available": " Toutes les données disponibles",
-      "all-fields-available": " Tous les champs disponibles",
-      "show": "Afficher dans le tableau",
-      "exportable": "Exportable",
       "compare-url": {
         "title": "URL de comparaison",
         "help-title": "Modèle d'URL de comparaison",
         "help-text": "Ce modèle permet de générer l'URL de comparaison qui est disponible dans le tableau lorsque l'on sélectionne plusieurs éléments. Ajoutez « {{ids}} » à l'emplacement où la liste des identifiants sélectionnés doit-être insérée."
       },
+      "widget":{
+        "tab": "Widget"
+      },
+      "table":{
+        "tab": "Table",
+        "show": "Afficher dans le tableau",
+        "exportable": "Exportable",
+        "allow-export-data": " Permettre l'export des données",
+        "allow-display-data-table": " Permettre l'affichage du tableau de données"
+      },
       "popup": {
-        "display-on-hover": "Afficher une fenêtre contextuelle",
+        "tab": "Fenêtre au survol",
+        "display-on-hover": "Activer la fenêtre au survol",
         "min-zoom": "Zoom minimum",
         "max-zoom": "Zoom maximum",
-        "template": "Modèle de la fenêtre contextuelle"
+        "template": "Modèle de la fenêtre au survol"
       },
       "minisheet": {
+        "tab": "Mini-fiche",
         "display-on-click": "Afficher la minifiche",
         "template": "Modèle de la minifiche",
         "pick-highlight-color": "Sélectionner une couleur de surbrillance"
       },
-      "filter": "Filtre",
-      "allow-filtering-field": "Permettre de filter par le champ",
-      "text": "Texte",
-      "data-sample": "Extrait des données",
-      "type": {
-        "label": "Type de filtrage",
-        "single": "Une seule valeur",
-        "many": "Plusieurs valeurs",
-        "range": "Une étendue de valeurs",
-        "values": "Proposer une liste définie de valeurs pour le filtrage",
-        "values_optional": "Proposer une liste définie de valeurs pour le filtrage (optionnel)",
-        "range_format": {
-          "label": "Format du filtre",
-          "number": "Numérique",
-          "date": "Dates"
-        },
-        "fetch": {
-          "label": "Proposer toutes les valeurs disponibles en base de données pour le filtrage"
+      "filter": {
+        "tab": "Filtre",
+        "all-fields-available": " Tous les champs disponibles",
+        "allow-filtering-field": "Permettre de filter par le champ",
+        "type": {
+          "label": "Type de filtrage",
+          "single": "Une seule valeur",
+          "many": "Plusieurs valeurs",
+          "range": "Une étendue de valeurs",
+          "values": "Proposer une liste définie de valeurs pour le filtrage",
+          "values_optional": "Proposer une liste définie de valeurs pour le filtrage (optionnel)",
+          "range_format": {
+            "label": "Format du filtre",
+            "number": "Numérique",
+            "date": "Dates"
+          },
+          "fetch": {
+            "label": "Proposer toutes les valeurs disponibles en base de données pour le filtrage"
+          }
         }
       },
-      "legends": "Afficher une ou plusieurs légendes",
+      "text": "Texte",
+      "data-sample": "Extrait des données",
       "legend": {
+        "tab": "Légendes",
+        "legends": "Afficher une ou plusieurs légendes",
         "title": "Titre de la légende",
         "template": "Contenu mis en page de la légende (optionnel)",
         "items": "Items de la légende (Optionnel)",
@@ -520,6 +529,9 @@
         }
       },
       "styles": {
+        "tab": "Style",
+        "wizard_style": "Génération assistée",
+        "layer-style": "Style de la couche",
         "default_opacity": "Opacité par défaut (en %)",
         "mainstyle": "Style principal",
         "secondarylabels": "Styles secondaires",

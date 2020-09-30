@@ -12,7 +12,7 @@ const DataLayerDataTableField = () => {
   return (
     <BooleanInput
       source="table_enable"
-      label="datalayer.form.allow-display-data-table"
+      label="datalayer.form.table.allow-display-data-table"
       onChange={value => {
         if (!value) return;
         form.change('table_export_enable', false);

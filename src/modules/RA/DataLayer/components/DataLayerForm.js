@@ -94,7 +94,7 @@ const LayerStyleField = ({ defaultValue }) => (
   />
 );
 
-const DataLayerTabbedForm = ({
+const DataLayerForm = ({
   classes,
   translate,
   randomColor,
@@ -351,4 +351,4 @@ export default compose(
   translateRA,
   PropsSanitizer,
   withDataProvider,
-)(DataLayerTabbedForm);
+)(DataLayerForm);

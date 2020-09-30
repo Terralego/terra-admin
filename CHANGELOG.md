@@ -1,4 +1,58 @@
 
+3.0.0 / 2020-09-30
+==================
+
+  * Disable JSONInput default value to avoid infinite error loop
+  * Extract DataLayerDataTableField component to a dedicated file
+  * Extract DataLayerSourceField component to a dedicated file
+  * Rename main DataLayer form component from DataLayerTabbedForm to DataLayerForm
+  * Remove now useless components
+  * Disable advanced tabs for layer with "external" sources (WMTS)
+  * Create local state for managing is current source is external or not
+  * Remove useless wrapping Fragment
+  * Allow `null` as DraggableFormIterator child
+  * Add MUI as peerDep to avoid a bunch of linting exceptions
+  * Update src/modules/RA/DataLayer/components/FieldUpdater.js
+  * Remove TreeInput default value as it break initial loading of tree
+  * Fix SceneForm by extracting Name field
+  * Memoize enabledResources
+  * Memoize i18nProvider
+  * Extract static dataProvider variable from inside component rendering
+  * Get router history from hook instead of HOC
+  * Put FieldUpdater component inside form
+  * Read field data from `useField` instead of Redux state
+  * Extract LayerStyleField and memoize default value
+  * Avoid forwarding useless dispatch prop
+  * Extract and fix SourceField in DataLAyerTabbedForm
+  * Use `theme.spacing()` instead of deprecated `theme.spacing.unit`
+  * Add Fragment as wrapper to avoid accidental props forwarding
+  * Replace Button variant that doesn't exist anymore
+  * Replace Typography variant that doesn't exist anymore
+  * Upgrade react-scripts from 3.4.1 to 3.4.3
+  * Upgrade @terralego/core from 1.20.2 to 1.20.2 (upgrade sub-dependencies)
+  * Upgrade enzyme-adapter-react-16 from 1.15.2 to 1.15.4
+  * Upgrade react-i18next from 11.3.5 to 11.7.2
+  * Upgrade node-sass from 4.13.1 to 4.14.1
+  * Upgrade react-paginate from 6.3.2 to 6.5.0
+  * Upgrade react-mapbox-gl from 4.8.3 to 4.8.6
+  * Upgrade react-i18next from 11.3.4 to 11.3.5
+  * Upgrade query-string from 6.12.0 to 6.13.2
+  * Upgrade react-sortable-tree from 2.7.1 to 2.8.0
+  * Upgrade react-router & react-router-dom from 5.1.2 to 5.2.0
+  * Upgrade i18next from 19.4.0 to 19.7.0
+  * Install ra-language-french@3.8.5
+  * Use useForm hook instead of dispatch(change())
+  * Install react-autosuggest@10.0.2
+  * Install material-ui-chip-input@1.1.0
+  * Upgrade to new i18nProvider signature
+  * Use multiline TextInput instead of LongTextInput
+  * Rename Admin prop from appLayout to layout
+  * Rename CardActions to TopToolbar
+  * Use disabled TextInput instead of DisabledInput
+  * Add missing translation for ra.action.unselect
+  * Upgrade all dependencies related to react-admin
+  * Upgrade ra-data-drf to a dev release so it does not require react-admin v2 specifically
+
 2.15.0 / 2020-09-30
 ==================
 

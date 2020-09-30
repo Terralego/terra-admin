@@ -1,4 +1,97 @@
 
+2.15.0 / 2020-09-30
+==================
+
+  * Fix boolean value to display combine/uncombine features
+  * Display warning about geometry replacement by import only if a draw started
+  * Use ImportGeomFile in the project
+  * Create ImportGeomFile component
+  * Install @tmcw/togeojson package
+  * Display singular name (if available) for title/submit when adding feature
+  * Improve FitBoundButton appearance
+  * Remove useless condition
+  * Put in a tooltip the text content of delete feature
+  * Cut off dead legacy code from old OPP admin UI
+  * Fix some regressions after the support of multi geometries
+  * Add combine/uncombine buttons for Multi* features edition
+  * Manage creation/edition/deletion of Multi* features
+  * Merge pull request #275 from Terralego/add-date-type-to-field
+  * Add date as field type
+  * Merge pull request #273 from Terralego/wmts-layer-do-not-need-style
+  * Allow dataLayer view to clone element
+  * Don't set default style when geom type is not defined
+  * Add stackedCircles choice for legends
+  * Add layer style wizard field in admin
+  * Merge pull request #269 from Terralego/layer-main-field-can-be-empty
+  * Allow empty value for datalayer mainfield
+  * Update logo
+  * Deactivate Campaign list module
+  * Fix getLocale for ImportFile component
+  * Deactivation of langDropDown
+  * Set the language driven by api/settings
+  * Get locale for the Map driven by the current language
+  * Update public/locales/en/translation.json
+  * improve translations
+  * Add language selector to the main menu
+  * Create change language component
+  * Prefer i18config with english first
+  * Fix some typo
+  * Add 'languages' locales
+  * add en translation
+  * Set filters list if `terraOppSearchableProperties` is defined
+  * Get mapConfig from `mapConfig` and now `map` key as fallback
+  * Bump websocket-extensions from 0.1.3 to 0.1.4
+  * Accept and format NumberType from JSON schema
+  * Fix typo in french locale
+  * Display image url + a button to open it in Picture attachment
+  * Rename field header to use_header
+  * CSV options are now boolean inputs
+  * Rename src in coordinate_reference_system
+  * Correct labels and sources names
+  * Fix SelectInput value is NaN after first clic
+  * Add formDataConsumer
+  * Translate choices and inputs
+  * Use translate function
+  * Fix translations linting issues
+  * Add CSV source form
+  * Change color of no value CRUD information
+  * Use FitboundButton component in details header
+  * Create FitBoundButton component
+  * Sanitize CategoryList HOC props
+  * Use PictureSelector in RTEField to load image
+  * Create PictureSelector component
+  * Add props to attachment to render it selectable or not
+  * Add props to attachment to render it editable or not
+  * Refacto DeleteAttachment to use ConfirmDeletion component
+  * Refacto DeleteFeature to use ConfirmDeletion component
+  * Create a generic component for confirmation of deletion
+  * Improve some code comments
+  * Display import file
+  * Create ImportFile component
+  * Install some @uppy package
+  * Create createAttachmentCategories function
+  * Add saveAttachmentCategories service
+  * Upgrade eslint-config-makina from 2.1.0 to 3.0.0
+  * Display a message when there are no attachments yet
+  * Split AttachmentList into AttachmentList and AttachmentItem
+  * Remove useless translation
+  * Update Map only if coordinates update for real
+  * Add Edit and delete attachment features
+  * Create Figcaption component to display and edit attachment's label
+  * Create DeleteAttachment component
+  * Create a service to save and delete attachments
+  * Display new category feature if there are no categories listed
+  * Create a form to select or create an attachment Category
+  * Define some defaultValue props to tablefield if undefined
+  * Fix detail CSS for Safari
+  * Re-activate Attachments in menu detail
+  * Refacto AttachmentView to use CategoryList
+  * Create Attachments/Pictures components
+  * Fix TableField if the uiSchema.items is not set
+  * Fix native geolayer selector value conversion
+  * Fix security issue (minimist) through npm audit
+  * Upgrade dependencies
+
 2.14.1 / 2020-04-08
 ===================
 

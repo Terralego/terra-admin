@@ -67,20 +67,18 @@ const DisplayDataTableField = () => {
 const SourceField = ({ formData, dataProvider }) => {
   const form = useForm();
   return (
-    <>
-      <ReferenceInput
-        source="source"
-        reference={RES_DATASOURCE}
-        label="datalayer.form.data-source"
-        sort={{ field: 'name', order: 'ASC' }}
-        validate={defaultRequired}
-        perPage={100}
-        onChange={({ target: { value: sourceId } }) =>
-          updateFieldFromSource(formData.fields, form, dataProvider, sourceId)}
-      >
-        <SelectInput />
-      </ReferenceInput>
-    </>
+    <ReferenceInput
+      source="source"
+      reference={RES_DATASOURCE}
+      label="datalayer.form.data-source"
+      sort={{ field: 'name', order: 'ASC' }}
+      validate={defaultRequired}
+      perPage={100}
+      onChange={({ target: { value: sourceId } }) =>
+        updateFieldFromSource(formData.fields, form, dataProvider, sourceId)}
+    >
+      <SelectInput />
+    </ReferenceInput>
   );
 };
 

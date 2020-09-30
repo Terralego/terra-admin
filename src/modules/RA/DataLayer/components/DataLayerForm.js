@@ -11,6 +11,7 @@ import {
   FormDataConsumer,
   translate as translateRA,
   withDataProvider,
+  SimpleFormIterator,
 } from 'react-admin';
 
 import { FormGroup } from '@blueprintjs/core';
@@ -18,7 +19,6 @@ import { ColorInput } from 'react-admin-color-input';
 import { withStyles } from '@material-ui/core/styles';
 
 import compose from '../../../../utils/compose';
-import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
 import DraggableFormIterator from '../../../../components/react-admin/DraggableFormIterator';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import JSONInput from '../../../../components/react-admin/JSONInput';
@@ -156,13 +156,13 @@ const DataLayerForm = ({
         />
 
         <ArrayInput source="custom_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
-          <CustomFormIterator>
+          <SimpleFormIterator>
             <CustomLayer />
-          </CustomFormIterator>
+          </SimpleFormIterator>
         </ArrayInput>
 
         <ArrayInput source="legends" label="datalayer.form.legends" fullWidth>
-          <CustomFormIterator>
+          <SimpleFormIterator>
             <TextInput multiline source="title" label="datalayer.form.legend.title" />
             <TextInput multiline source="content" label="datalayer.form.legend.template" />
             <LegendItemsField
@@ -173,7 +173,7 @@ const DataLayerForm = ({
             />
             <HelpContent title="datalayer.form.legend.help.title" content="datalayer.form.legend.help.text" />
             <BooleanInput source="stackedCircles" label="datalayer.form.legend.stackedCircles" />
-          </CustomFormIterator>
+          </SimpleFormIterator>
         </ArrayInput>
 
       </LazyFormTab>

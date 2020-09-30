@@ -16,7 +16,6 @@ import {
 import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
 import { withStyles } from '@material-ui/core/styles';
-import { useForm } from 'react-final-form';
 
 import compose from '../../../../utils/compose';
 import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
@@ -36,6 +35,7 @@ import HelpContent from '../../../../components/react-admin/HelpContent';
 import withRandomColor from './withRandomColor';
 import DataLayerFormSwitcher from './DataLayerFormSwitcher';
 import DataLayerSourceField from './DataLayerSourceField';
+import DataLayerDataTableField from './DataLayerDataTableField';
 
 const defaultRequired = required();
 
@@ -49,21 +49,6 @@ const styles = {
 const LazyFormTab = ({ hidden, ...props }) => (
   hidden ? null : <FormTab {...props} />
 );
-
-const DisplayDataTableField = () => {
-  const form = useForm();
-
-  return (
-    <BooleanInput
-      source="table_enable"
-      label="datalayer.form.allow-display-data-table"
-      onChange={value => {
-        if (!value) return;
-        form.change('table_export_enable', false);
-      }}
-    />
-  );
-};
 
 const LayerStyleField = ({ defaultValue }) => (
   <TextInput
@@ -195,7 +180,7 @@ const DataLayerForm = ({
 
       <LazyFormTab disabled={external} label="datalayer.form.interactions" path="interactions">
         <FormDataConsumer>
-          {formDataProps => <DisplayDataTableField {...formDataProps} />}
+          {formDataProps => <DataLayerDataTableField {...formDataProps} />}
         </FormDataConsumer>
 
         <FormDataConsumer>

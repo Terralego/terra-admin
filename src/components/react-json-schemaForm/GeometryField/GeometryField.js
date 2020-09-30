@@ -71,11 +71,11 @@ const getGeometries = ({
   return { layerName: name, ...featureName };
 };
 
-const getCoordinatesFromGeometries = features => {
+const getCoordinatesFromGeometries = (features, isMultiGeometry) => {
   const featuresHasCompositesType = features
     .filter((item, index, array) => array.indexOf(item) === index).length === 2;
 
-  if (featuresHasCompositesType) {
+  if (featuresHasCompositesType || isMultiGeometry) {
     return features.reduce((list, { geometry: { type, coordinates } }) => (
       (type.startsWith('Multi'))
         ? [...list, ...coordinates]
@@ -131,7 +131,7 @@ const GeometryField = ({
       ...prevGeomValues,
       geom: {
         ...prevGeomValues.geom,
-        coordinates: getCoordinatesFromGeometries(features),
+        coordinates: getCoordinatesFromGeometries(features, isMultiGeometry),
       },
     }));
   }, [geomValues.geom_type]);

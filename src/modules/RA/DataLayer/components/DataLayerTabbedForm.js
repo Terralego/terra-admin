@@ -65,7 +65,7 @@ const DisplayDataTableField = () => {
   );
 };
 
-const SourceField = ({ formData, dataProvider }) => {
+const SourceField = ({ formData, dataProvider, external = false }) => {
   const form = useForm();
   return (
     <ReferenceInput
@@ -75,8 +75,10 @@ const SourceField = ({ formData, dataProvider }) => {
       sort={{ field: 'name', order: 'ASC' }}
       validate={defaultRequired}
       perPage={100}
-      onChange={({ target: { value: sourceId } }) =>
-        updateFieldFromSource(formData.fields, form, dataProvider, sourceId)}
+      onChange={({ target: { value: sourceId } }) => {
+        if (external) { return; }
+        updateFieldFromSource(formData.fields, form, dataProvider, sourceId);
+      }}
     >
       <SelectInput />
     </ReferenceInput>
@@ -110,7 +112,8 @@ const DataLayerTabbedForm = ({
     <TabbedForm {...props}>
       <LazyFormTab label="datalayer.form.definition">
         <FormDataConsumer>
-          {formDataProps => <SourceField {...formDataProps} dataProvider={dataProvider} />}
+          {formDataProps =>
+            <SourceField {...formDataProps} dataProvider={dataProvider} external={external} />}
         </FormDataConsumer>
         <DataLayerFormSwitcher onSwitch={setExternal} />
 
@@ -156,7 +159,7 @@ const DataLayerTabbedForm = ({
 
       </LazyFormTab>
 
-      <LazyFormTab label="datalayer.form.style" path="style">
+      <LazyFormTab disabled={external} label="datalayer.form.style" path="style">
 
         <StyleField
           source="layer_style"
@@ -205,7 +208,7 @@ const DataLayerTabbedForm = ({
 
       </LazyFormTab>
 
-      <LazyFormTab label="datalayer.form.interactions" path="interactions">
+      <LazyFormTab disabled={external} label="datalayer.form.interactions" path="interactions">
         <FormDataConsumer>
           {formDataProps => <DisplayDataTableField {...formDataProps} />}
         </FormDataConsumer>
@@ -250,7 +253,7 @@ const DataLayerTabbedForm = ({
 
       </LazyFormTab>
 
-      <LazyFormTab label="datalayer.form.fields-settings" path="fields">
+      <LazyFormTab disabled={external} label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>
@@ -333,6 +336,7 @@ const DataLayerTabbedForm = ({
       </LazyFormTab>
       <FormTab label="fieldUpdater" style={{ display: 'none' }}>
         <FieldUpdater />
+        <DataLayerFormSwitcher onSwitch={setExternal} />
       </FormTab>
     </TabbedForm>
   );

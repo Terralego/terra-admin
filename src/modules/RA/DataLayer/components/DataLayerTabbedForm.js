@@ -35,6 +35,7 @@ import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
 import { RES_DATASOURCE } from '../../ra-modules';
 import withRandomColor from './withRandomColor';
+import DataLayerFormSwitcher from './DataLayerFormSwitcher';
 
 const defaultRequired = required();
 
@@ -103,6 +104,7 @@ const DataLayerTabbedForm = ({
     () => getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType)),
     [geomType, randomColor],
   );
+  const [external, setExternal] = React.useState(true);
 
   return (
     <TabbedForm {...props}>
@@ -110,6 +112,7 @@ const DataLayerTabbedForm = ({
         <FormDataConsumer>
           {formDataProps => <SourceField {...formDataProps} dataProvider={dataProvider} />}
         </FormDataConsumer>
+        <DataLayerFormSwitcher onSwitch={setExternal} />
 
         <TextInput
           source="name"

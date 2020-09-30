@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
-import get from 'lodash.get';
-/* eslint-disable import/no-extraneous-dependencies */
-import { connect } from 'react-redux';
-import { change } from 'redux-form';
-/* eslint-enable */
+
+import { useField, useForm } from 'react-final-form';
 import {
   withDataProvider,
   GET_ONE,
-  REDUX_FORM_NAME,
 } from 'react-admin';
 
 import { WMTS } from '../../DataSource';
@@ -50,7 +46,7 @@ const mergeFields = (layerFields = [], sourceFields = []) => {
   ];
 };
 
-export const updateFieldFromSource = async (layerFields, dispatch, dataProvider, sourceId) => {
+export const updateFieldFromSource = async (layerFields, form, dataProvider, sourceId) => {
   const { data: { fields: sourceFields = [] } } =
       await dataProvider(GET_ONE, RES_DATASOURCE, { id: sourceId });
 
@@ -61,22 +57,26 @@ export const updateFieldFromSource = async (layerFields, dispatch, dataProvider,
 
   // Prevent rerender on equality
   if (JSON.stringify(result) !== JSON.stringify(layerFields)) {
-    dispatch(change(REDUX_FORM_NAME, 'fields', result));
+    form.change('fields', result);
   }
 };
 
-const FieldUpdater = ({ dispatch, dataProvider, sourceId, layerFields }) => {
+const FieldUpdater = ({ dataProvider }) => {
+  const form = useForm();
+  const { input: { value: sourceId } } = useField('source');
+  const { input: { value: layerFields } } = useField('fields');
+
   // Update fields from source
   useEffect(() => {
     if (!sourceId || !layerFields) return;
 
     const fillFields = async () => {
-      // We should avoid dipatch call if component is unmount
-      await updateFieldFromSource(layerFields, dispatch, dataProvider, sourceId);
+      // We should avoid update call if component is unmount
+      await updateFieldFromSource(layerFields, form, dataProvider, sourceId);
     };
 
     fillFields();
-  }, [sourceId, layerFields]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [form, sourceId, layerFields]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update external source status
   useEffect(() => {
@@ -91,24 +91,18 @@ const FieldUpdater = ({ dispatch, dataProvider, sourceId, layerFields }) => {
       if (!isMounted) return;
 
 
-      dispatch(change(REDUX_FORM_NAME, 'external', type === WMTS));
+      form.change('external', type === WMTS);
     };
 
     loadSource();
 
     return () => { isMounted = false; };
-  }, [dataProvider, dispatch, sourceId]);
+  }, [dataProvider, form, sourceId]);
 
   return null;
 };
 
-const mapStateToProps = state => ({
-  sourceId: get(state, 'form.record-form.values.source'),
-  layerFields: get(state, 'form.record-form.values.fields'),
-});
-
 const ConnectedFieldUpdater = compose(
-  connect(mapStateToProps),
   withDataProvider,
 )(FieldUpdater);
 

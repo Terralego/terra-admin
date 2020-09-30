@@ -574,7 +574,8 @@
       "search": "Search",
       "show": "Show",
       "sort": "Sort",
-      "undo": "Cancel"
+      "undo": "Cancel",
+      "unselect": "Unselect"
     },
     "boolean": {
       "true": "Yes",

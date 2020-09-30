@@ -1,12 +1,10 @@
 import React from 'react';
 
-/* eslint-disable import/no-extraneous-dependencies */
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import SuccessIcon from '@material-ui/icons/Done';
 import FailureIcon from '@material-ui/icons/Clear';
 import PendingIcon from '@material-ui/icons/History';
-/* eslint-enable */
 
 const renderTooltipContent = ({ state = '' } = {}) => {
   let Icon;
@@ -40,7 +38,7 @@ const StatusChip = ({ status, status: { state } = {} }) => (
         <Chip label={renderTooltipContent(status)} style={{ marginRight: '1em' }} />
       </Tooltip>
     )
-    : <></>
+    : null
 );
 
 export default StatusChip;

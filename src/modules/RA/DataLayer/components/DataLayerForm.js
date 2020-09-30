@@ -1,33 +1,28 @@
 import React from 'react';
+
 import {
   TabbedForm,
   TextInput,
-  LongTextInput,
   BooleanInput,
   FormTab,
   SelectInput,
   NumberInput,
   ArrayInput,
-  ReferenceInput,
   FormDataConsumer,
-  REDUX_FORM_NAME,
   translate as translateRA,
   withDataProvider,
 } from 'react-admin';
+
 import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
-
-/* eslint-disable import/no-extraneous-dependencies */
 import { withStyles } from '@material-ui/core/styles';
-import { change } from 'redux-form';
-/* eslintenable import/no-extraneous-dependencies */
 
 import compose from '../../../../utils/compose';
 import CustomFormIterator from '../../../../components/react-admin/CustomFormIterator';
 import DraggableFormIterator from '../../../../components/react-admin/DraggableFormIterator';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import JSONInput from '../../../../components/react-admin/JSONInput';
-import FieldUpdater, { updateFieldFromSource } from './FieldUpdater';
+import FieldUpdater from './FieldUpdater';
 
 import LegendItemsField from './LegendItemsField';
 import CustomLayer from './CustomLayer';
@@ -37,8 +32,10 @@ import { required } from '../../../../utils/react-admin/validate';
 import { getLayerStyleDefaultValue, getShapeFromGeomType, POLYGON } from '../../../../utils/geom';
 import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
-import { RES_DATASOURCE } from '../../ra-modules';
 import withRandomColor from './withRandomColor';
+import DataLayerFormSwitcher from './DataLayerFormSwitcher';
+import DataLayerSourceField from './DataLayerSourceField';
+import DataLayerDataTableField from './DataLayerDataTableField';
 
 const defaultRequired = required();
 
@@ -53,36 +50,42 @@ const LazyFormTab = ({ hidden, ...props }) => (
   hidden ? null : <FormTab {...props} />
 );
 
-const DataLayerTabbedForm = ({
+const LayerStyleField = ({ defaultValue }) => (
+  <TextInput
+    type="hidden"
+    label=""
+    source="layer_style"
+    defaultValue={defaultValue}
+  />
+);
+
+const DataLayerForm = ({
   classes,
   translate,
   randomColor,
   sourceData: { geom_type: geomType = POLYGON } = {},
   dataProvider,
   ...props
-}) => (
-  <>
-    <FieldUpdater />
-    <TabbedForm
-      {...props}
-    >
+}) => {
+  const layerStyleDefaultValue = React.useMemo(
+    () => getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType)),
+    [geomType, randomColor],
+  );
+  const [external, setExternal] = React.useState(true);
+
+  return (
+    <TabbedForm {...props}>
       <LazyFormTab label="datalayer.form.definition">
         <FormDataConsumer>
-          {({ formData, dispatch }) => (
-            <ReferenceInput
-              source="source"
-              reference={RES_DATASOURCE}
-              label="datalayer.form.data-source"
-              sort={{ field: 'name', order: 'ASC' }}
-              validate={defaultRequired}
-              perPage={100}
-              onChange={(_, sourceId) =>
-                updateFieldFromSource(formData.fields, dispatch, dataProvider, sourceId)}
-            >
-              <SelectInput />
-            </ReferenceInput>
+          {formDataProps => (
+            <DataLayerSourceField
+              {...formDataProps}
+              dataProvider={dataProvider}
+              external={external}
+            />
           )}
         </FormDataConsumer>
+        <DataLayerFormSwitcher onSwitch={setExternal} />
 
         <TextInput
           source="name"
@@ -95,7 +98,7 @@ const DataLayerTabbedForm = ({
           {({ formData }) => {
             const hasFields = formData.fields && formData.fields.length;
             if (!hasFields) {
-              return <></>;
+              return null;
             }
 
             return (
@@ -116,24 +119,17 @@ const DataLayerTabbedForm = ({
         </FormDataConsumer>
         <BooleanInput source="active_by_default" />
 
-        <LongTextInput source="description" label="datalayer.form.description" />
+        <TextInput multiline source="description" label="datalayer.form.description" />
 
         <FormDataConsumer>
           {({ formData }) =>
             // Allow to initialize default value even if next tab is not yet loaded
-            formData.source && (
-            <TextInput
-              type="hidden"
-              label=""
-              source="layer_style"
-              defaultValue={getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType))}
-            />
-            )}
+            formData.source && <LayerStyleField defaultValue={layerStyleDefaultValue} />}
         </FormDataConsumer>
 
       </LazyFormTab>
 
-      <LazyFormTab label="datalayer.form.style" path="style">
+      <LazyFormTab disabled={external} label="datalayer.form.style" path="style">
 
         <StyleField
           source="layer_style"
@@ -167,8 +163,8 @@ const DataLayerTabbedForm = ({
 
         <ArrayInput source="legends" label="datalayer.form.legends" fullWidth>
           <CustomFormIterator>
-            <LongTextInput source="title" label="datalayer.form.legend.title" />
-            <LongTextInput source="content" label="datalayer.form.legend.template" />
+            <TextInput multiline source="title" label="datalayer.form.legend.title" />
+            <TextInput multiline source="content" label="datalayer.form.legend.template" />
             <LegendItemsField
               source="items"
               label="datalayer.form.legend.items"
@@ -182,18 +178,9 @@ const DataLayerTabbedForm = ({
 
       </LazyFormTab>
 
-      <LazyFormTab label="datalayer.form.interactions" path="interactions">
+      <LazyFormTab disabled={external} label="datalayer.form.interactions" path="interactions">
         <FormDataConsumer>
-          {({ dispatch }) => (
-            <BooleanInput
-              source="table_enable"
-              label="datalayer.form.allow-display-data-table"
-              onChange={value => {
-                if (!value) return;
-                dispatch(change(REDUX_FORM_NAME, 'table_export_enable', false));
-              }}
-            />
-          )}
+          {formDataProps => <DataLayerDataTableField {...formDataProps} />}
         </FormDataConsumer>
 
         <FormDataConsumer>
@@ -210,11 +197,11 @@ const DataLayerTabbedForm = ({
 
         <BooleanInput source="popup_enable" label="datalayer.form.popup.display-on-hover" />
         <FormDataConsumer fullWidth>
-          {({ formData, dispatch, ...rest }) => formData.popup_enable && (
+          {({ formData, ...rest }) => formData.popup_enable && (
             <FieldGroup {...rest}>
               <NumberInput source="popup_minzoom" label="datalayer.form.popup.min-zoom" defaultValue={0} step={1} />
               <NumberInput source="popup_maxzoom" label="datalayer.form.popup.max-zoom" defaultValue={24} step={1} />
-              <LongTextInput source="popup_template" label="datalayer.form.popup.template" />
+              <TextInput multiline source="popup_template" label="datalayer.form.popup.template" />
             </FieldGroup>
           )}
         </FormDataConsumer>
@@ -223,7 +210,7 @@ const DataLayerTabbedForm = ({
         <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
         <FormDataConsumer>
           {({ formData }) => formData.minisheet_enable &&
-            <LongTextInput source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
+            <TextInput multiline source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />}
         </FormDataConsumer>
 
         <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
@@ -236,7 +223,7 @@ const DataLayerTabbedForm = ({
 
       </LazyFormTab>
 
-      <LazyFormTab label="datalayer.form.fields-settings" path="fields">
+      <LazyFormTab disabled={external} label="datalayer.form.fields-settings" path="fields">
         <FormDataConsumer>
           {({ formData }) => (
             <ArrayInput source="fields" label="datalayer.form.all-fields-available" fullWidth>
@@ -246,7 +233,7 @@ const DataLayerTabbedForm = ({
               >
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (
-                    <LongTextInput source={getSource('label')} label={scopedFormData.name} fullWidth />
+                    <TextInput multiline source={getSource('label')} label={scopedFormData.name} fullWidth />
                   )}
                 </FormDataConsumer>
                 <BooleanInput
@@ -305,24 +292,28 @@ const DataLayerTabbedForm = ({
                     );
                   }}
                 </FormDataConsumer>
-                {formData.table_enable ? <BooleanInput source="shown" label="datalayer.form.show" /> : <></>}
+                {formData.table_enable && <BooleanInput source="shown" label="datalayer.form.show" />}
                 <FormDataConsumer>
                   {({ scopedFormData = {}, getSource }) => (
                     scopedFormData.shown && <BooleanInput source={getSource('display')} label="Afficher ce champs par défaut" />
                   )}
                 </FormDataConsumer>
-                {formData.table_export_enable ? <BooleanInput source="exportable" label="datalayer.form.exportable" /> : <></>}
+                {formData.table_export_enable && <BooleanInput source="exportable" label="datalayer.form.exportable" />}
               </DraggableFormIterator>
             </ArrayInput>
           )}
         </FormDataConsumer>
       </LazyFormTab>
+      <FormTab label="fieldUpdater" style={{ display: 'none' }}>
+        <FieldUpdater />
+        <DataLayerFormSwitcher onSwitch={setExternal} />
+      </FormTab>
     </TabbedForm>
-  </>
-);
+  );
+};
 
 const PropsSanitizer = WrappedComponent =>
-  ({ withSource, ...props }) => (<WrappedComponent {...props} />);
+  ({ withSource, dispatch, ...props }) => (<WrappedComponent {...props} />);
 
 export default compose(
   withStyles(styles),
@@ -330,4 +321,4 @@ export default compose(
   translateRA,
   PropsSanitizer,
   withDataProvider,
-)(DataLayerTabbedForm);
+)(DataLayerForm);

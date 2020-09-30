@@ -33,7 +33,7 @@ const LegendItemsField = withRandomColor(({
 }) => (
   <JSONInput
     {...props}
-    defaultValue={[getDefaultValue(name, type, randomColor)]}
+    DISABLED_defaultValue={[getDefaultValue(name, type, randomColor)]}
   />
 ));
 

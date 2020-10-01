@@ -1,5 +1,9 @@
 import React from 'react';
+
+import { useTranslate } from 'react-admin';
+
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { useField } from 'react-final-form';
 import Switch from '@material-ui/core/Switch';
 
@@ -13,6 +17,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+
+import Placeholder from '../../../../components/Placeholder';
 
 const useStyles = makeStyles({
   table: {
@@ -54,7 +60,7 @@ const DragHandle = sortableHandle(() => {
   return (<span className={classes.handle} />);
 });
 
-const FieldRow = SortableElement(({ field, onChange }) => {
+const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
   const handleChangeTextField = property => e => {
     const newValue = { ...field };
     newValue[property] = e.target.value;
@@ -67,15 +73,12 @@ const FieldRow = SortableElement(({ field, onChange }) => {
     onChange(newValue);
   };
 
-
-  const classes = useStyles();
-
   return (
     <TableRow>
       <TableCell component="td" scope="row">
         <DragHandle />
       </TableCell>
-      <TableCell component="td">
+      <TableCell component="td" style={{ userSelect: 'none' }}>
         {field.name}
       </TableCell>
       <TableCell component="td">
@@ -90,13 +93,15 @@ const FieldRow = SortableElement(({ field, onChange }) => {
       </TableCell>
       <TableCell align="right" component="td">
         <Switch
-          checked={field.display}
+          disabled={!field.shown}
+          checked={field.shown && field.display}
           onChange={handleChangeBoolField('display')}
         />
       </TableCell>
       <TableCell align="right" component="td">
         <Switch
-          checked={field.exportable}
+          disabled={!exportEnabled}
+          checked={exportEnabled && field.exportable}
           onChange={handleChangeBoolField('exportable')}
         />
       </TableCell>
@@ -104,7 +109,7 @@ const FieldRow = SortableElement(({ field, onChange }) => {
   );
 });
 
-const SortableTable = SortableContainer(({ fields, onChange }) => {
+const SortableTable = SortableContainer(({ fields, onChange, exportEnabled }) => {
   const handleChangeField = fieldIndex => fieldValue => {
     const newValue = [...fields];
     newValue[fieldIndex] = fieldValue;
@@ -114,22 +119,26 @@ const SortableTable = SortableContainer(({ fields, onChange }) => {
   return (
     <TableBody>
       {fields.map((field, index) => (
+        field.name && (
         <FieldRow
           field={field}
+          exportEnabled={exportEnabled}
           onChange={handleChangeField(index)}
           key={field.name}
           index={index}
         />
+        )
       ))}
     </TableBody>
   );
 });
 
-const TableConfigField = ({ name, label }) => {
+const TableConfigField = ({ name, label, exportEnabled }) => {
   const {
-    input: { value: fields, onChange, ...rest },
+    input: { value: fields, onChange },
     meta: { touched, error },
   } = useField(name, { format, parse });
+  const translate = useTranslate();
 
   const wrapper = React.useRef(null);
   const classes = useStyles();
@@ -142,39 +151,35 @@ const TableConfigField = ({ name, label }) => {
     }
   };
 
-  const computeHelperDimension = ({ node }) => {
-    console.log(node, node.parent);
-    return {
-      height: node.offsetHeight,
-      width: 1355/* node.offsetWidth */,
-    };
-  };
-
   return (
-    <TableContainer component={Paper} className={classes.wrapper}>
-      <Table className={classes.table} stickyHeader aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Order</TableCell>
-            <TableCell>Field</TableCell>
-            <TableCell>Label</TableCell>
-            <TableCell align="right">Shown</TableCell>
-            <TableCell align="right">Default ?</TableCell>
-            <TableCell align="right">Exportable</TableCell>
-          </TableRow>
-        </TableHead>
-        <SortableTable
-          fields={fields}
-          onChange={onChange}
-          onSortEnd={handleSortEnd}
-          useDragHandle
-          lockAxis="y"
-          getHelperDimensions={computeHelperDimension}
-          helperClass={classes.row}
-        />
-      </Table>
-      <div ref={wrapper} />
-    </TableContainer>
+    <>
+      <Typography variant="h5" component="h2">{translate(label)}</Typography>
+
+      <TableContainer component={Paper} className={classes.wrapper}>
+        <Table className={classes.table} stickyHeader aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>{translate('datalayer.form.table.order')}</TableCell>
+              <TableCell>{translate('datalayer.form.table.fieldName')}</TableCell>
+              <TableCell>{translate('datalayer.form.table.label')}</TableCell>
+              <TableCell align="right">{translate('datalayer.form.table.shown')}</TableCell>
+              <TableCell align="right">{translate('datalayer.form.table.display')}</TableCell>
+              <TableCell align="right">{translate('datalayer.form.table.exportable')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <SortableTable
+            fields={fields}
+            exportEnabled={exportEnabled}
+            onChange={onChange}
+            onSortEnd={handleSortEnd}
+            useDragHandle
+            lockAxis="y"
+            helperClass={classes.row}
+          />
+        </Table>
+        <div ref={wrapper} />
+      </TableContainer>
+    </>
   );
 };
 

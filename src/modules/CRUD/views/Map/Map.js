@@ -119,7 +119,7 @@ export class Map extends React.Component {
       this.setMapConfig();
     }
 
-    if (settings !== prevSettings || layer !== prevLayer) {
+    if (settings !== prevSettings || layer !== prevLayer || prevId !== id) {
       this.setInteractions();
     }
 
@@ -169,22 +169,22 @@ export class Map extends React.Component {
 
   setInteractions = () => {
     const {
-      match: { params: { layer } },
+      match: { params: { layer, id } },
       history: { push },
       displayViewFeature,
       settings,
     } = this.props;
 
-    const { layer: { id } = {} } = getView(settings, layer);
+    const { layer: { id: layerId } = {} } = getView(settings, layer);
 
-    if (!id) {
+    if (!layerId) {
       return;
     }
 
     const layers = getLayersPaints(settings);
 
     const interactions = layers.map(interaction => {
-      if (interaction.source !== `${id}`) {
+      if (interaction.source !== `${layerId}`) {
         return false;
       }
       return {
@@ -193,7 +193,7 @@ export class Map extends React.Component {
         fn: ({
           feature: { sourceLayer, properties: { _id: propId } },
         }) => {
-          if (interaction.main && displayViewFeature) {
+          if (interaction.main && displayViewFeature && !id) {
             push(generateURI('layer', { layer: sourceLayer, id: propId }));
           }
         },

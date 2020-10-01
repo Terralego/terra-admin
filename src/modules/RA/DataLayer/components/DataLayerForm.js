@@ -37,6 +37,8 @@ import DataLayerFormSwitcher from './DataLayerFormSwitcher';
 import DataLayerSourceField from './DataLayerSourceField';
 import DataLayerDataTableField from './DataLayerDataTableField';
 
+import TableConfigField from './TableConfigField';
+
 const defaultRequired = required();
 
 const styles = {
@@ -308,30 +310,8 @@ const DataLayerForm = ({
           )}
         </FormDataConsumer>
 
-        <FormDataConsumer>
-          {({ formData }) => (
-            <ArrayInput source="fields" label="datalayer.form.filter.all-fields-available" fullWidth>
-              <DraggableFormIterator
-                disableAdd
-                disableRemove
-              >
-                <FormDataConsumer>
-                  {({ scopedFormData = {}, getSource }) => (
-                    <TextInput multiline source={getSource('label')} label={scopedFormData.name} fullWidth />
-                  )}
-                </FormDataConsumer>
+        <TableConfigField name="fields" />
 
-                {formData.table_enable && <BooleanInput source="shown" label="datalayer.form.table.show" />}
-                <FormDataConsumer>
-                  {({ scopedFormData = {}, getSource }) => (
-                    scopedFormData.shown && <BooleanInput source={getSource('display')} label="Afficher ce champs par défaut" />
-                  )}
-                </FormDataConsumer>
-                {formData.table_export_enable && <BooleanInput source="exportable" label="datalayer.form.table.exportable" />}
-              </DraggableFormIterator>
-            </ArrayInput>
-          )}
-        </FormDataConsumer>
       </LazyFormTab>
 
 

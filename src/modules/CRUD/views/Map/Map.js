@@ -468,84 +468,84 @@ export class Map extends React.Component {
     }
 
     const areSettingsLoaded = Object.keys(settings).length && Object.keys(mapConfig).length;
+
+    if (!areSettingsLoaded) {
+      return <Loading spinner />;
+    }
+
+    const firstCrudViewName = getFirstCrudViewName(settings);
+    const redirectArgs = firstCrudViewName ? { layer: firstCrudViewName } : {};
+
+    if (layer && !getView(settings, layer)) {
+      toast.displayError(t('CRUD.layer.errorNoLayer'));
+      return <Redirect to={generateURI('layer', redirectArgs)} />;
+    }
+    // Redirect to the first item of the menu when no one is selected
+    if (layer === undefined && firstCrudViewName) {
+      return <Redirect to={generateURI('layer', redirectArgs)} />;
+    }
+
     const areDetailsVisible = !!id;
     const layersToMap = layers.map(({ displayOnMap, main, ...props }) => props);
 
-    if (areSettingsLoaded) {
-      const firstCrudViewName = getFirstCrudViewName(settings);
-      const redirectArgs = firstCrudViewName ? { layer: firstCrudViewName } : {};
-      if (layer && !getView(settings, layer)) {
-        toast.displayError(t('CRUD.layer.errorNoLayer'));
-        return <Redirect to={generateURI('layer', redirectArgs)} />;
-      }
-      // Redirect to the first item of the menu when no one is selected
-      if (layer === undefined && firstCrudViewName) {
-        return <Redirect to={generateURI('layer', redirectArgs)} />;
-      }
-    }
-
-    const { terralego: { map: mapLocale } } = getResourceBundle(language) || getResourceBundle(language.split('-')[0]) || getResourceBundle(fallbackLng[0]);
+    const {
+      terralego: { map: mapLocale },
+    } = getResourceBundle(language.slice(0, 2)) || getResourceBundle(fallbackLng[0]);
 
     return (
       <>
-        {!areSettingsLoaded
-          ? <Loading spinner />
-          : (
-            <>
-              <DetailsWrapper detailsRef={detailsRef}>
-                {areDetailsVisible && (
-                  <Details
-                    refreshingLayers={refreshingLayers}
-                  />
-                )}
-              </DetailsWrapper>
-
-              <div
-                className={classnames(
-                  {
-                    'CRUD-map': true,
-                    'CRUD-map--is-resizing': mapIsResizing,
-                    [`CRUD-map--with-table-${tableSize}`]: layer && !areDetailsVisible,
-                  },
-                )}
-              >
-                {!!backgroundStyle.length && (
-                  <InteractiveMap
-                    onMapLoaded={this.resetMap}
-                    {...mapConfig}
-                    customStyle={{ layers: layersToMap, sources }}
-                    interactions={interactions}
-                    controls={controls}
-                    onInit={this.interactiveMapInit}
-                    onStyleChange={this.refreshLayers}
-                    translate={t}
-                    locale={mapLocale}
-                  />
-                )}
-                {!backgroundStyle.length && (
-                  <Message intent="danger" className="CRUD-no-map">
-                    {t('CRUD.settings.unableToLoadMap')}
-                  </Message>
-                )}
-              </div>
-
-              <div
-                ref={dataTableRef}
-                className={classnames(
-                  {
-                    'CRUD-table': true,
-                    'CRUD-table--active': layer && !areDetailsVisible,
-                    [`CRUD-table--${tableSize}`]: layer && !areDetailsVisible,
-                  },
-                )}
-              >
-                <DataTable
-                  layerName={layer}
-                  onHoverCell={this.onTableHoverCell}
-                />
-              </div>
-            </>
+        <DetailsWrapper detailsRef={detailsRef}>
+          {areDetailsVisible && (
+            <Details
+              refreshingLayers={refreshingLayers}
+            />
           )}
+        </DetailsWrapper>
+
+        <div
+          className={classnames(
+            {
+              'CRUD-map': true,
+              'CRUD-map--is-resizing': mapIsResizing,
+              [`CRUD-map--with-table-${tableSize}`]: layer && !areDetailsVisible,
+            },
+          )}
+        >
+          {!!backgroundStyle.length && (
+            <InteractiveMap
+              onMapLoaded={this.resetMap}
+              {...mapConfig}
+              customStyle={{ layers: layersToMap, sources }}
+              interactions={interactions}
+              controls={controls}
+              onInit={this.interactiveMapInit}
+              onStyleChange={this.refreshLayers}
+              translate={t}
+              locale={mapLocale}
+            />
+          )}
+          {!backgroundStyle.length && (
+            <Message intent="danger" className="CRUD-no-map">
+              {t('CRUD.settings.unableToLoadMap')}
+            </Message>
+          )}
+        </div>
+
+        <div
+          ref={dataTableRef}
+          className={classnames(
+            {
+              'CRUD-table': true,
+              'CRUD-table--active': layer && !areDetailsVisible,
+              [`CRUD-table--${tableSize}`]: layer && !areDetailsVisible,
+            },
+          )}
+        >
+          <DataTable
+            layerName={layer}
+            onHoverCell={this.onTableHoverCell}
+          />
+        </div>
       </>
     );
   }

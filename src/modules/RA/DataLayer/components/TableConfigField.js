@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { useTranslate } from 'react-admin';
+import { useTranslate, useInput } from 'react-admin';
 
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { useField } from 'react-final-form';
+
 import Switch from '@material-ui/core/Switch';
 
 import { SortableContainer, SortableElement, sortableHandle } from 'react-sortable-hoc';
@@ -17,8 +17,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
-import Placeholder from '../../../../components/Placeholder';
 
 const useStyles = makeStyles({
   table: {
@@ -51,9 +49,6 @@ const useStyles = makeStyles({
   },
 });
 
-const format = val => val;
-const parse = val => val;
-
 
 const DragHandle = sortableHandle(() => {
   const classes = useStyles();
@@ -61,17 +56,21 @@ const DragHandle = sortableHandle(() => {
 });
 
 const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
+  const translate = useTranslate();
+
   const handleChangeTextField = property => e => {
     const newValue = { ...field };
     newValue[property] = e.target.value;
     onChange(newValue);
   };
 
-  const handleChangeBoolField = property => e => {
+  const handleToggleField = property => e => {
     const newValue = { ...field };
     newValue[property] = e.target.checked;
     onChange(newValue);
   };
+
+  const labelInError = !field.label || field.label.length === 0;
 
   return (
     <TableRow>
@@ -82,27 +81,33 @@ const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
         {field.name}
       </TableCell>
       <TableCell component="td">
-        <TextField label="" value={field.label} onChange={handleChangeTextField('label')} />
+        <TextField
+          label=""
+          value={field.label}
+          onChange={handleChangeTextField('label')}
+          error={labelInError}
+          helperText={labelInError ? translate('datalayer.form.table.empty-not-allowed') : ''}
+        />
       </TableCell>
 
       <TableCell align="right" component="td">
         <Switch
-          checked={field.shown}
-          onChange={handleChangeBoolField('shown')}
+          checked={Boolean(field.shown)}
+          onChange={handleToggleField('shown')}
         />
       </TableCell>
       <TableCell align="right" component="td">
         <Switch
           disabled={!field.shown}
-          checked={field.shown && field.display}
-          onChange={handleChangeBoolField('display')}
+          checked={Boolean(field.shown) && Boolean(field.display)}
+          onChange={handleToggleField('display')}
         />
       </TableCell>
       <TableCell align="right" component="td">
         <Switch
           disabled={!exportEnabled}
-          checked={exportEnabled && field.exportable}
-          onChange={handleChangeBoolField('exportable')}
+          checked={Boolean(exportEnabled) && Boolean(field.exportable)}
+          onChange={handleToggleField('exportable')}
         />
       </TableCell>
     </TableRow>
@@ -133,11 +138,19 @@ const SortableTable = SortableContainer(({ fields, onChange, exportEnabled }) =>
   );
 });
 
-const TableConfigField = ({ name, label, exportEnabled }) => {
+const validate = data => {
+  const valid = data.reduce((prev, field) => prev && (field.label.length > 0), true);
+  if (!valid) {
+    return 'datalayer.form.table.row-in-error';
+  }
+  return undefined;
+};
+
+const TableConfigField = ({ label, exportEnabled, ...rest }) => {
   const {
     input: { value: fields, onChange },
     meta: { touched, error },
-  } = useField(name, { format, parse });
+  } = useInput({ validate, ...rest });
   const translate = useTranslate();
 
   const wrapper = React.useRef(null);
@@ -154,6 +167,8 @@ const TableConfigField = ({ name, label, exportEnabled }) => {
   return (
     <>
       <Typography variant="h5" component="h2">{translate(label)}</Typography>
+
+      {touched && error && (<Typography color="error">{translate(error)}</Typography>)}
 
       <TableContainer component={Paper} className={classes.wrapper}>
         <Table className={classes.table} stickyHeader aria-label="simple table">

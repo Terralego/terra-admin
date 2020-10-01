@@ -296,9 +296,9 @@ const DataLayerForm = ({
         </ArrayInput>
       </LazyFormTab>
 
-      <LazyFormTab disabled={external} label="datalayer.form.table.tab" path="table">
+      <FormTab disabled={external} label="datalayer.form.table.tab" path="table">
         <FormDataConsumer>
-          {({ formData, formDataProps }) => {
+          {({ formData, formDataProps, ...rest }) => {
             if (!formData.source) {
               return (<Placeholder><Typography variant="h5" component="h2">{translate('datalayer.form.table.no-source')}</Typography></Placeholder>);
             }
@@ -318,14 +318,20 @@ const DataLayerForm = ({
                       disabled: !formData.table_enable,
                     }}
                   />
-                  <TableConfigField name="fields" label="datalayer.form.table.all-fields" exportEnabled={formData.table_export_enable} />
+                  <TableConfigField
+                    source="fields"
+                    label="datalayer.form.table.all-fields"
+                    exportEnabled={formData.table_export_enable}
+                    formDataProps={formDataProps}
+                    {...rest}
+                  />
                 </>
                 )}
               </>
             );
           }}
         </FormDataConsumer>
-      </LazyFormTab>
+      </FormTab>
 
 
       <LazyFormTab disabled={external} label="datalayer.form.widget.tab" path="other">

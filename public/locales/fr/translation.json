@@ -471,14 +471,16 @@
         "tab": "Table",
         "all-fields": "Configuration des champs",
         "no-field": "Aucun champ pour cette source",
-        "no-source": "Veuillez choisir une source de donnée avant de configurer la table",
+        "no-source": "Veuillez choisir une source de données avant de configurer la table",
+        "row-in-error": "Votre saisie comporte une erreur.",
+        "empty-not-allowed": "Ce champ est requis",
         "shown": "Afficher dans la table",
         "fieldName": "Champ source",
         "label": "Nom",
         "display": "Afficher par défaut",
         "exportable": "Exportable",
         "allow-export-data": "Autoriser l'export des données",
-        "allow-display-data-table": "Activer l'affichage du tableau de données",
+        "allow-display-data-table": "Activer la table des données",
         "order": "Ordre"
       },
       "popup": {

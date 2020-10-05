@@ -11,7 +11,7 @@ exports[`should render AttachmentView correctly 1`] = `
   className="details"
 >
   <div
-    documents={
+    generatedFiles={
       Array [
         Object {
           "file1": "file1",
@@ -49,7 +49,7 @@ exports[`should render defaultView correctly 1`] = `
   className="details"
 >
   <div
-    documents={
+    generatedFiles={
       Array [
         Object {
           "file1": "file1",

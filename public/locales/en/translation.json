@@ -253,7 +253,9 @@
       "true": "Yes",
       "false": "No",
       "other": "Other",
-      "generatedDocuments": "Generated documents",
+      "exportFiles": "Export",
+      "generatedDocument": "Generated document",
+      "generatedDocument_plural": "Generated documents",
       "fitBoundButton": "Center map to \"{{name}}\"",
       "menu": {
         "default": "Informations",

@@ -19,7 +19,7 @@ exports[`should render correctly 1`] = `
     </h2>
   </div>
   <div>
-    ExportGeneratedFiles
+    ExportFiles
   </div>
 </header>
 `;
@@ -27,6 +27,15 @@ exports[`should render correctly 1`] = `
 exports[`should render correctly with documents 1`] = `
 <header
   className="details__header"
+  documents={
+    Array [
+      Object {
+        "download_url": "path/to/file",
+        "template_file": "foo.pdf",
+        "template_name": "foo",
+      },
+    ]
+  }
 >
   <div
     className="details__header-title"
@@ -42,18 +51,8 @@ exports[`should render correctly with documents 1`] = `
       Title
     </h2>
   </div>
-  <div
-    documents={
-      Array [
-        Object {
-          "download_url": "path/to/file",
-          "template_file": "foo.pdf",
-          "template_name": "foo",
-        },
-      ]
-    }
-  >
-    ExportGeneratedFiles
+  <div>
+    ExportFiles
   </div>
 </header>
 `;

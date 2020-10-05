@@ -138,19 +138,12 @@ const SortableTable = SortableContainer(({ fields, onChange, exportEnabled }) =>
   );
 });
 
-const validate = data => {
-  const valid = data.reduce((prev, field) => prev && (field.label.length > 0), true);
-  if (!valid) {
-    return 'datalayer.form.table.row-in-error';
-  }
-  return undefined;
-};
 
 const TableConfigField = ({ label, exportEnabled, ...rest }) => {
   const {
     input: { value: fields, onChange },
-    meta: { touched, error },
-  } = useInput({ validate, ...rest });
+    meta: { error },
+  } = useInput(rest);
   const translate = useTranslate();
 
   const wrapper = React.useRef(null);
@@ -168,7 +161,7 @@ const TableConfigField = ({ label, exportEnabled, ...rest }) => {
     <>
       <Typography variant="h5" component="h2">{translate(label)}</Typography>
 
-      {touched && error && (<Typography color="error">{translate(error)}</Typography>)}
+      {error && (<Typography color="error">{translate(error)}</Typography>)}
 
       <TableContainer component={Paper} className={classes.wrapper}>
         <Table className={classes.table} stickyHeader aria-label="simple table">

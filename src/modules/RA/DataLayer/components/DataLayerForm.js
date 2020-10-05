@@ -17,7 +17,6 @@ import {
 import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 import compose from '../../../../utils/compose';
 import DraggableFormIterator from '../../../../components/react-admin/DraggableFormIterator';
@@ -33,14 +32,11 @@ import { required } from '../../../../utils/react-admin/validate';
 import { getLayerStyleDefaultValue, getShapeFromGeomType, POLYGON } from '../../../../utils/geom';
 import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
-import Placeholder from '../../../../components/Placeholder';
 
 import withRandomColor from './withRandomColor';
 import DataLayerFormSwitcher from './DataLayerFormSwitcher';
 import DataLayerSourceField from './DataLayerSourceField';
-import DataLayerDataTableField from './DataLayerDataTableField';
-
-import TableConfigField from './TableConfigField';
+import TableConfigTabContent from './TableConfigTab';
 
 const defaultRequired = required();
 
@@ -77,6 +73,7 @@ const DataLayerForm = ({
     [geomType, randomColor],
   );
   const [external, setExternal] = React.useState(true);
+
 
   return (
     <TabbedForm {...props}>
@@ -297,40 +294,7 @@ const DataLayerForm = ({
       </LazyFormTab>
 
       <FormTab disabled={external} label="datalayer.form.table.tab" path="table">
-        <FormDataConsumer>
-          {({ formData, formDataProps, ...rest }) => {
-            if (!formData.source) {
-              return (<Placeholder><Typography variant="h5" component="h2">{translate('datalayer.form.table.no-source')}</Typography></Placeholder>);
-            }
-            if (!Array.isArray(formData.fields) || formData.fields.length === 0) {
-              return (<Placeholder><Typography variant="h5" component="h2">{translate('datalayer.form.table.no-field')}</Typography></Placeholder>);
-            }
-            return (
-              <>
-                <DataLayerDataTableField {...formDataProps} />
-
-                {formData.table_enable && (
-                <>
-                  <BooleanInput
-                    source="table_export_enable"
-                    label="datalayer.form.table.allow-export-data"
-                    options={{
-                      disabled: !formData.table_enable,
-                    }}
-                  />
-                  <TableConfigField
-                    source="fields"
-                    label="datalayer.form.table.all-fields"
-                    exportEnabled={formData.table_export_enable}
-                    formDataProps={formDataProps}
-                    {...rest}
-                  />
-                </>
-                )}
-              </>
-            );
-          }}
-        </FormDataConsumer>
+        <TableConfigTabContent />
       </FormTab>
 
 

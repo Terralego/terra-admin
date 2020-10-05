@@ -86,7 +86,7 @@ AttachmentList.defaultProps = {
   name: 'attachments',
   onSelection: () => {},
   selectable: false,
-  settings: {},
+  settings: undefined,
 };
 
 export default AttachmentList;

@@ -33,9 +33,6 @@ const CRUDPRoviderGetter = ({
   detailsRef,
   getSettings,
   settings,
-  settings: {
-    config: { BASE_LAYERS } = {},
-  },
   setMap,
   map,
   mapIsResizing,
@@ -57,7 +54,7 @@ const CRUDPRoviderGetter = ({
   mapIsResizing,
   feature: feature[id] || {},
   errors,
-  backgroundStyle: BASE_LAYERS && BASE_LAYERS.map(style => {
+  backgroundStyle: settings?.config?.BASE_LAYERS?.map(style => {
     const [label] = Object.keys(style);
     return {
       label,

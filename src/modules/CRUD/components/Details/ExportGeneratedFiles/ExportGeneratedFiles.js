@@ -1,42 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, MenuItem, Popover, Classes, Button, Position } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
+import { Classes, MenuDivider, MenuItem } from '@blueprintjs/core';
 
-const ExportGeneratedFiles = ({ documents, t }) => documents.length > 0 && (
-  <Popover
-    position={Position.BOTTOM_RIGHT}
-    content={(
-      <Menu>
-        {documents.map(({ download_url: url, template_file: file, template_name: name }) => (
-          <MenuItem
-            className={Classes.MINIMAL}
-            icon="document"
-            text={name}
-            key={file}
-            href={url}
-          />
-        ))}
-      </Menu>
-  )}
-  >
-    <Button icon="download" text={t('CRUD.details.generatedDocuments')} />
-  </Popover>
-);
+const ExportGeneratedFiles = ({ files }) => {
+  const { t } = useTranslation();
+
+  const count = files.length;
+
+  if (!count) {
+    return null;
+  }
+
+  return (
+    <>
+      <MenuDivider title={t('CRUD.details.generatedDocument', { count })} />
+      {files.map(({ download_url: url, template_file: file, template_name: name }) => (
+        <MenuItem
+          className={Classes.MINIMAL}
+          icon="document"
+          text={name}
+          key={file}
+          href={url}
+        />
+      ))}
+    </>
+  );
+};
 
 ExportGeneratedFiles.propTypes = {
-  documents: PropTypes.arrayOf(
+  files: PropTypes.arrayOf(
     PropTypes.shape({
       template_name: PropTypes.string,
       download_url: PropTypes.string,
       template_file: PropTypes.string,
     }),
   ),
-  t: PropTypes.func,
 };
 
 ExportGeneratedFiles.defaultProps = {
-  documents: [],
-  t: text => text,
+  files: [],
 };
 
 export default ExportGeneratedFiles;

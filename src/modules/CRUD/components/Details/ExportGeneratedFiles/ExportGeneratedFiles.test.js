@@ -4,13 +4,8 @@ import renderer from 'react-test-renderer';
 import ExportGeneratedFiles from './ExportGeneratedFiles';
 
 jest.mock('@blueprintjs/core', () => ({
-  Popover: ({ children, ...props }) => <div {...props}>{children}</div>,
-  Menu: ({ children }) => <ul>{children}</ul>,
-  MenuItem: ({ children }) => <li>{children}</li>,
-  Button: ({ text }) => <div>{text}</div>,
-  Position: {
-    BOTTOM_RIGHT: 'bottom-right',
-  },
+  MenuDivider: props => <li {...props} />,
+  MenuItem: props => <li {...props} />,
   Classes: {
     MINIMAL: 'MINIMAL',
   },
@@ -18,7 +13,7 @@ jest.mock('@blueprintjs/core', () => ({
 
 
 const props = {
-  documents: [{
+  files: [{
     template_name: 'FileName',
     download_url: 'path/to/file/',
     template_file: 'file1.pdf',

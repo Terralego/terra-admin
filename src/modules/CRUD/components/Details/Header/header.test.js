@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import Header from './Header';
 
 jest.mock('../FitBoundButton', () => props => <div {...props}>FitBoundButton</div>);
-jest.mock('../ExportGeneratedFiles', () => props => <div {...props}>ExportGeneratedFiles</div>);
+jest.mock('../ExportFiles', () => props => <div {...props}>ExportFiles</div>);
 
 
 const props = {

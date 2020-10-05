@@ -3,24 +3,22 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import FitBoundButton from '../FitBoundButton';
-import ExportGeneratedFiles from '../ExportGeneratedFiles';
+import ExportFiles from '../ExportFiles';
 
-const Header = ({ className, documents, title, ...props }) => (
+const Header = ({ className, generatedFiles, title, ...props }) => (
   <header className={classnames('details__header', className)} {...props}>
     <div className="details__header-title">
       <FitBoundButton title={title} />
       <h2 className="details__title">{title}</h2>
     </div>
-    <ExportGeneratedFiles
-      documents={documents}
-    />
+    <ExportFiles generatedFiles={generatedFiles} />
   </header>
 );
 
 Header.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string.isRequired,
-  documents: PropTypes.arrayOf(
+  generatedFiles: PropTypes.arrayOf(
     PropTypes.shape({
       template_name: PropTypes.string,
       download_url: PropTypes.string,
@@ -31,7 +29,7 @@ Header.propTypes = {
 
 Header.defaultProps = {
   className: '',
-  documents: undefined,
+  generatedFiles: undefined,
 };
 
 export default Header;

@@ -40,7 +40,10 @@ const Read = ({
 
   return (
     <div className="details">
-      <Header title={title} documents={documents} />
+      <Header
+        generatedFiles={documents}
+        title={title}
+      />
       <Menu section={section} />
       <div className="details__content">
         {getView()}

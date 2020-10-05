@@ -256,6 +256,8 @@
       "exportFiles": "Exporter",
       "generatedDocument": "Document généré",
       "generatedDocument_plural": "Documents générés",
+      "generatedGeomFile": "Donnée géographique",
+      "generatedGeomFile_plural": "Données géographiques",
       "fitBoundButton": "Centrer la carte sur \"{{name}}\"",
       "menu": {
         "default": "Informations",

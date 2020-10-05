@@ -256,6 +256,8 @@
       "exportFiles": "Export",
       "generatedDocument": "Generated document",
       "generatedDocument_plural": "Generated documents",
+      "generatedGeomFile": "Geom file",
+      "generatedGeomFile_plural": "Geom files",
       "fitBoundButton": "Center map to \"{{name}}\"",
       "menu": {
         "default": "Informations",

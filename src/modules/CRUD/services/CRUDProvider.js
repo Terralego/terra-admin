@@ -19,10 +19,10 @@ const { Provider } = context;
 
 export class CRUDProvider extends React.Component {
   state = {
-    settings: {},
+    settings: undefined,
     featuresList: {},
     feature: {},
-    mapConfig: {},
+    mapConfig: undefined,
     errors: {
       attachmentCategories: undefined,
       settings: undefined,

@@ -60,8 +60,8 @@ export class Map extends React.Component {
         layer: undefined,
       },
     },
-    map: {},
-    settings: {},
+    map: undefined,
+    settings: undefined,
     settingsEndpoint: undefined,
     tableSize: TABLE_MEDIUM,
     feature: {},
@@ -69,7 +69,7 @@ export class Map extends React.Component {
   }
 
   state = {
-    mapConfig: {},
+    mapConfig: undefined,
     interactions: [],
     sources: [],
     layers: [],
@@ -86,13 +86,13 @@ export class Map extends React.Component {
       match: { params: { layer } },
     } = this.props;
 
-    if (Object.keys(settings).length > 0) {
+    if (settings) {
       this.setMapConfig();
     } else {
       getSettings(settingsEndpoint);
     }
 
-    if (Object.keys(map).length > 0 && layer) {
+    if (map && layer) {
       this.generateLayersToMap();
       this.setInteractions();
     }
@@ -123,7 +123,7 @@ export class Map extends React.Component {
       this.setInteractions();
     }
 
-    if ((layer !== prevLayer || map !== prevMap || prevId !== id) && Object.keys(map).length > 0) {
+    if ((layer !== prevLayer || map !== prevMap || prevId !== id) && map) {
       this.generateLayersToMap();
     }
 
@@ -143,7 +143,7 @@ export class Map extends React.Component {
       this.setFitBounds();
       this.generateLayersToMap();
       const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
-      if (!layerId || !Object.keys(map).length) {
+      if (!layerId || !map) {
         return;
       }
       addHighlight({
@@ -157,7 +157,7 @@ export class Map extends React.Component {
 
     if (isTrueFeatureID(prevId) && !id) {
       const { id: layerId } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === prevLayer) || {};
-      if (!layerId || !Object.keys(map).length) {
+      if (!layerId || !map) {
         return;
       }
       removeHighlight && removeHighlight({
@@ -215,7 +215,7 @@ export class Map extends React.Component {
       feature: { geom: { coordinates = [] } = {} },
     } = this.props;
 
-    if (!Object.keys(map).length) return;
+    if (!map) return;
 
     const { extent: [w, s, e, n] } = getView(settings, layer);
     const coords = isTrueFeatureID(id) ? coordinates : [[w, s], [e, n]];
@@ -243,7 +243,7 @@ export class Map extends React.Component {
       backgroundStyle,
     } = this.props;
 
-    if (!Object.keys(settings).length) {
+    if (!settings) {
       return;
     }
 
@@ -292,7 +292,7 @@ export class Map extends React.Component {
     const view = getView(settings, layer);
 
     const { layers } = this.state;
-    if (!Object.keys(map).length || !layers.length) {
+    if (!map || !layers.length) {
       return;
     }
 
@@ -356,7 +356,7 @@ export class Map extends React.Component {
     const { map, match: { params: { layer } } } = this.props;
     const { layers, addHighlight, removeHighlight } = this.state;
     const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
-    if (!layerId || !Object.keys(map).length) {
+    if (!layerId || !map) {
       return;
     }
     if (hover) {
@@ -390,7 +390,7 @@ export class Map extends React.Component {
 
     const view = getView(settings, layer);
 
-    if (!Object.keys(settings).length || !layer || !view) {
+    if (!settings || !layer || !view) {
       return;
     }
 
@@ -467,7 +467,7 @@ export class Map extends React.Component {
       );
     }
 
-    const areSettingsLoaded = Object.keys(settings).length && Object.keys(mapConfig).length;
+    const areSettingsLoaded = settings && mapConfig;
 
     if (!areSettingsLoaded) {
       return <Loading spinner />;

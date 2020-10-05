@@ -9,7 +9,6 @@ import Details from './Details';
 export default withRouter(
   connectCRUDProvider(({
     settings,
-    map,
     fetchFeature,
     feature,
     errors,
@@ -21,7 +20,6 @@ export default withRouter(
       error: { message = '' } = {},
     } = errors.feature.find(({ featureId }) => featureId === id) || {};
     return {
-      map,
       fetchFeature,
       feature: feature[id] || {},
       view: getView(settings, layer),

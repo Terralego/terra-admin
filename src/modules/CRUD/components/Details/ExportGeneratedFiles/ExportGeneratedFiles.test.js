@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import DownloadButtons from './DownloadButtons';
+import ExportGeneratedFiles from './ExportGeneratedFiles';
 
 jest.mock('@blueprintjs/core', () => ({
   Popover: ({ children, ...props }) => <div {...props}>{children}</div>,
@@ -32,7 +32,7 @@ const props = {
 
 it('should render correctly', () => {
   const tree = renderer.create((
-    <DownloadButtons
+    <ExportGeneratedFiles
       {...props}
     />
   )).toJSON();

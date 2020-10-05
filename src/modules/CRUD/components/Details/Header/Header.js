@@ -5,13 +5,13 @@ import classnames from 'classnames';
 import FitBoundButton from '../FitBoundButton';
 import ExportFiles from '../ExportFiles';
 
-const Header = ({ className, generatedFiles, title, ...props }) => (
+const Header = ({ className, generatedFiles, geomFiles, title, ...props }) => (
   <header className={classnames('details__header', className)} {...props}>
     <div className="details__header-title">
       <FitBoundButton title={title} />
       <h2 className="details__title">{title}</h2>
     </div>
-    <ExportFiles generatedFiles={generatedFiles} />
+    <ExportFiles generatedFiles={generatedFiles} geomFiles={geomFiles} />
   </header>
 );
 

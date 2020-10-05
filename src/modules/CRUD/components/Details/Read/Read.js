@@ -17,6 +17,7 @@ const Read = ({
   feature: {
     title = t('CRUD.details.noFeature'),
     documents,
+    geometry_files: geomFiles,
     geometries,
     display_properties: properties,
   },
@@ -42,6 +43,7 @@ const Read = ({
     <div className="details">
       <Header
         generatedFiles={documents}
+        geomFiles={geomFiles}
         title={title}
       />
       <Menu section={section} />

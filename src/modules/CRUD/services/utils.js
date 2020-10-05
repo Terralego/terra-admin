@@ -1,4 +1,6 @@
+import Api from '@terralego/core/modules/Api';
 import { geomTypes } from '../../RA/DataSource/index';
+
 
 import {
   POINT,
@@ -35,6 +37,17 @@ export const sanitizeCustomEndpoint = str => {
     return str.replace('/api/', '');
   }
   return str;
+};
+
+export const exportFileFromURL = async (url, name) => {
+  const data = await Api.request(sanitizeCustomEndpoint(url), { responseType: 'text' });
+  const file = new Blob([data], { type: 'text/plain' });
+
+  const [fileName] = url.split('/').slice(-1);
+  const link = document.createElement('a');
+  link.download = name || fileName;
+  link.href = global.URL.createObjectURL(file);
+  link.click();
 };
 
 
@@ -126,6 +139,7 @@ export const getJSONSchemaFromGeom = (
 };
 
 export default {
+  exportFileFromURL,
   getJSONSchemaFromGeom,
   getObjectOrderedValue,
   isTableObject,

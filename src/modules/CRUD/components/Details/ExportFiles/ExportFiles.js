@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Menu, Popover, Button, Position } from '@blueprintjs/core';
+import ExportGeomFiles from '../ExportGeomFiles';
 import ExportGeneratedFiles from '../ExportGeneratedFiles';
 
 const ExportFiles = ({ generatedFiles, geomFiles }) => {
@@ -15,6 +16,7 @@ const ExportFiles = ({ generatedFiles, geomFiles }) => {
       content={(
         <Menu>
           <ExportGeneratedFiles files={generatedFiles} />
+          <ExportGeomFiles files={geomFiles} />
         </Menu>
       )}
     >

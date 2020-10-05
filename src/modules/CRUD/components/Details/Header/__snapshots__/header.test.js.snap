@@ -19,7 +19,7 @@ exports[`should render correctly 1`] = `
     </h2>
   </div>
   <div>
-    DownloadButtons
+    ExportGeneratedFiles
   </div>
 </header>
 `;
@@ -53,7 +53,7 @@ exports[`should render correctly with documents 1`] = `
       ]
     }
   >
-    DownloadButtons
+    ExportGeneratedFiles
   </div>
 </header>
 `;

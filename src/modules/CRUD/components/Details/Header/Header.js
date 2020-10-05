@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import FitBoundButton from '../FitBoundButton';
-import DownloadButtons from '../DownloadButtons';
+import ExportGeneratedFiles from '../ExportGeneratedFiles';
 
 const Header = ({ className, documents, title, ...props }) => (
   <header className={classnames('details__header', className)} {...props}>
@@ -11,7 +11,7 @@ const Header = ({ className, documents, title, ...props }) => (
       <FitBoundButton title={title} />
       <h2 className="details__title">{title}</h2>
     </div>
-    <DownloadButtons
+    <ExportGeneratedFiles
       documents={documents}
     />
   </header>

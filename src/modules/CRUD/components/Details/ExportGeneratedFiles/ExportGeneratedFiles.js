@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem, Popover, Classes, Button, Position } from '@blueprintjs/core';
 
-const DownloadButtons = ({ documents, t }) => documents.length > 0 && (
+const ExportGeneratedFiles = ({ documents, t }) => documents.length > 0 && (
   <Popover
     position={Position.BOTTOM_RIGHT}
     content={(
@@ -23,7 +23,7 @@ const DownloadButtons = ({ documents, t }) => documents.length > 0 && (
   </Popover>
 );
 
-DownloadButtons.propTypes = {
+ExportGeneratedFiles.propTypes = {
   documents: PropTypes.arrayOf(
     PropTypes.shape({
       template_name: PropTypes.string,
@@ -34,9 +34,9 @@ DownloadButtons.propTypes = {
   t: PropTypes.func,
 };
 
-DownloadButtons.defaultProps = {
+ExportGeneratedFiles.defaultProps = {
   documents: [],
   t: text => text,
 };
 
-export default DownloadButtons;
+export default ExportGeneratedFiles;

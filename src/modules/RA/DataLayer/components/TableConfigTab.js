@@ -9,7 +9,7 @@ import Placeholder from '../../../../components/Placeholder';
 import TableConfigField from './TableConfigField';
 
 const validateTableFields = data => {
-  const valid = data.reduce((prev, field) => prev && (field.label.length > 0), true);
+  const valid = !data.some(({ label }) => !label.length);
   if (!valid) {
     return 'datalayer.form.table.row-in-error';
   }
@@ -24,20 +24,29 @@ const TableConfigTabContent = props => {
   const translate = useTranslate();
 
   if (!source) {
-    return (<Placeholder><Typography variant="h5" component="h2">{translate('datalayer.form.table.no-source')}</Typography></Placeholder>);
+    return (
+      <Placeholder>
+        <Typography variant="h5" component="h2">
+          {translate('datalayer.form.table.no-source')}
+        </Typography>
+      </Placeholder>
+    );
   }
   if (!Array.isArray(fields) || fields.length === 0) {
-    return (<Placeholder><Typography variant="h5" component="h2">{translate('datalayer.form.table.no-field')}</Typography></Placeholder>);
+    return (
+      <Placeholder>
+        <Typography variant="h5" component="h2">
+          {translate('datalayer.form.table.no-field')}
+        </Typography>
+      </Placeholder>
+    );
   }
   return (
     <>
       <BooleanInput
         source="table_enable"
         label="datalayer.form.table.allow-display-data-table"
-        onChange={value => {
-          if (!value) return;
-          onTableEnableChange(value);
-        }}
+        onChange={onTableEnableChange}
       />
 
       {tableEnable && (

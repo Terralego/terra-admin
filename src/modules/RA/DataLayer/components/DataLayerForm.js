@@ -78,6 +78,12 @@ const DataLayerForm = ({
   return (
     <TabbedForm {...props}>
       <FormTab label="datalayer.form.definition" path="general">
+        <TextInput
+          source="name"
+          label="datalayer.form.name"
+          validate={defaultRequired}
+          type="text"
+        />
         <FormDataConsumer>
           {formDataProps => (
             <DataLayerSourceField
@@ -89,12 +95,6 @@ const DataLayerForm = ({
         </FormDataConsumer>
         <DataLayerFormSwitcher onSwitch={setExternal} />
 
-        <TextInput
-          source="name"
-          label="datalayer.form.name"
-          validate={defaultRequired}
-          type="text"
-        />
 
         <FormDataConsumer>
           {({ formData }) => {

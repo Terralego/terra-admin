@@ -64,23 +64,24 @@ const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
     onChange(newValue);
   };
 
+
   const handleToggleField = property => e => {
     const newValue = { ...field };
     newValue[property] = e.target.checked;
     onChange(newValue);
   };
 
-  const labelInError = !field.label || field.label.length === 0;
+  const labelInError = !field.label;
 
   return (
     <TableRow>
-      <TableCell component="td" scope="row">
+      <TableCell scope="row">
         <DragHandle />
       </TableCell>
-      <TableCell component="td" style={{ userSelect: 'none' }}>
+      <TableCell style={{ userSelect: 'none' }}>
         {field.name}
       </TableCell>
-      <TableCell component="td">
+      <TableCell>
         <TextField
           label=""
           value={field.label}
@@ -90,20 +91,20 @@ const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
         />
       </TableCell>
 
-      <TableCell align="right" component="td">
+      <TableCell align="right">
         <Switch
           checked={Boolean(field.shown)}
           onChange={handleToggleField('shown')}
         />
       </TableCell>
-      <TableCell align="right" component="td">
+      <TableCell align="right">
         <Switch
           disabled={!field.shown}
           checked={Boolean(field.shown) && Boolean(field.display)}
           onChange={handleToggleField('display')}
         />
       </TableCell>
-      <TableCell align="right" component="td">
+      <TableCell align="right">
         <Switch
           disabled={!exportEnabled}
           checked={Boolean(exportEnabled) && Boolean(field.exportable)}
@@ -125,13 +126,13 @@ const SortableTable = SortableContainer(({ fields, onChange, exportEnabled }) =>
     <TableBody>
       {fields.map((field, index) => (
         field.name && (
-        <FieldRow
-          field={field}
-          exportEnabled={exportEnabled}
-          onChange={handleChangeField(index)}
-          key={field.name}
-          index={index}
-        />
+          <FieldRow
+            field={field}
+            exportEnabled={exportEnabled}
+            onChange={handleChangeField(index)}
+            key={field.name}
+            index={index}
+          />
         )
       ))}
     </TableBody>

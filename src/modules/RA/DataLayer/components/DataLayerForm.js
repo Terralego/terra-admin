@@ -14,7 +14,6 @@ import {
   SimpleFormIterator,
 } from 'react-admin';
 
-import { FormGroup } from '@blueprintjs/core';
 import { ColorInput } from 'react-admin-color-input';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -25,18 +24,17 @@ import JSONInput from '../../../../components/react-admin/JSONInput';
 import FieldUpdater from './FieldUpdater';
 
 import LegendItemsField from './LegendItemsField';
-import CustomLayer from './CustomLayer';
-import StyleField from './StyleField';
 
 import { required } from '../../../../utils/react-admin/validate';
-import { getLayerStyleDefaultValue, getShapeFromGeomType, POLYGON } from '../../../../utils/geom';
 import TextArrayInput from '../../../../components/react-admin/TextArrayInput';
 import HelpContent from '../../../../components/react-admin/HelpContent';
 
-import withRandomColor from './withRandomColor';
 import DataLayerFormSwitcher from './DataLayerFormSwitcher';
-import DataLayerSourceField from './DataLayerSourceField';
-import TableConfigTabContent from './TableConfigTab';
+
+import TableConfigTabContent from './tabs/TableConfigTab';
+import DefinitionTab from './tabs/DefinitionTab';
+import StyleTab from './tabs/StyleTab';
+
 
 const defaultRequired = required();
 
@@ -51,119 +49,24 @@ const LazyFormTab = ({ hidden, ...props }) => (
   hidden ? null : <FormTab {...props} />
 );
 
-const LayerStyleField = ({ defaultValue }) => (
-  <TextInput
-    type="hidden"
-    label=""
-    source="layer_style"
-    defaultValue={defaultValue}
-  />
-);
-
 const DataLayerForm = ({
   classes,
   translate,
-  randomColor,
-  sourceData: { geom_type: geomType = POLYGON } = {},
   dataProvider,
   ...props
 }) => {
-  const layerStyleDefaultValue = React.useMemo(
-    () => getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType)),
-    [geomType, randomColor],
-  );
   const [external, setExternal] = React.useState(true);
 
-
   return (
-    <TabbedForm {...props}>
-      <FormTab label="datalayer.form.definition" path="general">
-        <TextInput
-          source="name"
-          label="datalayer.form.name"
-          validate={defaultRequired}
-          type="text"
-        />
-        <FormDataConsumer>
-          {formDataProps => (
-            <DataLayerSourceField
-              {...formDataProps}
-              dataProvider={dataProvider}
-              external={external}
-            />
-          )}
-        </FormDataConsumer>
-        <DataLayerFormSwitcher onSwitch={setExternal} />
+    <TabbedForm {...props} initialValues={{ fields: [] }}>
 
-
-        <FormDataConsumer>
-          {({ formData }) => {
-            const hasFields = formData.fields && formData.fields.length;
-            if (!hasFields) {
-              return null;
-            }
-
-            return (
-              <FormGroup
-                helperText={translate('datalayer.form.search.main-field.helpertext')}
-              >
-                <SelectInput
-                  source="main_field"
-                  allowEmpty
-                  label="datalayer.form.search.main-field.label"
-                  choices={formData.fields.map(({ label: name, field: id }) => ({ id, name }))}
-                  fullWidth
-                />
-              </FormGroup>
-            );
-          }}
-
-        </FormDataConsumer>
-        <BooleanInput source="active_by_default" />
-
-        <TextInput multiline source="description" label="datalayer.form.description" />
-
-        <FormDataConsumer>
-          {({ formData }) =>
-            // Allow to initialize default value even if next tab is not yet loaded
-            (formData.source ? <LayerStyleField defaultValue={layerStyleDefaultValue} /> : <></>)}
-        </FormDataConsumer>
-
+      <FormTab label="datalayer.form.definition">
+        <DefinitionTab onSwitch={setExternal} external={external} />
       </FormTab>
 
-      <LazyFormTab disabled={external} label="datalayer.form.styles.tab" path="style">
-
-        <StyleField
-          source="layer_style"
-          withSource="source"
-          label="datalayer.form.styles.mainstyle"
-          defaultValue={getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType))}
-          fullWidth
-        />
-
-        <JSONInput
-          source="layer_style_wizard"
-          label="datalayer.form.styles.wizard_style"
-          fullWidth
-        />
-
-        <NumberInput
-          source="settings.default_opacity"
-          label="datalayer.form.styles.default_opacity"
-          step={5}
-          defaultValue={100}
-          min={0}
-          max={100}
-          validate={defaultRequired}
-        />
-
-        <ArrayInput source="custom_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
-          <SimpleFormIterator>
-            <CustomLayer />
-          </SimpleFormIterator>
-        </ArrayInput>
-
-      </LazyFormTab>
+      <FormTab disabled={external} label="datalayer.form.styles.tab" path="style">
+        <StyleTab external={external} />
+      </FormTab>
 
       <LazyFormTab disabled={external} label="datalayer.form.legend.tab" path="legend">
 
@@ -315,7 +218,6 @@ const PropsSanitizer = WrappedComponent =>
 
 export default compose(
   withStyles(styles),
-  withRandomColor,
   translateRA,
   PropsSanitizer,
   withDataProvider,

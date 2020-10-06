@@ -544,7 +544,8 @@
         "default_opacity": "Opacité par défaut (en %)",
         "mainstyle": "Style principal",
         "secondarylabels": "Styles secondaires",
-        "style": "Configuration du style"
+        "style": "Configuration du style",
+        "no-source": "Veuillez choisir une source de données avant de configurer les styles"
       }
     }
   },

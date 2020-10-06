@@ -20,6 +20,9 @@ export const getShapeFromGeomType = geomType => {
       return 'line';
     case GEOM_UNDEFINED:
       return null;
+    case undefined:
+    case null:
+      return undefined;
     default:
       return 'fill';
   }
@@ -27,7 +30,10 @@ export const getShapeFromGeomType = geomType => {
 
 export const getLayerStyleDefaultValue = (color, type) => {
   if (!type) {
-    return {};
+    return undefined;
+  }
+  if (type === null) {
+    return null;
   }
   return {
     type,

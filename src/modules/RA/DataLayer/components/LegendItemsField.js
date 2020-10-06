@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { JSONInput } from '../../../../components/react-admin/JSONInput';
-import withRandomColor from './withRandomColor';
+
+import useRandomColor from './useRandomColor';
+import useSourceData from './useSourceData';
 
 const getIconByType = type => {
   switch (type) {
@@ -28,13 +30,16 @@ const getDefaultValue = (label, type, color) => {
   return value;
 };
 
-const LegendItemsField = withRandomColor(({
-  sourceData: { geom_type: type = 'fill', name = '' } = {}, randomColor, ...props
-}) => (
-  <JSONInput
-    {...props}
-    initialValue={[getDefaultValue(name, type, randomColor)]}
-  />
-));
+const LegendItemsField = ({ withSource, ...props }) => {
+  const randomColor = useRandomColor();
+  const { geom_type: type, name = '' } = useSourceData(withSource);
+
+  return (
+    <JSONInput
+      {...props}
+      initialValue={[getDefaultValue(name, type, randomColor)]}
+    />
+  );
+};
 
 export default LegendItemsField;

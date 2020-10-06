@@ -4,9 +4,9 @@ import { BooleanInput, useTranslate } from 'react-admin';
 import { useField } from 'react-final-form';
 
 import Typography from '@material-ui/core/Typography';
-import Placeholder from '../../../../components/Placeholder';
+import Placeholder from '../../../../../components/Placeholder';
 
-import TableConfigField from './TableConfigField';
+import TableConfigField from '../TableConfigField';
 
 const validateTableFields = data => {
   const valid = !data.some(({ label }) => !label.length);

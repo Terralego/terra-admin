@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { translate as RAtranslate } from 'react-admin';
+import { useTranslate } from 'react-admin';
 
 import { JSONInput } from '../../../../components/react-admin/JSONInput';
 
-import compose from '../../../../utils/compose';
+const StyleField = props => {
+  const translate  = useTranslate();
 
-const StyleField = ({ translate, ...props }) => {
   const memoizedValidate = React.useCallback(value => {
     if (!value) {
       return translate('ra.input.style_field.empty_object');
@@ -27,4 +27,4 @@ const StyleField = ({ translate, ...props }) => {
 };
 
 
-export default compose(RAtranslate)(StyleField);
+export default StyleField;

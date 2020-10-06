@@ -4,6 +4,8 @@ import {
   useInput,
 } from 'react-admin';
 
+import Typography from '@material-ui/core/Typography';
+
 import { JsonEditor as Editor } from 'jsoneditor-react';
 import 'jsoneditor-react/es/editor.min.css';
 
@@ -23,7 +25,7 @@ const allowedModes = ['code', 'tree'];
 export const JSONInput = props => {
   const {
     input: { value, ...rest },
-    meta: { error },
+    meta: { touched, error },
   } = useInput(props);
 
   const { source, initialValue = {} } = props;
@@ -31,6 +33,7 @@ export const JSONInput = props => {
   return (
     <Labeled label={source} {...props}>
       <>
+        {touched && error && (<Typography color="error">{error}</Typography>)}
         <Editor
           value={sanitizeValue(value, initialValue)}
           ace={ace}
@@ -41,7 +44,6 @@ export const JSONInput = props => {
           search={false}
           {...rest}
         />
-        {error && <p className="error">{error}</p>}
       </>
     </Labeled>
   );

@@ -27,7 +27,6 @@ export const CustomLayer = ({ resource, source }) => (
         ? (
           <StyleField
             source={`${source}.style`}
-            withSource={`${source}.source`}
             label="datalayer.form.styles.style"
             fullWidth
           />

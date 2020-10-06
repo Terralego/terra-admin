@@ -58,11 +58,11 @@ const DragHandle = sortableHandle(() => {
 const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
   const translate = useTranslate();
 
-  const handleChangeTextField = property => e => {
+  const handleChangeLabel = React.useCallback(e => {
     const newValue = { ...field };
-    newValue[property] = e.target.value;
+    newValue.label = e.target.value;
     onChange(newValue);
-  };
+  }, [field, onChange]);
 
 
   const handleToggleField = property => e => {
@@ -70,6 +70,19 @@ const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
     newValue[property] = e.target.checked;
     onChange(newValue);
   };
+
+  const onShownChange = React.useCallback(
+    handleToggleField('chown'),
+    [field, onChange],
+  );
+  const onDisplayChange = React.useCallback(
+    handleToggleField('display'),
+    [field, onChange],
+  );
+  const onExportableChange = React.useCallback(
+    handleToggleField('exportable'),
+    [field, onChange],
+  );
 
   const labelInError = !field.label;
 
@@ -85,7 +98,7 @@ const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
         <TextField
           label=""
           value={field.label}
-          onChange={handleChangeTextField('label')}
+          onChange={handleChangeLabel}
           error={labelInError}
           helperText={labelInError ? translate('datalayer.form.table.empty-not-allowed') : ''}
         />
@@ -94,21 +107,21 @@ const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
       <TableCell align="right">
         <Switch
           checked={Boolean(field.shown)}
-          onChange={handleToggleField('shown')}
+          onChange={onShownChange}
         />
       </TableCell>
       <TableCell align="right">
         <Switch
           disabled={!field.shown}
           checked={Boolean(field.shown) && Boolean(field.display)}
-          onChange={handleToggleField('display')}
+          onChange={onDisplayChange}
         />
       </TableCell>
       <TableCell align="right">
         <Switch
           disabled={!exportEnabled}
           checked={Boolean(exportEnabled) && Boolean(field.exportable)}
-          onChange={handleToggleField('exportable')}
+          onChange={onExportableChange}
         />
       </TableCell>
     </TableRow>

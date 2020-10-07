@@ -8,7 +8,7 @@ import { RES_DATASOURCE } from '../../ra-modules';
 
 /**
  * Returns the source data
- * @param {str} sourceFieldName
+ * @param {string} sourceFieldName
  */
 export const useSourceData = sourceFieldName => {
   const { input: { value: sourceId } } = useField(sourceFieldName);

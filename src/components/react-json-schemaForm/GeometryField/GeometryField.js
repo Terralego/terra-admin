@@ -224,7 +224,7 @@ const GeometryField = ({
       <div className="form-group field">
         <ImportGeomFile
           geomType={geomValues.geom_type}
-          hasDraws={!!geomValues.geom.coordinates.length}
+          hasDraws={Boolean(geomValues?.geom?.coordinates.length)}
           onSubmit={importDraw}
         />
         <p className="form-group__or">{t('jsonSchema.geometryField.or')}</p>

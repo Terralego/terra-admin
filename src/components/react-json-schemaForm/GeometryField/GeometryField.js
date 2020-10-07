@@ -115,16 +115,22 @@ const GeometryField = ({
     features: [{ id }],
     target,
   }) => {
-    const { features } = target.draw.getAll();
+    let { features } = target.draw.getAll();
 
     const isMultiGeometry = ![POINT, LINESTRING, POLYGON].includes(geomValues.geom_type);
 
     if (features.length > 1 && !isMultiGeometry) {
-      const otherFeaturesIds = features.reduce((list, item) => (
-        item.id === id ? list : [...list, item.id]
-      ), []);
+      const { currentFeature, otherFeaturesIds } = features.reduce((list, item) => {
+        if (item.id === id) {
+          list.currentFeature.push(item);
+        } else {
+          list.otherFeaturesIds.push(item.id);
+        }
+        return list;
+      }, { currentFeature: [], otherFeaturesIds: [] });
 
       target.draw.delete(otherFeaturesIds);
+      features = currentFeature;
     }
 
     setGeomValues(prevGeomValues => ({

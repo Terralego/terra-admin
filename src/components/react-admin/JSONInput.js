@@ -33,7 +33,9 @@ export const JSONInput = props => {
   return (
     <Labeled label={source} {...props}>
       <>
-        {touched && error && (<Typography color="error">{error}</Typography>)}
+        {(touched && error) && (
+          <Typography color="error">{error}</Typography>
+        )}
         <Editor
           value={sanitizeValue(value, initialValue)}
           ace={ace}

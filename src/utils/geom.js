@@ -32,9 +32,6 @@ export const getLayerStyleDefaultValue = (color, type) => {
   if (!type) {
     return undefined;
   }
-  if (type === null) {
-    return null;
-  }
   return {
     type,
     paint: {

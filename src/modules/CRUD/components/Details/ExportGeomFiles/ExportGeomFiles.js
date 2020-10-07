@@ -6,7 +6,7 @@ import { Classes, MenuDivider, MenuItem } from '@blueprintjs/core';
 import { exportFileFromURL } from '../../../services/utils';
 
 const File = ({ name, href }) => {
-  const handleClick = useCallback(() => async event => {
+  const handleClick = useCallback(async event => {
     event.preventDefault();
     exportFileFromURL(href);
   }, [href]);
@@ -16,7 +16,6 @@ const File = ({ name, href }) => {
       className={Classes.MINIMAL}
       icon="document"
       text={name}
-      key={name}
       href={href}
       onClick={handleClick}
     />
@@ -38,7 +37,11 @@ const ExportGeomFiles = ({ files }) => {
     <>
       <MenuDivider title={t('CRUD.details.generatedGeomFile', { count })} />
       {list.map(([name, href]) => (
-        <File name={name} href={href} />
+        <File
+          href={href}
+          key={name}
+          name={name}
+        />
       ))}
     </>
   );

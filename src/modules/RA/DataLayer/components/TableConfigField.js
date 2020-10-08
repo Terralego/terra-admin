@@ -2,10 +2,11 @@ import React from 'react';
 
 import { useTranslate, useInput } from 'react-admin';
 
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { useForm } from 'react-final-form';
 
+import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 
 import { SortableContainer, SortableElement, sortableHandle } from 'react-sortable-hoc';
 
@@ -128,21 +129,28 @@ const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
   );
 });
 
-const SortableTable = SortableContainer(({ fields, onChange, exportEnabled }) => {
-  const handleChangeField = fieldIndex => fieldValue => {
-    const newValue = [...fields];
-    newValue[fieldIndex] = fieldValue;
-    onChange(newValue);
-  };
+const MemoFieldRow = React.memo(FieldRow);
+
+const SortableTable = SortableContainer(({ fields, exportEnabled }) => {
+  const form = useForm();
+
+  const onChange = React.useCallback(newField => {
+    form.change('fields', form.getState().values.fields.map(field => {
+      if (field.sourceFieldId === newField.sourceFieldId) {
+        return newField;
+      }
+      return field;
+    }));
+  }, [form]);
 
   return (
     <TableBody>
       {fields.map((field, index) => (
         field.name && (
-          <FieldRow
+          <MemoFieldRow
             field={field}
             exportEnabled={exportEnabled}
-            onChange={handleChangeField(index)}
+            onChange={onChange}
             key={field.name}
             index={index}
           />

@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 
 import { useField, useForm } from 'react-final-form';
 import {
-  withDataProvider,
   GET_ONE,
+  useDataProvider,
 } from 'react-admin';
 
+import debounce from 'lodash.debounce';
 import { WMTS } from '../../DataSource';
 import { RES_DATASOURCE } from '../../ra-modules';
-import compose from '../../../../utils/compose';
 
 
 /** Merge layer fields and source fields by preserving
@@ -46,7 +46,7 @@ const mergeFields = (layerFields = [], sourceFields = []) => {
   ];
 };
 
-export const updateFieldFromSource = async (layerFields, form, dataProvider, sourceId) => {
+export const updateFieldFromSource = debounce(async (layerFields, form, dataProvider, sourceId) => {
   const { data: { fields: sourceFields = [] } } =
       await dataProvider(GET_ONE, RES_DATASOURCE, { id: sourceId });
 
@@ -59,10 +59,11 @@ export const updateFieldFromSource = async (layerFields, form, dataProvider, sou
   if (JSON.stringify(result) !== JSON.stringify(layerFields)) {
     form.change('fields', result);
   }
-};
+});
 
-const FieldUpdater = ({ dataProvider }) => {
+const FieldUpdater = () => {
   const form = useForm();
+  const dataProvider = useDataProvider();
   const { input: { value: sourceId } } = useField('source');
   const { input: { value: layerFields } } = useField('fields');
 
@@ -102,8 +103,5 @@ const FieldUpdater = ({ dataProvider }) => {
   return null;
 };
 
-const ConnectedFieldUpdater = compose(
-  withDataProvider,
-)(FieldUpdater);
 
-export default ConnectedFieldUpdater;
+export default FieldUpdater;

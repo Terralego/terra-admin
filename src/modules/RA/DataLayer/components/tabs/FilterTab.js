@@ -13,10 +13,40 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { makeStyles } from '@material-ui/core/styles';
+
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+
+
+import Paper from '@material-ui/core/Paper';
 
 import { useField, useForm } from 'react-final-form';
+import DragHandle from '../DragHandle';
 
-// For migration purpose
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+  wrapper: {
+    position: 'relative',
+    height: '400px',
+    overflowY: 'scroll',
+  },
+  row: {
+    zIndex: 10,
+    margin: '1em 0',
+    backgroundColor: 'white',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    '& > fieldset': {
+      flex: 1,
+    },
+  },
+});
+
+// For compat purpose
 const computeOptionsValue = filter => {
   if (filter.filter_settings.proposeValues) {
     return filter.filter_settings.proposeValues;
@@ -33,7 +63,7 @@ const computeOptionsValue = filter => {
   return 'custom';
 };
 
-// for migration purpose
+// for compat purpose
 const updateFilterFromOptions = (value, filter) => {
   const newFilter = { ...filter };
   newFilter.filter_settings = { ...filter.filter_settings };
@@ -55,7 +85,8 @@ const updateFilterFromOptions = (value, filter) => {
   return newFilter;
 };
 
-const FilterConfigField = React.memo(({ filter, onChange }) => {
+const FilterConfigRow = ({ filter, onChange }) => {
+  const classes = useStyles();
   const translate = useTranslate();
 
   const handleChangeLabel = React.useCallback(e => {
@@ -76,7 +107,6 @@ const FilterConfigField = React.memo(({ filter, onChange }) => {
     onChange(newFilter);
   }, [filter, onChange]);
 
-
   const handleChangeCustomProposeValues = React.useCallback(e => {
     const newFilter = { ...filter };
     newFilter.filter_settings = { ...filter.filter_settings };
@@ -85,17 +115,19 @@ const FilterConfigField = React.memo(({ filter, onChange }) => {
     onChange(newFilter);
   }, [filter, onChange]);
 
-
   const optionsValue = computeOptionsValue(filter);
   const customProposeValues = (filter.filter_settings.values || []).join('\n');
 
   return (
-    <div>
-      <TextField
-        label=""
-        value={filter.label}
-        onChange={handleChangeLabel}
-      />
+    <Paper className={classes.row}>
+      <DragHandle />
+      <FormControl component="fieldset">
+        <TextField
+          label=""
+          value={filter.label}
+          onChange={handleChangeLabel}
+        />
+      </FormControl>
       {filter.filter_enable &&
       (
         <>
@@ -151,13 +183,13 @@ const FilterConfigField = React.memo(({ filter, onChange }) => {
           )}
         </>
       )}
-    </div>
+    </Paper>
   );
-});
+};
 
-const FilterTab = () => {
-  const translate = useTranslate();
-  const { input: { value: fields } } = useField('fields');
+const MemoFilterConfigRow = React.memo(SortableElement(FilterConfigRow));
+
+const FieldsConfigList = SortableContainer(({ filters }) => {
   const form = useForm();
 
   const onChange = React.useCallback(newField => {
@@ -170,19 +202,88 @@ const FilterTab = () => {
   }, [form]);
 
   return (
-    <>
-      <Typography variant="h5" component="h2">{translate('datalayer.form.filter.all-fields-available')}</Typography>
-      {fields
-        .filter(({ filter_enable: filterEnable }) => filterEnable)
-        .map(field => (
-          <FilterConfigField
+    <div>
+      {filters
+        .map((field, index) => (
+          <MemoFilterConfigRow
             filter={field}
             onChange={onChange}
             key={field.sourceFieldId}
+            index={index}
           />
         ))}
-    </>
+    </div>
+  );
+});
 
+/**
+ * Filter enabled fields by order or index
+ * @param {array} fields
+ */
+const orderFilterFields = fields =>
+  fields.filter(({ filter_enable: filterEnable }) => filterEnable) // Filter only enabled fields
+    .map((field, index) =>
+      [field?.filter_settings.order, index, field]) // eslint-disable-line camelcase
+    .sort(([ordera, indexa], [orderb, indexb]) => {
+      if (ordera !== undefined && orderb === undefined) {
+        return 1;
+      }
+      if (ordera === undefined && orderb !== undefined) {
+        return -1;
+      }
+      if (ordera !== undefined && orderb !== undefined) {
+        return ordera - orderb;
+      }
+      return indexa - indexb;
+    }).map(([,, field], index) => {
+      // eslint-disable-next-line camelcase
+      if (field?.filter_settings.order !== undefined) {
+        return field;
+      }
+      // eslint-disable-next-line no-param-reassign
+      field.filter_settings.order = index;
+      return field;
+    });
+
+
+const FilterTab = () => {
+  const translate = useTranslate();
+  const { input: { value: fields } } = useField('fields');
+  const form = useForm();
+
+  const handleSortEnd = React.useCallback(({ oldIndex, newIndex }) => {
+    const { values: { fields: formFields } } = form.getState();
+    if (oldIndex !== newIndex) {
+      const newFields = [...formFields];
+
+      const sortedFields = orderFilterFields(newFields);
+      sortedFields.splice(newIndex, 0, sortedFields.splice(oldIndex, 1)[0]);
+
+      sortedFields.forEach((field, index) => {
+        // eslint-disable-next-line camelcase
+        // eslint-disable-next-line no-param-reassign
+        field.filter_settings.order = index;
+      });
+      form.change('fields', newFields);
+    }
+  }, [form]);
+
+  const sortedFields = React.useMemo(
+    () =>
+      orderFilterFields(fields),
+    [fields],
+  );
+
+  return (
+    <>
+      <Typography variant="h5" component="h2">{translate('datalayer.form.filter.all-fields-available')}</Typography>
+      <FieldsConfigList
+        filters={sortedFields}
+        onSortEnd={handleSortEnd}
+        useDragHandle
+        lockAxis="y"
+      />
+    </>
   );
 };
 

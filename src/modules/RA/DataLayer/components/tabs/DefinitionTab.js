@@ -14,11 +14,12 @@ import { useField, useForm } from 'react-final-form';
 
 import { FormGroup } from '@blueprintjs/core';
 
-import { updateFieldFromSource } from '../FieldUpdater';
+import FieldUpdater, { updateFieldFromSource } from '../FieldUpdater';
 import { required } from '../../../../../utils/react-admin/validate';
 import { RES_DATASOURCE } from '../../../ra-modules';
 import { WMTS } from '../../../DataSource';
 import useSourceData from '../useSourceData';
+
 
 const defaultRequired = required();
 
@@ -76,6 +77,8 @@ const DefinitionTab = ({ onSwitch, external }) => {
       <BooleanInput source="active_by_default" />
 
       <TextInput multiline source="description" label="datalayer.form.description" fullWidth />
+
+      <FieldUpdater />
 
     </FormTab>
   );

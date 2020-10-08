@@ -1,93 +1,189 @@
 import React from 'react';
 
 import {
-  TextInput,
-  BooleanInput,
-  SelectInput,
-  ArrayInput,
-  FormDataConsumer,
+  useTranslate,
 } from 'react-admin';
 
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
-import DraggableFormIterator from '../../../../../components/react-admin/DraggableFormIterator';
+import { useField, useForm } from 'react-final-form';
+
+// For migration purpose
+const computeOptionsValue = filter => {
+  if (filter.filter_settings.proposeValues) {
+    return filter.filter_settings.proposeValues;
+  }
+  if (!filter.filter_enable) {
+    return 'none';
+  }
+  if (filter.filter_settings.fetchValues) {
+    return 'all';
+  }
+  if (!Array.isArray(filter.filter_settings.values) || !filter.filter_settings.values.length) {
+    return 'none';
+  }
+  return 'custom';
+};
+
+// for migration purpose
+const updateFilterFromOptions = (value, filter) => {
+  const newFilter = { ...filter };
+  newFilter.filter_settings = { ...filter.filter_settings };
+
+  if (value === 'none') {
+    newFilter.filter_settings.fetchValues = false;
+    newFilter.filter_settings.values = [];
+    newFilter.filter_settings.proposeValues = 'none';
+  }
+  if (value === 'all') {
+    newFilter.filter_settings.fetchValues = true;
+    newFilter.filter_settings.values = [];
+    newFilter.filter_settings.proposeValues = 'all';
+  }
+  if (value === 'custom') {
+    newFilter.filter_settings.fetchValues = false;
+    newFilter.filter_settings.proposeValues = 'custom';
+  }
+  return newFilter;
+};
+
+const FilterConfigField = React.memo(({ filter, onChange }) => {
+  const translate = useTranslate();
+
+  const handleChangeLabel = React.useCallback(e => {
+    const newFilter = { ...filter };
+    newFilter.label = e.target.value;
+    onChange(newFilter);
+  }, [filter, onChange]);
+
+  const handleChangeType = React.useCallback(e => {
+    const newFilter = { ...filter };
+    newFilter.filter_settings = { ...filter.filter_settings };
+    newFilter.filter_settings.type = e.target.value;
+    onChange(newFilter);
+  }, [filter, onChange]);
+
+  const handleChangeOptions = React.useCallback(e => {
+    const newFilter = updateFilterFromOptions(e.target.value, filter);
+    onChange(newFilter);
+  }, [filter, onChange]);
 
 
-import { required } from '../../../../../utils/react-admin/validate';
-import TextArrayInput from '../../../../../components/react-admin/TextArrayInput';
+  const handleChangeCustomProposeValues = React.useCallback(e => {
+    const newFilter = { ...filter };
+    newFilter.filter_settings = { ...filter.filter_settings };
+    const values = e.target.value.split('\n').map(val => val);
+    newFilter.filter_settings.values = values;
+    onChange(newFilter);
+  }, [filter, onChange]);
 
 
-const defaultRequired = required();
+  const optionsValue = computeOptionsValue(filter);
+  const customProposeValues = (filter.filter_settings.values || []).join('\n');
 
-const FilterTab = () => (
-  <ArrayInput source="fields" label="datalayer.form.filter.all-fields-available" fullWidth>
-    <DraggableFormIterator
-      disableAdd
-      disableRemove
-    >
-      <FormDataConsumer>
-        {({ scopedFormData = {}, getSource }) => (
-          <TextInput multiline source={getSource('label')} label={scopedFormData.name} fullWidth />
-        )}
-      </FormDataConsumer>
-      <BooleanInput
-        source="filter_enable"
-        label="datalayer.form.filter.allow-filtering-field"
-        fullWidth
+  return (
+    <div>
+      <TextField
+        label=""
+        value={filter.label}
+        onChange={handleChangeLabel}
       />
-      <FormDataConsumer>
-        {({
-          scopedFormData: {
-            filter_enable: filterEnable,
-            filter_settings: { type: filterType, fetchValues: filterFetch } = {},
-          } = {},
-          getSource,
-        }) => {
-          if (!filterEnable) return null;
+      {filter.filter_enable &&
+      (
+        <>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">{translate('datalayer.form.filter.type.label')}</FormLabel>
+            <RadioGroup value={filter.filter_settings.type} onChange={handleChangeType}>
+              <FormControlLabel value="single" control={<Radio />} label={translate('datalayer.form.filter.type.single')} />
+              <FormControlLabel value="many" control={<Radio />} label={translate('datalayer.form.filter.type.many')} />
+              <FormControlLabel value="range" control={<Radio />} label={translate('datalayer.form.filter.type.range')} />
+            </RadioGroup>
+          </FormControl>
 
-          return (
-            <>
-              <SelectInput
-                source={getSource('filter_settings.type')}
-                choices={[
-                  { id: 'single', name: 'datalayer.form.filter.type.single' },
-                  { id: 'many', name: 'datalayer.form.filter.type.many' },
-                  { id: 'range', name: 'datalayer.form.filter.type.range' },
-                ]}
-                label="datalayer.form.type.label"
-                validate={defaultRequired}
+          <FormControl component="fieldset">
+            <FormLabel component="legend">
+              {translate('datalayer.form.filter.propose-values.label')}
+            </FormLabel>
+
+            <RadioGroup value={optionsValue} onChange={handleChangeOptions}>
+              <FormControlLabel
+                value="none"
+                control={<Radio />}
+                label={translate('datalayer.form.filter.propose-values.none')}
               />
-              {filterType && (
-                <BooleanInput
-                  source={getSource('filter_settings.fetchValues')}
-                  label="datalayer.form.filter.type.fetch.label"
-                  fullWidth
-                />
-              )}
-              {(filterType && !filterFetch) && (
-                <TextArrayInput
-                  source={getSource('filter_settings.values')}
-                  label={`datalayer.form.filter.type.values${filterType === 'many' ? '' : '_optional'}`}
-                  validate={filterType === 'many' ? defaultRequired : undefined}
-                  fullWidth
-                />
-              )}
-              {filterType === 'range' && (
-                <SelectInput
-                  source={getSource('filter_settings.format')}
-                  label="datalayer.form.filter.type.range_format.label"
-                  choices={[
-                    { id: 'number', name: 'datalayer.form.filter.type.range_format.number' },
-                    { id: 'date', name: 'datalayer.form.filter.type.range_format.date' },
-                  ]}
-                />
-              )}
-            </>
-          );
-        }}
-      </FormDataConsumer>
-    </DraggableFormIterator>
-  </ArrayInput>
+              <FormControlLabel
+                value="all"
+                control={<Radio />}
+                label={translate('datalayer.form.filter.propose-values.all')}
+              />
+              <FormControlLabel
+                value="custom"
+                control={<Radio />}
+                label={translate('datalayer.form.filter.propose-values.custom')}
+              />
+            </RadioGroup>
 
-);
+            <TextField
+              multiline
+              label="Values"
+              value={customProposeValues}
+              onChange={handleChangeCustomProposeValues}
+              disabled={filter.filter_settings.fetchValues}
+            />
+          </FormControl>
+
+          {filter.filter_settings.type === 'range' && (
+            <Select
+              value={filter.filter_settings.format}
+              onChange={handleChangeType}
+            >
+              <MenuItem value="number">{translate('datalayer.form.filter.type.range_format.number')}</MenuItem>
+              <MenuItem value="date">{translate('datalayer.form.filter.type.range_format.date')}</MenuItem>
+            </Select>
+          )}
+        </>
+      )}
+    </div>
+  );
+});
+
+const FilterTab = () => {
+  const translate = useTranslate();
+  const { input: { value: fields } } = useField('fields');
+  const form = useForm();
+
+  const onChange = React.useCallback(newField => {
+    form.change('fields', form.getState().values.fields.map(field => {
+      if (field.sourceFieldId === newField.sourceFieldId) {
+        return newField;
+      }
+      return field;
+    }));
+  }, [form]);
+
+  return (
+    <>
+      <Typography variant="h5" component="h2">{translate('datalayer.form.filter.all-fields-available')}</Typography>
+      {fields
+        .filter(({ filter_enable: filterEnable }) => filterEnable)
+        .map(field => (
+          <FilterConfigField
+            filter={field}
+            onChange={onChange}
+            key={field.sourceFieldId}
+          />
+        ))}
+    </>
+
+  );
+};
 
 export default FilterTab;

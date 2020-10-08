@@ -21,7 +21,6 @@ export const useSourceData = sourceFieldName => {
     let isMounted = true;
 
     const loadSourceData = async () => {
-      console.log('source called');
       const { data } = await dataProvider.getOne(RES_DATASOURCE, { id: sourceId });
       if (!isMounted) {
         return;

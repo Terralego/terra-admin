@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 
-import { SortableContainer, SortableElement, sortableHandle } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -18,6 +18,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+
+import DragHandle from './DragHandle';
 
 const useStyles = makeStyles({
   table: {
@@ -37,26 +39,10 @@ const useStyles = makeStyles({
       flex: 1,
     },
   },
-  handle: {
-    position: 'relative',
-    top: '1px',
-    display: 'block',
-    width: '18px',
-    height: '11px',
-    opacity: '.25',
-    marginRight: '20px',
-    cursor: 'row-resize',
-    background: 'linear-gradient(180deg,#000,#000 20%,#fff 0,#fff 40%,#000 0,#000 60%,#fff 0,#fff 80%,#000 0,#000)',
-  },
 });
 
 
-const DragHandle = sortableHandle(() => {
-  const classes = useStyles();
-  return (<span className={classes.handle} />);
-});
-
-const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
+const FieldRow = ({ field, onChange, exportEnabled }) => {
   const translate = useTranslate();
 
   const handleChangeLabel = React.useCallback(e => {
@@ -127,9 +113,9 @@ const FieldRow = SortableElement(({ field, onChange, exportEnabled }) => {
       </TableCell>
     </TableRow>
   );
-});
+};
 
-const MemoFieldRow = React.memo(FieldRow);
+const MemoFieldRow = SortableElement(React.memo(FieldRow));
 
 const SortableTable = SortableContainer(({ fields, exportEnabled }) => {
   const form = useForm();
@@ -162,22 +148,24 @@ const SortableTable = SortableContainer(({ fields, exportEnabled }) => {
 
 
 const TableConfigField = ({ label, exportEnabled, ...rest }) => {
+  const translate = useTranslate();
   const {
-    input: { value: fields, onChange },
+    input: { value: fields },
     meta: { error },
   } = useInput(rest);
-  const translate = useTranslate();
 
-  const wrapper = React.useRef(null);
+  const form = useForm();
+
   const classes = useStyles();
 
-  const handleSortEnd = ({ oldIndex, newIndex }) => {
+  const handleSortEnd = React.useCallback(({ oldIndex, newIndex }) => {
+    const { values: { fields: currentFields } } = form.getState();
     if (oldIndex !== newIndex) {
-      const newFields = [...fields];
+      const newFields = [...currentFields];
       newFields.splice(newIndex, 0, newFields.splice(oldIndex, 1)[0]);
-      onChange(newFields);
+      form.change('fields', newFields);
     }
-  };
+  }, [form]);
 
   return (
     <>
@@ -200,14 +188,12 @@ const TableConfigField = ({ label, exportEnabled, ...rest }) => {
           <SortableTable
             fields={fields}
             exportEnabled={exportEnabled}
-            onChange={onChange}
             onSortEnd={handleSortEnd}
             useDragHandle
             lockAxis="y"
             helperClass={classes.row}
           />
         </Table>
-        <div ref={wrapper} />
       </TableContainer>
     </>
   );

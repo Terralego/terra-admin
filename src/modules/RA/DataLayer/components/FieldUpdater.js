@@ -77,7 +77,7 @@ const FieldUpdater = () => {
     };
 
     fillFields();
-  }, [form, sourceId, layerFields]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [form, sourceId, layerFields, dataProvider]);
 
   // Update external source status
   useEffect(() => {

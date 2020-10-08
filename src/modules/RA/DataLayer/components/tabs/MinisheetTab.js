@@ -9,8 +9,10 @@ import { useField } from 'react-final-form';
 
 import { ColorInput } from 'react-admin-color-input';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import HelpContent from '../../../../../components/react-admin/HelpContent';
+import Placeholder from '../../../../../components/Placeholder';
 
 const useStyles = makeStyles({
   colorPicker: {
@@ -22,14 +24,16 @@ const useStyles = makeStyles({
 const MinisheetTab = () => {
   const classes = useStyles();
   const { input: { value: minisheetEnable } } = useField('minisheet_enable');
+  const { input: { value: advancedMinisheet } } = useField('settings.advanced_minisheet');
 
   return (
     <>
       <BooleanInput source="minisheet_enable" label="datalayer.form.minisheet.display-on-click" />
+      <BooleanInput source="settings.advanced_minisheet" label="datalayer.form.minisheet.advanced" />
 
       <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
 
-      {minisheetEnable && (
+      {(minisheetEnable && advancedMinisheet) && (
         <>
           <TextInput multiline source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />
           <TextInput
@@ -38,6 +42,13 @@ const MinisheetTab = () => {
           />
           <HelpContent title="datalayer.form.compare-url.help-title" content="datalayer.form.compare-url.help-text" />
         </>
+      )}
+      {(minisheetEnable && !advancedMinisheet) && (
+        <Placeholder>
+          <Typography variant="h5" component="h2">
+            In construction
+          </Typography>
+        </Placeholder>
       )}
     </>
   );

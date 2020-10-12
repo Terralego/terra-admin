@@ -542,7 +542,8 @@
       "category": "Category",
       "icon": "Icon",
       "ordering": "Ordering",
-      "import-report": "Import reporting"
+      "import-report": "Import reporting",
+      "baselayer": "Map baselayers"
     }
   },
   "ra": {

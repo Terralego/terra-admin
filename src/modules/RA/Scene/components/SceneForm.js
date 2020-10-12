@@ -78,6 +78,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       <ReferenceArrayInput
         source="baselayer"
         reference={RES_BASELAYER}
+        label="view.form.baselayer"
       >
         <SelectArrayInput />
       </ReferenceArrayInput>

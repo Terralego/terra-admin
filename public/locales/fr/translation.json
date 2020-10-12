@@ -564,7 +564,8 @@
       "category": "Catégorie",
       "icon": "Icône",
       "ordering": "Classement",
-      "import-report": "Rapport d'importation"
+      "import-report": "Rapport d'importation",
+      "baselayer": "Fonds de plan"
     }
   },
   "ra": {

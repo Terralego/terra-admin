@@ -493,7 +493,11 @@
         "min-zoom": "Zoom minimum",
         "max-zoom": "Zoom maximum",
         "template": "Modèle de la fenêtre au survol",
-        "advanced": "Saisie avancée"
+        "advanced": "Saisie avancée",
+        "card-message": "Pour activer une fenêtre contextuelle, cliquer sur",
+        "add-message": "Ajouter un champ",
+        "fields": "champs de la source",
+        "select-field": "Sélectionnez un champ"
       },
       "minisheet": {
         "tab": "Mini-fiche",

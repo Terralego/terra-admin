@@ -18,9 +18,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
-
-import Paper from '@material-ui/core/Paper';
-
 import { useForm } from 'react-final-form';
 import DragHandle from '../../DragHandle';
 
@@ -36,11 +33,12 @@ const useStyles = makeStyles({
   },
   row: {
     zIndex: 10,
-    margin: '1em 0',
+    padding: '1em 0',
     backgroundColor: 'white',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    borderBottom: '1px solid #e0e0e0',
+    // alignItems: 'top',
     '& > fieldset': {
       flex: 1,
       padding: '1em',
@@ -105,6 +103,13 @@ const FilterConfigRow = ({ filter, onChange }) => {
     onChange(newFilter);
   }, [filter, onChange]);
 
+  const handleChangeFormatType = React.useCallback(e => {
+    const newFilter = { ...filter };
+    newFilter.filter_settings = { ...filter.filter_settings };
+    newFilter.filter_settings.format_type = e.target.value;
+    onChange(newFilter);
+  }, [filter, onChange]);
+
   const handleChangeOptions = React.useCallback(e => {
     const newFilter = updateFilterFromOptions(e.target.value, filter);
     onChange(newFilter);
@@ -128,8 +133,8 @@ const FilterConfigRow = ({ filter, onChange }) => {
   const customProposeValues = (filter.filter_settings.values || []).join('\n');
 
   return (
-    <Paper className={classes.row}>
-      <DragHandle />
+    <div className={classes.row}>
+      <DragHandle withBorder />
       <FormControl component="fieldset">
         <FormLabel component="legend">
           {translate('datalayer.form.filter.field')}
@@ -148,6 +153,18 @@ const FilterConfigRow = ({ filter, onChange }) => {
           <FormControlLabel value="many" control={<Radio />} label={translate('datalayer.form.filter.type.many')} />
           <FormControlLabel value="range" control={<Radio />} label={translate('datalayer.form.filter.type.range')} />
         </RadioGroup>
+        {filter.filter_settings.type === 'range' && (
+        <>
+          <FormLabel component="legend">{translate('datalayer.form.filter.type.range_format.label')}</FormLabel>
+          <Select
+            value={filter.filter_settings.format}
+            onChange={handleChangeFormatType}
+          >
+            <MenuItem value="number">{translate('datalayer.form.filter.type.range_format.number')}</MenuItem>
+            <MenuItem value="date">{translate('datalayer.form.filter.type.range_format.date')}</MenuItem>
+          </Select>
+        </>
+        )}
       </FormControl>
 
       <FormControl component="fieldset">
@@ -181,18 +198,10 @@ const FilterConfigRow = ({ filter, onChange }) => {
           disabled={filter.filter_settings.fetchValues}
         />
       </FormControl>
-
-      {filter.filter_settings.type === 'range' && (
-      <Select
-        value={filter.filter_settings.format}
-        onChange={handleChangeType}
-      >
-        <MenuItem value="number">{translate('datalayer.form.filter.type.range_format.number')}</MenuItem>
-        <MenuItem value="date">{translate('datalayer.form.filter.type.range_format.date')}</MenuItem>
-      </Select>
-      )}
-      <IconButton color="secondary" variant="contained" onClick={handleDeleteClick}><DeleteIcon /></IconButton>
-    </Paper>
+      <div>
+        <IconButton color="secondary" variant="contained" onClick={handleDeleteClick}><DeleteIcon /></IconButton>
+      </div>
+    </div>
   );
 };
 

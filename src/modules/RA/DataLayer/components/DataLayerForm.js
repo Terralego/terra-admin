@@ -14,7 +14,7 @@ import LegendTab from './tabs/LegendTab';
 import PopupTab from './tabs/PopupTab';
 import MinisheetTab from './tabs/MinisheetTab';
 import FilterTab from './tabs/FilterTab';
-import TableConfigTabContent from './tabs/TableConfigTab';
+import TableTab from './tabs/TableTab';
 
 
 const DataLayerForm = ({
@@ -50,7 +50,7 @@ const DataLayerForm = ({
       </FormTab>
 
       <FormTab disabled={external} label="datalayer.form.table.tab" path="table">
-        <TableConfigTabContent />
+        <TableTab />
       </FormTab>
 
       <FormTab disabled={external} label="datalayer.form.widget.tab" path="other">

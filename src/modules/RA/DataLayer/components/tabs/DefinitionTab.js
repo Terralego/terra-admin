@@ -74,7 +74,7 @@ const DefinitionTab = ({ onSwitch, external }) => {
         />
       </FormGroup>
 
-      <BooleanInput source="active_by_default" />
+      <BooleanInput source="active_by_default" label="resources.datalayer.fields.active_by_default_pastpart" />
 
       <TextInput multiline source="description" label="datalayer.form.description" fullWidth />
 

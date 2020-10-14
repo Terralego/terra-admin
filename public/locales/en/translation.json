@@ -461,55 +461,78 @@
       "view": "View",
       "ordering": "Ordering",
       "description": "Description",
-      "style": "Style",
-      "layer-style": "Layer style",
       "interactions": "Interactions",
-      "allow-display-data-table": " Allow display data table",
-      "allow-export-data": " Allow export data",
       "all-data-available": " All available data",
-      "all-fields-available": " All available fields",
-      "show": "Show in table",
-      "exportable": "Exportable",
       "compare-url": {
         "title": "Comparison URL",
         "help-title": "Comparison URL template",
         "help-text": "This template allows to generate comparison URL available in table when you select many elements. Add « {{ids}} » where identifier list should be inserted."
       },
+      "widget":{
+        "tab": "Widget"
+      },
+      "table":{
+        "tab": "Table",
+        "all-fields": "Fields configuration",
+        "no-field": "No fields for this source",
+        "no-source": "Choose a data source before to allow table configuration",
+        "row-in-error": "Please verify your entry",
+        "empty-not-allowed": "This field is required",
+        "shown": "Show in table",
+        "fieldName": "Original field",
+        "label": "Label",
+        "display": "Display",
+        "exportable": "Exportable",
+        "allow-export-data": "Allow data export",
+        "allow-display-data-table": "Allow data table",
+        "order": "Order"
+      },
       "popup": {
-        "display-on-hover": "Show contextual window",
+        "tab": "Contextual window",
+        "display-on-hover": "Enable contextual window",
         "min-zoom": "Min. Zoom",
         "max-zoom": "Max. Zoom",
         "template": "Contextual window template",
-        "advanced": "Advanced entry"
+        "advanced": "Advanced mode"
       },
       "minisheet": {
+        "tab": "Mini-fiche",
         "display-on-click": "Show mini-sheet",
         "template": "Mini-sheet template",
         "pick-highlight-color": "Select over lighting color",
-        "advanced": "Advanced entry"
+        "advanced": "Advanced mode"
       },
-      "filter": "Filter",
-      "allow-filtering-field": "Allow to filter by field",
-      "text": "Text",
-      "data-sample": "Data sample",
-      "type": {
-        "label": "Filter type",
-        "single": "One value",
-        "many": "Many values",
-        "range": "Value range",
-        "values": "Set a defined value list to filter",
-        "values_optional": "Set a defined value list to filter (optional)",
-        "range_format": {
-          "label": "Filter format",
-          "number": "Numeric",
-          "date": "Dates"
+      "filter": {
+        "tab": "Filter",
+        "title": "Filter configuration",
+        "field": "Filtered field",
+        "no-field": "No fields for this data source",
+        "no-filter": "Add a filter to activate filtering",
+        "select-field": "Select field to add",
+        "propose-values":{
+          "label": "Propose values",
+          "none": "No value proposal",
+          "all": "Propose all database values",
+          "list": "Custom value list",
+          "custom": "Propose a custom value list…"
         },
-        "fetch": {
-          "label": "Propose all values available from database"
+        "type": {
+          "label": "Filter type",
+          "single": "One value",
+          "many": "Multiple value",
+          "range": "Value range",
+          "range_format": {
+            "label": "Filter format",
+            "number": "Numerical",
+            "date": "Date"
+          }
         }
       },
-      "legends": "Show legend(s)",
+      "text": "Text",
+      "data-sample": "Data sample",
       "legend": {
+        "tab": "Legends",
+        "legends": "Show one or more legends",
         "title": "Legend title",
         "template": "Legend content template (optional)",
         "items": "Legend items (Optional)",
@@ -518,7 +541,7 @@
           "text": "<ul><li>label : name</li><li>shape : symbol (square for polygons and lines, circle for points)</li><li>color : HEX, RGB or name</li></ul><p>Example:</p><pre>\n[{\n  \"label\": \"cities\",\n  \"shape\": \"square\",\n  \"color\": \"red\"\n}]\n</pre>"
         },
         "stackedCircles": "Stacked circles",
-        "advanced": "Advanced legend"
+        "advanced": "Advanced mode"
       },
       "search": {
         "main-field": {
@@ -527,11 +550,15 @@
         }
       },
       "styles": {
+        "tab": "Style",
+        "wizard_style": "Wizard mode",
+        "layer-style": "Layer style",
         "default_opacity": "Default opacity (in %)",
         "mainstyle": "Main style",
         "secondarylabels": "Secondary styles",
         "style": "Style configuration",
-        "advanced": "Advanced symbology managment"
+        "no-source": "Choose a data source to allow style configuration",
+        "advanced": "Advenced mode"
       }
     }
   },

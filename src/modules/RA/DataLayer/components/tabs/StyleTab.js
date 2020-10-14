@@ -81,11 +81,13 @@ const StyleTab = ({ external }) => {
         </>
       )}
       {!advancedStyle && (
-        <Placeholder>
-          <Typography variant="h5" component="h2">
-            In construction
-          </Typography>
-        </Placeholder>
+        <>
+          <Placeholder>
+            <Typography variant="h5" component="h2">
+              In construction
+            </Typography>
+          </Placeholder>
+        </>
       )}
     </FormTab>
   );

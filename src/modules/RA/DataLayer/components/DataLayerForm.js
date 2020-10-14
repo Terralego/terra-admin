@@ -5,7 +5,6 @@ import {
   FormTab,
 } from 'react-admin';
 
-import compose from '../../../../utils/compose';
 import JSONInput from '../../../../components/react-admin/JSONInput';
 
 import DefinitionTab from './tabs/DefinitionTab';
@@ -61,9 +60,4 @@ const DataLayerForm = ({
   );
 };
 
-const PropsSanitizer = WrappedComponent =>
-  ({ withSource, dispatch, ...props }) => (<WrappedComponent {...props} />);
-
-export default compose(
-  PropsSanitizer,
-)(DataLayerForm);
+export default DataLayerForm;

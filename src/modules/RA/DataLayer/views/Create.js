@@ -9,7 +9,7 @@ export const DataLayerCreate = props => (
     {...props}
     actions={<DefaultActions />}
   >
-    <DataLayerForm withSource="source" />
+    <DataLayerForm />
   </Create>
 );
 

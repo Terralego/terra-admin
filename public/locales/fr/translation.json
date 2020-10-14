@@ -504,12 +504,17 @@
       },
       "filter": {
         "tab": "Filtre",
-        "all-fields-available": " Tous les champs disponibles",
+        "title": "Définition des filtres",
+        "field": "Champ à filtrer",
+        "no-field": "Aucun champ pour cette source",
+        "no-filter": "Ajoutez un champ pour activer le filtrage",
+        "select-field": "Sélectionnez un champ à ajouter",
         "allow-filtering-field": "Permettre de filter par le champ",
         "propose-values":{
           "label": "Proposer des valeurs",
           "none": "Ne pas proposer de valeur",
           "all": "Proposer toutes les valeurs disponibles en base de données pour le filtrage",
+          "list": "Liste de valeurs",
           "custom": "Proposer une liste définie de valeurs pour le filtrage",
           "custom_optional": "Proposer une liste définie de valeurs pour le filtrage (optionnel)"
 

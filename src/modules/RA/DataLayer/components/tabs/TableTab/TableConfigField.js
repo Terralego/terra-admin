@@ -19,7 +19,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import DragHandle from './DragHandle';
+import DragHandle from '../../DragHandle';
 
 const useStyles = makeStyles({
   table: {
@@ -59,7 +59,7 @@ const FieldRow = ({ field, onChange, exportEnabled }) => {
   };
 
   const onShownChange = React.useCallback(
-    handleToggleField('chown'),
+    handleToggleField('shown'),
     [field, onChange],
   );
   const onDisplayChange = React.useCallback(

@@ -513,9 +513,9 @@
         "propose-values":{
           "label": "Proposer des valeurs",
           "none": "Ne pas proposer de valeur",
-          "all": "Proposer toutes les valeurs disponibles en base de données pour le filtrage",
+          "all": "Proposer toutes les valeurs en base de données",
           "list": "Liste de valeurs",
-          "custom": "Proposer une liste définie de valeurs pour le filtrage",
+          "custom": "Proposer une liste de valeurs…",
           "custom_optional": "Proposer une liste définie de valeurs pour le filtrage (optionnel)"
 
         },
@@ -523,11 +523,11 @@
           "label": "Type de filtrage",
           "single": "Une seule valeur",
           "many": "Plusieurs valeurs",
-          "range": "Une étendue de valeurs",
+          "range": "Une étendue de valeurs…",
           "range_format": {
             "label": "Format du filtre",
             "number": "Numérique",
-            "date": "Dates"
+            "date": "Date"
           }
         }
       },

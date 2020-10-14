@@ -70,7 +70,6 @@ const FilterTab = () => {
     [fields],
   );
 
-
   // No field for this source
   if (fields.length === 0) {
     return (

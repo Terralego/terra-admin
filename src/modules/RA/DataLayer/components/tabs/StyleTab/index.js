@@ -26,6 +26,8 @@ import useSourceData from '../../useSourceData';
 
 import Placeholder from '../../../../../../components/Placeholder';
 
+import AdvancedStyleEditor from './AdvancedStyleEditor';
+
 const defaultRequired = required();
 
 const StyleTab = ({ external }) => {
@@ -76,18 +78,7 @@ const StyleTab = ({ external }) => {
         </>
       )}
       {!advancedStyle && (
-        <>
-          <JSONInput
-            source="layer_style_wizard"
-            label="datalayer.form.styles.wizard_style"
-            fullWidth
-          />
-          <Placeholder>
-            <Typography variant="h5" component="h2">
-              In construction
-            </Typography>
-          </Placeholder>
-        </>
+        <AdvancedStyleEditor />
       )}
     </FormTab>
   );

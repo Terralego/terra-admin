@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useTranslate } from 'react-admin';
 
-import { JSONInput } from '../../../../components/react-admin/JSONInput';
+import { JSONInput } from '../../../../../../components/react-admin/JSONInput';
 
 const StyleField = props => {
   const translate  = useTranslate();

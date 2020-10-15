@@ -21,7 +21,7 @@ const LegendTab = () => {
 
   return (
     <>
-      <BooleanInput source="settings.advanced_legend" label="datalayer.form.legend.advanced" />
+      <BooleanInput source="settings.advanced_legend" label="datalayer.form.legend.advanced" style={{ float: 'right' }} />
       {advancedStyle && (
         <ArrayInput source="legends" label="datalayer.form.legend.legends" fullWidth>
           <SimpleFormIterator>

@@ -498,7 +498,7 @@
         "min-zoom": "Zoom minimum",
         "max-zoom": "Zoom maximum",
         "template": "Modèle de la fenêtre au survol",
-        "advanced": "Saisie avancée",
+        "advanced": "Mode expert",
         "card-message": "Pour activer une fenêtre contextuelle, cliquer sur",
         "add-message": "Ajouter un champ",
         "fields": "champs de la source",
@@ -514,7 +514,7 @@
         "display-on-click": "Afficher la minifiche",
         "template": "Modèle de la minifiche",
         "pick-highlight-color": "Sélectionner une couleur de surbrillance",
-        "advanced": "Saisie avancée"
+        "advanced": "Mode expert"
       },
       "filter": {
         "tab": "Filtre",
@@ -557,7 +557,7 @@
           "text": "<ul><li>label : nom</li><li>shape : type de symbole (square pour les polygone et les lignes, circle pour les points)</li><li>color : HEX, RGB ou nom</li></ul><p>Exemple:</p><pre>\n[{\n  \"label\": \"communes\",\n  \"shape\": \"square\",\n  \"color\": \"red\"\n}]\n</pre>"
         },
         "stackedCircles": "Cercles empilés",
-        "advanced": "Légende avancée"
+        "advanced": "Mode expert"
       },
       "search": {
         "main-field": {
@@ -574,7 +574,7 @@
         "secondarylabels": "Styles secondaires",
         "style": "Configuration du style",
         "no-source": "Veuillez choisir une source de données avant de configurer les styles",
-        "advanced": "Gestion symbologie avancée"
+        "advanced": "Mode expert"
       }
     }
   },

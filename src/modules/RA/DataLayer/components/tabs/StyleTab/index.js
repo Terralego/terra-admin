@@ -12,19 +12,19 @@ import {
 import { useField } from 'react-final-form';
 
 import Typography from '@material-ui/core/Typography';
-import JSONInput from '../../../../../components/react-admin/JSONInput';
+import JSONInput from '../../../../../../components/react-admin/JSONInput';
 
-import CustomLayer from '../CustomLayer';
-import StyleField from '../StyleField';
+import CustomLayer from './CustomLayer';
+import StyleField from './StyleField';
 
-import { required } from '../../../../../utils/react-admin/validate';
-import { getLayerStyleDefaultValue, getShapeFromGeomType } from '../../../../../utils/geom';
+import { required } from '../../../../../../utils/react-admin/validate';
+import { getLayerStyleDefaultValue, getShapeFromGeomType } from '../../../../../../utils/geom';
 
-import useRandomColor from '../useRandomColor';
-import useSourceData from '../useSourceData';
+import useRandomColor from '../../useRandomColor';
+import useSourceData from '../../useSourceData';
 
 
-import Placeholder from '../../../../../components/Placeholder';
+import Placeholder from '../../../../../../components/Placeholder';
 
 const defaultRequired = required();
 

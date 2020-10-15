@@ -7,8 +7,8 @@ import {
 import get from 'lodash.get';
 
 import StyleField from './StyleField';
-import FieldGroup from '../../../../components/react-admin/FieldGroup';
-import { RES_DATASOURCE } from '../../ra-modules';
+import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
+import { RES_DATASOURCE } from '../../../../ra-modules';
 
 export const CustomLayer = ({ resource, source }) => (
   <FieldGroup>

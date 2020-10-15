@@ -17,9 +17,12 @@ const DataSourceMainFields = props => (
     <TextInput
       source="name"
       validate={defaultRequired}
-      type="text"
+      fullWidth={false}
     />
-    <TextInput multiline source="description" defaultValue="" />
+
+    <TextInput source="credit" defaultValue="" />
+
+    <TextInput multiline source="description" defaultValue="" style={{ width: '100%' }} />
 
     <ReferenceArrayInput source="settings.groups" reference={RES_USERGROUP}>
       <SelectArrayInput optionText="name" />

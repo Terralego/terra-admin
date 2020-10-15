@@ -37,7 +37,6 @@ const DataSourceFileFields = ({ translate: t, type, ...props }) => (
       label="datasource.form.uid-field"
       validate={required()}
       helperText={t('datasource.form.uid-field-help')}
-      fullWidth
     />
   </FieldGroup>
 );

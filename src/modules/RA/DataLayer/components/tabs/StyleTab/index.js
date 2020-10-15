@@ -46,7 +46,7 @@ const StyleTab = ({ external }) => {
 
   return (
     <FormTab disabled={external} label="datalayer.form.styles.tab" path="style">
-      <BooleanInput source="settings.advanced_style" label="datalayer.form.styles.advanced" />
+      <BooleanInput source="settings.advanced_style" label="datalayer.form.styles.advanced" style={{ float: 'right' }} />
       {advancedStyle && (
         <>
           <StyleField
@@ -57,11 +57,6 @@ const StyleTab = ({ external }) => {
             fullWidth
           />
 
-          <JSONInput
-            source="layer_style_wizard"
-            label="datalayer.form.styles.wizard_style"
-            fullWidth
-          />
 
           <NumberInput
             source="settings.default_opacity"
@@ -82,6 +77,11 @@ const StyleTab = ({ external }) => {
       )}
       {!advancedStyle && (
         <>
+          <JSONInput
+            source="layer_style_wizard"
+            label="datalayer.form.styles.wizard_style"
+            fullWidth
+          />
           <Placeholder>
             <Typography variant="h5" component="h2">
               In construction

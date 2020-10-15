@@ -28,8 +28,8 @@ const MinisheetTab = () => {
 
   return (
     <>
+      <BooleanInput source="settings.advanced_minisheet" label="datalayer.form.minisheet.advanced" style={{ float: 'right' }} />
       <BooleanInput source="minisheet_enable" label="datalayer.form.minisheet.display-on-click" />
-      <BooleanInput source="settings.advanced_minisheet" label="datalayer.form.minisheet.advanced" />
 
       <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
 

@@ -15,6 +15,8 @@ import {
   FormDataConsumer,
   required,
   translate,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from 'react-admin';
 
 import { isObjectEmpty } from '../../../../utils/react-admin/helper';
@@ -22,6 +24,7 @@ import compose from '../../../../utils/compose';
 
 import TreeInput from './TreeInput';
 import SceneFormNameField from './SceneFormNameField';
+import { RES_BASELAYER } from '../../ra-modules';
 
 const styles = {
   inline: {
@@ -72,7 +75,13 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       />
 
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
-
+      <ReferenceArrayInput
+        source="baselayer"
+        reference={RES_BASELAYER}
+        label="view.form.baselayer"
+      >
+        <SelectArrayInput />
+      </ReferenceArrayInput>
       <TreeInput source="tree" fullWidth />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
@@ -87,7 +96,6 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       >
         <FileField source="file_data" title="title" />
       </FileInput>
-
       <FormDataConsumer formClassName={classes.inline}>
         {({ formData, ...rest }) =>
           (!formData.config || formData.config.report) &&

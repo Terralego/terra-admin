@@ -9,52 +9,22 @@ import {
   ArrayInput,
   SimpleFormIterator,
   FormTab,
-  FormDataConsumer,
   translate,
 } from 'react-admin';
 
-import DataSourceMainFields from './DataSourceMainFields';
-import DataSourceFileFields from './DataSourceFileFields';
-import DataSourceWMTSField from './DataSourceWMTSField';
-import DataSourceCSVFields from './DataSourceCSVFields';
 import FieldSample from '../../../../components/react-admin/FieldSample';
 import AttributeMessage from './AttributeMessage';
-import DataSourceDbFields from './DataSourceDbFields';
-import {
-  SQL,
-  GEOJSON,
-  SHP,
-  WMTS,
-  CSV,
-  fieldTypeChoices,
-} from '..';
+import { fieldTypeChoices } from '..';
+
+import MainTab from './MainTab';
+
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
+
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => (
   <TabbedForm {...props}>
     <FormTab label="datasource.form.definition">
-
-      <DataSourceMainFields />
-
-      <FormDataConsumer>
-        {({ formData: { _type: type } = {}, ...rest }) =>
-          type === WMTS && <DataSourceWMTSField {...rest} />}
-      </FormDataConsumer>
-
-      <FormDataConsumer>
-        {({ formData: { _type: type } = {}, ...rest }) =>
-          [SHP, GEOJSON].includes(type) && <DataSourceFileFields {...rest} type={type} />}
-      </FormDataConsumer>
-
-      <FormDataConsumer>
-        {({ formData: { _type: type } = {}, ...rest }) =>
-          type === SQL && <DataSourceDbFields {...rest} />}
-      </FormDataConsumer>
-
-      <FormDataConsumer>
-        {({ formData: { _type: type } = {}, ...rest }) =>
-          type === CSV && <DataSourceCSVFields {...rest} type={type} />}
-      </FormDataConsumer>
+      <MainTab />
     </FormTab>
 
     {/* Fields */}

@@ -25,19 +25,21 @@ const DataSourceDbFields = ({ translate: t, ...props }) => (
     <TextInput source="db_name" type="text" label="datasource.form.request.database-name" />
     <TextInput source="db_username" type="text" label="datasource.form.request.user-name" />
     <TextInput source="db_password" type="password" label="datasource.form.request.user-password" />
+
     <TextInput
       multiline
       source="query"
       type="text"
       label="datasource.form.request.query"
       helperText={t('datasource.form.request.query-help')}
+      style={{ width: '100%' }}
     />
+
     <TextInput
       source="geom_field"
       type="text"
       label="datasource.form.geom-field"
       helperText={t('datasource.form.geom-field-help')}
-      fullWidth
     />
     <SelectInput
       source="refresh"

@@ -802,7 +802,8 @@
       "fields": {
         "description": "Description",
         "name": "Name",
-        "settings.groups": "User groups"
+        "settings.groups": "User groups",
+        "credit": "Data credit"
       }
     },
     "datalayer": {

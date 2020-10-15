@@ -5,40 +5,39 @@ import Tooltip from '@material-ui/core/Tooltip';
 import SuccessIcon from '@material-ui/icons/Done';
 import FailureIcon from '@material-ui/icons/Clear';
 import PendingIcon from '@material-ui/icons/History';
+import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 
-const renderTooltipContent = ({ state = '' } = {}) => {
-  let Icon;
 
+const chipIconProps = state => {
   switch (state) {
     case 'FAILURE':
-      Icon = FailureIcon;
-      break;
+      return { icon: <FailureIcon />, color: 'primary' };
     case 'SUCCESS':
-      Icon = SuccessIcon;
-      break;
+      return { icon: <SuccessIcon />, color: 'secondary' };
     case 'PENDING':
-      Icon = PendingIcon;
-      break;
+      return { icon: <PendingIcon />, color: 'secondary' };
+    case 'DONT_NEED':
+      return { icon: <CheckCircleOutline />, color: '' };
     default:
-      Icon = React.Fragment;
+      return { icon: <></>, color: '' };
   }
-
-  return (
-    <>
-      <span style={{ marginRight: '.5em' }}>{state}</span>
-      <Icon />
-    </>
-  );
 };
 
-const StatusChip = ({ status, status: { state } = {} }) => (
-  state
-    ? (
-      <Tooltip title={<pre>{JSON.stringify(status, null, 2)}</pre>}>
-        <Chip label={renderTooltipContent(status)} style={{ marginRight: '1em' }} />
-      </Tooltip>
-    )
-    : null
-);
+const StatusChip = ({ status, status: { state } = {} }) => {
+  const chipProps = chipIconProps(state);
+  if (!state) {
+    return null;
+  }
+  return (
+    <Tooltip title={<pre>{JSON.stringify(status, null, 2)}</pre>}>
+      <Chip
+        variant="outlined"
+        label={state}
+        {...chipProps}
+        style={{ marginRight: '1em' }}
+      />
+    </Tooltip>
+  );
+};
 
 export default StatusChip;

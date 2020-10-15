@@ -7,6 +7,7 @@ export const RALayout = props => (
     appBar={() => null}
     sidebar={() => null}
     menu={() => null}
+    style={{ marginTop: '-48px' }}
   />
 );
 

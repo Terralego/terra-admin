@@ -441,7 +441,13 @@
       "min-zoom": "Min. Zoom",
       "max-zoom": "Max. Zoom",
       "tile-size": "Tile size",
-      "wmts-url": "WMTS source url"
+      "wmts-url": "WMTS source url",
+      "report": {
+        "title": "Report",
+        "status": "Status",
+        "message": "Global error messages",
+        "line": "Line errors"
+      }
     },
     "edit": {
       "refresh": "Refresh data",

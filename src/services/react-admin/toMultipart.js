@@ -1,4 +1,4 @@
-import { CREATE, UPDATE } from 'react-admin';
+import { CREATE, UPDATE, HttpError } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
 import {
@@ -43,12 +43,30 @@ const toMultipart = nextDataProvider => async (...args) => {
 
     switch (type) {
       case CREATE:
-        response = await Api.request(`${endpoint}/`, { method: 'POST', body });
-        return { data: response, id: response.id };
+        try {
+          response = await Api.request(`${endpoint}/`, { method: 'POST', body });
+          return { data: response, id: response.id };
+        } catch (error) {
+          if (error.data && error.data.non_field_errors) {
+            // for now, errors are returned from backend as non_field_errors
+            // and displayed through notification
+            throw HttpError(error.data.non_field_errors, error.status);
+          }
+          throw error;
+        }
 
       case UPDATE:
-        response = await Api.request(`${endpoint}/${params.id}/`, { method: 'PATCH', body });
-        return { data: response };
+        try {
+          response = await Api.request(`${endpoint}/${params.id}/`, { method: 'PATCH', body });
+          return { data: response };
+        } catch (error) {
+          if (error.data && error.data.non_field_errors) {
+            // for now, errors are returned from backend as non_field_errors
+            // and displayed through notification
+            throw HttpError(error.data.non_field_errors, error.status);
+          }
+          throw error;
+        }
 
       default:
     }

@@ -441,7 +441,13 @@
       "min-zoom": "Zoom minimum",
       "max-zoom": "Zoom maximum",
       "tile-size": "Taille des tuiles",
-      "wmts-url": "Adresse de la source WMTS"
+      "wmts-url": "Adresse de la source WMTS",
+      "report": {
+        "title": "Report d'erreurs",
+        "status": "Statut",
+        "message": "Messages d´erreur global",
+        "line": "Erreurs de ligne"
+      }
     },
     "edit": {
       "refresh": "Actualiser les données",

@@ -443,10 +443,10 @@
       "tile-size": "Taille des tuiles",
       "wmts-url": "Adresse de la source WMTS",
       "report": {
-        "title": "Report d'erreurs",
+        "title": "Rapport d'importation",
         "status": "Statut",
-        "message": "Messages d´erreur global",
-        "line": "Erreurs de ligne"
+        "message": "Rapport global",
+        "line": "Rapport par ligne"
       }
     },
     "edit": {

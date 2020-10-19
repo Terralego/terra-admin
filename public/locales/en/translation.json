@@ -445,8 +445,8 @@
       "report": {
         "title": "Report",
         "status": "Status",
-        "message": "Global error messages",
-        "line": "Line errors"
+        "message": "Global report",
+        "line": "Line reports"
       }
     },
     "edit": {

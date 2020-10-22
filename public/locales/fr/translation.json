@@ -572,6 +572,7 @@
       },
       "styles": {
         "tab": "Style",
+        "select-field": "Sélectionnez le champ",
         "wizard_style": "Génération assistée",
         "layer-style": "Style de la couche",
         "default_opacity": "Opacité par défaut (en %)",
@@ -579,7 +580,11 @@
         "secondarylabels": "Styles secondaires",
         "style": "Configuration du style",
         "no-source": "Veuillez choisir une source de données avant de configurer les styles",
-        "advanced": "Mode expert"
+        "advanced": "Mode expert",
+        "jenks": "Jenks",
+        "equal-interval": "Intervalles égaux",
+        "quantiles": "Quantiles",
+        "manual": "Manuelle"
       }
     }
   },

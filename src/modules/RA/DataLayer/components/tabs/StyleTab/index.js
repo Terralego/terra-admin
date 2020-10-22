@@ -12,7 +12,6 @@ import {
 import { useField } from 'react-final-form';
 
 import Typography from '@material-ui/core/Typography';
-import JSONInput from '../../../../../../components/react-admin/JSONInput';
 
 import CustomLayer from './CustomLayer';
 import StyleField from './StyleField';

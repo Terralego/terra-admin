@@ -73,7 +73,6 @@ export class MapPlayground extends React.Component {
     interactions: [],
     sources: [],
     layers: [],
-    popups: [],
     refreshingLayers: false,
   }
 
@@ -101,13 +100,13 @@ export class MapPlayground extends React.Component {
   componentDidUpdate ({
     map: prevMap,
     settings: prevSettings,
-    match: { params: { layer: prevLayer, id: prevId, action: prevAction } },
+    match: { params: { layer: prevLayer, id: prevId } },
     feature: { geom: { coordinates: prevCoordinates } = {} },
     tableSize: prevTableSize,
   }) {
     const {
       settings,
-      match: { params: { layer, id, action } },
+      match: { params: { layer, id } },
       map,
       feature: { geom: { coordinates } = {} },
       tableSize,
@@ -125,10 +124,6 @@ export class MapPlayground extends React.Component {
 
     if ((layer !== prevLayer || map !== prevMap || prevId !== id) && map) {
       this.generateLayersToMap();
-    }
-
-    if (action !== prevAction) {
-      this.handleDisplayOfLayers();
     }
 
     if (layer && (layer !== prevLayer || map !== prevMap)) {
@@ -273,11 +268,10 @@ export class MapPlayground extends React.Component {
     map.resize();
   }
 
-  interactiveMapInit = ({ addHighlight, removeHighlight, popups }) => {
+  interactiveMapInit = ({ addHighlight, removeHighlight }) => {
     this.setState({
       addHighlight,
       removeHighlight,
-      popups,
     });
   }
 
@@ -375,12 +369,6 @@ export class MapPlayground extends React.Component {
     }
   }
 
-  hideAllTooltip = () => {
-    const { popups } = this.state;
-    popups.forEach(({ popup }) => popup.remove());
-    popups.clear();
-  }
-
   generateLayersToMap () {
     const {
       map,
@@ -427,7 +415,6 @@ export class MapPlayground extends React.Component {
         layers: [...prevLayers, ...nextLayers],
       };
     }, () => {
-      this.hideAllTooltip();
       this.displayCurrentLayer();
       this.handleDisplayOfLayers();
     });
@@ -445,7 +432,6 @@ export class MapPlayground extends React.Component {
       controls,
       dataTableRef,
       detailsRef,
-      mapIsResizing,
       settings,
       match: { params: { layer, id } },
       backgroundStyle,
@@ -506,7 +492,6 @@ export class MapPlayground extends React.Component {
           className={classnames(
             {
               'CRUD-map': true,
-              'CRUD-map--is-resizing': mapIsResizing,
               [`CRUD-map--with-table-${tableSize}`]: layer && !areDetailsVisible,
             },
           )}

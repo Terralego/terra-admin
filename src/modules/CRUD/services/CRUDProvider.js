@@ -12,10 +12,10 @@ import {
 
 import { saveAttachmentCategories } from './attachments';
 
-export const context = React.createContext({});
-export const connectCRUDProvider = connect(context);
+export const CRUDContext = React.createContext({});
+export const connectCRUDProvider = connect(CRUDContext);
 
-const { Provider } = context;
+const { Provider } = CRUDContext;
 
 export class CRUDProvider extends React.Component {
   state = {
@@ -265,12 +265,6 @@ export class CRUDProvider extends React.Component {
     return newCategory;
   }
 
-  resizingMap = () => {
-    const { map } = this.state;
-    if (!map) return;
-    map.resize();
-  }
-
   render () {
     const { children } = this.props;
 
@@ -286,7 +280,6 @@ export class CRUDProvider extends React.Component {
       getAttachmentCategories,
       findOrCreateAttachmentCategory,
       setMap,
-      resizingMap,
     } = this;
     const value = {
       ...this.state,
@@ -301,7 +294,6 @@ export class CRUDProvider extends React.Component {
       getAttachmentCategories,
       findOrCreateAttachmentCategory,
       setMap,
-      resizingMap,
     };
 
     return (

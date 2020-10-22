@@ -402,19 +402,3 @@ it('should not crash when no deleting feature', async () => {
     },
   });
 });
-
-it('should resizing map', () => {
-  const instance = new CRUDProvider();
-  instance.setState = jest.fn();
-  instance.resizingMap();
-  expect(instance.setState).not.toHaveBeenCalled();
-
-  instance.state = {
-    ...instance.state,
-    map: {
-      resize: jest.fn(),
-    },
-  };
-  instance.resizingMap();
-  expect(instance.state.map.resize).toHaveBeenCalled();
-});

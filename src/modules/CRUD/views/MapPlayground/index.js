@@ -35,7 +35,6 @@ const CRUDPRoviderGetter = ({
   settings,
   setMap,
   map,
-  mapIsResizing,
   feature,
   errors,
 }, {
@@ -51,7 +50,6 @@ const CRUDPRoviderGetter = ({
   settings,
   setMap,
   map,
-  mapIsResizing,
   feature: feature[id] || {},
   errors,
   backgroundStyle: settings?.config?.BASE_LAYERS?.map(style => {

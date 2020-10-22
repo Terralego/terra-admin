@@ -8,7 +8,7 @@ import { withTableSize } from '../../services/UserSettingsProvider';
 import { connectMapProvider } from './MapProvider';
 import compose from '../../../../utils/compose';
 
-import Map from './Map';
+import MapPlayground from './MapPlayground';
 
 const appProviderGetter = ({
   env: {
@@ -71,4 +71,4 @@ export default compose(
   connectMapProvider('addControl', 'controls', 'removeControl'),
   withTableSize(),
   withTranslation(),
-)(Map);
+)(MapPlayground);

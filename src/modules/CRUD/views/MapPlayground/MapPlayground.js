@@ -25,7 +25,7 @@ import './styles.scss';
 const CUSTOM_LAYER_WEIGHT = 850;
 const isTrueFeatureID = id => ![undefined, ACTION_CREATE].includes(id);
 
-export class Map extends React.Component {
+export class MapPlayground extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func,
@@ -551,4 +551,4 @@ export class Map extends React.Component {
   }
 }
 
-export default Map;
+export default MapPlayground;

@@ -22,13 +22,11 @@ const getOrderedMenu = menu => menu && (
 
 export const Nav = ({
   settings: { menu } = {},
-  resizingMap,
   t,
 }) => {
   const [menuOpen, setMenuOpen] = useState(true);
   const [orderedMenu, setOrderedMenu] = useState(getOrderedMenu(menu));
 
-  useEffect(resizingMap, [menuOpen]);
   useEffect(() => setOrderedMenu(getOrderedMenu(menu)), [menu]);
 
   return (
@@ -74,7 +72,6 @@ Nav.propTypes = {
   settings: PropTypes.shape({
     menu: PropTypes.array,
   }),
-  resizingMap: PropTypes.func,
   t: PropTypes.func,
 };
 
@@ -82,6 +79,5 @@ Nav.defaultProps = {
   settings: {
     menu: [],
   },
-  resizingMap () {},
   t: text => text,
 };

@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import { toast } from '../../../../utils/toast';
 import { ACTION_CREATE } from '../../services/CRUD';
-import Map from './Map';
+import MapPlayground from './MapPlayground';
 
 jest.mock('react-router-dom', () => ({
   Redirect: props => <div {...props}>Redirect</div>,
@@ -188,7 +188,7 @@ beforeEach(() => {
 describe('snapshots', () => {
   it('should display no settings message', () => {
     const tree = renderer.create((
-      <Map
+      <MapPlayground
         {...props}
         errors={{
           settings: 'Not found',
@@ -200,7 +200,7 @@ describe('snapshots', () => {
 
   it('should render correctly', () => {
     const tree = renderer.create((
-      <Map
+      <MapPlayground
         {...props}
         match={{ params: { id: 'foo', layer: 'layerTest' } }}
       />
@@ -210,7 +210,7 @@ describe('snapshots', () => {
 
   it('should not display details when the feature id is not defined', () => {
     const tree = renderer.create((
-      <Map
+      <MapPlayground
         {...props}
         match={{ params: { id: undefined, layer: 'layerTest' } }}
       />
@@ -220,7 +220,7 @@ describe('snapshots', () => {
 
   it('should display loading', () => {
     const tree = renderer.create((
-      <Map
+      <MapPlayground
         {...props}
         settings={{}}
       />
@@ -232,7 +232,7 @@ describe('snapshots', () => {
 
 it('should active datatable when the layer is defined', () => {
   const wrapper = shallow((
-    <Map
+    <MapPlayground
       {...props}
       match={{ params: { id: undefined, layer: 'layerTest' } }}
     />
@@ -243,7 +243,7 @@ it('should active datatable when the layer is defined', () => {
 
 it('should not active datatable when the layer and id are defined', () => {
   const wrapper = shallow((
-    <Map
+    <MapPlayground
       {...props}
       match={{ params: { id: '1', layer: 'layerTest' } }}
     />
@@ -254,7 +254,7 @@ it('should not active datatable when the layer and id are defined', () => {
 
 it('should redirect to the root view when trying to access to an unknown layer', () => {
   shallow((
-    <Map
+    <MapPlayground
       {...props}
       match={{ params: { id: '1', layer: 'notExists' } }}
     />
@@ -264,7 +264,7 @@ it('should redirect to the root view when trying to access to an unknown layer',
 
 it('should redirect to the first layer', () => {
   const tree = renderer.create((
-    <Map
+    <MapPlayground
       {...props}
       match={{ params: { id: '1', layer: undefined } }}
     />
@@ -273,7 +273,7 @@ it('should redirect to the first layer', () => {
 });
 
 it('should get map config and set interactions when mouting if settings is filled', () => {
-  const instance = new Map({ ...props, match: { params: { id: '1', layer: undefined } } });
+  const instance = new MapPlayground({ ...props, match: { params: { id: '1', layer: undefined } } });
   instance.setMapConfig = jest.fn();
   instance.setInteractions = jest.fn();
   instance.loadFeatures = jest.fn();
@@ -284,7 +284,7 @@ it('should get map config and set interactions when mouting if settings is fille
 });
 
 it('should else get settings when mouting', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     settings: {},
     match: { params: { id: '1', layer: undefined } },
@@ -296,7 +296,7 @@ it('should else get settings when mouting', () => {
 
 it('should not set interactions', () => {
   const push = jest.fn();
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     history: { push },
     match: { params: { id: '1', layer: 'layerTest' } },
@@ -310,7 +310,7 @@ it('should not set interactions', () => {
 
 it('should set interactions', () => {
   const push = jest.fn();
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     history: { push },
     match: { params: { id: '1', layer: 'layerTest' } },
@@ -328,7 +328,7 @@ it('should set interactions when settings are updated', () => {
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
   };
-  const instance = new Map({ ...nextProps });
+  const instance = new MapPlayground({ ...nextProps });
   instance.setInteractions = jest.fn();
   instance.componentDidUpdate({ ...nextProps, settings: {} }, {});
   expect(instance.setInteractions).toHaveBeenCalled();
@@ -343,7 +343,7 @@ fit('should generate layers and display current layer when settings are updated'
     ...props,
     match: { params: { id: '1', layer: 'layerTest2' } },
   };
-  const instance = new Map({ ...prevProps });
+  const instance = new MapPlayground({ ...prevProps });
   instance.generateLayersToMap = jest.fn();
   instance.displayCurrentLayer = jest.fn();
   instance.componentDidUpdate({ ...nextProps }, {});
@@ -351,7 +351,7 @@ fit('should generate layers and display current layer when settings are updated'
 });
 
 it('should set fit bounds', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
     map: {
@@ -392,7 +392,7 @@ it('should set fit bounds', () => {
 });
 
 it('should set fitbounds when changing from id feature view to feature list view', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { id: ACTION_CREATE, layer: 'layerTest' } },
   });
@@ -405,7 +405,7 @@ it('should set fitbounds when changing from id feature view to feature list view
 });
 
 it('should set fitbounds when changing to id feature view', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { id: undefined, layer: 'layerTest' } },
     feature: { 1: { geom: { coordinates: [1, 2] } } },
@@ -439,7 +439,7 @@ it('should set fitbounds when changing to id feature view', () => {
 });
 
 it('should reset map', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
   });
   const map = {
@@ -451,7 +451,7 @@ it('should reset map', () => {
 });
 
 it('should attach addHighlight and removeHighlight methods on interactive map init', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
   });
   const addHighlight = jest.fn();
@@ -464,7 +464,7 @@ it('should attach addHighlight and removeHighlight methods on interactive map in
 });
 
 it('should addHighLight current feature', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
     feature: { id: '1', geom: { coordinates: [1, 2] } },
@@ -500,7 +500,7 @@ it('should addHighLight current feature', () => {
 });
 
 it('should not addLight current feature if layers array is empty', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
     feature: { id: '1', geom: { coordinates: [1, 2] } },
@@ -524,7 +524,7 @@ it('should not addLight current feature if layers array is empty', () => {
 });
 
 it('should remove highlight', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
     feature: { id: '1', geom: { coordinates: [1, 2] } },
@@ -554,7 +554,7 @@ it('should remove highlight', () => {
 });
 
 it('should not remove highlight if layers array is empty', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { id: '1', layer: 'layerTest' } },
     feature: { id: '1', geom: { coordinates: [1, 2] } },
@@ -575,7 +575,7 @@ it('should not remove highlight if layers array is empty', () => {
 });
 
 it('should display current layer when changing layer or map props', () => {
-  const instance = new Map({ ...props, match: { params: { id: '1', layer: 'layerTest' } } });
+  const instance = new MapPlayground({ ...props, match: { params: { id: '1', layer: 'layerTest' } } });
   instance.displayCurrentLayer = jest.fn();
   instance.componentDidUpdate({
     ...props,
@@ -585,7 +585,7 @@ it('should display current layer when changing layer or map props', () => {
 });
 
 it('should not display current layer', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { layer: 'layerTest' } },
     map: {
@@ -599,7 +599,7 @@ it('should not display current layer', () => {
 });
 
 it('should display current layer', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { layer: 'layerTest' } },
     map: {
@@ -629,7 +629,7 @@ it('should display current layer', () => {
 });
 
 it('should update controls', () => {
-  const instance = new Map({ ...props });
+  const instance = new MapPlayground({ ...props });
   instance.setState = jest.fn();
   instance.updateControls([{ control: 'CustomControl', position: 'top-right' }]);
   const stateCallback = instance.setState.mock.calls[0][0];
@@ -646,7 +646,7 @@ it('should update controls', () => {
 });
 
 it('should change the table size to "full"', () => {
-  const instance = new Map({ ...props });
+  const instance = new MapPlayground({ ...props });
   instance.setState = jest.fn();
   instance.setFitBounds = jest.fn();
   instance.onTableSizeChange('full');
@@ -656,7 +656,7 @@ it('should change the table size to "full"', () => {
 });
 
 it('should change the table size to "medium" and fitBounds', () => {
-  const instance = new Map({ ...props });
+  const instance = new MapPlayground({ ...props });
   instance.setState = jest.fn();
   instance.setFitBounds = jest.fn();
   instance.onTableSizeChange('medium');
@@ -666,7 +666,7 @@ it('should change the table size to "medium" and fitBounds', () => {
 });
 
 it('should not highlight on table hover cell if there is not the identifiable layer ID', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { layer: 'layerTest' } },
   });
@@ -681,7 +681,7 @@ it('should not highlight on table hover cell if there is not the identifiable la
 });
 
 describe('should add or remove highlight on table hover cell', () => {
-  const instance = new Map({
+  const instance = new MapPlayground({
     ...props,
     match: { params: { layer: 'layerTest' } },
     map: { foo: 'foo' },
@@ -727,14 +727,14 @@ describe('should add or remove highlight on table hover cell', () => {
 });
 
 it('should not generate layers to map', () => {
-  const instance = new Map({ ...props, settings: {} });
+  const instance = new MapPlayground({ ...props, settings: {} });
   instance.setState = jest.fn();
   instance.generateLayersToMap();
   expect(instance.setState).not.toHaveBeenCalled();
 });
 
 it('should generate layers to map', () => {
-  const instance = new Map({ ...props });
+  const instance = new MapPlayground({ ...props });
   instance.setState = jest.fn();
   instance.generateLayersToMap();
   const stateCallback = instance.setState.mock.calls[0][0];

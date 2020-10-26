@@ -25,6 +25,7 @@ const { Provider } = MapContext;
 
 export const MapProvider = ({ children }) => {
   const [controls, setControls] = useState([...DEFAULT_CONTROLS, ...CONTROL_LIST]);
+  const [map, setMap] = useState(null);
 
   const addControl = useCallback(controlToAdd => {
     if (!controlToAdd) return;
@@ -46,9 +47,11 @@ export const MapProvider = ({ children }) => {
   }, []);
 
   const value = {
-    controls,
-    setControls,
     addControl,
+    controls,
+    map,
+    setControls,
+    setMap,
     removeControl,
   };
 

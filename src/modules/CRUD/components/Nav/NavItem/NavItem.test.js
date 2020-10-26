@@ -22,6 +22,8 @@ jest.mock('../../../config', () => ({
   generateURI: jest.fn(),
 }));
 
+jest.mock('@terralego/core/modules/Map', () => ({}));
+
 it('should snapshot correctly', () => {
   const tree = renderer.create((
     <NavItem

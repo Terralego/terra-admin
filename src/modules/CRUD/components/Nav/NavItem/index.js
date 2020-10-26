@@ -17,6 +17,6 @@ const authProviderGetter = ({
 
 export default compose(
   connectAuthProvider(authProviderGetter),
-  connectCRUDProvider('dataTableRef', 'map'),
+  connectCRUDProvider('dataTableRef'),
   withTranslation(),
 )(NavItem);

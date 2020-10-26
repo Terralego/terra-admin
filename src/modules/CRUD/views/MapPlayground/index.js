@@ -5,7 +5,7 @@ import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { connectAppProvider } from '../../../../components/AppProvider';
 import { connectCRUDProvider } from '../../services/CRUDProvider';
 import { withTableSize } from '../../services/UserSettingsProvider';
-import { connectMapProvider } from './MapProvider';
+import { connectMapProvider } from '../../services/MapProvider';
 import compose from '../../../../utils/compose';
 
 import MapPlayground from './MapPlayground';
@@ -33,8 +33,6 @@ const CRUDPRoviderGetter = ({
   detailsRef,
   getSettings,
   settings,
-  setMap,
-  map,
   feature,
   errors,
 }, {
@@ -48,8 +46,6 @@ const CRUDPRoviderGetter = ({
   detailsRef,
   getSettings,
   settings,
-  setMap,
-  map,
   feature: feature[id] || {},
   errors,
   backgroundStyle: settings?.config?.BASE_LAYERS?.map(style => {
@@ -66,7 +62,7 @@ export default compose(
   connectAppProvider(appProviderGetter),
   connectAuthProvider(authProviderGetter),
   connectCRUDProvider(CRUDPRoviderGetter),
-  connectMapProvider('addControl', 'controls', 'removeControl'),
+  connectMapProvider('addControl', 'controls', 'map', 'removeControl', 'setMap'),
   withTableSize(),
   withTranslation(),
 )(MapPlayground);

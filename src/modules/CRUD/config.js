@@ -1,6 +1,5 @@
 import { generateURIFactory } from '../../utils/routes';
 
-const MapProvider = () => import('./views/MapPlayground/MapProvider');
 const MapPlayground = () => import('./views/MapPlayground');
 
 const path = '/CRUD';
@@ -9,7 +8,6 @@ const routes = [
     path: `${path}/map/:layer?/:id?/:section?/:category?`,
     import: MapPlayground,
     name: 'layer',
-    provider: MapProvider,
   },
   {
     path,

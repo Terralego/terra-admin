@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Icon, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core';
+import { MapContext } from '../../../services/MapProvider';
 import { getBounds } from '../../../services/features';
 
 import { generateURI } from '../../../config';
@@ -31,13 +32,14 @@ const NavItem = ({
   displayAddFeature,
   extent,
   layer,
-  map,
   minified,
   name,
   pictogram,
   t,
 }) => {
-  const handleClick = ({ target }) => {
+  const { map } = useContext(MapContext);
+
+  const handleClick = useCallback(({ target }) => {
     const isActivePage = !!target.offsetParent.getAttribute('aria-current');
     if (!isActivePage || !map) {
       return;
@@ -57,7 +59,8 @@ const NavItem = ({
         duration: 0,
       });
     }, 600);
-  };
+  }, [dataTableRef, extent, map]);
+
   return (
     <div className="CRUD-nav__action">
       <NavLink
@@ -91,7 +94,6 @@ export default NavItem;
 
 NavItem.propTypes = {
   dataTableRef: PropTypes.shape({}),
-  map: PropTypes.shape({}),
   name: PropTypes.string.isRequired,
   pictogram: PropTypes.string,
   layer: PropTypes.shape({
@@ -108,7 +110,6 @@ NavItem.defaultProps = {
   layer: {
     name: undefined,
   },
-  map: undefined,
   minified: false,
   displayAddFeature: false,
   t: text => text,

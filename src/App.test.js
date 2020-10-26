@@ -9,6 +9,8 @@ jest.mock('react-mapbox-gl', () => ({
   Marker: () => ({}),
 }));
 
+jest.mock('@terralego/core/modules/Map', () => ({}));
+
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(<App />, div);

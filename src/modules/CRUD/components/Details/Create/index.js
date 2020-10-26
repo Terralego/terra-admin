@@ -5,7 +5,7 @@ import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { connectAppProvider } from '../../../../../components/AppProvider';
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
 import { withTableFilters } from '../../../services/UserSettingsProvider';
-import { getView, getLayersPaints } from '../../../services/CRUD';
+import { getView, getLayers } from '../../../services/CRUD';
 import compose from '../../../../../utils/compose';
 
 import Create from './Create';
@@ -46,7 +46,7 @@ const CRUDPRoviderGetter = ({
   feature: feature[id] || {},
   saveFeature,
   view: getView(settings, layer),
-  layerPaint: getLayersPaints(settings).find(item => item['source-layer'] === layer) || {},
+  layerPaint: getLayers(settings).find(item => item['source-layer'] === layer) || {},
   paramLayer: layer,
   paramId: id,
   featureError: featureError.find(({ featureId }) => featureId === id),

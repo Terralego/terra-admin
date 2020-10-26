@@ -14,7 +14,7 @@ import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
 import { getBounds } from '../../services/features';
-import { ACTION_CREATE, getView, getSources, getLayersPaints, getFirstCrudViewName } from '../../services/CRUD';
+import { ACTION_CREATE, getView, getSources, getLayers, getFirstCrudViewName } from '../../services/CRUD';
 import { TABLE_MEDIUM, TABLE_FULL } from '../../services/UserSettingsProvider';
 import { generateURI } from '../../config';
 import { toast } from '../../../../utils/toast';
@@ -176,7 +176,7 @@ export class MapPlayground extends React.Component {
       return;
     }
 
-    const layers = getLayersPaints(settings);
+    const layers = getLayers(settings);
 
     const interactions = layers.map(interaction => {
       if (interaction.source !== `${layerId}`) {
@@ -393,7 +393,7 @@ export class MapPlayground extends React.Component {
       }
 
       const sourcesFromSettings = getSources(settings);
-      const layersFromSettings = getLayersPaints(settings);
+      const layersFromSettings = getLayers(settings);
 
       const nextSource = sourcesFromSettings.find(({ id }) => id === `${layerId}`);
       const nextLayers = layersFromSettings

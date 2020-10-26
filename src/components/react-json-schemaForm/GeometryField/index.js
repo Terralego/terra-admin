@@ -3,12 +3,12 @@ import { withTranslation } from 'react-i18next';
 import compose from '../../../utils/compose';
 import { connectCRUDProvider } from '../../../modules/CRUD/services/CRUDProvider';
 import { connectMapProvider } from '../../../modules/CRUD/services/MapProvider';
-import { getLayersPaints } from '../../../modules/CRUD/services/CRUD';
+import { getLayers } from '../../../modules/CRUD/services/CRUD';
 
 import GeometryField from './GeometryField';
 
 const CRUDPRoviderGetter = ({ detailsRef, feature, map, settings }) =>
-  ({ detailsRef, feature, map, settings, layerPaints: getLayersPaints(settings) });
+  ({ detailsRef, feature, map, settings, layerPaints: getLayers(settings) });
 
 export default compose(
   withRouter,

@@ -24,7 +24,7 @@ const flattenMenu = menu => (
   ), [])
 );
 
-export const getView = ({ menu = [] }, name) => {
+export const getView = ({ menu = [] } = {}, name) => {
   const view = flattenMenu(menu);
   if (!view.length || !name) {
     return false;
@@ -51,7 +51,7 @@ export const getSources = ({ menu = [] }) =>
       ]
   ), []);
 
-export const getLayersPaints = ({ menu = [] }) =>
+export const getLayers = ({ menu = [] }) =>
   flattenMenu(menu).reduce((
     layersList,
     {
@@ -69,4 +69,4 @@ export const getLayersPaints = ({ menu = [] }) =>
     })),
   ]), []);
 
-export default { fetchSettings, getView, getSources, getLayersPaints, getFirstCrudViewName };
+export default { fetchSettings, getView, getSources, getLayers, getFirstCrudViewName };

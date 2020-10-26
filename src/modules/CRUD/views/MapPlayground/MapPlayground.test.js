@@ -82,7 +82,7 @@ jest.mock('../../services/CRUD', () => ({
     type: 'vector',
     url: '/api/layer/2/tilejson',
   }],
-  getLayersPaints: () => [{
+  getLayers: () => [{
     id: 'terralego-layerTest-1',
     'source-layer': 'layerTest',
     source: '1',

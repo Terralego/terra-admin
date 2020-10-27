@@ -2,11 +2,9 @@ import React from 'react';
 
 import {
   FormTab,
-  NumberInput,
   ArrayInput,
   SimpleFormIterator,
   useTranslate,
-  BooleanInput,
 } from 'react-admin';
 
 import { useField } from 'react-final-form';
@@ -14,26 +12,20 @@ import { useField } from 'react-final-form';
 import Typography from '@material-ui/core/Typography';
 
 import CustomLayer from './CustomLayer';
-import StyleField from './StyleField';
 
-import { required } from '../../../../../../utils/react-admin/validate';
-import { getLayerStyleDefaultValue, getShapeFromGeomType } from '../../../../../../utils/geom';
-
-import useRandomColor from '../../useRandomColor';
 import useSourceData from '../../useSourceData';
-
 
 import Placeholder from '../../../../../../components/Placeholder';
 
 import StyleEditor from './StyleEditor';
 
-const defaultRequired = required();
 
 const StyleTab = ({ external }) => {
   const translate = useTranslate();
-  const randomColor = useRandomColor();
+  const [extraStylesInitialValue] = React.useState([]);
   const { geom_type: geomType } = useSourceData('source');
-  const { input: { value: advancedStyle } } = useField('settings.advanced_style');
+  const { input: { value: mainStyle } } = useField('settings.main_style');
+  const { input: { value: extraStyles } } = useField('settings.extra_styles', { initialValue: extraStylesInitialValue });
 
   if (geomType === undefined) {
     return (
@@ -47,38 +39,21 @@ const StyleTab = ({ external }) => {
 
   return (
     <FormTab disabled={external} label="datalayer.form.styles.tab" path="style">
-      <BooleanInput source="settings.advanced_style" label="datalayer.form.styles.advanced" style={{ float: 'right' }} />
-      {advancedStyle && (
-        <>
-          <StyleField
-            source="layer_style"
-            withSource="source"
-            label="datalayer.form.styles.mainstyle"
-            initialValue={getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType))}
-            fullWidth
-          />
+      <StyleEditor path="settings.main_style" geomType={geomType} />
 
-
-          <NumberInput
-            source="settings.default_opacity"
-            label="datalayer.form.styles.default_opacity"
-            step={5}
-            defaultValue={100}
-            min={0}
-            max={100}
-            validate={defaultRequired}
-          />
-
-          <ArrayInput source="custom_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
-            <SimpleFormIterator>
-              <CustomLayer />
-            </SimpleFormIterator>
-          </ArrayInput>
-        </>
-      )}
-      {!advancedStyle && (
-        <StyleEditor geomType={geomType} />
-      )}
+      <ArrayInput source="settings.extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
+        <SimpleFormIterator>
+          <CustomLayer />
+        </SimpleFormIterator>
+      </ArrayInput>
+      <>
+        <div style={{ paddingTop: '5em', color: '#ccc' }}>
+          <pre>{JSON.stringify(mainStyle, null, 2)}</pre>
+        </div>
+        <div style={{ paddingTop: '5em', color: '#ccc' }}>
+          <pre>{JSON.stringify(extraStyles, null, 2)}</pre>
+        </div>
+      </>
     </FormTab>
   );
 };

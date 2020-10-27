@@ -14,6 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import randomColor from 'randomcolor';
 
+import get from 'lodash.get';
 import { getLayerStyleDefaultValue, getShapeFromGeomType } from '../../../../../../utils/geom';
 
 import { fieldTypes } from '../../../../DataSource';
@@ -25,7 +26,7 @@ import FillCategorize from './Style/FillCategorize';
 import StyleField from './StyleField';
 
 
-const StyleEditor = ({ geomType }) => {
+const StyleEditor = ({ path, geomType }) => {
   const translate = useTranslate();
 
   const [initialValue] = React.useState({
@@ -35,11 +36,16 @@ const StyleEditor = ({ geomType }) => {
     no_value_style: {},
   });
 
+  // To avoid circular render
+  const [advancedStyleInitialValue] = React.useState(
+    getLayerStyleDefaultValue(randomColor(), getShapeFromGeomType(geomType)),
+  );
+
   const [selectedField, setSelectedField] = React.useState(null);
 
   const {
     input: { value: styleConfig },
-  } = useField('settings.style_config', { initialValue });
+  } = useField(path, { defaultValue: initialValue });
 
   const {
     input: { value: fields },
@@ -51,9 +57,9 @@ const StyleEditor = ({ geomType }) => {
 
   const setStyleConfig = React.useCallback(
     callback => {
-      form.change('settings.style_config', callback(form.getState().values.settings.style_config));
+      form.change(path, callback(get(form.getState().values, path)));
     },
-    [form],
+    [form, path],
   );
 
   const handlePropChange = React.useCallback(
@@ -136,6 +142,7 @@ const StyleEditor = ({ geomType }) => {
       {styleType === 'fill' && <h1>Polygone</h1>}
       {styleType === 'line' && <h1>Line</h1>}
       {styleType === 'circle' && <h1>Point</h1>}
+      {!['fill', 'line', 'circle'].includes(styleType) && <h1>Other ({styleType})</h1>}
       <FormControl component="fieldset">
         <RadioGroup
           value={styleConfig.analysis}
@@ -219,25 +226,19 @@ const StyleEditor = ({ geomType }) => {
             </>
           )}
         </>
-
-
       )}
 
       {styleConfig.analysis === 'advanced' && (
         <>
           <StyleField
-            source="layer_style"
-            withSource="source"
+            source={`${path}.map_style`}
             label="datalayer.form.styles.mainstyle"
-            initialValue={getLayerStyleDefaultValue(randomColor, getShapeFromGeomType(geomType))}
+            initialValue={advancedStyleInitialValue}
             fullWidth
           />
         </>
       )}
 
-      <div style={{ paddingTop: '5em', color: '#ccc' }}>
-        {JSON.stringify(styleConfig, null, 2)}
-      </div>
     </>
   );
 };

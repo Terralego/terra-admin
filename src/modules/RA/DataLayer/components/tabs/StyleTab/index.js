@@ -25,7 +25,7 @@ import useSourceData from '../../useSourceData';
 
 import Placeholder from '../../../../../../components/Placeholder';
 
-import AdvancedStyleEditor from './AdvancedStyleEditor';
+import StyleEditor from './StyleEditor';
 
 const defaultRequired = required();
 
@@ -77,7 +77,7 @@ const StyleTab = ({ external }) => {
         </>
       )}
       {!advancedStyle && (
-        <AdvancedStyleEditor />
+        <StyleEditor geomType={geomType} />
       )}
     </FormTab>
   );

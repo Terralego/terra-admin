@@ -16,8 +16,11 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Select from '@material-ui/core/Select';
 import Slider from '@material-ui/core/Slider';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import Typography from '@material-ui/core/Typography';
+
 
 import Switch from '@material-ui/core/Switch';
 
@@ -27,7 +30,6 @@ import randomColor from 'randomcolor';
 import { getShapeFromGeomType } from '../../../../../../utils/geom';
 
 import { fieldTypes } from '../../../../DataSource';
-
 
 import useSourceData from '../../useSourceData';
 
@@ -44,11 +46,13 @@ const cover = {
 };
 
 const useStyles = makeStyles({
-  color: props => ({ width: '25px',
+  color: props => ({
+    width: '25px',
     height: '25px',
     backgroundColor: props.disabled ? '#fff' : props.value,
     cursor: props.disabled ? 'default' : 'pointer',
-    backgroundImage: props.disabled ? `repeating-linear-gradient(
+    backgroundImage: props.disabled
+      ? `repeating-linear-gradient(
       45deg,
       transparent,
       transparent 15px,
@@ -61,7 +65,9 @@ const useStyles = makeStyles({
         transparent 15px,
         rgb(255, 123, 123) 10px,
         rgb(255, 123, 123) 20px
-      )` : '' }),
+      )`
+      : '',
+  }),
   configLine: {
     display: 'flex',
     alignItems: 'center',
@@ -71,7 +77,6 @@ const useStyles = makeStyles({
     '& > .grow': {
       flex: 1,
     },
-
   },
 });
 
@@ -123,11 +128,11 @@ const FillStyleColorField = ({ value, index, style = {} }) => {
     const newStyle = { ...form.getState().values.settings.filter_config.style };
     newStyle.fill_color[index] = newValue;
     form.change('settings.filter_config.style', newStyle);
-  });
+  }, [form, index]);
   return (
     <div style={style}>
       <ColorPicker
-    // eslint-disable-next-line react/no-array-index-key
+        // eslint-disable-next-line react/no-array-index-key
         value={value}
         onChange={onChange}
       />
@@ -135,15 +140,10 @@ const FillStyleColorField = ({ value, index, style = {} }) => {
   );
 };
 
-
 const styleMap = {
   polygon: ['fill-color', 'fill-extrusion-height'],
   line: ['line-color', 'line-width'],
   point: ['circle-color', 'circle-radius', 'icon-image'],
-};
-
-const genDefaultValue = (geomType, analysis) => {
-
 };
 
 const AdvancedStyleEditor = () => {
@@ -163,7 +163,9 @@ const AdvancedStyleEditor = () => {
     input: { value: filterConfig },
   } = useField('settings.filter_config', { initialValue });
 
-  const { input: { value: fields } } = useField('fields');
+  const {
+    input: { value: fields },
+  } = useField('fields');
 
   const { geom_type: geomType } = useSourceData('source');
 
@@ -171,11 +173,14 @@ const AdvancedStyleEditor = () => {
 
   const styleType = getShapeFromGeomType(geomType);
 
-  const handlePropChange = React.useCallback(property => newValue => {
-    const newStyle = { ...form.getState().values.settings.filter_config };
-    newStyle[property] = newValue;
-    form.change('settings.filter_config', newStyle);
-  }, [form]);
+  const handlePropChange = React.useCallback(
+    property => newValue => {
+      const newStyle = { ...form.getState().values.settings.filter_config };
+      newStyle[property] = newValue;
+      form.change('settings.filter_config', newStyle);
+    },
+    [form],
+  );
 
   const handleTypeChange = React.useCallback(
     e => {
@@ -205,10 +210,16 @@ const AdvancedStyleEditor = () => {
     [handlePropChange],
   );
 
-  const handleStyleChange = React.useCallback(newValue => {
-    const newStyle = { ...form.getState().values.settings.filter_config.style, ...newValue };
-    handlePropChange('style')(newStyle);
-  }, [form, handlePropChange]);
+  const handleStyleChange = React.useCallback(
+    newValue => {
+      const newStyle = {
+        ...form.getState().values.settings.filter_config.style,
+        ...newValue,
+      };
+      handlePropChange('style')(newStyle);
+    },
+    [form, handlePropChange],
+  );
 
   const handleBorderColorChange = React.useCallback(
     newColor => {
@@ -217,22 +228,33 @@ const AdvancedStyleEditor = () => {
     [handleStyleChange],
   );
 
-  const handleBackgroundChange = React.useCallback(e => {
-    handlePropChange('background_enabled')(e.target.checked);
-  }, [handlePropChange]);
+  const handleBackgroundChange = React.useCallback(
+    e => {
+      handlePropChange('background_enabled')(e.target.checked);
+    },
+    [handlePropChange],
+  );
 
-  const handleBorderChange = React.useCallback(e => {
-    handlePropChange('border_enabled')(e.target.checked);
-  }, [handlePropChange]);
+  const handleBorderChange = React.useCallback(
+    e => {
+      handlePropChange('border_enabled')(e.target.checked);
+    },
+    [handlePropChange],
+  );
 
-  const handleMethodChange = React.useCallback(e => {
-    handlePropChange('method')(e.target.value);
-  }, [handlePropChange]);
+  const handleMethodChange = React.useCallback(
+    e => {
+      handlePropChange('method')(e.target.value);
+    },
+    [handlePropChange],
+  );
 
-  const handleClassesCountChange = React.useCallback((e, newValue) => {
-    handlePropChange('classes_count')(newValue);
-  }, [handlePropChange]);
-
+  const handleClassesCountChange = React.useCallback(
+    (e, newValue) => {
+      handlePropChange('classes_count')(newValue);
+    },
+    [handlePropChange],
+  );
 
   // Update color list if classes count change
   React.useEffect(() => {
@@ -261,12 +283,15 @@ const AdvancedStyleEditor = () => {
     handleStyleChange,
   ]);
 
-
   // Update config if selected field change
   React.useEffect(() => {
-    const newSelectedField = fields.find(field => field.name && field.name === filterConfig.field);
+    const newSelectedField = fields.find(
+      field => field.name && field.name === filterConfig.field,
+    );
     if (newSelectedField) {
-      handlePropChange('analysis_type')([2, 3].includes(newSelectedField.data_type) ? 'graduate' : 'categorize');
+      handlePropChange('analysis_type')(
+        [2, 3].includes(newSelectedField.data_type) ? 'graduate' : 'categorize',
+      );
     }
     setSelectedField(newSelectedField);
   }, [fields, filterConfig.field, handlePropChange]);
@@ -305,9 +330,7 @@ const AdvancedStyleEditor = () => {
                 onChange={handleBackgroundColorChange}
               />
             </div>
-            <div
-              style={{ float: 'right' }}
-            >
+            <div style={{ float: 'right' }}>
               <Switch
                 checked={Boolean(filterConfig.background_enabled)}
                 onChange={handleBackgroundChange}
@@ -323,9 +346,7 @@ const AdvancedStyleEditor = () => {
                 onChange={handleBorderColorChange}
               />
             </div>
-            <div
-              style={{ float: 'right' }}
-            >
+            <div style={{ float: 'right' }}>
               <Switch
                 checked={Boolean(filterConfig.border_enabled)}
                 onChange={handleBorderChange}
@@ -337,136 +358,137 @@ const AdvancedStyleEditor = () => {
       {filterConfig.analysis === 'variable' && ( // «----------------------------------------------------------
         <>
           <div>
-            <Typography gutterBottom>
-              On field
-            </Typography>
-            <Select
-              native
-              value={filterConfig.field}
-              onChange={handleFieldChange}
-              required
-            >
-              <option value="">{translate('datalayer.form.styles.select-field')}</option>
-              {fields.filter(field => [1, 2, 3].includes(field.data_type)).map(field => (
-                <option
-                  key={field.sourceFieldId}
-                  value={field.name}
-                >{field.label} ({fieldTypes[field.data_type]})
-                </option>
-              ))}
-            </Select>
+            <FormControl style={{ minWidth: '20em', margin: '1em 0' }}>
+              <InputLabel>On field</InputLabel>
+              <Select
+                value={filterConfig.field}
+                onChange={handleFieldChange}
+                required
+              >
+                {fields
+                  .filter(field => [1, 2, 3].includes(field.data_type))
+                  .map(field => (
+                    <MenuItem key={field.sourceFieldId} value={field.name}>
+                      {field.label} ({fieldTypes[field.data_type]})
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
           </div>
 
           {selectedField && (
-          <>
-            <FormControl component="fieldset">
-              <RadioGroup
-                value={filterConfig.analysis_type}
-                onChange={handleAnalysisTypeChange}
-                style={{ flexDirection: 'row' }}
-                defaultValue={[2, 3].includes(selectedField.data_type) ? 'graduate' : 'categorize'}
-              >
-                <FormControlLabel
-                  value="graduate"
-                  control={<Radio />}
-                  label="Graduate"
-                  disabled={selectedField.data_type === 1}
-                />
-                <FormControlLabel
-                  value="categorize"
-                  control={<Radio />}
-                  label="Categorize"
-                />
-              </RadioGroup>
-            </FormControl>
+            <>
+              <FormControl component="fieldset">
+                <RadioGroup
+                  value={filterConfig.analysis_type}
+                  onChange={handleAnalysisTypeChange}
+                  style={{ flexDirection: 'row' }}
+                  defaultValue={
+                    [2, 3].includes(selectedField.data_type)
+                      ? 'graduate'
+                      : 'categorize'
+                  }
+                >
+                  <FormControlLabel
+                    value="graduate"
+                    control={<Radio />}
+                    label="Graduate"
+                    disabled={selectedField.data_type === 1}
+                  />
+                  <FormControlLabel
+                    value="categorize"
+                    control={<Radio />}
+                    label="Categorize"
+                  />
+                </RadioGroup>
+              </FormControl>
 
-            {filterConfig.analysis_type === 'graduate' && (
-              <>
-                <div style={{ width: '50%' }}>
-                  <div className={classes.configLine} style={{ width: '100%' }}>
-                    <FormLabel style={{ width: '9em' }}>Background</FormLabel>
-                    <div className="grow" style={{ display: 'flex' }}>
-                      {filterConfig.style.fill_color.map((color, index) => (
-                      // eslint-disable-next-line react/no-array-index-key
-                        <FillStyleColorField value={color} index={index} key={index} />
-                      ))}
-                    </div>
+              {filterConfig.analysis_type === 'graduate' && (
+                <>
+                  <div style={{ width: '50%' }}>
+
+                    <Typography gutterBottom>
+                      Classes count
+                    </Typography>
+                    <Slider
+                      value={filterConfig.classes_count}
+                      onChange={handleClassesCountChange}
+                      valueLabelDisplay="auto"
+                      step={1}
+                      marks
+                      min={2}
+                      max={10}
+                    />
+
                     <div
-                      style={{ float: 'right' }}
+                      className={classes.configLine}
+                      style={{ width: '100%' }}
                     >
+                      <FormLabel>Background</FormLabel>
+                      <div className="grow" style={{ display: 'flex' }}>
+                        {filterConfig.style.fill_color.map((color, index) => (
+                          <FillStyleColorField
+                            value={color}
+                            index={index}
+                            // eslint-disable-next-line react/no-array-index-key
+                            key={index}
+                          />
+                        ))}
+                      </div>
+                      <div style={{ float: 'right' }}>
+                        <Switch checked disabled />
+                      </div>
+                    </div>
+
+
+                    <FormControl style={{ minWidth: '20em', margin: '1em 0' }}>
+                      <InputLabel>Statistic method</InputLabel>
+                      <Select
+                        value={filterConfig.method}
+                        onChange={handleMethodChange}
+                        required
+                      >
+                        <MenuItem value="jenks">
+                          {translate('datalayer.form.styles.jenks')}
+                        </MenuItem>
+                        <MenuItem value="quantile">
+                          {translate('datalayer.form.styles.quantiles')}
+                        </MenuItem>
+                        <MenuItem value="equal_interal">
+                          {translate('datalayer.form.styles.equal-interval')}
+                        </MenuItem>
+                        <MenuItem value="manual">
+                          {translate('datalayer.form.styles.manual')}
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+
+                  <div className={classes.configLine}>
+                    <FormLabel style={{ width: '9em' }}>Border</FormLabel>
+                    <div className="grow">
+                      <ColorPicker
+                        disabled={!filterConfig.border_enabled}
+                        value={filterConfig.stroke_color}
+                        onChange={handleBorderColorChange}
+                      />
+                    </div>
+                    <div style={{ float: 'right' }}>
                       <Switch
-                        checked
-                        disabled
+                        checked={Boolean(filterConfig.border_enabled)}
+                        onChange={handleBorderChange}
+                        defaultValue={false}
                       />
                     </div>
                   </div>
 
-                  <Typography gutterBottom>
-                    Classes count
-                  </Typography>
-                  <Slider
-                    value={filterConfig.classes_count}
-                    onChange={handleClassesCountChange}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    marks
-                    min={2}
-                    max={10}
-                  />
+                  // style par défaut
+                  // Inclure les valeur vide ?
+                  // Faire api qui retourne le style mis à jour
 
-                  <Typography gutterBottom>
-                    Statistic method
-                  </Typography>
-                  <Select
-                    native
-                    value={filterConfig.method}
-                    onChange={handleMethodChange}
-                    required
-                  >
-                    <option
-                      value="jenks"
-                    >
-                      {translate('datalayer.form.styles.jenks')}
-                    </option>
-                    <option
-                      value="quantile"
-                    >
-                      {translate('datalayer.form.styles.quantiles')}
-                    </option>
-                    <option
-                      value="equal_interal"
-                    >
-                      {translate('datalayer.form.styles.equal-interval')}
-                    </option>
-                    <option
-                      value="manual"
-                    >
-                      {translate('datalayer.form.styles.manual')}
-                    </option>
-                  </Select>
-                </div>
-                <div className={classes.configLine}>
-                  <FormLabel style={{ width: '9em' }}>Border</FormLabel>
-                  <div className="grow">
-                    <ColorPicker
-                      disabled={!filterConfig.border_enabled}
-                      value={filterConfig.stroke_color}
-                      onChange={handleBorderColorChange}
-                    />
-                  </div>
-                  <div
-                    style={{ float: 'right' }}
-                  >
-                    <Switch
-                      checked={Boolean(filterConfig.border_enabled)}
-                      onChange={handleBorderChange}
-                      defaultValue={false}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-          </>
+                </>
+              )}
+            </>
           )}
         </>
       )}
@@ -482,9 +504,7 @@ const AdvancedStyleEditor = () => {
               />
             </div>
             <div className="grow">
-              <div
-                style={{ float: 'right' }}
-              >
+              <div style={{ float: 'right' }}>
                 <Switch
                   checked={Boolean(filterConfig.background_enabled)}
                   onChange={handleBackgroundChange}
@@ -503,9 +523,7 @@ const AdvancedStyleEditor = () => {
               />
             </div>
             <div className="grow">
-              <div
-                style={{ float: 'right' }}
-              >
+              <div style={{ float: 'right' }}>
                 <Switch
                   checked={Boolean(filterConfig.border_enabled)}
                   onChange={handleBorderChange}
@@ -516,7 +534,9 @@ const AdvancedStyleEditor = () => {
           </div>
         </>
       )}
-      <div style={{ paddingTop: '5em', color: '#ccc' }}>{JSON.stringify(filterConfig, null, 2)}</div>
+      <div style={{ paddingTop: '5em', color: '#ccc' }}>
+        {JSON.stringify(filterConfig, null, 2)}
+      </div>
     </>
   );
 };

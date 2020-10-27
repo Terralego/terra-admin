@@ -43,10 +43,19 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     padding: '1em 0',
-    borderBottom: '1px solid #ccc',
     width: '50%',
     '& > .grow': {
       flex: 1,
+    },
+  },
+  graduateConfig: {
+    display: 'flex',
+    '& .method': {
+      width: '20em',
+      marginRight: '3em',
+    },
+    '& .count': {
+      flex: '1',
     },
   },
 });
@@ -100,20 +109,43 @@ const FillGraduate = ({ styleConfig, setStyleConfig }) => {
   return (
     <>
       <div style={{ width: '50%' }}>
-
-        <Typography gutterBottom>
-          Classes count
-        </Typography>
-        <Slider
-          value={styleConfig.classes_count}
-          onChange={handleClassesCountChange}
-          valueLabelDisplay="auto"
-          step={1}
-          marks
-          min={2}
-          max={10}
-        />
-
+        <div className={classes.graduateConfig}>
+          <FormControl className="method">
+            <InputLabel>Statistic method</InputLabel>
+            <Select
+              value={styleConfig.method}
+              onChange={handleMethodChange}
+              required
+            >
+              <MenuItem value="jenks">
+                {translate('datalayer.form.styles.jenks')}
+              </MenuItem>
+              <MenuItem value="quantile">
+                {translate('datalayer.form.styles.quantiles')}
+              </MenuItem>
+              <MenuItem value="equal_interal">
+                {translate('datalayer.form.styles.equal-interval')}
+              </MenuItem>
+              <MenuItem value="manual">
+                {translate('datalayer.form.styles.manual')}
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className="count">
+            <Typography gutterBottom>
+              Classes count
+            </Typography>
+            <Slider
+              value={styleConfig.classes_count}
+              onChange={handleClassesCountChange}
+              valueLabelDisplay="auto"
+              step={1}
+              marks
+              min={2}
+              max={10}
+            />
+          </FormControl>
+        </div>
         <div
           className={classes.configLine}
           style={{ width: '100%' }}
@@ -124,7 +156,7 @@ const FillGraduate = ({ styleConfig, setStyleConfig }) => {
               <FillStyleColorField
                 value={color}
                 index={index}
-                            // eslint-disable-next-line react/no-array-index-key
+                // eslint-disable-next-line react/no-array-index-key
                 key={index}
               />
             ))}
@@ -135,27 +167,6 @@ const FillGraduate = ({ styleConfig, setStyleConfig }) => {
         </div>
 
 
-        <FormControl style={{ minWidth: '20em', margin: '1em 0' }}>
-          <InputLabel>Statistic method</InputLabel>
-          <Select
-            value={styleConfig.method}
-            onChange={handleMethodChange}
-            required
-          >
-            <MenuItem value="jenks">
-              {translate('datalayer.form.styles.jenks')}
-            </MenuItem>
-            <MenuItem value="quantile">
-              {translate('datalayer.form.styles.quantiles')}
-            </MenuItem>
-            <MenuItem value="equal_interal">
-              {translate('datalayer.form.styles.equal-interval')}
-            </MenuItem>
-            <MenuItem value="manual">
-              {translate('datalayer.form.styles.manual')}
-            </MenuItem>
-          </Select>
-        </FormControl>
       </div>
 
       <div className={classes.configLine}>

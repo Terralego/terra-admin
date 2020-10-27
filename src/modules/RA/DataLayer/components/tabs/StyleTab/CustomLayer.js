@@ -2,39 +2,32 @@ import React from 'react';
 import {
   SelectInput,
   ReferenceInput,
-  FormDataConsumer,
 } from 'react-admin';
-import get from 'lodash.get';
 
-import StyleField from './StyleField';
+import useSourceData from '../../useSourceData';
+
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
 import { RES_DATASOURCE } from '../../../../ra-modules';
 
-export const CustomLayer = ({ resource, source }) => (
-  <FieldGroup>
-    <ReferenceInput
-      source={`${source}.source`}
-      reference={RES_DATASOURCE}
-      label="datalayer.form.data-source"
-      sort={{ field: 'name', order: 'ASC' }}
-      resource={resource}
-      perPage={100}
-    >
-      <SelectInput />
-    </ReferenceInput>
-    <FormDataConsumer>
-      {({ formData }) => (get(formData, `${source}.source`)
-        ? (
-          <StyleField
-            source={`${source}.style`}
-            label="datalayer.form.styles.style"
-            fullWidth
-          />
-        )
-        : null
-      )}
-    </FormDataConsumer>
-  </FieldGroup>
-);
+import StyleEditor from './StyleEditor';
+
+export const CustomLayer = ({ source }) => {
+  const { geom_type: geomType } = useSourceData(`${source}.source`);
+
+  return (
+    <FieldGroup>
+      <ReferenceInput
+        source={`${source}.source`}
+        reference={RES_DATASOURCE}
+        label="datalayer.form.data-source"
+        sort={{ field: 'name', order: 'ASC' }}
+        perPage={100}
+      >
+        <SelectInput />
+      </ReferenceInput>
+      {geomType !== undefined && <StyleEditor path={`${source}.style_config`} geomType={geomType} />}
+    </FieldGroup>
+  );
+};
 
 export default CustomLayer;

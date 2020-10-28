@@ -1,6 +1,7 @@
 import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Icon, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core';
 import { MapContext } from '../../../services/MapProvider';
 import { getBounds } from '../../../services/features';
@@ -9,7 +10,8 @@ import { generateURI } from '../../../config';
 
 import NavIcon from '../NavIcon';
 
-const NavAddFeature = ({ withPopover, children, t }) => {
+const NavAddFeature = ({ withPopover, children }) => {
+  const { t } = useTranslation();
   if (!withPopover) {
     return children;
   }
@@ -26,18 +28,15 @@ const NavAddFeature = ({ withPopover, children, t }) => {
   );
 };
 
-
 const NavItem = ({
-  dataTableRef,
   displayAddFeature,
   extent,
   layer,
   minified,
   name,
   pictogram,
-  t,
 }) => {
-  const { map } = useContext(MapContext);
+  const { dataTableRef, map } = useContext(MapContext);
 
   const handleClick = useCallback(({ target }) => {
     const isActivePage = !!target.offsetParent.getAttribute('aria-current');
@@ -76,7 +75,7 @@ const NavItem = ({
         </span>
       </NavLink>
       {displayAddFeature && (
-        <NavAddFeature withPopover={!minified} t={t}>
+        <NavAddFeature withPopover={!minified}>
           <NavLink to={generateURI('layer', { layer: layer.name, id: 'create' })}>
             <span className="CRUD-nav__item-content">
               <span className="bp3-button bp3-minimal">
@@ -93,7 +92,6 @@ const NavItem = ({
 export default NavItem;
 
 NavItem.propTypes = {
-  dataTableRef: PropTypes.shape({}),
   name: PropTypes.string.isRequired,
   pictogram: PropTypes.string,
   layer: PropTypes.shape({
@@ -101,16 +99,13 @@ NavItem.propTypes = {
   }),
   minified: PropTypes.bool,
   displayAddFeature: PropTypes.bool,
-  t: PropTypes.func,
 };
 
 NavItem.defaultProps = {
-  dataTableRef: null,
   pictogram: undefined,
   layer: {
     name: undefined,
   },
   minified: false,
   displayAddFeature: false,
-  t: text => text,
 };

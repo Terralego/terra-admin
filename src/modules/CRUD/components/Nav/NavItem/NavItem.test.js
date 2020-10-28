@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { MapContext } from '../../../services/MapProvider';
 
 import NavItem from './NavItem';
 
@@ -26,12 +27,22 @@ jest.mock('@terralego/core/modules/Map', () => ({}));
 
 it('should snapshot correctly', () => {
   const tree = renderer.create((
-    <NavItem
-      name="foo"
-      displayAddFeature
-      displayPictogram
-      pictogram="path/to/picture"
-    />
+    <MapContext.Provider value={{
+      dataTableRef: {
+        current: {
+          offsetHeigh: 100,
+        },
+      },
+      map: {},
+    }}
+    >
+      <NavItem
+        name="foo"
+        displayAddFeature
+        displayPictogram
+        pictogram="path/to/picture"
+      />
+    </MapContext.Provider>
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });

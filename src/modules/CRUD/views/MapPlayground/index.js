@@ -58,7 +58,7 @@ export default compose(
   connectAppProvider(appProviderGetter),
   connectAuthProvider(authProviderGetter),
   connectCRUDProvider(CRUDPRoviderGetter),
-  connectMapProvider('addControl', 'controls', 'dataTableRef', 'detailsRef', 'map', 'removeControl', 'setMap'),
+  connectMapProvider('addControl', 'controls', 'dataTableRef', 'detailsRef', 'map', 'removeControl', 'setFitBounds', 'setMap'),
   withTableSize(),
   withTranslation(),
 )(MapPlayground);

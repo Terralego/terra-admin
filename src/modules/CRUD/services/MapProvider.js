@@ -8,6 +8,8 @@ import {
   CONTROLS_TOP_RIGHT,
 } from '@terralego/core/modules/Map';
 
+import { getBounds } from './features';
+
 const CONTROL_LIST = [{
   control: CONTROL_BACKGROUND_STYLES,
   position: CONTROLS_TOP_RIGHT,
@@ -49,6 +51,22 @@ export const MapProvider = ({ children }) => {
     setControls(prevControls => prevControls.filter(item => item.control !== controlToRemove));
   }, []);
 
+  const setFitBounds = useCallback(({ coordinates, hasDetails }) => {
+    if (!coordinates.length) return;
+
+    const { current: detail } = detailsRef;
+    const { current: dataTable } = dataTableRef;
+
+    const padding = {
+      top: 20,
+      right: hasDetails ? (detail.offsetWidth + 50) : 50,
+      bottom: !hasDetails ? (dataTable.offsetHeight + 20) : 20,
+      left: 20,
+    };
+    map.resize();
+    map.fitBounds(getBounds(coordinates), { padding, duration: 0 });
+  }, [dataTableRef, detailsRef, map]);
+
   const value = {
     addControl,
     controls,
@@ -56,6 +74,7 @@ export const MapProvider = ({ children }) => {
     dataTableRef,
     map,
     setControls,
+    setFitBounds,
     setMap,
     removeControl,
   };

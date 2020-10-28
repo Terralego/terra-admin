@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Icon, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core';
 import { MapContext } from '../../../services/MapProvider';
-import { getBounds } from '../../../services/features';
 
 import { generateURI } from '../../../config';
 
@@ -36,29 +35,22 @@ const NavItem = ({
   name,
   pictogram,
 }) => {
-  const { dataTableRef, map } = useContext(MapContext);
+  const { setFitBounds } = useContext(MapContext);
 
   const handleClick = useCallback(({ target }) => {
     const isActivePage = !!target.offsetParent.getAttribute('aria-current');
-    if (!isActivePage || !map) {
+    if (!isActivePage) {
       return;
     }
     const [w, s, e, n] = extent;
-    const { current: dataTable } = dataTableRef;
 
     setTimeout(() => {
-      map.resize();
-      map.fitBounds(getBounds([[w, s], [e, n]]), {
-        padding: {
-          top: 20,
-          right: 50,
-          bottom: dataTable.offsetHeight + 20,
-          left: 20,
-        },
-        duration: 0,
+      setFitBounds({
+        coordinates: [[w, s], [e, n]],
+        hasDetails: false,
       });
     }, 600);
-  }, [dataTableRef, extent, map]);
+  }, [extent, setFitBounds]);
 
   return (
     <div className="CRUD-nav__action">

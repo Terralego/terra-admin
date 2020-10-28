@@ -13,7 +13,6 @@ import Message from '../../../../components/Message';
 import DataTable from '../../components/DataTable';
 import DetailsWrapper from '../../components/DetailsWrapper';
 import Details from '../../components/Details';
-import { getBounds } from '../../services/features';
 import { ACTION_CREATE, getView, getSources, getLayers, getFirstCrudViewName } from '../../services/CRUD';
 import { TABLE_MEDIUM, TABLE_FULL } from '../../services/UserSettingsProvider';
 import { generateURI } from '../../config';
@@ -202,12 +201,11 @@ export class MapPlayground extends React.Component {
 
   setFitBounds = () => {
     const {
-      dataTableRef,
-      detailsRef,
       map,
       match: { params: { layer, id } },
       settings,
       feature: { geom: { coordinates = [] } = {} },
+      setFitBounds,
     } = this.props;
 
     if (!map) return;
@@ -217,19 +215,10 @@ export class MapPlayground extends React.Component {
 
     if (!coords.length) return;
 
-    const { current: detail } = detailsRef;
-    const { current: dataTable } = dataTableRef;
-
-    setTimeout(() => {
-      const padding = {
-        top: 20,
-        right: (id && detail) ? (detail.offsetWidth + 50) : 50,
-        bottom: !id ? (dataTable.offsetHeight + 20) : 20,
-        left: 20,
-      };
-      map.resize();
-      map.fitBounds(getBounds(coords), { padding, duration: 0 });
-    }, 500);
+    setFitBounds({
+      coordinates: id ? coordinates : [[w, s], [e, n]],
+      hasDetails: !!id,
+    });
   }
 
   setMapConfig () {
@@ -525,6 +514,7 @@ export class MapPlayground extends React.Component {
               [`CRUD-table--${tableSize}`]: layer && !areDetailsVisible,
             },
           )}
+          onTransitionEnd={this.setFitBounds}
         >
           <DataTable
             layerName={layer}

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useMemo, useContext } from 'react';
 import { Button } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
+import { CRUDContext } from '../../services/CRUDProvider';
+import { MapContext } from '../../services/MapProvider';
 import NavGroup from './NavGroup';
 
 import './styles.scss';
@@ -12,22 +14,34 @@ const sortBy = prop => ({ [prop]: orderA }, { [prop]: orderB }) =>
 
 const sortByOrder = sortBy('order');
 
-const getOrderedMenu = menu => menu && (
-  menu.reduce((group, menuItem) => {
-    const { id, crud_views: views } = menuItem;
-    return [...group, ({ views: views.sort(sortByOrder), collapsed: (id !== null), ...menuItem })];
-  },
-  []).filter(({ crud_views: views }) => views.length).sort(sortByOrder)
-);
+export const Nav = () => {
+  const { map } = useContext(MapContext);
+  const { settings: { menu } = {} } = useContext(CRUDContext);
 
-export const Nav = ({
-  settings: { menu } = {},
-  t,
-}) => {
+  const { t } = useTranslation();
+
   const [menuOpen, setMenuOpen] = useState(true);
-  const [orderedMenu, setOrderedMenu] = useState(getOrderedMenu(menu));
 
-  useEffect(() => setOrderedMenu(getOrderedMenu(menu)), [menu]);
+  const orderedMenu = useMemo(() => (
+    menu && menu
+      .reduce((group, menuItem) => {
+        const { id, crud_views: views } = menuItem;
+        return [
+          ...group,
+          ({ views: views.sort(sortByOrder), collapsed: (id !== null), ...menuItem }),
+        ];
+      }, [])
+      .filter(({ crud_views: views }) => views.length)
+      .sort(sortByOrder)
+  ), [menu]);
+
+  useEffect(() => {
+    map && map.resize();
+  }, [map, menuOpen]);
+
+  if (!menu) {
+    return null;
+  }
 
   return (
     <div
@@ -42,9 +56,9 @@ export const Nav = ({
         <Button
           icon={menuOpen ? 'menu-closed' : 'menu-open'}
           aria-controls="CRUD-nav__menu"
-          expandable={menuOpen ? 'true' : 'false'}
+          expandable={menuOpen.toString()}
           aria-label={t(menuOpen ? 'CRUD.nav.foldMenu' : 'CRUD.nav.unfoldMenu')}
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMenuOpen(prevMenOpen => !prevMenOpen)}
           minimal
         />
       </div>
@@ -67,17 +81,3 @@ export const Nav = ({
 };
 
 export default Nav;
-
-Nav.propTypes = {
-  settings: PropTypes.shape({
-    menu: PropTypes.array,
-  }),
-  t: PropTypes.func,
-};
-
-Nav.defaultProps = {
-  settings: {
-    menu: [],
-  },
-  t: text => text,
-};

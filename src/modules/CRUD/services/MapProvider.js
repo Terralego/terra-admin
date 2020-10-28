@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import connect from 'react-ctx-connect';
 
 import {
@@ -24,6 +24,9 @@ export const connectMapProvider = connect(MapContext);
 const { Provider } = MapContext;
 
 export const MapProvider = ({ children }) => {
+  const detailsRef = useRef(null);
+  const dataTableRef = useRef(null);
+
   const [controls, setControls] = useState([...DEFAULT_CONTROLS, ...CONTROL_LIST]);
   const [map, setMap] = useState(null);
 
@@ -49,6 +52,8 @@ export const MapProvider = ({ children }) => {
   const value = {
     addControl,
     controls,
+    detailsRef,
+    dataTableRef,
     map,
     setControls,
     setMap,

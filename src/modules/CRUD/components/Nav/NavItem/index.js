@@ -1,6 +1,4 @@
-import { withTranslation } from 'react-i18next';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
-import { connectCRUDProvider } from '../../../services/CRUDProvider';
 import compose from '../../../../../utils/compose';
 
 import NavItem from './NavItem';
@@ -17,6 +15,4 @@ const authProviderGetter = ({
 
 export default compose(
   connectAuthProvider(authProviderGetter),
-  connectCRUDProvider('dataTableRef'),
-  withTranslation(),
 )(NavItem);

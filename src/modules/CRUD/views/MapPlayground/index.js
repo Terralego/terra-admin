@@ -29,8 +29,6 @@ const authProviderGetter = ({
 };
 
 const CRUDPRoviderGetter = ({
-  dataTableRef,
-  detailsRef,
   getSettings,
   settings,
   feature,
@@ -42,8 +40,6 @@ const CRUDPRoviderGetter = ({
     },
   },
 }) => ({
-  dataTableRef,
-  detailsRef,
   getSettings,
   settings,
   feature: feature[id] || {},
@@ -62,7 +58,7 @@ export default compose(
   connectAppProvider(appProviderGetter),
   connectAuthProvider(authProviderGetter),
   connectCRUDProvider(CRUDPRoviderGetter),
-  connectMapProvider('addControl', 'controls', 'map', 'removeControl', 'setMap'),
+  connectMapProvider('addControl', 'controls', 'dataTableRef', 'detailsRef', 'map', 'removeControl', 'setMap'),
   withTableSize(),
   withTranslation(),
 )(MapPlayground);

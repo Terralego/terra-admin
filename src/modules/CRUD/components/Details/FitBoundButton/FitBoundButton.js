@@ -1,10 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Tooltip } from '@blueprintjs/core';
+import { MapContext } from '../../../services/MapProvider';
 
 import { getBounds } from '../../../services/features';
 
-const FitBoundButton = ({ coordinates, detailsRef, map, t, title }) => {
+const FitBoundButton = ({ coordinates, t, title }) => {
+  const { detailsRef, map } = useContext(MapContext);
+
   const handleClick = useCallback(() => {
     const { current: detail } = detailsRef;
     if (!map || !detail) {
@@ -43,16 +46,12 @@ FitBoundButton.propTypes = {
   coordinates: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.number, PropTypes.array,
   ])),
-  detailsRef: PropTypes.shape({}),
-  map: PropTypes.shape({}),
   title: PropTypes.string,
   t: PropTypes.func,
 };
 
 FitBoundButton.defaultProps = {
   coordinates: [],
-  detailsRef: null,
-  map: undefined,
   title: undefined,
   t: () => {},
 };

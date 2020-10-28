@@ -7,9 +7,7 @@ import compose from '../../../../../utils/compose';
 import FitBoundButton from './FitBoundButton';
 
 const CRUDPRoviderGetter = ({
-  detailsRef,
   feature,
-  map,
 }, {
   match: {
     params: {
@@ -20,11 +18,8 @@ const CRUDPRoviderGetter = ({
   const { geom: { coordinates } = {} } = feature[id] || {};
   return {
     coordinates,
-    detailsRef,
-    map,
   };
 };
-
 
 export default compose(
   withRouter,

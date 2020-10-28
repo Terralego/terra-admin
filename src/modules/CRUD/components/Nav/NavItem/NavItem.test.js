@@ -28,12 +28,7 @@ jest.mock('@terralego/core/modules/Map', () => ({}));
 it('should snapshot correctly', () => {
   const tree = renderer.create((
     <MapContext.Provider value={{
-      dataTableRef: {
-        current: {
-          offsetHeigh: 100,
-        },
-      },
-      map: {},
+      setFitBounds: jest.fn(),
     }}
     >
       <NavItem

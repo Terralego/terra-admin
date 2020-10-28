@@ -1,30 +1,31 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Tooltip } from '@blueprintjs/core';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import { MapContext } from '../../../services/MapProvider';
+import { CRUDContext } from '../../../services/CRUDProvider';
 
-import { getBounds } from '../../../services/features';
 
-const FitBoundButton = ({ coordinates, t, title }) => {
-  const { detailsRef, map } = useContext(MapContext);
+const FitBoundButton = ({ title }) => {
+  const { setFitBounds } = useContext(MapContext);
+  const { feature } = useContext(CRUDContext);
+
+  const { id } = useParams();
+  const { t } = useTranslation();
+
+  const coordinates = useMemo(() => {
+    const { geom } = feature[id] || {};
+    return geom.coordinates || {};
+  }, [feature, id]);
 
   const handleClick = useCallback(() => {
-    const { current: detail } = detailsRef;
-    if (!map || !detail) {
-      return;
-    }
-    map
-      .resize()
-      .fitBounds(getBounds(coordinates), {
-        padding: {
-          top: 20,
-          right: detail.offsetWidth + 50,
-          bottom:  20,
-          left: 20,
-        },
-        duration: 0,
-      });
-  }, [coordinates, detailsRef, map]);
+    setFitBounds({
+      coordinates,
+      hasDetails: true,
+    });
+  }, [coordinates, setFitBounds]);
 
   if (!coordinates.length) {
     return null;
@@ -43,17 +44,11 @@ const FitBoundButton = ({ coordinates, t, title }) => {
 };
 
 FitBoundButton.propTypes = {
-  coordinates: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.number, PropTypes.array,
-  ])),
   title: PropTypes.string,
-  t: PropTypes.func,
 };
 
 FitBoundButton.defaultProps = {
-  coordinates: [],
   title: undefined,
-  t: () => {},
 };
 
 export default FitBoundButton;

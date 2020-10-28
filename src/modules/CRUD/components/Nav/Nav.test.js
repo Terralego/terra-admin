@@ -1,5 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { MapContext } from '../../services/MapProvider';
+import { CRUDContext } from '../../services/CRUDProvider';
 
 import Nav from './Nav';
 
@@ -8,6 +10,8 @@ jest.mock('@blueprintjs/core', () => ({
 }));
 
 jest.mock('./NavGroup', () => props => <div {...props} />);
+
+jest.mock('@terralego/core/modules/Map', () => ({}));
 
 const settings = {
   menu: [{
@@ -58,10 +62,13 @@ const settings = {
   }],
 };
 
-
 it('should snapshot correctly', () => {
   const tree = renderer.create((
-    <Nav settings={settings} />
+    <MapContext.Provider value={{ map: jest.fn() }}>
+      <CRUDContext.Provider value={{ settings }}>
+        <Nav />
+      </CRUDContext.Provider>
+    </MapContext.Provider>
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });

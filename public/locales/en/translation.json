@@ -499,7 +499,11 @@
         "min-zoom": "Min. Zoom",
         "max-zoom": "Max. Zoom",
         "template": "Contextual window template",
-        "advanced": "Advanced mode"
+        "advanced": "Advanced mode",
+        "add-message": "Add a new field",
+        "card-message": "To activate a popup, click on:",
+        "fields": "source fields",
+        "select-field": "Select a field"
       },
       "minisheet": {
         "tab": "Mini-fiche",

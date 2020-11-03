@@ -35,11 +35,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange }) => {
   return (
     <Paper className={classes.row}>
       <FormControl className={classes.formControl}>
-        <TextField
-          label={popupField.field.label}
-          value={popupField.field.name}
-          disabled
-        />
+        <div><strong>{popupField.field.label}</strong> ({popupField.field.name})</div>
       </FormControl>
       <FormControl>
         <TextField

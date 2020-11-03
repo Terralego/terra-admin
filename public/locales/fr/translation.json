@@ -505,7 +505,8 @@
           "prefix": "préfixe",
           "suffix": "suffixe",
           "default": "texte par defaut"
-        }
+        },
+        "title": "Modèle de fenêtre au survol"
       },
       "minisheet": {
         "tab": "Mini-fiche",

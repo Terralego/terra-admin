@@ -28,6 +28,14 @@ const useStyle = makeStyles({
     display: 'flex',
     flexDirection: 'row',
   },
+  title: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    borderBottom: 'thin solid grey',
+    marginBottom: '25px',
+  },
 });
 
 const PopupTab = () => {
@@ -78,7 +86,10 @@ const PopupTab = () => {
     <>
       {popupfields.length > 0 && (
         <FieldGroup>
-          <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
+          <div className={classes.title}>
+            <h3>{translate('datalayer.form.popup.title')}</h3>
+            <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
+          </div>
           <Typography id="discrete-slider" gutterBottom>
             {translate('datalayer.form.popup.min-zoom')}
           </Typography>

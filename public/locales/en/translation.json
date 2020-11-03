@@ -505,7 +505,8 @@
           "prefix": "prefix",
           "suffix": "suffix",
           "default": "default text"
-        }
+        },
+        "title": "Contextual window model"
       },
       "minisheet": {
         "tab": "Mini-fiche",

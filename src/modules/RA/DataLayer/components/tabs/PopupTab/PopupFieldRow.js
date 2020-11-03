@@ -19,9 +19,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
   },
   formControl: {
-    display: 'flex',
-    flexDirection: 'columns',
-    alignItems: 'strech',
+    width: '100%',
   },
 });
 
@@ -37,29 +35,37 @@ const PopupFieldRow = React.memo(({ popupField, onChange }) => {
   return (
     <Paper className={classes.row}>
       <FormControl className={classes.formControl}>
-        <div><strong>{popupField.field.label}</strong> ({popupField.field.name})</div>
+        <div style={{ paddingLeft: '20px' }}>
+          <strong>{popupField.field.label}</strong> ({popupField.field.name})
+        </div>
       </FormControl>
-      <FormControl>
+      <FormControl className={classes.formControl}>
         <TextField
           label={translate('datalayer.form.popup.field.prefix')}
           onChange={onRowItemChange('prefix')}
           value={popupField.prefix}
+          variant="outlined"
+          fullWidth
           required
         />
       </FormControl>
-      <FormControl>
+      <FormControl className={classes.formControl}>
         <TextField
           label={translate('datalayer.form.popup.field.suffix')}
           onChange={onRowItemChange('suffix')}
           value={popupField.suffix}
+          variant="outlined"
+          fullWidth
           required
         />
       </FormControl>
-      <FormControl>
+      <FormControl className={classes.formControl}>
         <TextField
           label={translate('datalayer.form.popup.field.default')}
           onChange={onRowItemChange('default')}
           value={popupField.default}
+          variant="outlined"
+          fullWidth
           required
         />
       </FormControl>

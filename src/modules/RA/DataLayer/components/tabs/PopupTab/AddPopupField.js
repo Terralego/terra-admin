@@ -12,7 +12,7 @@ const AddPopupField = ({ fields }) => {
     const {
       values: {
         fields: formFields,
-        popup_config: { wizard: { fields: wizardFields = [] } = {} },
+        popup_config: { wizard: { fields: wizardFields = [] } = {} } = {},
         popup_config: popupConfig,
       },
     } = form.getState();

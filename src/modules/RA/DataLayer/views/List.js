@@ -42,8 +42,8 @@ const ListFilters = props => (
       label="resources.datalayer.fields.active_by_default_pastpart"
     />
     <BooleanInput source="table_enable" />
-    <BooleanInput source="popup_enable" />
-    <BooleanInput source="minisheet_enable" />
+    <BooleanInput source="popup_config.enable" />
+    <BooleanInput source="minisheet_config.enable" />
   </Filter>
 );
 

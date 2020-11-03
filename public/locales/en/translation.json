@@ -269,16 +269,16 @@
         "confirmDeletionText": "Are you sure you want to delete {{name}}? This can't be canceled.",
         "delete": "Delete file",
         "empty": "No file for this feature",
-        "figcaptionCancel" : "Cancel",
-        "figcaptionEdit" : "Edit legend",
-        "figcaptionSubmit" : "Submit legend",
+        "figcaptionCancel": "Cancel",
+        "figcaptionEdit": "Edit legend",
+        "figcaptionSubmit": "Submit legend",
         "files": "Files",
         "images": "Images",
         "openImage": "Show image in new window",
         "label": "Legend",
         "loadFiles": "Load file(s)",
         "noFiles": "No files",
-        "category" : {
+        "category": {
           "helper": "Files will be linked to this category",
           "select": "Select category",
           "input": "Set category",
@@ -394,7 +394,6 @@
         "onecolumn": "In one column",
         "twocolumns": "In two columns"
       },
-
       "optionsCSV": {
         "separator": {
           "comma": "Comma",
@@ -405,7 +404,6 @@
           "colon": "Colon",
           "simplequote": "Simple quote",
           "doublequote": "Double quote"
-
         },
         "encoding": "Encoding",
         "coordinateReferenceSystem": "Coordinate Reference System",
@@ -418,7 +416,6 @@
         "headers": "First line headers",
         "ignoreNull": "Ignore null columns"
       },
-
       "request": {
         "host-server": "Host",
         "host-port": "Port",
@@ -474,10 +471,10 @@
         "help-title": "Comparison URL template",
         "help-text": "This template allows to generate comparison URL available in table when you select many elements. Add « {{ids}} » where identifier list should be inserted."
       },
-      "widget":{
+      "widget": {
         "tab": "Widget"
       },
-      "table":{
+      "table": {
         "tab": "Table",
         "all-fields": "Fields configuration",
         "no-field": "No fields for this source",
@@ -503,7 +500,12 @@
         "add-message": "Add a new field",
         "card-message": "To activate a popup, click on:",
         "fields": "source fields",
-        "select-field": "Select a field"
+        "select-field": "Select a field",
+        "field": {
+          "prefix": "prefix",
+          "suffix": "suffix",
+          "default": "default text"
+        }
       },
       "minisheet": {
         "tab": "Mini-fiche",
@@ -519,7 +521,7 @@
         "no-field": "No fields for this data source",
         "no-filter": "Add a filter to activate filtering",
         "select-field": "Select field to add",
-        "propose-values":{
+        "propose-values": {
           "label": "Propose values",
           "none": "No value proposal",
           "all": "Propose all database values",

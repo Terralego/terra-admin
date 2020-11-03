@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslate } from 'react-admin';
 
 import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
@@ -26,6 +27,7 @@ const useStyles = makeStyles({
 
 const PopupFieldRow = React.memo(({ popupField, onChange }) => {
   const classes = useStyles();
+  const translate = useTranslate();
 
   const onRowItemChange = useCallback(
     (item, value) => e => onChange({ ...popupField, [item]: value || e.target.value }),
@@ -35,15 +37,11 @@ const PopupFieldRow = React.memo(({ popupField, onChange }) => {
   return (
     <Paper className={classes.row}>
       <FormControl className={classes.formControl}>
-        <TextField
-          label={popupField.field.label}
-          value={popupField.field.name}
-          disabled
-        />
+        <div><strong>{popupField.field.label}</strong> ({popupField.field.name})</div>
       </FormControl>
       <FormControl>
         <TextField
-          label="prefix"
+          label={translate('datalayer.form.popup.field.prefix')}
           onChange={onRowItemChange('prefix')}
           value={popupField.prefix}
           required
@@ -51,7 +49,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange }) => {
       </FormControl>
       <FormControl>
         <TextField
-          label="suffix"
+          label={translate('datalayer.form.popup.field.suffix')}
           onChange={onRowItemChange('suffix')}
           value={popupField.suffix}
           required
@@ -59,7 +57,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange }) => {
       </FormControl>
       <FormControl>
         <TextField
-          label="default"
+          label={translate('datalayer.form.popup.field.default')}
           onChange={onRowItemChange('default')}
           value={popupField.default}
           required

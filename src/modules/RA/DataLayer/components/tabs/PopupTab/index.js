@@ -76,7 +76,7 @@ const PopupTab = () => {
 
   return (
     <>
-      {popupfields.length && (
+      {popupfields.length > 0 && (
         <FieldGroup>
           <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
           <Typography id="discrete-slider" gutterBottom>
@@ -122,7 +122,6 @@ const PopupTab = () => {
             </>
           )}
         </FieldGroup>
-
       )}
       {!popupfields.length && (
         <div className={classes.addPopup}>

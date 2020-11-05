@@ -12,7 +12,11 @@ export class LayersControl extends AbstractMapControl {
     layers: PropTypes.arrayOf(
       PropTypes.shape({}),
     ).isRequired,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
+  }
+
+  static defaultProps = {
+    onChange () {},
   }
 
   componentDidMount () {

@@ -1,5 +1,9 @@
 image: node:12.16 # Should match .nvmrc content
 
+services:
+  - geocrud/back:latest
+  - pgrouting/pgrouting:12-3.0-3.1.0
+
 stages:
   - prepare
   - deploy
@@ -32,9 +36,6 @@ E2E:
   tags: [shared-ci-docker]
   stage: prepare
   image: cypress/base:12.16.2
-    services:
-      - geocrud/back:latest
-      - pgrouting/pgrouting:12-3.0-3.1.0
 
   before_script:
     - npm ci

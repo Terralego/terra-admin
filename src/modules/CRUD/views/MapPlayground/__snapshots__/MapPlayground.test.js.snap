@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should redirect to the first layer 1`] = `
+<div
+  to="/CRUD/map/layerTest"
+>
+  Redirect
+</div>
+`;
+
+exports[`snapshots should display loading 1`] = `
+<div
+  to="/CRUD/map/layerTest"
+>
+  Redirect
+</div>
+`;
+
+exports[`snapshots should display no settings message 1`] = `
+<div>
+  No settings
+</div>
+`;
+
+exports[`snapshots should not display details when the feature id is not defined 1`] = `
+Array [
+  <div
+    className="CRUD-map CRUD-map--with-table-medium"
+  >
+    <div>
+      Map
+    </div>
+  </div>,
+  <div
+    className="CRUD-table CRUD-table--active CRUD-table--medium"
+    onTransitionEnd={[Function]}
+  >
+    <div>
+      Datatable
+    </div>
+  </div>,
+]
+`;
+
+exports[`snapshots should render correctly 1`] = `
+Array [
+  <div>
+    Details
+  </div>,
+  <div
+    className="CRUD-map"
+  >
+    <div>
+      Map
+    </div>
+  </div>,
+  <div
+    className="CRUD-table"
+    onTransitionEnd={[Function]}
+  >
+    <div>
+      Datatable
+    </div>
+  </div>,
+]
+`;

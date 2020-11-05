@@ -1,6 +1,7 @@
 image: node:12.16 # Should match .nvmrc content
 
 variables:
+  FF_NETWORK_PER_BUILD: 1
   POSTGRES_DB: dev
   POSTGRES_USER: dev
   POSTGRES_PASSWORD: dev

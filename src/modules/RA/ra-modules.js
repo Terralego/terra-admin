@@ -9,6 +9,8 @@ import userGroupViews from './UserGroup/views';
 import dataSourceViews from './DataSource/views';
 import dataLayerViews from './DataLayer/views';
 import sceneViews from './Scene/views';
+import baseLayerViews from './BaseLayer/views';
+
 
 // OPP
 import viewpointViews from './Viewpoint/views';
@@ -19,6 +21,9 @@ import pictureViews from './Picture/views';
 //   list: ListGuesser,
 // };
 
+// Base map
+export const RES_BASELAYER = 'baselayer';
+
 // User
 export const RES_USER = 'user';
 export const RES_USERGROUP = 'usergroup';
@@ -27,7 +32,6 @@ export const RES_USERGROUP = 'usergroup';
 export const RES_DATASOURCE = 'datasource';
 export const RES_DATALAYER = 'datalayer';
 export const RES_VIEW = 'view';
-export const RES_BASELAYER = 'baselayer';
 
 // OPP
 export const RES_VIEWPOINT = 'viewpoint';
@@ -90,6 +94,7 @@ export const resources = [
   {
     name: RES_BASELAYER,
     moduleName: 'BaseLayer',
+    ...baseLayerViews,
     endpoint: 'baselayer',
   },
 ];
@@ -121,6 +126,14 @@ export const config = {
       label: 'opp.project',
       requiredModule: 'OPP',
       items: resources.filter(byModule('OPP')).map(({ name }) => ({
+        label: `ra.nav.${name}_list`,
+        href: `/${name}`,
+      })),
+    },
+    {
+      label: 'baseLayer.project',
+      requiredModule: 'BaseLayer',
+      items: resources.filter(byModule('BaseLayer')).map(({ name }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
       })),

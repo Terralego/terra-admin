@@ -581,6 +581,33 @@
       }
     }
   },
+  "baseLayer": {
+    "project": "Base map",
+    "nav": {
+      "list": "View"
+    },
+    "form": {
+      "errors":  {
+        "url": "Incorrect URL format",
+        "mandatoryTilesWord": "The server URL should contain {z}, {x} and {y} tokens or {bbox-epsg-3857} token",
+        "mandatoryWord": "The %{name} token is missing"
+      },
+      "mapBoxUrl": "MapBox URL",
+      "minMaxZoom": "Min and max zoom",
+      "name": "Name",
+      "order": "Order",
+      "tiles": "Tiles URL",
+      "tileSize": "Tile size",
+      "type": {
+        "choices": {
+          "mapbox": "Mapbox",
+          "raster": "Raster",
+          "vector": "Vector"
+        },
+        "select": "Base map type"
+      }
+    }
+  },
   "view": {
     "project": "Viewer",
     "nav": {
@@ -598,6 +625,7 @@
   },
   "ra": {
     "nav": {
+      "baselayer_list": "Base layer list",
       "user_list": "User list",
       "usergroup_list": "User group list",
       "datalayer_list": "Layer list",

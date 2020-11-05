@@ -29,7 +29,7 @@ E2E:
     POSTGRES_DB: dev
     POSTGRES_USER: dev
     POSTGRES_PASSWORD: dev
-    POSTGRES_HOST: makinacorpus__postgis
+    POSTGRES_HOST: pgrouting__pgrouting
     SECRET_KEY: dev-dev-dev
     DJANGO_SETTINGS_MODULE: project.settings.dev
     LANG: C.UTF-8

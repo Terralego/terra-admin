@@ -5,6 +5,7 @@ variables:
   POSTGRES_USER: dev
   POSTGRES_PASSWORD: dev
   POSTGRES_HOST: pgrouting__pgrouting
+  PGPORT: 5432
   SECRET_KEY: dev-dev-dev
   DJANGO_SETTINGS_MODULE: project.settings.dev
   LANG: C.UTF-8

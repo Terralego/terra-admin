@@ -1,0 +1,6 @@
+{
+  "screenshotsFolder": "screenshots",
+  "baseUrl": "http://localhost:3000",
+  "video": true,
+  "requestTimeout": 50000
+}

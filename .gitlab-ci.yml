@@ -1,4 +1,4 @@
-image: node:12.16.1 # Should match .nvmrc content
+image: node:12.16 # Should match .nvmrc content
 
 stages:
   - prepare
@@ -19,6 +19,28 @@ Tests:
   script:
     - npm run test
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+
+E2E:
+  variables:
+    POSTGRES_DB: dev
+    POSTGRES_USER: dev
+    POSTGRES_PASSWORD: dev
+    POSTGRES_HOST: makinacorpus__postgis
+    SECRET_KEY: dev-dev-dev
+    DJANGO_SETTINGS_MODULE: project.settings.dev
+    LANG: C.UTF-8
+  tags: [shared-ci-docker]
+  stage: prepare
+  image: cypress/base:12.16.2
+    services:
+      - geocrud/back:latest
+      - pgrouting/pgrouting:12-3.0-3.1.0
+
+  before_script:
+    - npm ci
+    - (npm run start&)
+  script:
+    - $(npm bin)/cypress run
 
 Lint:
   before_script:

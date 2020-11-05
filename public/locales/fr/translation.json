@@ -583,6 +583,33 @@
       }
     }
   },
+  "baseLayer": {
+    "project": "Fond de carte",
+    "nav": {
+      "list": "Vue"
+    },
+    "form": {
+      "errors":  {
+        "url": "l'URL est mal formatée",
+        "mandatoryTilesWord": "L'URL doit contenir les éléments {z}, {x} et {y} ou {bbox-epsg-3857}",
+        "mandatoryWord": "L'URL doit contenir %{name}"
+      },
+      "mapBoxUrl": "URL MapBox",
+      "minMaxZoom": "Amplitude du zoom",
+      "name": "Nom",
+      "order": "Ordre",
+      "tiles": "URL des tuiles",
+      "tileSize": "Taille des tuiles",
+      "type": {
+        "choices": {
+          "mapbox": "Mapbox",
+          "raster": "Raster",
+          "vector": "Vectoriel"
+        },
+        "select": "Type de fond de carte"
+      }
+    }
+  },
   "view": {
     "project": "Visualiseur",
     "nav": {
@@ -600,6 +627,7 @@
   },
   "ra": {
     "nav": {
+      "baselayer_list": "Liste des fonds de carte",
       "user_list": "Liste des utilisateurs",
       "usergroup_list": "Liste des groupes utilisateurs",
       "datalayer_list": "Liste des couches",

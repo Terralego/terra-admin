@@ -4,7 +4,7 @@ variables:
   POSTGRES_DB: dev
   POSTGRES_USER: dev
   POSTGRES_PASSWORD: dev
-  POSTGRES_HOST: pgrouting__pgrouting
+  POSTGRES_HOST: postgres
   PGPORT: 5432
   SECRET_KEY: dev-dev-dev
   DJANGO_SETTINGS_MODULE: project.settings.dev
@@ -38,10 +38,10 @@ E2E:
   stage: prepare
   image: cypress/base:12.16.2
   services:
-    - pgrouting/pgrouting:12-3.0-3.1.0
+    - name: pgrouting/pgrouting:12-3.0-3.1.0
+      alias: postgres
     - name: geocrud/back:latest
       alias: backend
-      entrypoint: ["/bin/sh", "-c", "while [ ! -f /$CI_PROJECT_DIR/hosts ]; do sleep 1; done && cat /$CI_PROJECT_DIR/hosts > /etc/hosts && /usr/local/bin/entrypoint.sh"]
   before_script:
     - cp /etc/hosts "${CI_PROJECT_DIR}/"
     - npm ci

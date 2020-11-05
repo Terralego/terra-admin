@@ -36,9 +36,13 @@ E2E:
   stage: prepare
   image: cypress/base:12.16.2
   services:
-    - geocrud/back:latest
+    - name: geocrud/back:latest
+      alias: backend
+      entrypoint: ["/bin/sh", "-c", "while [ ! -f /$CI_PROJECT_DIR/hosts ]; do sleep 1; done && cat /$CI_PROJECT_DIR/hosts > /etc/hosts && /usr/local/bin/entrypoint.sh"]
+
     - pgrouting/pgrouting:12-3.0-3.1.0
   before_script:
+    - cp /etc/hosts "${CI_PROJECT_DIR}/"
     - npm ci
     - (npm run start&)
   script:

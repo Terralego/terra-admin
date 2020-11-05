@@ -10,7 +10,7 @@ variables:
   SECRET_KEY: dev-dev-dev
   DJANGO_SETTINGS_MODULE: project.settings.dev
   TERRA_TILES_HOSTNAMES: http://127.0.0.1:3000
-  DOMAIN_NAME: 127.0.0.1
+  DOMAIN_NAME: backend
   LANG: C.UTF-8
   TZ: Europe/Paris
 
@@ -44,7 +44,6 @@ E2E:
     - name: geocrud/back:latest
       alias: backend
   before_script:
-    - cp /etc/hosts "${CI_PROJECT_DIR}/"
     - npm ci
     - echo "REACT_APP_API_HOST=http://backend:8000/" >> .env
     - (npm run start&)

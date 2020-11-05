@@ -16,8 +16,11 @@ const FitBoundButton = ({ title }) => {
   const { t } = useTranslation();
 
   const coordinates = useMemo(() => {
-    const { geom } = feature[id] || {};
-    return geom.coordinates || {};
+    if (!feature[id]) {
+      return [];
+    }
+    const { geom } = feature[id];
+    return geom.coordinates || [];
   }, [feature, id]);
 
   const handleClick = useCallback(() => {

@@ -31,6 +31,8 @@ export const MapProvider = ({ children }) => {
 
   const [controls, setControls] = useState([...DEFAULT_CONTROLS, ...CONTROL_LIST]);
   const [map, setMap] = useState(null);
+  const [interactiveMapProps, setInteractiveMapProps] = useState(undefined);
+  const [layers, setLayers] = useState([]);
 
   const addControl = useCallback(controlToAdd => {
     if (!controlToAdd) return;
@@ -50,6 +52,29 @@ export const MapProvider = ({ children }) => {
     if (!controlToRemove) return;
     setControls(prevControls => prevControls.filter(item => item.control !== controlToRemove));
   }, []);
+
+  const featureToHighlight = useCallback(({ featureId, layer, hover }) => {
+    const { id: layerId, source } = layers.find(({ 'source-layer': sourceLayer }) => sourceLayer === layer) || {};
+    if (!map || !featureId || !layerId) {
+      return;
+    }
+    const { addHighlight, removeHighlight } = interactiveMapProps;
+    if (hover) {
+      addHighlight && addHighlight({
+        layerId,
+        featureId,
+        highlightColor: 'red',
+        unique: true,
+        source,
+      });
+    } else {
+      removeHighlight && removeHighlight({
+        layerId,
+        featureId,
+      });
+    }
+  }, [interactiveMapProps, layers, map]);
+
 
   const setFitBounds = useCallback(({ coordinates, hasDetails }) => {
     if (!coordinates.length) return;
@@ -72,10 +97,15 @@ export const MapProvider = ({ children }) => {
     controls,
     detailsRef,
     dataTableRef,
+    featureToHighlight,
+    layers,
+    interactiveMapProps,
     map,
     setControls,
     setFitBounds,
     setMap,
+    setLayers,
+    setInteractiveMapProps,
     removeControl,
   };
 

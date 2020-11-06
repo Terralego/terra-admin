@@ -43,6 +43,7 @@ E2E:
       alias: postgres
     - name: geocrud/back:latest
       alias: backend
+      entrypoint: ["entrypoint.sh", "&&", "./manage.py loaddata demo"]
   before_script:
     - npm ci
     - echo "REACT_APP_API_HOST=http://backend:8000/" >> .env

@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { CONTROL_DRAW, CONTROLS_TOP_LEFT } from '@terralego/core/modules/Map';
 import PropTypes from 'prop-types';
-import { ACTION_CREATE, getView } from '../../../modules/CRUD/services/CRUD';
+import { ACTION_CREATE, getLayers, getView } from '../../../modules/CRUD/services/CRUD';
+
 
 import {
   ALL,
@@ -13,25 +14,22 @@ import {
   MULTI_POLYGON,
 } from '../../../utils/geom';
 
-import { getBounds } from '../../../modules/CRUD/services/features';
-
 import ImportGeomFile from '../../ImportGeomFile';
 
 import PointField from './PointField';
 import DefaultField from './DefaultField';
 import './styles.scss';
 
-const getLayerPaintId = (layerPaints, name) => {
-  const { id } = layerPaints.find(({ 'source-layer': source }) => source === name) || {};
+const getLayerId = (layers, name) => {
+  const { id } = layers.find(({ 'source-layer': source }) => source === name) || {};
   return id;
 };
 
-const resetStyle = (map, layerPaints, name) => {
-  if (!Object.keys(map).length) {
+const resetStyle = (map, layers, name) => {
+  if (!map) {
     return;
   }
-  const layerPaintId = getLayerPaintId(layerPaints, name);
-  map.setFilter(layerPaintId, null);
+  map.setFilter(getLayerId(layers, name), null);
 };
 
 /**
@@ -87,7 +85,6 @@ const getCoordinatesFromGeometries = (features, isMultiGeometry) => {
 
 const GeometryField = ({
   addControl,
-  detailsRef,
   feature,
   formData,
   layerPaints,
@@ -95,10 +92,16 @@ const GeometryField = ({
   match: { params },
   removeControl,
   name,
+  setFitBounds,
   settings,
   t,
   ...rest
 }) => {
+  const layers = useMemo(() => (
+    getLayers(settings)
+  ), [settings]);
+
+
   const geometries = useMemo(() => (
     getGeometries(({ feature, formData, params, name, settings }))
   ), [feature, formData, params, name, settings]);
@@ -145,19 +148,10 @@ const GeometryField = ({
   const importDraw = useCallback(features => {
     map.draw.deleteAll();
     features.forEach(feat => map.draw.add(feat));
-    const coords = features.flatMap(({ geometry: { coordinates } }) => coordinates);
-    const { current: detail } = detailsRef;
-    map
-      .resize()
-      .fitBounds(getBounds(coords), {
-        padding: {
-          top: 20,
-          right: detail.offsetWidth + 50,
-          bottom:  20,
-          left: 20,
-        },
-        duration: 0,
-      });
+    setFitBounds({
+      coordinates: features.flatMap(({ geometry: { coordinates } }) => coordinates),
+      hasDetails: true,
+    });
 
     setGeomValues(prevGeomValues => ({
       ...prevGeomValues,
@@ -166,13 +160,13 @@ const GeometryField = ({
         coordinates: getCoordinatesFromGeometries(features),
       },
     }));
-  }, [detailsRef, map]);
+  }, [map, setFitBounds]);
 
   const setMapControls = useCallback(({
-    layerPaintId,
+    layerId,
   }) => {
     const { geom, identifier, geom_type: geomType } = geomValues;
-    if (!Object.keys(map).length) {
+    if (!map) {
       return;
     }
 
@@ -199,7 +193,7 @@ const GeometryField = ({
           return;
         }
         if (identifier) {
-          map.setFilter(layerPaintId, ['!=', '_id', identifier]);
+          map.setFilter(layerId, ['!=', '_id', identifier]);
         }
         map.draw.add(geom);
         map.off('control_added', onControlAdded);
@@ -213,14 +207,14 @@ const GeometryField = ({
   }, [addControl, map, updateGeometryFromMap]);
 
   useEffect(() => {
-    const layerPaintId = getLayerPaintId(layerPaints, geomValues.layerName);
-    setMapControls({ layerPaintId });
-  }, [geomValues.layerName, setMapControls, layerPaints]);
+    const layerId = getLayerId(layers, geomValues.layerName);
+    setMapControls({ layerId });
+  }, [geomValues.layerName, setMapControls, layers]);
 
   useEffect(() => () => {
     removeControl(CONTROL_DRAW);
-    resetStyle(map, layerPaints, geomValues.layerName);
-  }, [geomValues.layerName, layerPaints, map, removeControl]);
+    resetStyle(map, layers, geomValues.layerName);
+  }, [geomValues.layerName, layers, map, removeControl]);
 
   const TypeField = formData.type === 'Point' ? PointField : DefaultField;
 
@@ -247,16 +241,18 @@ GeometryField.propTypes = {
   }),
   map: PropTypes.shape({}),
   removeControl: PropTypes.func,
+  settings: PropTypes.shape({}),
   t: PropTypes.func,
 };
 
 GeometryField.defaultProps = {
   addControl: () => {},
-  map: {},
+  map: undefined,
   formData: {
     type: '',
   },
   removeControl: () => {},
+  settings: undefined,
   t: text => text,
 };
 

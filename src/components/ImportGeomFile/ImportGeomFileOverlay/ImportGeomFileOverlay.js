@@ -105,7 +105,7 @@ const ImportGeomFileOverlay = ({
     reader.readAsText(file);
   }, [acceptedExtensions]);
 
-  const accept = acceptedExtensions.map(ext => `.${ext}`).join(',');
+  const accept = acceptedExtensions.map(ext => `.${ext}`.toUpperCase()).join(',');
 
   const { error, geom } = geojson;
 

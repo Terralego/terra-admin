@@ -97,9 +97,9 @@
   },
   "importGeomFile": {
     "accept": "Format acceptés : {{accept}}",
-    "intro1": "Lors de la sélection du fichier, il sera analysé, et vous serez prévenu s'il est compatible avec le type de géométrie courant.",
-    "intro2": "Dès la validation de l'importation, il vous sera présenté sur la carte avant de l'enregistrer.",
-    "intro3": "Vous avez débuté un tracé. Il sera <1>remplacé</1> lors de la validation de l'importation.",
+    "intro1": "Lors de la sélection du fichier, il est analysé par l'application. Vous serez ensuite informé de la compatibilité du fichier avec le type de géométrie courant.",
+    "intro2": "Dès validation de l'import, l'application propose sur la carte un aperçu de la nouvelle géométrie.",
+    "intro3": "Dès validation de ce nouveau tracé importé, il remplace le précédent.",
     "nothingToImport": "Aucun tracé de {{fileName}} ne peut être importé.",
     "readyToImport": "Le tracé de {{fileName}} est prêt à être importé.",
     "readyToImport_plural": "les tracés de {{fileName}} sont prêts à être importés.",

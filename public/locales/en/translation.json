@@ -97,9 +97,9 @@
   },
   "importGeomFile": {
     "accept": "Accepted format: {{accept}}",
-    "intro1": "When selecting the file, it will be analyzed, and you will be warned if it is compatible with the current geometry type.",
-    "intro2": "As soon as the import is validated, it will be presented to you on the map before saving it.",
-    "intro3": "You started drawing. It will be <1>replaced</1> by validating the import.",
+    "intro1": "When selecting the file, it is analyzed by the application. You will then be informed about the compatibility of the file with the current geometry type.",
+    "intro2": "Upon validation of the import, the application offers on the map an overview of the new geometry.",
+    "intro3": "Upon validation of this new imported sketch, it replaces the previous one.",
     "nothingToImport": "No one geometry from {{fileName}} could be imported.",
     "readyToImport": "{{fileName}} geometry is ready to be imported.",
     "readyToImport_plural": "{{fileName}} geometries are ready to be imported.",

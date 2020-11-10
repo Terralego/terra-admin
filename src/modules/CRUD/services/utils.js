@@ -138,10 +138,43 @@ export const getJSONSchemaFromGeom = (
   };
 };
 
+/**
+ * Clean all useless properties and keep required properties
+ * 1/ Flat all props by removing groups
+ * 2/ Keep only required props
+ *
+ * @param {Object} props JSON schema properties
+ * @returns {Object} JSON schema properties cleaned
+ */
+export const requiredProperties = props => {
+  const propertiesWithoutGroup = Object.values(props).reduce((list, value) => {
+    const { type, properties, required = [] } = value;
+
+    if (type === 'object' && required.length) {
+      const requiredProps = Object.entries(properties).reduce((acc, [subKey, subValue]) => (
+        required.includes(subKey)
+          ? ({ [subKey]: subValue })
+          : acc
+      ), {});
+
+      return {
+        ...list,
+        properties: { ...list.properties, ...requiredProps },
+        required: [...list.required, ...required],
+      };
+    }
+
+    return list;
+  }, { properties: {}, required: [] });
+
+  return propertiesWithoutGroup;
+};
+
 export default {
   exportFileFromURL,
   getJSONSchemaFromGeom,
   getObjectOrderedValue,
   isTableObject,
+  requiredProperties,
   sanitizeCustomEndpoint,
 };

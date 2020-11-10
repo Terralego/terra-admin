@@ -123,33 +123,36 @@ const Edit = ({
         title={isEdited ? t('CRUD.details.cancel') : t('CRUD.details.update')}
       />
       {isCurrentEditedItem && (
-      <Form
-        className="CRUD-edit"
-        disabled={loading}
-        fields={customFields}
-        ErrorList={ErrorListTemplate}
-        onSubmit={handleSubmit}
-        uiSchema={{ [name]: { ...uiSchema } }}
-        schema={{
-          type: 'object',
-          required: [requiredField && name],
-          properties: {
-            [name]: {
-              ...schema,
-              default: defaultValue,
+        <Form
+          className="CRUD-edit"
+          disabled={loading}
+          fields={customFields}
+          ErrorList={ErrorListTemplate}
+          onSubmit={handleSubmit}
+          uiSchema={{ [name]: { ...uiSchema } }}
+          schema={{
+            type: 'object',
+            required: [requiredField && name].filter(Boolean),
+            properties: {
+              [name]: {
+                ...schema,
+                default: defaultValue,
+              },
             },
-          },
-        }}
-        widgets={widgets}
-      >
-        <Button
-          className="CRUD-edit__submit"
-          loading={loading}
-          type="submit"
+          }}
+          widgets={widgets}
         >
-          {t('CRUD.details.save')}
-        </Button>
-      </Form>
+          {requiredField && (
+            <span className="details__list-edit-mandatory details__list-edit-mandatory--edit">{t('CRUD.details.mandatory')}</span>
+          )}
+          <Button
+            className="CRUD-edit__submit"
+            loading={loading}
+            type="submit"
+          >
+            {t('CRUD.details.save')}
+          </Button>
+        </Form>
       )}
     </div>
   );

@@ -131,13 +131,16 @@ const Create = props => {
           fields={customFields}
           onSubmit={handleSubmit}
         >
-          <Button
-            className="CRUD-edit__submit"
-            loading={loading}
-            type="submit"
-          >
-            {title}
-          </Button>
+          <div className="details__list-edit-action">
+            <span className="details__list-edit-mandatory">{t('CRUD.details.mandatory_plural')}</span>
+            <Button
+              className="CRUD-edit__submit"
+              loading={loading}
+              type="submit"
+            >
+              {title}
+            </Button>
+          </div>
         </Form>
       </div>
     </div>

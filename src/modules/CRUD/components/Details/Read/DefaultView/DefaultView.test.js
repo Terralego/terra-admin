@@ -14,18 +14,25 @@ jest.mock('@blueprintjs/core', () => {
   };
 });
 
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: text => text,
+  }),
+}));
+
 jest.mock('react-router-dom', () => ({
   NavLink: ({ children }) => <span>{children}</span>,
+  useParams: () => ({
+    category: 'someCategory',
+    id: 'layerId',
+    layer: 'layerFoo',
+    section: 'default',
+  }),
 }));
 
 jest.mock('../../PropertyItem', () => props => <div {...props} />);
 
 const props = {
-  t: text => text,
-  match: { params: { layer: 'layerFoo', id: 'layerId' } },
-  location: {
-    hash: '',
-  },
   properties: {
     'Group 1': {
       properties: {

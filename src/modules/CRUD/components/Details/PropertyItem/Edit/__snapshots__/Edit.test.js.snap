@@ -34,6 +34,9 @@ exports[`should render correctly can edit 1`] = `
             },
           },
         },
+        "required": Array [
+          false,
+        ],
         "type": "object",
       }
     }

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import Form from 'react-jsonschema-form';
-import { getJSONSchemaFromGeom } from '../../../services/utils';
+import { getJSONSchemaFromGeom, requiredProperties } from '../../../services/utils';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import customFields from '../../../../../components/react-json-schemaForm';
@@ -29,38 +29,6 @@ const getSchemaWithDefaultValues = (schema, properties) => {
 };
 
 /**
- * Clean all useless properties to create feature
- * 1/ Flat all props by removing groups
- * 2/ Keep only required props
- *
- * @param {Object} props JSON schema properties
- * @returns {Object} JSON schema properties cleaned
- */
-const cleanProperties = props => {
-  const propertiesWithoutGroup = Object.values(props).reduce((list, value) => {
-    const { type, properties, required = [] } = value;
-
-    if (type === 'object' && required.length) {
-      const requiredProps = Object.entries(properties).reduce((acc, [subKey, subValue]) => (
-        required.includes(subKey)
-          ? ({ [subKey]: subValue })
-          : acc
-      ), {});
-
-      return {
-        ...list,
-        properties: { ...list.properties, ...requiredProps },
-        required: [...list.required, ...required],
-      };
-    }
-
-    return list;
-  }, { properties: {}, required: [] });
-
-  return propertiesWithoutGroup;
-};
-
-/**
  * Build a json schema object
  *
  * @param {Object} {
@@ -77,7 +45,7 @@ const buildSchema = ({ schemaProperties, uiSchemaProperties, geomType }) => {
     value,
   } = getJSONSchemaFromGeom({ identifier: null, geom: null, title: 'Geométrie', geom_type: geomType });
 
-  const { required, properties } = cleanProperties(schemaProperties);
+  const { required, properties } = requiredProperties(schemaProperties);
 
   const { 'ui:order': uiOrder = [] } = uiSchemaProperties;
 

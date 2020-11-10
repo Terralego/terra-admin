@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import Form from 'react-jsonschema-form';
@@ -20,67 +20,26 @@ const sanitizeValue = (type, value) => {
   return value;
 };
 
-const submitFeature = props => async ({ formData }) => {
-  const {
-    view: { featureEndpoint },
-    isGeom,
-    isMounted,
-    getSettings,
-    match: { params: { id } },
-    method,
-    name,
-    onRead,
-    url,
-    saveFeature,
-    setDefaultValue,
-    setEditedItem,
-    setLoading,
-    settingsEndpoint,
-  } = props;
-
-  const endpoint = url ? url.replace(featureEndpoint, '') : id;
-
-  const [[propKey, propValue]] = Object.entries(formData);
-
-  const valueOrEmptyString = propValue === undefined ? '' : propValue;
-
-  setLoading(true);
-
-  const body = !isGeom
-    ? { properties: { [propKey]: valueOrEmptyString } }
-    : { geom: valueOrEmptyString };
-
-  setDefaultValue(propValue);
-
-  await saveFeature(
-    featureEndpoint,
-    endpoint,
-    body,
-    method,
-  );
-
-  if (!isMounted.current) return;
-
-  setLoading(false);
-  setEditedItem('');
-  onRead(name);
-  getSettings(settingsEndpoint);
-};
-
-const Edit = props => {
-  const {
-    editedItem,
-    name,
-    onEdit,
-    onRead,
-    setEditedItem,
-    schema,
-    schema: { type: schemaType },
-    t,
-    ui_schema: uiSchema,
-    value,
-  } = props;
-
+const Edit = ({
+  editedItem,
+  getSettings,
+  isGeom,
+  onEdit,
+  onRead,
+  match: { params: { id } },
+  method,
+  name,
+  saveFeature,
+  schema,
+  schema: { type: schemaType },
+  setEditedItem,
+  settingsEndpoint,
+  t,
+  ui_schema: uiSchema,
+  url,
+  value,
+  view: { featureEndpoint },
+}) => {
   const isMounted = useRef(true);
 
   const isCurrentEditedItem = editedItem === name;
@@ -102,6 +61,47 @@ const Edit = props => {
     setDefaultValue(sanitizeValue(schemaType, value));
   }, [schemaType, value]);
 
+  const handleSubmit = useCallback(async ({ formData }) => {
+    const endpoint = url ? url.replace(featureEndpoint, '') : id;
+
+    const [[propKey, propValue]] = Object.entries(formData);
+
+    const valueOrEmptyString = propValue === undefined ? '' : propValue;
+
+    setLoading(true);
+
+    const body = !isGeom
+      ? { properties: { [propKey]: valueOrEmptyString } }
+      : { geom: valueOrEmptyString };
+
+    setDefaultValue(propValue);
+
+    await saveFeature(
+      featureEndpoint,
+      endpoint,
+      body,
+      method,
+    );
+
+    if (!isMounted.current) return;
+
+    setLoading(false);
+    setEditedItem('');
+    onRead(name);
+    getSettings(settingsEndpoint);
+  }, [
+    featureEndpoint,
+    getSettings,
+    id,
+    isGeom,
+    method,
+    name,
+    onRead,
+    saveFeature,
+    setEditedItem,
+    settingsEndpoint,
+    url,
+  ]);
 
   return (
     <div className="details__list-edit">
@@ -119,9 +119,7 @@ const Edit = props => {
         disabled={loading}
         fields={customFields}
         ErrorList={ErrorListTemplate}
-        onSubmit={
-          submitFeature({ isMounted, setDefaultValue, setEditedItem, setLoading, ...props })
-        }
+        onSubmit={handleSubmit}
         uiSchema={{ [name]: { ...uiSchema } }}
         schema={{
           type: 'object',
@@ -149,21 +147,17 @@ const Edit = props => {
 
 Edit.propTypes = {
   editedItem: PropTypes.string,
-  // eslint-disable-next-line react/no-unused-prop-types
   isGeom: PropTypes.bool,
-  // eslint-disable-next-line react/no-unused-prop-types
   getSettings: PropTypes.func,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
     }),
   }),
-  // eslint-disable-next-line react/no-unused-prop-types
   method: PropTypes.oneOf(['PATCH', 'POST', 'PUT']),
   onEdit: PropTypes.func,
   onRead: PropTypes.func,
   name: PropTypes.string,
-  // eslint-disable-next-line react/no-unused-prop-types
   saveFeature: PropTypes.func,
   setEditedItem: PropTypes.func,
   schema: PropTypes.shape({

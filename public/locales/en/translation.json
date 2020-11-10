@@ -259,6 +259,8 @@
       "generatedGeomFile": "Geom file",
       "generatedGeomFile_plural": "Geom files",
       "fitBoundButton": "Center map to \"{{name}}\"",
+      "mandatory": "Mandatory field",
+      "mandatory_plural": "Mandatory fields",
       "menu": {
         "default": "Informations",
         "geometries": "Geometries",

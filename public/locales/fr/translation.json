@@ -259,6 +259,8 @@
       "generatedGeomFile": "Donnée géographique",
       "generatedGeomFile_plural": "Données géographiques",
       "fitBoundButton": "Centrer la carte sur \"{{name}}\"",
+      "mandatory": "Champ obligatoire",
+      "mandatory_plural": "Champs obligatoires",
       "menu": {
         "default": "Informations",
         "geometries": "Géométries",

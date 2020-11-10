@@ -31,6 +31,9 @@ const props = {
   value: 'null',
   view: {
     featureEndpoint: 'endpoint/to/save/feature',
+    formSchema: {
+      properties: {},
+    },
   },
 };
 

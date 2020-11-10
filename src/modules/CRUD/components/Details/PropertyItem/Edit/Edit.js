@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import Form from 'react-jsonschema-form';
+import { requiredProperties } from '../../../../services/utils';
 import customFields from '../../../../../../components/react-json-schemaForm';
 import FileWidget from '../../../../../../components/react-json-schemaForm/FileWidget';
 import ErrorListTemplate from '../../../../../../components/react-json-schemaForm/ErrorListTemplate';
@@ -38,7 +39,10 @@ const Edit = ({
   ui_schema: uiSchema,
   url,
   value,
-  view: { featureEndpoint },
+  view: {
+    featureEndpoint,
+    formSchema: { properties: schemaProperties } = {},
+  },
 }) => {
   const isMounted = useRef(true);
 
@@ -103,6 +107,11 @@ const Edit = ({
     url,
   ]);
 
+  const requiredField = useMemo(() => {
+    const { required }  = requiredProperties(schemaProperties);
+    return required.includes(name);
+  }, [name, schemaProperties]);
+
   return (
     <div className="details__list-edit">
       <Button
@@ -123,6 +132,7 @@ const Edit = ({
         uiSchema={{ [name]: { ...uiSchema } }}
         schema={{
           type: 'object',
+          required: [requiredField && name],
           properties: {
             [name]: {
               ...schema,

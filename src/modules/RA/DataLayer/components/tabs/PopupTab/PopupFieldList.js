@@ -1,10 +1,25 @@
-import React, { useCallback } from 'react';
-import { useForm } from 'react-final-form';
+import React, { useCallback, useMemo } from 'react';
+import { useForm, useField } from 'react-final-form';
+import { useTranslate } from 'react-admin';
 
 import PopupFieldRow from './PopupFieldRow';
 
 const PopupFieldList = ({ fields, popupFields }) => {
   const form = useForm();
+  const translate = useTranslate();
+  const { input: { value: mainFieldId } } = useField('main_field');
+
+  const mainField = useMemo(() => (
+    fields.find(field => field.sourceFieldId === mainFieldId) || {}
+  ), [fields, mainFieldId]);
+
+  const [titleField, ...contentFields] = popupFields;
+  const availableFields = useMemo(() => (
+    fields.filter(field =>
+      !contentFields.find(contentField => (contentField.sourceFieldId === field.sourceFieldId)))
+  ), [contentFields, fields]);
+
+
   const onChange = useCallback(popupField => {
     const popupConfig = form.getState().values.popup_config;
     const {
@@ -24,14 +39,26 @@ const PopupFieldList = ({ fields, popupFields }) => {
 
   return (
     <div className="wrapper">
-      {popupFields.map(popupField => (
-        <PopupFieldRow
-          key={popupField.sourceFieldId}
-          popupField={popupField}
-          onChange={onChange}
-          fields={fields}
-        />
-      ))}
+      <h4>{translate('datalayer.form.popup.title-field')}</h4>
+      <PopupFieldRow
+        popupField={titleField || mainField}
+        onChange={onChange}
+        fields={availableFields}
+        isTitle
+      />
+      {contentFields.length > 0 && (
+        <>
+          <h4>{translate('datalayer.form.popup.content-field')}</h4>
+          {contentFields.map(contentField => (
+            <PopupFieldRow
+              key={contentField.sourceFieldId}
+              popupField={contentField}
+              onChange={onChange}
+              fields={fields}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };

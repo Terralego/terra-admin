@@ -18,7 +18,7 @@ import AddPopupField from './AddPopupField';
 import PopupFieldList from './PopupFieldList';
 
 const useStyle = makeStyles({
-  addPopup: {
+  popupEnabler: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -27,6 +27,7 @@ const useStyle = makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     display: 'flex',
@@ -46,6 +47,7 @@ const PopupTab = () => {
         wizard: { fields: popupfields = [] } = {},
         minzoom = 0,
         maxzoom = 24,
+        enable,
         advanced,
       },
     },
@@ -58,23 +60,31 @@ const PopupTab = () => {
 
   const updateTemplate = useCallback(debounce(() => {
     if (popupfields.length) {
-      const lines = popupfields.map(({
+      const [titlefield, ...contentfields] = popupfields;
+      const titleLine = (
+        `# {% if ${titlefield.field.name} %}`
+        + `{{${titlefield.field.name}}}`
+        + `{% else %}${titlefield.default}{% endif %}`
+      );
+
+      const lines = contentfields.map(({
         suffix,
         prefix,
         field: { name },
         default: defaultTitle,
       }) => (
-        `${prefix}: {% if ${name}.length > 0} %}{{${name}}} ${suffix}{% else %}${defaultTitle}{% endif %}`
+        `- ${prefix} : {% if ${name} %}{{${name}}} ${suffix}{% else %}${defaultTitle}{% endif %}`
       ));
+
       form.change('popup_config', {
         ...form.getState().values.popup_config,
-        template: lines.join('\n'),
-        enabled: true,
+        template: [titleLine, ...lines].join('\n'),
+        minzoom,
+        maxzoom,
       });
     }
-  }, 2000), [form, popupfields]);
+  }, 500), [form, popupfields]);
   useEffect(updateTemplate, [updateTemplate]);
-
 
   const onMinZoomChange = (e, newValue) =>
     form.change('popup_config', { ...form.getState().values.popup_config, minzoom: newValue });
@@ -84,8 +94,9 @@ const PopupTab = () => {
 
   return (
     <>
-      {popupfields.length > 0 && (
+      {enable && (
         <FieldGroup>
+          <BooleanInput source="popup_config.enable" label="datalayer.form.popup.enable" />
           <div className={classes.title}>
             <h3>{translate('datalayer.form.popup.title')}</h3>
             <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
@@ -134,15 +145,18 @@ const PopupTab = () => {
           )}
         </FieldGroup>
       )}
-      {!popupfields.length && (
-        <div className={classes.addPopup}>
+      {!enable && (
+        <div className={classes.popupEnabler}>
           <Card className={classes.card}>
             <CardContent>
               <Typography variant="h6">
                 {translate('datalayer.form.popup.card-message')}
               </Typography>
             </CardContent>
-            <AddPopupField fields={fields} />
+            <BooleanInput
+              source="popup_config.enable"
+              label="datalayer.form.popup.enable"
+            />
           </Card>
         </div>
       )}

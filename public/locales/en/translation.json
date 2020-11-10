@@ -499,14 +499,17 @@
         "advanced": "Advanced mode",
         "add-message": "Add a new field",
         "card-message": "To activate a popup, click on:",
-        "fields": "source fields",
+        "fields": "Source fields",
         "select-field": "Select a field",
         "field": {
-          "prefix": "prefix",
-          "suffix": "suffix",
-          "default": "default text"
+          "prefix": "Prefix",
+          "suffix": "Suffix",
+          "default": "Default text"
         },
-        "title": "Contextual window model"
+        "title": "Contextual window model",
+        "enable": "Enable/disable popup",
+        "title-field": "Title",
+        "content-field": "Popup content"
       },
       "minisheet": {
         "tab": "Mini-fiche",

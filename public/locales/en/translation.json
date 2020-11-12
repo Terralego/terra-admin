@@ -506,7 +506,7 @@
           "suffix": "Suffix",
           "default": "Default text"
         },
-        "title": "Contextual window model",
+        "title": "Contextual window template",
         "enable": "Enable/disable popup",
         "title-field": "Title",
         "content-field": "Popup content"

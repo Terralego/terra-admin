@@ -12,21 +12,53 @@ import Slider from '@material-ui/core/Slider';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
-
+import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 
-import {  useForm } from 'react-final-form';
+import randomColor from 'randomcolor';
+
+import { useForm } from 'react-final-form';
 
 import ColorPicker from '../ColorPicker';
 
 
-const FillStyleColorField = ({ value, index, style = {} }) => {
-  const form = useForm();
+const getRepr = geomType => {
+  switch (geomType) {
+    case 'polygon':
+      return [
+        { name: 'Choropleth', variableField: 'fill_color' },
+        { name: 'Colored border', variableField: 'fill_outline_color' },
+        { name: 'Extrusion', variableField: 'fill_extrusion_height' },
+      ];
+    case 'line':
+      return [
+        { name: 'Colored lines', variableField: 'line_color' },
+        { name: 'Variable lines width ', variableField: 'line_width' },
+      ];
+    case 'point':
+      return [
+        { name: 'Proportionnal circles', variableField: 'circle_radius' },
+        { name: 'Colored circles', variableField: 'circle_color' },
+        { name: 'Colored circle borders', variableField: 'circle_stroke_color' },
+        { name: 'Variable circle borders width', variableField: 'circle_stroke_width' },
+        { name: 'Icons', variableField: 'icon_image' },
+        { name: 'Colored icons', variableField: 'icon_color' },
+      ];
+    default:
+      return [];
+  }
+};
+
+const repr2field = {
+};
+
+
+const FillStyleColorField = ({ value, index, style = {}, setStyle }) => {
   const onChange = React.useCallback(newValue => {
-    const newStyle = { ...form.getState().values.settings.filter_config.style };
+    const newStyle = { style };
     newStyle.fill_color[index] = newValue;
-    form.change('settings.filter_config.style', newStyle);
-  }, [form, index]);
+    setStyle(newStyle);
+  }, [index, setStyle, style]);
   return (
     <div style={style}>
       <ColorPicker
@@ -85,6 +117,15 @@ const FillGraduate = ({ styleConfig, setStyleConfig }) => {
     [handleStyleChange],
   );
 
+  const handleVariableFieldChange = React.useCallback(
+    e => {
+      handleStyleChange({ [e.target.value]: [] });
+      handlePropChange('variable_field')(e.target.value);
+    },
+    [handlePropChange, handleStyleChange],
+  );
+
+
   const handleBorderChange = React.useCallback(
     e => {
       handlePropChange('border_enabled')(e.target.checked);
@@ -106,10 +147,59 @@ const FillGraduate = ({ styleConfig, setStyleConfig }) => {
     [handlePropChange],
   );
 
+  React.useEffect(() => {
+    if (!styleConfig.variable_field) return;
+
+    if (!styleConfig.style[styleConfig.variable_field]) {
+      return;
+    }
+
+    // Create new random color for each new color
+    if (styleConfig.classes_count > styleConfig.style[styleConfig.variable_field].length) {
+      const newStyle = { [styleConfig.variable_field]: [...styleConfig.style[styleConfig.variable_field]] };
+      while (styleConfig.classes_count > newStyle[styleConfig.variable_field].length) {
+        newStyle[styleConfig.variable_field].push(randomColor());
+      }
+      handleStyleChange(newStyle);
+      return;
+    }
+
+    // Remove extra colors
+    if (styleConfig.classes_count < styleConfig.style[styleConfig.variable_field].length) {
+      const newStyle = { [styleConfig.variable_field]: [...styleConfig.style[styleConfig.variable_field]] };
+      while (styleConfig.classes_count < newStyle[styleConfig.variable_field].length) {
+        newStyle[styleConfig.variable_field].pop();
+      }
+      handleStyleChange(newStyle);
+    }
+  }, [styleConfig.analysis_type, styleConfig.classes_count, handleStyleChange, styleConfig.style, styleConfig.variable_field]);
+
   return (
     <>
       <div style={{ width: '50%' }}>
         <div className={classes.graduateConfig}>
+          <TextField
+            label=""
+            value={styleConfig.variable_field}
+            onChange={handleVariableFieldChange}
+          />
+          <FormControl className="variable-field">
+            <InputLabel>Variable field</InputLabel>
+            <Select
+              value={styleConfig.variable_field}
+              onChange={handleVariableFieldChange}
+              required
+            >
+              <MenuItem value="circle_color">
+                {translate('datalayer.form.styles.circle_color')}
+              </MenuItem>
+              <MenuItem value="fill_color">
+                {translate('datalayer.form.styles.fill_color')}
+              </MenuItem>
+            </Select>
+          </FormControl>
+
+
           <FormControl className="method">
             <InputLabel>Statistic method</InputLabel>
             <Select
@@ -146,18 +236,21 @@ const FillGraduate = ({ styleConfig, setStyleConfig }) => {
             />
           </FormControl>
         </div>
+
+        {styleConfig.variable_field && (
         <div
           className={classes.configLine}
           style={{ width: '100%' }}
         >
           <FormLabel>Background</FormLabel>
           <div className="grow" style={{ display: 'flex' }}>
-            {styleConfig.style.fill_color.map((color, index) => (
-              <FillStyleColorField
+            {styleConfig.style[styleConfig.variable_field].map((color, index) => (
+              <ColorPicker
+              // eslint-disable-next-line react/no-array-index-key
                 value={color}
-                index={index}
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
+                onChange={newColor => handleStyleChange({ [styleConfig.variable_field]: styleConfig.style[styleConfig.variable_field].map(
+                  (val, i) => (i === index ? newColor : val),
+                ) })}
               />
             ))}
           </div>
@@ -165,6 +258,7 @@ const FillGraduate = ({ styleConfig, setStyleConfig }) => {
             <Switch checked disabled />
           </div>
         </div>
+        )}
 
 
       </div>

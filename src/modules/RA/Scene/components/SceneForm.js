@@ -75,13 +75,13 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       />
 
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
-      <ReferenceArrayInput
+      {/* <ReferenceArrayInput
         source="baselayer"
         reference={RES_BASELAYER}
         label="view.form.baselayer"
       >
         <SelectArrayInput />
-      </ReferenceArrayInput>
+      </ReferenceArrayInput> */}
       <TreeInput source="tree" fullWidth />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 

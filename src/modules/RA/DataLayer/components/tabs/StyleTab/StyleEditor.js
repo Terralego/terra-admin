@@ -26,26 +26,21 @@ import FillCategorize from './Style/FillCategorize';
 import StyleField from './StyleField';
 
 
-const StyleEditor = ({ path, geomType }) => {
+const StyleEditor = ({ path, geomType, record }) => {
   const translate = useTranslate();
-
-  const [initialValue] = React.useState({
-    analysis: 'variable',
+  /* const [defaultValue] = React.useState({
+    type: 'advanced',
     classes_count: 5,
     style: { fill_color: [], stroke_color: [randomColor()] },
     no_value_style: {},
-  });
-
-  // To avoid circular render
-  const [advancedStyleInitialValue] = React.useState(
-    getLayerStyleDefaultValue(randomColor(), getShapeFromGeomType(geomType)),
-  );
+    map_style: getLayerStyleDefaultValue(randomColor(), getShapeFromGeomType(geomType)),
+  }); */
 
   const [selectedField, setSelectedField] = React.useState(null);
 
   const {
     input: { value: styleConfig },
-  } = useField(path, { defaultValue: initialValue });
+  } = useField(path);
 
   const {
     input: { value: fields },
@@ -78,7 +73,7 @@ const StyleEditor = ({ path, geomType }) => {
 
   const handleTypeChange = React.useCallback(
     e => {
-      handlePropChange('analysis')(e.target.value);
+      handlePropChange('type')(e.target.value);
     },
     [handlePropChange],
   );
@@ -97,8 +92,38 @@ const StyleEditor = ({ path, geomType }) => {
     [handlePropChange],
   );
 
-  // Update color list if classes count change
   React.useEffect(() => {
+    if (!styleConfig.type) {
+      form.change(
+        path,
+        { ...styleConfig, type: 'advanced' },
+      );
+    }
+    if (!styleConfig.style) {
+      form.change(
+        path,
+        { ...styleConfig, style: { fill_color: [], stroke_color: [randomColor()] } },
+      );
+    }
+    const mapStyle = getLayerStyleDefaultValue(randomColor(), getShapeFromGeomType(geomType));
+    if (!styleConfig.map_style /* || mapStyle.type !== styleConfig.map_style.type */) {
+      form.change(
+        path,
+        { ...styleConfig, map_style: mapStyle },
+      );
+    }
+  }, [form, geomType, path, record.fields, record.id, styleConfig]);
+
+  // Update color list if classes count change
+  // TODO put that in fill graduate instead
+  /* React.useEffect(() => {
+    if (styleConfig.analysis_type !== 'graduate') {
+      return;
+    }
+
+    if (!styleConfig.style) {
+      return;
+    }
     // Create new random color for each new color
     if (styleConfig.classes_count > styleConfig.style.fill_color.length) {
       const newStyle = { fill_color: [...styleConfig.style.fill_color] };
@@ -117,12 +142,7 @@ const StyleEditor = ({ path, geomType }) => {
       }
       handleStyleChange(newStyle);
     }
-  }, [
-    styleConfig.classes_count,
-    styleConfig.style.fill_color,
-    styleConfig.style.fill_color.length,
-    handleStyleChange,
-  ]);
+  }, [styleConfig.analysis_type, styleConfig.classes_count, handleStyleChange, styleConfig.style]); */
 
   // Update config if selected field change
   React.useEffect(() => {
@@ -137,6 +157,8 @@ const StyleEditor = ({ path, geomType }) => {
     setSelectedField(newSelectedField);
   }, [fields, styleConfig.field, handlePropChange]);
 
+  console.log(fields);
+
   return (
     <>
       {styleType === 'fill' && <h1>Polygone</h1>}
@@ -145,7 +167,7 @@ const StyleEditor = ({ path, geomType }) => {
       {!['fill', 'line', 'circle'].includes(styleType) && <h1>Other ({styleType})</h1>}
       <FormControl component="fieldset">
         <RadioGroup
-          value={styleConfig.analysis}
+          value={styleConfig.type || 'advanced'}
           onChange={handleTypeChange}
           style={{ flexDirection: 'row' }}
         >
@@ -166,11 +188,11 @@ const StyleEditor = ({ path, geomType }) => {
           />
         </RadioGroup>
       </FormControl>
-      {styleConfig.analysis === 'simple' && (
+      {styleConfig.type === 'simple' && (
         <FillSimple styleConfig={styleConfig} setStyleConfig={setStyleConfig} />
       )}
 
-      {styleConfig.analysis === 'variable' && (
+      {styleConfig.type === 'variable' && (
         <>
           <div>
             <FormControl style={{ minWidth: '20em', margin: '1em 0' }}>
@@ -184,7 +206,7 @@ const StyleEditor = ({ path, geomType }) => {
                   .filter(field => [1, 2, 3].includes(field.data_type))
                   .map(field => (
                     <MenuItem key={field.sourceFieldId} value={field.name}>
-                      {field.label} ({fieldTypes[field.data_type]})
+                      {field.label || field.name} ({fieldTypes[field.data_type]})
                     </MenuItem>
                   ))}
               </Select>
@@ -228,12 +250,11 @@ const StyleEditor = ({ path, geomType }) => {
         </>
       )}
 
-      {styleConfig.analysis === 'advanced' && (
+      {styleConfig.type === 'advanced' && (
         <>
           <StyleField
             source={`${path}.map_style`}
-            label="datalayer.form.styles.mainstyle"
-            initialValue={advancedStyleInitialValue}
+            label="datalayer.form.style.map"
             fullWidth
           />
         </>

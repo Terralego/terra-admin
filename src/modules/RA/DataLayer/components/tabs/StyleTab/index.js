@@ -7,9 +7,10 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { useField } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 
 import Typography from '@material-ui/core/Typography';
+
 
 import CustomLayer from './CustomLayer';
 
@@ -20,12 +21,14 @@ import Placeholder from '../../../../../../components/Placeholder';
 import StyleEditor from './StyleEditor';
 
 
-const StyleTab = ({ external }) => {
+const StyleTab = ({ external, ...rest }) => {
   const translate = useTranslate();
   const [extraStylesInitialValue] = React.useState([]);
+  const form = useForm();
+
   const { geom_type: geomType } = useSourceData('source');
-  const { input: { value: mainStyle } } = useField('settings.main_style');
-  const { input: { value: extraStyles } } = useField('settings.extra_styles', { initialValue: extraStylesInitialValue });
+  const { input: { value: mainStyle } } = useField('main_style');
+  const { input: { value: extraStyles } } = useField('extra_styles', { defaultValue: extraStylesInitialValue });
 
   if (geomType === undefined) {
     return (
@@ -37,20 +40,26 @@ const StyleTab = ({ external }) => {
     );
   }
 
-  return (
-    <FormTab disabled={external} label="datalayer.form.styles.tab" path="style">
-      <StyleEditor path="settings.main_style" geomType={geomType} />
 
-      <ArrayInput source="settings.extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
+  // Handle intermediate state of data loading and
+  // Different use cases: new record, existing record from menu
+  // existing record after reloading the page
+  if (rest.record.id && !mainStyle) {
+    return null;
+  }
+
+  return (
+    <FormTab disabled={external} label="datalayer.form.styles.tab" path="style" {...rest}>
+      <StyleEditor path="main_style" geomType={geomType} />
+
+      <ArrayInput source="extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
         <SimpleFormIterator>
           <CustomLayer />
         </SimpleFormIterator>
       </ArrayInput>
-      <>
-        <div style={{ paddingTop: '5em', color: '#ccc' }}>
+      <> {/* Protect div from RA props */}
+        <div style={{ paddingTop: '5em', color: '#ccc', fontSize: '0.7em', display: 'flex' }}>
           <pre>{JSON.stringify(mainStyle, null, 2)}</pre>
-        </div>
-        <div style={{ paddingTop: '5em', color: '#ccc' }}>
           <pre>{JSON.stringify(extraStyles, null, 2)}</pre>
         </div>
       </>

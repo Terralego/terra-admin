@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import ArrayType from './ArrayType';
@@ -63,8 +63,13 @@ const Type = props => {
     },
   } = props;
 
-  const rightType = getRightType(schemaType, type, uiField);
-  const Component = getComponent(rightType);
+  const rightType = useMemo(() => (
+    getRightType(schemaType, type, uiField)
+  ), [schemaType, type, uiField]);
+
+  const Component = useMemo(() => (
+    getComponent(rightType)
+  ), [rightType]);
 
   return (
     <Component {...props} />

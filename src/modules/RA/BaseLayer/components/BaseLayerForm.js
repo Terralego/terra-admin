@@ -14,7 +14,9 @@ import {
   SimpleFormIterator,
   translate,
 } from 'react-admin';
+
 import ZoomInput from './ZoomInput';
+import BaseLayerType from './BaseLayerType';
 
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
@@ -94,7 +96,7 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
     <SimpleForm sanitizeEmptyValues={false} {...props}>
       <TextInput source="name" label="baseLayer.form.name" validate={required()} />
 
-      <SelectInput
+      <BaseLayerType
         choices={[
           { id: 'raster', name: t('baseLayer.form.type.choices.raster') },
           { id: 'vector', name: t('baseLayer.form.type.choices.vector') },

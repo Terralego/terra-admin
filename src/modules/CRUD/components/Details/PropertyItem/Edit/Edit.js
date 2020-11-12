@@ -14,9 +14,12 @@ const widgets = {
   ),
 };
 
-const sanitizeValue = (type, value) => {
-  if (type === 'array' && value === null) {
+const sanitizeValue = (schema, value) => {
+  if (schema.type === 'array' && value === null) {
     return [];
+  }
+  if (schema.enum?.length) {
+    return schema.enum[0];
   }
   return value;
 };
@@ -32,7 +35,6 @@ const Edit = ({
   name,
   saveFeature,
   schema,
-  schema: { type: schemaType },
   setEditedItem,
   settingsEndpoint,
   t,
@@ -50,7 +52,7 @@ const Edit = ({
   const canEdit =  ['', name].includes(editedItem);
   const isEdited = canEdit && isCurrentEditedItem;
   const [loading, setLoading] = useState(false);
-  const [defaultValue, setDefaultValue] = useState(sanitizeValue(schemaType, value));
+  const [defaultValue, setDefaultValue] = useState(() => sanitizeValue(schema, value));
 
   useEffect(() => {
     isCurrentEditedItem && !loading ? onEdit(name) : onRead(name);
@@ -62,8 +64,8 @@ const Edit = ({
   }, []);
 
   useEffect(() => {
-    setDefaultValue(sanitizeValue(schemaType, value));
-  }, [schemaType, value]);
+    setDefaultValue(sanitizeValue(schema, value));
+  }, [schema, value]);
 
   const handleSubmit = useCallback(async ({ formData }) => {
     const endpoint = url ? url.replace(featureEndpoint, '') : id;
@@ -174,8 +176,9 @@ Edit.propTypes = {
   saveFeature: PropTypes.func,
   setEditedItem: PropTypes.func,
   schema: PropTypes.shape({
-    type: PropTypes.string,
+    enum: PropTypes.arrayOf(PropTypes.string),
     properties: PropTypes.shape({}),
+    type: PropTypes.string,
   }),
   t: PropTypes.func,
   ui_schema: PropTypes.shape({}),

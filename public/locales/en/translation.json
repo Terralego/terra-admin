@@ -504,7 +504,8 @@
         "field": {
           "prefix": "Prefix",
           "suffix": "Suffix",
-          "default": "Default text"
+          "default": "Default text",
+          "round": "Number of digit to round"
         },
         "title": "Contextual window template",
         "enable": "Enable/disable popup",

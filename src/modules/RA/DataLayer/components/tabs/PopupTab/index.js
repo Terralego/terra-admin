@@ -57,7 +57,6 @@ const PopupTab = () => {
   const form = useForm();
   const classes = useStyle();
 
-
   const updateTemplate = useCallback(debounce(() => {
     if (popupfields.length) {
       const [titlefield, ...contentfields] = popupfields;
@@ -70,11 +69,26 @@ const PopupTab = () => {
       const lines = contentfields.map(({
         suffix,
         prefix,
-        field: { name },
+        field: { name, label },
         default: defaultTitle,
-      }) => (
-        `- ${prefix} : {% if ${name} %}{{${name}}} ${suffix}{% else %}${defaultTitle}{% endif %}`
-      ));
+        sourceFieldId,
+      }) => {
+        const { settings: { round } = {} } = fields.find(f => (f.sourceFieldId === sourceFieldId));
+        if (round !== undefined) {
+          return (
+            `- ${label} : `
+          + `{% if ${name} !== undefined %}`
+          + ` ${prefix} {{ (${name} | round(${round})).toLocaleString() }} ${suffix}`
+          + `{% else %}${defaultTitle}{% endif %}`
+          );
+        }
+        return (
+          `- ${label} : `
+        + `{% if ${name} !== undefined %}`
+        + `${prefix}  {{ ${name} }} ${suffix}`
+        + `{% else %}${defaultTitle}{% endif %}`
+        );
+      });
 
       form.change('popup_config', {
         ...form.getState().values.popup_config,
@@ -83,7 +97,7 @@ const PopupTab = () => {
         maxzoom,
       });
     }
-  }, 500), [form, popupfields]);
+  }, 500), [form, popupfields, fields]);
   useEffect(updateTemplate, [updateTemplate]);
 
   const onMinZoomChange = (e, newValue) =>

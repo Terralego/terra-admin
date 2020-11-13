@@ -504,7 +504,8 @@
         "field": {
           "prefix": "Préfixe",
           "suffix": "Suffixe",
-          "default": "Texte par defaut"
+          "default": "Texte par defaut",
+          "round": "Nombre de chiffres à arrondir"
         },
         "title": "Modèle de fenêtre au survol",
         "enable": "Activer/désactiver",

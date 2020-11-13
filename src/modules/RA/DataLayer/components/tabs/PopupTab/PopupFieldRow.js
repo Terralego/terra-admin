@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useForm } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 
@@ -11,6 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PopupFieldSelect from './PopupFielSelect';
+import { fieldTypes } from '../../../../DataSource';
 
 const useStyles = makeStyles({
   row: {
@@ -26,10 +27,14 @@ const useStyles = makeStyles({
   },
 });
 
-const PopupFieldRow = React.memo(({ popupField, onChange, isTitle }) => {
+const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields: layerFields }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
+
+  const {
+    settings: { round } = {},
+  } = layerFields.find(f => f.sourceFieldId === popupField.sourceFieldId);
 
   const onRowItemChange = useCallback(
     (item, value) => e => onChange({ ...popupField, [item]: value || e.target.value }),
@@ -57,6 +62,27 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle }) => {
       },
     });
   }, [form]);
+
+  const onRoundChange = ({ target: { value } }) => {
+    const { values: { fields } } = form.getState();
+    const newFields = fields.map(field => {
+      if (field.sourceFieldId === popupField.sourceFieldId) {
+        return { ...field, settings: { ...field.settings, round: Number(value) } };
+      }
+      return field;
+    });
+    form.change('fields', newFields);
+  };
+
+  const fieldIsNumber = useCallback((targetForm, targetField) => {
+    const { data_type: dataType } = layerFields.find(({ sourceFieldId }) =>
+      (sourceFieldId === targetField.sourceFieldId));
+    return (['Integer', 'Float'].indexOf(fieldTypes[dataType]) >= 0);
+  }, [layerFields]);
+
+  const isNumber = useMemo(() =>
+    fieldIsNumber(form, popupField), [fieldIsNumber, form, popupField]);
+
 
   return (
     <Paper className={classes.row}>
@@ -101,6 +127,17 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle }) => {
           required
         />
       </FormControl>
+      {isNumber && (
+      <FormControl className={classes.formControl}>
+        <TextField
+          label={translate('datalayer.form.popup.field.round')}
+          value={round || 0}
+          onChange={onRoundChange}
+          variant="filled"
+          fullWidth
+        />
+      </FormControl>
+      )}
       {!isTitle && <Button type="button" onClick={onRowItemChange('deleted', true)}><DeleteIcon /></Button>}
     </Paper>
   );

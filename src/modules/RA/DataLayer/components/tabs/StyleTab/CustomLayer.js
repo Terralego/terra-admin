@@ -11,7 +11,7 @@ import { RES_DATASOURCE } from '../../../../ra-modules';
 
 import StyleEditor from './StyleEditor';
 
-export const CustomLayer = ({ source }) => {
+export const CustomLayer = ({ source, fields }) => {
   const { geom_type: geomType } = useSourceData(`${source}.source`);
 
   return (
@@ -25,7 +25,7 @@ export const CustomLayer = ({ source }) => {
       >
         <SelectInput />
       </ReferenceInput>
-      {geomType !== undefined && <StyleEditor path={`${source}.style_config`} geomType={geomType} />}
+      {geomType !== undefined && <StyleEditor path={`${source}.style_config`} geomType={geomType} fields={fields} />}
     </FieldGroup>
   );
 };

@@ -27,6 +27,9 @@ const StyleTab = ({ external, ...rest }) => {
   const form = useForm();
 
   const { geom_type: geomType } = useSourceData('source');
+  const {
+    input: { value: fields },
+  } = useField('fields');
   const { input: { value: mainStyle } } = useField('main_style');
   const { input: { value: extraStyles } } = useField('extra_styles', { defaultValue: extraStylesInitialValue });
 
@@ -50,11 +53,11 @@ const StyleTab = ({ external, ...rest }) => {
 
   return (
     <FormTab disabled={external} label="datalayer.form.styles.tab" path="style" {...rest}>
-      <StyleEditor path="main_style" geomType={geomType} />
+      <StyleEditor path="main_style" geomType={geomType} fields={fields} />
 
       <ArrayInput source="extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
         <SimpleFormIterator>
-          <CustomLayer />
+          <CustomLayer fields={fields} />
         </SimpleFormIterator>
       </ArrayInput>
       <> {/* Protect div from RA props */}

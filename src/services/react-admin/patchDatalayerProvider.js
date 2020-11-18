@@ -16,17 +16,18 @@ const patchPictureDataProvider = nextDataProvider => async (type, resource, para
             const mainStyle = {
               type: 'advanced' || modifiedResult.data.main_style?.type,
               classes_count: 5,
-              style: { fill_color: [] },
+              style: {},
               map_style: modifiedResult.data.layer_style,
             };
             modifiedResult.data.main_style = mainStyle;
           }
+          modifiedResult.data.main_style.style = {};
           if ((modifiedResult.data.custom_styles || []).length > 0 && modifiedResult.data.extra_styles.length === 0) {
             const extraStyles = modifiedResult.data.custom_styles.map(layerStyle => ({
               style_config: {
                 type: 'advanced',
                 classes_count: 5,
-                style: { fill_color: [] },
+                style: {},
                 map_style: { ...layerStyle.style },
               },
               source: layerStyle.source,

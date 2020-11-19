@@ -501,13 +501,18 @@
         "advanced": "Saisie avancée",
         "card-message": "Pour activer une fenêtre contextuelle, cliquer sur",
         "add-message": "Ajouter un champ",
-        "fields": "champs de la source",
+        "fields": "Champs de la source",
         "select-field": "Sélectionnez un champ",
         "field": {
-          "prefix": "préfixe",
-          "suffix": "suffixe",
-          "default": "texte par defaut"
-        }
+          "prefix": "Préfixe",
+          "suffix": "Suffixe",
+          "default": "Texte par defaut",
+          "round": "Nombre de chiffres à arrondir"
+        },
+        "title": "Modèle de fenêtre au survol",
+        "enable": "Activer/désactiver",
+        "title-field": "Titre",
+        "content-field": "Contenu de la fenêtre contextuelle"
       },
       "minisheet": {
         "tab": "Mini-fiche",

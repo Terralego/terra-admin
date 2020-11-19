@@ -18,7 +18,7 @@ import AddPopupField from './AddPopupField';
 import PopupFieldList from './PopupFieldList';
 
 const useStyle = makeStyles({
-  addPopup: {
+  popupEnabler: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -27,6 +27,15 @@ const useStyle = makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    borderBottom: 'thin solid grey',
+    marginBottom: '25px',
   },
 });
 
@@ -38,6 +47,7 @@ const PopupTab = () => {
         wizard: { fields: popupfields = [] } = {},
         minzoom = 0,
         maxzoom = 24,
+        enable,
         advanced,
       },
     },
@@ -47,26 +57,48 @@ const PopupTab = () => {
   const form = useForm();
   const classes = useStyle();
 
-
   const updateTemplate = useCallback(debounce(() => {
     if (popupfields.length) {
-      const lines = popupfields.map(({
+      const [titlefield, ...contentfields] = popupfields;
+      const titleLine = (
+        `# {% if ${titlefield.field.name} %}`
+        + `{{${titlefield.field.name}}}`
+        + `{% else %}${titlefield.default}{% endif %}`
+      );
+
+      const lines = contentfields.map(({
         suffix,
         prefix,
-        field: { name },
+        field: { name, label },
         default: defaultTitle,
-      }) => (
-        `${prefix}: {% if ${name}.length > 0} %}{{${name}}} ${suffix}{% else %}${defaultTitle}{% endif %}`
-      ));
+        sourceFieldId,
+      }) => {
+        const { settings: { round } = {} } = fields.find(f => (f.sourceFieldId === sourceFieldId));
+        if (round !== undefined) {
+          return (
+            `- ${label} : `
+          + `{% if ${name} !== undefined %}`
+          + ` ${prefix} {{ (${name} | round(${round})).toLocaleString() }} ${suffix}`
+          + `{% else %}${defaultTitle}{% endif %}`
+          );
+        }
+        return (
+          `- ${label} : `
+        + `{% if ${name} !== undefined %}`
+        + `${prefix}  {{ ${name} }} ${suffix}`
+        + `{% else %}${defaultTitle}{% endif %}`
+        );
+      });
+
       form.change('popup_config', {
         ...form.getState().values.popup_config,
-        template: lines.join('\n'),
-        enabled: true,
+        template: [titleLine, ...lines].join('\n'),
+        minzoom,
+        maxzoom,
       });
     }
-  }, 2000), [form, popupfields]);
+  }, 500), [form, popupfields, fields]);
   useEffect(updateTemplate, [updateTemplate]);
-
 
   const onMinZoomChange = (e, newValue) =>
     form.change('popup_config', { ...form.getState().values.popup_config, minzoom: newValue });
@@ -76,9 +108,13 @@ const PopupTab = () => {
 
   return (
     <>
-      {popupfields.length > 0 && (
+      {enable && (
         <FieldGroup>
-          <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
+          <BooleanInput source="popup_config.enable" label="datalayer.form.popup.enable" />
+          <div className={classes.title}>
+            <h3>{translate('datalayer.form.popup.title')}</h3>
+            <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
+          </div>
           <Typography id="discrete-slider" gutterBottom>
             {translate('datalayer.form.popup.min-zoom')}
           </Typography>
@@ -123,15 +159,18 @@ const PopupTab = () => {
           )}
         </FieldGroup>
       )}
-      {!popupfields.length && (
-        <div className={classes.addPopup}>
+      {!enable && (
+        <div className={classes.popupEnabler}>
           <Card className={classes.card}>
             <CardContent>
               <Typography variant="h6">
                 {translate('datalayer.form.popup.card-message')}
               </Typography>
             </CardContent>
-            <AddPopupField fields={fields} />
+            <BooleanInput
+              source="popup_config.enable"
+              label="datalayer.form.popup.enable"
+            />
           </Card>
         </div>
       )}

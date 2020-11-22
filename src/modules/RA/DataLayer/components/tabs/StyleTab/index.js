@@ -5,6 +5,7 @@ import {
   ArrayInput,
   SimpleFormIterator,
   useTranslate,
+  useDataProvider,
 } from 'react-admin';
 
 import { useField, useForm } from 'react-final-form';
@@ -21,19 +22,29 @@ import Placeholder from '../../../../../../components/Placeholder';
 import StyleEditor from './StyleEditor';
 
 
+import { usePrevious } from '../../../../../../utils/hooks';
+import { RES_DATASOURCE } from '../../../../ra-modules';
+
 const StyleTab = ({ external, ...rest }) => {
   const translate = useTranslate();
   const [extraStylesInitialValue] = React.useState([]);
   const form = useForm();
 
-  const { geom_type: geomType } = useSourceData('source');
+  const dataProvider = useDataProvider();
+
+  const { geom_type: geomType, id: sourceId } = useSourceData('source');
+
   const {
     input: { value: fields },
   } = useField('fields');
   const { input: { value: mainStyle } } = useField('main_style');
   const { input: { value: extraStyles } } = useField('extra_styles', { defaultValue: extraStylesInitialValue });
 
-  if (geomType === undefined) {
+  const getValuesOfProperty = React.useCallback(property =>
+    dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: sourceId, property }),
+  [dataProvider, sourceId]);
+
+  if (geomType === undefined || !sourceId) {
     return (
       <Placeholder>
         <Typography variant="h5" component="h2">
@@ -42,6 +53,18 @@ const StyleTab = ({ external, ...rest }) => {
       </Placeholder>
     );
   }
+
+
+  /* React.useEffect(() => {
+    const getValueList = async () => {
+      if (!dataSource.id || (dataSource.id === prevSourceId && field === prevField)) return;
+
+      const result = await dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: dataSource.id, property: field });
+      console.log('result', result);
+      setValueList(result.map(val => ({ name: val, color: randomColor() })));
+    };
+    getValueList();
+  }, [dataProvider, dataSource.id, field, prevField, prevSourceId, setValueList]); */
 
 
   // Handle intermediate state of data loading and
@@ -53,7 +76,7 @@ const StyleTab = ({ external, ...rest }) => {
 
   return (
     <FormTab disabled={external} label="datalayer.form.styles.tab" path="style" {...rest}>
-      <StyleEditor path="main_style" geomType={geomType} fields={fields} />
+      <StyleEditor path="main_style" geomType={geomType} fields={fields} getValuesOfProperty={getValuesOfProperty} />
 
       <ArrayInput source="extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
         <SimpleFormIterator>

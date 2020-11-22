@@ -3,22 +3,18 @@ import React from 'react';
 import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import { Field } from 'react-final-form';
 
 import ColorStyleField from './ColorStyleField';
+import RadiusStyleField from './RadiusStyleField';
 
 const useStyles = makeStyles({
   configLine: {
     '& header': {
       display: 'flex',
       alignItems: 'center',
-      padding: '1em 0',
+      padding: '0 1em',
       backgroundColor: '#eee',
-      paddingBottom: '1em',
+      margingBottom: '1em',
       width: '50%',
       '& > .grow': {
         flex: 1,
@@ -28,54 +24,63 @@ const useStyles = makeStyles({
   },
 });
 
-const WizardPolygon = ({ path, fields }) => {
+const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
 
   return (
     <>
       <div className={classes.configLine}>
         <header>
-          <FormLabel style={{ width: '9em' }}>Background color</FormLabel>
-          <div className="grow">test</div>
-          <div style={{ float: 'right' }}>
-            <RadioButtonGroupInput
-              label=""
-              source={`${path}.style.fill_color.type`}
-              choices={[
-                { id: 'none', name: 'None' },
-                { id: 'fixed', name: 'Fixed' },
-                { id: 'variable', name: 'Variable' },
-              ]}
-              initialValue="none"
-            />
-          </div>
-        </header>
-        <ColorStyleField path={`${path}.style.fill_color`} fields={fields} />
-      </div>
-
-
-      <div className={classes.configLine}>
-        <header>
-          <FormLabel style={{ width: '9em' }}>Border color</FormLabel>
+          <FormLabel style={{ width: '9em' }}>Circle color</FormLabel>
           <div className="grow" />
           <div style={{ float: 'right' }}>
             <RadioButtonGroupInput
               label=""
-              source={`${path}.style.fill_outline_color.type`}
+              source={`${path}.style.circle_color.type`}
               choices={[
                 { id: 'none', name: 'None' },
                 { id: 'fixed', name: 'Fixed' },
                 { id: 'variable', name: 'Variable' },
               ]}
+              helperText=""
+              initialValue="none"
+            />
+          </div>
+        </header>
+        <ColorStyleField
+          path={`${path}.style.circle_color`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
+      </div>
+
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel style={{ width: '9em' }}>Circle radius</FormLabel>
+          <div className="grow" />
+          <div style={{ float: 'right' }}>
+            <RadioButtonGroupInput
+              label=""
+              source={`${path}.style.circle_radius.type`}
+              choices={[
+                { id: 'none', name: 'None' },
+                { id: 'fixed', name: 'Fixed' },
+                { id: 'variable', name: 'Variable' },
+              ]}
+              helperText=""
               initialValue="none"
             />
           </div>
         </header>
 
-        <ColorStyleField path={`${path}.style.fill_outline_color`} fields={fields} />
+        <RadiusStyleField
+          path={`${path}.style.circle_radius`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
       </div>
     </>
   );
 };
 
-export default WizardPolygon;
+export default WizardCircle;

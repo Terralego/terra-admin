@@ -1,14 +1,11 @@
-
 import React from 'react';
 
-import { useTranslate, SelectInput } from 'react-admin';
+import { useTranslate, SelectInput, BooleanInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Field } from 'react-final-form';
-import randomColor from 'randomcolor';
 
-import ColorListField from './ColorListField';
-
+import ValueListField from './ValueListField';
 
 const useStyles = makeStyles({
   configLine: {
@@ -32,15 +29,14 @@ const useStyles = makeStyles({
   },
 });
 
-const GraduateColor = ({ path }) => {
+const GraduateValue = ({ path }) => {
   const translate = useTranslate();
   const classes = useStyles();
-  const [defaultValue] = React.useState([randomColor()]);
+  const [defaultValue] = React.useState([1]);
 
   return (
     <div style={{ width: '50%' }}>
       <div className={classes.graduateConfig}>
-
         <SelectInput
           source={`${path}.method`}
           choices={[
@@ -52,14 +48,15 @@ const GraduateColor = ({ path }) => {
         />
       </div>
 
-      <FormLabel>Colors</FormLabel>
-      <Field name={`${path}.colors`} defaultValue={defaultValue}>
+      <FormLabel>Steps</FormLabel>
+      <Field name={`${path}.values`} defaultValue={defaultValue}>
         {({ input: { value, onChange } }) => (
-          <ColorListField value={value} onChange={onChange} />
+          <ValueListField value={value} onChange={onChange} />
         )}
       </Field>
+      <BooleanInput source={`${path}.generate_legend`} />
     </div>
   );
 };
 
-export default GraduateColor;
+export default GraduateValue;

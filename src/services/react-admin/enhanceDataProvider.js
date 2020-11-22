@@ -1,10 +1,6 @@
 import { CREATE, UPDATE } from 'react-admin';
-import Api from '@terralego/core/modules/Api';
-import { WMTS } from '../../modules/RA/DataSource';
 
-import { RES_DATASOURCE, RES_VIEWPOINT } from '../../modules/RA/ra-modules';
-
-const REFRESH = 'REFRESH';
+import { RES_VIEWPOINT } from '../../modules/RA/ra-modules';
 
 const convertFileToBase64 = file => new Promise((resolve, reject) => {
   const reader = new FileReader();
@@ -17,23 +13,6 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 const enhanceDataProvider = nextDataProvider => async (...args) => {
   const [type, resource, params, meta = {}] = args;
   const { endpoint = resource } = meta;
-
-  /**
-   * Manage custom RESFRESH query type
-   */
-  if (type === REFRESH) {
-    return Api.request(`${endpoint}/${params.id}/refresh/`);
-  }
-
-  /**
-   * Force geom_type field for WMTS _type
-   */
-  if (type === CREATE && resource === RES_DATASOURCE) {
-    const { _type: sourceType } = params.data;
-    if (sourceType === WMTS) {
-      params.data.geom_type = 7;
-    }
-  }
 
   /**
    * Manage file upload by converting file to base64.

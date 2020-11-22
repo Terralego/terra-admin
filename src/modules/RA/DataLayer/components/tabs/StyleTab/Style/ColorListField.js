@@ -1,7 +1,6 @@
 import React from 'react';
 import randomColor from 'randomcolor';
 
-
 import { makeStyles } from '@material-ui/core/styles';
 
 import ColorPicker from '../ColorPicker';

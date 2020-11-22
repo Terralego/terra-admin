@@ -2,14 +2,13 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Field } from 'react-final-form';
-import { SelectInput, RadioButtonGroupInput } from 'react-admin';
-import randomColor from 'randomcolor';
+import { SelectInput, RadioButtonGroupInput, NumberInput } from 'react-admin';
+import TextField from '@material-ui/core/TextField';
 import { fieldTypes } from '../../../../../DataSource';
 
 import Condition from '../../../../../../../components/react-admin/Condition';
 
-import ColorPicker from '../ColorPicker';
-import GraduateColor from './GraduateColor';
+import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
 
 
@@ -30,20 +29,15 @@ const useStyles = makeStyles({
   },
 });
 
-const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
+const genDefaultValue = () => 0;
+
+const RadiusStyleField = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
-  const [defaultSeed] = React.useState(Math.floor((Math.random() * 100000) + 1));
 
   return (
     <>
       <Condition when={`${path}.type`} is="fixed">
-        <Field name={`${path}.value`} defaultValue={randomColor({ seed: defaultSeed })}>{({ input: { onChange, value } }) => (
-          <ColorPicker
-            value={value || '#cccccc'}
-            onChange={onChange}
-          />
-        )}
-        </Field>
+        <NumberInput source={`${path}.value`} />
       </Condition>
 
       <Condition when={`${path}.type`} is="variable">
@@ -63,6 +57,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
               const selectedField = fields.find(({ name }) => name === value);
               if (!selectedField) return null;
               const analysisChoices = [2, 3].includes(selectedField.data_type) ? [
+                { id: 'proportionnal', name: 'Propotionnal' },
                 { id: 'graduated', name: 'Graduate' },
                 { id: 'categorized', name: 'Categorize' },
               ] : [
@@ -76,12 +71,15 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                     choices={analysisChoices}
                     initialValue={
                       [2, 3].includes(selectedField.data_type)
-                        ? 'graduated'
+                        ? 'proportionnal'
                         : 'categorized'
                     }
                   />
+                  <Condition when={`${path}.analysis`} is="proportionnal">
+                    <NumberInput source={`${path}.max_radius`} />
+                  </Condition>
                   <Condition when={`${path}.analysis`} is="graduated">
-                    <GraduateColor path={path} />
+                    <GraduateValue path={path} fields={fields} />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="categorized">
                     <CategorizeValue
@@ -90,9 +88,9 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                       getValuesOfProperty={getValuesOfProperty}
                       Component={
                         ({ value: fieldValue, onChange }) =>
-                          <ColorPicker value={fieldValue} onChange={onChange} />
+                          <TextField type="text" value={fieldValue} onChange={event => onChange(parseInt(event.target.value, 10))} />
                       }
-                      defaultValueGenerator={randomColor}
+                      defaultValueGenerator={genDefaultValue}
                     />
                   </Condition>
                 </>
@@ -106,4 +104,4 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
   );
 };
 
-export default ColorStyleField;
+export default RadiusStyleField;

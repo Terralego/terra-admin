@@ -10,6 +10,7 @@ import compose from '../../utils/compose';
 import dataProvider from '../../services/react-admin/dataProvider';
 import withResourceEndpoint from '../../services/react-admin/withResourceEndpoint';
 import enhanceDataProvider from '../../services/react-admin/enhanceDataProvider';
+import sourceDataProvider from '../../services/react-admin/sourceDataProvider';
 import patchPictureDataProvider from '../../services/react-admin/patchPictureDataProvider';
 import patchDatalayerProvider from '../../services/react-admin/patchDatalayerProvider';
 import toMultipart from '../../services/react-admin/toMultipart';
@@ -36,6 +37,7 @@ const customDataProvider = compose(
   patchPictureDataProvider,
   patchDatalayerProvider,
   toMultipart,
+  sourceDataProvider,
   enhanceDataProvider,
 )(dataProvider);
 

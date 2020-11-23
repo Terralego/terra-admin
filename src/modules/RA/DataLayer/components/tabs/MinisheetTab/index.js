@@ -14,12 +14,10 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import AddMinisheetField from './AddMiniSheetField';
 import MiniSheetFieldTree from './MiniSheetFieldTree';
 
 import HelpContent from '../../../../../../components/react-admin/HelpContent';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
-import TreeInput from '../../../../Scene/components/TreeInput';
 
 const useStyles = makeStyles({
   colorPicker: {
@@ -46,14 +44,15 @@ const MinisheetTab = () => {
     input: {
       value: {
         advanced,
-        wizard: { fields: minisheetFields = [] } = {},
+        enable,
+        wizard: { sections = [], title = {} } = {},
       },
     },
   } = useField('minisheet_config');
 
   return (
     <>
-      {!minisheetFields.length && (
+      {!enable && (
         <div className={classes.addPopup}>
           <Card className={classes.card}>
             <CardContent>
@@ -61,16 +60,18 @@ const MinisheetTab = () => {
                 {translate('datalayer.form.popup.card-message')}
               </Typography>
             </CardContent>
-            <AddMinisheetField fields={fields} wizardFields={minisheetFields} />
+            <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
           </Card>
         </div>
       )}
-      {minisheetFields.length && (
-        <FieldGroup>
-          <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
-          <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
+      {enable && (
+        <>
+          <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
+          <FieldGroup>
+            <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
+            <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
 
-          {advanced && (
+            {advanced && (
             <>
               <TextInput multiline source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />
               <TextInput
@@ -79,15 +80,14 @@ const MinisheetTab = () => {
               />
               <HelpContent title="datalayer.form.compare-url.help-title" content="datalayer.form.compare-url.help-text" />
             </>
-          )}
-          {!advanced && (
+            )}
+            {!advanced && (
             <>
-              {/* <MiniSheetFieldTree fieldTree={minisheetFields} /> */}
-              <TreeInput source="minisheet_config.wizard.fields" fullWidth />
-              <AddMinisheetField fields={fields} wizardFields={minisheetFields} />
+              <MiniSheetFieldTree sections={sections} fields={fields} titleField={title} />
             </>
-          )}
-        </FieldGroup>
+            )}
+          </FieldGroup>
+        </>
       )}
     </>
   );

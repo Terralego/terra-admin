@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-const AddPopupField = ({ fields, onAdd, textContent }) => {
+const AddField = ({ fields, onAdd, textContent, iconOnly }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const [showModal, setShowModal] = useState(false);
@@ -56,10 +56,9 @@ const AddPopupField = ({ fields, onAdd, textContent }) => {
         type="button"
         onClick={showModalOnclick}
         label="datalayer.form.popup.add-field"
-        variant="contained"
         startIcon={<AddIcon />}
       >
-        {translate(textContent.addField)}
+        {!iconOnly && translate(textContent.addField)}
       </Button>
       <Modal open={showModal}>
         <form className={classes.modal} onSubmit={handleSubmit} onReset={handleReset}>
@@ -101,4 +100,4 @@ const AddPopupField = ({ fields, onAdd, textContent }) => {
   );
 };
 
-export default AddPopupField;
+export default AddField;

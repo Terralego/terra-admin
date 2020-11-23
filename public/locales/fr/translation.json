@@ -519,7 +519,22 @@
         "display-on-click": "Afficher la minifiche",
         "template": "Modèle de la minifiche",
         "pick-highlight-color": "Sélectionner une couleur de surbrillance",
-        "advanced": "Mode expert"
+        "advanced": "Mode expert",
+        "enable": "Activer/desactiver",
+        "section": "Titre de la section",
+        "title": {
+          "default": "Titre par defaut"
+        },
+        "select-field": "Sélectionnez un champ",
+        "add-section": {
+          "text": "Ajouter une section",
+          "label": "Ajouter une section"
+        },
+        "field": {
+          "prefix": "Préfixe",
+          "suffix": "Suffixe",
+          "default": "Texte par defaut"
+        }
       },
       "filter": {
         "tab": "Filtre",
@@ -583,7 +598,7 @@
       "list": "Vue"
     },
     "form": {
-      "errors":  {
+      "errors": {
         "url": "l'URL est mal formatée",
         "mandatoryTilesWord": "L'URL doit contenir les éléments {z}, {x} et {y} ou {bbox-epsg-3857}",
         "mandatoryWord": "L'URL doit contenir %{name}"
@@ -865,7 +880,7 @@
       }
     }
   },
-  "style-editor":{
+  "style-editor": {
     "geometry": "Type de géométrie : ",
     "polygon": "polygone",
     "line-type": "ligne",
@@ -876,7 +891,7 @@
     "generate-legend": "Générer la légende associée",
     "advanced-style": "Style expert",
     "type": {
-      "input":"Assistant de style",
+      "input": "Assistant de style",
       "wizard": "Activé",
       "expert": "Désactivé"
     },
@@ -890,49 +905,49 @@
       "text": "Texte",
       "heatmap": "Heatmap"
     },
-    "style-type":{
+    "style-type": {
       "none": "Aucun",
       "fixed": "Fixe",
       "variable": "Variable"
     },
-    "fill":{
+    "fill": {
       "fill-color": "Couleur du polygone",
       "fill-opacity": "Opacité du fond",
       "border-color": "Couleur du contour"
     },
-    "circle":{
+    "circle": {
       "fill-color": "Couleur du disque",
       "circle-radius": "Diamètre",
       "border-color": "Couleur du contour",
       "border-width": "Épaisseur du contour",
       "circle-opacity": "Opacité du fond"
     },
-    "line":{
+    "line": {
       "line-color": "Couleur de la ligne",
       "line-width": "Épaisseur de la ligne",
       "line-opacity": "Opacité de la ligne"
     },
-    "extrusion":{
+    "extrusion": {
       "extrusion-color": "Couleur de l'extrusion",
       "extrusion-height": "Hauteur de l'extrusion",
       "extrusion-base": "Base de l'extrusion",
       "extrusion-opacity": "Opacité de l'extrusion"
     },
-    "fixed":{
+    "fixed": {
       "diameter": "Diamètre",
       "value": "Valeur"
     },
-    "proportionnal":{
+    "proportionnal": {
       "max-diameter": "Diamètre maximal",
       "max-value": "Valeur maximale"
     },
-    "categorize":{
+    "categorize": {
       "categories": "Choisissez une valeur pour chaque catégorie",
       "empty-category": "Sans catégorie",
       "empty-category-list": "Aucune catégorie pour ce champ",
       "too-many-values": "Trop de valeurs sont possibles pour ce champ, veuillez en sélectionner un autre ou changez de mode de représentation."
     },
-    "analysis":{
+    "analysis": {
       "categorize": "Catégoriser",
       "graduate": "Discrétiser",
       "interpolate": "Interpoler",

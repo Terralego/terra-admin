@@ -1,12 +1,9 @@
 import React, { useCallback } from 'react';
+import { useTranslate } from 'react-admin';
 
 import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -25,15 +22,14 @@ const useStyles = makeStyles({
   },
 });
 
-const FieldRow = React.memo(({ field, onChange, add }) => {
+const FieldRow = React.memo(({ field, onChange }) => {
   const classes = useStyles();
+  const translate = useTranslate();
 
   const onRowItemChange = useCallback(
     (item, value) => e => onChange({ ...field, [item]: value || e.target.value }),
     [onChange, field],
   );
-
-  const addSection = () => add(field.sourceFieldId);
 
   return (
     <Paper className={classes.row}>
@@ -46,7 +42,7 @@ const FieldRow = React.memo(({ field, onChange, add }) => {
       </FormControl>
       <FormControl>
         <TextField
-          label="prefix"
+          label={translate('datalayer.form.minisheet.field.prefix')}
           onChange={onRowItemChange('prefix')}
           value={field.prefix}
           required
@@ -54,7 +50,7 @@ const FieldRow = React.memo(({ field, onChange, add }) => {
       </FormControl>
       <FormControl>
         <TextField
-          label="suffix"
+          label={translate('datalayer.form.minisheet.field.suffix')}
           onChange={onRowItemChange('suffix')}
           value={field.suffix}
           required
@@ -62,14 +58,12 @@ const FieldRow = React.memo(({ field, onChange, add }) => {
       </FormControl>
       <FormControl>
         <TextField
-          label="default"
+          label={translate('datalayer.form.minisheet.field.default')}
           onChange={onRowItemChange('default')}
           value={field.default}
           required
         />
       </FormControl>
-      <Button type="button" onClick={addSection} startIcon={<AddIcon />} />
-      <Button type="button" onClick={onRowItemChange('deleted', true)}><DeleteIcon /></Button>
     </Paper>
   );
 });

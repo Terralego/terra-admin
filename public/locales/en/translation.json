@@ -519,7 +519,22 @@
         "display-on-click": "Show mini-sheet",
         "template": "Mini-sheet template",
         "pick-highlight-color": "Select over lighting color",
-        "advanced": "Advanced mode"
+        "advanced": "Advanced mode",
+        "enable": "Enable/disable",
+        "select-field": "Select a field",
+        "add-section": {
+          "text": "Add a section",
+          "label": "Add a section"
+        },
+        "section": "Section title",
+        "title": {
+          "default": "Default title"
+        },
+        "field": {
+          "prefix": "Prefix",
+          "suffix": "Suffix",
+          "default": "Default text"
+        }
       },
       "filter": {
         "tab": "Filter",

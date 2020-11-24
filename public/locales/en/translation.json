@@ -527,7 +527,8 @@
           "label": "Add a section"
         },
         "section": "Section title",
-        "title": {
+        "title": "Minisheet model",
+        "title-field": {
           "default": "Default title"
         },
         "field": {

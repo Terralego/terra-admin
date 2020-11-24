@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useForm } from 'react-final-form';
+import React, { useCallback, useMemo } from 'react';
+import { useForm, useField } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 import { makeStyles } from '@material-ui/core';
 
@@ -34,36 +34,48 @@ const useStyles = makeStyles({
   },
 });
 
-const MiniSheetFieldTree = ({ sections, fields, titleField: { sourceFieldId } = {} }) => {
+const MiniSheetFieldTree = ({
+  sections,
+  fields,
+  titleField: { sourceFieldId, default: defaultTitle = '' } = {},
+}) => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
 
-  const onTitleFieldChange = useCallback(({ target: { value } }) => {
+  const { input: { value: mainFieldId } } =  useField('main_field');
+  const { sourceFieldId: mainSourceFieldId = '' } = useMemo(() => (
+    fields.find(field => field.sourceFieldId === mainFieldId) || {}
+  ), [fields, mainFieldId]);
+
+  const updateTitle = useCallback(newTitle => {
     const {
       values: {
         minisheet_config: {
           wizard: { title = {} } = {},
           wizard,
         } = {},
-        minisheet_config: minisheetCofnig,
+        minisheet_config: minisheetConfig,
       },
     } = form.getState();
 
-    const newField = fields.find(f => (f.sourceFieldId === value));
-
     form.change('minisheet_config', {
-      ...minisheetCofnig,
-      wizard: {
-        ...wizard,
-        title: {
-          ...title,
-          field: { name: newField.name, label: newField.label },
-          sourceFieldId: newField.sourceFieldId,
-        },
-      },
+      ...minisheetConfig,
+      wizard: { ...wizard, title: { ...title, ...newTitle } },
     });
-  }, [fields, form]);
+  }, [form]);
+
+  const onTitleFieldChange = useCallback(({ target: { value } }) => {
+    const newField = fields.find(f => (f.sourceFieldId === value));
+    updateTitle({
+      field: { name: newField.name, label: newField.label },
+      sourceFieldId: newField.sourceFieldId,
+    });
+  }, [fields, updateTitle]);
+
+  const onTitleDefaultChange = useCallback(({ target: { value } }) => {
+    updateTitle({ default: value });
+  }, [updateTitle]);
 
   const onTreeChange = useCallback(treeData => {
     const {
@@ -77,14 +89,20 @@ const MiniSheetFieldTree = ({ sections, fields, titleField: { sourceFieldId } = 
     });
   }, [form]);
 
-  const generateNodeProps = useCallback(({ node, path }) => ({
-    title: (
-      node.group
-        ? <SectionToolbar node={node} path={path} />
-        : <FieldToolbar node={node} path={path} />
-    ),
-    buttons: [<ButtonToolBar node={node} path={path} fields={fields} />],
-  }), [fields]);
+  const generateNodeProps = useCallback(({ node, path }) => {
+    const nodeProps = { node, path };
+    const availableFields = fields.filter(f =>
+      f.sourceFieldId !== (sourceFieldId || mainSourceFieldId));
+
+    return {
+      title: (
+        node.group
+          ? <SectionToolbar {...nodeProps} />
+          : <FieldToolbar {...nodeProps} />
+      ),
+      buttons: [<ButtonToolBar {...nodeProps} fields={availableFields} />],
+    };
+  }, [fields, mainSourceFieldId, sourceFieldId]);
 
   return (
     <div className="wrapper">
@@ -93,7 +111,7 @@ const MiniSheetFieldTree = ({ sections, fields, titleField: { sourceFieldId } = 
           <TextField
             variant="outlined"
             onChange={onTitleFieldChange}
-            value={sourceFieldId || ''}
+            value={sourceFieldId || mainSourceFieldId}
             select
           >
             <MenuItem value="">{translate('datalayer.form.minisheet.select-field')}</MenuItem>
@@ -105,7 +123,13 @@ const MiniSheetFieldTree = ({ sections, fields, titleField: { sourceFieldId } = 
           </TextField>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <TextField variant="outlined" label={translate('datalayer.form.minisheet.title.default')} fullWidth />
+          <TextField
+            variant="outlined"
+            label={translate('datalayer.form.minisheet.title-field.default')}
+            value={defaultTitle}
+            onChange={onTitleDefaultChange}
+            fullWidth
+          />
         </FormControl>
       </Paper>
       <SortableTree

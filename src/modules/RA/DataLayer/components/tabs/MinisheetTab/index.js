@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import {
   TextInput,
@@ -33,6 +33,14 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
   },
+  title: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    borderBottom: 'thin solid grey',
+    marginBottom: '25px',
+  },
 });
 
 
@@ -45,10 +53,22 @@ const MinisheetTab = () => {
       value: {
         advanced,
         enable,
-        wizard: { sections = [], title = {} } = {},
+        wizard: { sections = [], title } = {},
       },
     },
   } = useField('minisheet_config');
+
+
+  const getAvailableFields = useCallback(() => {
+    const sectionsFieldIds = sections.reduce((fieldIds, { children = [] }) => {
+      const sectionFieldIds = children.map(({ sourceFieldId }) => sourceFieldId);
+      return [...fieldIds, ...sectionFieldIds];
+    }, []);
+
+    return fields.filter(field => !sectionsFieldIds.find(id => id === field.sourceFieldId));
+  }, [fields, sections]);
+
+  const availableFields = useMemo(() => getAvailableFields(), [getAvailableFields]);
 
   return (
     <>
@@ -68,7 +88,10 @@ const MinisheetTab = () => {
         <>
           <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
           <FieldGroup>
-            <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
+            <div className={classes.title}>
+              <h3>{translate('datalayer.form.minisheet.title')}</h3>
+              <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
+            </div>
             <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
 
             {advanced && (
@@ -83,7 +106,7 @@ const MinisheetTab = () => {
             )}
             {!advanced && (
             <>
-              <MiniSheetFieldTree sections={sections} fields={fields} titleField={title} />
+              <MiniSheetFieldTree sections={sections} fields={availableFields} titleField={title} />
             </>
             )}
           </FieldGroup>

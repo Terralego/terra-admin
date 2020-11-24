@@ -522,7 +522,8 @@
         "advanced": "Mode expert",
         "enable": "Activer/desactiver",
         "section": "Titre de la section",
-        "title": {
+        "title": "Modèle de mini fiche",
+        "title-field": {
           "default": "Titre par defaut"
         },
         "select-field": "Sélectionnez un champ",

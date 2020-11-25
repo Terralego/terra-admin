@@ -532,6 +532,7 @@
           "label": "Ajouter une section"
         },
         "field": {
+          "field": "Champ sélectionné",
           "prefix": "Préfixe",
           "suffix": "Suffixe",
           "default": "Texte par defaut"

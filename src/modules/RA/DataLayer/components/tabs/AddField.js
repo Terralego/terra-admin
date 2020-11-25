@@ -56,7 +56,7 @@ const AddField = ({ fields, onAdd, textContent, iconOnly }) => {
         type="button"
         onClick={showModalOnclick}
         label="datalayer.form.popup.add-field"
-        startIcon={<AddIcon />}
+        startIcon={<AddIcon aria-label={iconOnly ? translate(textContent.addField) : ''} />}
       >
         {!iconOnly && translate(textContent.addField)}
       </Button>

@@ -60,58 +60,59 @@ const MinisheetTab = () => {
 
 
   const getAvailableFields = useCallback(() => {
-    const sectionsFieldIds = sections.reduce((fieldIds, { children = [] }) => {
-      const sectionFieldIds = children.map(({ sourceFieldId }) => sourceFieldId);
-      return [...fieldIds, ...sectionFieldIds];
-    }, []);
+    const sectionsFieldIds =  sections.flatMap(({ children = [] }) =>
+      children.map(({ sourceFieldId }) => sourceFieldId));
 
     return fields.filter(field => !sectionsFieldIds.find(id => id === field.sourceFieldId));
   }, [fields, sections]);
 
   const availableFields = useMemo(() => getAvailableFields(), [getAvailableFields]);
 
+  if (!enable) {
+    return (
+      <div className={classes.addPopup}>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography variant="h6">
+              {translate('datalayer.form.popup.card-message')}
+            </Typography>
+          </CardContent>
+          <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <>
-      {!enable && (
-        <div className={classes.addPopup}>
-          <Card className={classes.card}>
-            <CardContent>
-              <Typography variant="h6">
-                {translate('datalayer.form.popup.card-message')}
-              </Typography>
-            </CardContent>
-            <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
-          </Card>
+      <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
+      <FieldGroup>
+        <div className={classes.title}>
+          <h3>{translate('datalayer.form.minisheet.title')}</h3>
+          <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
         </div>
-      )}
-      {enable && (
-        <>
-          <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
-          <FieldGroup>
-            <div className={classes.title}>
-              <h3>{translate('datalayer.form.minisheet.title')}</h3>
-              <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
-            </div>
-            <ColorInput source="highlight_color" label="datalayer.form.minisheet.pick-highlight-color" className={classes.colorPicker} />
+        <ColorInput
+          source="minisheet_config.highlight_color"
+          label="datalayer.form.minisheet.pick-highlight-color"
+          className={classes.colorPicker}
+        />
 
-            {advanced && (
-            <>
-              <TextInput multiline source="minisheet_template" label="datalayer.form.minisheet.template" fullWidth />
-              <TextInput
-                label="datalayer.form.compare-url.title"
-                source="settings.compare"
-              />
-              <HelpContent title="datalayer.form.compare-url.help-title" content="datalayer.form.compare-url.help-text" />
-            </>
-            )}
-            {!advanced && (
-            <>
-              <MiniSheetFieldTree sections={sections} fields={availableFields} titleField={title} />
-            </>
-            )}
-          </FieldGroup>
+        {advanced && (
+        <>
+          <TextInput multiline source="minisheet_config.template" label="datalayer.form.minisheet.template" fullWidth />
+          <TextInput
+            label="datalayer.form.compare-url.title"
+            source="settings.compare"
+          />
+          <HelpContent title="datalayer.form.compare-url.help-title" content="datalayer.form.compare-url.help-text" />
         </>
-      )}
+        )}
+        {!advanced && (
+        <>
+          <MiniSheetFieldTree sections={sections} fields={availableFields} titleField={title} />
+        </>
+        )}
+      </FieldGroup>
     </>
   );
 };

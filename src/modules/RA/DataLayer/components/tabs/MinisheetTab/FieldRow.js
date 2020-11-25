@@ -32,12 +32,11 @@ const FieldRow = React.memo(({ field, onChange }) => {
   );
 
   return (
-    <Paper className={classes.row}>
+    <Paper className={classes.row} elevation={0}>
       <FormControl className={classes.formControl}>
         <TextField
-          label={field.field.label}
-          value={field.field.name}
-          disabled
+          label={translate('datalayer.form.minisheet.field.field')}
+          value={`${field.field.name} (${field.field.label})`}
         />
       </FormControl>
       <FormControl>

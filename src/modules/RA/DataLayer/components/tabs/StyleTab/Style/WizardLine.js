@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-const WizardLine = ({ path, fields }) => {
+const WizardLine = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
 
   return (
@@ -52,7 +52,11 @@ const WizardLine = ({ path, fields }) => {
             />
           </div>
         </header>
-        <ColorStyleField path={`${path}.style.line_color`} fields={fields} />
+        <ColorStyleField
+          path={`${path}.style.line_color`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
       </div>
 
       <div className={classes.configLine}>
@@ -74,7 +78,11 @@ const WizardLine = ({ path, fields }) => {
           </div>
         </header>
 
-        <SizeStyleField path={`${path}.style.line_width`} fields={fields} />
+        <SizeStyleField
+          path={`${path}.style.line_width`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
       </div>
     </>
   );

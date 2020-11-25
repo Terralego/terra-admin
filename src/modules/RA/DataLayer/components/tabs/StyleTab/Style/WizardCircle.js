@@ -3,11 +3,6 @@ import React from 'react';
 import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import { Field } from 'react-final-form';
 
 import ColorStyleField from './ColorStyleField';
 import RadiusStyleField from './RadiusStyleField';
@@ -29,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-const WizardCircle = ({ path, fields }) => {
+const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
 
   return (
@@ -52,7 +47,11 @@ const WizardCircle = ({ path, fields }) => {
             />
           </div>
         </header>
-        <ColorStyleField path={`${path}.style.circle_color`} fields={fields} />
+        <ColorStyleField
+          path={`${path}.style.circle_color`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
       </div>
 
       <div className={classes.configLine}>
@@ -77,6 +76,7 @@ const WizardCircle = ({ path, fields }) => {
         <RadiusStyleField
           path={`${path}.style.circle_radius`}
           fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
         />
       </div>
     </>

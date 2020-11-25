@@ -2,6 +2,7 @@ import React from 'react';
 import {
   SelectInput,
   ReferenceInput,
+  useDataProvider,
 } from 'react-admin';
 
 import useSourceData from '../../useSourceData';
@@ -12,7 +13,12 @@ import { RES_DATASOURCE } from '../../../../ra-modules';
 import StyleEditor from './StyleEditor';
 
 export const CustomLayer = ({ source, fields }) => {
-  const { geom_type: geomType } = useSourceData(`${source}.source`);
+  const dataProvider = useDataProvider();
+  const { geom_type: geomType, id: sourceId } = useSourceData(`${source}.source`);
+
+  const getValuesOfProperty = React.useCallback(property =>
+    dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: sourceId, property }),
+  [dataProvider, sourceId]);
 
   return (
     <FieldGroup>
@@ -25,7 +31,14 @@ export const CustomLayer = ({ source, fields }) => {
       >
         <SelectInput />
       </ReferenceInput>
-      {geomType !== undefined && <StyleEditor path={`${source}.style_config`} geomType={geomType} fields={fields} />}
+      {geomType !== undefined && (
+        <StyleEditor
+          path={`${source}.style_config`}
+          geomType={geomType}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
+      )}
     </FieldGroup>
   );
 };

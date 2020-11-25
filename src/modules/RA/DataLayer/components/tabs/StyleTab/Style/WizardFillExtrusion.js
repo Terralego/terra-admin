@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-const WizardFillExtrusion = ({ path, fields }) => {
+const WizardFillExtrusion = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
 
   return (
@@ -50,6 +50,7 @@ const WizardFillExtrusion = ({ path, fields }) => {
         <ColorStyleField
           path={`${path}.style.fill_extrusion_color`}
           fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
         />
       </div>
 
@@ -75,6 +76,7 @@ const WizardFillExtrusion = ({ path, fields }) => {
         <SizeStyleField
           path={`${path}.style.fill_extrusion_height`}
           fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
         />
       </div>
     </>

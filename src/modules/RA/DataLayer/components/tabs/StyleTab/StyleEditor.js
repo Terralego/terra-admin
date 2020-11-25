@@ -20,7 +20,7 @@ import WizardCircle from './Style/WizardCircle';
 import StyleField from './StyleField';
 
 
-const StyleEditor = ({ path, geomType, fields }) => {
+const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
   const translate = useTranslate();
 
   const {
@@ -103,16 +103,16 @@ const StyleEditor = ({ path, geomType, fields }) => {
 
       <Condition when={`${path}.type`} is="wizard">
         <Condition when={`${path}.map_style_type`} is="fill">
-          <WizardFill path={path} fields={fields} />
+          <WizardFill path={path} fields={fields} getValuesOfProperty={getValuesOfProperty} />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="fill-extrusion">
-          <WizardFillExtrusion path={path} fields={fields} />
+          <WizardFillExtrusion path={path} fields={fields} getValuesOfProperty={getValuesOfProperty} />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="line">
-          <WizardLine path={path} fields={fields} />
+          <WizardLine path={path} fields={fields} getValuesOfProperty={getValuesOfProperty} />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="circle">
-          <WizardCircle path={path} fields={fields} />
+          <WizardCircle path={path} fields={fields} getValuesOfProperty={getValuesOfProperty} />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="symbol">
           <p>To be done</p>

@@ -3,9 +3,13 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Field } from 'react-final-form';
 import { SelectInput, RadioButtonGroupInput, NumberInput } from 'react-admin';
+import TextField from '@material-ui/core/TextField';
 import { fieldTypes } from '../../../../../DataSource';
 
 import Condition from '../../../../../../../components/react-admin/Condition';
+
+import GraduateValue from './GraduateValue';
+import CategorizeValue from './CategorizeValue';
 
 
 const useStyles = makeStyles({
@@ -25,7 +29,9 @@ const useStyles = makeStyles({
   },
 });
 
-const RadiusStyleField = ({ path, fields }) => {
+const genDefaultValue = () => 0;
+
+const RadiusStyleField = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
 
   return (
@@ -73,10 +79,19 @@ const RadiusStyleField = ({ path, fields }) => {
                     <NumberInput source={`${path}.max_radius`} />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="graduated">
-                    <p>To be done</p>
+                    <GraduateValue path={path} fields={fields} />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="categorized">
-                    <p>To be done</p>
+                    <CategorizeValue
+                      path={path}
+                      fields={fields}
+                      getValuesOfProperty={getValuesOfProperty}
+                      Component={
+                        ({ value: fieldValue, onChange }) =>
+                          <TextField type="text" value={fieldValue} onChange={event => onChange(parseInt(event.target.value, 10))} />
+                      }
+                      defaultValueGenerator={genDefaultValue}
+                    />
                   </Condition>
                 </>
               );

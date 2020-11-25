@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
-const WizardPolygon = ({ path, fields }) => {
+const WizardPolygon = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
 
   return (
@@ -51,7 +51,11 @@ const WizardPolygon = ({ path, fields }) => {
             />
           </div>
         </header>
-        <ColorStyleField path={`${path}.style.fill_color`} fields={fields} />
+        <ColorStyleField
+          path={`${path}.style.fill_color`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
       </div>
 
       <div className={classes.configLine}>
@@ -76,6 +80,7 @@ const WizardPolygon = ({ path, fields }) => {
         <ColorStyleField
           path={`${path}.style.fill_outline_color`}
           fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
         />
       </div>
     </>

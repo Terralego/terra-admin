@@ -10,6 +10,8 @@ import Condition from '../../../../../../../components/react-admin/Condition';
 
 import ColorPicker from '../ColorPicker';
 import GraduateColor from './GraduateColor';
+import CategorizeValue from './CategorizeValue';
+
 
 const useStyles = makeStyles({
   configLine: {
@@ -28,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ColorStyleField = ({ path, fields }) => {
+const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
   const [defaultSeed] = React.useState(Math.floor((Math.random() * 100000) + 1));
 
@@ -82,7 +84,16 @@ const ColorStyleField = ({ path, fields }) => {
                     <GraduateColor path={path} />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="categorized">
-                    <p>To be done</p>
+                    <CategorizeValue
+                      path={path}
+                      fields={fields}
+                      getValuesOfProperty={getValuesOfProperty}
+                      Component={
+                        ({ value: fieldValue, onChange }) =>
+                          <ColorPicker value={fieldValue} onChange={onChange} />
+                      }
+                      defaultValueGenerator={randomColor}
+                    />
                   </Condition>
                 </>
               );

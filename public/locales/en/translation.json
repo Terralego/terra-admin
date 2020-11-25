@@ -532,6 +532,7 @@
           "default": "Default title"
         },
         "field": {
+          "field": "Selected field",
           "prefix": "Prefix",
           "suffix": "Suffix",
           "default": "Default text"
@@ -597,7 +598,7 @@
       "list": "View"
     },
     "form": {
-      "errors":  {
+      "errors": {
         "url": "Incorrect URL format",
         "mandatoryTilesWord": "The server URL should contain {z}, {x} and {y} tokens or {bbox-epsg-3857} token",
         "mandatoryWord": "The %{name} token is missing"

@@ -37,7 +37,7 @@ const CategorizeValue = ({
   maxCategories = DEFAULT_MAX_CATEGORIES,
   getValuesOfProperty,
   Component,
-  defaultValueGenerator = () => 0,
+  defaultValueGenerator,
 }) => {
   const translate = useTranslate();
   const classes = useStyles();
@@ -58,14 +58,14 @@ const CategorizeValue = ({
         return;
       }
 
-      const newValueList = valueList.filter(({ name }) => result.includes(name));
+      const newValueList = (valueList || []).filter(({ name }) => result.includes(name));
       const nameList = newValueList.map(({ name }) => name);
       const toAdd = result.filter(name => !nameList.includes(name));
 
       if (newValueList.length < valueList.length || toAdd.length) {
         setValueList([
           ...newValueList,
-          toAdd.map(val => ({ name: val, value: defaultValueGenerator })),
+          ...toAdd.map(val => ({ name: val, value: defaultValueGenerator() })),
         ]);
       }
     };

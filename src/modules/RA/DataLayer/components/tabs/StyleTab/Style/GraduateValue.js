@@ -29,10 +29,12 @@ const useStyles = makeStyles({
   },
 });
 
-const GraduateValue = ({ path }) => {
+const defValue = [1];
+
+const GraduateValue = ({ path, Component = ValueListField, defaultValue = defValue }) => {
   const translate = useTranslate();
   const classes = useStyles();
-  const [defaultValue] = React.useState([1]);
+  // const [defaultValue] = React.useState([1]);
 
   return (
     <div style={{ width: '50%' }}>
@@ -51,7 +53,7 @@ const GraduateValue = ({ path }) => {
       <FormLabel>Steps</FormLabel>
       <Field name={`${path}.values`} defaultValue={defaultValue}>
         {({ input: { value, onChange } }) => (
-          <ValueListField value={value} onChange={onChange} />
+          <Component value={value} onChange={onChange} />
         )}
       </Field>
       <BooleanInput source={`${path}.generate_legend`} />

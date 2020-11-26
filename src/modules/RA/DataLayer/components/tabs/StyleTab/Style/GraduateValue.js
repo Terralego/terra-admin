@@ -56,7 +56,6 @@ const GraduateValue = ({ path, Component = ValueListField, defaultValue = defVal
           <Component value={value} onChange={onChange} />
         )}
       </Field>
-      <BooleanInput source={`${path}.generate_legend`} />
     </div>
   );
 };

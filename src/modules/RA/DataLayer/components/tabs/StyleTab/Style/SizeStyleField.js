@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Field } from 'react-final-form';
-import { SelectInput, RadioButtonGroupInput, NumberInput } from 'react-admin';
+import { SelectInput, RadioButtonGroupInput, NumberInput, BooleanInput } from 'react-admin';
 import TextField from '@material-ui/core/TextField';
 import { fieldTypes } from '../../../../../DataSource';
 
@@ -76,9 +76,11 @@ const SizeStyleField = ({ path, fields, getValuesOfProperty }) => {
                   />
                   <Condition when={`${path}.analysis`} is="proportionnal">
                     <NumberInput source={`${path}.max_value`} />
+                    <BooleanInput source={`${path}.generate_legend`} />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="graduated">
                     <GraduateValue path={path} />
+                    <BooleanInput source={`${path}.generate_legend`} />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="categorized">
                     <CategorizeValue
@@ -91,6 +93,8 @@ const SizeStyleField = ({ path, fields, getValuesOfProperty }) => {
                       }
                       defaultValueGenerator={genDefaultValue}
                     />
+
+                    <BooleanInput source={`${path}.generate_legend`} />
                   </Condition>
                 </>
               );

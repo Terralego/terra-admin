@@ -64,6 +64,8 @@ export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
     return null;
   }
 
+  console.log('i18n', i18nProvider);
+
   return (
     <Admin
       layout={RALayout}

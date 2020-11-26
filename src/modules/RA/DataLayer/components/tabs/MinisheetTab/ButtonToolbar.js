@@ -23,7 +23,7 @@ const ButtonToolBar = ({ node, path, fields }) => {
       },
     } = form.getState();
 
-    const selectedField = fields.find(f => f.sourceFieldId === selected);
+    const selectedField = fields.find(f => f.sourceFieldId === selected) || {};
     const newSections = changeNodeAtPath({
       path,
       treeData: sections,

@@ -535,8 +535,11 @@
           "field": "Champ sélectionné",
           "prefix": "Préfixe",
           "suffix": "Suffixe",
-          "default": "Texte par defaut"
-        }
+          "default": "Texte par defaut",
+          "round": "Nombre de chiffres à arrondir"
+        },
+        "true": "Oui",
+        "false": "Non"
       },
       "filter": {
         "tab": "Filtre",

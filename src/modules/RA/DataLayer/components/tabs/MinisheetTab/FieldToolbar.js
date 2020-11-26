@@ -1,11 +1,14 @@
 import React, { useCallback } from 'react';
-import { useForm } from 'react-final-form';
+import { useForm, useField } from 'react-final-form';
 import { changeNodeAtPath } from 'react-sortable-tree';
 
+import { fieldTypes } from '../../../../DataSource';
 import FieldRow from './FieldRow';
 
 const FieldToolbar = ({ node, path }) => {
   const form = useForm();
+  const { input: { value: fields } } = useField('fields');
+
   const onFieldChange = useCallback(newField => {
     const { values } = form.getState();
     const {
@@ -34,7 +37,28 @@ const FieldToolbar = ({ node, path }) => {
     });
   }, [form, node, path]);
 
-  return <FieldRow field={node} onChange={onFieldChange} />;
+  const {
+    data_type: dataType,
+    round,
+  } = fields.find(f => f.sourceFieldId === node.sourceFieldId) || {};
+  const isFloat = fieldTypes[dataType] === 'Float';
+
+  const onRoundChange = useCallback(({ target: { value } }) => {
+    const { values: { fields: formFields } } = form.getState();
+    const newFields = formFields.map(f => (
+      f.sourceFieldId === node.sourceFieldId ? { ...f, round: value } : f));
+    form.change('fields', newFields);
+  }, [form, node.sourceFieldId]);
+
+  return (
+    <FieldRow
+      field={node}
+      onChange={onFieldChange}
+      isFloat={isFloat}
+      onRoundChange={onRoundChange}
+      round={round}
+    />
+  );
 };
 
 export default FieldToolbar;

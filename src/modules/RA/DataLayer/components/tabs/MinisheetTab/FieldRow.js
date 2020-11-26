@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
 });
 
-const FieldRow = React.memo(({ field, onChange }) => {
+const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChange }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -63,6 +63,15 @@ const FieldRow = React.memo(({ field, onChange }) => {
           required
         />
       </FormControl>
+      {isFloat && (
+        <FormControl>
+          <TextField
+            label={translate('datalayer.form.minisheet.field.round')}
+            onChange={onRoundChange}
+            value={round}
+          />
+        </FormControl>
+      )}
     </Paper>
   );
 });

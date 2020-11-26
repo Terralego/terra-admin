@@ -535,8 +535,11 @@
           "field": "Selected field",
           "prefix": "Prefix",
           "suffix": "Suffix",
-          "default": "Default text"
-        }
+          "default": "Default text",
+          "round": "Number of digit to round"
+        },
+        "true": "Yes",
+        "false": "No"
       },
       "filter": {
         "tab": "Filter",

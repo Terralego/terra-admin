@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useEffect } from 'react';
+import debounce from 'lodash.debounce';
 
 import {
   TextInput,
@@ -6,7 +7,7 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { useField } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 
 import { ColorInput } from 'react-admin-color-input';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,6 +19,7 @@ import MiniSheetFieldTree from './MiniSheetFieldTree';
 
 import HelpContent from '../../../../../../components/react-admin/HelpContent';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
+import createTemplate from './minisheetTemplate';
 
 const useStyles = makeStyles({
   colorPicker: {
@@ -47,6 +49,7 @@ const useStyles = makeStyles({
 const MinisheetTab = () => {
   const classes = useStyles();
   const translate = useTranslate();
+  const form = useForm();
   const { input: { value: fields } } = useField('fields');
   const {
     input: {
@@ -67,6 +70,28 @@ const MinisheetTab = () => {
   }, [fields, sections]);
 
   const availableFields = useMemo(() => getAvailableFields(), [getAvailableFields]);
+
+  const updateTemplate = useCallback(debounce(() => {
+    const {
+      values: {
+        minisheet_config: {
+          wizard: {
+            title: titleField = {},
+            sections: minisheetSections = [],
+          } = {},
+        } = {},
+        minisheet_config: minisheetConfig,
+      },
+    } = form.getState();
+
+    const template = createTemplate(titleField, minisheetSections, fields, translate);
+
+    form.change('minisheet_config', {
+      ...minisheetConfig,
+      template,
+    });
+  }, 500), [fields, form]);
+  useEffect(updateTemplate, [updateTemplate]);
 
   if (!enable) {
     return (

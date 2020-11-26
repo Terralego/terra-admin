@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Field } from 'react-final-form';
-import { SelectInput, RadioButtonGroupInput } from 'react-admin';
+import { SelectInput, RadioButtonGroupInput, BooleanInput } from 'react-admin';
 import randomColor from 'randomcolor';
 import { fieldTypes } from '../../../../../DataSource';
 
@@ -85,6 +85,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                   />
                   <Condition when={`${path}.analysis`} is="graduated">
                     <GraduateValue path={path} Component={ColorListField} defaultValue={defaultValue} />
+                    <BooleanInput source={`${path}.generate_legend`} />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="categorized">
                     <CategorizeValue
@@ -94,6 +95,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                       Component={ColorPicker}
                       defaultValueGenerator={randomColor}
                     />
+                    <BooleanInput source={`${path}.generate_legend`} />
                   </Condition>
                 </>
               );

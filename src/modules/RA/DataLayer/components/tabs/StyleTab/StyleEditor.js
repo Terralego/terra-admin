@@ -23,12 +23,6 @@ import StyleField from './StyleField';
 const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
   const translate = useTranslate();
 
-  const {
-    input: { value: styleConfig },
-  } = useField(path);
-
-  // const form = useForm();
-
   const styleType = getShapeFromGeomType(geomType);
 
   /* React.useEffect(() => {
@@ -99,7 +93,6 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
           initialValue="circle"
         />
       )}
-
 
       <Condition when={`${path}.type`} is="wizard">
         <Condition when={`${path}.map_style_type`} is="fill">

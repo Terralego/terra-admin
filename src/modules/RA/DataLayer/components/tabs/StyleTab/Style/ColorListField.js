@@ -3,7 +3,7 @@ import randomColor from 'randomcolor';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import ColorPicker from '../ColorPicker';
+import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
 
 const useStyles = makeStyles({
   colorList: {

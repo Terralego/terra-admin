@@ -8,7 +8,7 @@ import { fieldTypes } from '../../../../../DataSource';
 
 import Condition from '../../../../../../../components/react-admin/Condition';
 
-import ColorPicker from '../ColorPicker';
+import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
 import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
 

@@ -8,27 +8,9 @@ import { Field, useField } from 'react-final-form';
 
 import { usePrevious } from '../../../../../../../utils/hooks';
 
-const useStyles = makeStyles({
-  configLine: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '1em 0',
-    width: '50%',
-    '& > .grow': {
-      flex: 1,
-    },
-  },
-  graduateConfig: {
-    display: 'flex',
-    '& .method': {
-      width: '20em',
-      marginRight: '3em',
-    },
-    '& .count': {
-      flex: '1',
-    },
-  },
-});
+import styles from './styles';
+
+const useStyles = makeStyles(styles);
 
 const DEFAULT_MAX_CATEGORIES = 20;
 
@@ -48,10 +30,14 @@ const CategorizeValue = ({
   const prevField = usePrevious(field);
 
   React.useEffect(() => {
+    let mounted = true;
+
     const getValueList = async () => {
       if (prevField === field) return;
       setTooManyValues(false);
       const result = await getValuesOfProperty(field);
+
+      if (!mounted) return;
 
       if (result.length > maxCategories) {
         setTooManyValues(true);
@@ -69,7 +55,12 @@ const CategorizeValue = ({
         ]);
       }
     };
+
     getValueList();
+
+    return () => {
+      mounted = false;
+    };
   }, [
     defaultValueGenerator,
     field,
@@ -81,18 +72,20 @@ const CategorizeValue = ({
   ]);
 
   if (tooManyValues) {
-    return <div>Too many values</div>;
+    return <p>{translate('style-editor.categorize.too-many-values')}</p>;
   }
 
   if (valueList.length === 0) {
-    return <div>No categories for this field</div>;
+    return <p>{translate('style-editor.categorize.empty-category-list')}</p>;
   }
 
   return (
-    <div>
+    <div style={{ marginTop: '1em' }}>
+      <FormLabel>
+        {translate('style-editor.categorize.categories')}
+      </FormLabel>
       {valueList && valueList.map((category, index) => (
-        <div key={category.name}>
-          <FormLabel>Category {category.name || "'empty'"}</FormLabel>
+        <div key={category.name} className={classes.categoryLine}>
           <Field name={`${path}.categories[${index}].value`}>
             {({ input: { value, onChange } }) => (
               <Component
@@ -101,9 +94,11 @@ const CategorizeValue = ({
               />
             )}
           </Field>
+          <span>
+            {category.name || translate('style-editor.categorize.empty-category')}
+          </span>
         </div>
       ))}
-
     </div>
   );
 };

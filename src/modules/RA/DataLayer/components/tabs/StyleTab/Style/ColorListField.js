@@ -5,21 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
 
-const useStyles = makeStyles({
-  colorList: {
-    display: 'flex',
-    '& > *': {
-      margin: '5px',
-    },
-    '& .action': {
-      width: '25px',
-      height: '25px',
-      backgroundColor: 'none',
-      border: '1px dotted #ccc',
-      padding: '0px',
-    },
-  },
-});
+import styles from './styles';
+
+const useStyles = makeStyles(styles);
 
 const ColorListField = ({ value, onChange }) => {
   const classes = useStyles();

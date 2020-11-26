@@ -5,48 +5,35 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 
 import ColorStyleField from './ColorStyleField';
+import SizeStyleField from './SizeStyleField';
 import RadiusStyleField from './RadiusStyleField';
 
-const useStyles = makeStyles({
-  configLine: {
-    '& header': {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '0 1em',
-      backgroundColor: '#eee',
-      margingBottom: '1em',
-      width: '50%',
-      '& > .grow': {
-        flex: 1,
-      },
-    },
-    paddingBottom: '1em',
-  },
-});
+import styles from './styles';
+
+const useStyles = makeStyles(styles);
 
 const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
+  const translate = useTranslate();
 
   return (
     <>
       <div className={classes.configLine}>
         <header>
-          <FormLabel style={{ width: '9em' }}>Circle color</FormLabel>
-          <div className="grow" />
-          <div style={{ float: 'right' }}>
-            <RadioButtonGroupInput
-              label=""
-              source={`${path}.style.circle_color.type`}
-              choices={[
-                { id: 'none', name: 'None' },
-                { id: 'fixed', name: 'Fixed' },
-                { id: 'variable', name: 'Variable' },
-              ]}
-              helperText=""
-              initialValue="none"
-            />
-          </div>
+          <FormLabel>{translate('style-editor.circle.fill-color')}</FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.circle_color.type`}
+            helperText={false}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
+            ]}
+            initialValue="none"
+          />
         </header>
+
         <ColorStyleField
           path={`${path}.style.circle_color`}
           fields={fields}
@@ -56,25 +43,91 @@ const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
 
       <div className={classes.configLine}>
         <header>
-          <FormLabel style={{ width: '9em' }}>Circle radius</FormLabel>
-          <div className="grow" />
-          <div style={{ float: 'right' }}>
-            <RadioButtonGroupInput
-              label=""
-              source={`${path}.style.circle_radius.type`}
-              choices={[
-                { id: 'none', name: 'None' },
-                { id: 'fixed', name: 'Fixed' },
-                { id: 'variable', name: 'Variable' },
-              ]}
-              helperText=""
-              initialValue="none"
-            />
-          </div>
+          <FormLabel>{translate('style-editor.circle.circle-radius')}</FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.circle_radius.type`}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
+            ]}
+            helperText={false}
+            initialValue="none"
+          />
         </header>
 
         <RadiusStyleField
           path={`${path}.style.circle_radius`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
+      </div>
+
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel>{translate('style-editor.circle.border-color')}</FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.circle_stroke_color.type`}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
+            ]}
+            helperText={false}
+            initialValue="none"
+          />
+        </header>
+
+        <ColorStyleField
+          path={`${path}.style.circle_stroke_color`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
+      </div>
+
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel>{translate('style-editor.circle.border-width')}</FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.circle_stroke_width.type`}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+            ]}
+            helperText={false}
+            initialValue="none"
+          />
+        </header>
+
+        <SizeStyleField
+          path={`${path}.style.circle_stroke_width`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
+      </div>
+
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel>
+            {translate('style-editor.circle.circle-opacity')}
+          </FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.circle_opacity.type`}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+            ]}
+            helperText={false}
+            initialValue="none"
+          />
+        </header>
+
+        <SizeStyleField
+          path={`${path}.style.circle_opacity`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
         />

@@ -12,7 +12,6 @@ import withResourceEndpoint from '../../services/react-admin/withResourceEndpoin
 import enhanceDataProvider from '../../services/react-admin/enhanceDataProvider';
 import sourceDataProvider from '../../services/react-admin/sourceDataProvider';
 import patchPictureDataProvider from '../../services/react-admin/patchPictureDataProvider';
-import patchDatalayerProvider from '../../services/react-admin/patchDatalayerProvider';
 import toMultipart from '../../services/react-admin/toMultipart';
 
 import authProvider from '../../services/react-admin/authProvider';
@@ -25,17 +24,12 @@ import { resources } from './ra-modules';
 import { connectAppProvider } from '../../components/AppProvider';
 import { withPermissions } from '../../hoc/withUserSettings';
 
-const sanitizeProps = ({
-  enpoint,
-  moduleName,
-  requiredPermissions,
-  ...rest
-}) => rest;
+const sanitizeProps = ({ enpoint, moduleName, requiredPermissions, ...rest }) =>
+  rest;
 
 const customDataProvider = compose(
   withResourceEndpoint,
   patchPictureDataProvider,
-  patchDatalayerProvider,
   toMultipart,
   sourceDataProvider,
   enhanceDataProvider,
@@ -44,27 +38,30 @@ const customDataProvider = compose(
 export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
   const history = useHistory();
 
-  const i18nProvider = React.useMemo(() =>
-    polyglotI18nProvider(i18nProviderLegacy, `${locale}`.substr(0, 2)), [locale]);
+  const i18nProvider = React.useMemo(
+    () => polyglotI18nProvider(i18nProviderLegacy, `${locale}`.substr(0, 2)),
+    [locale],
+  );
 
   // Keep only allowedModules
-  const enabledResources = React.useMemo(() =>
-    resources.filter(({ moduleName, requiredPermissions }) => {
-      if (!allowedModules.includes(moduleName)) {
-        return false;
-      }
-      if (requiredPermissions && !permissions.includes[requiredPermissions]) {
-        return false;
-      }
+  const enabledResources = React.useMemo(
+    () =>
+      resources.filter(({ moduleName, requiredPermissions }) => {
+        if (!allowedModules.includes(moduleName)) {
+          return false;
+        }
+        if (requiredPermissions && !permissions.includes[requiredPermissions]) {
+          return false;
+        }
 
-      return true;
-    }), [allowedModules, permissions]);
+        return true;
+      }),
+    [allowedModules, permissions],
+  );
 
   if (!enabledResources.length) {
     return null;
   }
-
-  console.log('i18n', i18nProvider);
 
   return (
     <Admin
@@ -81,7 +78,9 @@ export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
   );
 };
 
-const componentsToDisplay = ({ env: { enabled_modules: allowedModules } }) => ({ allowedModules });
+const componentsToDisplay = ({ env: { enabled_modules: allowedModules } }) => ({
+  allowedModules,
+});
 
 export default compose(
   withLocale,

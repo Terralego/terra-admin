@@ -51,6 +51,7 @@ export const fieldTypes = {
   5: 'Undefined',
   6: 'Date',
 };
+
 export const fieldTypeChoices = typesToChoices(fieldTypes);
 
 export const encodingTypes = {

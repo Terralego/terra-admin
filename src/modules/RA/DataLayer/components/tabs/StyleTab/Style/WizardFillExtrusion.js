@@ -7,45 +7,32 @@ import FormLabel from '@material-ui/core/FormLabel';
 import SizeStyleField from './SizeStyleField';
 import ColorStyleField from './ColorStyleField';
 
-const useStyles = makeStyles({
-  configLine: {
-    '& header': {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '0 1em',
-      backgroundColor: '#eee',
-      marginBottom: '1em',
-      width: '50%',
-      '& > .grow': {
-        flex: 1,
-      },
-    },
-    paddingBottom: '1em',
-  },
-});
+import styles from './styles';
+
+const useStyles = makeStyles(styles);
 
 const WizardFillExtrusion = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
+  const translate = useTranslate();
 
   return (
     <>
       <div className={classes.configLine}>
         <header>
-          <FormLabel style={{ width: '9em' }}>Extrusion color</FormLabel>
-          <div className="grow" />
-          <div style={{ float: 'right' }}>
-            <RadioButtonGroupInput
-              label=""
-              source={`${path}.style.fill_extrusion_color.type`}
-              choices={[
-                { id: 'none', name: 'None' },
-                { id: 'fixed', name: 'Fixed' },
-                { id: 'variable', name: 'Variable' },
-              ]}
-              helperText=""
-              initialValue="none"
-            />
-          </div>
+          <FormLabel>
+            {translate('style-editor.extrusion.extrusion-color')}
+          </FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.fill_extrusion_color.type`}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
+            ]}
+            helperText={false}
+            initialValue="none"
+          />
         </header>
         <ColorStyleField
           path={`${path}.style.fill_extrusion_color`}
@@ -56,25 +43,72 @@ const WizardFillExtrusion = ({ path, fields, getValuesOfProperty }) => {
 
       <div className={classes.configLine}>
         <header>
-          <FormLabel style={{ width: '9em' }}>Extrusion height</FormLabel>
-          <div className="grow" />
-          <div style={{ float: 'right' }}>
-            <RadioButtonGroupInput
-              label=""
-              source={`${path}.style.fill_extrusion_height.type`}
-              choices={[
-                { id: 'none', name: 'None' },
-                { id: 'fixed', name: 'Fixed' },
-                { id: 'variable', name: 'Variable' },
-              ]}
-              helperText=""
-              initialValue="none"
-            />
-          </div>
+          <FormLabel>
+            {translate('style-editor.extrusion.extrusion-height')}
+          </FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.fill_extrusion_height.type`}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
+            ]}
+            helperText={false}
+            initialValue="none"
+          />
         </header>
 
         <SizeStyleField
           path={`${path}.style.fill_extrusion_height`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
+      </div>
+
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel>
+            {translate('style-editor.extrusion.extrusion-base')}
+          </FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.fill_extrusion_base.type`}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+            ]}
+            helperText={false}
+            initialValue="none"
+          />
+        </header>
+
+        <SizeStyleField
+          path={`${path}.style.fill_extrusion_base`}
+          fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
+        />
+      </div>
+
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel>
+            {translate('style-editor.extrusion.extrusion-opacity')}
+          </FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.fill_extrusion_opacity.type`}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+            ]}
+            helperText={false}
+            initialValue="none"
+          />
+        </header>
+
+        <SizeStyleField
+          path={`${path}.style.fill_extrusion_opacity`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
         />

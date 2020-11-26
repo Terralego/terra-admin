@@ -572,19 +572,8 @@
       },
       "styles": {
         "tab": "Style",
-        "select-field": "Sélectionnez le champ",
-        "wizard_style": "Génération assistée",
-        "layer-style": "Style de la couche",
-        "default_opacity": "Opacité par défaut (en %)",
-        "mainstyle": "Style principal",
-        "secondarylabels": "Styles secondaires",
-        "style": "Configuration du style",
         "no-source": "Veuillez choisir une source de données avant de configurer les styles",
-        "advanced": "Mode expert",
-        "jenks": "Jenks",
-        "equal-interval": "Intervalles égaux",
-        "quantiles": "Quantiles",
-        "manual": "Manuelle"
+        "secondarylabels": "Styles secondaires"
       }
     }
   },
@@ -873,6 +862,90 @@
         "config.tree": "Arbre des couches",
         "file": "Générer l'arbre à partir d'un fichier Excel",
         "file-placeholder": "Déposer ici le fichier Excel pour générer l'arbre (l'arbre existant sera écrasé)."
+      }
+    }
+  },
+  "style-editor":{
+    "geometry": "Type de géométrie : ",
+    "polygon": "polygone",
+    "line-type": "ligne",
+    "point": "point",
+    "other": "Type inconnu (${type})",
+    "field": "Champ",
+    "field-help": "Sélectionnez un champ de la source parmi ceux disponibles",
+    "generate-legend": "Générer la légende associée",
+    "advanced-style": "Style expert",
+    "type": {
+      "input":"Assistant de style",
+      "wizard": "Activé",
+      "expert": "Désactivé"
+    },
+    "map-style-type": {
+      "input": "Représentation",
+      "fill": "Polygone",
+      "line": "Ligne",
+      "extrusion": "Extrusion",
+      "circle": "Cercle",
+      "symbol": "Symbole",
+      "text": "Texte",
+      "heatmap": "Heatmap"
+    },
+    "style-type":{
+      "none": "Aucun",
+      "fixed": "Fixe",
+      "variable": "Variable"
+    },
+    "fill":{
+      "fill-color": "Couleur du polygone",
+      "fill-opacity": "Opacité du fond",
+      "border-color": "Couleur du contour"
+    },
+    "circle":{
+      "fill-color": "Couleur du disque",
+      "circle-radius": "Diamètre",
+      "border-color": "Couleur du contour",
+      "border-width": "Épaisseur du contour",
+      "circle-opacity": "Opacité du fond"
+    },
+    "line":{
+      "line-color": "Couleur de la ligne",
+      "line-width": "Épaisseur de la ligne",
+      "line-opacity": "Opacité de la ligne"
+    },
+    "extrusion":{
+      "extrusion-color": "Couleur de l'extrusion",
+      "extrusion-height": "Hauteur de l'extrusion",
+      "extrusion-base": "Base de l'extrusion",
+      "extrusion-opacity": "Opacité de l'extrusion"
+    },
+    "fixed":{
+      "diameter": "Diamètre",
+      "value": "Valeur"
+    },
+    "proportionnal":{
+      "max-diameter": "Diamètre maximal",
+      "max-value": "Valeur maximale"
+    },
+    "categorize":{
+      "categories": "Choisissez une valeur pour chaque catégorie",
+      "empty-category": "Sans catégorie",
+      "empty-category-list": "Aucune catégorie pour ce champ",
+      "too-many-values": "Trop de valeurs sont possibles pour ce champ, veuillez en sélectionner un autre ou changez de mode de représentation."
+    },
+    "analysis":{
+      "categorize": "Catégoriser",
+      "graduate": "Discrétiser",
+      "interpolate": "Interpoler",
+      "choose": "Mode de réprésentation"
+    },
+    "graduate": {
+      "steps": "Classes",
+      "method": {
+        "input": "Méthode",
+        "jenks": "Jenks",
+        "equal-interval": "Intervalles égaux",
+        "quantiles": "Quantiles",
+        "manual": "Manuelle"
       }
     }
   }

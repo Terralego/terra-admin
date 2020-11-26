@@ -1,46 +1,43 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Field } from 'react-final-form';
-import { SelectInput, RadioButtonGroupInput, BooleanInput } from 'react-admin';
+import { Field, useField } from 'react-final-form';
+import { SelectInput, RadioButtonGroupInput, BooleanInput, useTranslate } from 'react-admin';
 import randomColor from 'randomcolor';
+
 import { fieldTypes } from '../../../../../DataSource';
-
 import Condition from '../../../../../../../components/react-admin/Condition';
-
 import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
+
 import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
 
 import ColorListField from './ColorListField';
 
+import styles from './styles';
 
-const useStyles = makeStyles({
-  configLine: {
-    '& header': {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '1em 0',
-      backgroundColor: '#eee',
-      paddingBottom: '1em',
-      width: '50%',
-      '& > .grow': {
-        flex: 1,
-      },
-    },
-    paddingBottom: '1em',
-  },
-});
+const useStyles = makeStyles(styles);
 
 const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
+  const translate = useTranslate();
+
   const [defaultSeed] = React.useState(Math.floor((Math.random() * 100000) + 1));
   const [defaultValue] = React.useState([randomColor()]);
 
+  const { input: { value: type } } = useField(`${path}.type`);
+
+  if (type === 'none') {
+    return null;
+  }
+
   return (
-    <>
+    <div className={classes.styleField}>
       <Condition when={`${path}.type`} is="fixed">
-        <Field name={`${path}.value`} defaultValue={randomColor({ seed: defaultSeed })}>{({ input: { onChange, value } }) => (
+        <Field
+          name={`${path}.value`}
+          defaultValue={randomColor({ seed: defaultSeed })}
+        >{({ input: { onChange, value } }) => (
           <ColorPicker
             value={value || '#cccccc'}
             onChange={onChange}
@@ -50,14 +47,15 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
       </Condition>
 
       <Condition when={`${path}.type`} is="variable">
-
         {fields && (
         <>
           <SelectInput
             source={`${path}.field`}
+            helperText="style-editor.field-help"
             style={{ minWidth: '20em', margin: '1em 0' }}
+            label="style-editor.field"
             choices={fields
-              .filter(field => [1, 2, 3].includes(field.data_type))
+              .filter(field => ['String', 'Integer', 'Float'].includes(fieldTypes[field.data_type]))
               .map(field => ({ id: field.name, name: `${field.label || field.name} (${fieldTypes[field.data_type]})` }))}
           />
 
@@ -65,16 +63,17 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
             {({ input: { value } }) => {
               const selectedField = fields.find(({ name }) => name === value);
               if (!selectedField) return null;
-              const analysisChoices = [2, 3].includes(selectedField.data_type) ? [
-                { id: 'graduated', name: 'Graduate' },
-                { id: 'categorized', name: 'Categorize' },
+              const analysisChoices = ['Integer', 'Float'].includes(fieldTypes[selectedField.data_type]) ? [
+                { id: 'graduated', name: translate('style-editor.analysis.graduate') },
+                { id: 'categorized', name: translate('style-editor.analysis.categorize') },
               ] : [
-                { id: 'categorized', name: 'Categorize' },
+                { id: 'categorized', name: translate('style-editor.analysis.categorize') },
               ];
               return (
                 <>
                   <RadioButtonGroupInput
-                    label=""
+                    label="style-editor.analysis.choose"
+                    helperText={false}
                     source={`${path}.analysis`}
                     choices={analysisChoices}
                     initialValue={
@@ -84,8 +83,16 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                     }
                   />
                   <Condition when={`${path}.analysis`} is="graduated">
-                    <GraduateValue path={path} Component={ColorListField} defaultValue={defaultValue} />
-                    <BooleanInput source={`${path}.generate_legend`} />
+                    <GraduateValue
+                      path={path}
+                      Component={ColorListField}
+                      defaultValue={defaultValue}
+                    />
+                    <BooleanInput
+                      source={`${path}.generate_legend`}
+                      label="style-editor.generate-legend"
+                      className="generate-legend"
+                    />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="categorized">
                     <CategorizeValue
@@ -95,7 +102,11 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                       Component={ColorPicker}
                       defaultValueGenerator={randomColor}
                     />
-                    <BooleanInput source={`${path}.generate_legend`} />
+                    <BooleanInput
+                      source={`${path}.generate_legend`}
+                      label="style-editor.generate-legend"
+                      className="generate-legend"
+                    />
                   </Condition>
                 </>
               );
@@ -104,7 +115,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
         </>
         )}
       </Condition>
-    </>
+    </div>
   );
 };
 

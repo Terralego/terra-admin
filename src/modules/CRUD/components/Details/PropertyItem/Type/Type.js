@@ -54,9 +54,7 @@ export const getRightType = (schemaType, type, uiField) => {
 
 const Type = props => {
   const {
-    schema: {
-      type: schemaType,
-    },
+    schema,
     type,
     ui_schema: {
       'ui:field': uiField,
@@ -64,12 +62,17 @@ const Type = props => {
   } = props;
 
   const rightType = useMemo(() => (
-    getRightType(schemaType, type, uiField)
-  ), [schemaType, type, uiField]);
+    getRightType(schema?.type, type, uiField)
+  ), [schema, type, uiField]);
 
   const Component = useMemo(() => (
     getComponent(rightType)
   ), [rightType]);
+
+  // If not schema, unable to determine what type is needed
+  if (schema === null) {
+    return null;
+  }
 
   return (
     <Component {...props} />

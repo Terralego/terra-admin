@@ -28,7 +28,10 @@ const ValueListField = ({ value, onChange }) => {
 
   const handleValueChange = index => event => {
     const newValueList = [...value];
-    newValueList[index] = parseInt(event.target.value, 10);
+    const newValue = parseFloat(event.target.value);
+
+    newValueList[index] = Number.isNaN(newValue) ? newValueList[index] : newValue;
+
     onChange(newValueList);
   };
 
@@ -49,7 +52,7 @@ const ValueListField = ({ value, onChange }) => {
       {(value || []).map((val, index) => (
         <TextField
           type="number"
-        // eslint-disable-next-line react/no-array-index-key
+          // eslint-disable-next-line react/no-array-index-key
           key={index}
           value={val}
           onChange={handleValueChange(index)}

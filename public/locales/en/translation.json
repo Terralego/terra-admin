@@ -570,14 +570,8 @@
       },
       "styles": {
         "tab": "Style",
-        "wizard_style": "Wizard mode",
-        "layer-style": "Layer style",
-        "default_opacity": "Default opacity (in %)",
-        "mainstyle": "Main style",
-        "secondarylabels": "Secondary styles",
-        "style": "Style configuration",
-        "no-source": "Choose a data source to allow style configuration",
-        "advanced": "Advenced mode"
+        "no-source": "Please select a source before configuring style",
+        "secondarylabels": "Secondary styles"
       }
     }
   },
@@ -866,6 +860,90 @@
         "config.tree": "Layer tree",
         "file": "Generate tree from Excel file",
         "file-placeholder": "Drop here Excel file to generate tree (Existing tree will be replaced)."
+      }
+    }
+  },
+  "style-editor":{
+    "geometry": "Geometry type: ",
+    "polygon": "Polygone",
+    "line-type": "Line",
+    "point": "Point",
+    "other": "Other type (${type})",
+    "field": "Variable field",
+    "field-help": "Choose an available field from source",
+    "generate-legend": "Generate legend",
+    "advanced-style": "Expert style",
+    "type": {
+      "input":"Style wizard",
+      "wizard": "Activated",
+      "expert": "Expert mode"
+    },
+    "map-style-type": {
+      "input": "Representation",
+      "fill": "Polygon",
+      "line": "Line",
+      "extrusion": "Extrusion",
+      "circle": "Circle",
+      "symbol": "Symbol",
+      "text": "Text",
+      "heatmap": "Heatmap"
+    },
+    "style-type":{
+      "none": "None",
+      "fixed": "Fixed",
+      "variable": "Variable"
+    },
+    "fill":{
+      "fill-color": "Background color",
+      "fill-opacity": "Background opacity",
+      "border-color": "Border color"
+    },
+    "circle":{
+      "fill-color": "Circle color",
+      "circle-radius": "Circle diameter",
+      "border-color": "Stroke color",
+      "border-width": "Stroke width",
+      "circle-opacity": "Circle opacity"
+    },
+    "line":{
+      "line-color": "Line color",
+      "line-width": "Line width",
+      "line-opacity": "Line opacity"
+    },
+    "extrusion":{
+      "extrusion-color": "Extrusion color",
+      "extrusion-height": "Extrusion height",
+      "extrusion-base": "Extrusion base",
+      "extrusion-opacity": "Extrusion opacity"
+    },
+    "fixed":{
+      "diameter": "Diameter",
+      "value": "Value"
+    },
+    "proportionnal":{
+      "max-diameter": "Maximal diameter",
+      "max-value": "Maximal value"
+    },
+    "categorize":{
+      "categories": "Categories",
+      "empty-category": "Without category",
+      "empty-category-list": "No category for this field",
+      "too-many-values": "Too many categories for this field. Please, choose another one."
+    },
+    "analysis":{
+      "categorize": "Categorize",
+      "graduate": "Graduate",
+      "interpolate": "Interpolate",
+      "choose": "Representation mode"
+    },
+    "graduate": {
+      "steps": "Classes",
+      "method": {
+        "input": "Method",
+        "jenks": "Jenks",
+        "equal-interval": "Equal intervals",
+        "quantiles": "Quantiles",
+        "manual": "Manual"
       }
     }
   }

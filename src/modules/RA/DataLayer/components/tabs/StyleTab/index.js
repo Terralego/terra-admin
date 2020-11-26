@@ -8,27 +8,18 @@ import {
   useDataProvider,
 } from 'react-admin';
 
-import { useField, useForm } from 'react-final-form';
-
+import { useField } from 'react-final-form';
 import Typography from '@material-ui/core/Typography';
 
+import useSourceData from '../../useSourceData';
+import Placeholder from '../../../../../../components/Placeholder';
+import { RES_DATASOURCE } from '../../../../ra-modules';
 
 import CustomLayer from './CustomLayer';
-
-import useSourceData from '../../useSourceData';
-
-import Placeholder from '../../../../../../components/Placeholder';
-
 import StyleEditor from './StyleEditor';
-
-
-import { usePrevious } from '../../../../../../utils/hooks';
-import { RES_DATASOURCE } from '../../../../ra-modules';
 
 const StyleTab = ({ external, ...rest }) => {
   const translate = useTranslate();
-  const [extraStylesInitialValue] = React.useState([]);
-  const form = useForm();
 
   const dataProvider = useDataProvider();
 
@@ -37,8 +28,8 @@ const StyleTab = ({ external, ...rest }) => {
   const {
     input: { value: fields },
   } = useField('fields');
+
   const { input: { value: mainStyle } } = useField('main_style');
-  const { input: { value: extraStyles } } = useField('extra_styles', { defaultValue: extraStylesInitialValue });
 
   const getValuesOfProperty = React.useCallback(property =>
     dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: sourceId, property }),
@@ -53,19 +44,6 @@ const StyleTab = ({ external, ...rest }) => {
       </Placeholder>
     );
   }
-
-
-  /* React.useEffect(() => {
-    const getValueList = async () => {
-      if (!dataSource.id || (dataSource.id === prevSourceId && field === prevField)) return;
-
-      const result = await dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: dataSource.id, property: field });
-      console.log('result', result);
-      setValueList(result.map(val => ({ name: val, color: randomColor() })));
-    };
-    getValueList();
-  }, [dataProvider, dataSource.id, field, prevField, prevSourceId, setValueList]); */
-
 
   // Handle intermediate state of data loading and
   // Different use cases: new record, existing record from menu
@@ -83,12 +61,6 @@ const StyleTab = ({ external, ...rest }) => {
           <CustomLayer fields={fields} />
         </SimpleFormIterator>
       </ArrayInput>
-      <> {/* Protect div from RA props */}
-        <div style={{ paddingTop: '5em', color: '#ccc', fontSize: '0.7em', display: 'flex' }}>
-          <pre>{JSON.stringify(mainStyle, null, 2)}</pre>
-          <pre>{JSON.stringify(extraStyles, null, 2)}</pre>
-        </div>
-      </>
     </FormTab>
   );
 };

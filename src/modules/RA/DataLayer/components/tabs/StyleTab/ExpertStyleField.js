@@ -4,7 +4,7 @@ import { useTranslate } from 'react-admin';
 
 import { JSONInput } from '../../../../../../components/react-admin/JSONInput';
 
-const StyleField = props => {
+const ExpertStyleField = props => {
   const translate  = useTranslate();
 
   const memoizedValidate = React.useCallback(value => {
@@ -27,4 +27,4 @@ const StyleField = props => {
 };
 
 
-export default StyleField;
+export default ExpertStyleField;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import connect from 'react-ctx-connect';
 
-export const context = React.createContext({});
-export const connectUserSettingsProvider = connect(context);
+export const UserSettingsContext = React.createContext({});
+export const connectUserSettingsProvider = connect(UserSettingsContext);
 
 export const TABLE_MINIFIED = 'minified';
 export const TABLE_MEDIUM = 'medium';
@@ -11,7 +11,7 @@ export const TABLE_FULL = 'full';
 export const withTableFilters = () => connectUserSettingsProvider('tableFilters', 'setTableFilters');
 export const withTableSize = () => connectUserSettingsProvider('tableSize', 'setTableSize');
 
-const { Provider } = context;
+const { Provider } = UserSettingsContext;
 
 const userSettings = JSON.parse(localStorage.getItem('CRUDUserSettings')) || {};
 export const getUserSetting = key => userSettings[key];

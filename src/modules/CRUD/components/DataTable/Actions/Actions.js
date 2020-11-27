@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useMemo, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
+
+import { useTranslation } from 'react-i18next';
 
 import {
   Button,
@@ -9,29 +11,41 @@ import {
   PopoverInteractionKind,
 } from '@blueprintjs/core';
 import ColumnsSelector from '@terralego/core/modules/Table/components/ColumnsSelector';
+import { UserSettingsContext, TABLE_MINIFIED, TABLE_MEDIUM, TABLE_FULL } from '../../../services/UserSettingsProvider';
 
-import { TABLE_MINIFIED, TABLE_MEDIUM, TABLE_FULL } from '../../../services/UserSettingsProvider';
 import Search from '../Search';
+
+const resizeButtonsProps = [
+  { action: TABLE_FULL, icon: 'maximize' },
+  { action: TABLE_MEDIUM, icon: 'minimize' },
+  { action: TABLE_MINIFIED, icon: 'minus', text: 'hide' },
+];
 
 const Actions = ({
   columns,
   onChange,
   onHeaderChange,
-  setTableSize,
-  t,
-  tableSize,
 }) => {
-  const popoverProps = {
+  const { t } = useTranslation();
+  const {
+    setTableSize,
+    tableSize = TABLE_MEDIUM,
+  } = useContext(UserSettingsContext);
+
+  const popoverProps = useMemo(() => ({
     interactionKind: PopoverInteractionKind.HOVER,
     position: tableSize === TABLE_FULL ? Position.BOTTOM : Position.TOP,
     boundary: 'window',
-  };
-  const resizeButtonsProps = [
-    { action: TABLE_FULL, icon: 'maximize' },
-    { action: TABLE_MEDIUM, icon: 'minimize' },
-    { action: TABLE_MINIFIED, icon: 'minus', text: 'hide' },
-  ];
-  const displayTableFilters = !!columns.length && tableSize !== TABLE_MINIFIED;
+  }), [tableSize]);
+
+  const displayTableFilters = useMemo(() => (
+    Boolean(columns.length) && tableSize !== TABLE_MINIFIED
+  ), [columns.length, tableSize]);
+
+  const handleChange = useCallback(props => {
+    onChange(props);
+    onHeaderChange(props);
+  }, [onChange, onHeaderChange]);
 
   return (
     <div className="table-header__actions">
@@ -44,10 +58,7 @@ const Actions = ({
           >
             <ColumnsSelector
               columns={columns}
-              onChange={props => {
-                onChange(props);
-                onHeaderChange(props);
-              }}
+              onChange={handleChange}
               position={Position.LEFT}
               locales={{
                 displayAllColumns: t('CRUD.table.columnsDisplay'),
@@ -90,9 +101,6 @@ Actions.propTypes = {
   layerName: PropTypes.string,
   onChange: PropTypes.func,
   onHeaderChange: PropTypes.func,
-  setTableSize: PropTypes.func,
-  t: PropTypes.func,
-  tableSize: PropTypes.string,
 };
 
 Actions.defaultProps = {
@@ -101,9 +109,6 @@ Actions.defaultProps = {
   layerName: '',
   onChange: () => {},
   onHeaderChange: () => {},
-  setTableSize: () => {},
-  t:  () => {},
-  tableSize: 'medium',
 };
 
 export default Actions;

@@ -27,14 +27,14 @@ const useStyles = makeStyles({
   },
 });
 
-const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields: layerFields }) => {
+const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields: layerFields = [] }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
 
   const {
     settings: { round } = {},
-  } = layerFields.find(f => f.sourceFieldId === popupField.sourceFieldId);
+  } = layerFields.find(f => f.sourceFieldId === popupField.sourceFieldId) || {};
 
   const onRowItemChange = useCallback(
     (item, value) => e => onChange({ ...popupField, [item]: value || e.target.value }),
@@ -76,7 +76,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields: layer
 
   const fieldIsNumber = useCallback((targetForm, targetField) => {
     const { data_type: dataType } = layerFields.find(({ sourceFieldId }) =>
-      (sourceFieldId === targetField.sourceFieldId));
+      (sourceFieldId === targetField.sourceFieldId)) || {};
     return (['Integer', 'Float'].indexOf(fieldTypes[dataType]) >= 0);
   }, [layerFields]);
 

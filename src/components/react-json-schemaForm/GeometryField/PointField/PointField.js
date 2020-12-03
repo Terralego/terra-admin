@@ -32,13 +32,9 @@ const PointField = ({
   formData: { coordinates, type },
   onChange,
   t,
-  schema: {
-    required = [],
-  },
   disabled,
+  required,
 }) => {
-  const isRequired = required.includes('coordinates');
-
   const refLatitude = useRef(null);
   const refLongitude = useRef(null);
 
@@ -74,7 +70,7 @@ const PointField = ({
             name={name}
             onFocus={handleChange}
             onChange={handleChange}
-            required={isRequired}
+            required={required}
             t={t}
           />
         );

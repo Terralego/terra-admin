@@ -56,7 +56,7 @@ const RadiusStyleField = ({ path, fields, getValuesOfProperty }) => {
             style={{ minWidth: '20em', margin: '1em 0' }}
             label="style-editor.field"
             choices={fields
-              .filter(field => [1, 2, 3].includes(field.data_type))
+              .filter(field => ['String', 'Integer', 'Float'].includes(fieldTypes[field.data_type]))
               .map(field => ({ id: field.name, name: `${field.label || field.name} (${fieldTypes[field.data_type]})` }))}
           />
 
@@ -64,7 +64,8 @@ const RadiusStyleField = ({ path, fields, getValuesOfProperty }) => {
             {({ input: { value } }) => {
               const selectedField = fields.find(({ name }) => name === value);
               if (!selectedField) return null;
-              const analysisChoices = [2, 3].includes(selectedField.data_type) ? [
+              const isNumber =  ['Integer', 'Float'].includes(fieldTypes[selectedField.data_type]);
+              const analysisChoices =  isNumber ? [
                 { id: 'proportionnal', name: translate('style-editor.analysis.interpolate') },
                 /* { id: 'graduated', name: translate('style-editor.analysis.graduate') }, */
                 { id: 'categorized', name: translate('style-editor.analysis.categorize') },
@@ -78,11 +79,7 @@ const RadiusStyleField = ({ path, fields, getValuesOfProperty }) => {
                     helperText={false}
                     source={`${path}.analysis`}
                     choices={analysisChoices}
-                    initialValue={
-                      [2, 3].includes(selectedField.data_type)
-                        ? 'proportionnal'
-                        : 'categorized'
-                    }
+                    initialValue={isNumber ? 'proportionnal' : 'categorized'}
                   />
                   <Condition when={`${path}.analysis`} is="proportionnal">
                     <NumberInput source={`${path}.max_radius`} label="style-editor.proportionnal.max-diameter" />

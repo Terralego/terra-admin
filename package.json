@@ -58,6 +58,7 @@
     "react-sortable-hoc": "^1.11.0",
     "react-sortable-tree": "^2.8.0",
     "react-test-renderer": "~16.13.1",
+    "tinycolor2": "^1.4.2",
     "uuid": "~7.0.3"
   },
   "scripts": {

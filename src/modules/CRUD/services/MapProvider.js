@@ -38,11 +38,7 @@ export const MapProvider = ({ children }) => {
     if (!controlToAdd) return;
     setControls(prevControls => {
       if (prevControls.some(({ control }) => control === controlToAdd.control)) {
-        return prevControls.map(control => (
-          (control.control === controlToAdd.control)
-            ? controlToAdd
-            : control
-        ));
+        return prevControls;
       }
       return [controlToAdd, ...prevControls].sort(sortByOrder);
     });
@@ -50,7 +46,12 @@ export const MapProvider = ({ children }) => {
 
   const removeControl = useCallback(controlToRemove => {
     if (!controlToRemove) return;
-    setControls(prevControls => prevControls.filter(item => item.control !== controlToRemove));
+    setControls(prevControls => {
+      if (prevControls.some(({ control }) => control === controlToRemove)) {
+        return prevControls.filter(({ control }) => control !== controlToRemove);
+      }
+      return prevControls;
+    });
   }, []);
 
   const featureToHighlight = useCallback(({ featureId, layer, hover }) => {

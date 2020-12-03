@@ -63,7 +63,8 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
             {({ input: { value } }) => {
               const selectedField = fields.find(({ name }) => name === value);
               if (!selectedField) return null;
-              const analysisChoices = ['Integer', 'Float'].includes(fieldTypes[selectedField.data_type]) ? [
+              const isNumber =  ['Integer', 'Float'].includes(fieldTypes[selectedField.data_type]);
+              const analysisChoices = isNumber ? [
                 { id: 'graduated', name: translate('style-editor.analysis.graduate') },
                 { id: 'categorized', name: translate('style-editor.analysis.categorize') },
               ] : [
@@ -76,11 +77,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                     helperText={false}
                     source={`${path}.analysis`}
                     choices={analysisChoices}
-                    initialValue={
-                      [2, 3].includes(selectedField.data_type)
-                        ? 'graduated'
-                        : 'categorized'
-                    }
+                    initialValue={isNumber ? 'proportionnal' : 'categorized'}
                   />
                   <Condition when={`${path}.analysis`} is="graduated">
                     <GraduateValue

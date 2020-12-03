@@ -40,13 +40,14 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
         />
       </div>
 
-      {styleType === 'fill' && <h1>{translate('style-editor.geometry')} {translate('style-editor.polygon')}</h1>}
-      {styleType === 'line' && <h1>{translate('style-editor.geometry')} {translate('style-editor.line-type')}</h1>}
-      {styleType === 'circle' && <h1>{translate('style-editor.geometry')} {translate('style-editor.point')}</h1>}
-
-      {!['fill', 'line', 'circle'].includes(styleType) && (
-        <h2>{translate('style-editor.other', { type: styleType })}</h2>
-      )}
+      <h1>
+        {['fill', 'line', 'circle'].includes(styleType)
+          ? <>{translate('style-editor.geometry')}</>
+          : <>{translate('style-editor.other', { type: styleType })}</>}
+        {styleType === 'fill' && <>{translate('style-editor.polygon')}</>}
+        {styleType === 'line' && <>{translate('style-editor.line')}</>}
+        {styleType === 'circle' && <>{translate('style-editor.point')}</>}
+      </h1>
 
 
       <Condition when={`${path}.type`} is="wizard">

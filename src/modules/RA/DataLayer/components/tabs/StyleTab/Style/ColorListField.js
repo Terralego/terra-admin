@@ -9,7 +9,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const ColorListField = ({ value, onChange }) => {
+const ColorListField = ({ value, onChange = () => {} }) => {
   const classes = useStyles();
 
   const handleColorChange = index => newValue => {
@@ -23,7 +23,6 @@ const ColorListField = ({ value, onChange }) => {
     newColorList.push(randomColor());
     onChange(newColorList);
   };
-
 
   const removeColor = index => () => {
     const newColorList = [...value];

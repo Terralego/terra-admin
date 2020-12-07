@@ -529,6 +529,7 @@
         "section": "Section title",
         "title": "Minisheet model",
         "title-field": {
+          "input": "Select a title field",
           "default": "Default title"
         },
         "field": {
@@ -883,7 +884,7 @@
       }
     }
   },
-  "style-editor":{
+  "style-editor": {
     "geometry": "Geometry type: ",
     "polygon": "Polygone",
     "line-type": "Line",
@@ -894,7 +895,7 @@
     "generate-legend": "Generate legend",
     "advanced-style": "Expert style",
     "type": {
-      "input":"Style wizard",
+      "input": "Style wizard",
       "wizard": "Activated",
       "expert": "Expert mode"
     },
@@ -908,49 +909,49 @@
       "text": "Text",
       "heatmap": "Heatmap"
     },
-    "style-type":{
+    "style-type": {
       "none": "None",
       "fixed": "Fixed",
       "variable": "Variable"
     },
-    "fill":{
+    "fill": {
       "fill-color": "Background color",
       "fill-opacity": "Background opacity",
       "border-color": "Border color"
     },
-    "circle":{
+    "circle": {
       "fill-color": "Circle color",
       "circle-radius": "Circle diameter",
       "border-color": "Stroke color",
       "border-width": "Stroke width",
       "circle-opacity": "Circle opacity"
     },
-    "line":{
+    "line": {
       "line-color": "Line color",
       "line-width": "Line width",
       "line-opacity": "Line opacity"
     },
-    "extrusion":{
+    "extrusion": {
       "extrusion-color": "Extrusion color",
       "extrusion-height": "Extrusion height",
       "extrusion-base": "Extrusion base",
       "extrusion-opacity": "Extrusion opacity"
     },
-    "fixed":{
+    "fixed": {
       "diameter": "Diameter",
       "value": "Value"
     },
-    "proportionnal":{
+    "proportionnal": {
       "max-diameter": "Maximal diameter",
       "max-value": "Maximal value"
     },
-    "categorize":{
+    "categorize": {
       "categories": "Categories",
       "empty-category": "Without category",
       "empty-category-list": "No category for this field",
       "too-many-values": "Too many categories for this field. Please, choose another one."
     },
-    "analysis":{
+    "analysis": {
       "categorize": "Categorize",
       "graduate": "Graduate",
       "interpolate": "Interpolate",

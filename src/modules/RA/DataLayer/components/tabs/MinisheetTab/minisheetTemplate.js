@@ -20,7 +20,7 @@ const getFieldTemplate = (layerFields = [], translate) => ({
   field,
   prefix,
   suffix,
-  default: defaultText,
+  default: defaultText = '',
   sourceFieldId,
 }) => {
   const { data_type: dataType = 5, round = 0 }  = layerFields.find(f =>
@@ -43,7 +43,7 @@ const getFieldTemplate = (layerFields = [], translate) => ({
 const createTemplate = (
   {
     field: { name: titleName } = {},
-    default: defaultTitle,
+    default: defaultTitle = '',
   },
   sections,
   fields,

@@ -122,7 +122,7 @@ const MiniSheetFieldTree = ({
         </FormControl>
         <FormControl className={classes.formControl}>
           <Field name="minisheet_config.wizard.title.default">
-            {({ input: { value, onChange } }) => (
+            {({ input: { value = '', onChange } }) => (
               <TextField
                 variant="outlined"
                 label={translate('datalayer.form.minisheet.title-field.default')}

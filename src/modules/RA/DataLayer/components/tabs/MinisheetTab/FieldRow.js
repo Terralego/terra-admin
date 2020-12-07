@@ -37,6 +37,7 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
         <TextField
           label={translate('datalayer.form.minisheet.field.field')}
           value={`${field.field.name} (${field.field.label})`}
+          disabled
         />
       </FormControl>
       <FormControl>

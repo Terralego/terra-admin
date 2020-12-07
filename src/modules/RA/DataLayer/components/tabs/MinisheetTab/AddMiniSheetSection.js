@@ -16,8 +16,8 @@ const AddSection = ({ sections }) => {
           wizard,
           enable,
         } = {},
+        minisheet_config: minisheetConfig,
       },
-      minisheet_config: minisheetConfig,
     } = form.getState();
 
 

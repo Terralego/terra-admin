@@ -61,9 +61,9 @@ const PopupTab = () => {
     if (popupfields.length) {
       const [titlefield, ...contentfields] = popupfields;
       const titleLine = (
-        `# {% if ${titlefield.field.name} %}`
-        + `{{${titlefield.field.name}}}`
-        + `{% else %}${titlefield.default}{% endif %}`
+        `{% if ${titlefield.field.name} %}`
+        + `# {{${titlefield.field.name}}}`
+        + `{% else %}# ${titlefield.default || ''}{% endif %}`
       );
 
       const lines = contentfields.map(({

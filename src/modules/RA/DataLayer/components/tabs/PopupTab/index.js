@@ -73,7 +73,8 @@ const PopupTab = () => {
         default: defaultTitle,
         sourceFieldId,
       }) => {
-        const { settings: { round } = {} } = fields.find(f => (f.sourceFieldId === sourceFieldId)) || {};
+        const { settings: { round } = {} } = fields.find(f =>
+          (f.sourceFieldId === sourceFieldId)) || {};
         if (round !== undefined) {
           return (
             `- ${label} : `

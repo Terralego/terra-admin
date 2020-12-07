@@ -33,8 +33,8 @@ const useStyles = makeStyles({
         rgb(255, 123, 123) 20px
       )`
         : '',
-    } }
-  ),
+    },
+  }),
 });
 
 

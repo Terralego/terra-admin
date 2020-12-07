@@ -7,9 +7,8 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { useField, useForm } from 'react-final-form';
+import { Field, useField, useForm } from 'react-final-form';
 
-import { ColorInput } from 'react-admin-color-input';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -17,6 +16,7 @@ import CardContent from '@material-ui/core/CardContent';
 
 import MiniSheetFieldTree from './MiniSheetFieldTree';
 
+import ColorPicker from '../../../../../../components/react-admin/ColorPicker';
 import HelpContent from '../../../../../../components/react-admin/HelpContent';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
 import createTemplate from './minisheetTemplate';
@@ -116,11 +116,11 @@ const MinisheetTab = () => {
           <h3>{translate('datalayer.form.minisheet.title')}</h3>
           <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
         </div>
-        <ColorInput
-          source="minisheet_config.highlight_color"
-          label="datalayer.form.minisheet.pick-highlight-color"
-          className={classes.colorPicker}
-        />
+        <Field name="minisheet_config.highlight_color" defaultValue="#cccccc">
+          {({ input: { onChange, value } }) => (
+            <ColorPicker onChange={onChange} value={value} />
+          )}
+        </Field>
 
         {advanced && (
         <>

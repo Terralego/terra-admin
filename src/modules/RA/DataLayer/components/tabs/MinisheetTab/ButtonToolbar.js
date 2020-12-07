@@ -30,6 +30,7 @@ const ButtonToolBar = ({ node, path, fields }) => {
       getNodeKey: ({ treeIndex: nodeKey }) => nodeKey,
       newNode: {
         ...node,
+        expanded: true,
         children: [
           ...node.children,
           {

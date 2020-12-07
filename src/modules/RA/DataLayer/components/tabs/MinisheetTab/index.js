@@ -57,10 +57,10 @@ const MinisheetTab = () => {
         advanced,
         enable,
         wizard: { sections = [], title } = {},
+        wizard,
       },
     },
   } = useField('minisheet_config');
-
 
   const getAvailableFields = useCallback(() => {
     const sectionsFieldIds =  sections.flatMap(({ children = [] }) =>
@@ -90,7 +90,7 @@ const MinisheetTab = () => {
       ...minisheetConfig,
       template,
     });
-  }, 500), [fields, form]);
+  }, 500), [fields, form, wizard, translate]);
   useEffect(updateTemplate, [updateTemplate]);
 
   if (!enable) {
@@ -124,17 +124,29 @@ const MinisheetTab = () => {
 
         {advanced && (
         <>
-          <TextInput multiline source="minisheet_config.template" label="datalayer.form.minisheet.template" fullWidth />
+          <TextInput
+            multiline
+            source="minisheet_config.template"
+            label="datalayer.form.minisheet.template"
+            fullWidth
+          />
           <TextInput
             label="datalayer.form.compare-url.title"
             source="settings.compare"
           />
-          <HelpContent title="datalayer.form.compare-url.help-title" content="datalayer.form.compare-url.help-text" />
+          <HelpContent
+            title="datalayer.form.compare-url.help-title"
+            content="datalayer.form.compare-url.help-text"
+          />
         </>
         )}
         {!advanced && (
         <>
-          <MiniSheetFieldTree sections={sections} fields={availableFields} titleField={title} />
+          <MiniSheetFieldTree
+            sections={sections}
+            fields={availableFields}
+            titleField={title}
+          />
         </>
         )}
       </FieldGroup>

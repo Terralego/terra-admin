@@ -524,6 +524,7 @@
         "section": "Titre de la section",
         "title": "Modèle de mini fiche",
         "title-field": {
+          "input": "Sélectionnez un champ pour le titre",
           "default": "Titre par defaut"
         },
         "select-field": "Sélectionnez un champ",

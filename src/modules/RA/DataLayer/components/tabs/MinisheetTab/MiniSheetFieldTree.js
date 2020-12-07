@@ -107,6 +107,7 @@ const MiniSheetFieldTree = ({
         <FormControl className={classes.formControl}>
           <TextField
             variant="outlined"
+            label={translate('datalayer.form.minisheet.title-field.input')}
             onChange={onTitleFieldChange}
             value={sourceFieldId || mainSourceFieldId}
             select

@@ -540,7 +540,8 @@
           "round": "Nombre de chiffres à arrondir"
         },
         "true": "Oui",
-        "false": "Non"
+        "false": "Non",
+        "color-label": "Sélectionnez une couleur"
       },
       "filter": {
         "tab": "Filtre",

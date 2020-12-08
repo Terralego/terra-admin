@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import InputLabel from '@material-ui/core/InputLabel';
 
 import MiniSheetFieldTree from './MiniSheetFieldTree';
 
@@ -121,6 +122,7 @@ const MinisheetTab = () => {
           <h3>{translate('datalayer.form.minisheet.title')}</h3>
           <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
         </div>
+        <InputLabel>{translate('datalayer.form.minisheet.color-label')}</InputLabel>
         <Field name="minisheet_config.highlight_color" defaultValue="#cccccc">
           {({ input: { onChange, value } }) => (
             <ColorPicker onChange={onChange} value={value} />

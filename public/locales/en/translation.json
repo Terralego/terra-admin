@@ -540,7 +540,8 @@
           "round": "Number of digit to round"
         },
         "true": "Yes",
-        "false": "No"
+        "false": "No",
+        "color-label": "Select a color"
       },
       "filter": {
         "tab": "Filter",

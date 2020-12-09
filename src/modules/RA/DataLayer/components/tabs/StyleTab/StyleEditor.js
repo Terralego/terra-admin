@@ -155,7 +155,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
       <Condition when={`${path}.type`} is="advanced">
         <ExpertStyleField
           source={`${path}.map_style`}
-          label="style-editor.advanced_style"
+          label="style-editor.advanced-style"
           fullWidth
         />
       </Condition>

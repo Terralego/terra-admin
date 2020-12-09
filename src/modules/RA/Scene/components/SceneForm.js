@@ -88,7 +88,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
       <ImageInput source="custom_icon" label="view.form.icon">
-        <ImageField source="url" />
+        <ImageField source="src" style={{ background: 'url(/media/colorpicker-background.png)' }} />
       </ImageInput>
 
       <FileInput

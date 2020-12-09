@@ -1,4 +1,4 @@
-import { CREATE, UPDATE, HttpError } from 'react-admin';
+import { CREATE, UPDATE, HttpError, GET_ONE  } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
 import {
@@ -70,6 +70,21 @@ const toMultipart = nextDataProvider => async (...args) => {
 
       default:
     }
+  }
+
+  // RA is waiting object for fileField/ImageField, so we transform the file url in object.
+  if ([GET_ONE].includes(type) && modules.includes(resource)) {
+    const result = nextDataProvider(type, resource, params, meta);
+    return result.then(toBeModified => {
+      // Only custom icon for now but may be other later.
+      ['custom_icon'].forEach(filenameProperty => {
+        if (toBeModified.data[filenameProperty] !== undefined) {
+          // eslint-disable-next-line no-param-reassign
+          toBeModified.data[filenameProperty] = { src: toBeModified.data[filenameProperty] };
+        }
+      });
+      return toBeModified;
+    });
   }
 
   /**

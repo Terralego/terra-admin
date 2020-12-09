@@ -50,8 +50,32 @@ export const updateFieldFromSource = debounce(async (layerFields, form, dataProv
   const { data: { fields: sourceFields = [] } } =
       await dataProvider(GET_ONE, RES_DATASOURCE, { id: sourceId });
 
-  const sourceFieldMapped = sourceFields.map(({ id, ...sourceField }) =>
-    ({ field: id, sourceFieldId: id, ...sourceField }));
+  /* Fix for dataProvider bug, putting "null" empty values (so we declare default value)
+  * https://github.com/marmelab/react-admin/issues/5427
+  */
+  const sourceFieldMapped = sourceFields.map(({
+    id,
+    exportable = false,
+    shown = false,
+    display = false,
+    settings = {},
+    // eslint-disable-next-line camelcase
+    filter_enable = false,
+    // eslint-disable-next-line camelcase
+    filter_settings = false,
+    ...sourceField
+  }) =>
+    ({
+      field: id,
+      sourceFieldId: id,
+      exportable,
+      shown,
+      display,
+      settings,
+      filter_enable,
+      filter_settings,
+      ...sourceField,
+    }));
 
   const result = mergeFields(layerFields, sourceFieldMapped);
 

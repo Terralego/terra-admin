@@ -35,7 +35,7 @@ const StyleTab = ({ external, ...rest }) => {
     dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: sourceId, property }),
   [dataProvider, sourceId]);
 
-  if (geomType ?? !sourceId) {
+  if (geomType === undefined || !sourceId) {
     return (
       <Placeholder>
         <Typography variant="h5" component="h2">

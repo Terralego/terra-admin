@@ -57,18 +57,18 @@ const MinisheetTab = () => {
       value: {
         advanced,
         enable,
-        wizard: { sections = [], title } = {},
+        wizard: { tree = [], title } = {},
         wizard,
       },
     },
   } = useField('minisheet_config');
 
   const getAvailableFields = useCallback(() => {
-    const sectionsFieldIds =  sections.flatMap(({ children = [] }) =>
-      children.map(({ sourceFieldId }) => sourceFieldId));
+    const wizardFieldIds =  tree.flatMap(({ group, sourceFieldId, children = [] }) =>
+      (group ? children.map(({ sourceFieldId: id }) => id) : sourceFieldId));
 
-    return fields.filter(field => !sectionsFieldIds.find(id => id === field.sourceFieldId));
-  }, [fields, sections]);
+    return fields.filter(field => !wizardFieldIds.find(id => id === field.sourceFieldId));
+  }, [fields, tree]);
 
   const availableFields = useMemo(() => getAvailableFields(), [getAvailableFields]);
 
@@ -78,14 +78,14 @@ const MinisheetTab = () => {
         minisheet_config: {
           wizard: {
             title: titleField = {},
-            sections: minisheetSections = [],
+            tree: treeData = [],
           } = {},
         } = {},
         minisheet_config: minisheetConfig,
       },
     } = form.getState();
 
-    const template = createTemplate(titleField, minisheetSections, fields, translate);
+    const template = createTemplate(titleField, treeData, fields, translate);
 
     form.change('minisheet_config', {
       ...minisheetConfig,
@@ -150,7 +150,7 @@ const MinisheetTab = () => {
         {!advanced && (
         <>
           <MiniSheetFieldTree
-            sections={sections}
+            treeData={tree}
             fields={availableFields}
             titleField={title}
           />

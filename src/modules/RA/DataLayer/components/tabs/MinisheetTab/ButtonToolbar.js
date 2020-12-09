@@ -15,7 +15,7 @@ const ButtonToolBar = ({ node, path, fields }) => {
       values: {
         minisheet_config: {
           wizard: {
-            sections = [],
+            tree: treeData = [],
           } = {},
           wizard,
         } = {},
@@ -24,9 +24,9 @@ const ButtonToolBar = ({ node, path, fields }) => {
     } = form.getState();
 
     const selectedField = fields.find(f => f.sourceFieldId === selected) || {};
-    const newSections = changeNodeAtPath({
+    const tree = changeNodeAtPath({
       path,
-      treeData: sections,
+      treeData,
       getNodeKey: ({ treeIndex: nodeKey }) => nodeKey,
       newNode: {
         ...node,
@@ -46,52 +46,49 @@ const ButtonToolBar = ({ node, path, fields }) => {
 
     form.change('minisheet_config', {
       ...minisheetConfig,
-      wizard: {
-        ...wizard,
-        sections: newSections,
-      },
+      wizard: { ...wizard, tree },
     });
   }, [fields, form, node, path]);
 
   const onDeleteSection = useCallback(() => {
     const {
       minisheet_config: {
-        wizard: { sections = [] } = {},
+        wizard: { tree: treeData = [] } = {},
         wizard,
       } = {},
       minisheet_config: minisheetConfig,
     } = form.getState().values;
 
-    const newSections = removeNodeAtPath({
+    const tree = removeNodeAtPath({
       path,
-      treeData: sections,
+      treeData,
       getNodeKey: ({ treeIndex }) => treeIndex,
     });
 
     form.change('minisheet_config', {
       ...minisheetConfig,
-      wizard: { ...wizard, sections: newSections },
+      wizard: { ...wizard, tree },
     });
   }, [form, path]);
 
   const onDeleteField = useCallback(() => {
     const {
       minisheet_config: {
-        wizard: { sections = [] } = {},
+        wizard: { tree: treeData = [] } = {},
         wizard,
       } = {},
       minisheet_config: minisheetConfig,
     } = form.getState().values;
 
-    const newSections = removeNodeAtPath({
+    const tree = removeNodeAtPath({
       path,
-      treeData: sections,
+      treeData,
       getNodeKey: ({ treeIndex }) => treeIndex,
     });
 
     form.change('minisheet_config', {
       ...minisheetConfig,
-      wizard: { ...wizard, sections: newSections },
+      wizard: { ...wizard, tree },
     });
   }, [form, path]);
 

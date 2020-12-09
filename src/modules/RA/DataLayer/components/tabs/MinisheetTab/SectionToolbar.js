@@ -14,7 +14,7 @@ const SectionToolbar = ({ node, path }) => {
       values: {
         minisheet_config: {
           wizard: {
-            sections = [],
+            tree: treeData = [],
           } = {},
           wizard,
         } = {},
@@ -22,16 +22,16 @@ const SectionToolbar = ({ node, path }) => {
       },
     } = form.getState();
 
-    const newSections = changeNodeAtPath({
+    const tree = changeNodeAtPath({
       path,
-      treeData: sections,
+      treeData,
       getNodeKey: ({ treeIndex }) => treeIndex,
       newNode: { ...node, name: value },
     });
 
     form.change('minisheet_config', {
       ...minisheetConfig,
-      wizard: { ...wizard, sections: newSections },
+      wizard: { ...wizard, tree },
     });
   }, [form, node, path]);
 

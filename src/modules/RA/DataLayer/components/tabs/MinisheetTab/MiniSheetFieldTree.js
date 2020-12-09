@@ -10,6 +10,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import SortableTree from 'react-sortable-tree';
 
+import AddField from '../AddField';
+
 import ButtonToolBar from './ButtonToolbar';
 import AddMiniSheetSection from './AddMiniSheetSection';
 import SectionToolbar from './SectionToolbar';
@@ -35,7 +37,7 @@ const useStyles = makeStyles({
 });
 
 const MiniSheetFieldTree = ({
-  sections,
+  treeData,
   fields,
   titleField: { sourceFieldId } = {},
 }) => {
@@ -74,7 +76,7 @@ const MiniSheetFieldTree = ({
     });
   }, [fields, form]);
 
-  const onTreeChange = useCallback(treeData => {
+  const onTreeChange = useCallback(tree => {
     const {
       minisheet_config: { wizard = {} } = {},
       minisheet_config: minisheetConfig,
@@ -82,7 +84,7 @@ const MiniSheetFieldTree = ({
 
     form.change('minisheet_config', {
       ...minisheetConfig,
-      wizard: { ...wizard, sections: treeData },
+      wizard: { ...wizard, tree },
     });
   }, [form]);
 
@@ -135,14 +137,65 @@ const MiniSheetFieldTree = ({
         </FormControl>
       </Paper>
       <SortableTree
-        treeData={sections}
+        treeData={treeData}
         onChange={onTreeChange}
         generateNodeProps={generateNodeProps}
         canNodeHaveChildren={({ group = false }) => group}
         style={{ minHeight: 400 }}
       />
-      <AddMiniSheetSection sections={sections} />
+      <AddMiniSheetSection treeData={treeData} />
+      <AddMiniSheetField
+        fields={fields.filter(f =>
+          f.sourceFieldId !== (sourceFieldId || mainSourceFieldId))}
+      />
     </div>
   );
 };
 export default MiniSheetFieldTree;
+
+
+function AddMiniSheetField ({ fields }) {
+  const form = useForm();
+
+  const onFieldAdd = fieldId => {
+    const {
+      minisheet_config: {
+        wizard: { tree = [] } = {},
+        wizard,
+      } = {},
+      minisheet_config: minisheetConfig,
+    } = form.getState().values;
+
+    const selectedField = fields.find(f => f.sourceFieldId === fieldId) || {};
+
+    form.change('minisheet_config', {
+      ...minisheetConfig,
+      wizard: {
+        ...wizard,
+        tree: [
+          ...tree,
+          {
+            prefix: '',
+            suffix: '',
+            default: '',
+            field: { name: selectedField.name, label: selectedField.label },
+            sourceFieldId: selectedField.sourceFieldId,
+          },
+        ],
+      },
+    });
+  };
+
+  return (
+    <AddField
+      fields={fields}
+      onAdd={onFieldAdd}
+      textContent={{
+        addField: 'datalayer.form.popup.add-message',
+        selectField: 'datalayer.form.popup.select-field',
+        add: 'ra.action.add',
+        cancel: 'ra.action.cancel',
+      }}
+    />
+  );
+}

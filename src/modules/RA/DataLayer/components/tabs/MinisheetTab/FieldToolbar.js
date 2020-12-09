@@ -14,26 +14,23 @@ const FieldToolbar = ({ node, path }) => {
     const {
       minisheet_config: {
         wizard: {
-          sections = [],
+          tree: treeData = [],
         } = {},
         wizard,
       } = {},
       minisheet_config: minisheetConfig,
     } = values;
 
-    const newSections = changeNodeAtPath({
+    const tree = changeNodeAtPath({
       path,
-      treeData: sections,
+      treeData,
       getNodeKey: ({ treeIndex }) => treeIndex,
       newNode: { ...node, ...newField },
     });
 
     form.change('minisheet_config', {
       ...minisheetConfig,
-      wizard: {
-        ...wizard,
-        sections: newSections,
-      },
+      wizard: { ...wizard, tree },
     });
   }, [form, node, path]);
 

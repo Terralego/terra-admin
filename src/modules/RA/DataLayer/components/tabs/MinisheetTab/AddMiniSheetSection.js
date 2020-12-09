@@ -5,7 +5,7 @@ import { useTranslate } from 'react-admin';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
-const AddSection = ({ sections }) => {
+const AddSection = ({ treeData }) => {
   const form = useForm();
   const translate = useTranslate();
 
@@ -26,8 +26,8 @@ const AddSection = ({ sections }) => {
       enable,
       wizard: {
         ...wizard,
-        sections: [
-          ...sections,
+        tree: [
+          ...treeData,
           {
             name: '',
             default: '',

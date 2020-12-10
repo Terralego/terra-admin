@@ -97,7 +97,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
                 id: 'circle',
                 name: translate('style-editor.map-style-type.circle'),
               },
-              {
+              /* {
                 id: 'heatmap',
                 name: translate('style-editor.map-style-type.heatmap'),
               },
@@ -108,7 +108,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
               {
                 id: 'text',
                 name: translate('style-editor.map-style-type.text'),
-              },
+              }, */
             ]}
             initialValue="circle"
           />

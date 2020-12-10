@@ -108,30 +108,6 @@ const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
           getValuesOfProperty={getValuesOfProperty}
         />
       </div>
-
-      <div className={classes.configLine}>
-        <header>
-          <FormLabel>
-            {translate('style-editor.circle.circle-opacity')}
-          </FormLabel>
-          <RadioButtonGroupInput
-            label=""
-            source={`${path}.style.circle_opacity.type`}
-            choices={[
-              { id: 'none', name: translate('style-editor.style-type.none') },
-              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
-            ]}
-            helperText={false}
-            initialValue="none"
-          />
-        </header>
-
-        <SizeStyleField
-          path={`${path}.style.circle_opacity`}
-          fields={fields}
-          getValuesOfProperty={getValuesOfProperty}
-        />
-      </div>
     </>
   );
 };

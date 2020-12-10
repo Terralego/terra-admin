@@ -65,30 +65,6 @@ const WizardLine = ({ path, fields, getValuesOfProperty }) => {
           getValuesOfProperty={getValuesOfProperty}
         />
       </div>
-
-      <div className={classes.configLine}>
-        <header>
-          <FormLabel>
-            {translate('style-editor.line.line-opacity')}
-          </FormLabel>
-          <RadioButtonGroupInput
-            label=""
-            source={`${path}.style.line_opacity.type`}
-            choices={[
-              { id: 'none', name: translate('style-editor.style-type.none') },
-              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
-            ]}
-            helperText={false}
-            initialValue="none"
-          />
-        </header>
-
-        <SizeStyleField
-          path={`${path}.style.line_opacity`}
-          fields={fields}
-          getValuesOfProperty={getValuesOfProperty}
-        />
-      </div>
     </>
   );
 };

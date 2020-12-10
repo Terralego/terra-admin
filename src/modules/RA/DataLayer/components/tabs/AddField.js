@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-const AddField = ({ fields, onAdd, textContent, iconOnly }) => {
+const AddField = ({ fields, onAdd, textContent, iconOnly, variant }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const [showModal, setShowModal] = useState(false);
@@ -54,6 +54,7 @@ const AddField = ({ fields, onAdd, textContent, iconOnly }) => {
     <>
       <Button
         type="button"
+        variant={variant}
         onClick={showModalOnclick}
         label="datalayer.form.popup.add-field"
         startIcon={<AddIcon aria-label={iconOnly ? translate(textContent.addField) : ''} />}

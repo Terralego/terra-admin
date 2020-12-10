@@ -522,6 +522,7 @@
         "advanced": "Advanced mode",
         "enable": "Enable/disable",
         "select-field": "Select a field",
+        "add-field": "Add a field",
         "add-section": {
           "text": "Add a section",
           "label": "Add a section"

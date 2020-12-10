@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useForm, useField, Field } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 import { makeStyles } from '@material-ui/core';
@@ -10,10 +10,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import SortableTree from 'react-sortable-tree';
 
-import AddField from '../AddField';
-
 import ButtonToolBar from './ButtonToolbar';
 import AddMiniSheetSection from './AddMiniSheetSection';
+import AddMiniSheetField from './AddMiniSheetField';
 import SectionToolbar from './SectionToolbar';
 import FieldToolbar from './FieldToolbar';
 
@@ -34,6 +33,18 @@ const useStyles = makeStyles({
     alignItems: 'strech',
     width: '100%',
   },
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+  },
+  addButtons: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    '& > *': {
+      marginRight: '20px',
+    },
+  },
 });
 
 const MiniSheetFieldTree = ({
@@ -46,35 +57,6 @@ const MiniSheetFieldTree = ({
   const form = useForm();
 
   const { input: { value: mainFieldId } } =  useField('main_field');
-  const { sourceFieldId: mainSourceFieldId = '' } = useMemo(() => (
-    fields.find(field => field.sourceFieldId === mainFieldId) || {}
-  ), [fields, mainFieldId]);
-
-  const onTitleFieldChange = useCallback(({ target: { value } }) => {
-    const newField = fields.find(f => (f.sourceFieldId === value));
-
-    const {
-      values: {
-        minisheet_config: {
-          wizard: { title = {} } = {},
-          wizard,
-        } = {},
-        minisheet_config: minisheetConfig,
-      },
-    } = form.getState();
-
-    form.change('minisheet_config', {
-      ...minisheetConfig,
-      wizard: {
-        ...wizard,
-        title:   {
-          ...title,
-          field: { name: newField.name, label: newField.label },
-          sourceFieldId: newField.sourceFieldId,
-        },
-      },
-    });
-  }, [fields, form]);
 
   const onTreeChange = useCallback(tree => {
     const {
@@ -91,7 +73,7 @@ const MiniSheetFieldTree = ({
   const generateNodeProps = useCallback(({ node, path }) => {
     const nodeProps = { node, path };
     const availableFields = fields.filter(f =>
-      f.sourceFieldId !== (sourceFieldId || mainSourceFieldId));
+      f.sourceFieldId !== (sourceFieldId || mainFieldId));
 
     return {
       title: (
@@ -101,26 +83,30 @@ const MiniSheetFieldTree = ({
       ),
       buttons: [<ButtonToolBar {...nodeProps} fields={availableFields} />],
     };
-  }, [fields, mainSourceFieldId, sourceFieldId]);
+  }, [fields, mainFieldId, sourceFieldId]);
 
   return (
-    <div className="wrapper">
+    <div className={classes.wrapper}>
       <Paper className={classes.row}>
         <FormControl className={classes.formControl}>
-          <TextField
-            variant="outlined"
-            label={translate('datalayer.form.minisheet.title-field.input')}
-            onChange={onTitleFieldChange}
-            value={sourceFieldId || mainSourceFieldId}
-            select
-          >
-            <MenuItem value="">{translate('datalayer.form.minisheet.select-field')}</MenuItem>
-            {fields.map(field => (
-              <MenuItem value={field.sourceFieldId} key={field.sourceFieldId}>
-                {field.name} ({field.label})
-              </MenuItem>
-            ))}
-          </TextField>
+          <Field name="minisheet_config.wizard.title.sourceFieldId" defaultValue={mainFieldId}>
+            {({ input: { onChange, value } }) => (
+              <TextField
+                variant="outlined"
+                label={translate('datalayer.form.minisheet.title-field.input')}
+                onChange={onChange}
+                value={value}
+                select
+              >
+                <MenuItem value="">{translate('datalayer.form.minisheet.select-field')}</MenuItem>
+                {fields.map(field => (
+                  <MenuItem value={field.sourceFieldId} key={field.sourceFieldId}>
+                    {field.name} ({field.label})
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          </Field>
         </FormControl>
         <FormControl className={classes.formControl}>
           <Field name="minisheet_config.wizard.title.default">
@@ -143,59 +129,16 @@ const MiniSheetFieldTree = ({
         canNodeHaveChildren={({ group = false }) => group}
         style={{ minHeight: 400 }}
       />
-      <AddMiniSheetSection treeData={treeData} />
-      <AddMiniSheetField
-        fields={fields.filter(f =>
-          f.sourceFieldId !== (sourceFieldId || mainSourceFieldId))}
-      />
+
+      <div className={classes.addButtons}>
+        <AddMiniSheetSection treeData={treeData} />
+        <AddMiniSheetField
+          fields={
+            fields.filter(f => f.sourceFieldId !== (sourceFieldId || mainFieldId))
+          }
+        />
+      </div>
     </div>
   );
 };
 export default MiniSheetFieldTree;
-
-
-function AddMiniSheetField ({ fields }) {
-  const form = useForm();
-
-  const onFieldAdd = fieldId => {
-    const {
-      minisheet_config: {
-        wizard: { tree = [] } = {},
-        wizard,
-      } = {},
-      minisheet_config: minisheetConfig,
-    } = form.getState().values;
-
-    const selectedField = fields.find(f => f.sourceFieldId === fieldId) || {};
-
-    form.change('minisheet_config', {
-      ...minisheetConfig,
-      wizard: {
-        ...wizard,
-        tree: [
-          ...tree,
-          {
-            prefix: '',
-            suffix: '',
-            default: '',
-            field: { name: selectedField.name, label: selectedField.label },
-            sourceFieldId: selectedField.sourceFieldId,
-          },
-        ],
-      },
-    });
-  };
-
-  return (
-    <AddField
-      fields={fields}
-      onAdd={onFieldAdd}
-      textContent={{
-        addField: 'datalayer.form.popup.add-message',
-        selectField: 'datalayer.form.popup.select-field',
-        add: 'ra.action.add',
-        cancel: 'ra.action.cancel',
-      }}
-    />
-  );
-}

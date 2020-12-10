@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useField, Field } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 
 import FormControl from '@material-ui/core/FormControl';
@@ -25,6 +26,10 @@ const useStyles = makeStyles({
 const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChange }) => {
   const classes = useStyles();
   const translate = useTranslate();
+  const { input: { value: fields } } = useField('fields');
+
+  const targetField =  fields.find(f => f.sourceFieldId === field.sourceFieldId);
+  const fieldIndex = fields.indexOf(targetField);
 
   const onRowItemChange = useCallback(
     (item, value) => e => onChange({ ...field, [item]: value || e.target.value }),
@@ -34,11 +39,15 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
   return (
     <Paper className={classes.row} elevation={0}>
       <FormControl className={classes.formControl}>
-        <TextField
-          label={translate('datalayer.form.minisheet.field.field')}
-          value={`${field.field.name} (${field.field.label})`}
-          disabled
-        />
+        <Field name={`fields.[${fieldIndex}].label`} defaultValue="">
+          {({ input: { onChange: onValueChange, value } }) => (
+            <TextField
+              label={translate('datalayer.form.minisheet.field.field')}
+              value={value}
+              onChange={onValueChange}
+            />
+          )}
+        </Field>
       </FormControl>
       <FormControl>
         <TextField

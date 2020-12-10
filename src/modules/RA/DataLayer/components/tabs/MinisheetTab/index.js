@@ -91,7 +91,12 @@ const MinisheetTab = () => {
       template,
     });
   }, 500), [fields, form, wizard, translate]);
-  useEffect(updateTemplate, [updateTemplate]);
+
+  useEffect(() => {
+    if (advanced === false) {
+      updateTemplate();
+    }
+  }, [advanced, updateTemplate]);
 
   if (!enable) {
     return (

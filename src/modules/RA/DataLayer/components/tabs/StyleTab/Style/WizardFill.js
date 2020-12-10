@@ -69,29 +69,6 @@ const WizardPolygon = ({ path, fields, getValuesOfProperty }) => {
         />
       </div>
 
-      <div className={classes.configLine}>
-        <header>
-          <FormLabel>
-            {translate('style-editor.fill.fill-opacity')}
-          </FormLabel>
-
-          <RadioButtonGroupInput
-            label=""
-            source={`${path}.style.fill_opacity.type`}
-            choices={[
-              { id: 'none', name: translate('style-editor.style-type.none') },
-              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
-            ]}
-            helperText={false}
-            initialValue="none"
-          />
-        </header>
-        <SizeStyleField
-          path={`${path}.style.fill_opacity`}
-          fields={fields}
-          getValuesOfProperty={getValuesOfProperty}
-        />
-      </div>
     </>
   );
 };

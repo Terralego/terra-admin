@@ -23,7 +23,7 @@ const ButtonToolBar = ({ node, path, fields }) => {
       },
     } = form.getState();
 
-    const selectedField = fields.find(f => f.sourceFieldId === selected) || {};
+    const { sourceFieldId } = fields.find(f => f.sourceFieldId === selected) || {};
     const tree = changeNodeAtPath({
       path,
       treeData,
@@ -34,11 +34,10 @@ const ButtonToolBar = ({ node, path, fields }) => {
         children: [
           ...node.children,
           {
-            sourceFieldId: selectedField.sourceFieldId,
+            sourceFieldId,
             prefix: '',
             suffix: '',
             default: '',
-            field: { name: selectedField.name, label: selectedField.label },
           },
         ],
       },

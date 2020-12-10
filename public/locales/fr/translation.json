@@ -528,6 +528,7 @@
           "default": "Titre par defaut"
         },
         "select-field": "Sélectionnez un champ",
+        "add-field": "Ajouter un champ",
         "add-section": {
           "text": "Ajouter une section",
           "label": "Ajouter une section"

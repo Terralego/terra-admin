@@ -515,7 +515,7 @@
         "content-field": "Popup content"
       },
       "minisheet": {
-        "tab": "Mini-fiche",
+        "tab": "Mini-sheet",
         "display-on-click": "Show mini-sheet",
         "template": "Mini-sheet template",
         "pick-highlight-color": "Select over lighting color",

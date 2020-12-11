@@ -2,6 +2,7 @@
   "common": {
     "add": "Add",
     "cancel": "Cancel",
+    "close": "Close",
     "confirmDeletion": "Confirm deletion",
     "delete": "Delete {{name}}",
     "error": {
@@ -206,6 +207,14 @@
           "label": "Layer display"
         }
       }
+    },
+    "export": {
+      "generate": "Generate",
+      "label": "Export the layer",
+      "title": "Export the layer as {{name}}",
+      "request": "By confirming the export, the server will generate the file {{name}} and when it is ready, a link will be sent directly to your email address.",
+      "success": "Your request has successfully been registered. When the {{name}} file is ready, a link will be sent directly to your email address.",
+      "error": "An error occured, please retry later"
     },
     "settings": {
       "unableToLoad": "Unable to load settings. Please contact your administrator.",

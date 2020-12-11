@@ -17,6 +17,7 @@ exports[`should render correctly 1`] = `
     <strong>
       Layer Test
     </strong>
+    <div />
   </div>
   <div
     columns={Array []}

@@ -12,7 +12,8 @@ jest.mock('react-router-dom', () => ({
   NavLink: ({ children }) => <div>{children}</div>,
 }));
 
-jest.mock('../Actions', () => ({ children, ...props }) => <div {...props}>{children}</div>);
+jest.mock('../Actions', () => props => <div {...props} />);
+jest.mock('../ExportGeom', () => props => <div {...props} />);
 
 let props;
 beforeEach(() => {

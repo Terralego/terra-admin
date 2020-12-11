@@ -7,6 +7,7 @@ import {
 } from '@blueprintjs/core';
 import { NavLink } from 'react-router-dom';
 
+import ExportGeom from '../ExportGeom';
 import { generateURI } from '../../../config';
 import Actions from '../Actions';
 
@@ -35,6 +36,7 @@ const Header = ({
           </span>
         </NavLink>
       )}
+      <ExportGeom />
     </div>
     <Actions
       columns={columns}

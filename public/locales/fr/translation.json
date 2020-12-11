@@ -2,6 +2,7 @@
   "common": {
     "add": "Ajouter",
     "cancel": "Annuler",
+    "close": "Fermer",
     "confirmDeletion": "Confirmer la suppression",
     "delete": "Supprimer {{name}}",
     "error": {
@@ -206,6 +207,13 @@
           "label": "Affichage des couches"
         }
       }
+    },
+    "export": {
+      "label": "Exporter la couche",
+      "title": "Exporter la couche au format {{name}}",
+      "request": "En confirmant l'exportation, le serveur va générer le fichier {{name}} et lorsque ce sera prêt, un lien vous sera directement envoyé à votre adresse email.",
+      "success": "Votre demande a bien été prise en compte. Lorsque le fichier {{name}} sera prêt, un lien vous sera directement envoyé à votre adresse email.",
+      "error": "Une erreur s'est produite, veuillez re-essayer ultérieurement"
     },
     "settings": {
       "unableToLoad": "Impossible de charger la configuration du module. Veuillez contacter un administrateur.",

@@ -53,7 +53,7 @@ const getTemplateNode = (fields, translate) => node => {
     const { fieldType, round, label, name } = getFieldMetaData(node.sourceFieldId, fields);
     const fieldTemplate = getFieldNameTemplate(name, fieldType, round, translate);
 
-    return `{% if ${label} %}\n`
+    return `{% if ${name} %}\n`
     + `<span class="details__column-label">${label}</span>\n`
     + `<span class="details__column-value">${node.prefix} {{${fieldTemplate}}} ${node.suffix}</span>\n`
     + `{% else %}<span class="details__value">${node.default}</span>{% endif %}\n`;

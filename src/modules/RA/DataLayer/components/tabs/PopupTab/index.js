@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
-import { useField, useForm } from 'react-final-form';
+import React, { useEffect, useCallback, useMemo } from 'react';
+import { useField, useForm, Field } from 'react-final-form';
 import {
   TextInput,
   BooleanInput,
@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
 import AddPopupField from './AddPopupField';
 import PopupFieldList from './PopupFieldList';
+import createTemplate from './popupTemplate';
 
 const useStyle = makeStyles({
   popupEnabler: {
@@ -39,73 +40,35 @@ const useStyle = makeStyles({
   },
 });
 
-const PopupTab = () => {
-  const { input: { value: fields } } = useField('fields');
-  const {
-    input: {
-      value: {
-        wizard: { fields: popupfields = [] } = {},
-        minzoom = 0,
-        maxzoom = 24,
-        enable,
-        advanced,
-      },
-    },
-  } = useField('popup_config');
 
+const PopupTab = () => {
   const translate = useTranslate();
   const form = useForm();
   const classes = useStyle();
 
+  const { input: { value: fields } } = useField('fields');
+  const { input: { value: mainFieldId } } = useField('main_field');
+  const { input: { value: enable = false } } = useField('popup_config.enable');
+  const { input: { value: advanced = false } } = useField('popup_config.advanced');
+  const { input: { value: { fields: popupfields = [] } = {} } } = useField('popup_config.wizard', {
+    initialValue: useMemo(() => ({ fields: [{ sourceFieldId: mainFieldId }] }), [mainFieldId]),
+  });
+
   const updateTemplate = useCallback(debounce(() => {
     if (popupfields.length) {
-      const [titlefield, ...contentfields] = popupfields;
-      const titleLine = (
-        `{% if ${titlefield.field.name} %}`
-        + `# {{${titlefield.field.name}}}`
-        + `{% else %}# ${titlefield.default || ''}{% endif %}`
-      );
-
-      const lines = contentfields.map(({
-        suffix,
-        prefix,
-        field: { name, label },
-        default: defaultTitle,
-        sourceFieldId,
-      }) => {
-        const { settings: { round } = {} } = fields.find(f =>
-          (f.sourceFieldId === sourceFieldId)) || {};
-        if (round !== undefined) {
-          return (
-            `- ${label} : `
-          + `{% if ${name} !== undefined %}`
-          + ` ${prefix} {{ (${name} | round(${round})).toLocaleString() }} ${suffix}`
-          + `{% else %}${defaultTitle}{% endif %}`
-          );
-        }
-        return (
-          `- ${label} : `
-        + `{% if ${name} !== undefined %}`
-        + `${prefix}  {{ ${name} }} ${suffix}`
-        + `{% else %}${defaultTitle}{% endif %}`
-        );
-      });
+      const lines = createTemplate(popupfields, fields);
 
       form.change('popup_config', {
         ...form.getState().values.popup_config,
-        template: [titleLine, ...lines].join('\n'),
-        minzoom,
-        maxzoom,
+        template: lines.join('\n'),
       });
     }
-  }, 500), [form, popupfields, fields]);
-  useEffect(updateTemplate, [updateTemplate]);
-
-  const onMinZoomChange = (e, newValue) =>
-    form.change('popup_config', { ...form.getState().values.popup_config, minzoom: newValue });
-
-  const onMaxZoomChange = (e, newValue) =>
-    form.change('popup_config', { ...form.getState().values.popup_config, maxzoom: newValue });
+  }, 200), [form, popupfields, fields]);
+  useEffect(() => {
+    if (advanced === false) {
+      updateTemplate();
+    }
+  }, [advanced, updateTemplate]);
 
   return (
     <>
@@ -116,32 +79,44 @@ const PopupTab = () => {
             <h3>{translate('datalayer.form.popup.title')}</h3>
             <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
           </div>
-          <Typography id="discrete-slider" gutterBottom>
-            {translate('datalayer.form.popup.min-zoom')}
-          </Typography>
-          <Slider
-            onChange={onMinZoomChange}
-            value={minzoom}
-            min={0}
-            max={24}
-            step={1}
-            marks
-            aria-labelledby="discrete-slider"
-            valueLabelDisplay="auto"
-          />
-          <Typography id="discrete-slider" gutterBottom>
-            {translate('datalayer.form.popup.max-zoom')}
-          </Typography>
-          <Slider
-            onChange={onMaxZoomChange}
-            value={maxzoom}
-            min={0}
-            max={24}
-            step={1}
-            marks
-            aria-labelledby="discrete-slider"
-            valueLabelDisplay="auto"
-          />
+          <div>
+            <Typography id="discrete-slider" gutterBottom>
+              {translate('datalayer.form.popup.min-zoom')}
+            </Typography>
+            <Field name="popup_config.minzoom" defaultValue={0}>
+              {({ input: { value, onChange } }) => (
+                <Slider
+                  onChange={(e, newValue) => onChange(newValue)}
+                  value={value}
+                  min={0}
+                  max={24}
+                  step={1}
+                  marks
+                  aria-labelledby="discrete-slider"
+                  valueLabelDisplay="auto"
+                />
+              )}
+            </Field>
+          </div>
+          <div>
+            <Typography id="discrete-slider" gutterBottom>
+              {translate('datalayer.form.popup.max-zoom')}
+            </Typography>
+            <Field name="popup_config.maxzoom" defaultValue={24}>
+              {({ input: { value, onChange } }) => (
+                <Slider
+                  onChange={(e, newValue) => onChange(newValue)}
+                  value={value}
+                  min={0}
+                  max={24}
+                  step={1}
+                  marks
+                  aria-labelledby="discrete-slider"
+                  valueLabelDisplay="auto"
+                />
+              )}
+            </Field>
+          </div>
           {advanced && (
             <TextInput
               multiline
@@ -155,7 +130,10 @@ const PopupTab = () => {
                 fields={fields}
                 popupFields={popupfields}
               />
-              <AddPopupField fields={fields} />
+              <AddPopupField
+                fields={fields}
+                popupFields={popupfields}
+              />
             </>
           )}
         </FieldGroup>

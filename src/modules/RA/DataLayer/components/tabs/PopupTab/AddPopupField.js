@@ -1,23 +1,19 @@
 import React, { useCallback, useMemo } from 'react';
 
-import { useForm, useField } from 'react-final-form';
+import { useForm } from 'react-final-form';
 
 import AddField from '../AddField';
 
-const AddPopupField = ({ fields }) => {
+const AddPopupField = ({ fields, popupFields = [] }) => {
   const form = useForm();
-  const { input: { value: { wizard: { fields: popupfields = [] } = {} } } } = useField('popup_config');
 
   const onAdd = useCallback(selected => {
     const {
       values: {
-        fields: formFields,
         popup_config: { wizard: { fields: wizardFields = [] } = {} } = {},
         popup_config: popupConfig,
       },
     } = form.getState();
-
-    const field = formFields.find(f => f.sourceFieldId === selected);
 
     form.change('popup_config', {
       ...popupConfig,
@@ -28,8 +24,7 @@ const AddPopupField = ({ fields }) => {
             prefix: '',
             suffix: '',
             default: '',
-            field: { name: field.name, label: field.label },
-            sourceFieldId: field.sourceFieldId,
+            sourceFieldId: selected,
           },
         ],
       },
@@ -38,8 +33,9 @@ const AddPopupField = ({ fields }) => {
 
   const availableFields = useMemo(() => (
     fields.filter(({ sourceFieldId }) =>
-      !popupfields.find(field => (sourceFieldId === field.sourceFieldId)))
-  ), [popupfields, fields]);
+      (popupFields.length > 0)
+      && !popupFields.find(field => (sourceFieldId === field.sourceFieldId)))
+  ), [fields, popupFields]);
 
   return (
     <AddField

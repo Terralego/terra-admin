@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useForm } from 'react-final-form';
+import { useForm, Field } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 
 import FormControl from '@material-ui/core/FormControl';
@@ -27,14 +27,15 @@ const useStyles = makeStyles({
   },
 });
 
-const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields: layerFields = [] }) => {
+const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
 
-  const {
-    settings: { round } = {},
-  } = layerFields.find(f => f.sourceFieldId === popupField.sourceFieldId) || {};
+  const fieldIndex = useMemo(() => {
+    const field = fields.find(f => f.sourceFieldId === popupField.sourceFieldId) || {};
+    return fields.indexOf(field);
+  }, [fields, popupField.sourceFieldId]);
 
   const onRowItemChange = useCallback(
     (item, value) => e => onChange({ ...popupField, [item]: value || e.target.value }),
@@ -43,7 +44,6 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields: layer
 
   const onTitleFieldChange = useCallback(({ target: { value } }) => {
     const {
-      fields = [],
       popup_config: {
         wizard: { fields: wizardFields = [] } = {},
         wizard,
@@ -51,44 +51,33 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields: layer
       popup_config: popupConfig,
     } = form.getState().values;
 
-    const { name, label, sourceFieldId } = fields.find(field => (field.sourceFieldId === value));
     const [titleField, ...contentField] = wizardFields;
-    const newTitleField = { ...titleField, sourceFieldId, field: { name, label } };
     form.change('popup_config', {
       ...popupConfig,
       wizard: {
         ...wizard,
-        fields: [newTitleField, ...contentField],
+        fields: [
+          { ...titleField, sourceFieldId: value },
+          ...contentField,
+        ],
       },
     });
   }, [form]);
 
-  const onRoundChange = ({ target: { value } }) => {
-    const { values: { fields } } = form.getState();
-    const newFields = fields.map(field => {
-      if (field.sourceFieldId === popupField.sourceFieldId) {
-        return { ...field, settings: { ...field.settings, round: Number(value) } };
-      }
-      return field;
-    });
-    form.change('fields', newFields);
-  };
-
-  const fieldIsNumber = useCallback((targetForm, targetField) => {
-    const { data_type: dataType } = layerFields.find(({ sourceFieldId }) =>
-      (sourceFieldId === targetField.sourceFieldId)) || {};
+  const isNumber = useMemo(() => {
+    const { data_type: dataType } = fields.find(({ sourceFieldId }) =>
+      (sourceFieldId === popupField.sourceFieldId)) || {};
     return (['Integer', 'Float'].indexOf(fieldTypes[dataType]) >= 0);
-  }, [layerFields]);
-
-  const isNumber = useMemo(() =>
-    fieldIsNumber(form, popupField), [fieldIsNumber, form, popupField]);
+  }, [fields, popupField.sourceFieldId]);
 
 
   return (
     <Paper className={classes.row}>
       <FormControl className={classes.formControl}>
         <PopupFieldSelect
-          selected={popupField}
+          path={`fields.[${fieldIndex}]`}
+          selected={popupField.sourceFieldId}
+          fields={fields}
           onChange={onTitleFieldChange}
           selectable={isTitle}
         />
@@ -129,13 +118,17 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields: layer
       </FormControl>
       {isNumber && (
       <FormControl className={classes.formControl}>
-        <TextField
-          label={translate('datalayer.form.popup.field.round')}
-          value={round || 0}
-          onChange={onRoundChange}
-          variant="filled"
-          fullWidth
-        />
+        <Field name={`fields.[${fieldIndex}].round`} defaultValue={0}>
+          {({ input: { onChange: onValueChange, value } }) => (
+            <TextField
+              label={translate('datalayer.form.popup.field.round')}
+              value={value}
+              onChange={onValueChange}
+              variant="filled"
+              fullWidth
+            />
+          )}
+        </Field>
       </FormControl>
       )}
       {!isTitle && <Button type="button" onClick={onRowItemChange('deleted', true)}><DeleteIcon /></Button>}

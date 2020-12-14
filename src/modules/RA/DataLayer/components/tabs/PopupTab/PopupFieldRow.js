@@ -87,7 +87,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }
         <TextField
           label={translate('datalayer.form.popup.field.prefix')}
           onChange={onRowItemChange('prefix')}
-          value={popupField.prefix}
+          value={popupField.prefix || ''}
           variant="filled"
           fullWidth
           required
@@ -99,7 +99,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }
         <TextField
           label={translate('datalayer.form.popup.field.suffix')}
           onChange={onRowItemChange('suffix')}
-          value={popupField.suffix}
+          value={popupField.suffix || ''}
           variant="filled"
           fullWidth
           required
@@ -110,7 +110,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }
         <TextField
           label={translate('datalayer.form.popup.field.default')}
           onChange={onRowItemChange('default')}
-          value={popupField.default}
+          value={popupField.default || ''}
           variant="filled"
           fullWidth
           required

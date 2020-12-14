@@ -55,7 +55,7 @@ const PopupTab = () => {
   });
 
   const updateTemplate = useCallback(debounce(() => {
-    if (popupfields.length) {
+    if (popupfields.length > 0) {
       const lines = createTemplate(popupfields, fields);
 
       form.change('popup_config', {
@@ -64,11 +64,12 @@ const PopupTab = () => {
       });
     }
   }, 200), [form, popupfields, fields]);
+
   useEffect(() => {
-    if (advanced === false) {
+    if (advanced !== true) {
       updateTemplate();
     }
-  }, [advanced, updateTemplate]);
+  }, [popupfields, advanced, updateTemplate]);
 
   return (
     <>

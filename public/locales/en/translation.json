@@ -542,7 +542,7 @@
         },
         "true": "Yes",
         "false": "No",
-        "color-label": "Select a color"
+        "color-label": "Select a highlight color"
       },
       "filter": {
         "tab": "Filter",

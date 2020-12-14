@@ -542,7 +542,7 @@
         },
         "true": "Oui",
         "false": "Non",
-        "color-label": "Sélectionnez une couleur"
+        "color-label": "Sélectionnez une couleur de surlignement"
       },
       "filter": {
         "tab": "Filtre",

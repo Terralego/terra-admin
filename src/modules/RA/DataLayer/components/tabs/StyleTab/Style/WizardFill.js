@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 
 import ColorStyleField from './ColorStyleField';
-import SizeStyleField from './SizeStyleField';
 
 import styles from './styles';
 

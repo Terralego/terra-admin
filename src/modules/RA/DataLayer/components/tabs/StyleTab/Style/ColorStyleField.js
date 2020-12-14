@@ -77,7 +77,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                     helperText={false}
                     source={`${path}.analysis`}
                     choices={analysisChoices}
-                    initialValue={isNumber ? 'proportionnal' : 'categorized'}
+                    initialValue={isNumber ? 'graduated' : 'categorized'}
                   />
                   <Condition when={`${path}.analysis`} is="graduated">
                     <GraduateValue

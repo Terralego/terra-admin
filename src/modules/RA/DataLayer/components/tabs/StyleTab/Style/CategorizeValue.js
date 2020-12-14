@@ -23,24 +23,37 @@ const CategorizeValue = ({
 }) => {
   const translate = useTranslate();
   const classes = useStyles();
+  const mountedRef = React.useRef(true);
   const [tooManyValues, setTooManyValues] = React.useState(false);
+  const [valuesLoaded, setValuesLoaded] = React.useState(false);
   const { input: { value: field } } = useField(`${path}.field`);
   const { input: { value: valueList, onChange: setValueList } } = useField(`${path}.categories`);
+  mountedRef.current = true;
 
   const prevField = usePrevious(field);
 
-  React.useEffect(() => {
-    let mounted = true;
+  React.useEffect(() => () => {
+    mountedRef.current = false;
+  }, []);
 
+  React.useEffect(() => {
+    if (prevField !== field) {
+      setValuesLoaded(false);
+    }
+  }, [prevField, field]);
+
+  // Load values if field change or on mount
+  React.useEffect(() => {
     const getValueList = async () => {
-      if (prevField === field) return;
       setTooManyValues(false);
       const result = await getValuesOfProperty(field);
 
-      if (!mounted) return;
+      if (!mountedRef.current) return;
 
       if (result.length > maxCategories) {
         setTooManyValues(true);
+        setValueList([]);
+        setValuesLoaded(true);
         return;
       }
 
@@ -53,22 +66,21 @@ const CategorizeValue = ({
           ...newValueList,
           ...toAdd.map(val => ({ name: val, value: defaultValueGenerator() })),
         ]);
+        setValuesLoaded(true);
       }
     };
 
-    getValueList();
-
-    return () => {
-      mounted = false;
-    };
+    if (!valuesLoaded) {
+      getValueList();
+    }
   }, [
     defaultValueGenerator,
     field,
     getValuesOfProperty,
     maxCategories,
-    prevField,
     setValueList,
     valueList,
+    valuesLoaded,
   ]);
 
   if (tooManyValues) {

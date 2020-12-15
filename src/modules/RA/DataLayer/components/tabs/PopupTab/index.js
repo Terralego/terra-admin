@@ -7,32 +7,19 @@ import {
 } from 'react-admin';
 import debounce from 'lodash.debounce';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 import ZoomOut from '@material-ui/icons/ZoomOut';
 import ZoomIn from '@material-ui/icons/ZoomIn';
 
-
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
+import Placeholder from '../../../../../../components/Placeholder';
 import ZoomInput from '../../../../BaseLayer/components/ZoomInput';
 import AddPopupField from './AddPopupField';
 import PopupFieldList from './PopupFieldList';
 import createTemplate from './popupTemplate';
 
 const useStyle = makeStyles({
-  popupEnabler: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '40vh',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   title: {
     display: 'flex',
     flexDirection: 'row',
@@ -40,6 +27,12 @@ const useStyle = makeStyles({
     width: '100%',
     borderBottom: 'thin solid grey',
     marginBottom: '25px',
+  },
+  placeholder: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 });
 
@@ -78,7 +71,7 @@ const PopupTab = () => {
     <>
       {enable && (
         <FieldGroup>
-          <BooleanInput source="popup_config.enable" label="datalayer.form.popup.enable" />
+          <BooleanInput source="popup_config.enable" label="datalayer.form.popup.disable" />
           <div className={classes.title}>
             <h3>{translate('datalayer.form.popup.title')}</h3>
             <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
@@ -117,19 +110,17 @@ const PopupTab = () => {
         </FieldGroup>
       )}
       {!enable && (
-        <div className={classes.popupEnabler}>
-          <Card className={classes.card}>
-            <CardContent>
-              <Typography variant="h6">
-                {translate('datalayer.form.popup.card-message')}
-              </Typography>
-            </CardContent>
-            <BooleanInput
-              source="popup_config.enable"
-              label="datalayer.form.popup.enable"
-            />
-          </Card>
+      <Placeholder>
+        <div className={classes.placeholder}>
+          <Typography variant="h5" component="h2" style={{ paddingBottom: '1em' }}>
+            {translate('datalayer.form.popup.card-message')}
+          </Typography>
+          <BooleanInput
+            source="popup_config.enable"
+            label="datalayer.form.popup.enable"
+          />
         </div>
+      </Placeholder>
       )}
     </>
   );

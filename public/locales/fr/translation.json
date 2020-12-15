@@ -509,17 +509,20 @@
           "round": "Nombre de chiffres à arrondir"
         },
         "title": "Modèle de fenêtre au survol",
-        "enable": "Activer/désactiver",
+        "enable": "Activer",
+        "disable": "Désactiver",
         "title-field": "Titre",
         "content-field": "Contenu de la fenêtre contextuelle"
       },
       "minisheet": {
         "tab": "Mini-fiche",
         "display-on-click": "Afficher la minifiche",
+        "card-message": "Pour activer une mini-fiche, cliquer sur",
         "template": "Modèle de la minifiche",
         "pick-highlight-color": "Sélectionner une couleur de surbrillance",
         "advanced": "Mode expert",
-        "enable": "Activer/desactiver",
+        "enable": "Activer",
+        "disable": "Désactiver",
         "section": "Titre de la section",
         "title": "Modèle de mini fiche",
         "title-field": {

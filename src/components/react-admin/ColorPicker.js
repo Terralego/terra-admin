@@ -40,7 +40,7 @@ const useStyles = makeStyles({
 
 const popover = {
   position: 'absolute',
-  zIndex: '2',
+  zIndex: '11',
 };
 
 const cover = {

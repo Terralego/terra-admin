@@ -512,7 +512,8 @@
         "enable": "Enable",
         "disable": "Disable",
         "title-field": "Title",
-        "content-field": "Popup content"
+        "content-field": "Popup content",
+        "no-source": "Please select a source before configuring the popup"
       },
       "minisheet": {
         "tab": "Mini-sheet",
@@ -544,7 +545,8 @@
         },
         "true": "Yes",
         "false": "No",
-        "color-label": "Select a highlight color"
+        "color-label": "Select a highlight color",
+        "no-source": "Please select a source before configuring the minisheet"
       },
       "filter": {
         "tab": "Filter",

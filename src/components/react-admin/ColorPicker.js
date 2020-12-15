@@ -40,7 +40,7 @@ const useStyles = makeStyles({
 
 const popover = {
   position: 'absolute',
-  zIndex: '11',
+  zIndex: '2',
 };
 
 const cover = {
@@ -80,7 +80,7 @@ const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => 
         <div />
       </div>
       {showPicker && (
-        <div style={popover}>
+        <div style={popover} className="popover">
           <div style={cover} onClick={() => setShowPicker(false)} />
           <SketchPicker
             color={currentColor}

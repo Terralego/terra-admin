@@ -974,7 +974,7 @@
       "choose": "Mode de réprésentation"
     },
     "graduate": {
-      "steps": "Classes",
+      "steps": "Classes (valeurs faibles -> valeurs élevées)",
       "method": {
         "input": "Méthode",
         "jenks": "Jenks",

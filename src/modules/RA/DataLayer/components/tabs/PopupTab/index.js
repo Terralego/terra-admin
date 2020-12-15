@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
-import { useField, useForm, Field } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 import {
   TextInput,
   BooleanInput,
@@ -10,10 +10,13 @@ import debounce from 'lodash.debounce';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/core';
+import ZoomOut from '@material-ui/icons/ZoomOut';
+import ZoomIn from '@material-ui/icons/ZoomIn';
+
 
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
+import ZoomInput from '../../../../BaseLayer/components/ZoomInput';
 import AddPopupField from './AddPopupField';
 import PopupFieldList from './PopupFieldList';
 import createTemplate from './popupTemplate';
@@ -80,44 +83,18 @@ const PopupTab = () => {
             <h3>{translate('datalayer.form.popup.title')}</h3>
             <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
           </div>
-          <div>
-            <Typography id="discrete-slider" gutterBottom>
-              {translate('datalayer.form.popup.min-zoom')}
-            </Typography>
-            <Field name="popup_config.minzoom" defaultValue={0}>
-              {({ input: { value, onChange } }) => (
-                <Slider
-                  onChange={(e, newValue) => onChange(newValue)}
-                  value={value}
-                  min={0}
-                  max={24}
-                  step={1}
-                  marks
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                />
-              )}
-            </Field>
-          </div>
-          <div>
-            <Typography id="discrete-slider" gutterBottom>
-              {translate('datalayer.form.popup.max-zoom')}
-            </Typography>
-            <Field name="popup_config.maxzoom" defaultValue={24}>
-              {({ input: { value, onChange } }) => (
-                <Slider
-                  onChange={(e, newValue) => onChange(newValue)}
-                  value={value}
-                  min={0}
-                  max={24}
-                  step={1}
-                  marks
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                />
-              )}
-            </Field>
-          </div>
+          <Typography id="discrete-slider" gutterBottom>
+            {translate('datalayer.form.popup.zoom')}
+          </Typography>
+          <ZoomInput
+            aria-labelledby="zoom-slider"
+            min={0}
+            max={24}
+            nextElement={ZoomIn}
+            prevElement={ZoomOut}
+            initialValue={[0, 20]}
+            fieldPaths={['popup_config.minzoom', 'popup_config.maxzoom']}
+          />
           {advanced && (
             <TextInput
               multiline

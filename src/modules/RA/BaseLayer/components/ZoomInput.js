@@ -32,9 +32,9 @@ const ZoomInput = ({
   ), [max, min, valueMax, valueMin]);
 
   const onZoomChange = useCallback((_, [newMin, newMax]) => {
-    form.change('min_zoom', newMin);
-    form.change('max_zoom', newMax);
-  }, [form]);
+    form.change(fieldMin, newMin);
+    form.change(fieldMax, newMax);
+  }, [fieldMax, fieldMin, form]);
 
   return (
     <RangeInput

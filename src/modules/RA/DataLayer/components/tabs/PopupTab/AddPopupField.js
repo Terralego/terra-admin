@@ -32,9 +32,10 @@ const AddPopupField = ({ fields, popupFields = [] }) => {
   }, [form]);
 
   const availableFields = useMemo(() => (
-    fields.filter(({ sourceFieldId }) =>
-      (popupFields.length > 0)
-      && !popupFields.find(field => (sourceFieldId === field.sourceFieldId)))
+    (popupFields.length > 0)
+      ? fields.filter(({ sourceFieldId }) =>
+        !popupFields.find(field => (sourceFieldId === field.sourceFieldId)))
+      : fields
   ), [fields, popupFields]);
 
   return (

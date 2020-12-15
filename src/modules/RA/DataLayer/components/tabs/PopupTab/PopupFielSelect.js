@@ -10,16 +10,17 @@ const FieldSelect = ({
   path,
   fields,
   selectable,
-  selected,
+  selected = '',
   onChange,
 }) => {
   const translate = useTranslate();
   const { input: { value: popupfields = [] } } = useField('popup_config.wizard.fields');
 
-  const availableFields = useMemo(() => popupfields.length > 0 && fields.filter(f =>
-    (f.sourceFieldId === selected)
-    || !popupfields.find(({ sourceFieldId }) => f.sourceFieldId === sourceFieldId)),
-  [fields, popupfields, selected]);
+  const availableFields = useMemo(() => ((popupfields.length > 0)
+    ? fields.filter(f =>
+      (f.sourceFieldId === selected)
+        || !popupfields.find(({ sourceFieldId }) => f.sourceFieldId === sourceFieldId))
+    : fields), [fields, popupfields, selected]);
 
   return (
     <>
@@ -43,7 +44,7 @@ const FieldSelect = ({
           required
         >
           <MenuItem value="">{translate('datalayer.form.popup.select-field')}</MenuItem>
-          {availableFields.length > 0 && availableFields.map(f => (
+          {availableFields.map(f => (
             <MenuItem
               key={f.sourceFieldId}
               value={f.sourceFieldId}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Field, useField } from 'react-final-form';
-import { SelectInput, RadioButtonGroupInput, NumberInput, BooleanInput, useTranslate } from 'react-admin';
+import { SelectInput, RadioButtonGroupInput, NumberInput, BooleanInput, useTranslate, required } from 'react-admin';
 import TextField from '@material-ui/core/TextField';
 import { fieldTypes } from '../../../../../DataSource';
 
@@ -12,6 +12,8 @@ import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
 
 import styles from './styles';
+
+const isRequired = [required()];
 
 const useStyles = makeStyles(styles);
 
@@ -55,6 +57,7 @@ const RadiusStyleField = ({ path, fields, getValuesOfProperty }) => {
             helperText="style-editor.field-help"
             style={{ minWidth: '20em', margin: '1em 0' }}
             label="style-editor.field"
+            validate={isRequired}
             choices={fields
               .filter(field => ['String', 'Integer', 'Float'].includes(fieldTypes[field.data_type]))
               .map(field => ({ id: field.name, name: `${field.label || field.name} (${fieldTypes[field.data_type]})` }))}

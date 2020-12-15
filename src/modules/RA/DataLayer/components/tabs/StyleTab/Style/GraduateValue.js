@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTranslate, SelectInput } from 'react-admin';
+import { useTranslate, SelectInput, required } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Field } from 'react-final-form';
@@ -8,6 +8,8 @@ import { Field } from 'react-final-form';
 import ValueListField from './ValueListField';
 
 import styles from './styles';
+
+const isRequired = [required()];
 
 const useStyles = makeStyles(styles);
 
@@ -23,6 +25,7 @@ const GraduateValue = ({ path, Component = ValueListField, defaultValue = defVal
         <SelectInput
           source={`${path}.method`}
           label="style-editor.graduate.method.input"
+          validate={isRequired}
           choices={[
             { id: 'jenks', name: translate('style-editor.graduate.method.jenks') },
             { id: 'quantile', name: translate('style-editor.graduate.method.quantiles') },

@@ -9,7 +9,9 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const ColorListField = ({ value, onChange = () => {} }) => {
+const DEFAULT_MAX_CLASSES = 15;
+
+const ColorListField = ({ value, onChange = () => {}, maxClasses = DEFAULT_MAX_CLASSES }) => {
   const classes = useStyles();
 
   const handleColorChange = index => newValue => {
@@ -43,9 +45,11 @@ const ColorListField = ({ value, onChange = () => {} }) => {
       <button type="button" className="action" onClick={removeColor(value.length - 1)}>
         -
       </button>
-      <button type="button" className="action" onClick={addColor}>
-        +
-      </button>
+      {(value ?? [])?.length < maxClasses && (
+        <button type="button" className="action" onClick={addColor}>
+          +
+        </button>
+      )}
     </div>
   );
 };

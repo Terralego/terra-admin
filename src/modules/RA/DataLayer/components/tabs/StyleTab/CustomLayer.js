@@ -3,6 +3,7 @@ import {
   SelectInput,
   ReferenceInput,
   useDataProvider,
+  required,
 } from 'react-admin';
 
 import useSourceData from '../../useSourceData';
@@ -11,6 +12,8 @@ import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
 import { RES_DATASOURCE } from '../../../../ra-modules';
 
 import StyleEditor from './StyleEditor';
+
+const isRequired = [required()];
 
 export const CustomLayer = ({ source, fields }) => {
   const dataProvider = useDataProvider();
@@ -28,8 +31,11 @@ export const CustomLayer = ({ source, fields }) => {
         label="datalayer.form.data-source"
         sort={{ field: 'name', order: 'ASC' }}
         perPage={100}
+        validate={isRequired}
       >
-        <SelectInput />
+        <SelectInput
+          validate={isRequired}
+        />
       </ReferenceInput>
       {geomType !== undefined && (
         <StyleEditor

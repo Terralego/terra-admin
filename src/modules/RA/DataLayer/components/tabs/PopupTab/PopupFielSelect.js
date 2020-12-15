@@ -15,6 +15,7 @@ const FieldSelect = ({
 }) => {
   const translate = useTranslate();
   const { input: { value: popupfields = [] } } = useField('popup_config.wizard.fields');
+  const { name = '' } = fields.find(({ sourceFieldId }) => sourceFieldId === selected) || {};
 
   const availableFields = useMemo(() => ((popupfields.length > 0)
     ? fields.filter(f =>
@@ -31,6 +32,7 @@ const FieldSelect = ({
             onChange={onValueChange}
             value={value}
             variant="filled"
+            helperText={name}
           />
         )}
       </Field>

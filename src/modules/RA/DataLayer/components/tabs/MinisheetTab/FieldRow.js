@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     backgroundColor: 'white',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   formControl: {
     display: 'flex',
@@ -45,6 +45,7 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
               label={translate('datalayer.form.minisheet.field.field')}
               value={value}
               onChange={onValueChange}
+              helperText={targetField.name}
             />
           )}
         </Field>

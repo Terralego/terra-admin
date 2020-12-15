@@ -127,6 +127,7 @@ const MiniSheetFieldTree = ({
         generateNodeProps={generateNodeProps}
         canNodeHaveChildren={({ group = false }) => group}
         style={{ minHeight: 400 }}
+        rowHeight={80}
       />
 
       <div className={classes.addButtons}>

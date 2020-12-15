@@ -45,7 +45,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
           ? <>{translate('style-editor.geometry')}</>
           : <>{translate('style-editor.other', { type: styleType })}</>}
         {styleType === 'fill' && <>{translate('style-editor.polygon')}</>}
-        {styleType === 'line' && <>{translate('style-editor.line')}</>}
+        {styleType === 'line' && <>{translate('style-editor.line-type')}</>}
         {styleType === 'circle' && <>{translate('style-editor.point')}</>}
       </h1>
 

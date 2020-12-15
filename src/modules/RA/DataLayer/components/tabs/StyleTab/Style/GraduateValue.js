@@ -11,7 +11,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const defValue = [1];
+const defValue = [1, 2, 3];
 
 const GraduateValue = ({ path, Component = ValueListField, defaultValue = defValue }) => {
   const translate = useTranslate();

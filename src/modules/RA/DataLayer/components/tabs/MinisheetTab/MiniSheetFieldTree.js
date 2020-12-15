@@ -20,7 +20,6 @@ import 'react-sortable-tree/style.css';
 
 const useStyles = makeStyles({
   row: {
-    zIndex: 10,
     margin: '1em 0',
     backgroundColor: 'white',
     display: 'flex',

@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     backgroundColor: 'white',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   formControl: {
     width: '100%',

@@ -495,8 +495,7 @@
       "popup": {
         "tab": "Fenêtre au survol",
         "display-on-hover": "Activer la fenêtre au survol",
-        "min-zoom": "Zoom minimum",
-        "max-zoom": "Zoom maximum",
+        "zoom": "Definissez la plage de zoom du layer",
         "template": "Modèle de la fenêtre au survol",
         "advanced": "Mode expert",
         "card-message": "Pour activer une fenêtre contextuelle, cliquer sur",

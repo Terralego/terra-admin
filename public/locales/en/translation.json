@@ -495,8 +495,7 @@
       "popup": {
         "tab": "Contextual window",
         "display-on-hover": "Enable contextual window",
-        "min-zoom": "Min. Zoom",
-        "max-zoom": "Max. Zoom",
+        "zoom": "Define the layer zoom range",
         "template": "Contextual window template",
         "advanced": "Advanced mode",
         "add-message": "Add a new field",

@@ -11,12 +11,11 @@ import { Field, useField, useForm } from 'react-final-form';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import MiniSheetFieldTree from './MiniSheetFieldTree';
 
+import Placeholder from '../../../../../../components/Placeholder';
 import ColorPicker from '../../../../../../components/react-admin/ColorPicker';
 import HelpContent from '../../../../../../components/react-admin/HelpContent';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
@@ -26,15 +25,11 @@ const useStyles = makeStyles({
   colorPicker: {
     width: '25%',
   },
-  addPopup: {
+  placeholder: {
     display: 'flex',
     justifyContent: 'center',
+    flexDirection: 'column',
     alignItems: 'center',
-    height: '40vh',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'row',
   },
   title: {
     display: 'flex',
@@ -101,22 +96,20 @@ const MinisheetTab = () => {
 
   if (!enable) {
     return (
-      <div className={classes.addPopup}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant="h6">
-              {translate('datalayer.form.popup.card-message')}
-            </Typography>
-          </CardContent>
+      <Placeholder>
+        <div className={classes.placeholder}>
+          <Typography variant="h5" component="h2" style={{ paddingBottom: '1em' }}>
+            {translate('datalayer.form.minisheet.card-message')}
+          </Typography>
           <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
-        </Card>
-      </div>
+        </div>
+      </Placeholder>
     );
   }
 
   return (
     <>
-      <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
+      <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.disable" />
       <FieldGroup>
         <div className={classes.title}>
           <h3>{translate('datalayer.form.minisheet.title')}</h3>

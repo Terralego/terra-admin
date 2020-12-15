@@ -509,7 +509,8 @@
           "round": "Number of digit to round"
         },
         "title": "Contextual window template",
-        "enable": "Enable/disable popup",
+        "enable": "Enable",
+        "disable": "Disable",
         "title-field": "Title",
         "content-field": "Popup content"
       },
@@ -517,9 +518,11 @@
         "tab": "Mini-sheet",
         "display-on-click": "Show mini-sheet",
         "template": "Mini-sheet template",
+        "card-message": "To activate a minisheet, click on:",
         "pick-highlight-color": "Select over lighting color",
         "advanced": "Advanced mode",
-        "enable": "Enable/disable",
+        "enable": "Enable",
+        "disable": "Disable",
         "select-field": "Select a field",
         "add-field": "Add a field",
         "add-section": {

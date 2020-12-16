@@ -22,16 +22,22 @@ const sanitizeValue = (value, defaultValue) => (
 
 const allowedModes = ['code', 'tree'];
 
-export const JSONInput = props => {
+const defaultInitialValue = {};
+
+export const JSONInput = ({ source, initialValue = defaultInitialValue, ...propRest }) => {
+  const editorRef = React.useRef(null);
   const {
     input: { value, ...rest },
     meta: { touched, error },
-  } = useInput(props);
+  } = useInput({ source, initialValue });
 
-  const { source, initialValue = {} } = props;
+  React.useEffect(() => {
+    editorRef.current.jsonEditor.update(value || initialValue);
+  }, [initialValue, value]);
+
 
   return (
-    <Labeled label={source} {...props}>
+    <Labeled label={source} {...propRest}>
       <>
         {(touched && error) && (
           <Typography color="error">{error}</Typography>
@@ -44,6 +50,7 @@ export const JSONInput = props => {
           allowedModes={allowedModes}
           navigationBar={false}
           search={false}
+          ref={editorRef}
           {...rest}
         />
       </>

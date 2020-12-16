@@ -58,7 +58,7 @@ const StyleTab = ({ external, ...rest }) => {
 
       <ArrayInput source="extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
         <SimpleFormIterator>
-          <CustomLayer fields={fields} />
+          <CustomLayer />
         </SimpleFormIterator>
       </ArrayInput>
     </FormTab>

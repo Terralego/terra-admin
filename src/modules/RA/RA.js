@@ -21,8 +21,7 @@ import { withLocale } from '../../components/Locale';
 import RALayout from '../../components/react-admin/Layout';
 
 import { resources } from './ra-modules';
-import { connectAppProvider } from '../../components/AppProvider';
-import { withPermissions } from '../../hoc/withUserSettings';
+import { withPermissions, withEnabledModules } from '../../hoc/withUserSettings';
 
 const sanitizeProps = ({ enpoint, moduleName, requiredPermissions, ...rest }) =>
   rest;
@@ -35,7 +34,7 @@ const customDataProvider = compose(
   enhanceDataProvider,
 )(dataProvider);
 
-export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
+export const CustomAdmin = ({ locale, permissions, enabledModules = [] }) => {
   const history = useHistory();
 
   const i18nProvider = React.useMemo(
@@ -47,7 +46,7 @@ export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
   const enabledResources = React.useMemo(
     () =>
       resources.filter(({ moduleName, requiredPermissions }) => {
-        if (!allowedModules.includes(moduleName)) {
+        if (!enabledModules.includes(moduleName)) {
           return false;
         }
         if (requiredPermissions && !permissions.includes[requiredPermissions]) {
@@ -56,7 +55,7 @@ export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
 
         return true;
       }),
-    [allowedModules, permissions],
+    [enabledModules, permissions],
   );
 
   if (!enabledResources.length) {
@@ -78,12 +77,8 @@ export const CustomAdmin = ({ locale, permissions, allowedModules = [] }) => {
   );
 };
 
-const componentsToDisplay = ({ env: { enabled_modules: allowedModules } }) => ({
-  allowedModules,
-});
-
 export default compose(
   withLocale,
   withPermissions,
-  connectAppProvider(componentsToDisplay),
+  withEnabledModules,
 )(CustomAdmin);

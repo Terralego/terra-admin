@@ -15,9 +15,9 @@ import StyleEditor from './StyleEditor';
 
 const isRequired = [required()];
 
-export const CustomLayer = ({ source, fields }) => {
+export const CustomLayer = ({ source }) => {
   const dataProvider = useDataProvider();
-  const { geom_type: geomType, id: sourceId } = useSourceData(`${source}.source`);
+  const { geom_type: geomType, id: sourceId, fields } = useSourceData(`${source}.source`);
 
   const getValuesOfProperty = React.useCallback(property =>
     dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: sourceId, property }),

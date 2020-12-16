@@ -6,8 +6,7 @@ import { withTranslation } from 'react-i18next';
 
 import { Tree } from '@blueprintjs/core';
 import compose from '../../../utils/compose';
-import { withPermissions } from '../../../hoc/withUserSettings';
-import { withEnabledModules } from '../../../hoc/withAppSettings';
+import { withPermissions, withEnabledModules } from '../../../hoc/withUserSettings';
 
 const byPermissions = permissions => ({ requiredPermissions }) => {
   if (!requiredPermissions) {

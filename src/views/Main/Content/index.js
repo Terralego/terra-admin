@@ -1,6 +1,9 @@
+import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { connectAppProvider } from '../../../components/AppProvider';
+
 import { Content } from './Content';
 import { getComponentsByEnabledModules } from '../../../services/modules';
+import compose from '../../../utils/compose';
 
 
 const getDefaultRoute = landingModule => {
@@ -8,10 +11,18 @@ const getDefaultRoute = landingModule => {
   return path;
 };
 
-export default connectAppProvider(({
-  env: { enabled_modules: enabledModules, landing_module: landingModule },
+const setLandingModule = ({
+  env: { landing_module: landingModule },
 }) => ({
-  modules: getComponentsByEnabledModules(enabledModules),
   defaultRoute: getDefaultRoute(landingModule),
   landingModule,
-}))(Content);
+});
+
+const componentsToDisplay = ({ user: { modules } }) => ({
+  modules: getComponentsByEnabledModules(modules),
+});
+
+export default compose(
+  connectAppProvider(setLandingModule),
+  connectAuthProvider(componentsToDisplay),
+)(Content);

@@ -520,7 +520,8 @@
         "enable": "Activer",
         "disable": "Désactiver",
         "title-field": "Titre",
-        "content-field": "Contenu de la fenêtre contextuelle"
+        "content-field": "Contenu de la fenêtre contextuelle",
+        "no-source": "Veuillez choisir une source de données avant de configurer la fenêtre contextuelle"
       },
       "minisheet": {
         "tab": "Mini-fiche",
@@ -552,7 +553,8 @@
         },
         "true": "Oui",
         "false": "Non",
-        "color-label": "Sélectionnez une couleur de surlignement"
+        "color-label": "Sélectionnez une couleur de surlignement",
+        "no-source": "Veuillez choisir une source de données avant de configurer la mini-fiche"
       },
       "filter": {
         "tab": "Filtre",

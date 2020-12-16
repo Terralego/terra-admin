@@ -15,6 +15,7 @@ import ZoomIn from '@material-ui/icons/ZoomIn';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
 import Placeholder from '../../../../../../components/Placeholder';
 import ZoomInput from '../../../../BaseLayer/components/ZoomInput';
+import useSourceData from '../../useSourceData';
 import AddPopupField from './AddPopupField';
 import PopupFieldList from './PopupFieldList';
 import createTemplate from './popupTemplate';
@@ -41,6 +42,7 @@ const PopupTab = () => {
   const translate = useTranslate();
   const form = useForm();
   const classes = useStyle();
+  const { geom_type: geomType, id: sourceId } = useSourceData('source');
 
   const { input: { value: fields } } = useField('fields');
   const { input: { value: mainFieldId } } = useField('main_field');
@@ -66,6 +68,16 @@ const PopupTab = () => {
       updateTemplate();
     }
   }, [popupfields, advanced, updateTemplate]);
+
+  if (geomType === undefined || !sourceId) {
+    return (
+      <Placeholder>
+        <Typography variant="h5" component="h2">
+          {translate('datalayer.form.popup.no-source')}
+        </Typography>
+      </Placeholder>
+    );
+  }
 
   return (
     <>

@@ -19,6 +19,7 @@ import Placeholder from '../../../../../../components/Placeholder';
 import ColorPicker from '../../../../../../components/react-admin/ColorPicker';
 import HelpContent from '../../../../../../components/react-admin/HelpContent';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
+import useSourceData from '../../useSourceData';
 import createTemplate from './minisheetTemplate';
 
 const useStyles = makeStyles({
@@ -46,6 +47,8 @@ const MinisheetTab = () => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
+  const { geom_type: geomType, id: sourceId } = useSourceData('source');
+
   const { input: { value: fields } } = useField('fields');
   const {
     input: {
@@ -93,6 +96,17 @@ const MinisheetTab = () => {
       updateTemplate();
     }
   }, [advanced, updateTemplate, tree]);
+
+  if (geomType === undefined || !sourceId) {
+    return (
+      <Placeholder>
+        <Typography variant="h5" component="h2">
+          {translate('datalayer.form.minisheet.no-source')}
+        </Typography>
+      </Placeholder>
+    );
+  }
+
 
   if (!enable) {
     return (

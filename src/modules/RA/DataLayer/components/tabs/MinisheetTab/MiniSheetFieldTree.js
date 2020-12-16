@@ -33,6 +33,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   wrapper: {
+    width: '50%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',

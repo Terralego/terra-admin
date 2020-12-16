@@ -27,7 +27,7 @@ const PopupFieldList = ({ fields, popupFields = [] }) => {
 
   const [titleField, ...contentFields] = popupFields;
   return (
-    <div className="wrapper">
+    <div className="wrapper" style={{ width: '50%' }}>
       <h4>{translate('datalayer.form.popup.title-field')}</h4>
       <PopupFieldRow
         popupField={titleField || {}}

@@ -15,14 +15,16 @@ import LegendItemsField from '../LegendItemsField';
 import HelpContent from '../../../../../components/react-admin/HelpContent';
 import Placeholder from '../../../../../components/Placeholder';
 
+import Condition from '../../../../../components/react-admin/Condition';
+
 
 const LegendTab = () => {
-  const { input: { value: advancedStyle } } = useField('settings.advanced_legend');
+  useField('settings.advanced_legend', { defaultValue: true });
 
   return (
     <>
       <BooleanInput source="settings.advanced_legend" label="datalayer.form.legend.advanced" style={{ float: 'right' }} />
-      {advancedStyle && (
+      <Condition when="settings.advanced_legend" is>
         <ArrayInput source="legends" label="datalayer.form.legend.legends" fullWidth>
           <SimpleFormIterator>
             <TextInput multiline source="title" label="datalayer.form.legend.title" />
@@ -37,14 +39,14 @@ const LegendTab = () => {
             <BooleanInput source="stackedCircles" label="datalayer.form.legend.stackedCircles" />
           </SimpleFormIterator>
         </ArrayInput>
-      )}
-      {!advancedStyle && (
+      </Condition>
+      <Condition when="settings.advanced_legend" is={false}>
         <Placeholder>
           <Typography variant="h5" component="h2">
-            In construction
+            En construction
           </Typography>
         </Placeholder>
-      )}
+      </Condition>
     </>
   );
 };

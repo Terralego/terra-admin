@@ -20,6 +20,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'columns',
     alignItems: 'strech',
+    marginRight: '10px',
   },
 });
 
@@ -50,7 +51,7 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
           )}
         </Field>
       </FormControl>
-      <FormControl>
+      <FormControl className={classes.formControl}>
         <TextField
           label={translate('datalayer.form.minisheet.field.prefix')}
           onChange={onRowItemChange('prefix')}
@@ -58,7 +59,7 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
           required
         />
       </FormControl>
-      <FormControl>
+      <FormControl className={classes.formControl}>
         <TextField
           label={translate('datalayer.form.minisheet.field.suffix')}
           onChange={onRowItemChange('suffix')}
@@ -66,7 +67,7 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
           required
         />
       </FormControl>
-      <FormControl>
+      <FormControl className={classes.formControl}>
         <TextField
           label={translate('datalayer.form.minisheet.field.default')}
           onChange={onRowItemChange('default')}
@@ -75,7 +76,7 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
         />
       </FormControl>
       {isFloat && (
-        <FormControl>
+        <FormControl className={classes.formControl}>
           <TextField
             label={translate('datalayer.form.minisheet.field.round')}
             onChange={onRoundChange}

@@ -4,7 +4,7 @@ import { getComponentsByEnabledModules } from '../../../services/modules';
 import { MenuDropdown } from './MenuDropdown';
 
 import compose from '../../../utils/compose';
-import { withEnabledModules } from '../../../hoc/withAppSettings';
+import { withEnabledModules } from '../../../hoc/withUserSettings';
 
 const componentsToDisplay = ({ env: { enabled_modules: modules } }) => ({
   modules: getComponentsByEnabledModules(modules),

@@ -54,13 +54,17 @@ const StyleTab = ({ external, ...rest }) => {
 
   return (
     <FormTab disabled={external} label="datalayer.form.styles.tab" path="style" {...rest}>
-      <StyleEditor path="main_style" geomType={geomType} fields={fields} getValuesOfProperty={getValuesOfProperty} />
+      <> {/* Protect div element */}
+        <div style={{ width: '70%' }}>
+          <StyleEditor path="main_style" geomType={geomType} fields={fields} getValuesOfProperty={getValuesOfProperty} />
 
-      <ArrayInput source="extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
-        <SimpleFormIterator>
-          <CustomLayer />
-        </SimpleFormIterator>
-      </ArrayInput>
+          <ArrayInput source="extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
+            <SimpleFormIterator>
+              <CustomLayer />
+            </SimpleFormIterator>
+          </ArrayInput>
+        </div>
+      </>
     </FormTab>
   );
 };

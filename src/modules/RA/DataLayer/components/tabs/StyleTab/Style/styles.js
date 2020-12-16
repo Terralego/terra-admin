@@ -12,7 +12,6 @@ const styles = {
       },
     },
     borderRadius: '0.5em',
-    width: '50%',
     marginBottom: '1em',
     paddingLeft: '1em',
     borderLeft: '1px solid #EEE',

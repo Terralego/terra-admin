@@ -50,18 +50,17 @@ const MinisheetTab = () => {
   const { geom_type: geomType, id: sourceId } = useSourceData('source');
 
   const { input: { value: fields } } = useField('fields');
-  const {
-    input: {
-      value: {
-        advanced,
-        enable,
-        wizard: { tree = [], title } = {},
-        wizard,
-      },
-    },
-  } = useField('minisheet_config');
+  const { input: { value: advanced = false } } = useField('minisheet_config.advanced');
+  const { input: { value: enable = false } } = useField('minisheet_config.enable');
+  const { input: { value: wizard } } = useField('minisheet_config.wizard');
+  const { input: { value: tree = [] } } = useField('minisheet_config.wizard.tree');
+  const { input: { value: title } } = useField('minisheet_config.wizard.title');
 
   const getAvailableFields = useCallback(() => {
+    if (!tree.length > 0) {
+      return fields;
+    }
+
     const wizardFieldIds =  tree.flatMap(({ group, sourceFieldId, children = [] }) =>
       (group ? children.map(({ sourceFieldId: id }) => id) : sourceFieldId));
 
@@ -95,7 +94,7 @@ const MinisheetTab = () => {
     if (advanced !== true) {
       updateTemplate();
     }
-  }, [advanced, updateTemplate, tree]);
+  }, [advanced, updateTemplate, tree, title]);
 
   if (geomType === undefined || !sourceId) {
     return (

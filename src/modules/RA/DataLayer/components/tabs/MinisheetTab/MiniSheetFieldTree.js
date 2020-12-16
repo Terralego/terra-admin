@@ -72,7 +72,7 @@ const MiniSheetFieldTree = ({
   const generateNodeProps = useCallback(({ node, path }) => {
     const nodeProps = { node, path };
     const availableFields = fields.filter(f =>
-      f.sourceFieldId !== (sourceFieldId || mainFieldId));
+      f.sourceFieldId !== sourceFieldId);
 
     return {
       title: (
@@ -82,13 +82,13 @@ const MiniSheetFieldTree = ({
       ),
       buttons: [<ButtonToolBar {...nodeProps} fields={availableFields} />],
     };
-  }, [fields, mainFieldId, sourceFieldId]);
+  }, [fields, sourceFieldId]);
 
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.row}>
         <FormControl className={classes.formControl}>
-          <Field name="minisheet_config.wizard.title.sourceFieldId" defaultValue={mainFieldId}>
+          <Field name="minisheet_config.wizard.title.sourceFieldId" initialValue={mainFieldId}>
             {({ input: { onChange, value } }) => (
               <TextField
                 variant="outlined"
@@ -134,7 +134,7 @@ const MiniSheetFieldTree = ({
         <AddMiniSheetSection treeData={treeData} />
         <AddMiniSheetField
           fields={
-            fields.filter(f => f.sourceFieldId !== (sourceFieldId || mainFieldId))
+            fields.filter(f => f.sourceFieldId !== sourceFieldId)
           }
         />
       </div>

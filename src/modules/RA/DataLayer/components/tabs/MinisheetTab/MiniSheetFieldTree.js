@@ -37,6 +37,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
+    '& .rst__moveHandle': { padding: '21px' },
   },
   addButtons: {
     display: 'flex',

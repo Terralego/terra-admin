@@ -50,8 +50,8 @@ const MinisheetTab = () => {
   const { geom_type: geomType, id: sourceId } = useSourceData('source');
 
   const { input: { value: fields } } = useField('fields');
-  const { input: { value: advanced = false } } = useField('minisheet_config.advanced');
-  const { input: { value: enable = false } } = useField('minisheet_config.enable');
+  const { input: { value: advanced } } = useField('minisheet_config.advanced', { defaultValue: true });
+  const { input: { value: enable } } = useField('minisheet_config.enable');
   const { input: { value: wizard } } = useField('minisheet_config.wizard');
   const { input: { value: tree = [] } } = useField('minisheet_config.wizard.tree');
   const { input: { value: title } } = useField('minisheet_config.wizard.title');

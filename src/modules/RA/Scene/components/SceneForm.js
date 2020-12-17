@@ -84,7 +84,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
         <SelectArrayInput />
       </ReferenceArrayInput>
 
-      <TreeInput source="tree" fullWidth />
+      <TreeInput source="tree" fullWidth initialValue={[]} />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
       <ImageInput source="custom_icon" label="view.form.icon">

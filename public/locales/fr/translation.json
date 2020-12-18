@@ -209,6 +209,7 @@
       }
     },
     "export": {
+      "generate": "Générer",
       "label": "Exporter la couche",
       "title": "Exporter la couche au format {{name}}",
       "request": "En confirmant l'exportation, le serveur va générer le fichier {{name}} et lorsque ce sera prêt, un lien vous sera directement envoyé à votre adresse email.",

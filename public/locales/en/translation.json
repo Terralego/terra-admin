@@ -214,7 +214,7 @@
       "title": "Export the layer as {{name}}",
       "request": "By confirming the export, the server will generate the file {{name}} and when it is ready, a link will be sent directly to your email address.",
       "success": "Your request has successfully been registered. When the {{name}} file is ready, a link will be sent directly to your email address.",
-      "error": "An error occured, please retry later"
+      "error": "An error occurred, please retry later"
     },
     "settings": {
       "unableToLoad": "Unable to load settings. Please contact your administrator.",

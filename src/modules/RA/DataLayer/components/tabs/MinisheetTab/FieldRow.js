@@ -40,7 +40,7 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
   return (
     <Paper className={classes.row} elevation={0}>
       <FormControl className={classes.formControl}>
-        <Field name={`fields.[${fieldIndex}].label`}>
+        <Field name={`fields.[${fieldIndex}].label`} parse={v => v}>
           {({ input: { onChange: onValueChange, value } }) => (
             <TextField
               label={translate('datalayer.form.minisheet.field.field')}

@@ -26,7 +26,7 @@ const FieldSelect = ({
   return (
     <>
       {!selectable && (
-      <Field name={`${path}.label]`}>
+      <Field name={`${path}.label]`} parse={v => v}>
         {({ input: { value, onChange: onValueChange } }) => (
           <TextField
             onChange={onValueChange}

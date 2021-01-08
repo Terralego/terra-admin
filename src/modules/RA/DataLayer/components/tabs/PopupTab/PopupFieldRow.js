@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { useForm, Field } from 'react-final-form';
 import { useTranslate } from 'react-admin';
+import { SortableElement } from 'react-sortable-hoc';
+
 
 import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
@@ -27,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }) => {
+export const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
@@ -75,7 +77,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }
     <Paper className={classes.row}>
       <FormControl className={classes.formControl}>
         <PopupFieldSelect
-          path={`fields.[${fieldIndex}]`}
+          path={`fields[${fieldIndex}]`}
           selected={popupField.sourceFieldId}
           fields={fields}
           onChange={onTitleFieldChange}
@@ -136,4 +138,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }
   );
 });
 
-export default PopupFieldRow;
+
+const SortableFieldRow = SortableElement(React.memo(PopupFieldRow));
+
+export default SortableFieldRow;

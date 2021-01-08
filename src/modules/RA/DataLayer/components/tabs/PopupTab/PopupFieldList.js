@@ -1,8 +1,23 @@
 import React, { useCallback } from 'react';
 import { useForm } from 'react-final-form';
 import { useTranslate } from 'react-admin';
+import { SortableContainer } from 'react-sortable-hoc';
 
-import PopupFieldRow from './PopupFieldRow';
+import SortableFieldRow, { PopupFieldRow } from './PopupFieldRow';
+
+const SortableFieldList = SortableContainer(({ fieldList, fields, onChange }) => (
+  <div>
+    {fieldList.map((field, index) => (
+      <SortableFieldRow
+        key={field.sourceFieldId}
+        popupField={field}
+        onChange={onChange}
+        fields={fields}
+        index={index}
+      />
+    ))}
+  </div>
+));
 
 const PopupFieldList = ({ fields, popupFields = [] }) => {
   const form = useForm();
@@ -26,6 +41,20 @@ const PopupFieldList = ({ fields, popupFields = [] }) => {
   }, [form]);
 
   const [titleField, ...contentFields] = popupFields;
+
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    const {
+      values: { popup_config: { wizard: { fields: currentFields } } },
+    } = form.getState();
+    const [currentTitle, ...currentContent] = currentFields;
+
+    if (oldIndex !== newIndex) {
+      // update contentFields or do nothing
+      currentContent.splice(newIndex, 0, currentContent.splice(oldIndex, 1)[0]);
+      form.change('popup_config.wizard.fields', [currentTitle, ...currentContent]);
+    }
+  };
+
   return (
     <div className="wrapper" style={{ width: '50%' }}>
       <h4>{translate('datalayer.form.popup.title-field')}</h4>
@@ -38,14 +67,13 @@ const PopupFieldList = ({ fields, popupFields = [] }) => {
       {contentFields.length > 0 && (
         <>
           <h4>{translate('datalayer.form.popup.content-field')}</h4>
-          {contentFields.map(contentField => (
-            <PopupFieldRow
-              key={contentField.sourceFieldId}
-              popupField={contentField}
-              onChange={onChange}
-              fields={fields}
-            />
-          ))}
+          <SortableFieldList
+            fields={fields}
+            fieldList={contentFields}
+            onChange={onChange}
+            onSortEnd={onSortEnd}
+            lockAxis="y"
+          />
         </>
       )}
     </div>

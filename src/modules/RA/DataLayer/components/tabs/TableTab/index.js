@@ -9,7 +9,7 @@ import Placeholder from '../../../../../../components/Placeholder';
 import TableConfigField from './TableConfigField';
 
 const validateTableFields = data => {
-  const valid = !data.some(({ label }) => !label.length);
+  const valid = !data.some(({ label }) => label && !label.length);
   if (!valid) {
     return 'datalayer.form.table.row-in-error';
   }

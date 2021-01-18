@@ -171,7 +171,9 @@ const TableConfigField = ({ label, exportEnabled, ...rest }) => {
     <>
       <Typography variant="h5" component="h2">{translate(label)}</Typography>
 
-      {error && (<Typography color="error">{translate(error)}</Typography>)}
+      {error && error.length > 0 && error.flatMap(err =>
+        err && Object.entries(err).map(([key, value]) => (
+          <Typography color="error">{key}: {translate(value)}</Typography>)))}
 
       <TableContainer component={Paper} className={classes.wrapper}>
         <Table className={classes.table} stickyHeader aria-label="simple table">

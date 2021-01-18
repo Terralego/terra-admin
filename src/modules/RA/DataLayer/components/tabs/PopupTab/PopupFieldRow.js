@@ -29,7 +29,13 @@ const useStyles = makeStyles({
   },
 });
 
-export const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }) => {
+export const PopupFieldRow = React.memo(({
+  popupField,
+  onChange,
+  isTitle,
+  fields = [],
+  meta = { error: {} },
+}) => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
@@ -82,6 +88,7 @@ export const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields
           fields={fields}
           onChange={onTitleFieldChange}
           selectable={isTitle}
+          meta={meta}
         />
       </FormControl>
       {!isTitle && (
@@ -113,6 +120,8 @@ export const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields
           label={translate('datalayer.form.popup.field.default')}
           onChange={onRowItemChange('default')}
           value={popupField.default || ''}
+          error={meta.error.default && meta.touched}
+          helperText={(meta.error.default && meta.touched) ? meta.error.default : undefined}
           variant="filled"
           fullWidth
           required

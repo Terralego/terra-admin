@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useForm } from 'react-final-form';
+import { useForm, Field } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 import { SortableContainer } from 'react-sortable-hoc';
 
@@ -40,7 +40,7 @@ const PopupFieldList = ({ fields, popupFields = [] }) => {
     });
   }, [form]);
 
-  const [titleField, ...contentFields] = popupFields;
+  const contentFields = popupFields.slice(1);
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
     const {
@@ -55,15 +55,34 @@ const PopupFieldList = ({ fields, popupFields = [] }) => {
     }
   };
 
+  const validateTitle = React.useCallback(({ default: defaultTitle, sourceFieldId } = {}) => {
+    const errors = {};
+    if (!defaultTitle) {
+      errors.default = translate('datalayer.form.error-required');
+    }
+    if (!sourceFieldId) {
+      errors.sourceFieldId = translate('datalayer.form.error-required');
+    }
+    return errors;
+  }, [translate]);
+
   return (
     <div className="wrapper" style={{ width: '50%' }}>
       <h4>{translate('datalayer.form.popup.title-field')}</h4>
-      <PopupFieldRow
-        popupField={titleField || {}}
-        onChange={onChange}
-        fields={fields}
-        isTitle
-      />
+      <Field
+        name="popup_config.wizard.fields[0]"
+        validate={validateTitle}
+      >
+        { ({ input: { value, onChange: onTitleChange }, meta }) => (
+          <PopupFieldRow
+            popupField={value || {}}
+            onChange={onTitleChange}
+            fields={fields}
+            meta={meta}
+            isTitle
+          />
+        )}
+      </Field>
       {contentFields.length > 0 && (
         <>
           <h4>{translate('datalayer.form.popup.content-field')}</h4>
@@ -73,6 +92,7 @@ const PopupFieldList = ({ fields, popupFields = [] }) => {
             onChange={onChange}
             onSortEnd={onSortEnd}
             lockAxis="y"
+            useDragHandle
           />
         </>
       )}

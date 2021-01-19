@@ -14,7 +14,7 @@ import ZoomIn from '@material-ui/icons/ZoomIn';
 
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
 import Placeholder from '../../../../../../components/Placeholder';
-import ZoomInput from '../../../../BaseLayer/components/ZoomInput';
+import ZoomInput from '../../../../../../components/react-admin/ZoomInput';
 import useSourceData from '../../useSourceData';
 import AddPopupField from './AddPopupField';
 import PopupFieldList from './PopupFieldList';

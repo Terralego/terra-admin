@@ -15,9 +15,9 @@ import {
   translate,
 } from 'react-admin';
 
-import ZoomInput from './ZoomInput';
 import BaseLayerType from './BaseLayerType';
 
+import ZoomInput from '../../../../components/react-admin/ZoomInput';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
 import compose from '../../../../utils/compose';

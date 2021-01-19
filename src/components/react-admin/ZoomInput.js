@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useField, useForm } from 'react-final-form';
 
-import RangeInput from '../../../../components/react-admin/RangeInput';
+import RangeInput from './RangeInput';
 
 const ZoomInput = ({
   basePath,
@@ -14,35 +14,29 @@ const ZoomInput = ({
   const form = useForm();
 
   const {
-    input: {
-      value: min,
-    },
+    input: { value: min },
   } = useField(fieldMin);
   const {
-    input: {
-      value: max,
-    },
+    input: { value: max },
   } = useField(fieldMax);
 
-  const value = useMemo(() => (
-    [
+  const value = useMemo(
+    () => [
       Number.isFinite(min) ? min : valueMin,
       Number.isFinite(max) ? max : valueMax,
-    ]
-  ), [max, min, valueMax, valueMin]);
-
-  const onZoomChange = useCallback((_, [newMin, newMax]) => {
-    form.change(fieldMin, newMin);
-    form.change(fieldMax, newMax);
-  }, [fieldMax, fieldMin, form]);
-
-  return (
-    <RangeInput
-      {...props}
-      onChange={onZoomChange}
-      value={value}
-    />
+    ],
+    [max, min, valueMax, valueMin],
   );
+
+  const onZoomChange = useCallback(
+    (_, [newMin, newMax]) => {
+      form.change(fieldMin, newMin);
+      form.change(fieldMax, newMax);
+    },
+    [fieldMax, fieldMin, form],
+  );
+
+  return <RangeInput {...props} onChange={onZoomChange} value={value} />;
 };
 
 export default ZoomInput;

@@ -131,6 +131,7 @@ const FilterConfigRow = ({ filter, onChange }) => {
 
   const optionsValue = computeOptionsValue(filter);
   const customProposeValues = (filter.filter_settings.values || []).join('\n');
+  const labelInError = !filter.label;
 
   return (
     <div className={classes.row}>
@@ -143,6 +144,8 @@ const FilterConfigRow = ({ filter, onChange }) => {
           label=""
           value={filter.label}
           onChange={handleChangeLabel}
+          error={labelInError}
+          helperText={labelInError ? translate('datalayer.form.error-required') : ''}
         />
         <div>({filter.name})</div>
       </FormControl>

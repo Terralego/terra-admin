@@ -17,6 +17,8 @@ const DataLayerForm = ({ ...props }) => {
   const [external, setExternal] = React.useState(true);
   const [popupInError, setPopupInError] = React.useState(false);
   const [miniSheetInError, setMiniSheetInError] = React.useState(false);
+  const [tableInError, setTableInError] = React.useState(false);
+  const [filterInError, setFilterInError] = React.useState(false);
 
   const onPopupErrorChange = React.useCallback(({
     values: {
@@ -41,7 +43,7 @@ const DataLayerForm = ({ ...props }) => {
       inError = true;
     }
     setPopupInError(inError);
-  }, []);
+  }, [setPopupInError]);
 
   const onMiniSheetErrorChange = React.useCallback(({
     values: {
@@ -71,7 +73,21 @@ const DataLayerForm = ({ ...props }) => {
       inError = true;
     }
     setMiniSheetInError(inError);
-  }, []);
+  }, [setMiniSheetInError]);
+
+  const onTableErrorChange = React.useCallback(({
+    values: { fields = [], table_enable: tableEnable },
+  }) => {
+    const someLabelMissing = tableEnable && fields.some(({ label }) => !label);
+    setTableInError(someLabelMissing);
+  }, [setTableInError]);
+
+  const onFilterErrorChange = React.useCallback(({ values: { fields = [] } }) => {
+    const someLabelMissing = fields
+      .filter(({ filter_enable: filterEnable }) => filterEnable)
+      .some(({ label }) => !label);
+    setFilterInError(someLabelMissing);
+  }, [setFilterInError]);
 
 
   return (
@@ -107,13 +123,25 @@ const DataLayerForm = ({ ...props }) => {
         <MinisheetTab />
       </CustomFormTab>
 
-      <FormTab disabled={external} label="datalayer.form.filter.tab" path="filter2">
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.filter.tab"
+        path="filter2"
+        onChange={onFilterErrorChange}
+        inError={filterInError}
+      >
         <FilterTab />
-      </FormTab>
+      </CustomFormTab>
 
-      <FormTab disabled={external} label="datalayer.form.table.tab" path="table">
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.table.tab"
+        path="table"
+        onChange={onTableErrorChange}
+        inError={tableInError}
+      >
         <TableTab />
-      </FormTab>
+      </CustomFormTab>
 
       <FormTab disabled={external} label="datalayer.form.widget.tab" path="other">
         <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />

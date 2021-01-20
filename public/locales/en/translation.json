@@ -361,7 +361,14 @@
     "help": {
       "superuser-create-user": "Only superuser can create user.",
       "is_superuser": "\"Super user\" give all administration rights",
-      "is_active": "\"Active\" mode set if user could connect."
+      "is_active": "\"Active\" mode set if user could connect.",
+      "firstname": "First name",
+      "lastname": "Last name",
+      "position": "Position",
+      "organization": "Organization",
+      "address-street": "Street",
+      "address-city": "City",
+      "address-zip-code": "Zip code"
     }
   },
   "usergroup": {

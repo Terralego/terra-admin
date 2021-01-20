@@ -356,7 +356,14 @@
       "active": "Actif",
       "permissions": "Permissions",
       "additional-information": "Information supplémentaire",
-      "password": "Mot de passe"
+      "password": "Mot de passe",
+      "firstname": "Prénom",
+      "lastname": "Nom",
+      "position": "Fonction",
+      "organization": "Ogranisation",
+      "address-street": "Rue",
+      "address-city": "Ville",
+      "address-zip-code": "Code postal"
     },
     "help": {
       "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",

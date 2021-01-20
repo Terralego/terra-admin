@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { useForm, Field } from 'react-final-form';
 import { useTranslate } from 'react-admin';
+import { SortableElement } from 'react-sortable-hoc';
+
 
 import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
@@ -27,7 +29,13 @@ const useStyles = makeStyles({
   },
 });
 
-const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }) => {
+export const PopupFieldRow = React.memo(({
+  popupField,
+  onChange,
+  isTitle,
+  fields = [],
+  meta = { error: {} },
+}) => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
@@ -75,11 +83,12 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }
     <Paper className={classes.row}>
       <FormControl className={classes.formControl}>
         <PopupFieldSelect
-          path={`fields.[${fieldIndex}]`}
+          path={`fields[${fieldIndex}]`}
           selected={popupField.sourceFieldId}
           fields={fields}
           onChange={onTitleFieldChange}
           selectable={isTitle}
+          meta={meta}
         />
       </FormControl>
       {!isTitle && (
@@ -111,6 +120,8 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }
           label={translate('datalayer.form.popup.field.default')}
           onChange={onRowItemChange('default')}
           value={popupField.default || ''}
+          error={meta.error.default && meta.touched}
+          helperText={(meta.error.default && meta.touched) ? meta.error.default : undefined}
           variant="filled"
           fullWidth
           required
@@ -136,4 +147,7 @@ const PopupFieldRow = React.memo(({ popupField, onChange, isTitle, fields = [] }
   );
 });
 
-export default PopupFieldRow;
+
+const SortableFieldRow = SortableElement(React.memo(PopupFieldRow));
+
+export default SortableFieldRow;

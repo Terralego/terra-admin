@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useForm, useField, Field } from 'react-final-form';
-import { useTranslate } from 'react-admin';
+import { useTranslate, required } from 'react-admin';
 import { makeStyles } from '@material-ui/core';
 
 import FormControl from '@material-ui/core/FormControl';
@@ -37,6 +37,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
+    '& .rst__moveHandle': { padding: '21px' },
   },
   addButtons: {
     display: 'flex',
@@ -89,13 +90,19 @@ const MiniSheetFieldTree = ({
     <div className={classes.wrapper}>
       <Paper className={classes.row}>
         <FormControl className={classes.formControl}>
-          <Field name="minisheet_config.wizard.title.sourceFieldId" initialValue={mainFieldId}>
-            {({ input: { onChange, value } }) => (
+          <Field
+            name="minisheet_config.wizard.title.sourceFieldId"
+            initialValue={mainFieldId}
+            validate={required(translate('datalayer.form.error-required'))}
+          >
+            {({ input: { onChange, value }, meta }) => (
               <TextField
                 variant="outlined"
                 label={translate('datalayer.form.minisheet.title-field.input')}
                 onChange={onChange}
                 value={value}
+                error={meta.error && meta.touched}
+                helperText={(meta.touched && meta.error) ? meta.error : null}
                 select
               >
                 <MenuItem value="">{translate('datalayer.form.minisheet.select-field')}</MenuItem>
@@ -109,13 +116,19 @@ const MiniSheetFieldTree = ({
           </Field>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <Field name="minisheet_config.wizard.title.default">
-            {({ input: { value = '', onChange } }) => (
+          <Field
+            name="minisheet_config.wizard.title.default"
+            validate={required(translate('datalayer.form.error-required'))}
+            parse={v => v}
+          >
+            {({ input: { value = '', onChange }, meta }) => (
               <TextField
                 variant="outlined"
                 label={translate('datalayer.form.minisheet.title-field.default')}
                 value={value}
                 onChange={onChange}
+                error={meta.error && meta.touched}
+                helperText={(meta.error && meta.touched) ? meta.error : null}
                 fullWidth
               />
             )}

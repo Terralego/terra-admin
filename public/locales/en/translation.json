@@ -477,6 +477,7 @@
       "description": "Description",
       "interactions": "Interactions",
       "all-data-available": " All available data",
+      "error-required": "This field is required",
       "compare-url": {
         "title": "Comparison URL",
         "help-title": "Comparison URL template",

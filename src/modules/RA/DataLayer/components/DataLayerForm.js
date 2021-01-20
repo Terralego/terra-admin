@@ -3,6 +3,7 @@ import React from 'react';
 import { TabbedForm, FormTab } from 'react-admin';
 
 import JSONInput from '../../../../components/react-admin/JSONInput';
+import CustomFormTab from '../../../../components/react-admin/CustomFormTab';
 
 import DefinitionTab from './tabs/DefinitionTab';
 import StyleTab from './tabs/StyleTab';
@@ -14,6 +15,64 @@ import TableTab from './tabs/TableTab';
 
 const DataLayerForm = ({ ...props }) => {
   const [external, setExternal] = React.useState(true);
+  const [popupInError, setPopupInError] = React.useState(false);
+  const [miniSheetInError, setMiniSheetInError] = React.useState(false);
+
+  const onPopupErrorChange = React.useCallback(({
+    values: {
+      fields: sourcefields,
+      popup_config: { wizard: { fields: popupfields = [] } = {} } = {},
+    },
+    errors: { fields = [], popup_config: popupConfig },
+    touched,
+  }) => {
+    const popupfieldIds = popupfields.flatMap(({ sourceFieldId }) => sourceFieldId);
+    const fieldIndexes = sourcefields
+      .map((field, index) => (
+        popupfieldIds.includes(field.sourceFieldId) ? index : null))
+      .filter(Boolean);
+    const fieldsInError = fields.filter((f, index) => f && fieldIndexes.includes(index));
+
+    let inError = false;
+    if (fieldsInError.length > 0) {
+      inError = true;
+    }
+    if (popupConfig && touched['popup_config.wizard.fields[0]']) {
+      inError = true;
+    }
+    setPopupInError(inError);
+  }, []);
+
+  const onMiniSheetErrorChange = React.useCallback(({
+    values: {
+      fields: sourcefields,
+      minisheet_config: { wizard: { tree = [] } = {} } = {},
+    },
+    errors: { fields = [], minisheet_config: minisheetConfig },
+    touched,
+  }) => {
+    const minisheetFieldIds = tree.flatMap(({ children, sourceFieldId }) => {
+      if (sourceFieldId) {
+        return sourceFieldId;
+      }
+      const ids = children.flatMap(({ sourceFieldId: id }) => id);
+      return ids;
+    });
+    const fieldIndexes = sourcefields
+      .map((field, index) => (minisheetFieldIds.includes(field.sourceFieldId) ? index : null))
+      .filter(Boolean);
+    const fieldsInError = fields.filter((f, index) => f && fieldIndexes.includes(index));
+
+    let inError = false;
+    if (fieldsInError.length > 0) {
+      inError = true;
+    }
+    if (minisheetConfig && touched['minisheet_config.wizard.title']) {
+      inError = true;
+    }
+    setMiniSheetInError(inError);
+  }, []);
+
 
   return (
     <TabbedForm {...props} initialValues={{ fields: [] }}>
@@ -28,13 +87,25 @@ const DataLayerForm = ({ ...props }) => {
         <LegendTab />
       </FormTab>
 
-      <FormTab disabled={external} label="datalayer.form.popup.tab" path="popup">
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.popup.tab"
+        path="popup"
+        inError={popupInError}
+        onChange={onPopupErrorChange}
+      >
         <PopupTab />
-      </FormTab>
+      </CustomFormTab>
 
-      <FormTab disabled={external} label="datalayer.form.minisheet.tab" path="minisheet">
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.minisheet.tab"
+        path="minisheet"
+        onChange={onMiniSheetErrorChange}
+        inError={miniSheetInError}
+      >
         <MinisheetTab />
-      </FormTab>
+      </CustomFormTab>
 
       <FormTab disabled={external} label="datalayer.form.filter.tab" path="filter2">
         <FilterTab />

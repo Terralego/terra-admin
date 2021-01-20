@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useField, Field } from 'react-final-form';
-import { useTranslate } from 'react-admin';
+import { useTranslate, required } from 'react-admin';
 
 import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
@@ -40,14 +40,21 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
   return (
     <Paper className={classes.row} elevation={0}>
       <FormControl className={classes.formControl}>
-        <Field name={`fields.[${fieldIndex}].label`}>
-          {({ input: { onChange: onValueChange, value } }) => (
-            <TextField
-              label={translate('datalayer.form.minisheet.field.field')}
-              value={value}
-              onChange={onValueChange}
-              helperText={targetField.name}
-            />
+        <Field
+          name={`fields.[${fieldIndex}].label`}
+          validate={required(translate('datalayer.form.error-required'))}
+          parse={v => v}
+        >
+          {({ input: { onChange: onValueChange, value }, meta }) => (
+            <>
+              <TextField
+                label={translate('datalayer.form.minisheet.field.field')}
+                value={value}
+                onChange={onValueChange}
+                error={meta.error}
+                helperText={meta.error ? `${targetField.name} (${meta.error})` : targetField.name}
+              />
+            </>
           )}
         </Field>
       </FormControl>

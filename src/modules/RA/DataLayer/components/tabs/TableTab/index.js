@@ -19,7 +19,9 @@ const validateTableFields = data => {
 const TableConfigTabContent = props => {
   const { input: { value: tableEnable, onChange: onTableEnableChange } } = useField('table_enable');
   const { input: { value: source } } = useField('source');
-  const { input: { value: fields } } = useField('fields');
+  const { input: { value: fields } } = useField('fields', {
+    validate: f => f.map(field => (field.label ? undefined : { label: 'required' })),
+  });
   const { input: { value: tableExportEnable } } = useField('table_export_enable');
   const translate = useTranslate();
 

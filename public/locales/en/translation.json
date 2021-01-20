@@ -356,19 +356,20 @@
       "active": "Active",
       "permissions": "Permissions",
       "additional-information": "Additional information",
-      "password": "Password"
+      "password": "Password",
+      "firstname": "First name",
+      "lastname": "Last name",
+      "position": "Position",
+      "organization": "Affiliate organization",
+      "address-street": "Street",
+      "address-city": "City",
+      "address-zip-code": "Zip code",
+      "advanced": "Advanced mode"
     },
     "help": {
       "superuser-create-user": "Only superuser can create user.",
       "is_superuser": "\"Super user\" give all administration rights",
-      "is_active": "\"Active\" mode set if user could connect.",
-      "firstname": "First name",
-      "lastname": "Last name",
-      "position": "Position",
-      "organization": "Organization",
-      "address-street": "Street",
-      "address-city": "City",
-      "address-zip-code": "Zip code"
+      "is_active": "\"Active\" mode set if user could connect."
     }
   },
   "usergroup": {

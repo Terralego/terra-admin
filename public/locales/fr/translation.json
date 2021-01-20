@@ -360,10 +360,11 @@
       "firstname": "Prénom",
       "lastname": "Nom",
       "position": "Fonction",
-      "organization": "Ogranisation",
+      "organization": "Organisme de rattachement",
       "address-street": "Rue",
       "address-city": "Ville",
-      "address-zip-code": "Code postal"
+      "address-zip-code": "Code postal",
+      "advanced": "Mode avancé"
     },
     "help": {
       "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",

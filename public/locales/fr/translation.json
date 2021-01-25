@@ -869,6 +869,7 @@
       "fields": {
         "id": "Id",
         "name": "Nom du groupe",
+        "permissions": "Permissions",
         "users": "Utilisateurs dans le groupe"
       }
     },

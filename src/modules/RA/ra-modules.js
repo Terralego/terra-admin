@@ -27,6 +27,7 @@ export const RES_BASELAYER = 'baselayer';
 // User
 export const RES_USER = 'user';
 export const RES_USERGROUP = 'usergroup';
+export const RES_PERMISSION = 'permissions';
 
 // Visu
 export const RES_DATASOURCE = 'datasource';
@@ -45,6 +46,11 @@ export const resources = [
     // requiredPermissions: 'auth.change_group',
     endpoint: 'user',
     ...userViews,
+  },
+  {
+    name: RES_PERMISSION,
+    moduleName: 'User',
+    endpoint: 'permissions',
   },
   {
     name: RES_USERGROUP,

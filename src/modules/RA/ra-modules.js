@@ -99,7 +99,7 @@ export const resources = [
   },
 ];
 
-const byModule = (...modules) => ({ moduleName }) => modules.includes(moduleName);
+const byModule = (...modules) => ({ moduleName, list }) => list && modules.includes(moduleName);
 
 export const config = {
   // path used by router to define when to display current module

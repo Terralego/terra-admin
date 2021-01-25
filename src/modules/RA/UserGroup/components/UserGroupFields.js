@@ -7,7 +7,7 @@ import {
   SelectArrayInput,
 } from 'react-admin';
 
-import { RES_USER } from '../../ra-modules';
+import { RES_USER, RES_PERMISSION } from '../../ra-modules';
 
 const UserGroupFields = ({ edit = false, ...props }) => (
   <SimpleForm {...props}>
@@ -17,6 +17,10 @@ const UserGroupFields = ({ edit = false, ...props }) => (
 
     <ReferenceArrayInput source="users" reference={RES_USER}>
       <SelectArrayInput optionText="email" />
+    </ReferenceArrayInput>
+
+    <ReferenceArrayInput source="permissions" reference={RES_PERMISSION}>
+      <SelectArrayInput optionText="name" />
     </ReferenceArrayInput>
   </SimpleForm>
 );

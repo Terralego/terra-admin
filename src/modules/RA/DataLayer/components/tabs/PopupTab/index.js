@@ -47,7 +47,7 @@ const PopupTab = () => {
   const { input: { value: fields } } = useField('fields');
   const { input: { value: mainFieldId } } = useField('main_field');
   const { input: { value: enable = false } } = useField('popup_config.enable');
-  const { input: { value: advanced } } = useField('popup_config.advanced', { defaultValue: true });
+  const { input: { value: advanced } } = useField('popup_config.advanced', { initialValue: true });
   const { input: { value: { fields: popupfields = [] } = {} } } = useField('popup_config.wizard', {
     initialValue: useMemo(() => ({ fields: [{ sourceFieldId: mainFieldId }] }), [mainFieldId]),
   });

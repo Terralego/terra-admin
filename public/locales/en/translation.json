@@ -364,7 +364,8 @@
       "address-street": "Street",
       "address-city": "City",
       "address-zip-code": "Zip code",
-      "advanced": "Advanced mode"
+      "advanced": "Advanced mode",
+      "not-allowed-to-edit": "You don't have enough permission to edit this field"
     },
     "help": {
       "superuser-create-user": "Only superuser can create user.",

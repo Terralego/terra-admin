@@ -12,6 +12,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
+import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
 import JSONInput from '../../../../components/react-admin/JSONInput';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
@@ -19,7 +20,7 @@ import UserFieldsHelp from './UserFieldsHelp';
 
 import { RES_USERGROUP } from '../../ra-modules';
 
-const UserFields = ({ edit = false, ...props }) => {
+const UserFields = ({ edit = false, user: { is_superuser: isSuperUser } = {}, ...props }) => {
   const [advanced, setAdvanced] = React.useState(false);
   const translate = useTranslate();
 
@@ -36,7 +37,11 @@ const UserFields = ({ edit = false, ...props }) => {
       <TextInput source="properties.last_name" label="user.form.lastname" />
       <TextInput source="email" type="email" />
       {!edit && <TextInput source="password" type="password" />}
-      <BooleanInput source="is_superuser" />
+      <BooleanInput
+        source="is_superuser"
+        disabled={!isSuperUser}
+        helperText={!isSuperUser && translate('user.form.not-allowed-to-edit')}
+      />
       <BooleanInput source="is_active" />
 
       <ReferenceArrayInput source="groups" reference={RES_USERGROUP}>
@@ -75,4 +80,4 @@ const UserFields = ({ edit = false, ...props }) => {
   );
 };
 
-export default UserFields;
+export default connectAuthProvider('user')(UserFields);

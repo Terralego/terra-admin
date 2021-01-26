@@ -364,7 +364,8 @@
       "address-street": "Rue",
       "address-city": "Ville",
       "address-zip-code": "Code postal",
-      "advanced": "Mode avancé"
+      "advanced": "Mode avancé",
+      "no-allowed-to-edit": "Vous n'avez pas les droits pour éditer ce champ"
     },
     "help": {
       "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",

@@ -909,6 +909,7 @@
     "field-help": "Choose an available field from source",
     "generate-legend": "Generate legend",
     "advanced-style": "Expert style",
+    "zoom-extend": "Visibility zoom extend",
     "type": {
       "input": "Style wizard",
       "wizard": "Activated",
@@ -920,7 +921,7 @@
       "line": "Line",
       "extrusion": "Extrusion",
       "circle": "Circle",
-      "symbol": "Symbol",
+      "icon": "Icon",
       "text": "Text",
       "heatmap": "Heatmap"
     },
@@ -951,6 +952,18 @@
       "extrusion-height": "Extrusion height",
       "extrusion-base": "Extrusion base",
       "extrusion-opacity": "Extrusion opacity"
+    },
+    "text":{
+      "text-field":"Displayed field",
+      "text-color":"Text color",
+      "text-size":"Text size",
+      "halo-color":"Halo color",
+      "halo-width":"Halo width",
+      "text-font": "Text font"
+    },
+    "icon":{
+      "icon-image": "Icon",
+      "icon-size": "Icon size"
     },
     "fixed": {
       "diameter": "Diameter",

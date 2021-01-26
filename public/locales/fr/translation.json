@@ -911,6 +911,7 @@
     "field-help": "Sélectionnez un champ de la source parmi ceux disponibles",
     "generate-legend": "Générer la légende associée",
     "advanced-style": "Style expert",
+    "zoom-extend": "Plage de visibilité",
     "type": {
       "input": "Assistant de style",
       "wizard": "Activé",
@@ -922,7 +923,7 @@
       "line": "Ligne",
       "extrusion": "Extrusion",
       "circle": "Cercle",
-      "symbol": "Symbole",
+      "icon": "Icône",
       "text": "Texte",
       "heatmap": "Heatmap"
     },
@@ -953,6 +954,18 @@
       "extrusion-height": "Hauteur de l'extrusion",
       "extrusion-base": "Base de l'extrusion",
       "extrusion-opacity": "Opacité de l'extrusion"
+    },
+    "text":{
+      "text-field":"Champs à afficher",
+      "text-color":"Couleur du texte",
+      "text-size":"Taille du texte",
+      "halo-color":"Couleur du halo",
+      "halo-width":"Largeur du halo",
+      "text-font": "Police de charatères"
+    },
+    "icon":{
+      "icon-image": "Icône",
+      "icon-size": "Taille de l'icône"
     },
     "fixed": {
       "diameter": "Diamètre",

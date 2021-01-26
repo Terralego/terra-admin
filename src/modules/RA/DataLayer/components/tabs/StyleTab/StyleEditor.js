@@ -2,14 +2,21 @@ import React from 'react';
 
 import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
+import FormLabel from '@material-ui/core/FormLabel';
+
+import ZoomOut from '@material-ui/icons/ZoomOut';
+import ZoomIn from '@material-ui/icons/ZoomIn';
 
 import { getShapeFromGeomType } from '../../../../../../utils/geom';
 import Condition from '../../../../../../components/react-admin/Condition';
+import ZoomInput from '../../../../../../components/react-admin/ZoomInput';
 
 import WizardFill from './Style/WizardFill';
 import WizardFillExtrusion from './Style/WizardFillExtrusion';
 import WizardLine from './Style/WizardLine';
 import WizardCircle from './Style/WizardCircle';
+import WizardIcon from './Style/WizardIcon';
+import WizardText from './Style/WizardText';
 
 import ExpertStyleField from './ExpertStyleField';
 
@@ -25,9 +32,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
 
   return (
     <div className={classes.styleEditor}>
-      <div
-        className="wizard-select"
-      >
+      <div className="wizard-select">
         <RadioButtonGroupInput
           source={`${path}.type`}
           label={translate('style-editor.type.input')}
@@ -41,16 +46,27 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
       </div>
 
       <h1>
-        {['fill', 'line', 'circle'].includes(styleType)
-          ? <>{translate('style-editor.geometry')}</>
-          : <>{translate('style-editor.other', { type: styleType })}</>}
+        {['fill', 'line', 'circle'].includes(styleType) ? (
+          <>{translate('style-editor.geometry')}</>
+        ) : (
+          <>{translate('style-editor.other', { type: styleType })}</>
+        )}
         {styleType === 'fill' && <>{translate('style-editor.polygon')}</>}
         {styleType === 'line' && <>{translate('style-editor.line-type')}</>}
         {styleType === 'circle' && <>{translate('style-editor.point')}</>}
       </h1>
 
-
       <Condition when={`${path}.type`} is="wizard">
+        <FormLabel>{translate('style-editor.zoom-extend')}</FormLabel>
+        <ZoomInput
+          aria-labelledby="zoom-slider"
+          min={0}
+          max={24}
+          nextElement={ZoomIn}
+          prevElement={ZoomOut}
+          initialValue={[0, 24]}
+          fieldPaths={[`${path}.min_zoom`, `${path}.max_zoom`]}
+        />
         {styleType === 'fill' && (
           <RadioButtonGroupInput
             source={`${path}.map_style_type`}
@@ -100,15 +116,15 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
               /* {
                 id: 'heatmap',
                 name: translate('style-editor.map-style-type.heatmap'),
-              },
+              }, */
               {
-                id: 'symbol',
-                name: translate('style-editor.map-style-type.symbol'),
+                id: 'icon',
+                name: translate('style-editor.map-style-type.icon'),
               },
               {
                 id: 'text',
                 name: translate('style-editor.map-style-type.text'),
-              }, */
+              },
             ]}
             initialValue="circle"
           />
@@ -141,11 +157,19 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
             getValuesOfProperty={getValuesOfProperty}
           />
         </Condition>
-        <Condition when={`${path}.map_style_type`} is="symbol">
-          <p>To be done</p>
+        <Condition when={`${path}.map_style_type`} is="icon">
+          <WizardIcon
+            path={path}
+            fields={fields}
+            getValuesOfProperty={getValuesOfProperty}
+          />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="text">
-          <p>To be done</p>
+          <WizardText
+            path={path}
+            fields={fields}
+            getValuesOfProperty={getValuesOfProperty}
+          />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="heatmap">
           <p>To be done</p>

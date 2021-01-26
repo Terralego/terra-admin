@@ -356,7 +356,16 @@
       "active": "Actif",
       "permissions": "Permissions",
       "additional-information": "Information supplémentaire",
-      "password": "Mot de passe"
+      "password": "Mot de passe",
+      "firstname": "Prénom",
+      "lastname": "Nom",
+      "position": "Fonction",
+      "organization": "Organisme de rattachement",
+      "address-street": "Rue",
+      "address-city": "Ville",
+      "address-zip-code": "Code postal",
+      "advanced": "Mode avancé",
+      "no-allowed-to-edit": "Vous n'avez pas les droits pour éditer ce champ"
     },
     "help": {
       "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",

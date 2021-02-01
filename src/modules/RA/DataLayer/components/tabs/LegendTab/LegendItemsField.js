@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { JSONInput } from '../../../../components/react-admin/JSONInput';
+import { JSONInput } from '../../../../../../components/react-admin/JSONInput';
 
-import useRandomColor from './useRandomColor';
-import useSourceData from './useSourceData';
+import useRandomColor from '../../useRandomColor';
+import useSourceData from '../../useSourceData';
 
 const getIconByType = type => {
   switch (type) {

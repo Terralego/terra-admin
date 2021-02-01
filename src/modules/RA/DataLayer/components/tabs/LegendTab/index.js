@@ -10,12 +10,12 @@ import {
 import { useField } from 'react-final-form';
 import Typography from '@material-ui/core/Typography';
 
-import LegendItemsField from '../LegendItemsField';
+import LegendItemsField from './LegendItemsField';
 
-import HelpContent from '../../../../../components/react-admin/HelpContent';
-import Placeholder from '../../../../../components/Placeholder';
+import HelpContent from '../../../../../../components/react-admin/HelpContent';
+import Placeholder from '../../../../../../components/Placeholder';
 
-import Condition from '../../../../../components/react-admin/Condition';
+import Condition from '../../../../../../components/react-admin/Condition';
 
 
 const LegendTab = () => {

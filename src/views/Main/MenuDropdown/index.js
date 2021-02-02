@@ -6,9 +6,13 @@ import { MenuDropdown } from './MenuDropdown';
 import compose from '../../../utils/compose';
 import { withEnabledModules } from '../../../hoc/withUserSettings';
 
-const componentsToDisplay = ({ user: { modules } }) => ({
-  modules: getComponentsByEnabledModules(modules),
-});
+const componentsToDisplay = ({ user }) => {
+  if (user) {
+    const { modules } = user;
+    return { modules: getComponentsByEnabledModules(modules) };
+  }
+  return { modules: [] };
+};
 
 export default compose(
   connectAuthProvider(componentsToDisplay),

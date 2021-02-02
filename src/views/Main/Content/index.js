@@ -18,9 +18,13 @@ const setLandingModule = ({
   landingModule,
 });
 
-const componentsToDisplay = ({ user: { modules } }) => ({
-  modules: getComponentsByEnabledModules(modules),
-});
+const componentsToDisplay = ({ user }) => {
+  if (user) {
+    const { modules } = user;
+    return { modules: getComponentsByEnabledModules(modules) };
+  }
+  return { modules: [] };
+};
 
 export default compose(
   connectAppProvider(setLandingModule),

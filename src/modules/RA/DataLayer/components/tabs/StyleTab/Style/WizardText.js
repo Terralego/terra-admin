@@ -4,7 +4,7 @@ import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 
-import useSettings from '../../../../../../../hooks/useSettings';
+import useAppSettings from '../../../../../../../hooks/useAppSettings';
 
 import ColorStyleField from './ColorStyleField';
 import SizeStyleField from './SizeStyleField';
@@ -45,7 +45,7 @@ const parseFieldValue = val => `{${val}}`;
 const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
   const translate = useTranslate();
-  const { fontList = defaultFontList } = useSettings();
+  const { fontList = defaultFontList } = useAppSettings();
 
   const fieldChoices = React.useMemo(
     () =>

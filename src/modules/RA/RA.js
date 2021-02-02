@@ -35,7 +35,6 @@ const customDataProvider = compose(
 )(dataProvider);
 
 export const CustomAdmin = ({ locale, permissions, enabledModules = [] }) => {
-  console.log('perms', permissions);
   const history = useHistory();
 
   const i18nProvider = React.useMemo(

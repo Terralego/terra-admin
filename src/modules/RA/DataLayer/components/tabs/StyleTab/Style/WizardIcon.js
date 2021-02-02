@@ -4,7 +4,7 @@ import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 
-import useSettings from '../../../../../../../hooks/useSettings';
+import useAppSettings from '../../../../../../../hooks/useAppSettings';
 import TextStyleField from './TextStyleField';
 import SizeStyleField from './SizeStyleField';
 
@@ -18,7 +18,7 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const [iconChoices, setIconChoices] = React.useState([]);
-  const { spriteBaseUrl = defaultSpriteBaseUrl } = useSettings();
+  const { spriteBaseUrl = defaultSpriteBaseUrl } = useAppSettings();
 
   React.useState(() => {
     let mounted = true;

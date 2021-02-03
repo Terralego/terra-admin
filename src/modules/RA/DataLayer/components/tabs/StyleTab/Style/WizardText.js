@@ -17,7 +17,6 @@ const useStyles = makeStyles(styles);
 const defaultFontList = [
   { id: 'Arial Unicode MS Regular', name: 'Arial Unicode MS Regular' },
   { id: 'Arial Unicode MS Bold', name: 'Arial Unicode MS Bold' },
-  { id: 'Cimson BoldItalic', name: 'Cimson BoldItalic' },
   { id: 'DIN Pro Regular', name: 'DIN Pro Regular' },
   { id: 'DIN Pro Medium', name: 'DIN Pro Medium' },
   { id: 'DIN Pro Bold', name: 'DIN Pro Bold' },
@@ -30,7 +29,6 @@ const defaultFontList = [
   { id: 'Orbitron Medium', name: 'Orbitron Medium' },
   { id: 'Oswald Medium', name: 'Oswald Medium' },
   { id: 'Overpass Mono SemiBold', name: 'Overpass Mono SemiBold' },
-  { id: 'Press Start', name: 'Press Start' },
   { id: 'Roboto Mono Medium', name: 'Roboto Mono Medium' },
   { id: 'Roboto Mono Medium Italic', name: 'Roboto Mono Medium Italic' },
   { id: 'Sniglet Regular', name: 'Sniglet Regular' },

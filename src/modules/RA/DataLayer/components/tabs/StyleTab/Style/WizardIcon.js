@@ -31,6 +31,8 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
           name: key,
           ...value,
         }));
+        // Sort by name
+        choices.sort(({ name: name1 }, { name: name2 }) => name1.localeCompare(name2));
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error('Error while getting icons', e);

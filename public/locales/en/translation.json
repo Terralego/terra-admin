@@ -599,14 +599,18 @@
         "tab": "Legends",
         "legends": "Show one or more legends",
         "title": "Legend title",
-        "template": "Legend content template (optional)",
-        "items": "Legend items (Optional)",
-        "help": {
-          "title": "3 required elements in legend :",
-          "text": "<ul><li>label : name</li><li>shape : symbol (square for polygons and lines, circle for points)</li><li>color : HEX, RGB or name</li></ul><p>Example:</p><pre>\n[{\n  \"label\": \"cities\",\n  \"shape\": \"square\",\n  \"color\": \"red\"\n}]\n</pre>"
-        },
-        "stackedCircles": "Stacked circles",
-        "advanced": "Advanced mode"
+        "items": "Legend items",
+        "shape": "Shape",
+        "stroke": "Stroke",
+        "size": "Size",
+        "width": "Width",
+        "item-label": "Label",
+        "comment": "Footer",
+        "square": "Squares",
+        "line": "Lines",
+        "circle": "Circles",
+        "stacked-circle": "Stacked circles",
+        "automsg": "This content is automatically generated, can't be edited."
       },
       "search": {
         "main-field": {

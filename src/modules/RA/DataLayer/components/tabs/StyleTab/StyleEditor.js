@@ -1,6 +1,7 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 
-import { useTranslate, RadioButtonGroupInput } from 'react-admin';
+import { useTranslate, RadioButtonGroupInput, TextInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 
@@ -27,11 +28,13 @@ const useStyles = makeStyles(styles);
 const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
   const classes = useStyles();
   const translate = useTranslate();
+  const [defaultUid] = React.useState(`${uuid()}`);
 
   const styleType = getShapeFromGeomType(geomType);
 
   return (
     <div className={classes.styleEditor}>
+      <TextInput source={`${path}.uid`} defaultValue={defaultUid} style={{ display: 'block' }} />
       <div className="wizard-select">
         <RadioButtonGroupInput
           source={`${path}.type`}

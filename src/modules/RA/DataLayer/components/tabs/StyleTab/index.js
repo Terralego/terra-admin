@@ -32,7 +32,10 @@ const StyleTab = ({ external, ...rest }) => {
   const { input: { value: mainStyle } } = useField('main_style');
 
   const getValuesOfProperty = React.useCallback(property =>
-    dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: sourceId, property }),
+    dataProvider('PROPERTY_VALUES', RES_DATASOURCE, { id: sourceId, property }).then(result => {
+      result.sort((name1, name2) => `${name1}`.localeCompare(`${name2}`));
+      return result;
+    }),
   [dataProvider, sourceId]);
 
   if (geomType === undefined || !sourceId) {

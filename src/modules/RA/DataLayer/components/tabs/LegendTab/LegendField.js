@@ -6,67 +6,81 @@ import {
   SimpleFormIterator,
   SelectInput,
   NumberInput,
+  required,
+  useTranslate,
 } from 'react-admin';
 
 import Typography from '@material-ui/core/Typography';
 import {  Field } from 'react-final-form';
 import FormLabel from '@material-ui/core/FormLabel';
 
-
 import Condition from '../../../../../../components/react-admin/Condition';
-
 import ColorPicker from '../../../../../../components/react-admin/ColorPicker';
 
-const LegendItemInput = ({ source }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
-    <FormLabel>Shape</FormLabel>
-    <Field name={`${source}.color`} defaultValue="#00000000">
-      {({ input: { onChange, value } }) => (
-        <ColorPicker value={value || '#000000'} onChange={onChange} />
-      )}
-    </Field>
-    <NumberInput source={`${source}.size`} label="Size" style={{ width: '6em' }} helperText={false} />
-    <FormLabel>Stroke</FormLabel>
-    <Field name={`${source}.strokeColor`} defaultValue={undefined}>
-      {({ input: { onChange, value } }) => (
-        <ColorPicker value={value || '#00000000'} onChange={onChange} />
-      )}
-    </Field>
-    <NumberInput source={`${source}.strokeWidth`} label="Width" style={{ width: '6em' }} helperText={false} />
-    <TextInput source={`${source}.label`} label="Label" helperText={false} />
-  </div>
-);
 
-const LegendField = ({ source }) => (
-  <>
-    <TextInput source={`${source}.title`} label="title" />
+const isRequired = [required()];
 
-    <SelectInput
-      label="shape"
-      source={`${source}.shape`}
-      choices={[
-        { id: 'square', name: 'Square' },
-        { id: 'circle', name: 'circle' },
-        { id: 'stackedCircle', name: 'stackedCircle' },
-        { id: 'line', name: 'line' },
-      ]}
-      helperText={false}
-      initialValue="none"
-      style={{ display: 'block' }}
-    />
-    <Condition when={`${source}.auto`} is={val => !val}>
-      <ArrayInput source={`${source}.items`}>
-        <SimpleFormIterator>
-          <LegendItemInput />
-        </SimpleFormIterator>
-      </ArrayInput>
-    </Condition>
+const LegendItemInput = ({ source }) => {
+  const translate = useTranslate();
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
+      <FormLabel>{translate('datalayer.form.legend.shape')}</FormLabel>
+      <Field name={`${source}.color`} defaultValue="#00000000">
+        {({ input: { onChange, value } }) => (
+          <ColorPicker value={value || '#000000'} onChange={onChange} />
+        )}
+      </Field>
+      <NumberInput source={`${source}.size`} label="datalayer.form.legend.size" style={{ width: '8em' }} helperText={false} />
+      <FormLabel>{translate('datalayer.form.legend.stroke')}</FormLabel>
+      <Field name={`${source}.strokeColor`} defaultValue={undefined}>
+        {({ input: { onChange, value } }) => (
+          <ColorPicker value={value || '#00000000'} onChange={onChange} />
+        )}
+      </Field>
+      <NumberInput source={`${source}.strokeWidth`} label="datalayer.form.legend.width" style={{ width: '8em' }} helperText={false} />
+      <TextInput source={`${source}.label`} label="datalayer.form.legend.item-label" helperText={false} />
+    </div>
+  );
+};
 
-    <Condition when={`${source}.auto`} is>
-      <Typography>This legend is auto generated.</Typography>
-    </Condition>
-    <TextInput source={`${source}.comment`} label="Comment" />
-  </>
-);
+const LegendField = ({ source }) => {
+  const translate = useTranslate();
+  return (
+    <div>
+      <TextInput
+        source={`${source}.title`}
+        label="datalayer.form.legend.title"
+        validate={isRequired}
+      />
 
-export default LegendField;
+      <Condition when={`${source}.auto`} is={val => !val}>
+        <SelectInput
+          label="datalayer.form.legend.shape"
+          source={`${source}.shape`}
+          choices={[
+            { id: 'square', name: 'datalayer.form.legend.square' },
+            { id: 'line', name: 'datalayer.form.legend.line' },
+            { id: 'circle', name: 'datalayer.form.legend.circle' },
+            { id: 'stackedCircle', name: 'datalayer.form.legend.stacked-circle' },
+          ]}
+          helperText={false}
+          validate={isRequired}
+          initialValue="square"
+          style={{ display: 'block' }}
+        />
+        <ArrayInput source={`${source}.items`} label="datalayer.form.legend.items">
+          <SimpleFormIterator>
+            <LegendItemInput />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </Condition>
+
+      <Condition when={`${source}.auto`} is>
+        <Typography>{translate('datalayer.form.legend.automsg')}</Typography>
+      </Condition>
+      <TextInput source={`${source}.comment`} label="datalayer.form.legend.comment" />
+    </div>
+  );
+};
+
+export default React.memo(LegendField);

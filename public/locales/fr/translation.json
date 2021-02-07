@@ -601,14 +601,18 @@
         "tab": "Légendes",
         "legends": "Afficher une ou plusieurs légendes",
         "title": "Titre de la légende",
-        "template": "Contenu mis en page de la légende (optionnel)",
-        "items": "Items de la légende (Optionnel)",
-        "help": {
-          "title": "3 élements nécessaires dans la légende :",
-          "text": "<ul><li>label : nom</li><li>shape : type de symbole (square pour les polygone et les lignes, circle pour les points)</li><li>color : HEX, RGB ou nom</li></ul><p>Exemple:</p><pre>\n[{\n  \"label\": \"communes\",\n  \"shape\": \"square\",\n  \"color\": \"red\"\n}]\n</pre>"
-        },
-        "stackedCircles": "Cercles empilés",
-        "advanced": "Mode expert"
+        "items": "Lignes de légende",
+        "shape": "Forme",
+        "stroke": "Trait",
+        "size": "Taille",
+        "width": "Largeur",
+        "item-label": "Libéllé",
+        "comment": "Pied de légende",
+        "square": "Carrés",
+        "line": "Lignes",
+        "circle": "Cercles",
+        "stacked-circle": "Cercles empilés",
+        "automsg": "Le contenu de cette légende est automatiquement généré et ne peut être modifié."
       },
       "search": {
         "main-field": {

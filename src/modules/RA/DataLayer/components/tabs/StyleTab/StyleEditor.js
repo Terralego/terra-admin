@@ -34,7 +34,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
 
   return (
     <div className={classes.styleEditor}>
-      <TextInput source={`${path}.uid`} defaultValue={defaultUid} style={{ display: 'block' }} />
+      <TextInput source={`${path}.uid`} defaultValue={defaultUid} style={{ display: 'none' }} />
       <div className="wizard-select">
         <RadioButtonGroupInput
           source={`${path}.type`}

@@ -598,6 +598,7 @@
       "legend": {
         "tab": "Legends",
         "legends": "Show one or more legends",
+        "no-legend": "To add a legend, click on",
         "title": "Legend title",
         "items": "Legend items",
         "shape": "Shape",

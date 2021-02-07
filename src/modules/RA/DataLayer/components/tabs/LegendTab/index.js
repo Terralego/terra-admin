@@ -1,16 +1,21 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 
 import { useTranslate } from 'react-admin';
 import { useField, useForm } from 'react-final-form';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { SortableContainer } from 'react-sortable-hoc';
+
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/AddCircleOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpIcon from '@material-ui/icons/ArrowUpward';
 import DownIcon from '@material-ui/icons/ArrowDownward';
-import { v4 as uuid } from 'uuid';
+
+import Placeholder from '../../../../../../components/Placeholder';
+
 import LegendField from './LegendField';
 
 
@@ -32,9 +37,14 @@ const useStyles = makeStyles({
       borderRadius: '0.5em',
     },
   },
-});
+  placeholder: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '2em',
 
-const defaultMap = [];
+  },
+});
 
 const LegendTab = SortableContainer(() => {
   const classes = useStyles();
@@ -64,6 +74,21 @@ const LegendTab = SortableContainer(() => {
     newLegends.push({ uid: uuid() });
     form.change('legends', newLegends);
   }, [form]);
+
+  // No legend yet
+  if (!legends || legends.length === 0) {
+    return (
+      <Placeholder className={classes.placeholder}>
+        <Typography variant="h5" component="h2">{translate('datalayer.form.legend.no-legend')}</Typography>
+        <Button
+          onClick={handleAdd}
+        >
+          <AddIcon />
+          {translate('ra.action.add')}
+        </Button>
+      </Placeholder>
+    );
+  }
 
   return (
     <>

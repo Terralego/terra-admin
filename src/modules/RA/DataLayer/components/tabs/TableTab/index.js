@@ -43,6 +43,22 @@ const TableConfigTabContent = props => {
       </Placeholder>
     );
   }
+  // No legend yet
+  if (!tableEnable) {
+    return (
+      <Placeholder>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1em', alignItems: 'center' }}>
+          <Typography variant="h5" component="h2">{translate('datalayer.form.table.no-table')}</Typography>
+          <BooleanInput
+            source="table_enable"
+            label="datalayer.form.table.allow"
+            onChange={onTableEnableChange}
+          />
+        </div>
+      </Placeholder>
+    );
+  }
+
   return (
     <>
       <BooleanInput

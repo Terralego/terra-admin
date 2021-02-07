@@ -40,15 +40,17 @@ const useStyles = makeStyles({
 
 const popover = {
   position: 'absolute',
-  zIndex: '2',
+  zIndex: '20',
 };
 
 const cover = {
   position: 'fixed',
+  backgroundColor: '#00000050',
   top: '0',
   right: '0',
   bottom: '0',
   left: '0',
+  zIndex: 10,
 };
 
 const presetColors = [];
@@ -72,7 +74,7 @@ const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => 
   );
 
   return (
-    <>
+    <div style={{ position: 'relative', display: 'inline' }}>
       <div
         className={classes.color}
         onClick={() => !disabled && setShowPicker(prevShowPicker => !prevShowPicker)}
@@ -80,8 +82,9 @@ const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => 
         <div />
       </div>
       {showPicker && (
+      <>
+        <div style={cover} onClick={() => setShowPicker(false)} />
         <div style={popover} className="popover">
-          <div style={cover} onClick={() => setShowPicker(false)} />
           <SketchPicker
             color={currentColor}
             presetColors={presetColors}
@@ -89,8 +92,9 @@ const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => 
             onChangeComplete={handleChangeComplete}
           />
         </div>
+      </>
       )}
-    </>
+    </div>
   );
 };
 

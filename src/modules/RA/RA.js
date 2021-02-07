@@ -11,6 +11,7 @@ import dataProvider from '../../services/react-admin/dataProvider';
 import withResourceEndpoint from '../../services/react-admin/withResourceEndpoint';
 import enhanceDataProvider from '../../services/react-admin/enhanceDataProvider';
 import sourceDataProvider from '../../services/react-admin/sourceDataProvider';
+import patchLayerDataProvider from '../../services/react-admin/patchLayerDataProvider';
 import patchPictureDataProvider from '../../services/react-admin/patchPictureDataProvider';
 import toMultipart from '../../services/react-admin/toMultipart';
 
@@ -29,6 +30,7 @@ const sanitizeProps = ({ enpoint, moduleName, requiredPermissions, ...rest }) =>
 const customDataProvider = compose(
   withResourceEndpoint,
   patchPictureDataProvider,
+  patchLayerDataProvider,
   toMultipart,
   sourceDataProvider,
   enhanceDataProvider,

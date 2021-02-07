@@ -42,7 +42,6 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     alignItems: 'center',
     gap: '2em',
-
   },
 });
 

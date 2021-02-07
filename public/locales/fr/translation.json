@@ -497,6 +497,8 @@
       },
       "table": {
         "tab": "Table",
+        "no-table": "Pour activer la table, cliquez sur",
+        "allow": "Activer",
         "all-fields": "Configuration des champs",
         "no-field": "Aucun champ pour cette source",
         "no-source": "Veuillez choisir une source de données avant de configurer la table",

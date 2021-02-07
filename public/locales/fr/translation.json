@@ -599,6 +599,7 @@
       "data-sample": "Extrait des données",
       "legend": {
         "tab": "Légendes",
+        "no-legend": "Pour ajouter une légende, cliquez sur",
         "legends": "Afficher une ou plusieurs légendes",
         "title": "Titre de la légende",
         "items": "Lignes de légende",

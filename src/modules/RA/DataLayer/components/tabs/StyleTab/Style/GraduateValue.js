@@ -30,7 +30,7 @@ const GraduateValue = ({ path, Component = ValueListField, defaultValue = defVal
             { id: 'jenks', name: translate('style-editor.graduate.method.jenks') },
             { id: 'quantile', name: translate('style-editor.graduate.method.quantiles') },
             { id: 'equal_interval', name: translate('style-editor.graduate.method.equal-interval') },
-            /* { id: 'manual', name: translate('style-editor.graduate.method.manual') }, */
+            { id: 'manual', name: translate('style-editor.graduate.method.manual') },
           ]}
         />
       </div>
@@ -38,7 +38,7 @@ const GraduateValue = ({ path, Component = ValueListField, defaultValue = defVal
       <FormLabel>{translate('style-editor.graduate.steps')}</FormLabel>
       <Field name={`${path}.values`} defaultValue={defaultValue}>
         {({ input: { value, onChange } }) => (
-          <Component value={value} onChange={onChange} />
+          <Component value={value} onChange={onChange} path={path} />
         )}
       </Field>
     </>

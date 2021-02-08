@@ -45,12 +45,12 @@ const ColorListField = ({ path, value, onChange = () => {}, maxClasses = DEFAULT
           <Condition when={`${path}.method`} is="manual">
             <Field
               name={`${path}.boundaries[${index}]`}
-              validate={number()}
               parse={v => Number(v)}
-              initialValue=""
             >
               {({ meta, input: { value: boundValue, onChange: onBoundChange } }) => (
                 <TextField
+                  style={{ width: '10%' }}
+                  type="number"
                   label={translate('datalayer.form.styles.step')}
                   value={boundValue}
                   onChange={onBoundChange}
@@ -70,13 +70,13 @@ const ColorListField = ({ path, value, onChange = () => {}, maxClasses = DEFAULT
           >
             <Field
               name={`${path}.boundaries[${value.length}]`}
-              validate={number()}
-              initialValue=""
               parse={v => Number(v)}
             >
               {({ meta, input: { value: boundValue, onChange: onBoundChange } }) => (
                 <TextField
-                  label={translate('datalayer.form.styles.boundary')}
+                  type="number"
+                  style={{ width: '10%' }}
+                  label={translate('datalayer.form.styles.step')}
                   value={boundValue}
                   onChange={onBoundChange}
                   error={meta.error && meta.touched}

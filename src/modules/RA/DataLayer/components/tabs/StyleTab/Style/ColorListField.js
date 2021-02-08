@@ -51,7 +51,7 @@ const ColorListField = ({ path, value, onChange = () => {}, maxClasses = DEFAULT
             >
               {({ meta, input: { value: boundValue, onChange: onBoundChange } }) => (
                 <TextField
-                  label={translate('datalayer.form.styles.boundary')}
+                  label={translate('datalayer.form.styles.step')}
                   value={boundValue}
                   onChange={onBoundChange}
                   error={meta.error && meta.touched}

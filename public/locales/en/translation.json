@@ -618,7 +618,7 @@
         "tab": "Style",
         "no-source": "Please select a source before configuring style",
         "secondarylabels": "Secondary styles",
-        "boundary": "boundary"
+        "step": "Step"
       }
     }
   },

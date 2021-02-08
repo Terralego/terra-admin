@@ -3,11 +3,13 @@ import React, { useState, useCallback } from 'react';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Select from '@material-ui/core/Select';
-import  AddIcon from '@material-ui/icons/Add';
+import MenuItem from '@material-ui/core/MenuItem';
+import AddIcon from '@material-ui/icons/Add';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 import { useTranslate } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
+import FieldOption from './FieldOption';
 
 const useStyles = makeStyles({
   modal: {
@@ -64,15 +66,23 @@ const AddField = ({ fields, onAdd, textContent, iconOnly, variant }) => {
       <Modal open={showModal}>
         <form className={classes.modal} onSubmit={handleSubmit} onReset={handleReset}>
           <div className={classes.fieldSelect}>
-            <Select native name="selected" required>
-              <option value="">{translate(textContent.selectField)}</option>
-              {fields.map(field => (
-                <option
-                  key={field.sourceFieldId}
-                  value={field.sourceFieldId}
+
+            <Select name="selected" required style={{ width: '80%' }}>
+              <MenuItem value="">{translate(textContent.selectField)}</MenuItem>
+              {fields.map(f => (
+                <MenuItem
+                  key={f.sourceFieldId}
+                  value={f.sourceFieldId}
                 >
-                  {field.label} ({field.name})
-                </option>
+                  <FieldOption record={
+                      {
+                        label: f.label || f.name,
+                        name: f.name,
+                        dataType: f.data_type,
+                      }
+                    }
+                  />
+                </MenuItem>
               ))}
             </Select>
           </div>

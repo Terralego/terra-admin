@@ -4,6 +4,7 @@ import { useTranslate, required } from 'react-admin';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import FieldOption from '../FieldOption';
 
 
 const FieldSelect = ({
@@ -64,7 +65,14 @@ const FieldSelect = ({
               key={f.sourceFieldId}
               value={f.sourceFieldId}
             >
-              {f.label} ({f.name})
+              <FieldOption record={
+                  {
+                    label: f.label || f.name,
+                    name: f.name,
+                    dataType: f.data_type,
+                  }
+                }
+              />
             </MenuItem>
           ))}
         </TextField>

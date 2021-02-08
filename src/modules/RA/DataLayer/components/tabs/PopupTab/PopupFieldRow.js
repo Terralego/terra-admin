@@ -120,6 +120,7 @@ export const PopupFieldRow = React.memo(({
           value={popupField.default || ''}
           variant="filled"
           fullWidth
+          helperText={false}
         />
       </FormControl>
       {isNumber && (

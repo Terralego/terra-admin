@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Field, useField } from 'react-final-form';
 import { SelectInput, RadioButtonGroupInput, BooleanInput, useTranslate, required } from 'react-admin';
 import randomColor from 'randomcolor';
+import Chip from '@material-ui/core/Chip';
 
 import { fieldTypes } from '../../../../../DataSource';
 import Condition from '../../../../../../../components/react-admin/Condition';
@@ -19,6 +20,9 @@ import styles from './styles';
 const isRequired = [required()];
 
 const useStyles = makeStyles(styles);
+
+const FieldOption = ({ record: { label, name, type } }) =>
+  <span>{label} - <em style={{ fontSize: '0.8em' }}>{name}</em> <Chip size="small" label={type} /></span>;
 
 const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
@@ -57,9 +61,17 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
             style={{ minWidth: '20em', margin: '1em 0' }}
             label="style-editor.field"
             validate={isRequired}
+            optionText={<FieldOption />}
             choices={fields
               .filter(field => ['String', 'Integer', 'Float'].includes(fieldTypes[field.data_type]))
-              .map(field => ({ id: field.name, name: `${field.label || field.name} (${fieldTypes[field.data_type]})` }))}
+              .map(field => (
+                {
+                  id: field.name,
+                  label: `${field.label || field.name}`,
+                  name: field.name,
+                  type: fieldTypes[field.data_type],
+                }
+              ))}
           />
 
           <Field name={`${path}.field`} subscription={{ value: true }}>

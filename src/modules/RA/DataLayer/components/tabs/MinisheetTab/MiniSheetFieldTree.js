@@ -118,17 +118,14 @@ const MiniSheetFieldTree = ({
         <FormControl className={classes.formControl}>
           <Field
             name="minisheet_config.wizard.title.default"
-            validate={required(translate('datalayer.form.error-required'))}
             parse={v => v}
           >
-            {({ input: { value = '', onChange }, meta }) => (
+            {({ input: { value = '', onChange } }) => (
               <TextField
                 variant="outlined"
                 label={translate('datalayer.form.minisheet.title-field.default')}
                 value={value}
                 onChange={onChange}
-                error={meta.error && meta.touched}
-                helperText={(meta.error && meta.touched) ? meta.error : null}
                 fullWidth
               />
             )}

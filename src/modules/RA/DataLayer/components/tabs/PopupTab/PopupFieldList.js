@@ -55,11 +55,8 @@ const PopupFieldList = ({ fields, popupFields = [] }) => {
     }
   };
 
-  const validateTitle = React.useCallback(({ default: defaultTitle, sourceFieldId } = {}) => {
+  const validateTitle = React.useCallback(({ sourceFieldId } = {}) => {
     const errors = {};
-    if (!defaultTitle) {
-      errors.default = translate('datalayer.form.error-required');
-    }
     if (!sourceFieldId) {
       errors.sourceFieldId = translate('datalayer.form.error-required');
     }

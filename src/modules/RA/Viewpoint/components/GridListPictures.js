@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { translate } from 'react-admin';
+import { translate, useListContext } from 'react-admin';
 
 import MuiGridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -54,76 +54,81 @@ const GridList = ({
   classes,
   ids,
   data,
-  basePath,
   width,
   location,
   viewpointId,
-}) => (
-  <div className={classes.root}>
-    <MuiGridList
-      cellHeight={180}
-      cols={getColsForWidth(width)}
-      className={classes.gridList}
-    >
-      {ids.map(id => {
-        const {
-          file,
-          properties = {},
-          owner: { properties: ownerProperties = {} } = {},
-          // state,
-          id: pictId,
-        } = data[id] || {};
-        return (
-          <GridListTile
-            component={Link}
-            key={id}
-            to={{
-              pathname: linkToRecord(basePath, pictId),
-              state: {
-                redirect: location.pathname,
-              },
-            }}
-          >
-            {file && <img src={file.list} alt={properties.index} />}
-            <GridListTileBar
-              className={classes.tileBar}
-              title={properties.index}
-              subtitle={(
-                <span>
-                  {ownerProperties.name}
-                  {/* &nbsp;|&nbsp;
+}) => {
+  const {
+    basePath,
+  } = useListContext();
+
+  return (
+    <div className={classes.root}>
+      <MuiGridList
+        cellHeight={180}
+        cols={getColsForWidth(width)}
+        className={classes.gridList}
+      >
+        {ids.map(id => {
+          const {
+            file,
+            properties = {},
+            owner: { properties: ownerProperties = {} } = {},
+            // state,
+            id: pictId,
+          } = data[id] || {};
+          return (
+            <GridListTile
+              component={Link}
+              key={id}
+              to={{
+                pathname: linkToRecord(basePath, pictId),
+                state: {
+                  redirect: location.pathname,
+                },
+              }}
+            >
+              {file && <img src={file.list} alt={properties.index} />}
+              <GridListTileBar
+                className={classes.tileBar}
+                title={properties.index}
+                subtitle={(
+                  <span>
+                    {ownerProperties.name}
+                    {/* &nbsp;|&nbsp;
                   {t('resources.picture.fields.properties.state')}&nbsp;:{' '}
                   {state} */}
-                </span>
+                  </span>
               )}
-              actionIcon={(
-                <IconButton>
-                  <EditIcon color="secondary" />
-                </IconButton>
+                actionIcon={(
+                  <IconButton>
+                    <EditIcon color="secondary" />
+                  </IconButton>
               )}
-            />
-          </GridListTile>
-        );
-      })}
+              />
+            </GridListTile>
+          );
+        })}
 
-      <GridListTile
-        component={Link}
-        key="add"
-        to={{
-          pathname: `/${RES_PICTURE}/create`,
-          state: {
-            record: { viewpoint: viewpointId },
-            redirect: location.pathname,
-          },
-        }}
-      >
-        <IconButton>
-          <IconContentAdd />
-        </IconButton>
-      </GridListTile>
-    </MuiGridList>
-  </div>
-);
+        <GridListTile
+          component={Link}
+          key="add"
+          to={{
+            pathname: `/${RES_PICTURE}/create`,
+            state: {
+              record: { viewpoint: viewpointId },
+              redirect: location.pathname,
+            },
+          }}
+        >
+          <IconButton>
+            <IconContentAdd />
+          </IconButton>
+        </GridListTile>
+      </MuiGridList>
+    </div>
+  );
+};
 
 export default compose(
   translate,

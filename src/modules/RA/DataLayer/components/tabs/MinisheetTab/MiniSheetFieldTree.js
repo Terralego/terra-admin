@@ -16,6 +16,8 @@ import AddMiniSheetField from './AddMiniSheetField';
 import SectionToolbar from './SectionToolbar';
 import FieldToolbar from './FieldToolbar';
 
+import FieldOption from '../FieldOption';
+
 import 'react-sortable-tree/style.css';
 
 const useStyles = makeStyles({
@@ -106,9 +108,19 @@ const MiniSheetFieldTree = ({
                 select
               >
                 <MenuItem value="">{translate('datalayer.form.minisheet.select-field')}</MenuItem>
-                {fields.map(field => (
-                  <MenuItem value={field.sourceFieldId} key={field.sourceFieldId}>
-                    {field.name} ({field.label})
+                {fields.map(f => (
+                  <MenuItem
+                    key={f.sourceFieldId}
+                    value={f.sourceFieldId}
+                  >
+                    <FieldOption record={
+                        {
+                          label: f.label || f.name,
+                          name: f.name,
+                          dataType: f.data_type,
+                        }
+                      }
+                    />
                   </MenuItem>
                 ))}
               </TextField>

@@ -4,11 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Field, useField } from 'react-final-form';
 import { SelectInput, RadioButtonGroupInput, BooleanInput, useTranslate, required } from 'react-admin';
 import randomColor from 'randomcolor';
-import Chip from '@material-ui/core/Chip';
 
 import { fieldTypes } from '../../../../../DataSource';
 import Condition from '../../../../../../../components/react-admin/Condition';
 import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
+import FieldOption from '../../FieldOption';
 
 import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
@@ -20,9 +20,6 @@ import styles from './styles';
 const isRequired = [required()];
 
 const useStyles = makeStyles(styles);
-
-const FieldOption = ({ record: { label, name, type } }) =>
-  <span>{label} - <em style={{ fontSize: '0.8em' }}>{name}</em> <Chip size="small" label={type} /></span>;
 
 const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();

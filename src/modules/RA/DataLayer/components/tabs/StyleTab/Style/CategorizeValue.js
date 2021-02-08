@@ -1,18 +1,58 @@
 
 import React from 'react';
-
+import get from 'lodash.get';
 import { useTranslate } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
-import { Field, useField } from 'react-final-form';
+import { Field, useField, useForm } from 'react-final-form';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import { usePrevious } from '../../../../../../../utils/hooks';
+import DragHandle from '../../../DragHandle';
 
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
 const DEFAULT_MAX_CATEGORIES = 20;
+
+const CategorizedValue = ({ path, category, Component }) => {
+  const translate = useTranslate();
+  const classes = useStyles();
+
+  return (
+    <div className={classes.categoryLine}>
+      <DragHandle withBorder />
+      <Field name={path}>
+        {({ input: { value, onChange } }) => (
+          <Component
+            value={value}
+            onChange={onChange}
+          />
+        )}
+      </Field>
+      <span>
+        {category.name || translate('style-editor.categorize.empty-category')}
+      </span>
+    </div>
+  );
+};
+
+const SortableCategorizeValue = SortableElement(CategorizedValue);
+
+const SortableComponentList = SortableContainer(({ values, path, Component }) => (
+  <div>
+    {values.map((category, index) => (
+      <SortableCategorizeValue
+        key={category.name}
+        path={`${path}.categories[${index}].value`}
+        category={category}
+        Component={Component}
+        index={index}
+      />
+    ))}
+  </div>
+));
 
 const CategorizeValue = ({
   path,
@@ -22,8 +62,8 @@ const CategorizeValue = ({
   defaultValueGenerator,
 }) => {
   const translate = useTranslate();
-  const classes = useStyles();
   const mountedRef = React.useRef(true);
+  const form = useForm();
   const [tooManyValues, setTooManyValues] = React.useState(false);
   const [valuesLoaded, setValuesLoaded] = React.useState(false);
   const { input: { value: field } } = useField(`${path}.field`);
@@ -83,6 +123,15 @@ const CategorizeValue = ({
     valuesLoaded,
   ]);
 
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    const { values } = form.getState();
+    const { categories } = get(values, path);
+    if (oldIndex !== newIndex) {
+      categories.splice(newIndex, 0, categories.splice(oldIndex, 1)[0]);
+      form.change(`${path}.categories`, [...categories]); // we need to create a new array or it does not work
+    }
+  };
+
   if (tooManyValues) {
     return <p>{translate('style-editor.categorize.too-many-values')}</p>;
   }
@@ -96,21 +145,16 @@ const CategorizeValue = ({
       <FormLabel>
         {translate('style-editor.categorize.categories')}
       </FormLabel>
-      {valueList && valueList.map((category, index) => (
-        <div key={category.name} className={classes.categoryLine}>
-          <Field name={`${path}.categories[${index}].value`}>
-            {({ input: { value, onChange } }) => (
-              <Component
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          </Field>
-          <span>
-            {category.name || translate('style-editor.categorize.empty-category')}
-          </span>
-        </div>
-      ))}
+      {valueList && (
+      <SortableComponentList
+        path={path}
+        Component={Component}
+        values={valueList}
+        onSortEnd={onSortEnd}
+        lockAxis="y"
+        useDragHandle
+      />
+      )}
     </div>
   );
 };

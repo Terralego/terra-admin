@@ -99,7 +99,6 @@ export const PopupFieldRow = React.memo(({
           value={popupField.prefix || ''}
           variant="filled"
           fullWidth
-          required
         />
       </FormControl>
       )}
@@ -111,7 +110,6 @@ export const PopupFieldRow = React.memo(({
           value={popupField.suffix || ''}
           variant="filled"
           fullWidth
-          required
         />
       </FormControl>
       )}
@@ -124,7 +122,6 @@ export const PopupFieldRow = React.memo(({
           helperText={(meta.error.default && meta.touched) ? meta.error.default : undefined}
           variant="filled"
           fullWidth
-          required
         />
       </FormControl>
       {isNumber && (

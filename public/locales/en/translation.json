@@ -622,7 +622,8 @@
       "styles": {
         "tab": "Style",
         "no-source": "Please select a source before configuring style",
-        "secondarylabels": "Secondary styles"
+        "secondarylabels": "Secondary styles",
+        "step": "Step"
       }
     }
   },

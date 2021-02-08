@@ -626,7 +626,8 @@
       "styles": {
         "tab": "Style",
         "no-source": "Veuillez choisir une source de données avant de configurer les styles",
-        "secondarylabels": "Styles secondaires"
+        "secondarylabels": "Styles secondaires",
+        "step": "Borne"
       }
     }
   },

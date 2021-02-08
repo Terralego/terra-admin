@@ -91,7 +91,10 @@ const MinisheetTab = () => {
   }, 200), [fields, form, wizard, translate]);
 
   useEffect(() => {
-    if (advanced !== true) {
+    // check for false equality specificaly
+    // for some unresolved reason yet, advanced take <empty string> as a value
+    // when coming from menu (not the case after a reload with F5 for example)
+    if (advanced === false) {
       updateTemplate();
     }
   }, [advanced, updateTemplate, tree, title]);

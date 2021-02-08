@@ -64,7 +64,10 @@ const PopupTab = () => {
   }, 200), [form, popupfields, fields]);
 
   useEffect(() => {
-    if (advanced !== true) {
+    // check for false equality specificaly
+    // for some unresolved reason yet, advanced take <empty string> as a value
+    // when coming from menu (not the case after a reload with F5 for example)
+    if (advanced === false) {
       updateTemplate();
     }
   }, [popupfields, advanced, updateTemplate]);

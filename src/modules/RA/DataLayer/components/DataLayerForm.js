@@ -50,8 +50,7 @@ const DataLayerForm = ({ ...props }) => {
       fields: sourcefields,
       minisheet_config: { wizard: { tree = [] } = {} } = {},
     },
-    errors: { fields = [], minisheet_config: minisheetConfig },
-    touched,
+    errors: { fields = [] },
   }) => {
     const minisheetFieldIds = tree.flatMap(({ children, sourceFieldId }) => {
       if (sourceFieldId) {
@@ -69,9 +68,7 @@ const DataLayerForm = ({ ...props }) => {
     if (fieldsInError.length > 0) {
       inError = true;
     }
-    if (minisheetConfig && touched['minisheet_config.wizard.title']) {
-      inError = true;
-    }
+
     setMiniSheetInError(inError);
   }, [setMiniSheetInError]);
 

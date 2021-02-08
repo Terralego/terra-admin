@@ -99,7 +99,6 @@ export const PopupFieldRow = React.memo(({
           value={popupField.prefix || ''}
           variant="filled"
           fullWidth
-          required
         />
       </FormControl>
       )}
@@ -111,7 +110,6 @@ export const PopupFieldRow = React.memo(({
           value={popupField.suffix || ''}
           variant="filled"
           fullWidth
-          required
         />
       </FormControl>
       )}
@@ -120,11 +118,8 @@ export const PopupFieldRow = React.memo(({
           label={translate('datalayer.form.popup.field.default')}
           onChange={onRowItemChange('default')}
           value={popupField.default || ''}
-          error={meta.error.default && meta.touched}
-          helperText={(meta.error.default && meta.touched) ? meta.error.default : undefined}
           variant="filled"
           fullWidth
-          required
         />
       </FormControl>
       {isNumber && (

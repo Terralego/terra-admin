@@ -63,7 +63,6 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
           label={translate('datalayer.form.minisheet.field.prefix')}
           onChange={onRowItemChange('prefix')}
           value={field.prefix}
-          required
         />
       </FormControl>
       <FormControl className={classes.formControl}>
@@ -71,7 +70,6 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
           label={translate('datalayer.form.minisheet.field.suffix')}
           onChange={onRowItemChange('suffix')}
           value={field.suffix}
-          required
         />
       </FormControl>
       <FormControl className={classes.formControl}>
@@ -79,7 +77,6 @@ const FieldRow = React.memo(({ field, onChange, isFloat, round = 0, onRoundChang
           label={translate('datalayer.form.minisheet.field.default')}
           onChange={onRowItemChange('default')}
           value={field.default}
-          required
         />
       </FormControl>
       {isFloat && (

@@ -620,7 +620,7 @@
         "tab": "Style",
         "no-source": "Veuillez choisir une source de données avant de configurer les styles",
         "secondarylabels": "Styles secondaires",
-        "boundary": "limite"
+        "step": "Borne"
       }
     }
   },

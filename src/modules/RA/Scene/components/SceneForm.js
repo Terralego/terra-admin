@@ -52,8 +52,11 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
 const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
   const { record } = props;
 
+  /* sanitizeEmptyValues is false for this form to prevent
+   * this issue with the layer tree https://github.com/marmelab/react-admin/issues/5427
+   */
   return (
-    <SimpleForm {...props}>
+    <SimpleForm {...props} sanitizeEmptyValues={false}>
       {edit && <TextInput disabled source="id" />}
 
       {isObjectEmpty(record) && (

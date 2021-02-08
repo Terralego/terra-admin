@@ -42,17 +42,15 @@ const patchLegend = ({ stackedCircles, content, source, items = [], ...rest }) =
 
 
 const patchLayerDataProvider = nextDataProvider => async (type, resource, params, meta = {}) => {
-  const { endpoint = resource } = meta;
-
   if (resource === RES_DATALAYER && type === GET_ONE) {
-    return nextDataProvider(type, endpoint, params).then(toBeModified => {
+    return nextDataProvider(type, resource, params, meta).then(toBeModified => {
       // eslint-disable-next-line no-param-reassign
       toBeModified.data.legends = toBeModified.data.legends.map(patchLegend);
       return toBeModified;
     });
   }
 
-  return nextDataProvider(type, endpoint, params);
+  return nextDataProvider(type, resource, params, meta);
 };
 
 export default patchLayerDataProvider;

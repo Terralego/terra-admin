@@ -221,7 +221,7 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
   }, [setLayers]);
 
   useEffect(() => {
-    if (!view || !map) {
+    if (!view) {
       return;
     }
     if (!isFeatureID) {
@@ -238,7 +238,7 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
         translate: t,
       });
     }
-  }, [addControl, isFeatureID, layers, map, onChangeDisplayOfLayers, removeControl, t, view]);
+  }, [addControl, isFeatureID, layers, onChangeDisplayOfLayers, removeControl, t, view]);
 
   const {
     terralego: { map: mapLocale },

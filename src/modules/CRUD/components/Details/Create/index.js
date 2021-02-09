@@ -31,7 +31,6 @@ const CRUDPRoviderGetter = ({
   getSettings,
   getFeaturesList,
   settings,
-  map,
   feature,
   saveFeature,
   errors: {
@@ -42,7 +41,6 @@ const CRUDPRoviderGetter = ({
 }) => ({
   getSettings,
   getFeaturesList,
-  map,
   feature: feature[id] || {},
   saveFeature,
   view: getView(settings, layer),

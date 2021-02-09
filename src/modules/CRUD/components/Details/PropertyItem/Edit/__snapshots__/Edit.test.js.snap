@@ -18,9 +18,9 @@ exports[`should render correctly can edit 1`] = `
     disabled={false}
     fields={
       Object {
-        "geometry": [Function],
-        "rte": [Function],
-        "table": [Function],
+        "GeometryField": [Function],
+        "RTEField": [Function],
+        "TableField": [Function],
       }
     }
     onSubmit={[Function]}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { dataURItoBlob, shouldRender } from 'react-jsonschema-form/lib/utils';
+import { dataURItoBlob, shouldRender } from '@rjsf/core/lib/utils';
 import { Button } from '@blueprintjs/core';
 
 import './styles.scss';

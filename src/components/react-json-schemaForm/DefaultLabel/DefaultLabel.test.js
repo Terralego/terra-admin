@@ -3,9 +3,9 @@ import renderer from 'react-test-renderer';
 import DefaultLabel from './DefaultLabel';
 
 
-jest.mock('react-jsonschema-form/lib/components/fields/DescriptionField', () => () => <div>Description</div>);
+jest.mock('@rjsf/core/lib/components/fields/DescriptionField', () => () => <div>Description</div>);
 
-jest.mock('react-jsonschema-form/lib/utils', () => ({
+jest.mock('@rjsf/core/lib/utils', () => ({
   isMultiSelect: (schema, bool = true) => bool,
   getUiOptions: () => true,
   isFilesArray: (schema, uiSchema, bool = true) => bool,

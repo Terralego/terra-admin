@@ -5,10 +5,15 @@ import Edit from './Edit';
 
 jest.mock('@blueprintjs/core', () => ({
   // eslint-disable-next-line react/button-has-type
-  Button: ({ children, ...props }) => <button {...props}>{children}</button>,
+  Button: props => <button {...props} />,
 }));
-jest.mock('react-jsonschema-form', () => ({ children, ...props }) => <form {...props}>{children}</form>);
-jest.mock('../../../../../../components/react-json-schemaForm/GeometryField', () => props => <div {...props} />);
+jest.mock('@rjsf/core', () => props => <form {...props} />);
+jest.mock('../../../../../../components/react-json-schemaForm/FileWidget', () => props => <form {...props} />);
+jest.mock('../../../../../../components/react-json-schemaForm', () => ({
+  GeometryField: props => <div {...props} />,
+  RTEField: props => <div {...props} />,
+  TableField: props => <div {...props} />,
+}));
 
 const props = {
   editedItem: '',

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DefaultDescriptionField from 'react-jsonschema-form/lib/components/fields/DescriptionField';
+import DefaultDescriptionField from '@rjsf/core/lib/components/fields/DescriptionField';
 import {
   isMultiSelect,
   getUiOptions,
   isFilesArray,
-} from 'react-jsonschema-form/lib/utils';
+} from '@rjsf/core/lib/utils';
 
 const REQUIRED_FIELD_SYMBOL = '*';
 

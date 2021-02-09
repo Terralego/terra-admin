@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
-import Form from 'react-jsonschema-form';
+import Form from '@rjsf/core';
 import { requiredProperties } from '../../../../services/utils';
 import customFields from '../../../../../../components/react-json-schemaForm';
 import FileWidget from '../../../../../../components/react-json-schemaForm/FileWidget';

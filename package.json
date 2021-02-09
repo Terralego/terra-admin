@@ -50,7 +50,6 @@
     "react-final-form": "^6.5.1",
     "react-helmet": "^5.2.1",
     "react-i18next": "^11.7.2",
-    "react-jsonschema-form": "^1.8.1",
     "react-mapbox-gl": "^4.8.6",
     "react-paginate": "^6.5.0",
     "react-router": "^5.2.0",

@@ -19,6 +19,9 @@ const DataLayerForm = ({ ...props }) => {
   const [miniSheetInError, setMiniSheetInError] = React.useState(false);
   const [tableInError, setTableInError] = React.useState(false);
   const [filterInError, setFilterInError] = React.useState(false);
+  const [legendInError, setLegendInError] = React.useState(false);
+  const [styleInError, setStyleInError] = React.useState(false);
+  const [definitionInError, setDefinitionInError] = React.useState(false);
 
   const onPopupErrorChange = React.useCallback(({
     values: {
@@ -86,19 +89,53 @@ const DataLayerForm = ({ ...props }) => {
     setFilterInError(someLabelMissing);
   }, [setFilterInError]);
 
+  const onLegendErrorChange = React.useCallback(({ errors }) => {
+    setLegendInError('legends' in errors);
+  }, [setLegendInError]);
+
+  const onStyleErrorChange = React.useCallback(({ errors }) => {
+    setStyleInError('main_style' in errors);
+  }, [setStyleInError]);
+
+  const onDefinitionErrorChange = React.useCallback(({ errors, touched }) => {
+    let inError = false;
+    if (touched.name && ('name' in errors)) {
+      inError = true;
+    }
+    if (touched.source && ('source' in errors)) {
+      inError = true;
+    }
+    setDefinitionInError(inError);
+  }, [setDefinitionInError]);
 
   return (
     <TabbedForm {...props} initialValues={{ fields: [] }}>
-      <FormTab label="datalayer.form.definition">
+      <CustomFormTab
+        label="datalayer.form.definition"
+        inError={definitionInError}
+        onChange={onDefinitionErrorChange}
+      >
         <DefinitionTab onSwitch={setExternal} external={external} />
-      </FormTab>
-      <FormTab disabled={external} label="datalayer.form.styles.tab" path="style">
+      </CustomFormTab>
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.styles.tab"
+        path="style"
+        inError={styleInError}
+        onChange={onStyleErrorChange}
+      >
         <StyleTab external={external} />
-      </FormTab>
+      </CustomFormTab>
 
-      <FormTab disabled={external} label="datalayer.form.legend.tab" path="legend">
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.legend.tab"
+        path="legend"
+        inError={legendInError}
+        onChange={onLegendErrorChange}
+      >
         <LegendTab />
-      </FormTab>
+      </CustomFormTab>
 
       <CustomFormTab
         disabled={external}

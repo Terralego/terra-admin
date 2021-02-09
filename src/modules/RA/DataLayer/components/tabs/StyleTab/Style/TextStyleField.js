@@ -62,6 +62,7 @@ const SizeStyleField = ({
             choices={choices}
             format={format}
             parse={parse}
+            validate={required()}
           />
         ) : (
           <TextInput
@@ -69,6 +70,7 @@ const SizeStyleField = ({
             label="style-editor.fixed.value"
             format={format}
             parse={parse}
+            validate={required()}
           />
         )}
       </Condition>

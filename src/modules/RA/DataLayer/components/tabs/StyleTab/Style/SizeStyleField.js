@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import { fieldTypes } from '../../../../../DataSource';
 
 import Condition from '../../../../../../../components/react-admin/Condition';
+import FieldOption from '../../FieldOption';
 
 import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
@@ -58,9 +59,17 @@ const SizeStyleField = ({ path, fields, getValuesOfProperty }) => {
             style={{ minWidth: '20em', margin: '1em 0' }}
             label="style-editor.field"
             validate={isRequired}
+            optionText={<FieldOption />}
             choices={fields
               .filter(field => ['String', 'Integer', 'Float'].includes(fieldTypes[field.data_type]))
-              .map(field => ({ id: field.name, name: `${field.label || field.name} (${fieldTypes[field.data_type]})` }))}
+              .map(field => (
+                {
+                  id: field.name,
+                  label: `${field.label || field.name}`,
+                  name: field.name,
+                  type: fieldTypes[field.data_type],
+                }
+              ))}
           />
 
           <Field name={`${path}.field`} subscription={{ value: true }}>

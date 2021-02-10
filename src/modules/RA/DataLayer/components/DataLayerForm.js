@@ -30,7 +30,7 @@ const inErrorReducer = (state, { type, payload }) => {
   return { ...state, [type]: Boolean(payload) };
 };
 
-const DataLayerForm = React.memo(({ ...props }) => {
+const DataLayerForm = React.memo(props => {
   const [external, setExternal] = React.useState(true);
   const [errorState, dispatch] = React.useReducer(inErrorReducer, initialErrorState);
 

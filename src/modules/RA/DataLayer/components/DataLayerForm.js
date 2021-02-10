@@ -13,12 +13,26 @@ import MinisheetTab from './tabs/MinisheetTab';
 import FilterTab from './tabs/FilterTab';
 import TableTab from './tabs/TableTab';
 
-const DataLayerForm = ({ ...props }) => {
+const initialErrorState = {
+  definition: false,
+  style: false,
+  legend: false,
+  popup: false,
+  minisheet: false,
+  filter: false,
+  table: false,
+};
+
+const inErrorReducer = (state, { type, payload }) => {
+  if (state[type] === Boolean(payload)) {
+    return state;
+  }
+  return { ...state, [type]: Boolean(payload) };
+};
+
+const DataLayerForm = React.memo(props => {
   const [external, setExternal] = React.useState(true);
-  const [popupInError, setPopupInError] = React.useState(false);
-  const [miniSheetInError, setMiniSheetInError] = React.useState(false);
-  const [tableInError, setTableInError] = React.useState(false);
-  const [filterInError, setFilterInError] = React.useState(false);
+  const [errorState, dispatch] = React.useReducer(inErrorReducer, initialErrorState);
 
   const onPopupErrorChange = React.useCallback(({
     values: {
@@ -42,8 +56,8 @@ const DataLayerForm = ({ ...props }) => {
     if (popupConfig && touched['popup_config.wizard.fields[0]']) {
       inError = true;
     }
-    setPopupInError(inError);
-  }, [setPopupInError]);
+    dispatch({ type: 'popup', payload: inError });
+  }, []);
 
   const onMiniSheetErrorChange = React.useCallback(({
     values: {
@@ -69,43 +83,77 @@ const DataLayerForm = ({ ...props }) => {
       inError = true;
     }
 
-    setMiniSheetInError(inError);
-  }, [setMiniSheetInError]);
+    dispatch({ type: 'minisheet', payload: inError });
+  }, []);
 
   const onTableErrorChange = React.useCallback(({
     values: { fields = [], table_enable: tableEnable },
   }) => {
     const someLabelMissing = tableEnable && fields.some(({ label }) => !label);
-    setTableInError(someLabelMissing);
-  }, [setTableInError]);
+    dispatch({ type: 'table', paylaod: someLabelMissing });
+  }, []);
 
   const onFilterErrorChange = React.useCallback(({ values: { fields = [] } }) => {
     const someLabelMissing = fields
       .filter(({ filter_enable: filterEnable }) => filterEnable)
       .some(({ label }) => !label);
-    setFilterInError(someLabelMissing);
-  }, [setFilterInError]);
+    dispatch({ type: 'filter', payload: someLabelMissing });
+  }, []);
 
+  const onLegendErrorChange = React.useCallback(({ errors }) => {
+    dispatch({ type: 'legend', payload: ('legends' in errors) });
+  }, []);
+
+  const onStyleErrorChange = React.useCallback(({ errors }) => {
+    dispatch({ type: 'style', payload: ('main_style' in errors) });
+  }, []);
+
+  const onDefinitionErrorChange = React.useCallback(({ errors, touched }) => {
+    let inError = false;
+    if (touched.name && ('name' in errors)) {
+      inError = true;
+    }
+    if (touched.source && ('source' in errors)) {
+      inError = true;
+    }
+    dispatch({ type: 'definition', payload: inError });
+  }, []);
 
   return (
     <TabbedForm {...props} initialValues={{ fields: [] }}>
-      <FormTab label="datalayer.form.definition">
+      <CustomFormTab
+        label="datalayer.form.definition"
+        onChange={onDefinitionErrorChange}
+        inError={errorState.definition}
+      >
         <DefinitionTab onSwitch={setExternal} external={external} />
-      </FormTab>
-      <FormTab disabled={external} label="datalayer.form.styles.tab" path="style">
+      </CustomFormTab>
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.styles.tab"
+        path="style"
+        onChange={onStyleErrorChange}
+        inError={errorState.style}
+      >
         <StyleTab external={external} />
-      </FormTab>
+      </CustomFormTab>
 
-      <FormTab disabled={external} label="datalayer.form.legend.tab" path="legend">
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.legend.tab"
+        path="legend"
+        onChange={onLegendErrorChange}
+        inError={errorState.legend}
+      >
         <LegendTab />
-      </FormTab>
+      </CustomFormTab>
 
       <CustomFormTab
         disabled={external}
         label="datalayer.form.popup.tab"
         path="popup"
-        inError={popupInError}
         onChange={onPopupErrorChange}
+        inError={errorState.popup}
       >
         <PopupTab />
       </CustomFormTab>
@@ -114,8 +162,8 @@ const DataLayerForm = ({ ...props }) => {
         disabled={external}
         label="datalayer.form.minisheet.tab"
         path="minisheet"
+        inError={errorState.minisheet}
         onChange={onMiniSheetErrorChange}
-        inError={miniSheetInError}
       >
         <MinisheetTab />
       </CustomFormTab>
@@ -124,8 +172,8 @@ const DataLayerForm = ({ ...props }) => {
         disabled={external}
         label="datalayer.form.filter.tab"
         path="filter2"
+        inError={errorState.filter}
         onChange={onFilterErrorChange}
-        inError={filterInError}
       >
         <FilterTab />
       </CustomFormTab>
@@ -134,8 +182,8 @@ const DataLayerForm = ({ ...props }) => {
         disabled={external}
         label="datalayer.form.table.tab"
         path="table"
+        inError={errorState.table}
         onChange={onTableErrorChange}
-        inError={tableInError}
       >
         <TableTab />
       </CustomFormTab>
@@ -145,6 +193,6 @@ const DataLayerForm = ({ ...props }) => {
       </FormTab>
     </TabbedForm>
   );
-};
+});
 
 export default DataLayerForm;

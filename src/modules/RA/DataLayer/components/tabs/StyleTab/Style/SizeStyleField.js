@@ -20,7 +20,7 @@ const useStyles = makeStyles(styles);
 
 const genDefaultValue = () => 0;
 
-const SizeStyleField = ({ path, fields, getValuesOfProperty }) => {
+const SizeStyleField = ({ path, fields, getValuesOfProperty, canGenerateLegend = true }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -94,19 +94,23 @@ const SizeStyleField = ({ path, fields, getValuesOfProperty }) => {
                   />
                   <Condition when={`${path}.analysis`} is="proportionnal">
                     <NumberInput source={`${path}.max_value`} label="style-editor.proportionnal.max-value" />
-                    <BooleanInput
-                      source={`${path}.generate_legend`}
-                      label="style-editor.generate-legend"
-                      className="generate-legend"
-                    />
+                    {canGenerateLegend && (
+                      <BooleanInput
+                        source={`${path}.generate_legend`}
+                        label="style-editor.generate-legend"
+                        className="generate-legend"
+                      />
+                    )}
                   </Condition>
                   <Condition when={`${path}.analysis`} is="graduated">
                     <GraduateValue path={path} />
-                    <BooleanInput
-                      source={`${path}.generate_legend`}
-                      label="style-editor.generate-legend"
-                      className="generate-legend"
-                    />
+                    {canGenerateLegend && (
+                      <BooleanInput
+                        source={`${path}.generate_legend`}
+                        label="style-editor.generate-legend"
+                        className="generate-legend"
+                      />
+                    )}
                   </Condition>
                   <Condition when={`${path}.analysis`} is="categorized">
                     <CategorizeValue
@@ -117,11 +121,13 @@ const SizeStyleField = ({ path, fields, getValuesOfProperty }) => {
                       defaultValueGenerator={genDefaultValue}
                     />
 
-                    <BooleanInput
-                      source={`${path}.generate_legend`}
-                      label="style-editor.generate-legend"
-                      className="generate-legend"
-                    />
+                    {canGenerateLegend && (
+                      <BooleanInput
+                        source={`${path}.generate_legend`}
+                        label="style-editor.generate-legend"
+                        className="generate-legend"
+                      />
+                    )}
                   </Condition>
                 </>
               );

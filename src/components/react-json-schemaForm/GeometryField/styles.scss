@@ -1,5 +1,44 @@
+@import "~@blueprintjs/core/src/components/forms/common";
+
 .form-group {
   &__or {
     margin: 1rem 0;
   }
+}
+
+.mapbox-gl-path-container {
+  pointer-events: auto;
+  user-select: none;
+  background-color: #ffffff;
+  color: #182026;
+  padding: 4px 6px;
+  margin: 10px;
+  border-radius: 4px; 
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+
+  input {
+    margin-right: 4px;
+  }
+
+  select {
+    margin-left: 8px;
+  }
+}
+
+.mapbox-gl-path-popup {
+  button {
+    appearance: none;
+  }
+}
+.mapboxgl-popup-close-button {
+  @include pt-button-base();
+  & + button {
+    margin-top: 1.3rem;
+  }
+}
+.mapbox-gl-path-popup-button {
+  margin: 0.3rem 0;
+  @include pt-button-base();
+  @include pt-button-height($pt-button-height);
+  @include pt-button();
 }

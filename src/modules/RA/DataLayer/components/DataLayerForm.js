@@ -39,7 +39,8 @@ const DataLayerForm = React.memo(props => {
       fields: sourcefields,
       popup_config: { wizard: { fields: popupfields = [] } = {} } = {},
     },
-    errors: { fields = [], popup_config: popupConfig },
+    errors: { fields = [],
+      popup_config: { wizard: { fields: popupfieldsErrors = [] } = {} } = {} },
     touched,
   }) => {
     const popupfieldIds = popupfields.flatMap(({ sourceFieldId }) => sourceFieldId);
@@ -53,7 +54,7 @@ const DataLayerForm = React.memo(props => {
     if (fieldsInError.length > 0) {
       inError = true;
     }
-    if (popupConfig && touched['popup_config.wizard.fields[0]']) {
+    if (popupfieldsErrors[0]?.sourceFieldId && touched['popup_config.wizard.fields[0]']) {
       inError = true;
     }
     dispatch({ type: 'popup', payload: inError });

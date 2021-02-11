@@ -995,7 +995,7 @@
     },
     "categorize": {
       "categories": "Choisissez une valeur pour chaque catégorie",
-      "empty-category": "Sans catégorie",
+      "empty-category": "Sans valeur",
       "empty-category-list": "Aucune catégorie pour ce champ",
       "too-many-values": "Trop de valeurs sont possibles pour ce champ, veuillez en sélectionner un autre ou changez de mode de représentation."
     },

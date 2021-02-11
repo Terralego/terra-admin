@@ -990,7 +990,7 @@
     },
     "categorize": {
       "categories": "Categories",
-      "empty-category": "Without category",
+      "empty-category": "Vo value",
       "empty-category-list": "No category for this field",
       "too-many-values": "Too many categories for this field. Please, choose another one."
     },

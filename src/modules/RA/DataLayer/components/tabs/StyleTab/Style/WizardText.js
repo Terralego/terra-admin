@@ -150,6 +150,7 @@ const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
           path={`${path}.style.text_size`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          canGenerateLegend={false}
         />
       </div>
       <div className={classes.configLine}>

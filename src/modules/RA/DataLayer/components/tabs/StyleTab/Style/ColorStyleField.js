@@ -21,6 +21,8 @@ const isRequired = [required()];
 
 const useStyles = makeStyles(styles);
 
+const defaultValueGenerator = val => (val ? randomColor() : '#CCC');
+
 const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
   const translate = useTranslate();
@@ -109,7 +111,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                       fields={fields}
                       getValuesOfProperty={getValuesOfProperty}
                       Component={ColorPicker}
-                      defaultValueGenerator={randomColor}
+                      defaultValueGenerator={defaultValueGenerator}
                     />
                     <BooleanInput
                       source={`${path}.generate_legend`}

@@ -85,8 +85,8 @@ export const MapProvider = ({ children }) => {
 
     const padding = {
       top: 20,
-      right: hasDetails ? (detail.offsetWidth + 50) : 50,
-      bottom: !hasDetails ? (dataTable.offsetHeight + 20) : 20,
+      right: hasDetails ? (detail?.offsetWidth ?? 0 + 50) : 50,
+      bottom: !hasDetails ? (dataTable?.offsetHeight ?? 0 + 20) : 20,
       left: 20,
     };
     map.resize();

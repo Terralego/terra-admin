@@ -20,6 +20,7 @@ const styles = {
   categoryLine: {
     padding: '0.5em 0',
     display: 'flex',
+    zIndex: 3,
     alignItems: 'center',
     '& > div:first-child': {
       marginRight: '1em',

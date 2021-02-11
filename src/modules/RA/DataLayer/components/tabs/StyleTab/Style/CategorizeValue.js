@@ -104,7 +104,7 @@ const CategorizeValue = ({
       if (newValueList.length < valueList.length || toAdd.length) {
         setValueList([
           ...newValueList,
-          ...toAdd.map(val => ({ name: val, value: defaultValueGenerator() })),
+          ...toAdd.map(val => ({ name: val, value: defaultValueGenerator(val) })),
         ]);
         setValuesLoaded(true);
       }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@blueprintjs/core';
+import { Button, Intent, Position, Tooltip } from '@blueprintjs/core';
 import Form from '@rjsf/core';
 import { requiredProperties } from '../../../../services/utils';
 import customFields from '../../../../../../components/react-json-schemaForm';
@@ -25,6 +25,7 @@ const sanitizeValue = (schema, value) => {
 };
 
 const Edit = ({
+  editable,
   editedItem,
   getSettings,
   isGeom,
@@ -49,7 +50,7 @@ const Edit = ({
   const isMounted = useRef(true);
 
   const isCurrentEditedItem = editedItem === name;
-  const canEdit =  ['', name].includes(editedItem);
+  const canEdit =  ['', name].includes(editedItem) && editable;
   const isEdited = canEdit && isCurrentEditedItem;
   const [loading, setLoading] = useState(false);
   const [defaultValue, setDefaultValue] = useState(() => sanitizeValue(schema, value));
@@ -114,16 +115,32 @@ const Edit = ({
     return required.includes(name);
   }, [name, schemaProperties]);
 
+  const title = useMemo(() => {
+    if (isEdited) {
+      return t('CRUD.details.cancel');
+    }
+    if (!editable) {
+      return t('CRUD.details.notAllowedToEdit');
+    }
+    return t('CRUD.details.update');
+  }, [editable, isEdited, t]);
+
   return (
     <div className="details__list-edit">
-      <Button
+      <Tooltip
         className="details__list-edit-button"
-        icon={isEdited ? 'small-cross' : 'edit'}
-        disabled={!canEdit}
-        onClick={() => setEditedItem(canEdit && !isCurrentEditedItem ? name : '')}
-        minimal
-        title={isEdited ? t('CRUD.details.cancel') : t('CRUD.details.update')}
-      />
+        content={title}
+        position={Position.TOP}
+        usePortal
+        intent={!editable ? Intent.WARNING : Intent.INFO}
+      >
+        <Button
+          icon={isEdited ? 'small-cross' : 'edit'}
+          disabled={!canEdit}
+          onClick={() => setEditedItem(canEdit && !isCurrentEditedItem ? name : '')}
+          minimal
+        />
+      </Tooltip>
       {isCurrentEditedItem && (
         <Form
           className="CRUD-edit"
@@ -161,6 +178,7 @@ const Edit = ({
 };
 
 Edit.propTypes = {
+  editable: PropTypes.bool,
   editedItem: PropTypes.string,
   isGeom: PropTypes.bool,
   getSettings: PropTypes.func,
@@ -190,6 +208,7 @@ Edit.propTypes = {
 };
 
 Edit.defaultProps = {
+  editable: true,
   editedItem: '',
   isGeom: false,
   getSettings: () => {},

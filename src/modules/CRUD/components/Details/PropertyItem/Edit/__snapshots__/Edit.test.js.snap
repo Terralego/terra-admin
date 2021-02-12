@@ -4,14 +4,20 @@ exports[`should render correctly can edit 1`] = `
 <div
   className="details__list-edit"
 >
-  <button
+  <div
     className="details__list-edit-button"
-    disabled={false}
-    icon="small-cross"
-    minimal={true}
-    onClick={[Function]}
-    title="CRUD.details.cancel"
-  />
+    content="CRUD.details.cancel"
+    intent="info"
+    position="top"
+    usePortal={true}
+  >
+    <button
+      disabled={false}
+      icon="small-cross"
+      minimal={true}
+      onClick={[Function]}
+    />
+  </div>
   <form
     ErrorList={[Function]}
     className="CRUD-edit"
@@ -64,13 +70,40 @@ exports[`should render correctly can't edit 1`] = `
 <div
   className="details__list-edit"
 >
-  <button
+  <div
     className="details__list-edit-button"
-    disabled={true}
-    icon="edit"
-    minimal={true}
-    onClick={[Function]}
-    title="CRUD.details.update"
-  />
+    content="CRUD.details.update"
+    intent="info"
+    position="top"
+    usePortal={true}
+  >
+    <button
+      disabled={true}
+      icon="edit"
+      minimal={true}
+      onClick={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`should render correctly can't edit explicitly 1`] = `
+<div
+  className="details__list-edit"
+>
+  <div
+    className="details__list-edit-button"
+    content="CRUD.details.notAllowedToEdit"
+    intent="warning"
+    position="top"
+    usePortal={true}
+  >
+    <button
+      disabled={true}
+      icon="edit"
+      minimal={true}
+      onClick={[Function]}
+    />
+  </div>
 </div>
 `;

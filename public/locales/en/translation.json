@@ -258,6 +258,7 @@
       "successDeleteFeature": "Feature has been successfully deleted.",
       "failDeleteFeature": "Feature has not been deleted.",
       "noAccess": "You are not allowed to access this resource.",
+      "notAllowedToEdit": "This is a generated property and couldn't be edited",
       "geometry": "Geometry",
       "true": "Yes",
       "false": "No",

@@ -6,6 +6,14 @@ import Edit from './Edit';
 jest.mock('@blueprintjs/core', () => ({
   // eslint-disable-next-line react/button-has-type
   Button: props => <button {...props} />,
+  Intent: {
+    INFO: 'info',
+    WARNING: 'warning',
+  },
+  Position: {
+    TOP: 'top',
+  },
+  Tooltip: props => <div {...props} />,
 }));
 jest.mock('@rjsf/core', () => props => <form {...props} />);
 jest.mock('../../../../../../components/react-json-schemaForm/FileWidget', () => props => <form {...props} />);
@@ -56,6 +64,16 @@ describe('should render correctly', () => {
     const tree = renderer.create((
       <Edit
         {...props}
+        editedItem="bar"
+      />
+    )).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+  it('can\'t edit explicitly', () => {
+    const tree = renderer.create((
+      <Edit
+        {...props}
+        editable={false}
         editedItem="bar"
       />
     )).toJSON();

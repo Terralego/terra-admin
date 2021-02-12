@@ -258,6 +258,7 @@
       "successDeleteFeature": "L'objet a été supprimé avec succès",
       "failDeleteFeature": "L'objet n'a pu être supprimé",
       "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
+      "notAllowedToEdit":"Cette propriété est calculée et ne peut être modifiée",
       "geometry": "Géométrie",
       "true": "Oui",
       "false": "Non",
@@ -365,7 +366,7 @@
       "address-city": "Ville",
       "address-zip-code": "Code postal",
       "advanced": "Mode avancé",
-      "no-allowed-to-edit": "Vous n'avez pas les droits pour éditer ce champ"
+      "not-allowed-to-edit": "Vous n'avez pas les droits pour éditer ce champ"
     },
     "help": {
       "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",

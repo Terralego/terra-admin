@@ -50,7 +50,10 @@ const MinisheetTab = () => {
   const { geom_type: geomType, id: sourceId } = useSourceData('source');
 
   const { input: { value: fields } } = useField('fields');
-  const { input: { value: advanced } } = useField('minisheet_config.advanced', { initialValue: true });
+  const { input: { value: advanced } } = useField('minisheet_config.advanced', {
+    initialValue: true,
+    format: Boolean,
+  });
   const { input: { value: enable } } = useField('minisheet_config.enable');
   const { input: { value: wizard } } = useField('minisheet_config.wizard');
   const { input: { value: tree = [] } } = useField('minisheet_config.wizard.tree');
@@ -129,7 +132,11 @@ const MinisheetTab = () => {
       <FieldGroup>
         <div className={classes.title}>
           <h3>{translate('datalayer.form.minisheet.title')}</h3>
-          <BooleanInput source="minisheet_config.advanced" label="datalayer.form.minisheet.advanced" />
+          <BooleanInput
+            source="minisheet_config.advanced"
+            label="datalayer.form.minisheet.advanced"
+            initialValue={advanced}
+          />
         </div>
         <InputLabel>{translate('datalayer.form.minisheet.color-label')}</InputLabel>
         <Field name="minisheet_config.highlight_color" defaultValue="#cccccc">

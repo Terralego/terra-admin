@@ -24,7 +24,6 @@ import {
   MULTI_POLYGON,
 } from '../../../utils/geom';
 
-
 import './styles.scss';
 
 const MapInteraction = ({
@@ -90,20 +89,11 @@ const MapInteraction = ({
     [geomValues.geomType, setFormData],
   );
 
-  useEffect(() => {
-    if (!map) {
-      return () => null;
-    }
+  const getRoutingConfiguration = useCallback(() => {
     const {
-      geom: geometry,
-      identifier,
-      layerName,
       geomType,
-      properties,
       routingSettings,
     } = geomValues;
-
-    const layerId = getLayerId(layers, layerName);
 
     const {
       config: {
@@ -113,37 +103,39 @@ const MapInteraction = ({
       },
     } = settings;
 
-    const routingControl = {
-      control: CONTROL_PATH,
-      directionsThemes: getDirectionsThemes({ routingSettings, accessToken }),
-      languageId: language,
-      layersCustomisation: {
-        pointCircleLayerCustomisation: {
-          paint: {
-            'circle-radius': 10,
-            'circle-color': '#FFFFFF',
-            'circle-stroke-width': 1,
-            'circle-stroke-color': '#0D47A1',
+    if (routingSettings?.length) {
+      return {
+        control: CONTROL_PATH,
+        directionsThemes: getDirectionsThemes({ routingSettings, accessToken }),
+        languageId: language,
+        layersCustomisation: {
+          pointCircleLayerCustomisation: {
+            paint: {
+              'circle-radius': 10,
+              'circle-color': '#FFFFFF',
+              'circle-stroke-width': 1,
+              'circle-stroke-color': '#0D47A1',
+            },
+          },
+          pointTextLayerCustomisation: { paint: { 'text-color': '#B71C1C' } },
+          lineLayerCustomisation: {
+            paint: { 'line-width': 4, 'line-color': '#0D47A1' },
+          },
+          phantomJunctionLineLayerCustomisation: {
+            paint: {
+              'line-width': 4,
+              'line-color': '#0D47A1',
+              'line-dasharray': [1, 1],
+            },
           },
         },
-        pointTextLayerCustomisation: { paint: { 'text-color': '#B71C1C' } },
-        lineLayerCustomisation: {
-          paint: { 'line-width': 4, 'line-color': '#0D47A1' },
-        },
-        phantomJunctionLineLayerCustomisation: {
-          paint: {
-            'line-width': 4,
-            'line-color': '#0D47A1',
-            'line-dasharray': [1, 1],
-          },
-        },
-      },
-      onPathUpdate: updateGeometryFromMap,
-      order: 2,
-      position: CONTROLS_TOP_LEFT,
-    };
+        onPathUpdate: updateGeometryFromMap,
+        order: 2,
+        position: CONTROLS_TOP_LEFT,
+      };
+    }
 
-    const othersControls = {
+    return {
       control: CONTROL_DRAW,
       position: CONTROLS_TOP_LEFT,
       onDrawUpdate: updateGeometryFromMap,
@@ -169,8 +161,21 @@ const MapInteraction = ({
       },
       order: 2,
     };
+  }, [geomValues, language, settings, updateGeometryFromMap]);
 
-    const control = routingSettings?.length ? routingControl : othersControls;
+  useEffect(() => {
+    if (!map) {
+      return () => null;
+    }
+    const {
+      geom: geometry,
+      identifier,
+      layerName,
+      properties,
+      routingSettings,
+    } = geomValues;
+
+    const layerId = getLayerId(layers, layerName);
 
     const onDrawControlAdded = () => {
       map.off('control_DrawControl_added', onDrawControlAdded);
@@ -200,14 +205,15 @@ const MapInteraction = ({
       }
     }
 
-    addControl(control);
+    const control = getRoutingConfiguration();
+    control && addControl(control);
 
     return () => {
       map.off('control_DrawControl_added', onDrawControlAdded);
       map.off('control_PathControl_added', onPathControlAdded);
       resetStyle();
     };
-  }, [addControl, geomValues, language, layers, map, resetStyle, settings, updateGeometryFromMap]);
+  }, [addControl, geomValues, getRoutingConfiguration, layers, map, resetStyle]);
 
   useEffect(() => {
     if (!featuresToFitBounds || !map) {
@@ -232,8 +238,7 @@ const MapInteraction = ({
       coordinates: getCoordinatesFromGeometries(featuresToFitBounds),
     });
     setFeaturesToFitBounds(null);
-  },
-  [featuresToFitBounds, map, setFeaturesToFitBounds, setFitBounds, setFormData]);
+  }, [featuresToFitBounds, map, setFeaturesToFitBounds, setFitBounds, setFormData]);
 
   useEffect(
     () => () => {

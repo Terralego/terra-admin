@@ -164,7 +164,7 @@ const ViewpointFields = ({
         {!waiting && (
           <SelectInput
             translateChoice={false}
-            source="properties.commune"
+            source="city"
             choices={remoteChoices.cities}
           />
         )}

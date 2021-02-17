@@ -1,4 +1,5 @@
 import Api from '@terralego/core/modules/Api';
+import { toast } from '../../../utils/toast';
 
 import { ACTION_CREATE, getView } from '../../../modules/CRUD/services/CRUD';
 
@@ -42,7 +43,8 @@ export const getDirectionsThemes = ({ routingSettings, accessToken }) => {
               },
             ).then(response => response.json());
             if (data?.code !== 'Ok') {
-              return undefined;
+              toast.displayError(data.message);
+              return null;
             }
             return {
               coordinates: data.routes[0].geometry.coordinates,
@@ -52,10 +54,21 @@ export const getDirectionsThemes = ({ routingSettings, accessToken }) => {
               },
             };
           }
-          const results = await Api.request(options.url.replace('/api/', ''), {
-            method: 'POST',
-            body: { geom: { type: 'LineString', coordinates } },
-          });
+
+          let results = null;
+          try {
+            results = await Api.request(options.url.replace('/api/', ''), {
+              method: 'POST',
+              body: { geom: { type: 'LineString', coordinates } },
+            });
+          } catch (e) {
+            toast.displayError(e.message);
+          }
+
+          if (!results) {
+            return null;
+          }
+
           const { way, waypoints } = results;
           const { coordinates: nextCoordinates = [] } = way || {};
           const [

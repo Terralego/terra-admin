@@ -100,7 +100,7 @@ exports[`should render correctly can't edit explicitly 1`] = `
   >
     <button
       disabled={true}
-      icon="edit"
+      icon="info-sign"
       minimal={true}
       onClick={[Function]}
     />

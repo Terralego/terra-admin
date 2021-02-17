@@ -81,10 +81,13 @@ const MapInteraction = ({
         target.draw.delete(otherFeaturesIds);
         features = currentFeature;
       }
-      setFormData({
-        type: features[0].geometry.type,
-        coordinates: getCoordinatesFromGeometries(features, isMultiGeometry),
-      });
+      const coordinates = getCoordinatesFromGeometries(features, isMultiGeometry);
+      if (coordinates) {
+        setFormData({
+          type: features[0].geometry.type,
+          coordinates,
+        });
+      }
     },
     [geomValues.geomType, setFormData],
   );
@@ -233,10 +236,13 @@ const MapInteraction = ({
         (Array.isArray(coordinates[0]) ? coordinates : [coordinates])),
       hasDetails: true,
     });
-    setFormData({
-      type: featuresToFitBounds[0].geometry.type,
-      coordinates: getCoordinatesFromGeometries(featuresToFitBounds),
-    });
+    const coordinates = getCoordinatesFromGeometries(featuresToFitBounds);
+    if (coordinates) {
+      setFormData({
+        type: featuresToFitBounds[0].geometry.type,
+        coordinates,
+      });
+    }
     setFeaturesToFitBounds(null);
   }, [featuresToFitBounds, map, setFeaturesToFitBounds, setFitBounds, setFormData]);
 

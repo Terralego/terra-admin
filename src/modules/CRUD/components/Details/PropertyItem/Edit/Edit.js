@@ -115,27 +115,36 @@ const Edit = ({
     return required.includes(name);
   }, [name, schemaProperties]);
 
-  const title = useMemo(() => {
+  const action = useMemo(() => {
     if (isEdited) {
-      return t('CRUD.details.cancel');
+      return {
+        label: t('CRUD.details.cancel'),
+        icon: 'small-cross',
+      };
     }
     if (!editable) {
-      return t('CRUD.details.notAllowedToEdit');
+      return {
+        label:  t('CRUD.details.notAllowedToEdit'),
+        icon:  'info-sign',
+      };
     }
-    return t('CRUD.details.update');
+    return {
+      label: t('CRUD.details.update'),
+      icon: 'edit',
+    };
   }, [editable, isEdited, t]);
 
   return (
     <div className="details__list-edit">
       <Tooltip
         className="details__list-edit-button"
-        content={title}
+        content={action.label}
         position={Position.TOP}
         usePortal
         intent={!editable ? Intent.WARNING : Intent.INFO}
       >
         <Button
-          icon={isEdited ? 'small-cross' : 'edit'}
+          icon={action.icon}
           disabled={!canEdit}
           onClick={() => setEditedItem(canEdit && !isCurrentEditedItem ? name : '')}
           minimal

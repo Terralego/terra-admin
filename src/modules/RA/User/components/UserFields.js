@@ -30,9 +30,6 @@ const UserFields = ({ edit = false, user: { is_superuser: isSuperUser } = {}, ..
 
   return (
     <SimpleForm {...props}>
-      {edit && <TextInput disabled source="id" />}
-      {edit && <TextInput disabled source="uuid" />}
-
       <TextInput source="properties.first_name" label="user.form.firstname" />
       <TextInput source="properties.last_name" label="user.form.lastname" />
       <TextInput source="email" type="email" />

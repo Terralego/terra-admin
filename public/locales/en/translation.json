@@ -803,7 +803,7 @@
       "fields": {
         "label": "Viewpoint name",
         "address": "Address",
-        "properties.index": "Viewpoint index",
+        "identifier": "Viewpoint index",
         "properties.voie": "Street",
         "properties.commune": "City",
         "properties.altitude": "Elevation",
@@ -969,15 +969,15 @@
       "extrusion-base": "Extrusion base",
       "extrusion-opacity": "Extrusion opacity"
     },
-    "text":{
-      "text-field":"Displayed field",
-      "text-color":"Text color",
-      "text-size":"Text size",
-      "halo-color":"Halo color",
-      "halo-width":"Halo width",
+    "text": {
+      "text-field": "Displayed field",
+      "text-color": "Text color",
+      "text-size": "Text size",
+      "halo-color": "Halo color",
+      "halo-width": "Halo width",
       "text-font": "Text font"
     },
-    "icon":{
+    "icon": {
       "icon-image": "Icon",
       "icon-size": "Icon size"
     },

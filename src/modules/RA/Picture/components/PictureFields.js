@@ -52,7 +52,7 @@ const PictureFields = ({
       >
         <SelectInput optionText="label" />
       </ReferenceInput>
-      <TextInput source="properties.index" formClassName={classes.inline} />
+      <TextInput source="identifier" formClassName={classes.inline} />
 
       <Br />
 

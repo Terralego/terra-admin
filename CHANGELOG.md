@@ -1,4 +1,9 @@
 
+3.0.1 / 2021-02-22
+==================
+
+  * ColorPicker is showing upward when bottom is outside of viewport
+
 3.0.0 / 2020-09-30
 ==================
 

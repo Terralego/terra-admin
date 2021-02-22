@@ -1,4 +1,161 @@
 
+3.1.0 / 2021-02-22
+==================
+
+  * Start real version management
+  * Add version management
+  * Display info sign icon to "edit" generated properties
+  * Review the fields to display in user list/detail admin
+  * Display error message when routing doesn't success
+  * Use a function to add geometry control to the map
+  * Refacto and integrate PathControl to GeometryField
+  * Upgrade @terralego/core package to 1.26.2
+  * Set default padding when depending ref are equal to null
+  * Clean the call of some useless map variables
+  * Set color picker up when bottom outside of viewport
+  * Prevent the user to edit generated properties
+  * Set initialValue to zoom and force advanced mode as boolean
+  * Change city data path
+  * Force correct value on advanced value for minisheet
+  * Legend is now forbidden for text size style
+  * Default value to grey for no value
+  * Fix z-index issue
+  * Update translation
+  * fix popup tab validation error showing incorrectly
+  * Show technical field name in all style select.
+  * Update src/modules/RA/DataLayer/components/DataLayerForm.js
+  * Manage tab error state with reducer
+  * Remove react-jsonschema-form package
+  * Call components from @rjsf/core package instead of react-jsonschema-form
+  * Install "@rjsf/core" package
+  * Remove sanitize empty value for scene form
+  * Add more tab validation
+  * Make categorized values sortable
+  * Fix picture basePath
+  * Fix patch layer dataprovider
+  * Use same field option everywhere
+  * Add field name to style
+  * Sort categories
+  * Add table placeholder
+  * Add empty state
+  * Better ui and translation
+  * Add legend admin
+  * Move legend tab in proper dir
+  * Remove broken fonts
+  * Sort icon by name
+  * Default title field is not required
+  * Remove asterix from field in popup/minisheet
+  * Update template only when advanced mode is set to false specificaly
+  * Add user settings hook
+  * Fix logout bug
+  * Rename useSettings to useAppSettings
+  * Allow only superuser to set superuser status
+  * Handle text and icon style
+  * Move Zoom input in common place
+  * Call permission field to userGroup module
+  * Add Permissions ressource to RA
+  * Display only RA modules with List component included to the Menu config
+  * Call module configuration by auth provider instead of app provider
+  * fix read modules in user settings
+  * modules can be read in user attributes with terra-accounts > 1.0
+  * Do not force advanced mode when popup/minisheet exists
+  * Add advanced mode in user form
+  * Add new fields in user form for further infos
+  * Add validate function to prevent bad submit
+  * Add table & filter tab validation
+  * Add some form validation for tab
+  * Make popup fields sortable
+  * Force empty string value for field label (instead of undefined)
+  * Fix drag handle area disappearing
+  * Fix some wording
+  * Set advanced mode to true by default
+  * Put some space between field inputs
+  * Fix initial value of TreeInput
+  * Fix default legend value
+  * Fix bad json input init
+  * Fix style for better width
+  * Fix bad field for extra style
+  * Add field validation
+  * Fix translation
+  * Default 3 values for gradutation
+  * Help user on classes
+  * Avoid render loop with nested spreading on useinput
+  * Remove default value for label
+  * Add space for future previsualization (popup/minisheet)
+  * Export geom layer files feature
+  * Allow configuration only if source is defined
+  * Fix template update not triggering
+  * Harmonize placeholder between popup minisheet & style
+  * Add field name as helper text
+  * Use ZoomInput component for popup
+  * remove forced z-index on minisheet row
+  * return all fields as available if none define in popup
+  * Increase color picker z-index
+  * Fix mini-sheet template
+  * Fix minisheet translation
+  * Fix template generation trigger issue
+  * Init default value form  for popup config & use field label
+  * Fix category bug on changing field
+  * Remove broken things
+  * Add a more precise label for color picker
+  * use field value instead of copying it
+  * Add field as possible root node in wizard tree
+  * Add label for color input
+  * Bump ini from 1.3.5 to 1.3.7
+  * Force default for empty value
+  * Avoid generating mini-sheet if advanced mode
+  * Fix image handling in scene
+  * Fix undetected source
+  * Fix translation
+  * Lint: style editing
+  * Fix default title in template cannot be undefined
+  * Use a more userfriendly color picker
+  * Add label for title field select
+  * Disable Field input so it doesn't look it can b modify
+  * Section is expanded by default when field is added
+  * Fix template generation issue
+  * Fix color picker reset when adding section
+  * Make Template more readable
+  * Add minisheet template generation
+  * Code formating & style editing
+  * MainField is the default title if defined
+  * Add draggable & sortable minisheet tree form
+  * WIP - new minisheet form ui
+  * Add mandatory fields mention on GeometryField
+  * Replace computation by function in initial useState values
+  * Add default value for onChange
+  * Fix fieldType number opacity
+  * Color picker now handle alpha value
+  * Add translations and enhance UI
+  * Move colorPicker
+  * Can generate legend now
+  * Remove some file
+  * Add categorization
+  * UX refactoring
+  * First xchange with the server working
+  * Add extra layers and patch data for now
+  * Split monolithic file in multiple files
+  * Change workflow for style creation
+  * Add advanced editor
+  * Fix layout to save space
+  * Fix advanced mode wording and style
+  * Reorg code
+  * Optimize AddControl and RemoveControl functions
+  * Optimize DataTable/Actions component
+  * Rename "context" from UserSettingsProvider to "UserSettingsContext"
+  * Upgrade @blueprintjs/core to 3.36.0 version
+  * Unable to determine Type if schema is not filled
+  * Create BaseLayerType input to manage form values
+  * Base map module
+  * Create react-admin/RangeInput component
+  * Manage Enum default value
+  * Optimize Type component with useMemo
+  * handle numerical condition & rounding for template
+  * Update public/locales/en/translation.json
+  * Popup form has now a title field by default
+  * Add better field ui
+  * Add title to popup form
+
 3.0.0 / 2020-09-30
 ==================
 

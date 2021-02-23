@@ -19,7 +19,6 @@ import {
   NumberField,
   NumberInput,
   ReferenceArrayField,
-  SelectInput,
   SimpleFormIterator,
   TabbedForm,
   TextField,
@@ -32,9 +31,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import { RES_PICTURE } from '../../ra-modules';
 
-import FreeAutocompleteInput
-  from '../../../../components/react-admin/FreeAutocompleteInput';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
+import FreeAutocompleteInput from '../../../../components/react-admin/FreeAutocompleteInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
 import GridListPictures from './GridListPictures';
@@ -48,6 +46,7 @@ const styles = {
 
 const Br = () => <br />;
 
+
 const SmartFileInput = props => {
   const { record: { document } } = props;
   const isImage = document && document.split(':')[1].split('/')[0] === 'image';
@@ -60,8 +59,7 @@ const SmartFileInput = props => {
   );
 };
 
-function PictureRephotography (props) {
-  const { record, ...rest } = props;
+const PictureRephotography = ({ record, ...rest }) => {
   if (!record || !record.pictures || !record.pictures.length) {
     return null;
   }
@@ -107,7 +105,7 @@ function PictureRephotography (props) {
       </Labeled>
     </>
   );
-}
+};
 
 const ViewpointFields = ({
   translate: t,
@@ -127,7 +125,7 @@ const ViewpointFields = ({
 
     setRemoteChoices({
       themes: themes.map(theme => ({ id: theme, name: theme })),
-      cities: cities.map(city => ({ id: city, name: city })),
+      cities,
     });
 
     setWaiting(false);
@@ -162,14 +160,12 @@ const ViewpointFields = ({
           </>
         )}
         {!waiting && (
-          <SelectInput
-            translateChoice={false}
-            source="city"
+          <FreeAutocompleteInput
             choices={remoteChoices.cities}
+            source="city"
+            label="City"
           />
         )}
-
-        <Br />
 
         <NumberInput
           source="point.coordinates[1]"
@@ -182,7 +178,7 @@ const ViewpointFields = ({
           defaultValue={mapConfig.center[0]}
         />
 
-        <MapPointInput source="point.coordinates" center={mapConfig.center} />
+        <MapPointInput source="point.coordinates" center={mapConfig.center} style={{ width: '50%' }} />
       </FormTab>
 
       {edit && (

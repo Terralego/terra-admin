@@ -37,6 +37,8 @@ const useStyle = makeStyles({
   },
 });
 
+// undefined value will be casted to false and trigger unwanted template generation
+const BooleanOrUndef = value => ((value === undefined) ? value : Boolean(value));
 
 const PopupTab = () => {
   const translate = useTranslate();
@@ -49,7 +51,7 @@ const PopupTab = () => {
   const { input: { value: enable = false } } = useField('popup_config.enable');
   const { input: { value: advanced } } = useField('popup_config.advanced', {
     initialValue: true,
-    format: Boolean,
+    format: BooleanOrUndef,
   });
   const { input: { value: { fields: popupfields = [] } = {} } } = useField('popup_config.wizard', {
     initialValue: useMemo(() => ({ fields: [{ sourceFieldId: mainFieldId }] }), [mainFieldId]),

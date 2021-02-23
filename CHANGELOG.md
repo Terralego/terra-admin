@@ -1,3 +1,7 @@
+3.1.1 / 2021-02-23
+==================
+
+  * ColorPicker popover now appear in the center of the screen
 
 3.1.0 / 2021-02-22
 ==================

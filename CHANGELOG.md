@@ -1,4 +1,9 @@
 
+3.1.2 / 2021-02-23
+==================
+
+  * Fix regression of undefined value triggering template update
+
 3.1.1 / 2021-02-23
 ==================
 

@@ -20,7 +20,11 @@ const styles = theme => ({
   },
 });
 
-const MapPointInput = ({ classes, input, center, mapConfig }) => {
+const sanitizeRestProps = ({
+  basePath, isRequired, ...rest
+}) => rest;
+
+const MapPointInput = ({ classes, input, center, mapConfig, ...rest }) => {
   const [loaded, setLoaded] = React.useState(false);
   const handleMapClick = (map, { lngLat }) => {
     const coords = Object.values(lngLat).map(value => Number(value.toFixed(7)));
@@ -47,19 +51,21 @@ const MapPointInput = ({ classes, input, center, mapConfig }) => {
   }
 
   return (
-    <Map
-      style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
-      containerStyle={{ height: '300px' }}
-      center={center}
-      onClick={handleMapClick}
-      {...customProps}
-    >
-      {!!input.value && (
+    <div {...sanitizeRestProps(rest)}>
+      <Map
+        style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
+        containerStyle={{ height: '300px' }}
+        center={center}
+        onClick={handleMapClick}
+        {...customProps}
+      >
+        {!!input.value && (
         <Marker coordinates={input.value} anchor="center">
           <span className={classes.marker} />
         </Marker>
-      )}
-    </Map>
+        )}
+      </Map>
+    </div>
   );
 };
 

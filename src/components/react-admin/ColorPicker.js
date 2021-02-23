@@ -39,9 +39,11 @@ const useStyles = makeStyles({
 
 
 const popover = {
-  position: 'absolute',
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
   zIndex: '20',
-  top: '100%',
+  transform: 'translate(-50%, -50%)',
 };
 
 const cover = {
@@ -58,7 +60,6 @@ const presetColors = [];
 
 const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => {
   const classes = useStyles({ value, disabled });
-  const popoverRef = React.useRef(null);
 
   const [currentColor, setCurrentColor] = React.useState(value);
   const [showPicker, setShowPicker] = React.useState(false);
@@ -75,17 +76,6 @@ const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => 
     [onChange],
   );
 
-
-  React.useEffect(() => {
-    if (showPicker) {
-      const popoverBounding = popoverRef.current?.getBoundingClientRect();
-      if (popoverBounding.bottom > window.innerHeight) {
-        popoverRef.current.style.top = 'auto';
-        popoverRef.current.style.bottom = '100%';
-      }
-    }
-  }, [showPicker]);
-
   return (
     <div style={{ position: 'relative', display: 'inline' }}>
       <div
@@ -97,7 +87,7 @@ const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => 
       {showPicker && (
       <>
         <div style={cover} onClick={() => setShowPicker(false)} />
-        <div style={popover} ref={popoverRef} className="popover">
+        <div style={popover} className="popover">
           <SketchPicker
             color={currentColor}
             presetColors={presetColors}

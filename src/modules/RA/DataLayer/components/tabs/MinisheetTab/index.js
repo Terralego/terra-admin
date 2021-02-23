@@ -42,6 +42,9 @@ const useStyles = makeStyles({
   },
 });
 
+// undefined value will be casted to false and trigger unwanted template generation
+const BooleanOrUndef = value => ((value === undefined) ? value : Boolean(value));
+
 
 const MinisheetTab = () => {
   const classes = useStyles();
@@ -52,7 +55,7 @@ const MinisheetTab = () => {
   const { input: { value: fields } } = useField('fields');
   const { input: { value: advanced } } = useField('minisheet_config.advanced', {
     initialValue: true,
-    format: Boolean,
+    format: BooleanOrUndef,
   });
   const { input: { value: enable } } = useField('minisheet_config.enable');
   const { input: { value: wizard } } = useField('minisheet_config.wizard');

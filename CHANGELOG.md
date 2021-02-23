@@ -1,4 +1,9 @@
 
+3.1.1 / 2021-02-23
+==================
+
+  * center color picker to avoid multiple ux issues
+
 3.1.0 / 2021-02-22
 ==================
 

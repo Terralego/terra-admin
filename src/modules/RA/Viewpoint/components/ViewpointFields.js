@@ -151,6 +151,7 @@ const ViewpointFields = ({
       {...props}
     >
       <FormTab label="resources.viewpoint.tabs.general">
+        <BooleanInput source="active" />
         <TextInput source="label" formClassName={classes.inline} />
         {edit && <TextInput source="id" formClassName={classes.inline} disabled />}
 

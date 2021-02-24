@@ -9,6 +9,8 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 import { linkToRecord } from 'ra-core';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 /* eslint-enable */
 
 import compose from '../../utils/compose';
@@ -64,6 +66,7 @@ const GridList = ({ translate: t, classes, ids, data, basePath, width }) => (
             subtitle={data[id].properties && (
               <span>{t(...viewpointSubtitle(data[id].properties.index))}</span>
             )}
+            actionIcon={data[id].active ? <VisibilityIcon /> : <VisibilityOffIcon />}
           />
         </GridListTile>
       ))}

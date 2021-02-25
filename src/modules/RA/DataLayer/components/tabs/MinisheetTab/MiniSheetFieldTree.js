@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useForm, useField, Field } from 'react-final-form';
 import { useTranslate, required } from 'react-admin';
 import { makeStyles } from '@material-ui/core';
@@ -51,14 +51,15 @@ const useStyles = makeStyles({
 });
 
 const MiniSheetFieldTree = ({
-  treeData,
   fields,
-  titleField: { sourceFieldId } = {},
+  updateTemplate,
 }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const form = useForm();
 
+  const { input: { value: treeData = [] } } = useField('minisheet_config.wizard.tree');
+  const { input: { value: { sourceFieldId } = {} } } = useField('minisheet_config.wizard.title');
   const { input: { value: mainFieldId } } =  useField('main_field');
 
   const onTreeChange = useCallback(tree => {
@@ -88,6 +89,15 @@ const MiniSheetFieldTree = ({
     };
   }, [fields, sourceFieldId]);
 
+  const onTitleChange = useCallback(cb => ({ target: { value } }) => {
+    cb(value);
+    updateTemplate();
+  }, [updateTemplate]);
+
+  useEffect(() => {
+    updateTemplate();
+  }, [treeData, updateTemplate]);
+
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.row}>
@@ -101,7 +111,7 @@ const MiniSheetFieldTree = ({
               <TextField
                 variant="outlined"
                 label={translate('datalayer.form.minisheet.title-field.input')}
-                onChange={onChange}
+                onChange={onTitleChange(onChange)}
                 value={value}
                 error={meta.error && meta.touched}
                 helperText={(meta.touched && meta.error) ? meta.error : null}
@@ -137,7 +147,7 @@ const MiniSheetFieldTree = ({
                 variant="outlined"
                 label={translate('datalayer.form.minisheet.title-field.default')}
                 value={value}
-                onChange={onChange}
+                onChange={onTitleChange(onChange)}
                 fullWidth
               />
             )}

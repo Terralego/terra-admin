@@ -3,6 +3,9 @@ import { Edit } from 'react-admin';
 
 import DataLayerForm from '../components/DataLayerForm';
 import DefaultActions from '../../../../components/react-admin/DefaultActions';
+import PreventPartialData from '../../../../components/react-admin/PreventPartialData';
+
+const EditDataLayerForm = PreventPartialData('description', DataLayerForm);
 
 export const DataLayerEdit = props => (
   <Edit
@@ -10,7 +13,7 @@ export const DataLayerEdit = props => (
     {...props}
     actions={<DefaultActions />}
   >
-    <DataLayerForm />
+    <EditDataLayerForm />
   </Edit>
 );
 

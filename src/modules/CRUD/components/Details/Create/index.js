@@ -30,12 +30,14 @@ const CRUDPRoviderGetter = ({
   errors: {
     feature,
   },
+  getFeaturesList,
   settings,
   saveFeature,
 }, {
   match: { params: { layer } },
 }) => ({
   featureError: feature[0],
+  getFeaturesList,
   saveFeature,
   view: getView(settings, layer),
 });

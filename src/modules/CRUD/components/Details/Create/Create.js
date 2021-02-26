@@ -66,6 +66,7 @@ const buildSchema = ({ schemaProperties, uiSchemaProperties, geomType }) => {
 const Create = props => {
   const {
     featureError,
+    getFeaturesList,
     history: { push },
     view: {
       featureEndpoint,
@@ -117,8 +118,9 @@ const Create = props => {
         { id: savedFeature.identifier },
         t('CRUD.details.successCreateFeature'),
       );
+      getFeaturesList(featureEndpoint);
     }
-  }, [featureEndpoint, name, push, saveFeature, t]);
+  }, [featureEndpoint, getFeaturesList, name, push, saveFeature, t]);
 
   const title = t('CRUD.details.create', { layer: objectName });
 

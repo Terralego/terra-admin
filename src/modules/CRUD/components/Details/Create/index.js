@@ -4,8 +4,7 @@ import { connectAuthProvider } from '@terralego/core/modules/Auth';
 
 import { connectAppProvider } from '../../../../../components/AppProvider';
 import { connectCRUDProvider } from '../../../services/CRUDProvider';
-import { withTableFilters } from '../../../services/UserSettingsProvider';
-import { getView, getLayers } from '../../../services/CRUD';
+import { getView } from '../../../services/CRUD';
 import compose from '../../../../../utils/compose';
 
 import Create from './Create';
@@ -28,26 +27,17 @@ const authProviderGetter = ({
 };
 
 const CRUDPRoviderGetter = ({
-  getSettings,
-  getFeaturesList,
-  settings,
-  feature,
-  saveFeature,
   errors: {
-    feature: featureError,
+    feature,
   },
+  settings,
+  saveFeature,
 }, {
-  match: { params: { layer, id } },
+  match: { params: { layer } },
 }) => ({
-  getSettings,
-  getFeaturesList,
-  feature: feature[id] || {},
+  featureError: feature[0],
   saveFeature,
   view: getView(settings, layer),
-  layerPaint: getLayers(settings).find(item => item['source-layer'] === layer) || {},
-  paramLayer: layer,
-  paramId: id,
-  featureError: featureError.find(({ featureId }) => featureId === id),
 });
 
 export default compose(
@@ -55,6 +45,5 @@ export default compose(
   connectAppProvider(appProviderGetter),
   connectAuthProvider(authProviderGetter),
   connectCRUDProvider(CRUDPRoviderGetter),
-  withTableFilters(),
   withTranslation(),
 )(Create);

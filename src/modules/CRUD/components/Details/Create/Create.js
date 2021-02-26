@@ -65,6 +65,7 @@ const buildSchema = ({ schemaProperties, uiSchemaProperties, geomType }) => {
 
 const Create = props => {
   const {
+    featureError,
     history: { push },
     view: {
       featureEndpoint,
@@ -88,6 +89,12 @@ const Create = props => {
     return () => { isMounted.current = false; };
   }, []);
 
+  useEffect(() => {
+    if (featureError?.error?.message) {
+      toast.displayError(featureError.error.message);
+    }
+  }, [featureError]);
+
   useMemo(() => {
     const builder = buildSchema({ schemaProperties, uiSchemaProperties, geomType });
     setSchema(builder.schema);
@@ -102,8 +109,6 @@ const Create = props => {
 
     const savedFeature = await saveFeature(featureEndpoint, false, { geom, properties }, 'POST');
 
-    if (!isMounted.current) return;
-
     setLoading(false);
 
     if (savedFeature) {
@@ -114,7 +119,6 @@ const Create = props => {
       );
     }
   }, [featureEndpoint, name, push, saveFeature, t]);
-
 
   const title = t('CRUD.details.create', { layer: objectName });
 

@@ -15,6 +15,7 @@ const appProviderGetter = ({
 });
 
 const CRUDPRoviderGetter = ({
+  getFeaturesList,
   getSettings,
   settings,
   saveFeature,
@@ -25,6 +26,7 @@ const CRUDPRoviderGetter = ({
   match: { params: { layer, id } },
 }) => ({
   featureError: featureError.find(({ featureId }) => featureId === id),
+  getFeaturesList,
   getSettings,
   saveFeature,
   view: getView(settings, layer),

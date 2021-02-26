@@ -27,6 +27,7 @@ const sanitizeValue = (schema, value) => {
 const Edit = ({
   editable,
   editedItem,
+  getFeaturesList,
   getSettings,
   isGeom,
   onEdit,
@@ -96,8 +97,10 @@ const Edit = ({
     setEditedItem('');
     onRead(name);
     getSettings(settingsEndpoint);
+    getFeaturesList(featureEndpoint);
   }, [
     featureEndpoint,
+    getFeaturesList,
     getSettings,
     id,
     isGeom,

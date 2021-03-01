@@ -89,10 +89,10 @@ const MiniSheetFieldTree = ({
     };
   }, [fields, sourceFieldId]);
 
-  const onTitleChange = useCallback(cb => ({ target: { value } }) => {
+  const onTitleChange = cb => ({ target: { value } }) => {
     cb(value);
     updateTemplate();
-  }, [updateTemplate]);
+  };
 
   useEffect(() => {
     updateTemplate();

@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Data MUST always have the same shape
+ * In react-admin, data MUST always have the same shape. see:
  * https://github.com/marmelab/react-admin/issues/5295
  */
 const PreventPartialData = (property, Children) => props => {

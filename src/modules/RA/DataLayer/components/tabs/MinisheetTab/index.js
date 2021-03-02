@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import debounce from 'lodash.debounce';
 
 import {
@@ -19,6 +19,7 @@ import Placeholder from '../../../../../../components/Placeholder';
 import ColorPicker from '../../../../../../components/react-admin/ColorPicker';
 import HelpContent from '../../../../../../components/react-admin/HelpContent';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
+import Condition from '../../../../../../components/react-admin/Condition';
 import useSourceData from '../../useSourceData';
 import createTemplate from './minisheetTemplate';
 
@@ -42,9 +43,6 @@ const useStyles = makeStyles({
   },
 });
 
-// undefined value will be casted to false and trigger unwanted template generation
-const BooleanOrUndef = value => ((value === undefined) ? value : Boolean(value));
-
 
 const MinisheetTab = () => {
   const classes = useStyles();
@@ -53,25 +51,27 @@ const MinisheetTab = () => {
   const { geom_type: geomType, id: sourceId } = useSourceData('source');
 
   const { input: { value: fields } } = useField('fields');
-  const { input: { value: advanced } } = useField('minisheet_config.advanced', {
-    initialValue: true,
-    format: BooleanOrUndef,
-  });
-  const { input: { value: enable } } = useField('minisheet_config.enable');
-  const { input: { value: wizard } } = useField('minisheet_config.wizard');
-  const { input: { value: tree = [] } } = useField('minisheet_config.wizard.tree');
-  const { input: { value: title } } = useField('minisheet_config.wizard.title');
 
   const getAvailableFields = useCallback(() => {
-    if (!tree.length > 0) {
+    const {
+      values: {
+        minisheet_config: {
+          wizard: {
+            tree: treeData = [],
+          } = {},
+        } = {},
+      },
+    } = form.getState();
+
+    if (!treeData.length > 0) {
       return fields;
     }
 
-    const wizardFieldIds =  tree.flatMap(({ group, sourceFieldId, children = [] }) =>
+    const wizardFieldIds =  treeData.flatMap(({ group, sourceFieldId, children = [] }) =>
       (group ? children.map(({ sourceFieldId: id }) => id) : sourceFieldId));
 
     return fields.filter(field => !wizardFieldIds.find(id => id === field.sourceFieldId));
-  }, [fields, tree]);
+  }, [fields, form]);
 
   const availableFields = useMemo(() => getAvailableFields(), [getAvailableFields]);
 
@@ -94,16 +94,8 @@ const MinisheetTab = () => {
       ...minisheetConfig,
       template,
     });
-  }, 200), [fields, form, wizard, translate]);
+  }, 500), [fields, form, translate]);
 
-  useEffect(() => {
-    // check for false equality specificaly
-    // for some unresolved reason yet, advanced take <empty string> as a value
-    // when coming from menu (not the case after a reload with F5 for example)
-    if (advanced === false) {
-      updateTemplate();
-    }
-  }, [advanced, updateTemplate, tree, title]);
 
   if (geomType === undefined || !sourceId) {
     return (
@@ -115,67 +107,64 @@ const MinisheetTab = () => {
     );
   }
 
-
-  if (!enable) {
-    return (
-      <Placeholder>
-        <div className={classes.placeholder}>
-          <Typography variant="h5" component="h2" style={{ paddingBottom: '1em' }}>
-            {translate('datalayer.form.minisheet.card-message')}
-          </Typography>
-          <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.enable" />
-        </div>
-      </Placeholder>
-    );
-  }
-
   return (
     <>
-      <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.disable" />
-      <FieldGroup>
-        <div className={classes.title}>
-          <h3>{translate('datalayer.form.minisheet.title')}</h3>
-          <BooleanInput
-            source="minisheet_config.advanced"
-            label="datalayer.form.minisheet.advanced"
-            initialValue={advanced}
-          />
-        </div>
-        <InputLabel>{translate('datalayer.form.minisheet.color-label')}</InputLabel>
-        <Field name="minisheet_config.highlight_color" defaultValue="#cccccc">
-          {({ input: { onChange, value } }) => (
-            <ColorPicker onChange={onChange} value={value} />
-          )}
-        </Field>
+      <Condition when="minisheet_config.enable" is={v => !v}>
+        <Placeholder>
+          <div className={classes.placeholder}>
+            <Typography variant="h5" component="h2" style={{ paddingBottom: '1em' }}>
+              {translate('datalayer.form.minisheet.card-message')}
+            </Typography>
+            <BooleanInput
+              source="minisheet_config.enable"
+              label="datalayer.form.minisheet.enable"
+            />
+          </div>
+        </Placeholder>
+      </Condition>
 
-        {advanced && (
-        <>
-          <TextInput
-            multiline
-            source="minisheet_config.template"
-            label="datalayer.form.minisheet.template"
-            fullWidth
-          />
-          <TextInput
-            label="datalayer.form.compare-url.title"
-            source="settings.compare"
-          />
-          <HelpContent
-            title="datalayer.form.compare-url.help-title"
-            content="datalayer.form.compare-url.help-text"
-          />
-        </>
-        )}
-        {!advanced && (
-        <>
-          <MiniSheetFieldTree
-            treeData={tree}
-            fields={availableFields}
-            titleField={title}
-          />
-        </>
-        )}
-      </FieldGroup>
+      <Condition when="minisheet_config.enable" is>
+        <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.disable" />
+        <FieldGroup>
+          <div className={classes.title}>
+            <h3>{translate('datalayer.form.minisheet.title')}</h3>
+            <BooleanInput
+              source="minisheet_config.advanced"
+              label="datalayer.form.minisheet.advanced"
+              defaultValue={false}
+            />
+          </div>
+          <InputLabel>{translate('datalayer.form.minisheet.color-label')}</InputLabel>
+          <Field name="minisheet_config.highlight_color" defaultValue="#cccccc">
+            {({ input: { onChange, value } }) => (
+              <ColorPicker onChange={onChange} value={value} />
+            )}
+          </Field>
+          <Condition when="minisheet_config.advanced" is={v => v}>
+            <TextInput
+              multiline
+              source="minisheet_config.template"
+              label="datalayer.form.minisheet.template"
+              fullWidth
+            />
+            <TextInput
+              label="datalayer.form.compare-url.title"
+              source="settings.compare"
+            />
+            <HelpContent
+              title="datalayer.form.compare-url.help-title"
+              content="datalayer.form.compare-url.help-text"
+            />
+          </Condition>
+          <Condition when="minisheet_config.advanced" is={false}>
+            <MiniSheetFieldTree
+              // treeData={tree}
+              fields={availableFields}
+              updateTemplate={updateTemplate}
+            />
+          </Condition>
+        </FieldGroup>
+      </Condition>
     </>
   );
 };

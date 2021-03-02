@@ -13,6 +13,6 @@ const httpClient = (url, options = {}) =>
   });
 
 export default (...args) => {
-  const idKey = args.slice(-1)?.id;
-  return drfProvider(Api.host, httpClient, idKey)(...args);
+  const [meta] = args.slice(-1);
+  return drfProvider(Api.host, httpClient, meta.id)(...args);
 };

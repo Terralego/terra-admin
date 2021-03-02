@@ -807,7 +807,7 @@
       "fields": {
         "label": "Nom du point de vue",
         "address": "Adresse",
-        "identifier": "Numéro du point de vue",
+        "identifier": "Identifiant",
         "properties.voie": "Voie",
         "properties.commune": "Commune",
         "properties.altitude": "Altitude",

@@ -81,6 +81,7 @@ export const resources = [
     name: RES_VIEWPOINT,
     moduleName: 'OPP',
     endpoint: 'viewpoints',
+    id: 'identifier',
     ...viewpointViews,
   },
   {

@@ -30,7 +30,7 @@ const enhanceDataProvider = nextDataProvider => async (...args) => {
   /**
    * At least return initial data provider
    */
-  return nextDataProvider(type, endpoint, params);
+  return nextDataProvider(type, endpoint, params, meta);
 };
 
 export default enhanceDataProvider;

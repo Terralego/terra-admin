@@ -12,7 +12,6 @@ import { resources as allConfig } from '../../modules/RA/ra-modules';
  */
 export const getEndpoint = resource => {
   const currentConfig = allConfig.find(config => (config.name === resource));
-
   if (currentConfig && currentConfig.endpoint) {
     return currentConfig.endpoint;
   }
@@ -20,6 +19,12 @@ export const getEndpoint = resource => {
   return resource;
 };
 
+export const getIdField = resource => {
+  const currentConfig = allConfig.find(config => (config.name === resource));
+  return currentConfig?.id;
+};
+
 export default {
   getEndpoint,
+  getIdField,
 };

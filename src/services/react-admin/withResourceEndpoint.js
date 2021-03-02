@@ -1,9 +1,10 @@
-import { getEndpoint } from '../../utils/react-admin/resources';
+import { getEndpoint, getIdField } from '../../utils/react-admin/resources';
 
 const withResourceEndpoint = dataProvider => async (type, resource, params, meta) => {
   const newMeta = {
     ...meta,
     endpoint: getEndpoint(resource),
+    id: getIdField(resource),
   };
 
   /**

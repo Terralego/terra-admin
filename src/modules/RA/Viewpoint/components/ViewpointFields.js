@@ -28,6 +28,7 @@ import {
 import RichTextInput from 'ra-input-rich-text';
 
 import { withStyles } from '@material-ui/core/styles';
+import MaterialTextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 import { RES_PICTURE } from '../../ra-modules';
@@ -37,7 +38,6 @@ import FreeAutocompleteInput
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
-import { toast } from '../../../../utils/toast';
 import GridListPictures from './GridListPictures';
 
 const styles = {
@@ -110,6 +110,14 @@ function PictureRephotography (props) {
   );
 }
 
+const IdentifierField = ({ record, source, translate: t, ...props }) => (
+  <MaterialTextField
+    {...props}
+    label={t(source)}
+    value={record[source]}
+  />
+);
+
 const ViewpointFields = ({
   translate: t,
   edit,
@@ -120,7 +128,6 @@ const ViewpointFields = ({
 }) => {
   const [remoteChoices, setRemoteChoices] = React.useState([]);
   const [waiting, setWaiting] = React.useState(false);
-  const [identifier, setIdentifier] = React.useState(null);
 
   const getRemoteData = async () => {
     setWaiting(true);
@@ -135,20 +142,9 @@ const ViewpointFields = ({
     setWaiting(false);
   };
 
-  const getLastViewpointNb = async () => {
-    try {
-      const { identifier__max: maxIdentifier } = await Api.request('viewpoints/max_identifier/');
-      setIdentifier(maxIdentifier + 1);
-    } catch (error) {
-      toast.displayError(error.message);
-    }
-  };
-
   React.useEffect(() => {
     getRemoteData();
-    getLastViewpointNb();
   }, []);
-
 
   return (
     <TabbedForm
@@ -157,17 +153,21 @@ const ViewpointFields = ({
           coordinates: undefined,
           type: 'Point',
         },
-        identifier
       }}
       record={record}
       {...props}
     >
       <FormTab label="resources.viewpoint.tabs.general">
         <TextInput source="label" formClassName={classes.inline} />
-        <TextInput
+        {edit && (
+        <IdentifierField
+          variant="filled"
           source="identifier"
           formClassName={classes.inline}
+          translate={t}
+          disabled
         />
+        )}
 
         <Br />
 

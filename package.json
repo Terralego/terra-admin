@@ -35,7 +35,7 @@
     "query-string": "^6.13.2",
     "querystring": "^0.2.0",
     "quill": "^1.3.7",
-    "ra-data-drf": "git://github.com/CFarcy/ra-data-drf.git#794d38b660c4b5e54a3219db8d96529f72f7137c",
+    "ra-data-drf": "git://github.com/CFarcy/ra-data-drf.git#0da8c15267818302410c93d607212fda9a91ee84",
     "ra-input-rich-text": "^3.8.3",
     "ra-language-french": "^3.8.5",
     "randomcolor": "^0.6.2",

@@ -19,12 +19,22 @@ export const getEndpoint = resource => {
   return resource;
 };
 
-export const getIdField = resource => {
+/**
+ * Return the id key of a specified resource
+ *
+ * @example
+ * getIdKey('viewpoint')
+ * // returns 'identifier'
+ *
+ * @param {string} resource the resource name
+ * @returns {?string} The id key of the specified rsource
+ */
+export const getIdKey = resource => {
   const currentConfig = allConfig.find(config => (config.name === resource));
   return currentConfig?.id;
 };
 
 export default {
   getEndpoint,
-  getIdField,
+  getIdKey,
 };

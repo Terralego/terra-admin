@@ -23,10 +23,11 @@ export const PictureList = props => (
   >
     <Datagrid>
       <ReferenceField
-        source="viewpoint"
+        source="viewpoint_identifier"
         reference={RES_VIEWPOINT}
       >
-        <TextField source="properties.index" />
+        {/* ic is set as viewpoint identifier by dataprovider */}
+        <TextField source="id" />
       </ReferenceField>
 
       <TextField source="properties.index" />

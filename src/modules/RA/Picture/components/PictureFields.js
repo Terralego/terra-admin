@@ -12,6 +12,9 @@ import {
   TabbedForm,
   TextInput,
   required,
+  ReferenceField,
+  TextField,
+  SelectField,
 } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -20,8 +23,12 @@ import { RES_VIEWPOINT, RES_USER } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
-import CustomToolbar from '../../../../components/react-admin/CustomToolbar';
+import CustomToolbar from './CustomToolbar';
 import TimeInput from '../../../../components/react-admin/TimeInput';
+
+import useUserSettings from '../../../../hooks/useUserSettings';
+import { stateChoices } from '../utils';
+import Condition from '../../../../components/react-admin/Condition';
 
 const styles = {
   inline: {
@@ -39,93 +46,124 @@ const weatherConditions = [
 
 const Br = () => <br />;
 
-const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => (
-  <TabbedForm {...props} toolbar={<CustomToolbar />}>
-    <FormTab label="resources.picture.tabs.metadata">
-      <ReferenceInput
-        source="viewpoint"
-        reference={RES_VIEWPOINT}
-        formClassName={classes.inline}
-        validate={required()}
-      >
-        <SelectInput optionText="label" />
-      </ReferenceInput>
-      <TextInput source="identifier" formClassName={classes.inline} disabled />
+const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
+  const { hasPermission } = useUserSettings();
 
-      <Br />
+  return (
+    <TabbedForm {...props} toolbar={<CustomToolbar />} initialValues={{ state: 'draft' }}>
+      <FormTab label="resources.picture.tabs.metadata">
+        {hasPermission('can_manage_pictures') && (
+          <ReferenceInput
+            source="viewpoint"
+            reference={RES_VIEWPOINT}
+            formClassName={classes.inline}
+            validate={required()}
+          >
+            <SelectInput optionText="label" />
+          </ReferenceInput>
+        )}
+        {!hasPermission('can_manage_pictures') && hasPermission('can_add_pictures') && (
+          <ReferenceField
+            source="viewpoint"
+            reference={RES_VIEWPOINT}
+            formClassName={classes.inline}
+          >
+            <TextField source="label" />
+          </ReferenceField>
+        )}
+        <Condition when="state" is="accepted">
+          {edit && <TextField source="identifier" formClassName={classes.inline} />}
+        </Condition>
 
-      <DateInput source="date" formClassName={classes.inline} />
-      <TimeInput
-        source="date"
-        label="resources.picture.fields.time"
-        formClassName={classes.inline}
-      />
+        {edit && (
+          <SelectField source="state" choices={stateChoices} formClassName={classes.inline} />
+        )}
 
-      <Br />
+        <Br />
 
-      {!edit && (
-        <ReferenceInput
-          source="owner_id"
-          reference={RES_USER}
+        <DateInput source="date" formClassName={classes.inline} />
+        <TimeInput
+          source="date"
+          label="resources.picture.fields.time"
           formClassName={classes.inline}
-          validate={required()}
-        >
-          <SelectInput optionText="email" disable={edit} />
-        </ReferenceInput>
-      )}
+        />
 
-      {edit && <TextInput disabled source="owner.email" formClassName={classes.inline} />}
+        <Br />
 
-      <Br />
+        {hasPermission('can_manage_users') && !edit && (
+          <ReferenceInput
+            source="owner_id"
+            reference={RES_USER}
+            formClassName={classes.inline}
+            validate={required()}
+          >
+            <SelectInput
+              optionText="email"
+              disable={edit}
+              label="resources.picture.fields.owner_id"
+            />
+          </ReferenceInput>
+        )}
 
-      <TextInput source="properties.camera_brand" formClassName={classes.inline} />
-      <TextInput source="properties.camera_model" formClassName={classes.inline} />
+        {hasPermission('can_manage_users') && edit && (
+          <TextInput
+            disabled
+            source="owner.email"
+            formClassName={classes.inline}
+            label="resources.picture.fields.owner_id"
+          />
+        )}
 
-      <SelectInput source="properties.meteo" choices={weatherConditions} />
-      <Br />
+        <Br />
 
-      <TextInput multiline source="properties.observations" />
+        <TextInput source="properties.camera_brand" formClassName={classes.inline} />
+        <TextInput source="properties.camera_model" formClassName={classes.inline} />
+        <SelectInput source="properties.meteo" choices={weatherConditions} />
+        <Br />
 
-      <Br />
+        <TextInput multiline source="properties.observations" />
 
-      <ImageInput source="file" accept="image/*">
-        <ImageField source="thumbnail" />
-      </ImageInput>
-    </FormTab>
+        <Br />
 
-    <FormTab label="resources.picture.tabs.repeat" path="repeat">
-      <Br />
+        <ImageInput source="file" accept="image/*">
+          <ImageField source="thumbnail" />
+        </ImageInput>
+      </FormTab>
 
-      <TextInput source="properties.altitude" formClassName={classes.inline} />
-      <TextInput source="properties.hauteur" formClassName={classes.inline} />
-      <TextInput source="properties.orientation" formClassName={classes.inline} />
+      <FormTab label="resources.picture.tabs.repeat" path="repeat">
+        <Br />
 
-      <Br />
+        <TextInput source="properties.altitude" formClassName={classes.inline} />
+        <TextInput source="properties.hauteur" formClassName={classes.inline} />
+        <TextInput source="properties.orientation" formClassName={classes.inline} />
 
-      <TextInput source="properties.focale_35mm" formClassName={classes.inline} />
-      <TextInput source="properties.focale_objectif" formClassName={classes.inline} />
+        <Br />
 
-      <Br />
+        <TextInput source="properties.focale_35mm" formClassName={classes.inline} />
+        <TextInput source="properties.focale_objectif" formClassName={classes.inline} />
 
-      <NumberInput
-        source="properties.geometry.coordinates[1]"
-        formClassName={classes.inline}
-        defaultValue={mapConfig.center[1]}
-      />
-      <NumberInput
-        source="properties.geometry.coordinates[0]"
-        formClassName={classes.inline}
-        defaultValue={mapConfig.center[0]}
-      />
+        <Br />
 
-      <MapPointInput
-        source="properties.geometry.coordinates"
-        center={mapConfig.center}
-        style={{ width: '50%' }}
-      />
-    </FormTab>
-  </TabbedForm>
-);
+        <NumberInput
+          source="properties.geometry.coordinates[1]"
+          formClassName={classes.inline}
+          defaultValue={mapConfig.center[1]}
+        />
+        <NumberInput
+          source="properties.geometry.coordinates[0]"
+          formClassName={classes.inline}
+          defaultValue={mapConfig.center[0]}
+        />
+
+        <MapPointInput
+          source="properties.geometry.coordinates"
+          center={mapConfig.center}
+          style={{ width: '50%' }}
+        />
+      </FormTab>
+    </TabbedForm>
+  );
+};
 
 PictureFields.propTypes = {
   edit: PropTypes.bool,

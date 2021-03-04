@@ -1,4 +1,11 @@
 
+3.1.3 / 2021-03-04
+==================
+
+  * Rework minisheet to handle partial data retrieved from RA
+  * Fix minisheet bug on initialisation
+  * Fix initial OPP city creation problem
+
 3.1.2 / 2021-02-23
 ==================
 

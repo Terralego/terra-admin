@@ -3,7 +3,7 @@ import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import UITextField from '@material-ui/core/TextField';
 
-import { useInput } from 'react-admin';
+import { useInput, useTranslate } from 'react-admin';
 
 
 const sanitizeRestProps = ({
@@ -11,6 +11,7 @@ const sanitizeRestProps = ({
 }) => rest;
 
 const FreeAutocompleteInput = ({ choices = [], label, ...rest }) => {
+  const translate = useTranslate();
   const {
     input: { value, onChange },
   } = useInput(rest);
@@ -26,7 +27,7 @@ const FreeAutocompleteInput = ({ choices = [], label, ...rest }) => {
 
         renderInput={params => (
           <UITextField
-            label={label}
+            label={translate(label)}
             {...params}
             margin="normal"
             variant="filled"

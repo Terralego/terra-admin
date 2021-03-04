@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Api from '@terralego/core/modules/Api';
+import mime from 'mime-types';
 
 import {
   minValue,
@@ -22,9 +23,11 @@ import {
   SimpleFormIterator,
   TabbedForm,
   TextField,
+  SelectInput,
   TextInput,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
+
 
 import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -46,10 +49,11 @@ const styles = {
 
 const Br = () => <br />;
 
-
 const SmartFileInput = props => {
-  const { record: { document } } = props;
-  const isImage = document && document.split(':')[1].split('/')[0] === 'image';
+  const {
+    record: { document },
+  } = props;
+  const isImage = mime.lookup(document).includes('image');
   const InputComponent = isImage ? ImageInput : RAFileInput;
   const FieldComponent = isImage ? ImageField : FileField;
   return (
@@ -163,7 +167,7 @@ const ViewpointFields = ({
           <FreeAutocompleteInput
             choices={remoteChoices.cities}
             source="city"
-            label="City"
+            label="resources.viewpoint.fields.city"
           />
         )}
 
@@ -178,7 +182,11 @@ const ViewpointFields = ({
           defaultValue={mapConfig.center[0]}
         />
 
-        <MapPointInput source="point.coordinates" center={mapConfig.center} style={{ width: '50%' }} />
+        <MapPointInput
+          source="point.coordinates"
+          center={mapConfig.center}
+          style={{ width: '50%' }}
+        />
       </FormTab>
 
       {edit && (
@@ -202,10 +210,7 @@ const ViewpointFields = ({
 
           <TextInput
             source="properties.frequence"
-            validate={[
-              number(),
-              minValue(1),
-            ]}
+            validate={[number(), minValue(1)]}
             formClassName={classes.inline}
             options={{
               InputProps: {
@@ -217,20 +222,17 @@ const ViewpointFields = ({
               },
             }}
           />
-          <BooleanInput
-            source="properties.difficulte"
-            formClassName={classes.inline}
-          />
+          <BooleanInput source="properties.difficulte" formClassName={classes.inline} />
           <TextInput multiline source="properties.rephotographie" rows={4} rowsMax={30} />
 
           <ArrayInput source="related" fullWidth>
             <SimpleFormIterator>
-              <FreeAutocompleteInput
+              <SelectInput
                 label="resources.viewpoint.fields.related.key"
                 source="key"
                 choices={[
-                  { id: 'croquis', name: 'croquis' },
-                  { id: 'emplacement', name: 'emplacement' },
+                  { id: 'croquis', name: 'Croquis' },
+                  { id: 'emplacement', name: 'Emplacement' },
                 ]}
                 formClassName={classes.inline}
               />
@@ -239,9 +241,7 @@ const ViewpointFields = ({
                 source="properties.label"
                 formClassName={classes.inline}
               />
-              <SmartFileInput
-                label="resources.viewpoint.fields.related.document"
-              />
+              <SmartFileInput label="resources.viewpoint.fields.related.document" />
             </SimpleFormIterator>
           </ArrayInput>
         </FormTab>
@@ -255,11 +255,15 @@ const ViewpointFields = ({
           <TextInput multiline source="properties.historial-data" />
           <TextInput multiline source="properties.cultural-references" />
 
-          {waiting && <><LinearProgress /></>}
+          {waiting && (
+            <>
+              <LinearProgress />
+            </>
+          )}
           {!waiting && (
             <AutocompleteArrayInput
               translateChoice={false}
-              source="properties.themes"
+              source="themes"
               choices={remoteChoices.themes}
             />
           )}
@@ -271,11 +275,7 @@ const ViewpointFields = ({
 
       {edit && (
         <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
-          <ReferenceArrayField
-            source="picture_ids"
-            reference={RES_PICTURE}
-            fullWidth
-          >
+          <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} fullWidth>
             <GridListPictures viewpointId={record.id} />
           </ReferenceArrayField>
         </FormTab>

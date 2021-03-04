@@ -802,6 +802,7 @@
       "viewpoint-no-number": "No identifier set",
       "fields": {
         "label": "Viewpoint name",
+        "city": "City",
         "address": "Address",
         "properties.index": "Viewpoint index",
         "properties.voie": "Street",

@@ -21,7 +21,7 @@ const styles = theme => ({
 });
 
 const sanitizeRestProps = ({
-  basePath, isRequired, ...rest
+  basePath, isRequired, record, meta, ressource, ...rest
 }) => rest;
 
 const MapPointInput = ({ classes, input, center, mapConfig, ...rest }) => {
@@ -54,7 +54,7 @@ const MapPointInput = ({ classes, input, center, mapConfig, ...rest }) => {
     <div {...sanitizeRestProps(rest)}>
       <Map
         style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
-        containerStyle={{ height: '300px' }}
+        containerStyle={{ height: '300px', width: '600px' }}
         center={center}
         onClick={handleMapClick}
         {...customProps}

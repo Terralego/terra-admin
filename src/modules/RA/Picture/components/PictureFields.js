@@ -125,7 +125,11 @@ const PictureFields = ({
         defaultValue={mapConfig.center[0]}
       />
 
-      <MapPointInput source="properties.geometry.coordinates" center={mapConfig.center} />
+      <MapPointInput
+        source="properties.geometry.coordinates"
+        center={mapConfig.center}
+        style={{ width: '50%' }}
+      />
     </FormTab>
   </TabbedForm>
 );

@@ -4,8 +4,20 @@ import { useForm } from 'react-final-form';
 
 import AddField from '../AddField';
 
-const AddPopupField = ({ fields, popupFields = [] }) => {
+const AddPopupField = ({ fields }) => {
   const form = useForm();
+  const {
+    values: {
+      popup_config: { wizard: { fields: popupFields = [] } = {} },
+    },
+  } = form.getState();
+
+  const availableFields = useMemo(() => (
+    (popupFields.length > 0)
+      ? (fields.filter(({ sourceFieldId }) =>
+        !popupFields.find(field => (sourceFieldId === field.sourceFieldId))))
+      : fields
+  ), [fields, popupFields]);
 
   const onAdd = useCallback(selected => {
     const {
@@ -30,13 +42,6 @@ const AddPopupField = ({ fields, popupFields = [] }) => {
       },
     });
   }, [form]);
-
-  const availableFields = useMemo(() => (
-    (popupFields.length > 0)
-      ? fields.filter(({ sourceFieldId }) =>
-        !popupFields.find(field => (sourceFieldId === field.sourceFieldId)))
-      : fields
-  ), [fields, popupFields]);
 
   return (
     <AddField

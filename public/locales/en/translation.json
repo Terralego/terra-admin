@@ -92,6 +92,28 @@
     "error_min": "{{name}} should be greater than {{min}}.",
     "error_max": "{{name}} should be lower than {{max}}."
   },
+  "table": {
+    "sortAsc": "Sort asc.",
+    "sortDesc": "Sort desc.",
+    "filterProps": "Filter properties",
+    "columnsDisplay": "Show all columns",
+    "columnsHide": "Hide all columns",
+    "selectedCount": "{{ count }} selected",
+    "selectAll": "Select all",
+    "maximize": "Maximize",
+    "minimize": "Minimize",
+    "hide": "Hide",
+    "noFeature": "No feature in this layer.",
+    "readMessage": "<0>Show</0> this feature.",
+    "results": "{{ count }} results :",
+    "results_singular": "{{ count }} result :",
+    "results_plural": "{{ count }} results :",
+    "pagination": {
+      "display": "Show",
+      "results": "results per page"
+    },
+    "search": "Search in table"
+  },
   "date": {
     "today": "Today",
     "clear": "Clear",
@@ -241,8 +263,8 @@
       "noFeature": "No feature in this layer.",
       "readMessage": "<0>Show</0> this feature.",
       "results": "{{ count }} results :",
-      "results_singular": "{{ count }} result :",
-      "results_plural": "{{ count }} results :",
+      "results_singular": "{{ count }} result:",
+      "results_plural": "{{ count }} results:",
       "pagination": {
         "display": "Show",
         "results": "results per page"
@@ -886,6 +908,9 @@
         "metadata": "Meta data",
         "repeat": "Rephotography"
       }
+    },
+    "campaign":{
+      "fields":{}
     },
     "user": {
       "fields": {

@@ -15,6 +15,7 @@ import baseLayerViews from './BaseLayer/views';
 // OPP
 import viewpointViews from './Viewpoint/views';
 import pictureViews from './Picture/views';
+import campaignViews from './Campaign/views';
 
 // const guessers = {
 //   edit: EditGuesser,
@@ -88,6 +89,12 @@ export const resources = [
     moduleName: 'OPP',
     endpoint: 'pictures',
     ...pictureViews,
+  },
+  {
+    name: RES_CAMPAIGN,
+    moduleName: 'OPP',
+    endpoint: 'campaigns',
+    ...campaignViews,
   },
   // Deactivacte campaign list module
   // cf https://github.com/Terralego/terra-admin/issues/260

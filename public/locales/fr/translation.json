@@ -92,6 +92,28 @@
     "error_min": "Ce champ {{name}} doit avoir une valeur inférieure à {{min}}.",
     "error_max": "Ce champ {{name}} doit avoir une valeur supérieure à {{min}}."
   },
+  "table": {
+    "sortAsc": "Tri croissant",
+    "sortDesc": "Tri décroissant",
+    "filterProps": "Filtrer les propriétés",
+    "columnsDisplay": "Afficher toutes les colonnes",
+    "columnsHide": "Cacher toutes les colonnes",
+    "selectedCount": "%{count} sélectionné(s)",
+    "selectAll": "Tout sélectionner",
+    "maximize": "Agrandir",
+    "minimize": "Réduire",
+    "hide": "Cacher",
+    "noFeature": "Aucun objet à afficher pour cette couche.",
+    "readMessage": "<0>Voir</0> cet objet.",
+    "results": "%{count} résultat :",
+    "results_singular": "%{count} résultat :",
+    "results_plural": "%{count} résultats :",
+    "pagination": {
+      "display": "Afficher",
+      "results": "résultats par page"
+    },
+    "search": "Rechercher dans la table"
+  },
   "date": {
     "today": "Aujourd'hui",
     "clear": "Effacer",
@@ -719,6 +741,11 @@
       "show": "Afficher",
       "sort": "Trier",
       "undo": "Annuler",
+      "start": "Démarrer",
+      "close": "Terminer",
+      "submit": "Soumettre",
+      "validate": "Valider",
+      "refuse": "Refuser",
       "unselect": "Désélectionner"
     },
     "boolean": {
@@ -733,6 +760,8 @@
       "list": "%{name}",
       "loading": "Chargement",
       "not_found": "Page manquante",
+      "empty": "Aucun résultat",
+      "invite": "Vous pouvez créer un nouvel élément en cliquant sur ce bouton",
       "show": "%{name} #%{id}"
     },
     "input": {
@@ -777,6 +806,7 @@
       "page_out_from_begin": "La page doit être supérieure à 1",
       "page_range_info": "%{offsetBegin}-%{offsetEnd} sur %{total}",
       "page_rows_per_page": "Lignes par page :",
+      "skip_nav": "Aller au contenu",
       "next": "Suivant",
       "prev": "Précédent"
     },
@@ -863,9 +893,31 @@
         "pictures": "Photographies"
       }
     },
+    "campaign":{
+      "fields":{
+        "start_date": "Date de début", 
+        "label": "Nom", 
+        "state": "État",
+        "assignee": "Photographe", 
+        "viewpoints": "Points de vue"
+      },
+      "actions":{
+        "add_picture": "Ajouter une photo",
+        "add_viewpoint": "Add viewpoint"
+      },
+      "tabs":{
+        "metadata": "Informations"
+      },
+      "states":{
+        "started": "Démarrée",
+        "closed": "Terminée",
+        "draft": "Brouillon"
+      }
+    },
     "picture": {
       "fields": {
         "label": "Nom du point de vue",
+        "state": "État",
         "properties.altitude": "Altitude",
         "properties.meteo": "Conditions météo",
         "properties.hauteur": "Hauteur de l'œil",
@@ -885,6 +937,12 @@
         "file": "Photographie",
         "file.thumbnail": "Photographie",
         "time": "Heure"
+      },
+      "states":{
+        "accepted": "Acceptée",
+        "refused": "Refusée",
+        "submited": "Soumise",
+        "draft": "Brouillon"
       },
       "tabs": {
         "metadata": "Métadonnées",

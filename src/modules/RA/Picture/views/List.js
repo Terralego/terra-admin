@@ -7,43 +7,52 @@ import {
   List,
   ReferenceField,
   TextField,
+  SelectField,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
-import {
-  RES_VIEWPOINT,
-  // RES_USER,
-} from '../../ra-modules';
+import useUserSettings from '../../../../hooks/useUserSettings';
+import { RES_VIEWPOINT, RES_USER } from '../../ra-modules';
 
-export const PictureList = props => (
-  <List
-    {...props}
-    exporter={false}
-    bulkActionButtons={<CommonBulkActionButtons />}
-  >
-    <Datagrid>
-      <ReferenceField
-        source="viewpoint"
-        reference={RES_VIEWPOINT}
-      >
-        <TextField source="id" />
-      </ReferenceField>
+import { stateChoices } from '../utils';
 
-      <TextField source="identifier" />
-      <DateField source="date" />
+export const PictureList = props => {
+  const { hasPermission, id } = useUserSettings();
 
-      {/* <ReferenceField
-        source="owner.uuid"
-        reference={RES_USER}
-      >
-        <TextField source="email" />
-      </ReferenceField> */}
+  const filter = {};
+  if (!hasPermission('can_manage_users')) {
+    filter.owner_id = id;
+    filter.owner = id;
+  }
+  return (
+    <List
+      {...props}
+      exporter={false}
+      bulkActionButtons={<CommonBulkActionButtons />}
+      filter={filter}
+    >
+      <Datagrid>
+        <ReferenceField source="viewpoint" reference={RES_VIEWPOINT}>
+          <TextField source="id" />
+        </ReferenceField>
 
-      <ImageField source="file.thumbnail" />
+        <TextField source="identifier" />
+        <DateField source="date" />
 
-      <EditButton />
-    </Datagrid>
-  </List>
-);
+        {hasPermission('can_manage_users') && (
+          <ReferenceField source="owner_id" reference={RES_USER}>
+            <TextField source="email" />
+          </ReferenceField>
+        )}
+
+        <ImageField source="file.thumbnail" />
+
+        <SelectField source="state" choices={stateChoices} />
+
+        <EditButton />
+      </Datagrid>
+    </List>
+  );
+};
 
 export default PictureList;

@@ -1,4 +1,10 @@
 
+3.1.4 / 2021-03-04
+==================
+
+  * Fix opp admin after upgrade
+  * rework popup form & generation for layer admin
+
 3.1.3 / 2021-03-04
 ==================
 

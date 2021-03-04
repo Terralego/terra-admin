@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useField, useForm } from 'react-final-form';
 import {
   TextInput,
@@ -15,6 +15,7 @@ import ZoomIn from '@material-ui/icons/ZoomIn';
 import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
 import Placeholder from '../../../../../../components/Placeholder';
 import ZoomInput from '../../../../../../components/react-admin/ZoomInput';
+import Condition from '../../../../../../components/react-admin/Condition';
 import useSourceData from '../../useSourceData';
 import AddPopupField from './AddPopupField';
 import PopupFieldList from './PopupFieldList';
@@ -37,9 +38,6 @@ const useStyle = makeStyles({
   },
 });
 
-// undefined value will be casted to false and trigger unwanted template generation
-const BooleanOrUndef = value => ((value === undefined) ? value : Boolean(value));
-
 const PopupTab = () => {
   const translate = useTranslate();
   const form = useForm();
@@ -47,35 +45,28 @@ const PopupTab = () => {
   const { geom_type: geomType, id: sourceId } = useSourceData('source');
 
   const { input: { value: fields } } = useField('fields');
-  const { input: { value: mainFieldId } } = useField('main_field');
-  const { input: { value: enable = false } } = useField('popup_config.enable');
-  const { input: { value: advanced } } = useField('popup_config.advanced', {
-    initialValue: true,
-    format: BooleanOrUndef,
-  });
-  const { input: { value: { fields: popupfields = [] } = {} } } = useField('popup_config.wizard', {
-    initialValue: useMemo(() => ({ fields: [{ sourceFieldId: mainFieldId }] }), [mainFieldId]),
-  });
 
   const updateTemplate = useCallback(debounce(() => {
+    const {
+      values: {
+        popup_config: {
+          wizard: {
+            fields: popupfields = [],
+          },
+        },
+        popup_config: popupConfig,
+      },
+    } = form.getState();
     if (popupfields.length > 0) {
       const lines = createTemplate(popupfields, fields);
 
       form.change('popup_config', {
-        ...form.getState().values.popup_config,
+        ...popupConfig,
         template: lines.join('\n'),
       });
     }
-  }, 200), [form, popupfields, fields]);
+  }, 200), [form, fields]);
 
-  useEffect(() => {
-    // check for false equality specificaly
-    // for some unresolved reason yet, advanced take <empty string> as a value
-    // when coming from menu (not the case after a reload with F5 for example)
-    if (advanced === false) {
-      updateTemplate();
-    }
-  }, [popupfields, advanced, updateTemplate]);
 
   if (geomType === undefined || !sourceId) {
     return (
@@ -89,7 +80,7 @@ const PopupTab = () => {
 
   return (
     <>
-      {enable && (
+      <Condition when="popup_config.enable" is={v => v}>
         <FieldGroup>
           <BooleanInput source="popup_config.enable" label="datalayer.form.popup.disable" />
           <div className={classes.title}>
@@ -108,40 +99,40 @@ const PopupTab = () => {
             initialValue={[0, 20]}
             fieldPaths={['popup_config.minzoom', 'popup_config.maxzoom']}
           />
-          {advanced && (
+          <Condition when="popup_config.advanced" is={v => v}>
+
             <TextInput
               multiline
               source="popup_config.template"
               label="datalayer.form.popup.template"
             />
-          )}
-          {!advanced && (
-            <>
-              <PopupFieldList
-                fields={fields}
-                popupFields={popupfields}
-              />
-              <AddPopupField
-                fields={fields}
-                popupFields={popupfields}
-              />
-            </>
-          )}
+          </Condition>
+
+          <Condition when="popup_config.advanced" is={v => !v}>
+            <PopupFieldList
+              fields={fields}
+              updateTemplate={updateTemplate}
+            />
+            <AddPopupField
+              fields={fields}
+            />
+          </Condition>
         </FieldGroup>
-      )}
-      {!enable && (
-      <Placeholder>
-        <div className={classes.placeholder}>
-          <Typography variant="h5" component="h2" style={{ paddingBottom: '1em' }}>
-            {translate('datalayer.form.popup.card-message')}
-          </Typography>
-          <BooleanInput
-            source="popup_config.enable"
-            label="datalayer.form.popup.enable"
-          />
-        </div>
-      </Placeholder>
-      )}
+      </Condition>
+
+      <Condition when="popup_config.enable" is={v => !v}>
+        <Placeholder>
+          <div className={classes.placeholder}>
+            <Typography variant="h5" component="h2" style={{ paddingBottom: '1em' }}>
+              {translate('datalayer.form.popup.card-message')}
+            </Typography>
+            <BooleanInput
+              source="popup_config.enable"
+              label="datalayer.form.popup.enable"
+            />
+          </div>
+        </Placeholder>
+      </Condition>
     </>
   );
 };

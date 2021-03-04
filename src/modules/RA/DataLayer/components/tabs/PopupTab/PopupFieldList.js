@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useForm, Field } from 'react-final-form';
+import React, { useCallback, useEffect } from 'react';
+import { useForm, Field, useField } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 import { SortableContainer } from 'react-sortable-hoc';
 
@@ -19,9 +19,15 @@ const SortableFieldList = SortableContainer(({ fieldList, fields, onChange }) =>
   </div>
 ));
 
-const PopupFieldList = ({ fields, popupFields = [] }) => {
+const PopupFieldList = ({ fields, updateTemplate }) => {
   const form = useForm();
   const translate = useTranslate();
+  const { input: { value: mainFieldId } } = useField('main_field');
+  const { input: { value: { fields: popupFields = [] } = {} } } = useField('popup_config.wizard', {
+    initialValue: React.useMemo(() => ({
+      fields: [{ sourceFieldId: mainFieldId }],
+    }), [mainFieldId]),
+  });
 
   const onChange = useCallback(popupField => {
     const popupConfig = form.getState().values.popup_config;
@@ -55,13 +61,17 @@ const PopupFieldList = ({ fields, popupFields = [] }) => {
     }
   };
 
-  const validateTitle = React.useCallback(({ sourceFieldId } = {}) => {
+  const validateTitle = useCallback(({ sourceFieldId } = {}) => {
     const errors = {};
     if (!sourceFieldId) {
       errors.sourceFieldId = translate('datalayer.form.error-required');
     }
     return errors;
   }, [translate]);
+
+  useEffect(() => {
+    updateTemplate();
+  }, [updateTemplate]);
 
   return (
     <div className="wrapper" style={{ width: '50%' }}>

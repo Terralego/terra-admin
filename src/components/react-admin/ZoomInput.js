@@ -15,10 +15,10 @@ const ZoomInput = ({
 
   const {
     input: { value: min },
-  } = useField(fieldMin, { initialValue: valueMin });
+  } = useField(fieldMin, { defaultValue: valueMin });
   const {
     input: { value: max },
-  } = useField(fieldMax, { initialValue: valueMax });
+  } = useField(fieldMax, { defaultValue: valueMax });
 
   const value = useMemo(
     () => [

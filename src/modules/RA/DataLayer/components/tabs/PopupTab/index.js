@@ -52,7 +52,7 @@ const PopupTab = () => {
         popup_config: {
           wizard: {
             fields: popupfields = [],
-          },
+          } = {},
         },
         popup_config: popupConfig,
       },

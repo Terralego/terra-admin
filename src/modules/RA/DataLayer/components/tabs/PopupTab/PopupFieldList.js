@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useMemo, useEffect } from 'react';
 import { useForm, Field, useField } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 import { SortableContainer } from 'react-sortable-hoc';
@@ -19,15 +19,30 @@ const SortableFieldList = SortableContainer(({ fieldList, fields, onChange }) =>
   </div>
 ));
 
+const TitleRow = ({ titlefield = {}, fields, onChange, callback, meta }) => {
+  const handleChange = useCallback(field => {
+    onChange(field);
+    callback();
+  }, [callback, onChange]);
+
+  return (
+    <PopupFieldRow
+      popupField={titlefield}
+      fields={fields}
+      onChange={handleChange}
+      meta={meta}
+      isTitle
+    />
+  );
+};
+
 const PopupFieldList = ({ fields, updateTemplate }) => {
   const form = useForm();
   const translate = useTranslate();
   const { input: { value: mainFieldId } } = useField('main_field');
-  const { input: { value: { fields: popupFields = [] } = {} } } = useField('popup_config.wizard', {
-    initialValue: React.useMemo(() => ({
-      fields: [{ sourceFieldId: mainFieldId }],
-    }), [mainFieldId]),
-  });
+  const { input: { value: popupFields = [] } } = useField('popup_config.wizard.fields');
+
+  const initialTitleField = useMemo(() => ({ sourceFieldId: mainFieldId }), [mainFieldId]);
 
   const onChange = useCallback(popupField => {
     const popupConfig = form.getState().values.popup_config;
@@ -44,7 +59,8 @@ const PopupFieldList = ({ fields, updateTemplate }) => {
       ...popupConfig,
       wizard: { ...wizard, fields: newWizardFields },
     });
-  }, [form]);
+    updateTemplate();
+  }, [form, updateTemplate]);
 
   const contentFields = popupFields.slice(1);
 
@@ -71,7 +87,7 @@ const PopupFieldList = ({ fields, updateTemplate }) => {
 
   useEffect(() => {
     updateTemplate();
-  }, [updateTemplate]);
+  }, [popupFields, updateTemplate]);
 
   return (
     <div className="wrapper" style={{ width: '50%' }}>
@@ -79,11 +95,13 @@ const PopupFieldList = ({ fields, updateTemplate }) => {
       <Field
         name="popup_config.wizard.fields[0]"
         validate={validateTitle}
+        initialValue={initialTitleField}
       >
         { ({ input: { value, onChange: onTitleChange }, meta }) => (
-          <PopupFieldRow
-            popupField={value || {}}
+          <TitleRow
+            titlefield={value}
             onChange={onTitleChange}
+            callback={updateTemplate}
             fields={fields}
             meta={meta}
             isTitle

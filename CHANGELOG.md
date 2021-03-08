@@ -1,4 +1,12 @@
 
+3.1.5 / 2021-03-08
+==================
+
+  * [LAYER] fix bad data persistance in form
+  * [CRUD] Update feature list when the user creates or edits a feature
+  * [CRUD] Display error to the user when creating feature fail
+  * [CRUD] Clean props to send to Create component
+
 3.1.4 / 2021-03-04
 ==================
 

@@ -54,16 +54,12 @@ const PopupTab = () => {
             fields: popupfields = [],
           } = {},
         },
-        popup_config: popupConfig,
       },
     } = form.getState();
     if (popupfields.length > 0) {
       const lines = createTemplate(popupfields, fields);
 
-      form.change('popup_config', {
-        ...popupConfig,
-        template: lines.join('\n'),
-      });
+      form.change('popup_config.template', lines.join('\n'));
     }
   }, 200), [form, fields]);
 
@@ -82,7 +78,7 @@ const PopupTab = () => {
     <>
       <Condition when="popup_config.enable" is={v => v}>
         <FieldGroup>
-          <BooleanInput source="popup_config.enable" label="datalayer.form.popup.disable" />
+          <BooleanInput source="popup_config.enable" label="datalayer.form.popup.disable" defaultValue={false} />
           <div className={classes.title}>
             <h3>{translate('datalayer.form.popup.title')}</h3>
             <BooleanInput source="popup_config.advanced" label="datalayer.form.popup.advanced" />
@@ -109,6 +105,8 @@ const PopupTab = () => {
           </Condition>
 
           <Condition when="popup_config.advanced" is={v => !v}>
+            {/* Keep value in react-admin form when changing tab */}
+            <TextInput style={{ display: 'none' }} source="popup_config.template" />
             <PopupFieldList
               fields={fields}
               updateTemplate={updateTemplate}

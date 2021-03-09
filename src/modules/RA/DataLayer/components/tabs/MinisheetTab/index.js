@@ -84,17 +84,13 @@ const MinisheetTab = () => {
             tree: treeData = [],
           } = {},
         } = {},
-        minisheet_config: minisheetConfig,
       },
     } = form.getState();
 
     const template = createTemplate(titleField, treeData, fields, translate);
 
-    form.change('minisheet_config', {
-      ...minisheetConfig,
-      template,
-    });
-  }, 500), [fields, form, translate]);
+    form.change('minisheet_config.template', template);
+  }, 200), [fields, form, translate]);
 
 
   if (geomType === undefined || !sourceId) {
@@ -124,7 +120,7 @@ const MinisheetTab = () => {
       </Condition>
 
       <Condition when="minisheet_config.enable" is>
-        <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.disable" />
+        <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.disable" defaultValue={false} />
         <FieldGroup>
           <div className={classes.title}>
             <h3>{translate('datalayer.form.minisheet.title')}</h3>
@@ -156,9 +152,10 @@ const MinisheetTab = () => {
               content="datalayer.form.compare-url.help-text"
             />
           </Condition>
-          <Condition when="minisheet_config.advanced" is={false}>
+          <Condition when="minisheet_config.advanced" is={v => !v}>
+            {/* Keep value in react-admin form when changing tab */}
+            <TextInput style={{ display: 'none' }} source="minisheet_config.template" />
             <MiniSheetFieldTree
-              // treeData={tree}
               fields={availableFields}
               updateTemplate={updateTemplate}
             />

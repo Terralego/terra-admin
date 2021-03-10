@@ -868,7 +868,7 @@
         "properties.index": "Numéro d'ordre",
         "properties.state": "Statut",
         "viewpoint": "Point de vue",
-        "owner_id": "ID du photographe",
+        "owner_id": "Photographe",
         "owner.properties.name": "Photographe",
         "file": "Photographie",
         "file.thumbnail": "Photographie",

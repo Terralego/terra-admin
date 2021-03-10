@@ -1,7 +1,11 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Intent, Position, Tooltip } from '@blueprintjs/core';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Form from '@rjsf/core';
+import { CRUDContext } from '../../../../services/CRUDProvider';
+import { getView } from '../../../../services/CRUD';
 import { requiredProperties } from '../../../../services/utils';
 import customFields from '../../../../../../components/react-json-schemaForm';
 import FileWidget from '../../../../../../components/react-json-schemaForm/FileWidget';
@@ -27,27 +31,33 @@ const sanitizeValue = (schema, value) => {
 const Edit = ({
   editable,
   editedItem,
-  getFeaturesList,
-  getSettings,
   isGeom,
+  method,
   onEdit,
   onRead,
-  match: { params: { id } },
-  method,
   name,
-  saveFeature,
   schema,
   setEditedItem,
   settingsEndpoint,
-  t,
   ui_schema: uiSchema,
   url,
   value,
-  view: {
+}) => {
+  const { t } = useTranslation();
+  const { id, layer } = useParams();
+
+  const {
+    getFeaturesList,
+    getSettings,
+    settings,
+    saveFeature,
+  } = useContext(CRUDContext);
+
+  const {
     featureEndpoint,
     formSchema: { properties: schemaProperties } = {},
-  },
-}) => {
+  } = useMemo(() => getView(settings, layer), [layer, settings]);
+
   const isMounted = useRef(true);
 
   const isCurrentEditedItem = editedItem === name;
@@ -191,55 +201,35 @@ Edit.propTypes = {
   editable: PropTypes.bool,
   editedItem: PropTypes.string,
   isGeom: PropTypes.bool,
-  getSettings: PropTypes.func,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }),
-  }),
   method: PropTypes.oneOf(['PATCH', 'POST', 'PUT']),
   onEdit: PropTypes.func,
   onRead: PropTypes.func,
   name: PropTypes.string,
-  saveFeature: PropTypes.func,
-  setEditedItem: PropTypes.func,
   schema: PropTypes.shape({
     enum: PropTypes.arrayOf(PropTypes.string),
     properties: PropTypes.shape({}),
     type: PropTypes.string,
   }),
-  t: PropTypes.func,
+  setEditedItem: PropTypes.func,
   ui_schema: PropTypes.shape({}),
+  url: PropTypes.string,
   // eslint-disable-next-line react/forbid-prop-types
   value: PropTypes.any,
-  view: PropTypes.shape({
-    featureEndpoint: PropTypes.string,
-  }),
 };
 
 Edit.defaultProps = {
   editable: true,
   editedItem: '',
   isGeom: false,
-  getSettings: () => {},
-  match: {
-    params: {
-      id: undefined,
-    },
-  },
   method: 'PATCH',
   onEdit: () => {},
   onRead: () => {},
   name: undefined,
-  saveFeature: () => {},
-  setEditedItem: () => {},
   schema: {},
-  t: text => text,
+  setEditedItem: () => {},
   ui_schema: {},
+  url: undefined,
   value: null,
-  view: {
-    featureEndpoint: undefined,
-  },
 };
 
 export default Edit;

@@ -47,7 +47,7 @@ const PointField = ({
   }, [onChange, type]);
 
   useEffect(() => {
-    const [latitude = '', longitude = ''] = coordinates;
+    const [longitude = '', latitude = ''] = coordinates;
     refLatitude.current.value = latitude;
     refLongitude.current.value = longitude;
     refLongitude.current.focus();
@@ -56,8 +56,8 @@ const PointField = ({
   return (
     <div>
       <legend>{t('jsonSchema.geometryField.label')}</legend>
-      {['latitude', 'longitude'].map((name, index) => {
-        const ref = !index ? refLatitude : refLongitude;
+      {['longitude', 'latitude'].map((name, index) => {
+        const ref = !index ? refLongitude : refLatitude;
         const { current } = ref;
         const { value = '' } = current || {};
         return (

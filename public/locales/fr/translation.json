@@ -30,6 +30,14 @@
   "main": {
     "title": "Terralego"
   },
+  "gl-pathControl": {
+    "followDirection": "Suivre les voies",
+    "enableFollowDirectionMode": "Activer le suivi de voie",
+    "disableFollowDirectionMode": "Désactiver le suivi de voie",
+    "createPoint": "Créer un point",
+    "createIntermediatePoint": "Créer un point intermédiaire",
+    "deletePoint": "Supprimer le point"
+  },
   "auth": {
     "loginform": {
       "email": {

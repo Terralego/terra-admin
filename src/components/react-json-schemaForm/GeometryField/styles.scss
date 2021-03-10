@@ -7,6 +7,8 @@
 }
 
 .mapbox-gl-path-container {
+  display: flex;
+  align-items: center;
   pointer-events: auto;
   user-select: none;
   background-color: #ffffff;

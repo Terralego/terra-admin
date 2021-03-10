@@ -811,6 +811,7 @@
       "fields": {
         "label": "Viewpoint name",
         "city": "City",
+        "pictures": "Pictures",
         "address": "Address",
         "id": "Viewpoint id",
         "properties.voie": "Street",

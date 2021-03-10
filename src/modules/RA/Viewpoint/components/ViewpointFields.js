@@ -276,7 +276,7 @@ const ViewpointFields = ({
 
       {edit && (
         <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
-          <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} fullWidth>
+          <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} label="resources.viewpoint.fields.pictures" fullWidth>
             <GridListPictures viewpointId={record.id} />
           </ReferenceArrayField>
         </FormTab>

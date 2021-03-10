@@ -814,7 +814,8 @@
       "viewpoint-no-number": "Pas d'id renseigné",
       "fields": {
         "label": "Nom du point de vue",
-        "city": "Ville",
+        "city": "Commune",
+        "pictures": "Photographies",
         "address": "Adresse",
         "id": "Numéro du point de vue",
         "properties.voie": "Voie",

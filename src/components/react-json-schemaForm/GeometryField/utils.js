@@ -24,6 +24,10 @@ export const getDirectionsThemes = ({ routingSettings, accessToken }) => {
   if (routingSettings.length === 0) {
     return [];
   }
+  let selectedIndex = routingSettings.findIndex(({ selected }) => selected === true);
+  if (selectedIndex === -1) {
+    selectedIndex = 0;
+  }
   return routingSettings
     .map(({ label, provider: { options, name } }, index) => {
       if (name === 'mapbox' && !accessToken) {
@@ -83,6 +87,7 @@ export const getDirectionsThemes = ({ routingSettings, accessToken }) => {
             },
           };
         },
+        selected: index === selectedIndex,
       };
     })
     .filter(Boolean);

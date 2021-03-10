@@ -132,6 +132,13 @@ const Edit = ({
     };
   }, [editable, isEdited, t]);
 
+  const enhanceUISchema = useMemo(() => {
+    if (schema.type === 'string' && schema.enum?.length) {
+      return { 'ui:placeholder': t('CRUD.details.placeholderSelect'), ...uiSchema };
+    }
+    return uiSchema;
+  }, [schema.enum, schema.type, t, uiSchema]);
+
   return (
     <div className="details__list-edit">
       <Tooltip
@@ -155,7 +162,7 @@ const Edit = ({
           fields={customFields}
           ErrorList={ErrorListTemplate}
           onSubmit={handleSubmit}
-          uiSchema={{ [name]: { ...uiSchema } }}
+          uiSchema={{ [name]: { ...enhanceUISchema } }}
           schema={{
             type: 'object',
             required: [requiredField && name].filter(Boolean),

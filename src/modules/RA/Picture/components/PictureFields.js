@@ -16,7 +16,7 @@ import {
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { RES_VIEWPOINT } from '../../ra-modules';
+import { RES_VIEWPOINT, RES_USER } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
@@ -32,17 +32,8 @@ const styles = {
 
 const Br = () => <br />;
 
-const PictureFields = ({
-  edit,
-  classes,
-  mapConfig,
-  location,
-  ...props
-}) => (
-  <TabbedForm
-    {...props}
-    toolbar={<CustomToolbar />}
-  >
+const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => (
+  <TabbedForm {...props} toolbar={<CustomToolbar />}>
     <FormTab label="resources.picture.tabs.metadata">
       <ReferenceInput
         source="viewpoint"
@@ -57,28 +48,31 @@ const PictureFields = ({
       <Br />
 
       <DateInput source="date" formClassName={classes.inline} />
-      <TimeInput source="date" label="resources.picture.fields.time" formClassName={classes.inline} />
+      <TimeInput
+        source="date"
+        label="resources.picture.fields.time"
+        formClassName={classes.inline}
+      />
 
       <Br />
 
-      {edit && (
-        <TextInput
-          disabled
-          source="owner.properties.name"
+      {!edit && (
+        <ReferenceInput
+          source="owner_id"
+          reference={RES_USER}
           formClassName={classes.inline}
-        />
+          validate={required()}
+        >
+          <SelectInput optionText="email" disable={edit} />
+        </ReferenceInput>
       )}
 
+      {edit && <TextInput disabled source="owner.email" formClassName={classes.inline} />}
+
       <Br />
 
-      <TextInput
-        source="properties.camera_brand"
-        formClassName={classes.inline}
-      />
-      <TextInput
-        source="properties.camera_model"
-        formClassName={classes.inline}
-      />
+      <TextInput source="properties.camera_brand" formClassName={classes.inline} />
+      <TextInput source="properties.camera_model" formClassName={classes.inline} />
       <TextInput source="properties.meteo" />
       <Br />
 
@@ -96,21 +90,12 @@ const PictureFields = ({
 
       <TextInput source="properties.altitude" formClassName={classes.inline} />
       <TextInput source="properties.hauteur" formClassName={classes.inline} />
-      <TextInput
-        source="properties.orientation"
-        formClassName={classes.inline}
-      />
+      <TextInput source="properties.orientation" formClassName={classes.inline} />
 
       <Br />
 
-      <TextInput
-        source="properties.focale_35mm"
-        formClassName={classes.inline}
-      />
-      <TextInput
-        source="properties.focale_objectif"
-        formClassName={classes.inline}
-      />
+      <TextInput source="properties.focale_35mm" formClassName={classes.inline} />
+      <TextInput source="properties.focale_objectif" formClassName={classes.inline} />
 
       <Br />
 
@@ -142,7 +127,4 @@ PictureFields.defaultProps = {
   edit: false,
 };
 
-export default compose(
-  withMapConfig,
-  withStyles(styles),
-)(PictureFields);
+export default compose(withMapConfig, withStyles(styles))(PictureFields);

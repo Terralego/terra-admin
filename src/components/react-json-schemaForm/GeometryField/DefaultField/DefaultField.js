@@ -5,10 +5,12 @@ import Message from '../../../Message';
 const DefaultField = props => {
   const {
     formData,
-    formData: { geom: { coordinates, type } } = {},
+    formData: { geom } = {},
     onChange,
     t,
   } = props;
+
+  const { coordinates = [], type } = geom || {};
 
   useEffect(() => {
     onChange(formData);

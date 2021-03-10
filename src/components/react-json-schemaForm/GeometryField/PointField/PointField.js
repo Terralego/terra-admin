@@ -29,12 +29,14 @@ const Input = ({ name, id, t, ...props }) => {
 
 const PointField = ({
   idSchema: { coordinates: { $id } },
-  formData: { geom: { coordinates, type } },
+  formData: { geom },
   onChange,
   t,
   disabled,
   required,
 }) => {
+  const { coordinates, type } = geom || {};
+
   const refLatitude = useRef(null);
   const refLongitude = useRef(null);
 

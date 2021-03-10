@@ -18,9 +18,6 @@ const sanitizeValue = (schema, value) => {
   if (schema.type === 'array' && value === null) {
     return [];
   }
-  if (schema.enum?.length) {
-    return schema.enum[0];
-  }
   return value;
 };
 
@@ -165,7 +162,7 @@ const Edit = ({
             properties: {
               [name]: {
                 ...schema,
-                default: defaultValue,
+                ...(defaultValue !== null && { default: defaultValue }),
               },
             },
           }}

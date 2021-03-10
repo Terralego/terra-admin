@@ -103,12 +103,15 @@ const Create = props => {
   }, [geomType, schemaProperties, uiSchemaProperties]);
 
 
-  const handleSubmit = useCallback(async ({ formData: { geom, ...properties } }) => {
+  const handleSubmit = useCallback(async ({
+    formData: { geom: { geom, routingInformation },
+      ...properties },
+  }) => {
     setLoading(true);
 
     setSchema(prevSchema => getSchemaWithDefaultValues(prevSchema, properties));
 
-    const savedFeature = await saveFeature(featureEndpoint, false, { geom, properties }, 'POST');
+    const savedFeature = await saveFeature(featureEndpoint, false, { geom, properties, routing_information: routingInformation }, 'POST');
 
     setLoading(false);
 

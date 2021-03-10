@@ -29,7 +29,7 @@ const Input = ({ name, id, t, ...props }) => {
 
 const PointField = ({
   idSchema: { coordinates: { $id } },
-  formData: { coordinates, type },
+  formData: { geom: { coordinates, type } },
   onChange,
   t,
   disabled,
@@ -43,7 +43,7 @@ const PointField = ({
       Number(refLatitude.current.value),
       Number(refLongitude.current.value),
     ];
-    onChange({ type, coordinates: nextCoordinates });
+    onChange({ geom: { type, coordinates: nextCoordinates } });
   }, [onChange, type]);
 
   useEffect(() => {

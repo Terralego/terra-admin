@@ -5,7 +5,7 @@ import Message from '../../../Message';
 const DefaultField = props => {
   const {
     formData,
-    formData: { coordinates, type } = {},
+    formData: { geom: { coordinates, type } } = {},
     onChange,
     t,
   } = props;

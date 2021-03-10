@@ -52,8 +52,8 @@ const MapInteraction = ({
   const updateGeometryFromMap = useCallback(
     ({ target, ...props }) => {
       if (target.pathControl) {
-        const { geometry } = target.pathControl.getLineString();
-        setFormData(geometry);
+        const { geometry, properties } = target.pathControl.getLineString();
+        setFormData({ geom: geometry, routingInformation: properties });
         return;
       }
 
@@ -80,8 +80,10 @@ const MapInteraction = ({
       const coordinates = getCoordinatesFromGeometries(features, isMultiGeometry);
       if (coordinates) {
         setFormData({
-          type: features[0].geometry.type,
-          coordinates,
+          geom: {
+            type: features[0].geometry.type,
+            coordinates,
+          },
         });
       }
     },
@@ -170,8 +172,8 @@ const MapInteraction = ({
       geom: geometry,
       identifier,
       layerName,
-      properties,
       routingSettings,
+      routingInformation,
     } = geomValues;
 
     const layerId = getLayerId(layers, layerName);
@@ -192,7 +194,7 @@ const MapInteraction = ({
         map.setFilter(layerId, ['!=', '_id', identifier]);
       }
       if (map.pathControl) {
-        map.pathControl.setLineString({ geometry, properties });
+        map.pathControl.setLineString({ geometry, properties: routingInformation });
       }
     };
 
@@ -235,8 +237,10 @@ const MapInteraction = ({
     const coordinates = getCoordinatesFromGeometries(featuresToFitBounds);
     if (coordinates) {
       setFormData({
-        type: featuresToFitBounds[0].geometry.type,
-        coordinates,
+        geom: {
+          type: featuresToFitBounds[0].geometry.type,
+          coordinates,
+        },
       });
     }
     setFeaturesToFitBounds(null);

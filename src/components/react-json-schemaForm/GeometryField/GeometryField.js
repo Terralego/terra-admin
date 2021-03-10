@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useContext } from 'react';
+import React, { useState, useEffect, useReducer, useCallback, useMemo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
@@ -14,6 +14,11 @@ import MapInteraction from './MapInteraction';
 import PointField from './PointField';
 import DefaultField from './DefaultField';
 import './styles.scss';
+
+
+function reducer (state, action) {
+  return { ...state, ...action };
+}
 
 const GeometryField = ({
   formData,
@@ -34,11 +39,13 @@ const GeometryField = ({
     [feature, formData, name, params, settings],
   );
 
-
   const [geomValues, setGeomValues] = useState(geometries);
   const [featuresToFitBounds, setFeaturesToFitBounds] = useState(null);
 
-  const [nextFormData, setFormData] = useState(geomValues.geom);
+  const [nextFormData, setFormData] = useReducer(reducer, {
+    geom: geomValues.geom,
+    routingInformation: geomValues.routingInformation,
+  });
 
   useEffect(() => {
     setGeomValues(geometries);
@@ -49,17 +56,15 @@ const GeometryField = ({
   }, [params]);
 
   useEffect(() => {
-    setFormData(geomValues.geom);
+    setFormData({ geom: geomValues.geom, routingInformation: geomValues.routingInformation });
     return () => {
-      setFormData(geomValues.geom);
+      setFormData({ geom: geomValues.geom, routingInformation: geomValues.routingInformation });
     };
-  }, [geomValues.geom, params]);
+  }, [geomValues.geom, geomValues.routingInformation, params]);
 
   const importDraw = useCallback(nextFeatures => {
     setFeaturesToFitBounds(nextFeatures);
-  },
-  []);
-
+  }, []);
 
   const TypeField = formData.type === 'Point' ? PointField : DefaultField;
   const {
@@ -91,7 +96,7 @@ const GeometryField = ({
         <TypeField
           {...rest}
           required={isRequired}
-          formData={nextFormData || formData}
+          formData={nextFormData}
           t={t}
         />
       </div>

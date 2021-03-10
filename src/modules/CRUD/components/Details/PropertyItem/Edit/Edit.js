@@ -74,13 +74,11 @@ const Edit = ({
 
     const [[propKey, propValue]] = Object.entries(formData);
 
-    const valueOrEmptyString = propValue === undefined ? '' : propValue;
-
     setLoading(true);
 
     const body = !isGeom
-      ? { properties: { [propKey]: valueOrEmptyString } }
-      : { geom: valueOrEmptyString };
+      ? { properties: { [propKey]: propValue === undefined ? '' : propValue } }
+      : { geom: propValue.geom, routing_information: propValue.routingInformation };
 
     setDefaultValue(propValue);
 

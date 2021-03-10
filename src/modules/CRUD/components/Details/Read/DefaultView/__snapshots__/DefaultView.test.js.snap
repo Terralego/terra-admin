@@ -6,43 +6,24 @@ exports[`should render correctly 1`] = `
     <span>
       CRUD.details.other
     </span>
-    <ul
-      className="details__list"
-    >
-      <div
-        editedItem=""
-        name="foo"
-        setEditedItem={[Function]}
-        value={
-          Object {
-            "display_value": "Value of foo",
-            "title": "Foo",
-          }
-        }
-      />
-      <div
-        editedItem=""
-        name="bar"
-        setEditedItem={[Function]}
-        value={
-          Object {
+    <div
+      properties={
+        Object {
+          "bar": Object {
             "display_value": "Value of bar",
             "title": "Bar",
-          }
-        }
-      />
-      <div
-        editedItem=""
-        name="foobar"
-        setEditedItem={[Function]}
-        value={
-          Object {
+          },
+          "foo": Object {
+            "display_value": "Value of foo",
+            "title": "Foo",
+          },
+          "foobar": Object {
             "display_value": "Value of foo and bar",
             "title": "Foo and Bar",
-          }
+          },
         }
-      />
-    </ul>
+      }
+    />
   </li>
 </ul>
 `;

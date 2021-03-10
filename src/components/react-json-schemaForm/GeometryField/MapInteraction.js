@@ -32,11 +32,7 @@ const MapInteraction = ({
   setFeaturesToFitBounds,
   setFormData,
 }) => {
-  const {
-    i18n: {
-      language,
-    },
-  } = useTranslation();
+  const { t } = useTranslation();
 
   const { settings } = useContext(CRUDContext);
 
@@ -110,7 +106,6 @@ const MapInteraction = ({
       return {
         control: CONTROL_PATH,
         directionsThemes: getDirectionsThemes({ routingSettings, accessToken }),
-        languageId: language,
         layersCustomisation: {
           pointCircleLayerCustomisation: {
             paint: {
@@ -135,6 +130,7 @@ const MapInteraction = ({
         onPathUpdate: updateGeometryFromMap,
         order: 2,
         position: CONTROLS_TOP_LEFT,
+        translate: t,
       };
     }
 
@@ -164,7 +160,7 @@ const MapInteraction = ({
       },
       order: 2,
     };
-  }, [geomValues, language, settings, updateGeometryFromMap]);
+  }, [geomValues, settings, t, updateGeometryFromMap]);
 
   useEffect(() => {
     if (!map) {

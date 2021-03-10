@@ -94,7 +94,7 @@ const Edit = ({
 
     setDefaultValue(propValue);
 
-    await saveFeature(
+    const savedFeatures = await saveFeature(
       featureEndpoint,
       endpoint,
       body,
@@ -104,10 +104,12 @@ const Edit = ({
     if (!isMounted.current) return;
 
     setLoading(false);
-    setEditedItem('');
-    onRead(name);
-    getSettings(settingsEndpoint);
-    getFeaturesList(featureEndpoint);
+    if (savedFeatures) {
+      setEditedItem('');
+      onRead(name);
+      getSettings(settingsEndpoint);
+      getFeaturesList(featureEndpoint);
+    }
   }, [
     featureEndpoint,
     getFeaturesList,

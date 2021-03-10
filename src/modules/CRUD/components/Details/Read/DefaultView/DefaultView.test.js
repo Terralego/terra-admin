@@ -30,7 +30,9 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+jest.mock('../../PropertyList', () => props => <div {...props} />);
 jest.mock('../../PropertyItem', () => props => <div {...props} />);
+
 
 const props = {
   properties: {

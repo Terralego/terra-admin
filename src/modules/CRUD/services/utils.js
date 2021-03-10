@@ -153,7 +153,7 @@ export const requiredProperties = props => {
     if (type === 'object' && required.length) {
       const requiredProps = Object.entries(properties).reduce((acc, [subKey, subValue]) => (
         required.includes(subKey)
-          ? ({ [subKey]: subValue })
+          ? ({ ...acc, [subKey]: subValue })
           : acc
       ), {});
 

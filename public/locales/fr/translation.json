@@ -285,6 +285,7 @@
         "geometries": "Géométries",
         "attachments": "Documents annexes"
       },
+      "placeholderSelect": "Sélectionnez une valeur",
       "attachment": {
         "allowedFileTypes": "Fichiers ({{files}}) autorisés",
         "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer le fichier {{name}} ? Cette action est irrévocable.",

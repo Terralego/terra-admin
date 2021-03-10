@@ -285,6 +285,7 @@
         "geometries": "Geometries",
         "attachments": "Attachments"
       },
+      "placeholderSelect": "Choose a value",
       "attachment": {
         "allowedFileTypes": "Files ({{files}}) allowed",
         "confirmDeletionText": "Are you sure you want to delete {{name}}? This can't be canceled.",

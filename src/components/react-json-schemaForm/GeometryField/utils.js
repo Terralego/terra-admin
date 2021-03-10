@@ -59,21 +59,24 @@ export const getDirectionsThemes = ({ routingSettings, accessToken }) => {
             };
           }
 
-          let results = null;
+          let request = null;
           try {
-            results = await Api.request(options.url.replace('/api/', ''), {
+            request = await Api.request(options.url.replace('/api/', ''), {
               method: 'POST',
               body: { geom: { type: 'LineString', coordinates } },
+              rawResponse: true,
             });
           } catch (e) {
             toast.displayError(e.message);
           }
+          const { result } = request;
 
-          if (!results) {
+          if (!result || result.message) {
+            toast.displayError(result.message);
             return null;
           }
 
-          const { way, waypoints } = results;
+          const { way, waypoints } = result;
           const { coordinates: nextCoordinates = [] } = way || {};
           const [
             { coordinates: departure = null } = {},

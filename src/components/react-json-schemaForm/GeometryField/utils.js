@@ -129,13 +129,12 @@ export const getGeometries = ({
       geomType: layer.geom_type,
       geom: { coordinates, type },
       layerName: layer.name,
-      properties: {},
       routingSettings,
     };
   }
   const {
     geometries: { [name]: { geom_type: geomType, geom, identifier } },
-    properties = {},
+    routing_information: routingInformation,
   } = feature[params.id];
 
   return {
@@ -143,7 +142,7 @@ export const getGeometries = ({
     layerName: name,
     geomType,
     geom,
-    properties,
+    routingInformation,
     routingSettings,
   };
 };

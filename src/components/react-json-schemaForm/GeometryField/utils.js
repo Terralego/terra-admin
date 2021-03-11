@@ -122,16 +122,20 @@ export const getGeometries = ({
   const {
     layer,
     routingSettings,
+    mapLayers = [],
   } = getView(settings, params.layer);
   if (params.id === ACTION_CREATE) {
     const { coordinates = [], type } = formData || {};
     return {
       geomType: layer.geom_type,
       geom: { coordinates, type },
+      isMainLayer: true,
       layerName: layer.name,
       routingSettings,
     };
   }
+
+  const { main: isMainLayer } = mapLayers.find(({ id_layer_vt: idLayer }) => idLayer === name);
   const {
     geometries: { [name]: { geom_type: geomType, geom, identifier } },
     routing_information: routingInformation,
@@ -142,6 +146,7 @@ export const getGeometries = ({
     layerName: name,
     geomType,
     geom,
+    isMainLayer,
     routingInformation,
     routingSettings,
   };

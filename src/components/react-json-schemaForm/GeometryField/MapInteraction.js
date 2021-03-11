@@ -22,6 +22,7 @@ import {
   MULTI_POINT,
   MULTI_LINESTRING,
   MULTI_POLYGON,
+  geomTypeList,
 } from '../../../utils/geom';
 
 import './styles.scss';
@@ -81,7 +82,7 @@ const MapInteraction = ({
       if (coordinates) {
         setFormData({
           geom: {
-            type: features[0].geometry.type,
+            type: geomTypeList[geomValues.geomType],
             coordinates,
           },
         });

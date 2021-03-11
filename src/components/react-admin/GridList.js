@@ -62,7 +62,7 @@ const GridList = ({ translate: t, classes, ids, data, basePath, width }) => (
             className={classes.tileBar}
             title={data[id].label}
             subtitle={data[id].properties && (
-              <span>{t(...viewpointSubtitle(data[id].properties.index))}</span>
+              <span>{t(...viewpointSubtitle(data[id].id))}</span>
             )}
           />
         </GridListTile>

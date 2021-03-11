@@ -26,7 +26,7 @@ export const PictureList = props => (
         source="viewpoint"
         reference={RES_VIEWPOINT}
       >
-        <TextField source="properties.index" />
+        <TextField source="id" />
       </ReferenceField>
 
       <TextField source="properties.index" />

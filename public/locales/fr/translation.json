@@ -258,7 +258,7 @@
       "successDeleteFeature": "L'objet a été supprimé avec succès",
       "failDeleteFeature": "L'objet n'a pu être supprimé",
       "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
-      "notAllowedToEdit":"Cette propriété est calculée et ne peut être modifiée",
+      "notAllowedToEdit": "Cette propriété est calculée et ne peut être modifiée",
       "geometry": "Géométrie",
       "true": "Oui",
       "false": "Non",
@@ -808,7 +808,7 @@
         "label": "Nom du point de vue",
         "city": "Ville",
         "address": "Adresse",
-        "properties.index": "Numéro du point de vue",
+        "id": "Numéro du point de vue",
         "properties.voie": "Voie",
         "properties.commune": "Commune",
         "properties.altitude": "Altitude",
@@ -975,15 +975,15 @@
       "extrusion-base": "Base de l'extrusion",
       "extrusion-opacity": "Opacité de l'extrusion"
     },
-    "text":{
-      "text-field":"Champs à afficher",
-      "text-color":"Couleur du texte",
-      "text-size":"Taille du texte",
-      "halo-color":"Couleur du halo",
-      "halo-width":"Largeur du halo",
+    "text": {
+      "text-field": "Champs à afficher",
+      "text-color": "Couleur du texte",
+      "text-size": "Taille du texte",
+      "halo-color": "Couleur du halo",
+      "halo-width": "Largeur du halo",
       "text-font": "Police de charatères"
     },
-    "icon":{
+    "icon": {
       "icon-image": "Icône",
       "icon-size": "Taille de l'icône"
     },

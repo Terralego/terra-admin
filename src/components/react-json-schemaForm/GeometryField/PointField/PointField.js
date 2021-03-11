@@ -33,9 +33,13 @@ const PointField = ({
   onChange,
   t,
   disabled,
+  schema: { default: {
+    coordinates: schemaCoordinates,
+    type: schemaType,
+  } },
   required,
 }) => {
-  const { coordinates, type } = geom || {};
+  const { coordinates = schemaCoordinates, type = schemaType } = geom || {};
 
   const refLatitude = useRef(null);
   const refLongitude = useRef(null);

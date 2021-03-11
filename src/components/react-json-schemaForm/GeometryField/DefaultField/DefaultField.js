@@ -7,16 +7,21 @@ const DefaultField = props => {
     formData,
     formData: { geom } = {},
     onChange,
+    schema: { default: {
+      coordinates: schemaCoordinates,
+      type: schemaType,
+    } },
     t,
   } = props;
 
-  const { coordinates = [], type } = geom || {};
+  const { coordinates = schemaCoordinates, type = schemaType } = geom || {};
 
   useEffect(() => {
     onChange(formData);
   }, [formData, onChange]);
 
   const action = !coordinates.length ? 'create' : 'edit';
+
   return (
     <Message intent="primary">
       <p>{t(`jsonSchema.geometryField.helper-${action}`, { type })}</p>

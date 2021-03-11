@@ -36,6 +36,7 @@ const MapInteraction = ({
   const { t } = useTranslation();
 
   const { settings } = useContext(CRUDContext);
+  const isRouting = geomValues.routingSettings?.length && geomValues.isMainLayer;
 
   const {
     addControl,
@@ -105,7 +106,8 @@ const MapInteraction = ({
       },
     } = settings;
 
-    if (routingSettings?.length) {
+
+    if (isRouting) {
       return {
         control: CONTROL_PATH,
         directionsThemes: getDirectionsThemes({ routingSettings, accessToken }),
@@ -163,7 +165,7 @@ const MapInteraction = ({
       },
       order: 2,
     };
-  }, [geomValues, settings, t, updateGeometryFromMap]);
+  }, [geomValues, isRouting, settings, t, updateGeometryFromMap]);
 
   useEffect(() => {
     if (!map) {
@@ -173,7 +175,6 @@ const MapInteraction = ({
       geom: geometry,
       identifier,
       layerName,
-      routingSettings,
       routingInformation,
     } = geomValues;
 
@@ -200,7 +201,7 @@ const MapInteraction = ({
     };
 
     if (geometry?.coordinates.length) {
-      if (routingSettings?.length) {
+      if (isRouting) {
         map.on('control_PathControl_added', onPathControlAdded);
       } else {
         map.on('control_DrawControl_added', onDrawControlAdded);
@@ -215,7 +216,7 @@ const MapInteraction = ({
       map.off('control_PathControl_added', onPathControlAdded);
       resetStyle();
     };
-  }, [addControl, geomValues, getRoutingConfiguration, layers, map, resetStyle]);
+  }, [addControl, geomValues, getRoutingConfiguration, isRouting, layers, map, resetStyle]);
 
   useEffect(() => {
     if (!featuresToFitBounds || !map) {
@@ -249,14 +250,14 @@ const MapInteraction = ({
 
   useEffect(
     () => () => {
-      if (geomValues.routingSettings?.length) {
+      if (isRouting) {
         removeControl(CONTROL_PATH);
       } else {
         removeControl(CONTROL_DRAW);
       }
       resetStyle();
     },
-    [geomValues, removeControl, resetStyle],
+    [isRouting, removeControl, resetStyle],
   );
 
   return null;

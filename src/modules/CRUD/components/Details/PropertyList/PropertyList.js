@@ -12,8 +12,9 @@ const PropertyList = ({ properties, ...props }) => {
       feature,
     },
   } = useContext(CRUDContext);
+
   const featureError = useMemo(() => (
-    feature.find(({ featureId }) => featureId === id)
+    feature.find(({ featureId }) => featureId.includes(id))
   ), [feature, id]);
   const [editedItem, setEditedItem] = useState('');
 

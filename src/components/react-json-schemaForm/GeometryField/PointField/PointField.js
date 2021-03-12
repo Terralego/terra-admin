@@ -46,17 +46,17 @@ const PointField = ({
 
   const handleChange = useCallback(() => {
     const nextCoordinates = [
-      Number(refLatitude.current.value),
       Number(refLongitude.current.value),
+      Number(refLatitude.current.value),
     ];
     onChange({ geom: { type, coordinates: nextCoordinates } });
   }, [onChange, type]);
 
   useEffect(() => {
     const [longitude = '', latitude = ''] = coordinates;
-    refLatitude.current.value = latitude;
     refLongitude.current.value = longitude;
-    refLongitude.current.focus();
+    refLatitude.current.value = latitude;
+    refLatitude.current.focus();
   }, [coordinates]);
 
   return (

@@ -184,6 +184,10 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
       return;
     }
 
+    if (id === ACTION_CREATE) {
+      return;
+    }
+
     const { geom: { coordinates = [] } = {} } = feature[id] || {};
     const { extent: [w, s, e, n] } = view;
 

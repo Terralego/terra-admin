@@ -29,7 +29,7 @@ export const PictureList = props => (
         <TextField source="id" />
       </ReferenceField>
 
-      <TextField source="properties.index" />
+      <TextField source="identifier" />
       <DateField source="date" />
 
       {/* <ReferenceField

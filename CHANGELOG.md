@@ -1,4 +1,31 @@
 
+3.1.7 / 2021-03-17
+==================
+
+  * Enhance translations
+  * Allow to edit picture owner
+  * Use auto generated identifier from back as index
+  * Disabling viewpoint
+  * Upgrade @terralego/core package to 1.26.4
+  * Fix lnglat point GeometryField
+  * Doesn't fit bound the map anymore for create view
+  * Set the application of routing only for the main geometry
+  * Fix default value for GeometryField
+  * Fix geomType for multigeometries saving
+  * Display error message for bad geometry POST
+  * Viewpoint business id is now the id
+  * Fix listing of required fields
+  * Display error message from API when editing props
+  * Refacto edit PropertyItem
+  * Avoid app to crash when the formData is null
+  * Store and use routing_information to describe routing to the UI
+  * Manage toast message when the provider doesn't find a route
+  * Check a following road by default
+  * Overide translations from mapbox gl path package
+  * Upgrade @terralego/core package to 1.26.3
+  * Fix alignement CSS for routing control
+  * Sync label with input for latitude/longitude fields
+
 3.1.6 / 2021-03-10
 ==================
 

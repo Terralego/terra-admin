@@ -809,6 +809,14 @@
       "email": "Doit être un email",
       "oneOf": "Doit être au choix: %{options}",
       "regex": "Doit respecter un format spécifique (regexp): %{pattern}"
+    },
+    "pictures": {
+      "weather": {
+        "good_weather": "Beau temps",
+        "lightly_cloudy": "Légérement couvert",
+        "partialy_cloudy": "Partiellement couvert",
+        "cloudy": "Nuageux"
+      }
     }
   },
   "resources": {

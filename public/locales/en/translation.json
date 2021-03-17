@@ -36,7 +36,7 @@
     "disableFollowDirectionMode": "Disable direction",
     "createPoint": "Create point",
     "createIntermediatePoint": "Create intermediate point",
-    "deletePoint": "Delete point",
+    "deletePoint": "Delete point"
   },
   "auth": {
     "loginform": {
@@ -805,6 +805,14 @@
       "email": "Should be a valid email",
       "oneOf": "Should be: %{options}",
       "regex": "Should check a specific format (regexp): %{pattern}"
+    },
+    "pictures": {
+      "weather": {
+        "good_weather": "Good weather",
+        "lightly_cloudy": "Lighly cloudy",
+        "partialy_cloudy": "Partialy cloudy",
+        "cloudy": "Cloudy"
+      }
     }
   },
   "resources": {

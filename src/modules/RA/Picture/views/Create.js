@@ -7,10 +7,11 @@ import DefaultActions from '../../../../components/react-admin/DefaultActions';
 export const PictureCreate = props => (
   <Create
     {...props}
-    actions={<DefaultActions />}
+    actions={<DefaultActions redirect="list" />}
   >
-    <PictureFields />
+    <PictureFields redirect="list" />
   </Create>
 );
+
 
 export default PictureCreate;

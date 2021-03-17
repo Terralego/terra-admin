@@ -149,6 +149,7 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
     } = view;
 
     if (sources.find(source => source.id === `${layerId}`) && layers.filter(({ source }) => source === `${layerId}`)) {
+      map.style.sourceCaches[layerId].clearTiles();
       displayCurrentLayer();
       return;
     }

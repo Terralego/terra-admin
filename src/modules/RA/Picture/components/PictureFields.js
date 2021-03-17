@@ -30,6 +30,13 @@ const styles = {
   },
 };
 
+const weatherConditions = [
+  { id: 'good_weather', name: 'ra.pictures.weather.good_weather' },
+  { id: 'lightly_cloudy', name: 'ra.pictures.weather.lightly_cloudy' },
+  { id: 'partialy_cloudy', name: 'ra.pictures.weather.partialy_cloudy' },
+  { id: 'cloudy', name: 'ra.pictures.weather.cloudy' },
+];
+
 const Br = () => <br />;
 
 const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => (
@@ -73,7 +80,8 @@ const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => (
 
       <TextInput source="properties.camera_brand" formClassName={classes.inline} />
       <TextInput source="properties.camera_model" formClassName={classes.inline} />
-      <TextInput source="properties.meteo" />
+
+      <SelectInput source="properties.meteo" choices={weatherConditions} />
       <Br />
 
       <TextInput multiline source="properties.observations" />

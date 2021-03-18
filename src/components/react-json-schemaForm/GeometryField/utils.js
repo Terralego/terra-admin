@@ -135,11 +135,17 @@ export const getGeometries = ({
     };
   }
 
-  const { main: isMainLayer } = mapLayers.find(({ id_layer_vt: idLayer }) => idLayer === name);
+  const currentFeature = feature[params.id];
+  if (!currentFeature) {
+    return {};
+  }
+
   const {
     geometries: { [name]: { geom_type: geomType, geom, identifier } },
     routing_information: routingInformation,
   } = feature[params.id];
+
+  const { main: isMainLayer } = mapLayers.find(({ id_layer_vt: idLayer }) => idLayer === name);
 
   return {
     identifier,

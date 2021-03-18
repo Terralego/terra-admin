@@ -4,10 +4,10 @@ import connect from 'react-ctx-connect';
 import { getSettings } from '../../services/settings';
 import Loading from '../Loading';
 
-export const context = React.createContext({});
-export const connectAppProvider = connect(context);
+export const AppContext = React.createContext({});
+export const connectAppProvider = connect(AppContext);
 
-const { Provider } = context;
+const { Provider } = AppContext;
 
 export class AppProvider extends React.Component {
   state = {};

@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import { LoginForm } from '@terralego/core/modules/Auth';
+import { context as AuthContext } from '@terralego/core/modules/Auth/services/context';
+
 import { useTranslation } from 'react-i18next';
 import Helmet from 'react-helmet';
+
+import { AppContext } from '../../components/AppProvider';
 
 import Header from './Header';
 import Content from './Content';
@@ -11,14 +15,15 @@ import Message from '../../components/Message';
 
 import './styles.scss';
 
-export const Main = ({
-  authenticated,
-  locale,
-  env: { title = 'Terralego Admin', favicon, language } = {},
-  errorSettings: { message: errorMessage },
-}) => {
+export const Main = ({ locale }) => {
   const { i18n, t } = useTranslation();
 
+  const { authenticated } = useContext(AuthContext);
+
+  const {
+    env: { title = 'Terralego Admin', favicon, language } = {},
+    errorSettings: { message: errorMessage } = {},
+  } = useContext(AppContext);
 
   useEffect(() => {
     if (!language) return;
@@ -56,27 +61,11 @@ export const Main = ({
 };
 
 Main.propTypes = {
-  authenticated: PropTypes.bool,
   locale: PropTypes.string,
-  env: PropTypes.shape({
-    title: PropTypes.string,
-    favicon: PropTypes.string,
-  }),
-  errorSettings: PropTypes.shape({
-    message: PropTypes.string,
-  }),
 };
 
 Main.defaultProps = {
-  authenticated: false,
   locale: 'en',
-  env: {
-    title: 'Terralego Admin',
-    favicon: undefined,
-  },
-  errorSettings: {
-    message: undefined,
-  },
 };
 
-export default Main;
+export default memo(Main);

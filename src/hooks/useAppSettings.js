@@ -1,6 +1,6 @@
 import React from 'react';
-import { context } from '../components/AppProvider';
+import { AppContext } from '../components/AppProvider';
 
-const useAppSettings = () => React.useContext(context)?.env;
+const useAppSettings = () => React.useContext(AppContext)?.env;
 
 export default useAppSettings;

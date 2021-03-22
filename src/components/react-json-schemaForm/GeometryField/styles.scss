@@ -1,8 +1,27 @@
 @import "~@blueprintjs/core/src/components/forms/common";
 
-.form-group {
-  &__or {
-    margin: 1rem 0;
+.CRUD-edit {
+  .geometry-field {
+    &__col {
+      border: solid #efefef;
+      border-width: 1px 0;
+      margin: 0.3rem 0;
+      padding: 0.5rem 0;
+    }
+    
+    &__row {
+      padding: 0.5rem;
+    }
+  }
+  .mapbox-gl-draw_ctrl-draw-btn {
+    display: inline-block;
+    background-color: #fff;
+    margin: 0 2px;
+    width: 29px;
+    height: 29px;
+    vertical-align: middle;
+    border-radius: 4px;
+    box-shadow: 0 0 0 2px rgba(0,0,0,.1);
   }
 }
 

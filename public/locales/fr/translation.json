@@ -106,6 +106,7 @@
   },
   "importGeomFile": {
     "accept": "Format acceptés : {{accept}}",
+    "button": "Fichier ({{accept}})",
     "intro1": "Lors de la sélection du fichier, il est analysé par l'application. Vous serez ensuite informé de la compatibilité du fichier avec le type de géométrie courant.",
     "intro2": "Dès validation de l'import, l'application propose sur la carte un aperçu de la nouvelle géométrie.",
     "intro3": "Dès validation de ce nouveau tracé importé, il remplace le précédent.",
@@ -113,7 +114,7 @@
     "readyToImport": "Le tracé de {{fileName}} est prêt à être importé.",
     "readyToImport_plural": "les tracés de {{fileName}} sont prêts à être importés.",
     "submit": "Valider la sélection",
-    "title": "Importer un fichier",
+    "title": "Importer les coordonnées (WGS84 Décimal)",
     "unableToImport": "Les données du fichier <1>{{fileName}}</1> n'ont pas pu être récupéré.",
     "warnGeomOtherType": "Le fichier contient d'autres types de géométries qui ont été ignorés.",
     "warnGeomSameType": "Le fichier contient d'autres géométries du même type. Seul le premier a été sélectionné.",
@@ -312,7 +313,6 @@
   },
   "jsonSchema": {
     "geometryField": {
-      "or": "ou",
       "type": {
         "Point": {
           "singular": "un point"
@@ -336,13 +336,15 @@
           "singular": "une ou des géométrie"
         }
       },
-      "label": "Saisir les coordonnées :",
+      "label": "Ou saisir les coordonnées",
+      "legend": "Coordonnées",
       "title": "Coordonnées (WGS84 décimal)",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "helper-create": "Dessinez $t(jsonSchema.geometryField.type.{{type}}.singular) à l'aide des boutons disponibles sur la carte.",
-      "helper-edit": "Modifiez $t(jsonSchema.geometryField.type.{{type}}.singular) à l'aide des boutons disponibles sur la carte.",
-      "save": "Une fois terminé, enregistrez en cliquant sur le bouton de soumission."
+      "information-create": "Ou dessiner $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
+      "information-edit": "Ou modifier $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
+      "helper": "Saisissez vos coordonnées en utilisant l'outil {{type}} <1></1> sur la carte",
+      "helper-routing": "Tracez un itinéraire en cliquant directement sur la carte. Vous avez la possibilité de suivre automatiquement les voies en cochant la case correspondante et en sélectionnant un mode de suivi."
     },
     "panelError": {
       "title": "Votre saisie comporte des erreurs"

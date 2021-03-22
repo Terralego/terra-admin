@@ -19,11 +19,13 @@ const ImportGeomFile = ({ onSubmit, ...props }) => {
   }, [features, onSubmit]);
 
   const { t } = useTranslation();
+  const acceptedExtensions = ['gpx', 'kml'];
 
   return (
     <div className="importGeomFile">
+      <p className="control-label">{t('importGeomFile.title')}</p>
       <Button icon="upload" onClick={toggleOverlay}>
-        {t('importGeomFile.title')}
+        {t('importGeomFile.button', { accept: acceptedExtensions.join(',') })}
       </Button>
       <Overlay
         className={`${Classes.OVERLAY_SCROLL_CONTAINER} importGeomFileOverlay`}
@@ -37,7 +39,7 @@ const ImportGeomFile = ({ onSubmit, ...props }) => {
               {...props}
               onChange={setFeatures}
               toggleOverlay={toggleOverlay}
-              acceptedExtensions={['gpx', 'kml']}
+              acceptedExtensions={acceptedExtensions}
             />
           </div>
           <div className="importGeomFileOverlay__actions">

@@ -106,6 +106,7 @@
   },
   "importGeomFile": {
     "accept": "Accepted format: {{accept}}",
+    "button": "File ({{accept}})",
     "intro1": "When selecting the file, it is analyzed by the application. You will then be informed about the compatibility of the file with the current geometry type.",
     "intro2": "Upon validation of the import, the application offers on the map an overview of the new geometry.",
     "intro3": "Upon validation of this new imported sketch, it replaces the previous one.",
@@ -113,7 +114,7 @@
     "readyToImport": "{{fileName}} geometry is ready to be imported.",
     "readyToImport_plural": "{{fileName}} geometries are ready to be imported.",
     "submit": "Confirm selection",
-    "title": "Import a geometry file",
+    "title": "Import coordinates (WGS84 Decimal)",
     "unableToImport": "Unable to load and read <1>{{fileName}}</1> data.",
     "warnGeomOtherType": "The file contains other types of geometries which have been ignored.",
     "warnGeomSameType": "The file contains other geometries of the same type. Only the first was selected.",
@@ -312,7 +313,6 @@
   },
   "jsonSchema": {
     "geometryField": {
-      "or": "or",
       "type": {
         "Point": {
           "singular": "a point"
@@ -336,13 +336,15 @@
           "singular": "some geometries"
         }
       },
-      "label": "Enter coordinates:",
+      "label": "Or enter coordinates",
+      "legend": "Coordinates",
       "title": "Coordinates (decimal WGS84)",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "helper-create": "Draw $t(jsonSchema.geometryField.type.{{type}}.singular) with available button on map.",
-      "helper-edit": "Edit $t(jsonSchema.geometryField.type.{{type}}.singular) with available button on map.",
-      "save": "Once edited, click on submit button."
+      "information-create": "Or draw $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
+      "information-edit": "Or edit $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
+      "helper": "Enter coordinates by using the tool <1></1> on map",
+      "helper-routing": "Draw a route by clicking directly on the map. You can automatically follow the paths by checking the corresponding box and selecting a follow mode"
     },
     "panelError": {
       "title": "Your input contains errors"

@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const Label = ({ name, required }) => (
   <>
@@ -31,7 +32,6 @@ const PointField = ({
   idSchema: { coordinates: { $id } },
   formData: { geom },
   onChange,
-  t,
   disabled,
   schema: { default: {
     coordinates: schemaCoordinates,
@@ -39,6 +39,7 @@ const PointField = ({
   } },
   required,
 }) => {
+  const { t } = useTranslation();
   const { coordinates = schemaCoordinates, type = schemaType } = geom || {};
 
   const refLatitude = useRef(null);
@@ -61,7 +62,7 @@ const PointField = ({
 
   return (
     <div>
-      <legend>{t('jsonSchema.geometryField.label')}</legend>
+      <p className="control-label">{t('jsonSchema.geometryField.label')}</p>
       {['longitude', 'latitude'].map((name, index) => {
         const ref = !index ? refLongitude : refLatitude;
         const { current } = ref;
@@ -95,7 +96,6 @@ PointField.propTypes = {
     coordinates: PropTypes.arrayOf(PropTypes.number),
   }),
   onChange: PropTypes.func,
-  t: PropTypes.func,
 };
 
 PointField.defaultProps = {
@@ -108,7 +108,6 @@ PointField.defaultProps = {
     coordinates: [],
   },
   onChange: () => {},
-  t: text => text,
 };
 
 export default PointField;

@@ -157,7 +157,7 @@ export class CRUDProvider extends React.Component {
       },
     }));
 
-    return Object.keys(newFeature).length > 0 && newFeature;
+    return result;
   }
 
   deleteFeature = async (layerId, featureId) => {

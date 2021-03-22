@@ -13,6 +13,7 @@ import ImportGeomFile from '../../ImportGeomFile';
 import MapInteraction from './MapInteraction';
 import PointField from './PointField';
 import DefaultField from './DefaultField';
+import Informations from './Informations';
 import './styles.scss';
 
 
@@ -42,6 +43,8 @@ const GeometryField = ({
   const [geomValues, setGeomValues] = useState(geometries);
   const [featuresToFitBounds, setFeaturesToFitBounds] = useState(null);
 
+  const isRouting = formData.type === 'LineString' && geomValues.routingSettings.length && geomValues.isMainLayer;
+
   const [nextFormData, setFormData] = useReducer(reducer, {
     geom: geomValues.geom,
     routingInformation: geomValues.routingInformation,
@@ -53,14 +56,20 @@ const GeometryField = ({
       setGeomValues(geometries);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  }, [params, geometries.geom?.type, isRouting]);
 
   useEffect(() => {
-    setFormData({ geom: geomValues.geom, routingInformation: geomValues.routingInformation });
+    setFormData({
+      geom: geomValues.geom,
+      ...(isRouting && { routingInformation: geomValues.routingInformation }),
+    });
     return () => {
-      setFormData({ geom: geomValues.geom, routingInformation: geomValues.routingInformation });
+      setFormData({
+        geom: geomValues.geom,
+        ...(isRouting && { routingInformation: geomValues.routingInformation }),
+      });
     };
-  }, [geomValues.geom, geomValues.routingInformation, params]);
+  }, [geomValues.geom, geomValues.routingInformation, isRouting, params]);
 
   const importDraw = useCallback(nextFeatures => {
     setFeaturesToFitBounds(nextFeatures);
@@ -73,32 +82,43 @@ const GeometryField = ({
   const isRequired = required.includes('coordinates');
 
   return (
-    <fieldset>
-      <MapInteraction
-        featuresToFitBounds={featuresToFitBounds}
-        geomValues={geomValues}
-        setFeaturesToFitBounds={setFeaturesToFitBounds}
-        setFormData={setFormData}
-      />
-      <legend>{t('jsonSchema.geometryField.title')}</legend>
+    <fieldset className="geometry-field">
       {isRequired && params.id !== ACTION_CREATE && (
         <span className="details__list-edit-mandatory details__list-edit-mandatory--edit">
           {t('CRUD.details.mandatory')}
         </span>
       )}
-      <div className="form-group field">
-        <ImportGeomFile
-          geomType={geomValues.geomType}
-          hasDraws={Boolean(geomValues?.geom?.coordinates.length)}
-          onSubmit={importDraw}
+      <legend>{t('jsonSchema.geometryField.legend')}{isRequired && <span className="required">*</span>}</legend>
+      <div className="geometry-field__col">
+        <MapInteraction
+          featuresToFitBounds={featuresToFitBounds}
+          geomValues={geomValues}
+          setFeaturesToFitBounds={setFeaturesToFitBounds}
+          setFormData={setFormData}
         />
-        <p className="form-group__or">{t('jsonSchema.geometryField.or')}</p>
-        <TypeField
-          {...rest}
-          required={isRequired}
-          formData={nextFormData}
-          t={t}
-        />
+        <div className="form-group field">
+          <div className="geometry-field__row">
+            <ImportGeomFile
+              geomType={geomValues.geomType}
+              hasDraws={Boolean(geomValues?.geom?.coordinates.length)}
+              onSubmit={importDraw}
+            />
+          </div>
+          <div className="geometry-field__row">
+            <TypeField
+              {...rest}
+              required={isRequired}
+              formData={nextFormData}
+            />
+          </div>
+          <div className="geometry-field__row">
+            <Informations
+              schema={rest.schema}
+              formData={nextFormData}
+              isRouting={isRouting}
+            />
+          </div>
+        </div>
       </div>
     </fieldset>
   );

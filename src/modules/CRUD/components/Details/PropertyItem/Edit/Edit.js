@@ -102,7 +102,7 @@ const Edit = ({
     if (!isMounted.current) return;
 
     setLoading(false);
-    if (savedFeatures) {
+    if (savedFeatures.feature) {
       setEditedItem('');
       onRead(name);
       getSettings(settingsEndpoint);

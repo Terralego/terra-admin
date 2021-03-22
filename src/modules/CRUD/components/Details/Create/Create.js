@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import Form from '@rjsf/core';
@@ -65,7 +65,6 @@ const buildSchema = ({ schemaProperties, uiSchemaProperties, geomType }) => {
 
 const Create = props => {
   const {
-    featureError,
     getFeaturesList,
     history: { push },
     view: {
@@ -91,12 +90,6 @@ const Create = props => {
   }, []);
 
   useEffect(() => {
-    if (featureError?.error?.message) {
-      toast.displayError(featureError.error.message);
-    }
-  }, [featureError]);
-
-  useMemo(() => {
     const builder = buildSchema({ schemaProperties, uiSchemaProperties, geomType });
     setSchema(builder.schema);
     setUiSchema(builder.uiSchema);
@@ -115,15 +108,30 @@ const Create = props => {
 
     setLoading(false);
 
-    if (savedFeature) {
-      push(generateURI('layer', { layer: name, id: savedFeature.identifier }));
+
+    if (savedFeature.feature) {
+      push(generateURI('layer', { layer: name, id: savedFeature.feature.identifier }));
       toast.displayToaster(
-        { id: savedFeature.identifier },
+        { id: savedFeature.feature.identifier },
         t('CRUD.details.successCreateFeature'),
       );
       getFeaturesList(featureEndpoint);
+    } else {
+      toast.displayError(
+        <>
+          <h3>{savedFeature.error.message}</h3>
+          {savedFeature.error.data && <p>{Object.values(savedFeature.error.data).join(', ')}</p>}
+        </>,
+      );
     }
   }, [featureEndpoint, getFeaturesList, name, push, saveFeature, t]);
+
+  const handleValidate = useCallback((formData, errors) => {
+    if (!formData.geom.geom?.coordinates.length) {
+      errors.addError(t('CRUD.details.errorNoGeometry'));
+    }
+    return errors;
+  }, [t]);
 
   const title = t('CRUD.details.create', { layer: objectName });
 
@@ -139,6 +147,7 @@ const Create = props => {
           uiSchema={uiSchema}
           fields={customFields}
           onSubmit={handleSubmit}
+          validate={handleValidate}
         >
           <div className="details__list-edit-action">
             <span className="details__list-edit-mandatory">{t('CRUD.details.mandatory_plural')}</span>

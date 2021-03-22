@@ -103,7 +103,7 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
         map.setFilter(layerItem.id, ['in', '_id', ...geometriesIdentifiers]);
       }
     });
-  }, [feature, id, isFeatureID, layers, map, view]);
+  }, [feature, id, isFeatureID, layers, map, view.layer.id]);
 
   useEffect(() => {
     if (!view || id) {
@@ -160,7 +160,7 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
     const nextLayers = getLayers(settings)
       .filter(({ source }) => source === `${layerId}`)
       .reverse()
-      .map(nextLayer => ({ ...nextLayer, displayOnMap: true, weight: CUSTOM_LAYER_WEIGHT }));
+      .map(nextLayer => ({ ...nextLayer, weight: CUSTOM_LAYER_WEIGHT }));
 
     nextLayers.forEach(({ layout: { 'icon-image': iconImage } = {} }) => {
       if (iconImage) {
@@ -215,16 +215,6 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
   }, [setInteractiveMapProps]);
 
 
-  const onChangeDisplayOfLayers = useCallback((layerId, display) => {
-    setLayers(prevLayers => (
-      prevLayers.map(item => (
-        item.id === layerId
-          ? { ...item, displayOnMap: display }
-          : item
-      ))
-    ));
-  }, [setLayers]);
-
   useEffect(() => {
     if (!view) {
       return;
@@ -233,17 +223,18 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
       removeControl(CONTROL_CUSTOM);
     } else {
       const layersProps = layers.filter(({ source, main }) => source === `${view.layer.id}` && !main);
-      addControl({
-        control: CONTROL_CUSTOM,
-        position: CONTROLS_TOP_LEFT,
-        instance: LayersControl,
-        layers: layersProps,
-        onChange: onChangeDisplayOfLayers,
-        order: 1,
-        translate: t,
-      });
+      if (layersProps.length) {
+        addControl({
+          control: CONTROL_CUSTOM,
+          position: CONTROLS_TOP_LEFT,
+          instance: LayersControl,
+          layers: layersProps,
+          order: 1,
+          translate: t,
+        });
+      }
     }
-  }, [addControl, isFeatureID, layers, onChangeDisplayOfLayers, removeControl, t, view]);
+  }, [addControl, isFeatureID, layers, removeControl, t, view]);
 
   const {
     terralego: { map: mapLocale },

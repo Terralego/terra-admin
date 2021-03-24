@@ -1,4 +1,5 @@
 import { Plugin } from '@uppy/core';
+import { buildHeaders } from '@terralego/core/modules/Api';
 
 class UppySetCategoryBeforeUpload extends Plugin {
   constructor (uppy, opts) {
@@ -14,6 +15,13 @@ class UppySetCategoryBeforeUpload extends Plugin {
     const { meta: { category } } = this.uppy.getState();
     const { props: { findOrCreateAttachmentCategory } } = this.opts;
     return findOrCreateAttachmentCategory(category);
+  }
+
+  setHeader () {
+    const XHRUploadPlugin = this.uppy.plugins.uploader.find(({ id }) => id === 'XHRUpload');
+    if (XHRUploadPlugin) {
+      XHRUploadPlugin.opts.headers = buildHeaders();
+    }
   }
 
   async setCategoryBeforeUpload (fileIDs) {
@@ -32,6 +40,7 @@ class UppySetCategoryBeforeUpload extends Plugin {
         file.meta.category = category.id;
         this.uppy.emit('preprocess-complete', file);
       });
+      this.setHeader();
     };
 
     // Why emit `preprocess-complete` for all files at once, instead of

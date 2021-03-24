@@ -243,7 +243,7 @@ export class CRUDProvider extends React.Component {
       return category;
     }
     const {
-      attachmentCategories,
+      attachmentCategories = [],
       settings: {
         config: {
           attachment_categories: endpoint,
@@ -251,12 +251,12 @@ export class CRUDProvider extends React.Component {
       },
     } = this.state;
     let categories = attachmentCategories;
-    if (!categories) {
+    if (!categories.length) {
       const { results } = await this.getAttachmentCategories(endpoint);
       categories = results;
     }
-    const categoryInList = categories.find(({ name: categoryName }) => (
-      categoryName.toLowerCase() === name.trim().toLowerCase()
+    const categoryInList = categories.find(cat => (
+        cat?.name.toLowerCase() === name.trim().toLowerCase()
     ));
     if (categoryInList !== undefined) {
       return categoryInList;

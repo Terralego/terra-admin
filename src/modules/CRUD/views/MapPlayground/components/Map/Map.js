@@ -106,7 +106,7 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
   }, [feature, id, isFeatureID, layers, map, view.layer.id]);
 
   useEffect(() => {
-    if (!view || id) {
+    if (!view && id) {
       setInteractions([]);
       return;
     }

@@ -68,6 +68,7 @@ export const getDirectionsThemes = ({ routingSettings, accessToken }) => {
             });
           } catch (e) {
             toast.displayError(e.message);
+            return null;
           }
           const { result } = request;
 

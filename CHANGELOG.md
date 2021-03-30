@@ -1,4 +1,24 @@
 
+3.1.8 / 2021-03-30
+==================
+
+  * Prevent user to go to another feature in detail page
+  * Early return the function if an error ocurred
+  * Reset header for Api.request just before uploading file
+  * Avoid error to pick a category in an empty category list
+  * Change Weather Input of viewpoint from textfield to select
+  * Add redirection based on the previous page
+  * Set a default placeholder for enum
+  * Fix default value for schema enum
+  * Refacto ui of GeometryField
+  * Rework errors after editing or creating features
+  * Make LayersControl self autonomous
+  * Refacto Main component by using useContext hook
+  * Rename `context` by `AppContext` in AppProvider
+  * Upgrade  @terralego/core version to 1.26.5
+  * Avoid app to crash after the delete of a feature
+  * Flush tiles cache after the update of geometry's feature
+
 3.1.7 / 2021-03-17
 ==================
 

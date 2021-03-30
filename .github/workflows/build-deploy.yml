@@ -19,12 +19,12 @@ jobs:
         with:
           fetch-depth: 0 # Need tags for git describe
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: 12
 
-      - run: git describe --tags
-      - run: npm ci && npm run build
+      - run: npm install -g npm && npm rebuild node-sass
+      - run: npm ci && npm rebuild node-sass && npm run build
         env:
           PUBLIC_URL: "/admin/"
       - run: |

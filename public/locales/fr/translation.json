@@ -683,7 +683,7 @@
         "mandatoryTilesWord": "L'URL doit contenir les éléments {z}, {x} et {y} ou {bbox-epsg-3857}",
         "mandatoryWord": "L'URL doit contenir %{name}"
       },
-      "mapBoxUrl": "URL MapBox",
+      "mapBoxUrl": "URL MapBox ou Style",
       "minMaxZoom": "Amplitude du zoom",
       "name": "Nom",
       "order": "Ordre",
@@ -691,7 +691,7 @@
       "tileSize": "Taille des tuiles",
       "type": {
         "choices": {
-          "mapbox": "Mapbox",
+          "mapbox": "Mapbox ou Style",
           "raster": "Raster",
           "vector": "Vectoriel"
         },

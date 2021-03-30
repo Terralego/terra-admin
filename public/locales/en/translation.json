@@ -36,7 +36,7 @@
     "disableFollowDirectionMode": "Disable direction",
     "createPoint": "Create point",
     "createIntermediatePoint": "Create intermediate point",
-    "deletePoint": "Delete point",
+    "deletePoint": "Delete point"
   },
   "auth": {
     "loginform": {
@@ -646,7 +646,7 @@
         "mandatoryTilesWord": "The server URL should contain {z}, {x} and {y} tokens or {bbox-epsg-3857} token",
         "mandatoryWord": "The %{name} token is missing"
       },
-      "mapBoxUrl": "MapBox URL",
+      "mapBoxUrl": "MapBox or Style URL",
       "minMaxZoom": "Min and max zoom",
       "name": "Name",
       "order": "Order",
@@ -654,7 +654,7 @@
       "tileSize": "Tile size",
       "type": {
         "choices": {
-          "mapbox": "Mapbox",
+          "mapbox": "Mapbox or Style",
           "raster": "Raster",
           "vector": "Vector"
         },

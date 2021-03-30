@@ -35,6 +35,12 @@
       }
     }
   }
+
+  .mapboxgl-ctrl-search {
+    .search-results__item button {
+      height: auto;
+    }
+  }
 }
 
 .CRUD-no-map {

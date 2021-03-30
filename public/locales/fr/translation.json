@@ -74,6 +74,15 @@
       "capture_control": {
         "button_label": "Capture"
       },
+      "search_control": {
+        "button_label": "Rechercher dans la carte"
+      },
+      "search_results": {
+        "group_total": "(1 résultat trouvé)",
+        "group_total_plural": "({{count}} résultats trouvés)",
+        "no_result": "Pas de résultat",
+        "title": "Résultats de recherche"
+      },
       "NavigationControl.ResetBearing": "Orienter vers le nord",
       "NavigationControl.ZoomIn": "Zoomer",
       "NavigationControl.ZoomOut": "Dézoomer"

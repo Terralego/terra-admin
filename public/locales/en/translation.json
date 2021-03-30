@@ -74,6 +74,15 @@
       "capture_control": {
         "button_label": "Capture"
       },
+      "search_control": {
+        "button_label": "Search in the map"
+      },
+      "search_results": {
+        "group_total": "(1 result found)",
+        "group_total_plural": "({{count}} résults found)",
+        "no_result": "No results",
+        "title": "Search result"
+      },
       "NavigationControl.ResetBearing": "Reset orientation",
       "NavigationControl.ZoomIn": "Zoom in",
       "NavigationControl.ZoomOut": "Zoom out"

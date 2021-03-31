@@ -84,7 +84,7 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
 
   const displayCurrentLayer = useCallback(() => {
     const {
-      feature: { geometries = {} } = {},
+      geometries = {},
     } = feature[id] || {};
 
     if (!map || !layers.length) {

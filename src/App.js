@@ -11,6 +11,7 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import 'normalize.css';
+import { BetaProvider } from './hooks/useBeta';
 
 const { PUBLIC_URL } = process.env;
 
@@ -19,7 +20,9 @@ const App = () => (
     <ApiProvider host="/api">
       <AppProvider>
         <AuthProvider>
-          <Main />
+          <BetaProvider>
+            <Main />
+          </BetaProvider>
         </AuthProvider>
       </AppProvider>
     </ApiProvider>

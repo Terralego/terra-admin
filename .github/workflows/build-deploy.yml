@@ -27,7 +27,6 @@ jobs:
       - run: npm ci && npm rebuild node-sass && npm run build
         env:
           PUBLIC_URL: "/admin/"
-          REACT_APP_ENABLE_CAMPAIGNS: "1"
       - run: |
           mkdir ./tmp
           mv ./build ./tmp/admin

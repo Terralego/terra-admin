@@ -11,7 +11,6 @@ import dataLayerViews from './DataLayer/views';
 import sceneViews from './Scene/views';
 import baseLayerViews from './BaseLayer/views';
 
-
 // OPP
 import viewpointViews from './Viewpoint/views';
 import pictureViews from './Picture/views';
@@ -91,26 +90,21 @@ export const resources = [
     ...pictureViews,
   },
   {
-    name: RES_CAMPAIGN,
-    moduleName: 'OPP',
-    endpoint: 'campaigns',
-    ...campaignViews,
-  },
-  // Deactivacte campaign list module
-  // cf https://github.com/Terralego/terra-admin/issues/260
-  // {
-  //   name: RES_CAMPAIGN,
-  //   moduleName: 'OPP',
-  //   endpoint: 'campaigns',
-  //   ...guessers,
-  // },
-  {
     name: RES_BASELAYER,
     moduleName: 'BaseLayer',
     ...baseLayerViews,
     endpoint: 'baselayer',
   },
 ];
+
+if (process.env.REACT_APP_ENABLE_CAMPAIGNS === '1') {
+  resources.push({
+    name: RES_CAMPAIGN,
+    moduleName: 'OPP',
+    endpoint: 'campaigns',
+    ...campaignViews,
+  });
+}
 
 const byModule = (...modules) => ({ moduleName, list }) => list && modules.includes(moduleName);
 

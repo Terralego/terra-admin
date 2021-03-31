@@ -72,10 +72,10 @@ const GridList = ({
         {ids.map(id => {
           const {
             file,
-            properties = {},
             owner: { properties: ownerProperties = {} } = {},
             // state,
             id: pictId,
+            identifier,
           } = data[id] || {};
           return (
             <GridListTile
@@ -88,10 +88,10 @@ const GridList = ({
                 },
               }}
             >
-              {file && <img src={file.list} alt={properties.index} />}
+              {file && <img src={file.list} alt={identifier} />}
               <GridListTileBar
                 className={classes.tileBar}
-                title={properties.index}
+                title={identifier}
                 subtitle={(
                   <span>
                     {ownerProperties.name}

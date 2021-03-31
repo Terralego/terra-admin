@@ -72,7 +72,7 @@ const AddViewpoint = ({ ids = [], onAdd }) => {
   React.useEffect(() => {
     const loadViewpoints = async () => {
       const { data } = await dataProvider.getList(RES_VIEWPOINT, {
-        pagination: { page: 1, perPage: 1000 },
+        pagination: { page: 1, perPage: 250 },
         sort: { field: 'id' },
         order: 'id',
       });

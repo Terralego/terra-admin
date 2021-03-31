@@ -90,21 +90,19 @@ export const resources = [
     ...pictureViews,
   },
   {
+    name: RES_CAMPAIGN,
+    moduleName: 'OPP',
+    endpoint: 'campaigns',
+    beta: true, // Beta for now
+    ...campaignViews,
+  },
+  {
     name: RES_BASELAYER,
     moduleName: 'BaseLayer',
     ...baseLayerViews,
     endpoint: 'baselayer',
   },
 ];
-
-if (process.env.REACT_APP_ENABLE_CAMPAIGNS === '1') {
-  resources.push({
-    name: RES_CAMPAIGN,
-    moduleName: 'OPP',
-    endpoint: 'campaigns',
-    ...campaignViews,
-  });
-}
 
 const byModule = (...modules) => ({ moduleName, list }) => list && modules.includes(moduleName);
 
@@ -116,33 +114,37 @@ export const config = {
       label: 'user.project',
       // requiredPermissions: 'auth.change_group',
       requiredModule: 'User',
-      items: resources.filter(byModule('User')).map(({ name }) => ({
+      items: resources.filter(byModule('User')).map(({ name, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
+        beta,
       })),
     },
     {
       label: 'datalayer.project',
       requiredModule: 'DataSource',
-      items: resources.filter(byModule('DataSource', 'DataLayer')).map(({ name }) => ({
+      items: resources.filter(byModule('DataSource', 'DataLayer')).map(({ name, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
+        beta,
       })),
     },
     {
       label: 'opp.project',
       requiredModule: 'OPP',
-      items: resources.filter(byModule('OPP')).map(({ name }) => ({
+      items: resources.filter(byModule('OPP')).map(({ name, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
+        beta,
       })),
     },
     {
       label: 'baseLayer.project',
       requiredModule: 'BaseLayer',
-      items: resources.filter(byModule('BaseLayer')).map(({ name }) => ({
+      items: resources.filter(byModule('BaseLayer')).map(({ name, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
+        beta,
       })),
     },
   ],

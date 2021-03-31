@@ -7,6 +7,7 @@ import { withTranslation } from 'react-i18next';
 import { Tree } from '@blueprintjs/core';
 import compose from '../../../utils/compose';
 import { withPermissions, withEnabledModules } from '../../../hoc/withUserSettings';
+import useBeta from '../../../hooks/useBeta';
 
 const byPermissions = permissions => ({ requiredPermissions }) => {
   if (!requiredPermissions) {
@@ -24,10 +25,17 @@ const byModule = enabledModules => ({ requiredModule }) => {
   return enabledModules.includes(requiredModule);
 };
 
-const menuToTreeContents = (menu = [], t = text => text, permissions = [], enabledModules = []) =>
+const menuToTreeContents = (
+  menu = [],
+  t = text => text,
+  permissions = [],
+  enabledModules = [],
+  showBeta = false,
+) =>
   menu
     .filter(byPermissions(permissions))
     .filter(byModule(enabledModules))
+    .filter(({ beta }) => !beta || showBeta)
     .map(({ items = [], label, href, ...rest }, index) => ({
       id: index,
       isExpanded: true,
@@ -37,16 +45,19 @@ const menuToTreeContents = (menu = [], t = text => text, permissions = [], enabl
         : t(label),
 
       ...(items.length ? {
-        childNodes: menuToTreeContents(items, t, permissions, enabledModules),
+        childNodes: menuToTreeContents(items, t, permissions, enabledModules, showBeta),
         icon: 'folder-close',
       } : {}),
 
       ...rest,
     }));
 
-export const AppSummary = ({ t, menu, permissions, enabledModules }) => (
-  <Tree contents={menuToTreeContents(menu, t, permissions, enabledModules)} />
-);
+export const AppSummary = ({ t, menu, permissions, enabledModules }) => {
+  const beta = useBeta();
+  return (
+    <Tree contents={menuToTreeContents(menu, t, permissions, enabledModules, beta)} />
+  );
+};
 
 AppSummary.defaultProps = {
   permissions: [],

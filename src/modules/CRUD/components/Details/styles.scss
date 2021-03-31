@@ -124,6 +124,15 @@
     ul {
        list-style: disc !important;
     }
+
+    .icon-text {
+      display: flex;
+      align-items: center;
+      img {
+        margin-right: .2rem;
+        max-height: 2rem;
+      }
+    }
   }
 
   &__table {

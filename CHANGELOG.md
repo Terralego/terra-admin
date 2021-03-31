@@ -1,4 +1,15 @@
 
+3.2.0 / 2021-03-31
+==================
+
+  * Add feature flag for campaigns
+  * Add campaign admin
+
+# Breaking changes
+
+  * Update react-admin version to latest
+  * Use last npm version
+
 3.1.8 / 2021-03-30
 ==================
 

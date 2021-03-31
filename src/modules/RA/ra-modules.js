@@ -136,14 +136,17 @@ export const config = {
         href: `/${name}`,
       })),
     },
-    {
-      label: 'baseLayer.project',
-      requiredModule: 'BaseLayer',
-      items: resources.filter(byModule('BaseLayer')).map(({ name }) => ({
-        label: `ra.nav.${name}_list`,
-        href: `/${name}`,
-      })),
-    },
+    // Deactivacte base layer module
+    // It style can be acces at the url "localhost:<PORT>/baselayer"
+    // cf https://gitlab.makina-corpus.net/Terralego/Customers/all-projects/-/issues/810
+    // {
+    //   label: 'baseLayer.project',
+    //   requiredModule: 'BaseLayer',
+    //   items: resources.filter(byModule('BaseLayer')).map(({ name }) => ({
+    //     label: `ra.nav.${name}_list`,
+    //     href: `/${name}`,
+    //   })),
+    // },
   ],
 };
 

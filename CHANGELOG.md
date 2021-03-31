@@ -1,4 +1,11 @@
 
+3.2.2 / 2021-03-31
+==================
+
+  * Add beta flag for campaigns
+  * display pic identfier in viewpoint pic list
+  * Add "search location" in map control
+
 3.2.1 / 2021-03-31
 ==================
 

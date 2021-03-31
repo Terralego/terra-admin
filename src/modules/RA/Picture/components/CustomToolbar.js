@@ -107,6 +107,7 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
           />
         )}
         <CancelButton redirect={redirect || basePath} className={classes.cancel} />
+        <DeleteWithConfirmButton redirect={redirect || 'list'} undoable={null} />
       </Toolbar>
     );
   }
@@ -141,7 +142,6 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
         className={classes.submit}
       />
       <CancelButton redirect={redirect || basePath} className={classes.cancel} />
-      <DeleteWithConfirmButton redirect={redirect || 'list'} undoable={null} />
     </Toolbar>
   );
 };

@@ -152,7 +152,8 @@ export const config = {
 };
 
 if (process.env.REACT_APP_NOT_DISPLAY_BASELAYERS) {
-  config.menu.pop();
+  const { menu } = config;
+  config.menu = menu.filter(obj => obj.label !== 'baseLayer.project');
 }
 
 export const fetchFilterOptions = () => Api.request('viewpoints/filters/');

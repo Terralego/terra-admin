@@ -32,27 +32,32 @@ const getSchemaWithDefaultValues = (schema, properties) => {
  * Build a json schema object
  *
  * @param {Object} {
- * schemaProperties {Object},
+ * formSchema {Object},
  * uiSchemaProperties {Object},
  * geomType {Number}
  *  }
  * @returns an object compatible with jsonSchema specification
  */
-const buildSchema = ({ schemaProperties, uiSchemaProperties, geomType }) => {
+const buildSchema = ({ formSchema, uiSchemaProperties, geomType }) => {
   const {
     schema: geomSchema,
     ui_schema: geomUiSchema,
     value,
   } = getJSONSchemaFromGeom({ identifier: null, geom: null, title: 'Geométrie', geom_type: geomType });
 
-  const { required, properties } = requiredProperties(schemaProperties);
+  const rootSchema = requiredProperties({ root: { type: 'object', ...formSchema } });
+  const groupSchema = requiredProperties(formSchema.properties);
 
-  const { 'ui:order': uiOrder = [] } = uiSchemaProperties;
+  const { 'ui:order': uiOrder = ['*'] } = uiSchemaProperties;
 
   return {
     schema: {
-      properties: { geom: { ...geomSchema, default: value }, ...properties },
-      required: ['geom', ...required],
+      properties: {
+        geom: { ...geomSchema, default: value },
+        ...rootSchema.properties,
+        ...groupSchema.properties,
+      },
+      required: ['geom', ...rootSchema.required, ...groupSchema.required],
       type: 'object',
     },
     uiSchema: {
@@ -69,7 +74,7 @@ const Create = props => {
     history: { push },
     view: {
       featureEndpoint,
-      formSchema: { properties: schemaProperties } = {},
+      formSchema = {},
       uiSchema: uiSchemaProperties,
       layer: { geom_type: geomType, name },
       objectName = name,
@@ -90,10 +95,10 @@ const Create = props => {
   }, []);
 
   useEffect(() => {
-    const builder = buildSchema({ schemaProperties, uiSchemaProperties, geomType });
+    const builder = buildSchema({ formSchema, uiSchemaProperties, geomType });
     setSchema(builder.schema);
     setUiSchema(builder.uiSchema);
-  }, [geomType, schemaProperties, uiSchemaProperties]);
+  }, [geomType, formSchema, uiSchemaProperties]);
 
 
   const handleSubmit = useCallback(async ({

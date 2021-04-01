@@ -99,8 +99,8 @@ export const resources = [
   {
     name: RES_BASELAYER,
     moduleName: 'BaseLayer',
-    ...baseLayerViews,
     endpoint: 'baselayer',
+    ...baseLayerViews,
   },
 ];
 
@@ -141,6 +141,7 @@ export const config = {
     {
       label: 'baseLayer.project',
       requiredModule: 'BaseLayer',
+      // requiredPermissions: 'can_manage_baselayers',
       items: resources.filter(byModule('BaseLayer')).map(({ name, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
@@ -149,6 +150,10 @@ export const config = {
     },
   ],
 };
+
+if (process.env.REACT_APP_NOT_DISPLAY_BASELAYERS) {
+  config.menu.pop();
+}
 
 export const fetchFilterOptions = () => Api.request('viewpoints/filters/');
 

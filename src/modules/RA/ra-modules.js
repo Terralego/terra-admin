@@ -141,7 +141,6 @@ export const config = {
     {
       label: 'baseLayer.project',
       requiredModule: 'BaseLayer',
-      // requiredPermissions: 'can_manage_baselayers',
       items: resources.filter(byModule('BaseLayer')).map(({ name, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
@@ -151,9 +150,9 @@ export const config = {
   ],
 };
 
-if (process.env.REACT_APP_NOT_DISPLAY_BASELAYERS) {
+if (process.env.REACT_APP_NOT_DISPLAY_MODULES) {
   const { menu } = config;
-  config.menu = menu.filter(obj => obj.label !== 'baseLayer.project');
+  config.menu = menu.filter(({ label }) => !process.env.REACT_APP_NOT_DISPLAY_MODULES.split(' ').includes(label));
 }
 
 export const fetchFilterOptions = () => Api.request('viewpoints/filters/');

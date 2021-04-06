@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, DeleteWithConfirmButton, SaveButton, Toolbar } from 'react-admin';
+import { Button, SaveButton, Toolbar } from 'react-admin';
 import { useField } from 'react-final-form';
 
 /* eslint-disable import/no-extraneous-dependencies */
@@ -13,6 +13,7 @@ import IconSend from '@material-ui/icons/Send';
 import IconCheck from '@material-ui/icons/Check';
 import IconBlock from '@material-ui/icons/Block';
 import useUserSettings from '../../../../hooks/useUserSettings';
+import DeleteWithConfirmButtonJS from '../../../../components/react-admin/DeleteWithConfirmButtonJS';
 
 /* eslint-enable */
 
@@ -74,6 +75,10 @@ const sanitizeRestProps = ({ staticContext, ...rest }) => rest;
  * - A delete button
  */
 const CustomToolbar = ({ basePath, redirect, ...props }) => {
+  const {
+    resource,
+    record,
+  } = props;
   const classes = useStyles();
   const { hasPermission } = useUserSettings();
 
@@ -107,7 +112,14 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
           />
         )}
         <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />
-        <DeleteWithConfirmButton redirect={redirect === 'list' ? basePath : redirect} undoable={null} />
+        <DeleteWithConfirmButtonJS
+          redirect={redirect || 'list'}
+          undoable={null}
+          translateOptions={{
+            name: resource,
+            id: record.identifier,
+          }}
+        />
       </Toolbar>
     );
   }

@@ -5,8 +5,10 @@ import {
   SimpleForm,
   ReferenceArrayInput,
   SelectArrayInput,
+  SelectInput,
 } from 'react-admin';
 
+import UserNameField from '../../User/components/UserNameField';
 import { RES_USER, RES_PERMISSION } from '../../ra-modules';
 
 const UserGroupFields = ({ edit = false, ...props }) => (
@@ -16,7 +18,7 @@ const UserGroupFields = ({ edit = false, ...props }) => (
     <TextInput source="name" />
 
     <ReferenceArrayInput source="users" reference={RES_USER}>
-      <SelectArrayInput optionText="email" />
+      <SelectInput optionText={record => UserNameField({ record })} />
     </ReferenceArrayInput>
 
     <ReferenceArrayInput source="permissions" reference={RES_PERMISSION}>

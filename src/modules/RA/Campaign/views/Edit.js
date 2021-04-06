@@ -9,7 +9,7 @@ import PreventPartialData from '../../../../components/react-admin/PreventPartia
 
 const EditCampaignFields = PreventPartialData('viewpoints', CampaignFields);
 
-export const CampaignEdit = props => {
+export const CampaignEdit = ({ staticContext, ...props }) => {
   const { location: { state: { redirect: redirectProp } = {} } } = props;
   const [redirect] = useState(redirectProp);
 

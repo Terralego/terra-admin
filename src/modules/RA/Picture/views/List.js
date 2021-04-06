@@ -7,14 +7,14 @@ import {
   List,
   ReferenceField,
   TextField,
-  SelectField,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 import useUserSettings from '../../../../hooks/useUserSettings';
 import { RES_VIEWPOINT, RES_USER } from '../../ra-modules';
 
-import { stateChoices } from '../utils';
+import PictureState from '../components/PictureState';
+import UserNameField from '../../User/components/UserNameField';
 
 export const PictureList = props => {
   const { hasPermission, id } = useUserSettings();
@@ -41,13 +41,13 @@ export const PictureList = props => {
 
         {hasPermission('can_manage_users') && (
           <ReferenceField source="owner_id" reference={RES_USER}>
-            <TextField source="email" />
+            <UserNameField />
           </ReferenceField>
         )}
 
         <ImageField source="file.thumbnail" />
 
-        <SelectField source="state" choices={stateChoices} />
+        <PictureState label="resources.picture.fields.state" />
 
         <EditButton />
       </Datagrid>

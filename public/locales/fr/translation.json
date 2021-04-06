@@ -398,7 +398,7 @@
       "superuser": "Superutilisateur",
       "active": "Actif",
       "permissions": "Permissions",
-      "additional-information": "Information supplémentaire",
+      "additional-information": "Informations supplémentaires",
       "password": "Mot de passe",
       "firstname": "Prénom",
       "lastname": "Nom",
@@ -408,6 +408,7 @@
       "address-city": "Ville",
       "address-zip-code": "Code postal",
       "advanced": "Mode avancé",
+      "advanced-button": "Mode avancé",
       "not-allowed-to-edit": "Vous n'avez pas les droits pour éditer ce champ"
     },
     "help": {
@@ -868,6 +869,8 @@
         "pictures": "Photographies",
         "address": "Adresse",
         "id": "Numéro du point de vue",
+        "picture_state": "État de la photo",
+        "replay_sheet": "Fiche de rephotographie",
         "properties.voie": "Voie",
         "properties.commune": "Commune",
         "properties.altitude": "Altitude",
@@ -876,8 +879,8 @@
         "properties.focale_35mm": "Focale 35 mm",
         "properties.focale_objectif": "Focale de l'objectif",
         "properties.frequence": "Fréquence de rephotographie",
-        "properties.frequence.suffix": "années",
-        "properties.difficulte": "Difficulté à reproduire",
+        "frequency_help": "En années",
+        "properties.difficulte": "Difficile à reproduire",
         "properties.rephotographie": "Observations de rephotographie",
         "properties.paysage": "Description du paysage",
         "properties.dynamiques": "Dynamiques en cours",
@@ -904,15 +907,22 @@
     },
     "campaign":{
       "fields":{
-        "start_date": "Date de début", 
+        "start_date": "Date", 
         "label": "Nom", 
         "state": "État",
         "assignee": "Photographe", 
-        "viewpoints": "Points de vue"
+        "viewpoints": "Points de vue",
+        "statistics":{
+          "total": "Nombre de points de vue",
+          "submited": "Photos à valider",
+          "accepted": "Photos acceptées"
+        }
       },
       "actions":{
         "add_picture": "Ajouter une photo",
-        "add_viewpoint": "Add viewpoint"
+        "show_picture": "Voir la photo",
+        "add_viewpoint": "Ajouter un point de vue",
+        "remove_viewpoint": "Supprimer un point de vue"
       },
       "tabs":{
         "metadata": "Informations"
@@ -945,7 +955,8 @@
         "owner.properties.name": "Photographe",
         "file": "Photographie",
         "file.thumbnail": "Photographie",
-        "time": "Heure"
+        "time": "Heure",
+        "no_picture": "Pas de photographie"
       },
       "states":{
         "accepted": "Acceptée",
@@ -967,7 +978,8 @@
         "password": "Mot de passe",
         "is_superuser": "Superutilisateur",
         "is_active": "Actif",
-        "permissions": "Permissions"
+        "permissions": "Permissions",
+        "fullname": "Nom"
       }
     },
     "usergroup": {

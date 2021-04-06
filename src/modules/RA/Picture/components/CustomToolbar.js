@@ -84,20 +84,10 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
   if (hasPermission('can_manage_pictures')) {
     return (
       <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
-        <SaveButton redirect={redirect || 'list'} submitOnEnter />
+        <SaveButton redirect={redirect === 'list' ? basePath : redirect} submitOnEnter />
         {state === 'submited' && (
           <SaveButton
-            redirect={redirect || 'list'}
-            submitOnEnter={false}
-            transform={data => ({ ...data, state: 'accepted' })}
-            label="ra.action.validate"
-            icon={<IconCheck />}
-            className={classes.validate}
-          />
-        )}
-        {state === 'submited' && (
-          <SaveButton
-            redirect={redirect || 'list'}
+            redirect={redirect === 'list' ? basePath : redirect}
             submitOnEnter={false}
             transform={data => ({ ...data, state: 'refused' })}
             label="ra.action.refuse"
@@ -106,8 +96,18 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
             className={`${classes.refuse}`}
           />
         )}
+        {state === 'submited' && (
+          <SaveButton
+            redirect={redirect === 'list' ? basePath : redirect}
+            submitOnEnter={false}
+            transform={data => ({ ...data, state: 'accepted' })}
+            label="ra.action.validate"
+            icon={<IconCheck />}
+            className={classes.validate}
+          />
+        )}
         <CancelButton redirect={redirect || basePath} className={classes.cancel} />
-        <DeleteWithConfirmButton redirect={redirect || 'list'} undoable={null} />
+        <DeleteWithConfirmButton redirect={redirect === 'list' ? basePath : redirect} undoable={null} />
       </Toolbar>
     );
   }
@@ -119,7 +119,7 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
   if (!canModify) {
     return (
       <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
-        <CancelButton redirect={redirect || 'list'} className={classes.cancel} />
+        <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />
       </Toolbar>
     );
   }

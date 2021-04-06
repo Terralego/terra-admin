@@ -6,14 +6,14 @@ import {
   List,
   ReferenceField,
   TextField,
-  SelectField,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 import useUserSettings from '../../../../hooks/useUserSettings';
-import { stateChoices } from '../utils';
 
 import { RES_USER } from '../../ra-modules';
+import CampaignState from '../components/CampaignState';
+import UserNameField from '../../User/components/UserNameField';
 
 export const CampaignList = props => {
   const { hasPermission } = useUserSettings();
@@ -25,14 +25,12 @@ export const CampaignList = props => {
         <DateField source="start_date" />
         {hasPermission('can_manage_users') && (
           <ReferenceField source="assignee" reference={RES_USER}>
-            <TextField source="email" />
+            <UserNameField />
           </ReferenceField>
         )}
-        <SelectField source="state" choices={stateChoices} />
-        {/* Keep that for later <TextField source="statistics.total" />
-        <TextField source="statistics.missing" />
-        <TextField source="statistics.pending" />
-        <TextField source="statistics.accepted" /> */}
+        <CampaignState />
+        <TextField source="statistics.total" />
+        <TextField source="statistics.submited" />
 
         <EditButton />
       </Datagrid>

@@ -123,9 +123,7 @@ const EnhancedTableToolbar = props => {
 
   return (
     <Toolbar
-      className={{
-        [classes.highlight]: numSelected > 0,
-      }}
+      className={numSelected > 0 ? classes.highlight : ''}
     >
       {numSelected > 0 ? (
         <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
@@ -265,7 +263,6 @@ export default function EnhancedTable ({
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
                     <TableRow
                       hover
@@ -273,7 +270,7 @@ export default function EnhancedTable ({
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -283,7 +280,7 @@ export default function EnhancedTable ({
                         />
                       </TableCell>
                       {headCells.map(cell => (
-                        <TableCell align="left">{row[cell.id]}</TableCell>
+                        <TableCell align="left" key={cell.id}>{row[cell.id]}</TableCell>
                       ))}
                     </TableRow>
                   );

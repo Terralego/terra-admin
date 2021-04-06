@@ -29,6 +29,7 @@ import TimeInput from '../../../../components/react-admin/TimeInput';
 import useUserSettings from '../../../../hooks/useUserSettings';
 import { stateChoices } from '../utils';
 import Condition from '../../../../components/react-admin/Condition';
+import UserNameField from '../../User/components/UserNameField';
 
 const styles = {
   inline: {
@@ -96,10 +97,10 @@ const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
             reference={RES_USER}
             formClassName={classes.inline}
             validate={required()}
+            disable={edit}
           >
             <SelectInput
-              optionText="email"
-              disable={edit}
+              optionText={record => UserNameField({ record })}
               label="resources.picture.fields.owner_id"
             />
           </ReferenceInput>
@@ -121,7 +122,7 @@ const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
         <SelectInput source="properties.meteo" choices={weatherConditions} />
         <Br />
 
-        <TextInput multiline source="properties.observations" />
+        <TextInput multiline source="properties.observations" fullWidth />
 
         <Br />
 

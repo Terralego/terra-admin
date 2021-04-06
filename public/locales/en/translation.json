@@ -408,6 +408,7 @@
       "address-city": "City",
       "address-zip-code": "Zip code",
       "advanced": "Advanced mode",
+      "advanced-button": "Advanced mode",
       "not-allowed-to-edit": "You don't have enough permission to edit this field"
     },
     "help": {
@@ -540,6 +541,8 @@
       },
       "table": {
         "tab": "Table",
+        "no-table": "To show table, click here",
+        "allow": "Allow",
         "all-fields": "Fields configuration",
         "no-field": "No fields for this source",
         "no-source": "Choose a data source before to allow table configuration",
@@ -580,23 +583,23 @@
       "minisheet": {
         "tab": "Mini-sheet",
         "display-on-click": "Show mini-sheet",
-        "template": "Mini-sheet template",
         "card-message": "To activate a minisheet, click on:",
+        "template": "Mini-sheet template",
         "pick-highlight-color": "Select over lighting color",
         "advanced": "Advanced mode",
         "enable": "Enable",
         "disable": "Disable",
-        "select-field": "Select a field",
-        "add-field": "Add a field",
-        "add-section": {
-          "text": "Add a section",
-          "label": "Add a section"
-        },
         "section": "Section title",
         "title": "Minisheet model",
         "title-field": {
           "input": "Select a title field",
           "default": "Default title"
+        },
+        "select-field": "Select a field",
+        "add-field": "Add a field",
+        "add-section": {
+          "text": "Add a section",
+          "label": "Add a section"
         },
         "field": {
           "field": "Selected field",
@@ -617,12 +620,14 @@
         "no-field": "No fields for this data source",
         "no-filter": "Add a filter to activate filtering",
         "select-field": "Select field to add",
+        "allow-filtering-field": "Allow filtering",
         "propose-values": {
           "label": "Propose values",
           "none": "No value proposal",
           "all": "Propose all database values",
           "list": "Custom value list",
-          "custom": "Propose a custom value list…"
+          "custom": "Propose a custom value list…",
+          "custom_optional": "Propose a custom value list… (optionnal)"
         },
         "type": {
           "label": "Filter type",
@@ -746,6 +751,11 @@
       "show": "Show",
       "sort": "Sort",
       "undo": "Cancel",
+      "start": "Start",
+      "close": "Close",
+      "submit": "Submit",
+      "validate": "Vaidate",
+      "refuse": "Refuse",
       "unselect": "Unselect"
     },
     "boolean": {
@@ -760,6 +770,8 @@
       "list": "%{name}",
       "loading": "Loading",
       "not_found": "Page not found",
+      "empty": "No result",
+      "invite": "You can create a new element by cliking here:",
       "show": "%{name} #%{id}"
     },
     "input": {
@@ -804,6 +816,7 @@
       "page_out_from_begin": "Page should be greater than 1",
       "page_range_info": "%{offsetBegin}-%{offsetEnd} on %{total}",
       "page_rows_per_page": "Lines per page :",
+      "skip_nav": "Skip navigation",
       "next": "Next",
       "prev": "Previous"
     },
@@ -856,6 +869,8 @@
         "pictures": "Pictures",
         "address": "Address",
         "id": "Viewpoint id",
+        "picture_state": "Picture state",
+        "replay_sheet": "Replay sheet",
         "properties.voie": "Street",
         "properties.commune": "City",
         "properties.altitude": "Elevation",
@@ -864,8 +879,8 @@
         "properties.focale_35mm": "Lens 35 mm",
         "properties.focale_objectif": "Camera lens",
         "properties.frequence": "Picture frequence",
-        "properties.frequence.suffix": "years",
-        "properties.difficulte": "Difficulties to reproduce",
+        "frequency_help": "In years",
+        "properties.difficulte": "Hard to reproduce",
         "properties.rephotographie": "Picture again observations",
         "properties.paysage": "Landscape description",
         "properties.dynamiques": "Dynamics",
@@ -890,9 +905,38 @@
         "pictures": "Pictures"
       }
     },
+    "campaign":{
+      "fields":{
+        "start_date": "Date", 
+        "label": "Name", 
+        "state": "Status",
+        "assignee": "Photographer", 
+        "viewpoints": "Viewpoint",
+        "statistics":{
+          "total": "Viewpoint count",
+          "submited": "Pictures to validate",
+          "accepted": "Accepted pictures"
+        }
+      },
+      "actions":{
+        "add_picture": "Add a picture",
+        "show_picture": "Show picture",
+        "add_viewpoint": "Add viewpoint",
+        "remove_viewpoint": "Remove viewpoint"
+      },
+      "tabs":{
+        "metadata": "Information"
+      },
+      "states":{
+        "started": "Started",
+        "closed": "Closed",
+        "draft": "Draft"
+      }
+    },
     "picture": {
       "fields": {
         "label": "Viewpoint label",
+        "state": "State",
         "properties.altitude": "Elevation",
         "properties.meteo": "Weather",
         "properties.hauteur": "Eye elevation",
@@ -911,15 +955,19 @@
         "owner.properties.name": "Owner",
         "file": "Picture",
         "file.thumbnail": "Picture",
-        "time": "Hour"
+        "time": "Hour",
+        "no_picture": "No picture"
+      },
+      "states":{
+        "accepted": "Accepted",
+        "refused": "Reused",
+        "submited": "Submited",
+        "draft": "Draft"
       },
       "tabs": {
         "metadata": "Meta data",
         "repeat": "Rephotography"
       }
-    },
-    "campaign":{
-      "fields":{}
     },
     "user": {
       "fields": {
@@ -930,13 +978,15 @@
         "password": "Password",
         "is_superuser": "Super user",
         "is_active": "Active",
-        "permissions": "Permissions"
+        "permissions": "Permissions",
+        "fullname": "Fullname"
       }
     },
     "usergroup": {
       "fields": {
         "id": "Id",
         "name": "Group name",
+        "permissions": "Permissions",
         "users": "Users in group"
       }
     },

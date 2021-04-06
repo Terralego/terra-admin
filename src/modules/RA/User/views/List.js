@@ -8,6 +8,8 @@ import {
 } from 'react-admin';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
+import UserNameField from '../components/UserNameField';
+
 
 export const UserList = props => (
   <List
@@ -18,6 +20,7 @@ export const UserList = props => (
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="email" />
+      <UserNameField label="resources.user.fields.fullname" />
       <BooleanField source="is_superuser" />
       <BooleanField source="is_active" />
       <EditButton />

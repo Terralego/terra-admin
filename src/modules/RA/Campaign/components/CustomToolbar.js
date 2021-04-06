@@ -62,13 +62,11 @@ const CancelButton = ({ redirect, className }) => (
   </Button>
 );
 
-const sanitizeRestProps = ({ staticContext, ...rest }) => rest;
-
 /**
  * A custom toolbar that action change with state and permissions
  * default redirect aware actions:
  */
-const CustomToolbar = ({ basePath, redirect, ...props }) => {
+const CustomToolbar = ({ basePath, redirect, staticContext, ...props }) => {
   const classes = useStyles();
   const { hasPermission } = useUserSettings();
 
@@ -78,11 +76,11 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
 
   if (hasPermission('can_manage_campaigns')) {
     return (
-      <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
-        {state === 'draft' && <SaveButton redirect={redirect || 'list'} submitOnEnter />}
+      <Toolbar {...props} className={classes.toolbar}>
+        {state === 'draft' && <SaveButton redirect={redirect === 'list' ? basePath : redirect} submitOnEnter />}
         {state === 'draft' && (
           <SaveButton
-            redirect={redirect || 'list'}
+            redirect={redirect === 'list' ? basePath : redirect}
             submitOnEnter={false}
             transform={data => ({ ...data, state: 'started' })}
             label="ra.action.start"
@@ -93,24 +91,23 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
 
         {state === 'started' && (
           <SaveButton
-            redirect={redirect || 'list'}
+            redirect={redirect === 'list' ? basePath : redirect}
             submitOnEnter={false}
             transform={data => ({ ...data, state: 'closed' })}
             label="ra.action.close"
             icon={<IconBlock />}
-            variant={false}
             className={`${classes.refuse}`}
           />
         )}
-        <CancelButton redirect={redirect || basePath} className={classes.cancel} />
+        <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />
       </Toolbar>
     );
   }
 
   if (hasPermission('can_add_pictures')) {
     return (
-      <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
-        <CancelButton redirect={redirect || 'list'} className={classes.cancel} />
+      <Toolbar {...props} className={classes.toolbar}>
+        <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />
       </Toolbar>
     );
   }

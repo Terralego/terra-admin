@@ -28,9 +28,7 @@ import {
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
-
 import { withStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 import { RES_PICTURE } from '../../ra-modules';
 
@@ -79,46 +77,23 @@ const PictureRephotography = ({ record, ...rest }) => {
         />
       </Labeled>
       <Labeled label="resources.viewpoint.fields.properties.hauteur">
-        <TextField
-          source="properties.hauteur"
-          record={pictureRecord}
-          {...rest}
-        />
+        <TextField source="properties.hauteur" record={pictureRecord} {...rest} />
       </Labeled>
       <Labeled label="resources.viewpoint.fields.properties.orientation">
-        <TextField
-          record={pictureRecord}
-          source="properties.orientation"
-          {...rest}
-        />
+        <TextField record={pictureRecord} source="properties.orientation" {...rest} />
       </Labeled>
       <Br />
       <Labeled label="resources.viewpoint.fields.properties.focale_35mm">
-        <TextField
-          record={pictureRecord}
-          source="properties.focale_35mm"
-          {...rest}
-        />
+        <TextField record={pictureRecord} source="properties.focale_35mm" {...rest} />
       </Labeled>
       <Labeled label="resources.viewpoint.fields.properties.focale_objectif">
-        <TextField
-          record={pictureRecord}
-          source="properties.focale_objectif"
-          {...rest}
-        />
+        <TextField record={pictureRecord} source="properties.focale_objectif" {...rest} />
       </Labeled>
     </>
   );
 };
 
-const ViewpointFields = ({
-  translate: t,
-  edit,
-  classes,
-  mapConfig,
-  record,
-  ...props
-}) => {
+const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...props }) => {
   const [remoteChoices, setRemoteChoices] = React.useState([]);
   const [waiting, setWaiting] = React.useState(false);
 
@@ -213,16 +188,11 @@ const ViewpointFields = ({
             source="properties.frequence"
             validate={[number(), minValue(1)]}
             formClassName={classes.inline}
-            options={{
-              InputProps: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {t('resources.viewpoint.fields.properties.frequence.suffix')}
-                  </InputAdornment>
-                ),
-              },
-            }}
+            helperText="resources.viewpoint.fields.frequency_help"
           />
+
+          <Br />
+
           <BooleanInput source="properties.difficulte" formClassName={classes.inline} />
           <TextInput multiline source="properties.rephotographie" rows={4} rowsMax={30} />
 
@@ -276,7 +246,12 @@ const ViewpointFields = ({
 
       {edit && (
         <FormTab label="resources.viewpoint.tabs.pictures" path="pictures">
-          <ReferenceArrayField source="picture_ids" reference={RES_PICTURE} label="resources.viewpoint.fields.pictures" fullWidth>
+          <ReferenceArrayField
+            source="picture_ids"
+            reference={RES_PICTURE}
+            label="resources.viewpoint.fields.pictures"
+            fullWidth
+          >
             <GridListPictures viewpointId={record.id} />
           </ReferenceArrayField>
         </FormTab>
@@ -293,8 +268,4 @@ ViewpointFields.defaultProps = {
   edit: false,
 };
 
-export default compose(
-  translate,
-  withMapConfig,
-  withStyles(styles),
-)(ViewpointFields);
+export default compose(translate, withMapConfig, withStyles(styles))(ViewpointFields);

@@ -33,6 +33,18 @@ export const getComponent = type => {
   return () => null;
 };
 
+
+export const isHTML = value => {
+  const trimmedValue = `${value}`.trim();
+  if (!trimmedValue) {
+    return false;
+  }
+  const div = document.createElement('div');
+  div.innerHTML = trimmedValue;
+  return div.firstChild.nodeType === Node.ELEMENT_NODE;
+};
+
+
 /**
  * To display the field's content, it's necessary to know its type
  * Most of cases `schemaType` would be chosen

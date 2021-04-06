@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ArrayOfObjects from './ArrayOfObjects';
 import NoValue from '../../NoValue';
+import { isHTML } from '../Type';
 
 const ArrayType = props => {
   const {
@@ -14,6 +15,19 @@ const ArrayType = props => {
 
   if (type === 'object') {
     return <ArrayOfObjects {...props} />;
+  }
+
+  if (isHTML(displayValue[0])) {
+    return (
+      <div className="details__RTE">
+        {displayValue.map(item => (
+          <div
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: item }}
+          />
+        ))}
+      </div>
+    );
   }
   return displayValue.join(', ');
 };

@@ -4,6 +4,7 @@ import { Button, Intent, Position, Tooltip } from '@blueprintjs/core';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Form from '@rjsf/core';
+import classNames from 'classnames';
 import { CRUDContext } from '../../../../services/CRUDProvider';
 import { getView } from '../../../../services/CRUD';
 import { get2DCoordinates, requiredProperties } from '../../../../services/utils';
@@ -172,7 +173,7 @@ const Edit = ({
       </Tooltip>
       {isCurrentEditedItem && (
         <Form
-          className="CRUD-edit"
+          className={classNames({ 'CRUD-edit': true, 'CRUD-edit--block': isGeom })}
           disabled={loading}
           fields={customFields}
           ErrorList={ErrorListTemplate}

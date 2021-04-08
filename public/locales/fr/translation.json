@@ -145,7 +145,7 @@
     "readyToImport": "Le tracé de {{fileName}} est prêt à être importé.",
     "readyToImport_plural": "les tracés de {{fileName}} sont prêts à être importés.",
     "submit": "Valider la sélection",
-    "title": "Importer les coordonnées (WGS84 Décimal)",
+    "title": "Importer un fichier (WGS84 Décimal)",
     "unableToImport": "Les données du fichier <1>{{fileName}}</1> n'ont pas pu être récupéré.",
     "warnGeomOtherType": "Le fichier contient d'autres types de géométries qui ont été ignorés.",
     "warnGeomSameType": "Le fichier contient d'autres géométries du même type. Seul le premier a été sélectionné.",
@@ -369,14 +369,12 @@
         }
       },
       "label": "Ou saisir les coordonnées",
-      "legend": "Coordonnées",
       "title": "Coordonnées (WGS84 décimal)",
-      "latitude": "Latitude",
-      "longitude": "Longitude",
-      "information-create": "Ou dessiner $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
-      "information-edit": "Ou modifier $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
+      "information-create": "Dessiner $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
+      "information-edit": "Modifier $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
       "helper": "Saisissez vos coordonnées en utilisant l'outil {{type}} <1></1> sur la carte",
-      "helper-routing": "Tracez un itinéraire en cliquant directement sur la carte. Vous avez la possibilité de suivre automatiquement les voies en cochant la case correspondante et en sélectionnant un mode de suivi."
+      "helper-routing": "Tracez un itinéraire en cliquant directement sur la carte. Vous avez la possibilité de suivre automatiquement les voies en cochant la case correspondante et en sélectionnant un mode de suivi.",
+      "or": "ou"
     },
     "panelError": {
       "title": "Votre saisie comporte des erreurs"

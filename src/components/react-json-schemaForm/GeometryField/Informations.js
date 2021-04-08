@@ -16,6 +16,7 @@ const getIconFromType = type => {
 const Information = props => {
   const {
     formData: { geom } = {},
+    isRequired,
     isRouting,
     schema: { default: {
       coordinates: schemaCoordinates,
@@ -31,8 +32,8 @@ const Information = props => {
 
   return (
     <>
-      <p className="control-label">{t(`jsonSchema.geometryField.information-${action}`, { type })}</p>
-      <Message intent="primary">
+      <p className="control-label">{t(`jsonSchema.geometryField.information-${action}`, { type })}{isRequired && <span className="required">*</span>}</p>
+      <Message className="geometry-field__message" intent="primary">
         {isRouting
           ? t('jsonSchema.geometryField.helper-routing')
           : (

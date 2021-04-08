@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Form from '@rjsf/core';
 import { CRUDContext } from '../../../../services/CRUDProvider';
 import { getView } from '../../../../services/CRUD';
-import { requiredProperties } from '../../../../services/utils';
+import { get2DCoordinates, requiredProperties } from '../../../../services/utils';
 import customFields from '../../../../../../components/react-json-schemaForm';
 import FileWidget from '../../../../../../components/react-json-schemaForm/FileWidget';
 import ErrorListTemplate from '../../../../../../components/react-json-schemaForm/ErrorListTemplate';
@@ -85,7 +85,10 @@ const Edit = ({
 
     const body = !isGeom
       ? { properties: { [propKey]: propValue === undefined ? '' : propValue } }
-      : { geom: propValue.geom, routing_information: propValue.routingInformation };
+      : {
+        geom: propValue.geom,
+        routing_information: get2DCoordinates(propValue.routingInformation),
+      };
 
     setDefaultValue(propValue);
 

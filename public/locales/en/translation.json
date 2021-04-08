@@ -145,7 +145,7 @@
     "readyToImport": "{{fileName}} geometry is ready to be imported.",
     "readyToImport_plural": "{{fileName}} geometries are ready to be imported.",
     "submit": "Confirm selection",
-    "title": "Import coordinates (WGS84 Decimal)",
+    "title": "Import a file (WGS84 Decimal)",
     "unableToImport": "Unable to load and read <1>{{fileName}}</1> data.",
     "warnGeomOtherType": "The file contains other types of geometries which have been ignored.",
     "warnGeomSameType": "The file contains other geometries of the same type. Only the first was selected.",
@@ -369,14 +369,12 @@
         }
       },
       "label": "Or enter coordinates",
-      "legend": "Coordinates",
       "title": "Coordinates (decimal WGS84)",
-      "latitude": "Latitude",
-      "longitude": "Longitude",
-      "information-create": "Or draw $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
-      "information-edit": "Or edit $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
+      "information-create": "Draw $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
+      "information-edit": "Edit $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
       "helper": "Enter coordinates by using the tool <1></1> on map",
-      "helper-routing": "Draw a route by clicking directly on the map. You can automatically follow the paths by checking the corresponding box and selecting a follow mode"
+      "helper-routing": "Draw a route by clicking directly on the map. You can automatically follow the paths by checking the corresponding box and selecting a follow mode",
+      "or": "or"
     },
     "panelError": {
       "title": "Your input contains errors"

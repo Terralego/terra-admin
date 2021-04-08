@@ -2,15 +2,39 @@
 
 .CRUD-edit {
   .geometry-field {
-    &__col {
-      border: solid #efefef;
-      border-width: 1px 0;
-      margin: 0.3rem 0;
-      padding: 0.5rem 0;
+    text-align: center;
+    &__or {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      margin: 1rem 0;
+      span {
+        padding: 0 0.5rem;
+      }
+      &::before,
+      &::after {
+        content: "";
+        flex-grow: 1;
+        margin-top: 2px;
+        border-top: 1px solid #ddd;
+      }
     }
-    
+    &__col {
+      border: solid #ddd;
+      border-width: 1px 0;
+      margin: 0.5rem 0;
+      padding: 1rem 0;
+    }
+
     &__row {
       padding: 0.5rem;
+    }
+    &__message {
+      max-width: max-content;
+      margin: auto;
+    }
+    .control-label {
+      font-size: 1.1rem;
     }
   }
   .mapbox-gl-draw_ctrl-draw-btn {
@@ -21,7 +45,15 @@
     height: 29px;
     vertical-align: middle;
     border-radius: 4px;
-    box-shadow: 0 0 0 2px rgba(0,0,0,.1);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.details__list-edit {
+  .geometry-field {
+    &__col {
+      margin-top: 1.8rem;
+    }
   }
 }
 
@@ -34,7 +66,7 @@
   color: #182026;
   padding: 4px 6px;
   margin: 10px;
-  border-radius: 4px; 
+  border-radius: 4px;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 
   input {

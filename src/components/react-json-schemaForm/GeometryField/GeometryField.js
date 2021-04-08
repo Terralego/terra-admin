@@ -87,7 +87,6 @@ const GeometryField = ({
           {t('CRUD.details.mandatory')}
         </span>
       )}
-      <legend>{t('jsonSchema.geometryField.legend')}{isRequired && <span className="required">*</span>}</legend>
       <div className="geometry-field__col">
         <MapInteraction
           featuresToFitBounds={featuresToFitBounds}
@@ -97,17 +96,19 @@ const GeometryField = ({
         />
         <div className="form-group field">
           <div className="geometry-field__row">
+            <Informations
+              schema={schema}
+              formData={nextFormData}
+              isRequired={isRequired}
+              isRouting={isRouting}
+            />
+          </div>
+          <span className="geometry-field__or"><span>{t('jsonSchema.geometryField.or')}</span></span>
+          <div className="geometry-field__row">
             <ImportGeomFile
               geomType={geomValues.geomType}
               hasDraws={Boolean(geomValues?.geom?.coordinates.length)}
               onSubmit={importDraw}
-            />
-          </div>
-          <div className="geometry-field__row">
-            <Informations
-              schema={schema}
-              formData={nextFormData}
-              isRouting={isRouting}
             />
           </div>
         </div>

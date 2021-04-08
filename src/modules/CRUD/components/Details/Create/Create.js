@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import Form from '@rjsf/core';
-import { getJSONSchemaFromGeom, requiredProperties } from '../../../services/utils';
+import { get2DCoordinates, getJSONSchemaFromGeom, requiredProperties } from '../../../services/utils';
 import { toast } from '../../../../../utils/toast';
 import { generateURI } from '../../../config';
 import customFields from '../../../../../components/react-json-schemaForm';
@@ -109,7 +109,7 @@ const Create = props => {
 
     setSchema(prevSchema => getSchemaWithDefaultValues(prevSchema, properties));
 
-    const savedFeature = await saveFeature(featureEndpoint, false, { geom, properties, routing_information: routingInformation }, 'POST');
+    const savedFeature = await saveFeature(featureEndpoint, false, { geom, properties, routing_information: get2DCoordinates(routingInformation) }, 'POST');
 
     setLoading(false);
 

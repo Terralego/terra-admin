@@ -63,7 +63,7 @@ const buildSchema = ({ formSchema, uiSchemaProperties, geomType }) => {
     uiSchema: {
       geom: geomUiSchema,
       ...uiSchemaProperties,
-      'ui:order': ['geom', ...uiOrder],
+      'ui:order': [...uiOrder, 'geom'],
     },
   };
 };

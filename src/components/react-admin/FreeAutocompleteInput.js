@@ -14,6 +14,7 @@ const FreeAutocompleteInput = ({ choices = [], label, ...rest }) => {
   const translate = useTranslate();
   const {
     input: { value, onChange },
+    meta: { touched, error },
   } = useInput(rest);
 
   return (
@@ -31,6 +32,8 @@ const FreeAutocompleteInput = ({ choices = [], label, ...rest }) => {
             {...params}
             margin="normal"
             variant="filled"
+            error={!!(touched && error)}
+            helperText={touched && translate(error)}
           />
         )}
       />

@@ -20,6 +20,7 @@ import {
   NumberField,
   NumberInput,
   ReferenceArrayField,
+  required,
   SimpleFormIterator,
   TabbedForm,
   TextField,
@@ -169,6 +170,7 @@ const ViewpointFields = ({
             choices={remoteChoices.cities}
             source="city"
             label="resources.viewpoint.fields.city"
+            validate={required()}
           />
         )}
 

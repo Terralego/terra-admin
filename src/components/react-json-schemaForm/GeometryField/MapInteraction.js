@@ -236,13 +236,12 @@ const MapInteraction = ({
         (Array.isArray(coordinates[0]) ? coordinates : [coordinates])),
       hasDetails: true,
     });
+    const { geometry, properties } = map.pathControl.getLineString();
     const coordinates = getCoordinatesFromGeometries(featuresToFitBounds);
     if (coordinates) {
       setFormData({
-        geom: {
-          type: featuresToFitBounds[0].geometry.type,
-          coordinates,
-        },
+        geom: geometry,
+        routingInformation: properties,
       });
     }
     setFeaturesToFitBounds(null);

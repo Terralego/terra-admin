@@ -11,8 +11,6 @@ import { CRUDContext } from '../../../modules/CRUD/services/CRUDProvider';
 import ImportGeomFile from '../../ImportGeomFile';
 
 import MapInteraction from './MapInteraction';
-import PointField from './PointField';
-import DefaultField from './DefaultField';
 import Informations from './Informations';
 import './styles.scss';
 
@@ -24,7 +22,8 @@ function reducer (state, action) {
 const GeometryField = ({
   formData,
   name,
-  ...rest
+  onChange,
+  schema,
 }) => {
   const { t } = useTranslation();
 
@@ -75,11 +74,11 @@ const GeometryField = ({
     setFeaturesToFitBounds(nextFeatures);
   }, []);
 
-  const TypeField = formData.type === 'Point' ? PointField : DefaultField;
-  const {
-    schema: { required = [] },
-  } = rest;
-  const isRequired = required.includes('coordinates');
+  useEffect(() => {
+    onChange(nextFormData);
+  }, [nextFormData, onChange]);
+
+  const isRequired = schema.required?.includes('coordinates');
 
   return (
     <fieldset className="geometry-field">
@@ -105,15 +104,8 @@ const GeometryField = ({
             />
           </div>
           <div className="geometry-field__row">
-            <TypeField
-              {...rest}
-              required={isRequired}
-              formData={nextFormData}
-            />
-          </div>
-          <div className="geometry-field__row">
             <Informations
-              schema={rest.schema}
+              schema={schema}
               formData={nextFormData}
               isRouting={isRouting}
             />

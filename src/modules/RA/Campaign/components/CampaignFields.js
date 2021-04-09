@@ -40,6 +40,8 @@ const CampaignFields = ({ edit, location, ...props }) => {
 
   const { record: { state } } = props;
 
+  const today = Date.now();
+
   return (
     <TabbedForm
       {...props}
@@ -52,14 +54,15 @@ const CampaignFields = ({ edit, location, ...props }) => {
           label="resources.campaign.fields.label"
           formClassName={classes.inline}
           validate={defaultRequired}
-          disabled={state  !== 'draft'}
+          disabled={edit && state  !== 'draft'}
         />
         <DateInput
           source="start_date"
           label="resources.campaign.fields.start_date"
           formClassName={classes.inline}
           validate={defaultRequired}
-          disabled={state  !== 'draft'}
+          disabled={edit && state  !== 'draft'}
+          defaultValue={today}
         />
 
         {edit && (

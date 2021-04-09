@@ -106,7 +106,7 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
             className={classes.validate}
           />
         )}
-        <CancelButton redirect={redirect || basePath} className={classes.cancel} />
+        <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />
         <DeleteWithConfirmButton redirect={redirect === 'list' ? basePath : redirect} undoable={null} />
       </Toolbar>
     );
@@ -127,21 +127,21 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
   return (
     <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
       <SaveButton
-        redirect={redirect || 'list'}
+        redirect={redirect === 'list' ? basePath : redirect}
         submitOnEnter
         // Reset state to draft for photographer
         transform={data =>
           (hasPermission('can_manage_pictures') ? data : { ...data, state: 'draft' })}
       />
       <SaveButton
-        redirect={redirect || 'list'}
+        redirect={redirect === 'list' ? basePath : redirect}
         submitOnEnter={false}
         transform={data => ({ ...data, state: 'submited' })}
         label="ra.action.submit"
         icon={<IconSend />}
         className={classes.submit}
       />
-      <CancelButton redirect={redirect || basePath} className={classes.cancel} />
+      <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />
     </Toolbar>
   );
 };

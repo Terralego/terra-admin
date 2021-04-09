@@ -50,6 +50,8 @@ const Br = () => <br />;
 const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
   const { hasPermission } = useUserSettings();
 
+  const today = Date.now();
+
   return (
     <TabbedForm {...props} toolbar={<CustomToolbar />} initialValues={{ state: 'draft' }}>
       <FormTab label="resources.picture.tabs.metadata">
@@ -82,11 +84,12 @@ const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
 
         <Br />
 
-        <DateInput source="date" formClassName={classes.inline} />
+        <DateInput source="date" formClassName={classes.inline} defaultValue={today} />
         <TimeInput
           source="date"
           label="resources.picture.fields.time"
           formClassName={classes.inline}
+          defaultValue={today}
         />
 
         <Br />

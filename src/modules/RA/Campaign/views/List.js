@@ -6,6 +6,8 @@ import {
   List,
   ReferenceField,
   TextField,
+  Filter,
+  TextInput,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
@@ -15,12 +17,46 @@ import { RES_USER } from '../../ra-modules';
 import CampaignState from '../components/CampaignState';
 import UserNameField from '../../User/components/UserNameField';
 
+const ListFilters = props => (
+  <Filter {...props}>
+    <TextInput label="ra.action.search" source="search" alwaysOn />
+  </Filter>
+);
+
+const ProgressField = ({ record: { statistics = {} } }) => (
+  <span>{Math.round((statistics.accepted / statistics.total) * 100)}%</span>
+);
+
+const postRowStyle = ({ state }) => {
+  switch (state) {
+    case 'draft':
+      return {
+        backgroundColor: '#e5e5e5',
+        borderLeft: '4px solid #5b5b5b',
+        color: '#5b5b5b',
+      };
+    case 'started':
+      return {
+        backgroundColor: '#deefee',
+        borderLeft: '4px solid #368e8d',
+      };
+    default: {
+      return {};
+    }
+  }
+};
+
 export const CampaignList = props => {
   const { hasPermission } = useUserSettings();
 
   return (
-    <List {...props} exporter={false} bulkActionButtons={<CommonBulkActionButtons />}>
-      <Datagrid>
+    <List
+      {...props}
+      exporter={false}
+      bulkActionButtons={<CommonBulkActionButtons />}
+      filters={<ListFilters />}
+    >
+      <Datagrid rowClick="edit" rowStyle={postRowStyle}>
         <TextField source="label" />
         <DateField source="start_date" />
         {hasPermission('can_manage_users') && (
@@ -28,9 +64,10 @@ export const CampaignList = props => {
             <UserNameField />
           </ReferenceField>
         )}
-        <CampaignState />
+        <CampaignState label="resources.campaign.fields.state" />
         <TextField source="statistics.total" />
         <TextField source="statistics.submited" />
+        <ProgressField label="resources.campaign.fields.statistics.progress" />
 
         <EditButton />
       </Datagrid>

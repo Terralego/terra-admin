@@ -80,6 +80,32 @@ const RemoveViewpoint = ({ record: viewpoint, onRemove, pictureMap }) => {
   return <IconButton color="secondary" variant="contained" onClick={() => onRemove(viewpoint.id)}><DeleteIcon /></IconButton>;
 };
 
+const postRowStyle = pictureMap => ({ id }) => {
+  let state = 'missing';
+
+  if (pictureMap[id]) {
+    state = pictureMap[id].state;
+  }
+
+  switch (state) {
+    case 'submited':
+      return {
+        borderLeft: '4px solid orange',
+      };
+    case 'accepted':
+      return {
+        borderLeft: '4px solid green',
+      };
+    case 'refused':
+      return {
+        borderLeft: '4px solid red',
+      };
+    default: {
+      return {};
+    }
+  }
+};
+
 const ViewpointGrid = ({ record }) => {
   const { hasPermission } = useUserSettings();
 
@@ -152,10 +178,14 @@ const ViewpointGrid = ({ record }) => {
   );
 
 
+  const postRowStyleCallback = React.useCallback(postRowStyle(pictureMap), [pictureMap]);
+
+
   return (
     <>
       <Datagrid
         basePath=""
+        rowStyle={postRowStyleCallback}
         isRowSelectable={() => true}
         currentSort={currentSort}
         data={viewpointMap}

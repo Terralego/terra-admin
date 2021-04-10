@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-const AddViewpoint = ({ record: { statistics } }) => {
+const StatsBar = ({ record: { statistics = {} } }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -49,4 +49,4 @@ const AddViewpoint = ({ record: { statistics } }) => {
   );
 };
 
-export default AddViewpoint;
+export default StatsBar;

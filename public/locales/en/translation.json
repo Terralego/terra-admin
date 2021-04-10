@@ -915,7 +915,8 @@
         "statistics":{
           "total": "Viewpoint count",
           "submited": "Pictures to validate",
-          "accepted": "Accepted pictures"
+          "accepted": "Accepted pictures",
+          "progress": "Progress"
         }
       },
       "actions":{

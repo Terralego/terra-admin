@@ -21,6 +21,7 @@ import ViewpointGrid from './ViewpointGrid';
 import CampaignState from './CampaignState';
 
 import UserNameField from '../../User/components/UserNameField';
+import StatsBar from './StatsBar';
 
 const useStyles = makeStyles({
   inline: {
@@ -85,6 +86,8 @@ const CampaignFields = ({ edit, location, ...props }) => {
         )}
 
         <Br />
+
+        <StatsBar />
 
         <ViewpointGrid />
       </FormTab>

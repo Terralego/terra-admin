@@ -14,10 +14,9 @@ import {
   required,
   ReferenceField,
   TextField,
-  SelectField,
 } from 'react-admin';
 
-import { withStyles } from '@material-ui/core/styles';
+import {  makeStyles } from '@material-ui/core/styles';
 
 import { RES_VIEWPOINT, RES_USER } from '../../ra-modules';
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
@@ -27,16 +26,28 @@ import CustomToolbar from './CustomToolbar';
 import TimeInput from '../../../../components/react-admin/TimeInput';
 
 import useUserSettings from '../../../../hooks/useUserSettings';
-import { stateChoices } from '../utils';
-import Condition from '../../../../components/react-admin/Condition';
 import UserNameField from '../../User/components/UserNameField';
+import PictureState from './PictureState';
 
-const styles = {
+const useStyles = makeStyles({
   inline: {
     display: 'inline-block',
     marginRight: '1em',
   },
-};
+  picture: {
+    float: 'right',
+    width: '50%',
+    '& .previews div': {
+      width: '100%',
+      height: 'auto',
+    },
+    '& .previews img': {
+      width: '100%',
+      height: 'auto',
+      maxHeight: 'inherit',
+    },
+  },
+});
 
 const weatherConditions = [
   { id: 'good_weather', name: 'ra.pictures.weather.good_weather' },
@@ -46,15 +57,31 @@ const weatherConditions = [
 ];
 
 const Br = () => <br />;
+const ClearFloat = () => <br style={{ clear: 'both' }} />;
 
-const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
+const PictureInput = props => {
+  const classes = useStyles();
+  return (
+    <div className={classes.picture}>
+      <ImageInput source="file" accept="image/*" {...props}>
+        <ImageField source="full" />
+      </ImageInput>
+    </div>
+  );
+};
+
+const PictureFields = ({ edit, mapConfig, location, ...props }) => {
   const { hasPermission } = useUserSettings();
+  const classes = useStyles();
 
   const today = Date.now();
+  const { record: { state } } = props;
 
   return (
     <TabbedForm {...props} toolbar={<CustomToolbar />} initialValues={{ state: 'draft' }}>
       <FormTab label="resources.picture.tabs.metadata">
+
+        <PictureInput />
         {hasPermission('can_manage_pictures') && (
           <ReferenceInput
             source="viewpoint"
@@ -74,12 +101,10 @@ const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
             <TextField source="label" />
           </ReferenceField>
         )}
-        <Condition when="state" is="accepted">
-          {edit && <TextField source="identifier" formClassName={classes.inline} />}
-        </Condition>
+        {edit && state === 'accepted' && <TextField source="identifier" formClassName={classes.inline} />}
 
         {edit && (
-          <SelectField source="state" choices={stateChoices} formClassName={classes.inline} />
+          <PictureState formClassName={classes.inline} />
         )}
 
         <Br />
@@ -90,6 +115,7 @@ const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
           label="resources.picture.fields.time"
           formClassName={classes.inline}
           defaultValue={today}
+          style={{ width: '7em' }}
         />
 
         <Br />
@@ -125,13 +151,9 @@ const PictureFields = ({ edit, classes, mapConfig, location, ...props }) => {
         <SelectInput source="properties.meteo" choices={weatherConditions} />
         <Br />
 
-        <TextInput multiline source="properties.observations" fullWidth />
+        <TextInput multiline source="properties.observations" style={{ width: '40em' }} />
 
-        <Br />
-
-        <ImageInput source="file" accept="image/*">
-          <ImageField source="thumbnail" />
-        </ImageInput>
+        <ClearFloat />
       </FormTab>
 
       <FormTab label="resources.picture.tabs.repeat" path="repeat">
@@ -177,4 +199,4 @@ PictureFields.defaultProps = {
   edit: false,
 };
 
-export default compose(withMapConfig, withStyles(styles))(PictureFields);
+export default compose(withMapConfig)(PictureFields);

@@ -20,15 +20,10 @@ const useStyles = makeStyles({
     width: '1024px',
     backgroundColor: 'white',
     padding: '1em',
-  },
-  modalButtons: {
-    marginTop: '1em',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  fieldSelect: {
-    display: 'flex',
-    justifyContent: 'center',
+    '& .actions': {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
   },
 });
 
@@ -100,23 +95,25 @@ const AddViewpoint = ({ ids = [], onAdd }) => {
             setSelected={setSelected}
           />
 
-          <Button
-            variant="outlined"
-            color="secondary"
-            startIcon={<CancelIcon />}
-            onClick={() => setShowModal(false)}
-          >
-            {translate('ra.action.cancel')}
-          </Button>
+          <div className="actions">
+            <Button
+              variant="outlined"
+              color="secondary"
+              startIcon={<CancelIcon />}
+              onClick={() => setShowModal(false)}
+            >
+              {translate('ra.action.cancel')}
+            </Button>
 
-          <Button
-            variant="outlined"
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={() => handleAdd(selected)}
-          >
-            {translate('ra.action.add')}
-          </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={() => handleAdd(selected)}
+            >
+              {translate('ra.action.add')}
+            </Button>
+          </div>
         </div>
       </Modal>
     </>

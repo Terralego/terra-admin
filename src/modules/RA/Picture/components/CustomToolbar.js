@@ -116,7 +116,6 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
           redirect={redirect || 'list'}
           undoable={null}
           translateOptions={{
-            name: resource,
             id: record.identifier,
           }}
         />

@@ -26,24 +26,24 @@ const useStyles = makeStyles({
   },
 });
 
-const StatsBar = ({ record: { statistics = {} } }) => {
+const StatsBar = ({ record: { state, statistics = {} } }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
   return (
     <div className={classes.bar}>
       <span>
-        <em>{statistics.total}</em> {translate('resources.campaign.fields.viewpoints')}
+        <em>{statistics.total ?? '-' }</em> {translate('resources.campaign.fields.viewpoints')}
       </span>
       <span>
-        <em>{statistics.submited}</em> {translate('resources.campaign.fields.statistics.submited')}
+        <em>{statistics.submited ?? '-'}</em> {translate('resources.campaign.fields.statistics.submited')}
       </span>
       <span>
-        <em>{statistics.accepted}</em> {translate('resources.campaign.fields.statistics.accepted')}
+        <em>{statistics.accepted ?? '-'}</em> {translate('resources.campaign.fields.statistics.accepted')}
       </span>
       <span>
         {translate('resources.campaign.fields.statistics.progress')}{' '}
-        <em>{Math.round((statistics.accepted / statistics.total) * 100)}%</em>
+        <em>{['started', 'closed'].includes(state) ? Math.round((statistics.accepted / statistics.total) * 100) : 0}%</em>
       </span>
     </div>
   );

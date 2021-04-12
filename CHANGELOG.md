@@ -1,4 +1,20 @@
 
+3.3.0 / 2021-04-12
+==================
+
+  * Create DeleteWithConfirmButton to display identifier
+  * Enhance viewpoint modal
+  * Add stats bar for campaign
+  * Better image picture field
+  * Default date today for input
+  * Add photo link
+  * Add validate required to city input
+  * Manage isHTML render in array string type
+  * Make isHTML function exportable
+  * Manage mandatory fields for none group layers
+  * Fix conditional display of secondaries geometries
+  * Delete picture button only accessible by user with perms
+
 3.2.2 / 2021-03-31
 ==================
 

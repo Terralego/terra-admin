@@ -74,7 +74,8 @@ const PictureFields = ({ edit, mapConfig, location, ...props }) => {
   const { hasPermission } = useUserSettings();
   const classes = useStyles();
 
-  const today = Date.now();
+  const today = new Date();
+  const noTimeDate = `${today.getFullYear()}-${((`${today.getMonth() + 1}`).padStart(2, '0'))}-${today.getDate()}`;
   const { record: { state } } = props;
 
   return (
@@ -109,7 +110,7 @@ const PictureFields = ({ edit, mapConfig, location, ...props }) => {
 
         <Br />
 
-        <DateInput source="date" formClassName={classes.inline} defaultValue={today} />
+        <DateInput source="date" formClassName={classes.inline} defaultValue={noTimeDate} />
         <TimeInput
           source="date"
           label="resources.picture.fields.time"

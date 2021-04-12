@@ -76,7 +76,6 @@ const sanitizeRestProps = ({ staticContext, ...rest }) => rest;
  */
 const CustomToolbar = ({ basePath, redirect, ...props }) => {
   const {
-    resource,
     record,
   } = props;
   const classes = useStyles();

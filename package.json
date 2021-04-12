@@ -9,7 +9,7 @@
     "@mapbox/geojson-extent": "^0.3.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@rjsf/core": "^2.4.1",
-    "@terralego/core": "^1.26.5",
+    "@terralego/core": "^1.27.1",
     "@tmcw/togeojson": "^4.2.0",
     "@uppy/core": "^1.10.4",
     "@uppy/locales": "^1.13.3",

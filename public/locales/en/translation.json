@@ -905,30 +905,30 @@
         "pictures": "Pictures"
       }
     },
-    "campaign": {
-      "fields": {
-        "start_date": "Date",
-        "label": "Name",
+    "campaign":{
+      "fields":{
+        "start_date": "Date", 
+        "label": "Name", 
         "state": "Status",
-        "assignee": "Photographer",
+        "assignee": "Photographer", 
         "viewpoints": "Viewpoint",
-        "statistics": {
+        "statistics":{
           "total": "Viewpoint count",
           "submited": "Pictures to validate",
           "accepted": "Accepted pictures",
           "progress": "Progress"
         }
       },
-      "actions": {
+      "actions":{
         "add_picture": "Add a picture",
         "show_picture": "Show picture",
         "add_viewpoint": "Add viewpoint",
         "remove_viewpoint": "Remove viewpoint"
       },
-      "tabs": {
+      "tabs":{
         "metadata": "Information"
       },
-      "states": {
+      "states":{
         "started": "Started",
         "closed": "Closed",
         "draft": "Draft"
@@ -959,7 +959,7 @@
         "time": "Hour",
         "no_picture": "No picture"
       },
-      "states": {
+      "states":{
         "accepted": "Accepted",
         "refused": "Reused",
         "submited": "Submited",
@@ -969,7 +969,7 @@
         "metadata": "Meta data",
         "repeat": "Rephotography"
       },
-      "name": "Picture"
+      "name": "Photographie"
     },
     "user": {
       "fields": {

@@ -93,7 +93,6 @@ export const resources = [
     name: RES_CAMPAIGN,
     moduleName: 'OPP',
     endpoint: 'campaigns',
-    beta: true, // Beta for now
     ...campaignViews,
   },
   {

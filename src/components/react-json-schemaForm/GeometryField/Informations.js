@@ -32,8 +32,8 @@ const Information = ({
 
   const { coordinates = schemaCoordinates, type = schemaType } = geom || {};
 
-  const hasDraws = Boolean(coordinates.length);
-  const action = !hasDraws ? 'create' : 'edit';
+  const hasDraw = Boolean(coordinates.length);
+  const action = !hasDraw ? 'create' : 'edit';
 
   return (
     <>
@@ -41,7 +41,7 @@ const Information = ({
         <span>{t(`jsonSchema.geometryField.information-${action}`, { type })}
           {isRequired && <span className="required">*</span>}
         </span>
-        <span><ResetGeometry disabled={!hasDraws} intent={hasDraws ? 'danger' : ''} /></span>
+        <span><ResetGeometry disabled={!hasDraw} intent={hasDraw ? 'danger' : ''} /></span>
       </p>
       <Message className="geometry-field__message" intent="primary">
         {isRouting

@@ -122,14 +122,14 @@ const ImportGeomFileOverlay = ({
   }, [features, onChange]);
 
   const featuresLength = features?.length;
-  const hasDraws = Boolean(geom?.coordinates.length);
+  const hasDraw = Boolean(geom?.coordinates.length);
 
   return (
     <>
       <Callout className="importGeomFile__info" intent={Intent.PRIMARY}>
         <p>{t('importGeomFile.intro1')}</p>
         <p>{t('importGeomFile.intro2')}</p>
-        {hasDraws && (
+        {hasDraw && (
           <Callout intent={Intent.WARNING}>
             <Trans i18nKey="importGeomFile.intro3">
               You started drawing.

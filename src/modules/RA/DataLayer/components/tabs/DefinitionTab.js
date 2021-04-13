@@ -3,11 +3,11 @@ import React from 'react';
 import {
   TextInput,
   BooleanInput,
-  FormTab,
   SelectInput,
   useTranslate,
   useDataProvider,
   ReferenceInput,
+  FormGroupContextProvider,
 } from 'react-admin';
 
 import { useField, useForm } from 'react-final-form';
@@ -20,6 +20,7 @@ import { RES_DATASOURCE } from '../../../ra-modules';
 import { WMTS } from '../../../DataSource';
 import useSourceData from '../useSourceData';
 
+const Br = () => <br />;
 
 const defaultRequired = required();
 
@@ -41,14 +42,15 @@ const DefinitionTab = ({ onSwitch, external }) => {
   }, [dataProvider, external, fields, form, sourceId]);
 
   return (
-    <FormTab label="datalayer.form.definition" path="general">
-
+    <FormGroupContextProvider name="definition">
       <TextInput
         source="name"
         label="datalayer.form.name"
         validate={defaultRequired}
         type="text"
       />
+
+      <Br />
 
       <ReferenceInput
         source="source"
@@ -60,6 +62,7 @@ const DefinitionTab = ({ onSwitch, external }) => {
       >
         <SelectInput />
       </ReferenceInput>
+
 
       <FormGroup
         helperText={translate('datalayer.form.search.main-field.helpertext')}
@@ -74,13 +77,20 @@ const DefinitionTab = ({ onSwitch, external }) => {
         />
       </FormGroup>
 
-      <BooleanInput source="active_by_default" label="resources.datalayer.fields.active_by_default_pastpart" />
+      <BooleanInput
+        source="active_by_default"
+        label="resources.datalayer.fields.active_by_default_pastpart"
+      />
 
-      <TextInput multiline source="description" label="datalayer.form.description" fullWidth />
+      <TextInput
+        multiline
+        source="description"
+        label="datalayer.form.description"
+        fullWidth
+      />
 
       <FieldUpdater />
-
-    </FormTab>
+    </FormGroupContextProvider>
   );
 };
 

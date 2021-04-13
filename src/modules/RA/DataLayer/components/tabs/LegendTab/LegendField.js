@@ -46,7 +46,7 @@ const LegendItemInput = ({ source }) => {
 const LegendField = ({ source }) => {
   const translate = useTranslate();
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <TextInput
         source={`${source}.title`}
         label="datalayer.form.legend.title"

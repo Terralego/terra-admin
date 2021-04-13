@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
   refuse: {
     color: theme.palette.error.main,
     marginLeft: '1em',
+    backgroundColor: 'transparent',
     '&:hover': {
       backgroundColor: fade(theme.palette.error.main, 0.12),
       // Reset on mouse devices
@@ -96,7 +97,8 @@ const CustomToolbar = ({ basePath, redirect, staticContext, ...props }) => {
             transform={data => ({ ...data, state: 'closed' })}
             label="ra.action.close"
             icon={<IconBlock />}
-            className={`${classes.refuse}`}
+            variant=""
+            className={classes.refuse}
           />
         )}
         <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />

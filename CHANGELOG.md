@@ -1,4 +1,14 @@
 
+3.3.1 / 2021-04-13
+==================
+
+  * Enhance viewpointgrid style
+  * Enhance campaign grids style
+  * Fix stats bar on creation
+  * Fix default date
+  * Remove resource as props in CustomToolbar
+  * Fix translations
+
 3.3.0 / 2021-04-12
 ==================
 

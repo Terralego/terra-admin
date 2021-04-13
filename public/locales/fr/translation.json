@@ -914,6 +914,8 @@
         "state": "État",
         "assignee": "Photographe", 
         "viewpoints": "Point(s) de vue",
+        "sheet_filename_prefix": "pointDeVue",
+        "download_sheet": "Télécharger",
         "statistics":{
           "total": "Nombre de points de vue",
           "submited": "Photo(s) à valider",

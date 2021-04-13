@@ -914,6 +914,8 @@
         "state": "Status",
         "assignee": "Photographer", 
         "viewpoints": "Viewpoint",
+        "sheet_filename_prefix": "viewpoint",
+        "download_sheet": "Download",
         "statistics":{
           "total": "Viewpoint count",
           "submited": "Pictures to validate",

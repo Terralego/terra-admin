@@ -27,7 +27,10 @@ const inErrorReducer = (state, { type, payload }) => {
   if (state[type] === Boolean(payload)) {
     return state;
   }
-  return { ...state, [type]: Boolean(payload) };
+  // Avoid recursive rendering due to React-admin logic
+  // eslint-disable-next-line no-param-reassign
+  state[type] = Boolean(payload);
+  return state;
 };
 
 const DataLayerForm = React.memo(props => {

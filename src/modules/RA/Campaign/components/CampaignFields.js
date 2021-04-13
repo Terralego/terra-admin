@@ -44,6 +44,8 @@ const CampaignFields = ({ edit, location, ...props }) => {
   const today = new Date();
   const noTimeDate = `${today.getFullYear()}-${((`${today.getMonth() + 1}`).padStart(2, '0'))}-${today.getDate()}`;
 
+  const isEditable = edit && state  !== 'draft';
+
   return (
     <TabbedForm
       {...props}
@@ -56,14 +58,14 @@ const CampaignFields = ({ edit, location, ...props }) => {
           label="resources.campaign.fields.label"
           formClassName={classes.inline}
           validate={defaultRequired}
-          disabled={edit && state  !== 'draft'}
+          disabled={isEditable}
         />
         <DateInput
           source="start_date"
           label="resources.campaign.fields.start_date"
           formClassName={classes.inline}
           validate={defaultRequired}
-          disabled={edit && state  !== 'draft'}
+          disabled={isEditable}
           defaultValue={noTimeDate}
         />
 
@@ -80,7 +82,7 @@ const CampaignFields = ({ edit, location, ...props }) => {
             source="assignee"
             reference={RES_USER}
             validate={defaultRequired}
-            disabled={edit && state  !== 'draft'}
+            disabled={isEditable}
           >
             <SelectInput optionText={record => UserNameField({ record })} />
           </ReferenceInput>

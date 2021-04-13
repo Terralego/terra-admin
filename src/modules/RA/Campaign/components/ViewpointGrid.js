@@ -177,9 +177,7 @@ const ViewpointGrid = ({ record }) => {
     [onChange, viewpoints],
   );
 
-
   const postRowStyleCallback = React.useCallback(postRowStyle(pictureMap), [pictureMap]);
-
 
   return (
     <>

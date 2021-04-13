@@ -38,7 +38,7 @@ const getSchemaWithDefaultValues = (schema, properties) => {
  *  }
  * @returns an object compatible with jsonSchema specification
  */
-const buildSchema = ({ formSchema, uiSchemaProperties, geomType }) => {
+const buildSchema = ({ formSchema, uiSchemaProperties, geomType, t }) => {
   const {
     schema: geomSchema,
     ui_schema: geomUiSchema,
@@ -48,23 +48,39 @@ const buildSchema = ({ formSchema, uiSchemaProperties, geomType }) => {
   const rootSchema = requiredProperties({ root: { type: 'object', ...formSchema } });
   const groupSchema = requiredProperties(formSchema.properties);
 
+  const properties = {
+    geom: { ...geomSchema, default: value },
+    ...rootSchema.properties,
+    ...groupSchema.properties,
+  };
+
   const { 'ui:order': uiOrder = ['*'] } = uiSchemaProperties;
+
+  const enhanceUISchema = Object.entries(properties).reduce((ui, [key, prop]) => {
+    if (prop.type === 'string' && prop.enum?.length) {
+      // eslint-disable-next-line no-param-reassign
+      ui[key] = {
+        ...uiSchemaProperties[key],
+        'ui:placeholder': uiSchemaProperties[key]?.['ui:placeholder'] ?? t('CRUD.details.placeholderSelect'),
+      };
+    }
+    return ui;
+  }, {});
+
+  const uiSchema = {
+    geom: geomUiSchema,
+    ...uiSchemaProperties,
+    ...enhanceUISchema,
+    'ui:order': [...uiOrder, 'geom'],
+  };
 
   return {
     schema: {
-      properties: {
-        geom: { ...geomSchema, default: value },
-        ...rootSchema.properties,
-        ...groupSchema.properties,
-      },
+      properties,
       required: ['geom', ...rootSchema.required, ...groupSchema.required],
       type: 'object',
     },
-    uiSchema: {
-      geom: geomUiSchema,
-      ...uiSchemaProperties,
-      'ui:order': [...uiOrder, 'geom'],
-    },
+    uiSchema,
   };
 };
 
@@ -95,10 +111,10 @@ const Create = props => {
   }, []);
 
   useEffect(() => {
-    const builder = buildSchema({ formSchema, uiSchemaProperties, geomType });
+    const builder = buildSchema({ formSchema, uiSchemaProperties, geomType, t });
     setSchema(builder.schema);
     setUiSchema(builder.uiSchema);
-  }, [geomType, formSchema, uiSchemaProperties]);
+  }, [geomType, formSchema, uiSchemaProperties, t]);
 
 
   const handleSubmit = useCallback(async ({

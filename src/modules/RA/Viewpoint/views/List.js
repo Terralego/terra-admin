@@ -3,7 +3,7 @@ import { List } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 import GridList from '../../../../components/react-admin/GridList';
-import ListFilters from '../../Filters/ListFilters';
+import ListFilters from './ListFilters';
 
 
 export const ViewpointList = props => (

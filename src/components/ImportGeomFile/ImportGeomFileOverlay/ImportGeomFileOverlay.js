@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button, Callout, FormGroup, InputGroup, Intent } from '@blueprintjs/core';
 import * as toGeojson from '@tmcw/togeojson';
-import { GeometryFieldContext } from '../../react-json-schemaForm/GeometryField/GeometryFieldProvider';
+import { useGeometryField } from '../../react-json-schemaForm/GeometryField/GeometryFieldProvider';
 
 import {
   ALL,
@@ -78,7 +78,7 @@ const ImportGeomFileOverlay = ({
       geomType,
       geom,
     },
-  } = useContext(GeometryFieldContext);
+  } = useGeometryField();
 
   const [geojson, setGeojson] = useState({});
   const [fileName, setFileName] = useState(null);

@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button, Classes, H5, Popover, PopoverInteractionKind } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
-import { GeometryFieldContext } from './GeometryFieldProvider';
+import { useGeometryField } from './GeometryFieldProvider';
 
 const ResetGeometry = props => {
-  const { resetFeatureCollection } = useContext(GeometryFieldContext);
+  const { resetFeatureCollection } = useGeometryField();
   const { t } = useTranslation();
 
   const onReset = () => {

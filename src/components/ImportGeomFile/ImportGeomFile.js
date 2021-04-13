@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Classes, H5, Intent, Overlay } from '@blueprintjs/core';
 import ImportGeomFileOverlay from './ImportGeomFileOverlay';
-import { GeometryFieldContext } from '../react-json-schemaForm/GeometryField/GeometryFieldProvider';
+import { useGeometryField } from '../react-json-schemaForm/GeometryField/GeometryFieldProvider';
 import './styles.scss';
 
 
@@ -15,7 +15,7 @@ const ImportGeomFile = props => {
 
   const {
     setFeaturesToFitBounds,
-  } = useContext(GeometryFieldContext);
+  } = useGeometryField();
 
   const handleSubmit = useCallback(() => {
     setFeaturesToFitBounds(features);

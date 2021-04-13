@@ -7,6 +7,7 @@ import { getCoordinatesFromGeometries, getGeometries } from './utils';
 
 
 export const GeometryFieldContext = createContext({});
+export const useGeometryField = () => useContext(GeometryFieldContext);
 
 function reducer (state, action) {
   return { ...state, ...action };

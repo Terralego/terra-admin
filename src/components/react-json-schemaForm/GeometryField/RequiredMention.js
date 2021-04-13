@@ -1,12 +1,12 @@
-import React, { useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GeometryFieldContext } from './GeometryFieldProvider';
+import { useGeometryField } from './GeometryFieldProvider';
 
 const RequiredMention = () => {
   const { t } = useTranslation();
   const {
     isRequiredInEditView,
-  } = useContext(GeometryFieldContext);
+  } = useGeometryField();
 
   if (!isRequiredInEditView) {
     return null;

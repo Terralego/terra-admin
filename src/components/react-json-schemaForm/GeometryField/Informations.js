@@ -1,9 +1,9 @@
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Message from '../../Message';
 import ResetGeometry from './ResetGeometry';
-import { GeometryFieldContext } from './GeometryFieldProvider';
+import { useGeometryField } from './GeometryFieldProvider';
 
 const getIconFromType = type => {
   if (type.includes('Point')) {
@@ -25,7 +25,7 @@ const Information = ({
     isRequired,
     isRouting,
     nextFormData: { geom } = {},
-  } = useContext(GeometryFieldContext);
+  } = useGeometryField();
 
 
   const { t } = useTranslation();

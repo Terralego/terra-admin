@@ -374,7 +374,11 @@
       "information-edit": "Modifier $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
       "helper": "Saisissez vos coordonnées en utilisant l'outil {{type}} <1></1> sur la carte",
       "helper-routing": "Tracez un itinéraire en cliquant directement sur la carte. Vous avez la possibilité de suivre automatiquement les voies en cochant la case correspondante et en sélectionnant un mode de suivi.",
-      "or": "ou"
+      "or": "ou",
+      "reset": {
+        "label": "Effacer le tracé",
+        "confirmation": "Êtes-vous sûr de vouloir effacer le tracé ?"
+      }
     },
     "panelError": {
       "title": "Votre saisie comporte des erreurs"

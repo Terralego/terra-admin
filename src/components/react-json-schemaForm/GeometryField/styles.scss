@@ -35,6 +35,12 @@
     }
     .control-label {
       font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > * {
+        margin: 0 0.2rem;
+      }
     }
   }
   .mapbox-gl-draw_ctrl-draw-btn {

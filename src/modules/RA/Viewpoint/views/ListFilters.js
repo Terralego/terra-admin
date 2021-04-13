@@ -1,8 +1,8 @@
 import React from 'react';
 import { Filter, SelectArrayInput, SelectInput, TextInput } from 'react-admin';
 
-import { fetchFilterOptions } from '../ra-modules';
-import { connectAppProvider } from '../../../components/AppProvider';
+import { fetchFilterOptions } from '../../ra-modules';
+import { connectAppProvider } from '../../../../components/AppProvider';
 
 
 /*

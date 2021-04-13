@@ -12,7 +12,7 @@ import {
   GEOMETRY_COLLECTION,
 } from '../../../utils/geom';
 
-export const get2DCoordinates = obj => ({
+export const get2DCoordinates = obj => obj && ({
   ...obj,
   points: obj.points.map(item => item?.slice(0, 2)),
 });

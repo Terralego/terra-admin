@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useContext, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button, Callout, FormGroup, InputGroup, Intent } from '@blueprintjs/core';
 import * as toGeojson from '@tmcw/togeojson';
+import { GeometryFieldContext } from '../../react-json-schemaForm/GeometryField/GeometryFieldProvider';
 
 import {
   ALL,
@@ -70,10 +71,15 @@ const getFeatures = (geom, geomType, t) => {
 
 const ImportGeomFileOverlay = ({
   acceptedExtensions: extensions,
-  geomType,
-  hasDraws,
   onChange,
 }) => {
+  const {
+    geomValues: {
+      geomType,
+      geom,
+    },
+  } = useContext(GeometryFieldContext);
+
   const [geojson, setGeojson] = useState({});
   const [fileName, setFileName] = useState(null);
 
@@ -107,15 +113,16 @@ const ImportGeomFileOverlay = ({
 
   const accept = acceptedExtensions.map(ext => `.${ext}`.toUpperCase()).join(',');
 
-  const { error, geom } = geojson;
-
-  const { features, warnings } = useMemo(() => getFeatures(geom, geomType, t), [geom, geomType, t]);
+  const { features, warnings } = useMemo(() => (
+    getFeatures(geojson.geom, geomType, t)
+  ), [geojson.geom, geomType, t]);
 
   useEffect(() => {
     onChange(features);
   }, [features, onChange]);
 
   const featuresLength = features?.length;
+  const hasDraws = Boolean(geom?.coordinates.length);
 
   return (
     <>
@@ -137,7 +144,7 @@ const ImportGeomFileOverlay = ({
         labelFor="import-geomFile"
         helperText={t('importGeomFile.accept', { accept })}
       >
-        {error && (
+        {geojson.error && (
           <Callout className="importGeomFile__canDelete importGeomFile__warning" intent={Intent.DANGER}>
             <p>
               <Trans i18nKey="importGeomFile.unableToImport">
@@ -163,7 +170,7 @@ const ImportGeomFileOverlay = ({
             <Button minimal icon="cross" onClick={handleReset} />
           </Callout>
         )}
-        {!error && !features && (
+        {!geojson.error && !features && (
           <InputGroup
             accept={accept}
             id="import-geomFile"
@@ -179,15 +186,11 @@ const ImportGeomFileOverlay = ({
 
 ImportGeomFileOverlay.propTypes = {
   acceptedExtensions: PropTypes.arrayOf(PropTypes.string),
-  hasDraws: PropTypes.bool,
-  geomType: PropTypes.number,
   onChange: PropTypes.func,
 };
 
 ImportGeomFileOverlay.defaultProps = {
   acceptedExtensions: ['gpx'],
-  hasDraws: false,
-  geomType: undefined,
   onChange () {},
 };
 

@@ -137,7 +137,7 @@ export const getGeometries = ({
   }
 
   const currentFeature = feature[params.id];
-  if (!currentFeature) {
+  if (!currentFeature || !name) {
     return {};
   }
 

@@ -12,7 +12,7 @@ import { getLayers } from '../../../modules/CRUD/services/CRUD';
 
 import { CRUDContext } from '../../../modules/CRUD/services/CRUDProvider';
 import { MapContext } from '../../../modules/CRUD/services/MapProvider';
-import { GeometryFieldContext } from './GeometryFieldProvider';
+import { useGeometryField } from './GeometryFieldProvider';
 
 import {
   ALL,
@@ -33,7 +33,7 @@ const MapInteraction = () => {
   const {
     geomValues,
     setNextFormData: setFormData,
-  } = useContext(GeometryFieldContext);
+  } = useGeometryField();
 
   const { settings } = useContext(CRUDContext);
   const isRouting = geomValues.routingSettings?.length && geomValues.isMainLayer;

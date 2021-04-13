@@ -1,22 +1,26 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Classes, H5, Intent, Overlay } from '@blueprintjs/core';
 import ImportGeomFileOverlay from './ImportGeomFileOverlay';
+import { GeometryFieldContext } from '../react-json-schemaForm/GeometryField/GeometryFieldProvider';
 import './styles.scss';
 
 
-const ImportGeomFile = ({ onSubmit, ...props }) => {
+const ImportGeomFile = props => {
   const [open, setOpen] = useState(false);
   const [features, setFeatures] = useState(null);
   const toggleOverlay = () => {
     setOpen(prevOpen => !prevOpen);
   };
 
+  const {
+    setFeaturesToFitBounds,
+  } = useContext(GeometryFieldContext);
+
   const handleSubmit = useCallback(() => {
-    onSubmit(features);
+    setFeaturesToFitBounds(features);
     setOpen(false);
-  }, [features, onSubmit]);
+  }, [features, setFeaturesToFitBounds]);
 
   const { t } = useTranslation();
   const acceptedExtensions = ['gpx', 'kml'];
@@ -57,15 +61,6 @@ const ImportGeomFile = ({ onSubmit, ...props }) => {
       </Overlay>
     </div>
   );
-};
-
-
-ImportGeomFile.propTypes = {
-  onSubmit: PropTypes.func,
-};
-
-ImportGeomFile.defaultProps = {
-  onSubmit () {},
 };
 
 export default ImportGeomFile;

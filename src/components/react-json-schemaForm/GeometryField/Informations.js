@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Message from '../../Message';
+import { GeometryFieldContext } from './GeometryFieldProvider';
 
 const getIconFromType = type => {
   if (type.includes('Point')) {
@@ -13,26 +14,33 @@ const getIconFromType = type => {
   return 'polygon';
 };
 
-const Information = props => {
+const Information = ({
+  schema: { default: {
+    coordinates: schemaCoordinates,
+    type: schemaType,
+  } },
+}) => {
   const {
-    formData: { geom } = {},
     isRequired,
     isRouting,
-    schema: { default: {
-      coordinates: schemaCoordinates,
-      type: schemaType,
-    } },
-  } = props;
+    nextFormData: { geom } = {},
+  } = useContext(GeometryFieldContext);
+
 
   const { t } = useTranslation();
 
   const { coordinates = schemaCoordinates, type = schemaType } = geom || {};
 
-  const action = !coordinates.length ? 'create' : 'edit';
+  const hasDraws = Boolean(coordinates.length);
+  const action = !hasDraws ? 'create' : 'edit';
 
   return (
     <>
-      <p className="control-label">{t(`jsonSchema.geometryField.information-${action}`, { type })}{isRequired && <span className="required">*</span>}</p>
+      <p className="control-label">
+        <span>{t(`jsonSchema.geometryField.information-${action}`, { type })}
+          {isRequired && <span className="required">*</span>}
+        </span>
+      </p>
       <Message className="geometry-field__message" intent="primary">
         {isRouting
           ? t('jsonSchema.geometryField.helper-routing')
@@ -47,7 +55,6 @@ const Information = props => {
 };
 
 Information.propTypes = {
-  formData: PropTypes.shape({}),
   schema: PropTypes.shape({
     default: PropTypes.shape({
       coordinates: PropTypes.array,
@@ -57,9 +64,6 @@ Information.propTypes = {
 };
 
 Information.defaultProps = {
-  formData: {
-    coordinates: [],
-  },
   schema: {
     default: {
       coordinates: [],

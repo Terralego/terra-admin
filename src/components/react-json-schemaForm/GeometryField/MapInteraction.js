@@ -6,13 +6,13 @@ import {
   CONTROL_PATH,
   CONTROLS_TOP_LEFT,
 } from '@terralego/core/modules/Map';
-import PropTypes from 'prop-types';
 import { getCoordinatesFromGeometries, getDirectionsThemes, getLayerId } from './utils';
 
 import { getLayers } from '../../../modules/CRUD/services/CRUD';
 
 import { CRUDContext } from '../../../modules/CRUD/services/CRUDProvider';
 import { MapContext } from '../../../modules/CRUD/services/MapProvider';
+import { GeometryFieldContext } from './GeometryFieldProvider';
 
 import {
   ALL,
@@ -27,13 +27,13 @@ import {
 
 import './styles.scss';
 
-const MapInteraction = ({
-  geomValues,
-  featuresToFitBounds,
-  setFeaturesToFitBounds,
-  setFormData,
-}) => {
+const MapInteraction = () => {
   const { t } = useTranslation();
+
+  const {
+    geomValues,
+    setNextFormData: setFormData,
+  } = useContext(GeometryFieldContext);
 
   const { settings } = useContext(CRUDContext);
   const isRouting = geomValues.routingSettings?.length && geomValues.isMainLayer;
@@ -42,7 +42,6 @@ const MapInteraction = ({
     addControl,
     map,
     removeControl,
-    setFitBounds,
   } = useContext(MapContext);
 
   const layers = useMemo(() => getLayers(settings), [settings]);
@@ -218,34 +217,6 @@ const MapInteraction = ({
     };
   }, [addControl, geomValues, getRoutingConfiguration, isRouting, layers, map, resetStyle]);
 
-  useEffect(() => {
-    if (!featuresToFitBounds || !map) {
-      return;
-    }
-    if (map.draw) {
-      map.draw.deleteAll();
-      featuresToFitBounds.forEach(feat => {
-        map.draw.add(feat);
-      });
-    }
-    if (map.pathControl) {
-      map.pathControl.setFeatureCollection({ features: featuresToFitBounds });
-    }
-    setFitBounds({
-      coordinates: featuresToFitBounds.flatMap(({ geometry: { coordinates } }) =>
-        (Array.isArray(coordinates[0]) ? coordinates : [coordinates])),
-      hasDetails: true,
-    });
-    const { geometry, properties } = map.pathControl.getLineString();
-    const coordinates = getCoordinatesFromGeometries(featuresToFitBounds);
-    if (coordinates) {
-      setFormData({
-        geom: geometry,
-        routingInformation: properties,
-      });
-    }
-    setFeaturesToFitBounds(null);
-  }, [featuresToFitBounds, map, setFeaturesToFitBounds, setFitBounds, setFormData]);
 
   useEffect(
     () => () => {
@@ -260,22 +231,6 @@ const MapInteraction = ({
   );
 
   return null;
-};
-
-MapInteraction.propTypes = {
-  formData: PropTypes.shape({
-    coordinates: PropTypes.array,
-    type: PropTypes.string,
-  }),
-  name: PropTypes.string,
-};
-
-MapInteraction.defaultProps = {
-  formData: {
-    coordinates: [],
-    type: '',
-  },
-  name: undefined,
 };
 
 export default memo(MapInteraction);

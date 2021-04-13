@@ -1,12 +1,8 @@
 import React from 'react';
 
-import {
-  TextField,
-  Datagrid,
-  useGetMany,
-  CreateButton,
-  ShowButton,
-} from 'react-admin';
+import { TextField, Datagrid, useGetMany, CreateButton, ShowButton, useTranslate } from 'react-admin';
+
+import Api from '@terralego/core/modules/Api';
 
 import { useHistory } from 'react-router';
 import { useField } from 'react-final-form';
@@ -19,7 +15,6 @@ import useUserSettings from '../../../../hooks/useUserSettings';
 
 import AddViewpoint from './AddViewpoint';
 import CampaignPictureState from './CampaignPictureState';
-
 
 const toggleSortOrder = prev => (prev === 'DESC' ? 'ASC' : 'DESC');
 
@@ -71,13 +66,24 @@ const PictureAction = ({ record: viewpoint, campaign, pictureMap }) => {
   return null;
 };
 
-const ViewpointSheet = () => <span>Télécharger la fiche</span>;
+const ViewpointSheet = ({ record: viewpoint }) => {
+  const translate = useTranslate();
+  return (
+    <a href={`${Api.host}/viewpoints/${viewpoint.id}/pdf/`} download={`${translate('resources.campaign.fields.sheet_filename_prefix')}_${viewpoint.id}.pdf`}>
+      {translate('resources.campaign.fields.download_sheet')}
+    </a>
+  );
+};
 
 const RemoveViewpoint = ({ record: viewpoint, onRemove, pictureMap }) => {
   if (pictureMap[viewpoint.id]) {
     return null;
   }
-  return <IconButton color="secondary" variant="contained" onClick={() => onRemove(viewpoint.id)}><DeleteIcon /></IconButton>;
+  return (
+    <IconButton color="secondary" variant="contained" onClick={() => onRemove(viewpoint.id)}>
+      <DeleteIcon />
+    </IconButton>
+  );
 };
 
 const postRowStyle = pictureMap => ({ id }) => {
@@ -117,19 +123,15 @@ const ViewpointGrid = ({ record }) => {
     input: { value: state },
   } = useField('state');
 
-  const pictureMap = React.useMemo(
-    () => {
-      if (!record.pictures) {
-        return [];
-      }
-      return record.pictures.reduce((acc, pic) => {
-        acc[pic.viewpoint] = pic;
-        return acc;
-      }, {});
-    },
-
-    [record.pictures],
-  );
+  const pictureMap = React.useMemo(() => {
+    if (!record.pictures) {
+      return [];
+    }
+    return record.pictures.reduce((acc, pic) => {
+      acc[pic.viewpoint] = pic;
+      return acc;
+    }, {});
+  }, [record.pictures]);
 
   const { data, total, loaded } = useGetMany('viewpoint', viewpoints);
   const [currentSort, setCurrentSort] = React.useState({ field: 'id', order: 'DESC' });
@@ -201,7 +203,10 @@ const ViewpointGrid = ({ record }) => {
         <TextField source="id" label="resources.viewpoint.fields.id" />
         <TextField source="label" label="resources.viewpoint.fields.label" />
         <ViewpointSheet label="resources.viewpoint.fields.replay_sheet" />
-        <CampaignPictureState label="resources.viewpoint.fields.picture_state" pictureMap={pictureMap} />
+        <CampaignPictureState
+          label="resources.viewpoint.fields.picture_state"
+          pictureMap={pictureMap}
+        />
         <PictureAction campaign={record} pictureMap={pictureMap} />
         <RemoveViewpoint onRemove={handleRemove} pictureMap={pictureMap} />
       </Datagrid>

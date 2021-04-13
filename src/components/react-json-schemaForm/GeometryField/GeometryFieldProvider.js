@@ -88,6 +88,24 @@ export const GeometryFieldProvider = ({ children, formData, onChange, name, sche
     }
   }, [map, setFitBounds]);
 
+  const resetFeatureCollection = useCallback(() => {
+    if (!map) {
+      return;
+    }
+    if (map.pathControl) {
+      map.pathControl.clearFeatureCollection();
+    } else if (map.draw) {
+      map.draw.deleteAll();
+    }
+
+    setNextFormData({
+      geom: {
+        ...nextFormData.geometry,
+        coordinates: [],
+      },
+      routingInformation: undefined,
+    });
+  }, [map, nextFormData.geometry]);
 
   const isRequired = schema.required?.includes('coordinates');
   const isRequiredInEditView = isRequired && params.id !== ACTION_CREATE;
@@ -102,6 +120,7 @@ export const GeometryFieldProvider = ({ children, formData, onChange, name, sche
     isRequiredInEditView,
     isRouting,
     nextFormData,
+    resetFeatureCollection,
     setFeaturesToFitBounds,
     setNextFormData,
   };

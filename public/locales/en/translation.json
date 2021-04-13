@@ -374,7 +374,11 @@
       "information-edit": "Edit $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
       "helper": "Enter coordinates by using the tool <1></1> on map",
       "helper-routing": "Draw a route by clicking directly on the map. You can automatically follow the paths by checking the corresponding box and selecting a follow mode",
-      "or": "or"
+      "or": "or",
+      "reset": {
+        "label": "Reset draw",
+        "confirmation": "Are you sure to reset the draw ?"
+      }
     },
     "panelError": {
       "title": "Your input contains errors"

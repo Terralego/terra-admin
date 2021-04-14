@@ -70,7 +70,9 @@
     "postbuild": "echo $npm_package_version > build/build.txt && git describe --tags >> build/build.txt && date -R >> build/build.txt",
     "test": "react-scripts test",
     "version": "git changelog -n -t $npm_package_version && git add CHANGELOG.md",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "browserslist": [
     ">0.2%",
@@ -83,6 +85,7 @@
     "@typescript-eslint/parser": "~2.30.0",
     "@welldone-software/why-did-you-render": "^4.3.2",
     "babel-eslint": "~10.1.0",
+    "cypress": "^7.1.0",
     "enzyme": "~3.11.0",
     "enzyme-adapter-react-16": "^1.15.4",
     "eslint": "~6.8.0",

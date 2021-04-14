@@ -1,4 +1,25 @@
 
+3.3.2 / 2021-04-14
+==================
+
+  * Add sheet link
+  * Fix datalayer form after RA upgrade
+  * Avoid recursive render bug
+  * Remove beta for campaigns
+  * Fix close button style
+  * Use useGeometryField hook instead of explicit useContext hook
+  * Fix typo `hasDraw`
+  * Add reset geometry feature
+  * Refactor GeometryField by using context provider
+  * Put a default placeholder for json schema string enum
+  * Add 'Mapbox or style URL' in translation
+  * Refacto GeometryField UI
+  * Make one GeometryField UI for all geomtype
+  * Invert order of fields in feature create view
+  * Save always routingInformation coordinates in 2D format
+  * Update routingInformation after the geometry import validation
+  * Upgrade @terralego/core package to 1.27.1
+
 3.3.1 / 2021-04-13
 ==================
 

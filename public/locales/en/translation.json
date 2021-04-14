@@ -962,7 +962,7 @@
         "file.thumbnail": "Picture",
         "time": "Hour",
         "no_picture": "No picture",
-        "identifier": "Identifiant"
+        "identifier": "Identifier"
       },
       "states":{
         "accepted": "Accepted",

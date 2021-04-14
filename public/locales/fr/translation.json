@@ -961,7 +961,8 @@
         "file": "Photographie",
         "file.thumbnail": "Photographie",
         "time": "Heure",
-        "no_picture": "Pas de photographie"
+        "no_picture": "Pas de photographie",
+        "identifier": "Identifiant"
       },
       "states":{
         "accepted": "Acceptée",

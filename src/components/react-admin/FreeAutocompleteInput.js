@@ -17,13 +17,16 @@ const FreeAutocompleteInput = ({ choices = [], label, ...rest }) => {
     meta: { touched, error },
   } = useInput(rest);
 
+  const lowercasedChoices = choices.map(choice =>
+    choice[0].toUpperCase() + choice.substring(1).toLowerCase());
+    
   return (
     <div {...sanitizeRestProps(rest)}>
       <Autocomplete
         freeSolo
         value={value}
         onChange={(e, val) => onChange(val)}
-        options={choices}
+        options={lowercasedChoices}
         onBlur={onChange}
 
         renderInput={params => (

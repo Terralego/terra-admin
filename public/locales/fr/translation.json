@@ -916,6 +916,7 @@
         "assignee": "Photographe", 
         "viewpoints": "Point(s) de vue",
         "sheet_filename_prefix": "pointDeVue",
+        "all_sheets_filename_prefix": "Campagne",
         "download_sheet": "Télécharger",
         "statistics":{
           "total": "Nombre de points de vue",
@@ -928,7 +929,8 @@
         "add_picture": "Ajouter une photo",
         "show_picture": "Voir la photo",
         "add_viewpoint": "Ajouter un point de vue",
-        "remove_viewpoint": "Supprimer un point de vue"
+        "remove_viewpoint": "Supprimer un point de vue",
+        "download_all_sheets": "Toutes les fiches"
       },
       "tabs":{
         "metadata": "Informations"

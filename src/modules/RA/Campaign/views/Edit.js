@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Edit } from 'react-admin';
 import { withRouter } from 'react-router';
 
+import CampaignActions from './CampaignActions';
 import CampaignFields from '../components/CampaignFields';
-import DefaultActions from '../../../../components/react-admin/DefaultActions';
 import PreventPartialData from '../../../../components/react-admin/PreventPartialData';
-
 
 const EditCampaignFields = PreventPartialData('viewpoints', CampaignFields);
 
@@ -17,7 +16,7 @@ export const CampaignEdit = ({ staticContext, ...props }) => {
     <Edit
       {...props}
       undoable={false}
-      actions={<DefaultActions redirect={redirect} />}
+      actions={<CampaignActions redirect={redirect} />}
     >
       <EditCampaignFields edit redirect={redirect} />
     </Edit>

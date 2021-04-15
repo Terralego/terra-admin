@@ -872,6 +872,7 @@
         "address": "Adresse",
         "id": "Numéro du point de vue",
         "picture_state": "État de la photo",
+        "last_accepted_picture_date": "Date de dernière photo",
         "replay_sheet": "Fiche de rephotographie",
         "properties.voie": "Voie",
         "properties.commune": "Commune",

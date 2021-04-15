@@ -14,9 +14,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import FilterListIcon from '@material-ui/icons/FilterList';
 
 function descendingComparator (a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -116,15 +113,12 @@ const useToolbarStyles = makeStyles(theme => ({
   },
 }));
 
-const EnhancedTableToolbar = props => {
+const EnhancedTableToolbar = ({ numSelected, title = '' }) => {
   const translate = useTranslate();
   const classes = useToolbarStyles();
-  const { numSelected, title = '' } = props;
 
   return (
-    <Toolbar
-      className={numSelected > 0 ? classes.highlight : ''}
-    >
+    <Toolbar className={numSelected > 0 ? classes.highlight : ''}>
       {numSelected > 0 ? (
         <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
           {translate('table.selectedCount', { count: numSelected })}
@@ -133,14 +127,6 @@ const EnhancedTableToolbar = props => {
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
           {title}
         </Typography>
-      )}
-
-      {numSelected === 0 && (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
       )}
     </Toolbar>
   );
@@ -182,6 +168,7 @@ export default function EnhancedTable ({
   defaultRowsPerPage = 10,
   selected,
   setSelected,
+  title,
 }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
@@ -240,7 +227,7 @@ export default function EnhancedTable ({
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} title={title} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -280,7 +267,9 @@ export default function EnhancedTable ({
                         />
                       </TableCell>
                       {headCells.map(cell => (
-                        <TableCell align="left" key={cell.id}>{row[cell.id]}</TableCell>
+                        <TableCell align="left" key={cell.id}>
+                          {cell.renderer ? cell.renderer(row[cell.id]) : row[cell.id]}
+                        </TableCell>
                       ))}
                     </TableRow>
                   );

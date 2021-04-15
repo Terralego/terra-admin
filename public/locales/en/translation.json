@@ -916,6 +916,7 @@
         "assignee": "Photographer", 
         "viewpoints": "Viewpoint",
         "sheet_filename_prefix": "viewpoint",
+        "all_sheets_filename_prefix": "campaign",
         "download_sheet": "Download",
         "statistics":{
           "total": "Viewpoint count",
@@ -928,7 +929,8 @@
         "add_picture": "Add a picture",
         "show_picture": "Show picture",
         "add_viewpoint": "Add viewpoint",
-        "remove_viewpoint": "Remove viewpoint"
+        "remove_viewpoint": "Remove viewpoint",
+        "download_all_sheets": "All sheets"
       },
       "tabs":{
         "metadata": "Information"

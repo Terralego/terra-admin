@@ -2,14 +2,18 @@ import React, { useState, useCallback } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
+import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-import { useTranslate, useDataProvider } from 'react-admin';
+import { useTranslate } from 'react-admin';
+
 import { makeStyles } from '@material-ui/core/styles';
 
+import { remove } from 'diacritics';
 import SuperTable from './SuperTable';
 import { RES_VIEWPOINT } from '../../ra-modules';
+import { useGetListAllPages } from '../../../../utils/react-admin/hooks';
 
 const useStyles = makeStyles({
   modal: {
@@ -19,31 +23,31 @@ const useStyles = makeStyles({
     position: 'absolute',
     width: '1024px',
     backgroundColor: 'white',
-    padding: '1em',
+    padding: '2em',
     '& .actions': {
+      paddingBottom: '2em',
       display: 'flex',
       justifyContent: 'space-between',
     },
   },
 });
 
-const AddViewpoint = ({ ids = [], onAdd }) => {
-  const classes = useStyles();
+const normalizeText = text => (text ? remove(text.toLowerCase()) : '');
+
+const ViewpointModal = ({ show, setShow, onAdd, ids }) => {
   const translate = useTranslate();
-  const [showModal, setShowModal] = useState(false);
+  const classes = useStyles();
 
-  const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = useState([]);
+  const [search, setSearch] = useState('');
 
-  const dataProvider = useDataProvider();
-  const [viewpointData, setViewpointData] = React.useState([]);
-
-  const showModalOnclick = useCallback(() => setShowModal(true), []);
+  const { data: viewpointData, isLoading } = useGetListAllPages(RES_VIEWPOINT, 100);
 
   const handleAdd = useCallback(() => {
     onAdd(selected);
     setSelected([]);
-    setShowModal(false);
-  }, [onAdd, selected]);
+    setShow(false);
+  }, [onAdd, selected, setShow]);
 
   const headCells = React.useMemo(
     () => [
@@ -52,29 +56,88 @@ const AddViewpoint = ({ ids = [], onAdd }) => {
         id: 'label',
         numeric: false,
         disablePadding: false,
-        label: translate('resources.campaign.fields.label'),
+        label: translate('resources.viewpoint.fields.label'),
       },
       {
-        id: 'photographer',
-        numeric: true,
+        id: 'city',
+        numeric: false,
         disablePadding: false,
-        label: translate('resources.campaign.fields.assignee'),
+        label: translate('resources.viewpoint.fields.city'),
+      },
+      {
+        id: 'last_accepted_picture_date',
+        numeric: false,
+        disablePadding: false,
+        renderer: date => new Date(date).toLocaleDateString(),
+        label: translate('resources.viewpoint.fields.last_accepted_picture_date'),
       },
     ],
     [translate],
   );
 
-  React.useEffect(() => {
-    const loadViewpoints = async () => {
-      const { data } = await dataProvider.getList(RES_VIEWPOINT, {
-        pagination: { page: 1, perPage: 250 },
-        sort: { field: 'id' },
-        order: 'id',
-      });
-      setViewpointData(data.filter(vp => !ids.includes(vp.id)));
-    };
-    loadViewpoints();
-  }, [dataProvider, ids]);
+  const filteredViewpoints = React.useMemo(() => {
+    const s = normalizeText(search);
+    return viewpointData
+      .filter(vp => !ids.includes(vp.id))
+      .filter(
+        ({ label, city }) => normalizeText(label).includes(s) || normalizeText(city).includes(s),
+      );
+  }, [ids, search, viewpointData]);
+
+  const onSearchChange = React.useCallback(e => {
+    setSearch(e.target.value);
+  }, []);
+
+  return (
+    <Modal open={show}>
+      <div className={classes.modal}>
+        <TextField
+          value={search}
+          onChange={onSearchChange}
+          placeholder={`${translate('ra.action.search')}…`}
+          variant="filled"
+        />
+        {!isLoading && (
+          <SuperTable
+            title={translate('ra.nav.viewpoint_list')}
+            data={filteredViewpoints}
+            headCells={headCells}
+            selected={selected}
+            setSelected={setSelected}
+          />
+        )}
+        {isLoading && <p>{translate('common.loading')}</p>}
+
+        <div className="actions">
+          <Button
+            variant="outlined"
+            color="secondary"
+            startIcon={<CancelIcon />}
+            onClick={() => setShow(false)}
+          >
+            {translate('ra.action.cancel')}
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={() => handleAdd(selected)}
+          >
+            {translate('ra.action.add')}
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+const AddViewpoint = ({ ids = [], onAdd }) => {
+  const translate = useTranslate();
+
+  const [showModal, setShowModal] = useState(false);
+
+  const showModalOnclick = useCallback(() => setShowModal(true), []);
 
   return (
     <>
@@ -86,36 +149,7 @@ const AddViewpoint = ({ ids = [], onAdd }) => {
       >
         {translate('ra.action.add')}
       </Button>
-      <Modal open={showModal}>
-        <div className={classes.modal}>
-          <SuperTable
-            data={viewpointData}
-            headCells={headCells}
-            selected={selected}
-            setSelected={setSelected}
-          />
-
-          <div className="actions">
-            <Button
-              variant="outlined"
-              color="secondary"
-              startIcon={<CancelIcon />}
-              onClick={() => setShowModal(false)}
-            >
-              {translate('ra.action.cancel')}
-            </Button>
-
-            <Button
-              variant="outlined"
-              color="primary"
-              startIcon={<AddIcon />}
-              onClick={() => handleAdd(selected)}
-            >
-              {translate('ra.action.add')}
-            </Button>
-          </div>
-        </div>
-      </Modal>
+      <ViewpointModal show={showModal} setShow={setShowModal} onAdd={onAdd} ids={ids} />
     </>
   );
 };

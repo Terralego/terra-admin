@@ -872,6 +872,7 @@
         "address": "Address",
         "id": "Viewpoint id",
         "picture_state": "Picture state",
+        "last_accepted_picture_date": "Last accepted picture",
         "replay_sheet": "Replay sheet",
         "properties.voie": "Street",
         "properties.commune": "City",

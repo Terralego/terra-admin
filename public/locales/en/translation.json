@@ -36,7 +36,9 @@
     "disableFollowDirectionMode": "Disable direction",
     "createPoint": "Create point",
     "createIntermediatePoint": "Create intermediate point",
-    "deletePoint": "Delete point"
+    "deletePoint": "Delete point",
+    "loopPoint": "Round trip",
+    "oneWayPoint": "One way"
   },
   "auth": {
     "loginform": {

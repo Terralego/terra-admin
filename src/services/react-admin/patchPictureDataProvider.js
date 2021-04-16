@@ -8,6 +8,10 @@ const patchPictureDataProvider = dataProvider => async (type, resource, params, 
   if ([CREATE, UPDATE].includes(type) && resource === RES_PICTURE) {
     // eslint-disable-next-line no-param-reassign
     params.data.date = new Date(params.data.date).toISOString();
+    if (params.data.campaign === null) {
+      // eslint-disable-next-line no-param-reassign
+      delete params.data.campaign;
+    }
   }
   /**
    * Continue to next dataProvider

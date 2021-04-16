@@ -16,6 +16,7 @@ import { required } from '../../../../utils/react-admin/validate';
 import { RES_USER } from '../../ra-modules';
 import CustomToolbar from './CustomToolbar';
 import useUserSettings from '../../../../hooks/useUserSettings';
+import { ISODateFormat } from '../../../../utils/date';
 
 import ViewpointGrid from './ViewpointGrid';
 import CampaignState from './CampaignState';
@@ -42,7 +43,6 @@ const CampaignFields = ({ edit, location, ...props }) => {
   const { record: { state } } = props;
 
   const today = new Date();
-  const noTimeDate = `${today.getFullYear()}-${((`${today.getMonth() + 1}`).padStart(2, '0'))}-${today.getDate()}`;
 
   const isEditable = edit && state  !== 'draft';
 
@@ -66,7 +66,7 @@ const CampaignFields = ({ edit, location, ...props }) => {
           formClassName={classes.inline}
           validate={defaultRequired}
           disabled={isEditable}
-          defaultValue={noTimeDate}
+          defaultValue={ISODateFormat(today)}
         />
 
         {edit && (

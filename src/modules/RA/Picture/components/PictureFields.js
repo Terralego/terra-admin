@@ -28,6 +28,7 @@ import TimeInput from '../../../../components/react-admin/TimeInput';
 import useUserSettings from '../../../../hooks/useUserSettings';
 import UserNameField from '../../User/components/UserNameField';
 import PictureState from './PictureState';
+import { ISODateFormat } from '../../../../utils/date';
 
 const useStyles = makeStyles({
   inline: {
@@ -75,7 +76,7 @@ const PictureFields = ({ edit, mapConfig, location, ...props }) => {
   const classes = useStyles();
 
   const today = new Date();
-  const noTimeDate = `${today.getFullYear()}-${((`${today.getMonth() + 1}`).padStart(2, '0'))}-${today.getDate()}`;
+
   const { record: { state } } = props;
 
   return (
@@ -110,7 +111,7 @@ const PictureFields = ({ edit, mapConfig, location, ...props }) => {
 
         <Br />
 
-        <DateInput source="date" formClassName={classes.inline} defaultValue={noTimeDate} />
+        <DateInput source="date" formClassName={classes.inline} defaultValue={ISODateFormat(today)} />
         <TimeInput
           source="date"
           label="resources.picture.fields.time"

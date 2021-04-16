@@ -11,4 +11,7 @@ export const localErrorMessages = {
 
 export const locale = i18n.language;
 
+/* ISO 8601 date format compatible with django filter */
+export const ISODateFormat = date => date.toISOString().split('T')[0];
+
 export default { dateFormat, localErrorMessages, locale };

@@ -12,11 +12,6 @@ import {
   GEOMETRY_COLLECTION,
 } from '../../../utils/geom';
 
-export const get2DCoordinates = obj => obj && ({
-  ...obj,
-  points: obj.points.map(item => item?.slice(0, 2)),
-});
-
 export const getObjectOrderedValue = (objectValues, arrayOrder = []) => {
   if (!objectValues) {
     return {};
@@ -177,7 +172,6 @@ export const requiredProperties = props => {
 
 export default {
   exportFileFromURL,
-  get2DCoordinates,
   getJSONSchemaFromGeom,
   getObjectOrderedValue,
   isTableObject,

@@ -7,7 +7,7 @@ import Form from '@rjsf/core';
 import classNames from 'classnames';
 import { CRUDContext } from '../../../../services/CRUDProvider';
 import { getView } from '../../../../services/CRUD';
-import { get2DCoordinates, requiredProperties } from '../../../../services/utils';
+import { requiredProperties } from '../../../../services/utils';
 import customFields from '../../../../../../components/react-json-schemaForm';
 import FileWidget from '../../../../../../components/react-json-schemaForm/FileWidget';
 import ErrorListTemplate from '../../../../../../components/react-json-schemaForm/ErrorListTemplate';
@@ -88,7 +88,7 @@ const Edit = ({
       ? { properties: { [propKey]: propValue === undefined ? '' : propValue } }
       : {
         geom: propValue.geom,
-        routing_information: get2DCoordinates(propValue.routingInformation),
+        ...(propValue.routingInformation && { routing_information: propValue.routingInformation }),
       };
 
     setDefaultValue(propValue);

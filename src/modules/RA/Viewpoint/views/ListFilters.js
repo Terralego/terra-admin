@@ -36,6 +36,7 @@ export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
 
     const setFiltersList = async () => {
       const filterOptions = await fetchFilterOptions();
+      console.log('filt', filterOptions);
 
       if (!isMounted) return;
 
@@ -50,6 +51,8 @@ export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
 
     return () => { isMounted = false; };
   }, [terraOppSearchableProperties]);
+
+  console.log('yeah');
 
   return (
     <Filter {...props}>

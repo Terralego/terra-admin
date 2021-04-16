@@ -36,7 +36,9 @@
     "disableFollowDirectionMode": "Désactiver le suivi de voie",
     "createPoint": "Créer un point",
     "createIntermediatePoint": "Créer un point intermédiaire",
-    "deletePoint": "Supprimer le point"
+    "deletePoint": "Supprimer le point",
+    "loopPoint": "Boucler le tracé",
+    "oneWayPoint": "Aller simple"
   },
   "auth": {
     "loginform": {

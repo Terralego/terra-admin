@@ -97,7 +97,7 @@ const CustomToolbar = ({ basePath, redirect, staticContext, ...props }) => {
             transform={data => ({ ...data, state: 'closed' })}
             label="ra.action.close"
             icon={<IconBlock />}
-            variant=""
+            variant="text"
             className={classes.refuse}
           />
         )}

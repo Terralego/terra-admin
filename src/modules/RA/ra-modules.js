@@ -38,6 +38,8 @@ export const RES_VIEW = 'view';
 export const RES_VIEWPOINT = 'viewpoint';
 export const RES_PICTURE = 'picture';
 export const RES_CAMPAIGN = 'campaign';
+export const RES_CITY = 'city';
+export const RES_THEME = 'theme';
 
 export const resources = [
   {
@@ -94,6 +96,16 @@ export const resources = [
     moduleName: 'OPP',
     endpoint: 'campaigns',
     ...campaignViews,
+  },
+  {
+    name: RES_CITY,
+    moduleName: 'OPP',
+    endpoint: 'cities',
+  },
+  {
+    name: RES_THEME,
+    moduleName: 'OPP',
+    endpoint: 'themes',
   },
   {
     name: RES_BASELAYER,

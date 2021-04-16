@@ -906,6 +906,12 @@
         "repeat": "Rephotographie",
         "landscape": "Paysage",
         "pictures": "Photographies"
+      },
+      "filters": {
+        "more-1-year": "Plus d'un an",
+        "more-2-year": "Plus de 2 ans",
+        "more-3-year": "Plus de 3 ans",
+        "more-5-year": "Plus de 5 ans"
       }
     },
     "campaign":{

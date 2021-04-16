@@ -1,9 +1,10 @@
 import React from 'react';
-import { Filter, SelectArrayInput, SelectInput, TextInput } from 'react-admin';
+import { Filter, SelectArrayInput, SelectInput, TextInput, ReferenceInput } from 'react-admin';
+import { ISODateFormat } from '../../../../utils/date';
 
 import { fetchFilterOptions } from '../../ra-modules';
-import { connectAppProvider } from '../../../../components/AppProvider';
 
+import useAppSettings from '../../../../hooks/useAppSettings';
 
 /*
   To generate the select input props list, first check that the filters in filterList are also
@@ -14,7 +15,15 @@ const reduceFilters = filterOptions => (filterList, [filterName, filterProps]) =
   const options = filterOptions[filterName];
 
   if (!options) {
-    return filterList;
+    // Case filter without choice list
+    return [
+      ...filterList,
+      {
+        ...filterProps,
+        source: `properties__${filterProps.json_key}`,
+        label: `resources.viewpoint.fields.properties.${filterProps.json_key}`,
+      },
+    ];
   }
 
   return [
@@ -28,7 +37,13 @@ const reduceFilters = filterOptions => (filterList, [filterName, filterProps]) =
   ];
 };
 
-export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
+const moreXYears = x =>
+  ISODateFormat(new Date(new Date().setFullYear(new Date().getFullYear() - x)));
+
+export const ListFilters = ({ ...props }) => {
+  const settings = useAppSettings();
+  const terraOppSearchableProperties = settings.modules.OPP.searchable_properties;
+
   const [filters, setFilters] = React.useState([]);
 
   React.useEffect(() => {
@@ -36,12 +51,13 @@ export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
 
     const setFiltersList = async () => {
       const filterOptions = await fetchFilterOptions();
-      console.log('filt', filterOptions);
 
       if (!isMounted) return;
 
-      const newFilters = Object.entries(terraOppSearchableProperties)
-        .reduce(reduceFilters(filterOptions), []);
+      const newFilters = Object.entries(terraOppSearchableProperties).reduce(
+        reduceFilters(filterOptions),
+        [],
+      );
       setFilters(newFilters);
     };
 
@@ -49,34 +65,54 @@ export const ListFilters = ({ terraOppSearchableProperties, ...props }) => {
       setFiltersList();
     }
 
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [terraOppSearchableProperties]);
 
-  console.log('yeah');
+  const lastPictureChoices = React.useMemo(
+    () => [
+      { id: moreXYears(1), name: 'resources.viewpoint.filters.more-1-year' },
+      { id: moreXYears(2), name: 'resources.viewpoint.filters.more-2-year' },
+      { id: moreXYears(3), name: 'resources.viewpoint.filters.more-3-year' },
+      { id: moreXYears(5), name: 'resources.viewpoint.filters.more-5-year' },
+    ],
+    [],
+  );
 
   return (
     <Filter {...props}>
       <TextInput label="ra.action.search" source="search" alwaysOn />
+      <ReferenceInput
+        label="resources.viewpoint.fields.city"
+        source="city_id"
+        reference="city"
+        allowEmpty
+      >
+        <SelectInput optionText="label" />
+      </ReferenceInput>
+      <SelectInput
+        label="resources.viewpoint.fields.last_accepted_picture_date"
+        source="last_picture"
+        choices={lastPictureChoices}
+        style={{ width: '15em' }}
+      />
       {filters.map(({ type, ...filterProps }) => {
-        const SelectComponent = type === 'many'
-          ? SelectArrayInput
-          : SelectInput;
+        let SelectComponent = TextInput;
+        switch (type) {
+          case 'many':
+            SelectComponent = SelectArrayInput;
+            break;
+          case 'select':
+            SelectComponent = SelectInput;
+            break;
+          default:
+        }
 
-        return (
-          <SelectComponent
-            {...filterProps}
-            key={filterProps.label}
-          />
-        );
+        return <SelectComponent {...filterProps} key={filterProps.label} />;
       })}
     </Filter>
   );
 };
 
-const withTerraOppSearchableProperties = WrappedComponent => (
-  connectAppProvider(({ env: { terraOppSearchableProperties } }) => (
-    { terraOppSearchableProperties }
-  ))(WrappedComponent)
-);
-
-export default withTerraOppSearchableProperties(ListFilters);
+export default ListFilters;

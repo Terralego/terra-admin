@@ -1,6 +1,6 @@
 {
   "name": "terra-admin",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^3.36.0",

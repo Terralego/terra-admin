@@ -1,4 +1,13 @@
 
+3.3.3 / 2021-04-16
+==================
+
+  * Add button to download all sheets
+  * Enhance viewpoint modal For campaign
+  * Add backend proxy
+  * Move filters
+  * Improve translation
+
 3.3.2 / 2021-04-14
 ==================
 

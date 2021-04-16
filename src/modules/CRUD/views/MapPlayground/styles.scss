@@ -7,7 +7,7 @@
 
 .CRUD-map {
   flex-grow: 1;
-  
+
   .interactive-map {
     position: absolute;
     top: 0;
@@ -37,6 +37,7 @@
   }
 
   .mapboxgl-ctrl-search {
+    overflow: visible;
     .search-results__item button {
       height: auto;
     }
@@ -53,7 +54,7 @@
   flex-shrink: 0;
   padding: 0;
   height: 0;
-  transition: height .2s ease-in;
+  transition: height 0.2s ease-in;
   display: flex;
   margin-top: auto;
   overflow: hidden;
@@ -72,7 +73,7 @@
   }
 
   .table-container {
-    background:  #fff;
+    background: #fff;
     position: absolute;
     top: 0;
     right: 0;
@@ -89,4 +90,3 @@
     }
   }
 }
-

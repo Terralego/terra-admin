@@ -2,6 +2,7 @@
 
 .CRUD-edit {
   .geometry-field {
+    position: relative;
     text-align: center;
     &__or {
       display: flex;
@@ -41,6 +42,11 @@
       > * {
         margin: 0 0.2rem;
       }
+    }
+    &__reset {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0;
     }
   }
   .mapbox-gl-draw_ctrl-draw-btn {

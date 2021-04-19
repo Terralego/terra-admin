@@ -174,10 +174,11 @@ const Create = props => {
             <span className="details__list-edit-mandatory">{t('CRUD.details.mandatory_plural')}</span>
             <Button
               className="CRUD-edit__submit"
+              intent="primary"
               loading={loading}
               type="submit"
             >
-              {title}
+              {t('CRUD.details.save')}
             </Button>
           </div>
         </Form>

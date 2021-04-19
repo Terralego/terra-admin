@@ -1,4 +1,11 @@
 
+3.3.4 / 2021-04-19
+==================
+
+  * Enhance viewpoint filter
+  * Remove get2Dcoordinate helper
+  * Upgrade @terralego/core package version to 1.27.2
+
 3.3.3 / 2021-04-16
 ==================
 

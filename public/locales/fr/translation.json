@@ -289,7 +289,7 @@
       "create": "Ajouter {{layer}}",
       "update": "Modifier",
       "noValue": "Non renseigné",
-      "save": "Sauvegarder",
+      "save": "Enregistrer",
       "close": "Fermer",
       "cancel": "Annuler",
       "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer l'objet {{name}} ? Cette action est irrévocable.",

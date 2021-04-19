@@ -349,37 +349,44 @@
     "geometryField": {
       "type": {
         "Point": {
-          "singular": "un point"
+          "create": "un point",
+          "edit": "le point"
         },
         "LineString": {
-          "singular": "un tracé"
+          "create": "un tracé",
+          "edit": "le tracé"
         },
         "Polygon": {
-          "singular": "une zone"
+          "create": "une zone",
+          "edit": "la zone"
         },
         "MultiPoint": {
-          "singular": "des points"
+          "create": "un ou des points",
+          "edit": "le ou les points"
         },
         "MultiLineString": {
-          "singular": "un ou des tracés"
+          "create": "un ou des tracés",
+          "edit": "le ou les tracés"
         },
         "MultiPolygon": {
-          "singular": "une ou des zones"
+          "create": "une ou des zones",
+          "edit": "la ou les zones"
         },
         "GeometryCollection": {
-          "singular": "une ou des géométrie"
+          "create": "une ou des géométrie",
+          "edit": "la ou les géométries"
         }
       },
       "label": "Ou saisir les coordonnées",
       "title": "Coordonnées (WGS84 décimal)",
-      "information-create": "Dessiner $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
-      "information-edit": "Modifier $t(jsonSchema.geometryField.type.{{type}}.singular) sur la carte",
+      "information-create": "Dessiner $t(jsonSchema.geometryField.type.{{type}}.create) sur la carte",
+      "information-edit": "Modifier $t(jsonSchema.geometryField.type.{{type}}.edit) sur la carte",
       "helper": "Saisissez vos coordonnées en utilisant l'outil {{type}} <1></1> sur la carte",
       "helper-routing": "Tracez un itinéraire en cliquant directement sur la carte. Vous avez la possibilité de suivre automatiquement les voies en cochant la case correspondante et en sélectionnant un mode de suivi.",
       "or": "ou",
       "reset": {
-        "label": "Effacer le tracé",
-        "confirmation": "Êtes-vous sûr de vouloir effacer le tracé ?"
+        "label": "Effacer $t(jsonSchema.geometryField.type.{{type}}.edit)",
+        "confirmation": "Êtes-vous sûr de vouloir effacer $t(jsonSchema.geometryField.type.{{type}}.edit) ?"
       }
     },
     "panelError": {

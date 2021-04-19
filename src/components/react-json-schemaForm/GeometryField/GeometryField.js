@@ -11,6 +11,7 @@ import MapInteraction from './MapInteraction';
 import Informations from './Informations';
 import './styles.scss';
 import RequiredMention from './RequiredMention';
+import ResetGeometry from './ResetGeometry';
 
 
 const GeometryField = ({
@@ -37,6 +38,7 @@ const GeometryField = ({
             </div>
           </div>
         </div>
+        <ResetGeometry intent="danger" schema={schema} />
       </fieldset>
     </GeometryFieldProvider>
   );

@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Message from '../../Message';
-import ResetGeometry from './ResetGeometry';
 import { useGeometryField } from './GeometryFieldProvider';
 
 const getIconFromType = type => {
@@ -32,8 +31,7 @@ const Information = ({
 
   const { coordinates = schemaCoordinates, type = schemaType } = geom || {};
 
-  const hasDraw = Boolean(coordinates.length);
-  const action = !hasDraw ? 'create' : 'edit';
+  const action = !coordinates.length ? 'create' : 'edit';
 
   return (
     <>
@@ -41,7 +39,6 @@ const Information = ({
         <span>{t(`jsonSchema.geometryField.information-${action}`, { type })}
           {isRequired && <span className="required">*</span>}
         </span>
-        <span><ResetGeometry disabled={!hasDraw} intent={hasDraw ? 'danger' : ''} /></span>
       </p>
       <Message className="geometry-field__message" intent="primary">
         {isRouting

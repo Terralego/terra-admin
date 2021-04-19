@@ -1,13 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Classes, H5, Popover, PopoverInteractionKind } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
 import { useGeometryField } from './GeometryFieldProvider';
 
-const ResetGeometry = props => {
+const ResetGeometry = ({
+  schema: {
+    default: {
+      coordinates: schemaCoordinates,
+    },
+  },
+  ...props
+}) => {
   const {
     resetFeatureCollection,
     nextFormData: {
-      geom: { type },
+      geom: {
+        coordinates = schemaCoordinates,
+        type,
+      } = {},
     } = {},
   } = useGeometryField();
   const { t } = useTranslation();
@@ -16,8 +27,13 @@ const ResetGeometry = props => {
     resetFeatureCollection();
   };
 
+  if (!coordinates.length) {
+    return null;
+  }
+
   return (
     <Popover
+      className="geometry-field__reset"
       popoverClassName={Classes.POPOVER_CONTENT_SIZING}
       interactionKind={PopoverInteractionKind.CLICK}
       content={(
@@ -47,6 +63,22 @@ const ResetGeometry = props => {
       </Button>
     </Popover>
   );
+};
+
+ResetGeometry.propTypes = {
+  schema: PropTypes.shape({
+    default: PropTypes.shape({
+      coordinates: PropTypes.array,
+    }),
+  }),
+};
+
+ResetGeometry.defaultProps = {
+  schema: {
+    default: {
+      coordinates: [],
+    },
+  },
 };
 
 export default ResetGeometry;

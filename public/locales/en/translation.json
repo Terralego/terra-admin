@@ -349,37 +349,44 @@
     "geometryField": {
       "type": {
         "Point": {
-          "singular": "a point"
+          "create": "a point",
+          "edit": "the point"
         },
         "LineString": {
-          "singular": "a line"
+          "create": "a line",
+          "edit": "the line"
         },
         "Polygon": {
-          "singular": "an area"
+          "create": "an area",
+          "edit": "the area"
         },
         "MultiPoint": {
-          "singular": "some points"
+          "create": "some points",
+          "edit": "points"
         },
         "MultiLineString": {
-          "singular": "some lines"
+          "create": "some lines",
+          "edit": "lines"
         },
         "MultiPolygon": {
-          "singular": "some areas"
+          "create": "some areas",
+          "edit": "areas"
         },
         "GeometryCollection": {
-          "singular": "some geometries"
+          "create": "some geometries",
+          "edit": "geometries"
         }
       },
       "label": "Or enter coordinates",
       "title": "Coordinates (decimal WGS84)",
-      "information-create": "Draw $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
-      "information-edit": "Edit $t(jsonSchema.geometryField.type.{{type}}.singular) on map.",
+      "information-create": "Draw $t(jsonSchema.geometryField.type.{{type}}.create) on map.",
+      "information-edit": "Edit $t(jsonSchema.geometryField.type.{{type}}.edit) on map.",
       "helper": "Enter coordinates by using the tool <1></1> on map",
       "helper-routing": "Draw a route by clicking directly on the map. You can automatically follow the paths by checking the corresponding box and selecting a follow mode",
       "or": "or",
       "reset": {
-        "label": "Reset draw",
-        "confirmation": "Are you sure to reset the draw ?"
+        "label": "Reset $t(jsonSchema.geometryField.type.{{type}}.edit)",
+        "confirmation": "Are you sure to reset $t(jsonSchema.geometryField.type.{{type}}.edit}?"
       }
     },
     "panelError": {

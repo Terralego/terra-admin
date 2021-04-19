@@ -4,7 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useGeometryField } from './GeometryFieldProvider';
 
 const ResetGeometry = props => {
-  const { resetFeatureCollection } = useGeometryField();
+  const {
+    resetFeatureCollection,
+    nextFormData: {
+      geom: { type },
+    } = {},
+  } = useGeometryField();
   const { t } = useTranslation();
 
   const onReset = () => {
@@ -17,7 +22,7 @@ const ResetGeometry = props => {
       interactionKind={PopoverInteractionKind.CLICK}
       content={(
         <div className="details__confirm">
-          <H5>{t('jsonSchema.geometryField.reset.confirmation')}</H5>
+          <H5>{t('jsonSchema.geometryField.reset.confirmation', { type })}</H5>
           <div className="details__confirm-content">
             <Button
               className={Classes.POPOVER_DISMISS}
@@ -38,7 +43,7 @@ const ResetGeometry = props => {
         minimal
         {...props}
       >
-        {t('jsonSchema.geometryField.reset.label')}
+        {t('jsonSchema.geometryField.reset.label', { type })}
       </Button>
     </Popover>
   );

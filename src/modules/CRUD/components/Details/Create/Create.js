@@ -14,16 +14,21 @@ import Header from '../Header';
  *
  * @param {Object} schema
  * @param {Object} properties
+ * @param {Boolean} resetValues
  * @returns schema with default values setted
  */
-const getSchemaWithDefaultValues = (schema, properties) => {
+const getSchemaWithValues = (schema, properties, resetValues) => {
   const defaultValues = Object.entries(properties);
   if (!defaultValues.length) {
     return schema;
   }
   const nextSchema = { ...schema };
   defaultValues.forEach(([key, value]) => {
-    nextSchema.properties[key].default = value;
+    if (!resetValues) {
+      nextSchema.properties[key].default = value;
+    } else {
+      delete nextSchema.properties[key].default;
+    }
   });
   return nextSchema;
 };
@@ -122,8 +127,7 @@ const Create = props => {
       ...properties },
   }) => {
     setLoading(true);
-
-    setSchema(prevSchema => getSchemaWithDefaultValues(prevSchema, properties));
+    setSchema(prevSchema => getSchemaWithValues(prevSchema, properties));
 
     const savedFeature = await saveFeature(featureEndpoint, false, { geom, properties, routing_information: routingInformation }, 'POST');
 
@@ -131,6 +135,7 @@ const Create = props => {
 
 
     if (savedFeature.feature) {
+      setSchema(prevSchema => getSchemaWithValues(prevSchema, properties, true));
       push(generateURI('layer', { layer: name, id: savedFeature.feature.identifier }));
       toast.displayToaster(
         { id: savedFeature.feature.identifier },

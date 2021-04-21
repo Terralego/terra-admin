@@ -74,6 +74,7 @@ const CampaignFields = ({ edit, location, ...props }) => {
             formClassName={classes.inline}
           />
         )}
+
         <Br />
 
         {hasPermission('can_manage_users') && (

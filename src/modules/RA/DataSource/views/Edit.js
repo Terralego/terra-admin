@@ -6,7 +6,7 @@ import DataSourceEditActions from '../components/DataSourceEditActions';
 
 export const DataSourceEdit = props => (
   <Edit
-    undoable={false}
+    mutationMode="optimistic"
     actions={<DataSourceEditActions {...props} />}
     {...props}
   >

@@ -6,7 +6,7 @@ import DefaultActions from '../../../../components/react-admin/DefaultActions';
 
 export const SceneEdit = props => (
   <Edit
-    undoable={false}
+    mutationMode="optimistic"
     {...props}
     actions={<DefaultActions />}
 

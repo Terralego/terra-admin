@@ -113,7 +113,7 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
         <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />
         <DeleteWithConfirmButtonJS
           redirect={redirect || 'list'}
-          undoable={null}
+          mutationMode="optimistic"
           translateOptions={{
             id: record.identifier,
           }}

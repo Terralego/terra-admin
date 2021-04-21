@@ -12,7 +12,11 @@ export const PictureEdit = ({ staticContext, ...props }) => {
   const [redirect] = useState(redirectProp);
 
   return (
-    <Edit {...props} undoable={false} actions={<DefaultActions redirect={redirect} />}>
+    <Edit
+      {...props}
+      mutationMode="optimistic"
+      actions={<DefaultActions redirect={redirect} />}
+    >
       <PictureFields edit redirect={redirect} />
     </Edit>
   );

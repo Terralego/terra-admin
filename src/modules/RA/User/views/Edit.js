@@ -10,7 +10,7 @@ export const UserEdit = props => (
   <Edit
     {...props}
     title={<UserTitle />}
-    undoable={false}
+    mutationMode="optimistic"
     actions={<DefaultActions />}
   >
     <UserFields edit />

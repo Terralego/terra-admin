@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, SaveButton, Toolbar } from 'react-admin';
+import { Button, SaveButton, Toolbar, useTranslate } from 'react-admin';
 import { useField } from 'react-final-form';
 
 /* eslint-disable import/no-extraneous-dependencies */
@@ -14,6 +14,7 @@ import IconCheck from '@material-ui/icons/Check';
 import IconBlock from '@material-ui/icons/Block';
 import useUserSettings from '../../../../hooks/useUserSettings';
 import DeleteWithConfirmButtonJS from '../../../../components/react-admin/DeleteWithConfirmButtonJS';
+import SaveButtonWithConfirm from '../../../../components/react-admin/SaveButtonWithConfirm';
 
 /* eslint-enable */
 
@@ -65,6 +66,7 @@ const CancelButton = ({ redirect, className }) => (
   </Button>
 );
 
+
 const sanitizeRestProps = ({ staticContext, ...rest }) => rest;
 
 /**
@@ -78,8 +80,11 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
   const {
     record,
   } = props;
+  const translate = useTranslate();
   const classes = useStyles();
   const { hasPermission } = useUserSettings();
+
+  const [reason, setReason] = React.useState('');
 
   const {
     input: { value: state },
@@ -90,24 +95,33 @@ const CustomToolbar = ({ basePath, redirect, ...props }) => {
       <Toolbar {...sanitizeRestProps(props)} className={classes.toolbar}>
         <SaveButton redirect={redirect === 'list' ? basePath : redirect} submitOnEnter />
         {state === 'submited' && (
-          <SaveButton
+          <SaveButtonWithConfirm
             redirect={redirect === 'list' ? basePath : redirect}
             submitOnEnter={false}
-            transform={data => ({ ...data, state: 'refused' })}
+            transform={data => ({ ...data, state: 'refused', properties: { ...data.properties, refusal_message: reason } })}
             label="ra.action.refuse"
             icon={<IconBlock />}
             variant={false}
             className={`${classes.refuse}`}
+            confirmTitle={translate('resources.picture.fields.refusal_message')}
+            confirmContent={(
+              <>
+                <p>{translate('resources.picture.actions.refusal_modal_content')}</p>
+                <input value={reason} onChange={e => setReason(e.target.value)} />
+              </>
+            )}
           />
         )}
         {state === 'submited' && (
-          <SaveButton
+          <SaveButtonWithConfirm
             redirect={redirect === 'list' ? basePath : redirect}
             submitOnEnter={false}
-            transform={data => ({ ...data, state: 'accepted' })}
+            transform={data => ({ ...data, state: 'accepted', properties: { ...data.properties, refusal_message: '' } })}
             label="ra.action.validate"
             icon={<IconCheck />}
             className={classes.validate}
+            confirmTitle={translate('resources.picture.actions.accept_modal_title')}
+            confirmContent={translate('resources.picture.actions.accept_modal_content')}
           />
         )}
         <CancelButton redirect={redirect === 'list' ? basePath : redirect} className={classes.cancel} />

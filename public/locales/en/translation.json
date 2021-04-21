@@ -872,6 +872,7 @@
   },
   "resources": {
     "viewpoint": {
+      "forcedCaseName": "Viewpoint",
       "viewpoint-number": "Viewpoint n°%{number}",
       "viewpoint-no-number": "No identifier set",
       "fields": {
@@ -924,6 +925,7 @@
       }
     },
     "campaign":{
+      "forcedCaseName": "Campaign",
       "fields":{
         "start_date": "Date", 
         "label": "Name", 
@@ -957,6 +959,7 @@
       }
     },
     "picture": {
+      "forcedCaseName": "Picture",
       "fields": {
         "label": "Viewpoint label",
         "state": "State",
@@ -982,6 +985,11 @@
         "no_picture": "No picture",
         "identifier": "Identifier"
       },
+      "actions":{
+        "refusal_modal_content": "Add a message to explain refusal",
+        "accept_modal_title": "Validate picture",
+        "accept_modal_content": "By validating, the picture will be available publicly."
+      },
       "states":{
         "accepted": "Accepted",
         "refused": "Reused",
@@ -995,6 +1003,7 @@
       "name": "Picture"
     },
     "user": {
+      "forcedCaseName": "User",
       "fields": {
         "id": "Id",
         "email": "Email",
@@ -1008,6 +1017,7 @@
       }
     },
     "usergroup": {
+      "forcedCaseName": "Group",
       "fields": {
         "id": "Id",
         "name": "Group name",
@@ -1016,6 +1026,7 @@
       }
     },
     "datasource": {
+      "forcedCaseName": "Source",
       "fields": {
         "description": "Description",
         "name": "Name",
@@ -1024,6 +1035,7 @@
       }
     },
     "datalayer": {
+      "forcedCaseName": "Layer",
       "fields": {
         "settings-widgets": "Widget configuration",
         "active_by_default": "Show by default",
@@ -1034,6 +1046,7 @@
       }
     },
     "view": {
+      "forcedCaseName": "View",
       "fields": {
         "category": "View type",
         "category-map": "Map",

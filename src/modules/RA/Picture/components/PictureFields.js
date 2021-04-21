@@ -14,6 +14,7 @@ import {
   required,
   ReferenceField,
   TextField,
+  useTranslate,
 } from 'react-admin';
 
 import {  makeStyles } from '@material-ui/core/styles';
@@ -36,6 +37,7 @@ const useStyles = makeStyles({
     marginRight: '1em',
   },
   picture: {
+    position: 'relative',
     float: 'right',
     width: '50%',
     '& .previews div': {
@@ -46,6 +48,17 @@ const useStyles = makeStyles({
       width: '100%',
       height: 'auto',
       maxHeight: 'inherit',
+    },
+    '& .refusal': {
+      position: 'absolute',
+      bottom: '1em',
+      left: 0,
+      right: 0,
+      padding: '2em',
+      fontSize: '1.5em',
+      margin: '0 0 8px -8px',
+      color: 'orange',
+      backgroundColor: 'rgba(23, 23, 23, 0.43)',
     },
   },
 });
@@ -62,11 +75,17 @@ const ClearFloat = () => <br style={{ clear: 'both' }} />;
 
 const PictureInput = props => {
   const classes = useStyles();
+  const translate = useTranslate();
+  const { record: { properties: { refusal_message: refusalMessage }, state } } = props;
   return (
     <div className={classes.picture}>
       <ImageInput source="file" accept="image/*" {...props}>
         <ImageField source="full" />
       </ImageInput>
+      {
+        refusalMessage && state === 'refused' &&
+        (<p className="refusal">{`${translate('resources.picture.states.refused')} - ${refusalMessage}`}</p>)
+      }
     </div>
   );
 };
@@ -94,6 +113,7 @@ const PictureFields = ({ edit, mapConfig, location, ...props }) => {
             <SelectInput optionText="label" />
           </ReferenceInput>
         )}
+
         {!hasPermission('can_manage_pictures') && hasPermission('can_add_pictures') && (
           <ReferenceField
             source="viewpoint"

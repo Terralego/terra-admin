@@ -872,6 +872,7 @@
   },
   "resources": {
     "viewpoint": {
+      "forcedCaseName": "Point de vue",
       "viewpoint-number": "Point de vue n°%{number}",
       "viewpoint-no-number": "Pas d'id renseigné",
       "fields": {
@@ -924,6 +925,7 @@
       }
     },
     "campaign":{
+      "forcedCaseName": "Campagne",
       "fields":{
         "start_date": "Date", 
         "label": "Nom", 
@@ -957,9 +959,11 @@
       }
     },
     "picture": {
+      "forcedCaseName": "Photographie",
       "fields": {
         "label": "Nom du point de vue",
         "state": "État",
+        "refusal_message": "Raison du refus",
         "properties.altitude": "Altitude",
         "properties.meteo": "Conditions météo",
         "properties.hauteur": "Hauteur de l'œil",
@@ -982,6 +986,11 @@
         "no_picture": "Pas de photographie",
         "identifier": "Identifiant"
       },
+      "actions":{
+        "refusal_modal_content": "Ajoutez un message expliquant le refus.",
+        "accept_modal_title": "Valider la photographie",
+        "accept_modal_content": "En validant, vous rendez visible la photographie sur le site publique de l'Observatoire"
+      },
       "states":{
         "accepted": "Acceptée",
         "refused": "Refusée",
@@ -995,6 +1004,7 @@
       "name": "Photographie"
     },
     "user": {
+      "forcedCaseName": "Utilisateur",
       "fields": {
         "id": "Id",
         "email": "Adresse e-mail",
@@ -1008,6 +1018,7 @@
       }
     },
     "usergroup": {
+      "forcedCaseName": "Groupe",
       "fields": {
         "id": "Id",
         "name": "Nom du groupe",
@@ -1016,6 +1027,7 @@
       }
     },
     "datasource": {
+      "forcedCaseName": "Source",
       "fields": {
         "description": "Description",
         "name": "Nom",
@@ -1024,6 +1036,7 @@
       }
     },
     "datalayer": {
+      "forcedCaseName": "Couche",
       "fields": {
         "settings-widgets": "Configuration des widgets",
         "active_by_default": "Afficher par défaut",
@@ -1034,6 +1047,7 @@
       }
     },
     "view": {
+      "forcedCaseName": "Vue",
       "fields": {
         "category": "Type de vue",
         "category-map": "Carte",

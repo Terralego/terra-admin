@@ -65,6 +65,20 @@ export const GeometryFieldProvider = ({ children, formData, onChange, name, sche
     if (!featuresToFitBounds || !map) {
       return;
     }
+
+    setFitBounds({
+      coordinates: featuresToFitBounds.flatMap(({ geometry: { coordinates } }) =>
+        (Array.isArray(coordinates[0]) ? coordinates : [coordinates])),
+      hasDetails: true,
+    });
+
+    const coordinates = getCoordinatesFromGeometries(featuresToFitBounds);
+
+    let geom = {
+      type: featuresToFitBounds[0].geometry.type,
+      coordinates,
+    };
+    let routingInformation = null;
     if (map.draw) {
       map.draw.deleteAll();
       featuresToFitBounds.forEach(feat => {
@@ -73,18 +87,15 @@ export const GeometryFieldProvider = ({ children, formData, onChange, name, sche
     }
     if (map.pathControl) {
       map.pathControl.setFeatureCollection({ features: featuresToFitBounds });
+      const { geometry, properties } = map.pathControl.getLineString();
+      geom = geometry;
+      routingInformation = properties;
     }
-    setFitBounds({
-      coordinates: featuresToFitBounds.flatMap(({ geometry: { coordinates } }) =>
-        (Array.isArray(coordinates[0]) ? coordinates : [coordinates])),
-      hasDetails: true,
-    });
-    const { geometry, properties } = map.pathControl.getLineString();
-    const coordinates = getCoordinatesFromGeometries(featuresToFitBounds);
+
     if (coordinates) {
       setNextFormData({
-        geom: geometry,
-        routingInformation: properties,
+        geom,
+        ...(routingInformation && { routingInformation }),
       });
     }
   }, [map, setFitBounds]);

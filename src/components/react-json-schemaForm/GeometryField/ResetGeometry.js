@@ -15,19 +15,21 @@ const ResetGeometry = ({
   const {
     resetFeatureCollection,
     nextFormData: {
-      geom: {
-        coordinates = schemaCoordinates,
-        type,
-      } = {},
+      geom,
     } = {},
   } = useGeometryField();
   const { t } = useTranslation();
+
+  const {
+    coordinates = schemaCoordinates,
+    type,
+  } = geom || {};
 
   const onReset = () => {
     resetFeatureCollection();
   };
 
-  if (!coordinates.length) {
+  if (!coordinates?.length) {
     return null;
   }
 

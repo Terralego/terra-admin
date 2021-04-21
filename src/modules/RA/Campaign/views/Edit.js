@@ -15,7 +15,7 @@ export const CampaignEdit = ({ staticContext, ...props }) => {
   return (
     <Edit
       {...props}
-      undoable={false}
+      mutationMode="optimistic"
       actions={<CampaignActions redirect={redirect} />}
     >
       <EditCampaignFields edit redirect={redirect} />

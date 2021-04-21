@@ -7,7 +7,7 @@ import DefaultActions from '../../../../components/react-admin/DefaultActions';
 export const UserEdit = props => (
   <Edit
     {...props}
-    undoable={false}
+    mutationMode="optimistic"
     actions={<DefaultActions />}
   >
     <UserGroupFields edit />

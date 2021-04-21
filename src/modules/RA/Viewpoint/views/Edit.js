@@ -7,7 +7,7 @@ import DefaultActions from '../../../../components/react-admin/DefaultActions';
 export const ViewpointEdit = props => (
   <Edit
     {...props}
-    undoable={false}
+    mutationMode="optimistic"
     actions={<DefaultActions />}
   >
     <ViewpointFields edit />

@@ -33,7 +33,7 @@ export const PictureList = props => {
     >
       <Datagrid>
         <ReferenceField source="viewpoint" reference={RES_VIEWPOINT}>
-          <TextField source="id" />
+          <TextField source="label" />
         </ReferenceField>
 
         <TextField source="identifier" />
@@ -45,9 +45,9 @@ export const PictureList = props => {
           </ReferenceField>
         )}
 
-        <ImageField source="file.thumbnail" />
+        <ImageField source="file.thumbnail" sortable={false} />
 
-        <PictureState label="resources.picture.fields.state" />
+        <PictureState source="state" label="resources.picture.fields.state" />
 
         <EditButton />
       </Datagrid>

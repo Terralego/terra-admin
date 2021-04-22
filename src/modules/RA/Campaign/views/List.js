@@ -46,6 +46,7 @@ const postRowStyle = ({ state }) => {
   }
 };
 
+
 export const CampaignList = props => {
   const { hasPermission } = useUserSettings();
 
@@ -64,10 +65,10 @@ export const CampaignList = props => {
             <UserNameField />
           </ReferenceField>
         )}
-        <CampaignState label="resources.campaign.fields.state" />
-        <TextField source="statistics.total" />
-        <TextField source="statistics.submited" />
-        <ProgressField label="resources.campaign.fields.statistics.progress" />
+        <CampaignState source="state" label="resources.campaign.fields.state" />
+        <TextField source="statistics.total" sortable={false} />
+        <TextField source="statistics.submited" sortable={false} />
+        <ProgressField label="resources.campaign.fields.statistics.progress" sortable={false} />
 
         <EditButton />
       </Datagrid>

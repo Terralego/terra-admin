@@ -96,6 +96,7 @@
     "required": "(*)",
     "reset": "Réinitialiser",
     "error": "Erreur inconnue",
+    "all": "Tout(es)",
     "error_required": "Ce champ {{name}} est requis.",
     "error_required-picture": "Ce champ image est requis.",
     "error_number": "Ce champ {{name}} doit être un nombre.",

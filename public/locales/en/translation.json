@@ -96,6 +96,7 @@
     "required": "(*)",
     "reset": "Reset",
     "error": "Unknown error",
+    "all": "All",
     "error_required": "{{name}} field is required.",
     "error_required-picture": "This picture field is required.",
     "error_number": "{{name}} field should be number.",

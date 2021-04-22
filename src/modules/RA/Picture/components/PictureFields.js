@@ -56,7 +56,7 @@ const useStyles = makeStyles({
       right: 0,
       padding: '2em',
       fontSize: '1.5em',
-      margin: '0 0 8px -8px',
+      margin: '0 -8px 0 8px',
       color: 'orange',
       backgroundColor: 'rgba(23, 23, 23, 0.43)',
     },
@@ -76,7 +76,7 @@ const ClearFloat = () => <br style={{ clear: 'both' }} />;
 const PictureInput = props => {
   const classes = useStyles();
   const translate = useTranslate();
-  const { record: { properties: { refusal_message: refusalMessage }, state } } = props;
+  const { record: { properties: { refusal_message: refusalMessage } = {}, state } = {} } = props;
   return (
     <div className={classes.picture}>
       <ImageInput source="file" accept="image/*" {...props}>

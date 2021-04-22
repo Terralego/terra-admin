@@ -5,6 +5,10 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import CancelIcon from '@material-ui/icons/Cancel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 import { useTranslate } from 'react-admin';
 
@@ -14,6 +18,7 @@ import { remove } from 'diacritics';
 import SuperTable from './SuperTable';
 import { RES_VIEWPOINT } from '../../ra-modules';
 import { useGetListAllPages } from '../../../../utils/react-admin/hooks';
+import { lastPictureChoices } from '../../Viewpoint/views/ListFilters';
 
 const useStyles = makeStyles({
   modal: {
@@ -40,6 +45,7 @@ const ViewpointModal = ({ show, setShow, onAdd, ids }) => {
 
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState('');
+  const [pictureDateFilter, setPictureDateFilter] = useState('');
 
   const { data: viewpointData, isLoading } = useGetListAllPages(RES_VIEWPOINT, 100);
 
@@ -77,13 +83,19 @@ const ViewpointModal = ({ show, setShow, onAdd, ids }) => {
 
   const filteredViewpoints = React.useMemo(() => {
     const s = normalizeText(search);
-    return viewpointData
+    const searched =  viewpointData
       .filter(vp => !ids.includes(vp.id))
       .filter(
         ({ label, city, id }) =>
           normalizeText(label).includes(s) || normalizeText(city).includes(s) || `${id}`.includes(s),
       );
-  }, [ids, search, viewpointData]);
+    if (pictureDateFilter) {
+      return searched.filter(
+        ({ last_accepted_picture_date: lastPicture }) => lastPicture < pictureDateFilter,
+      );
+    }
+    return searched;
+  }, [ids, pictureDateFilter, search, viewpointData]);
 
   const onSearchChange = React.useCallback(e => {
     setSearch(e.target.value);
@@ -98,6 +110,22 @@ const ViewpointModal = ({ show, setShow, onAdd, ids }) => {
           placeholder={`${translate('ra.action.search')}…`}
           variant="filled"
         />
+        <FormControl variant="filled" className={classes.formControl}>
+          <InputLabel>{translate('resources.viewpoint.fields.last_accepted_picture_date')}</InputLabel>
+          <Select
+            id="demo-simple-select-filled"
+            value={pictureDateFilter}
+            onChange={e => { setPictureDateFilter(e.target.value); }}
+            style={{ width: '13em', marginLeft: '0.5em' }}
+          >
+            <MenuItem value="">
+              <em>{translate('form.all')}</em>
+            </MenuItem>
+            {lastPictureChoices.map(
+              ({ id, name }) => <MenuItem value={id} key={id}>{translate(name)}</MenuItem>,
+            )}
+          </Select>
+        </FormControl>
         {!isLoading && (
           <SuperTable
             title={translate('ra.nav.viewpoint_list')}

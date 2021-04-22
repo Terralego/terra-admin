@@ -40,7 +40,14 @@ const reduceFilters = filterOptions => (filterList, [filterName, filterProps]) =
 const moreXYears = x =>
   ISODateFormat(new Date(new Date().setFullYear(new Date().getFullYear() - x)));
 
-export const ListFilters = ({ ...props }) => {
+export const lastPictureChoices = [
+  { id: moreXYears(1), name: 'resources.viewpoint.filters.more-1-year' },
+  { id: moreXYears(2), name: 'resources.viewpoint.filters.more-2-year' },
+  { id: moreXYears(3), name: 'resources.viewpoint.filters.more-3-year' },
+  { id: moreXYears(5), name: 'resources.viewpoint.filters.more-5-year' },
+];
+
+export const ListFilters = props => {
   const settings = useAppSettings();
   const terraOppSearchableProperties = settings.modules.OPP.searchable_properties;
 
@@ -69,16 +76,6 @@ export const ListFilters = ({ ...props }) => {
       isMounted = false;
     };
   }, [terraOppSearchableProperties]);
-
-  const lastPictureChoices = React.useMemo(
-    () => [
-      { id: moreXYears(1), name: 'resources.viewpoint.filters.more-1-year' },
-      { id: moreXYears(2), name: 'resources.viewpoint.filters.more-2-year' },
-      { id: moreXYears(3), name: 'resources.viewpoint.filters.more-3-year' },
-      { id: moreXYears(5), name: 'resources.viewpoint.filters.more-5-year' },
-    ],
-    [],
-  );
 
   return (
     <Filter {...props}>

@@ -869,6 +869,11 @@
         "partialy_cloudy": "Partiellement couvert",
         "cloudy": "Nuageux"
       }
+    },
+    "sort":{
+      "sort_by": "Trier",
+      "ASC": "⬆️ Croissant",
+      "DESC": "⬇️ Décroissant"
     }
   },
   "resources": {

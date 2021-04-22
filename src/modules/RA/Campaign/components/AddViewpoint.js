@@ -80,7 +80,8 @@ const ViewpointModal = ({ show, setShow, onAdd, ids }) => {
     return viewpointData
       .filter(vp => !ids.includes(vp.id))
       .filter(
-        ({ label, city }) => normalizeText(label).includes(s) || normalizeText(city).includes(s),
+        ({ label, city, id }) =>
+          normalizeText(label).includes(s) || normalizeText(city).includes(s) || `${id}`.includes(s),
       );
   }, [ids, search, viewpointData]);
 

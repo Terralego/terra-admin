@@ -112,6 +112,7 @@ const postRowStyle = pictureMap => ({ id }) => {
   }
 };
 
+
 const ViewpointGrid = ({ record }) => {
   const { hasPermission } = useUserSettings();
 
@@ -123,6 +124,10 @@ const ViewpointGrid = ({ record }) => {
     input: { value: state },
   } = useField('state');
 
+  const { data: viewpointsData, total, loaded } = useGetMany('viewpoint', viewpoints);
+  const [currentSort, setCurrentSort] = React.useState({ field: 'id', order: 'DESC' });
+
+  // Compute picture map to easily associate viewpoint to picture
   const pictureMap = React.useMemo(() => {
     if (!record.pictures) {
       return [];
@@ -133,9 +138,33 @@ const ViewpointGrid = ({ record }) => {
     }, {});
   }, [record.pictures]);
 
-  const { data, total, loaded } = useGetMany('viewpoint', viewpoints);
-  const [currentSort, setCurrentSort] = React.useState({ field: 'id', order: 'DESC' });
+  // Compute picture state from map for viewpoint
+  const getPictureState = React.useCallback(viewpoint => {
+    if (pictureMap[viewpoint.id]) {
+      switch (pictureMap[viewpoint.id].state) {
+        case 'submited':
+        case 'accepted':
+        case 'refused':
+          return pictureMap[viewpoint.id].state;
+        case 'draft':
+          if (hasPermission('can_add_pictures')) {
+            return 'draft';
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    return 'missing';
+  }, [hasPermission, pictureMap]);
 
+  // Add picture state field
+  const data = React.useMemo(() => viewpointsData.map(
+    viewpoint => viewpoint && { ...viewpoint, picture_state: getPictureState(viewpoint) },
+  ), [getPictureState, viewpointsData]);
+
+
+  // Viewpoint map for data grid
   const viewpointMap = React.useMemo(
     () =>
       (loaded
@@ -204,6 +233,7 @@ const ViewpointGrid = ({ record }) => {
         <TextField source="label" label="resources.viewpoint.fields.label" />
         <ViewpointSheet label="resources.viewpoint.fields.replay_sheet" />
         <CampaignPictureState
+          source="picture_state" // not used but allow ordering in header
           label="resources.viewpoint.fields.picture_state"
           pictureMap={pictureMap}
         />

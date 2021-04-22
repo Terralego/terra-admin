@@ -1,4 +1,18 @@
 
+3.3.5 / 2021-04-22
+==================
+
+  * Add filter by date for viewpoint modal inside campaigns
+  * Add id search when adding viewpoint to campaign
+  * Allow picture state ordering
+  * Add confirmation to picture actions
+  * Fix undoable change
+  * Fix ResetGeometry init if geom prop is equal to null
+  * Reset Create feature form after submitting it
+  * Change wording and ui for save feature button
+  * Style reset GeometryField button
+  * Improve wording to edit or reset geometries field
+
 3.3.4 / 2021-04-19
 ==================
 

@@ -869,6 +869,11 @@
         "partialy_cloudy": "Partialy cloudy",
         "cloudy": "Cloudy"
       }
+    },
+    "sort":{
+      "sort_by": "Sort",
+      "ASC": "⬆️ Ascendant",
+      "DESC": "⬇️ Descendant"
     }
   },
   "resources": {

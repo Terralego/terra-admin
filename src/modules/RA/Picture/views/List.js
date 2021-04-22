@@ -16,6 +16,8 @@ import { RES_VIEWPOINT, RES_USER } from '../../ra-modules';
 import PictureState from '../components/PictureState';
 import UserNameField from '../../User/components/UserNameField';
 
+import ListFilters from './ListFilters';
+
 export const PictureList = props => {
   const { hasPermission, id } = useUserSettings();
 
@@ -30,6 +32,7 @@ export const PictureList = props => {
       exporter={false}
       bulkActionButtons={<CommonBulkActionButtons />}
       filter={filter}
+      filters={<ListFilters />}
     >
       <Datagrid>
         <ReferenceField source="viewpoint" reference={RES_VIEWPOINT}>

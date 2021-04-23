@@ -24,32 +24,30 @@ const ExportGeom = () => {
   }
 
   return (
-    <div PopoverInteractionKind>
-      <Popover
-        position={Position.TOP}
-        boundary="window"
-        isOpen={open}
-        content={(
-          <Menu>
-            {Object.entries(exports).map(([name, url]) => (
-              <ExportGeomLink
-                key={name}
-                name={name}
-                url={url}
-                onValidation={handleClose}
-              />
-            ))}
-          </Menu>
+    <Popover
+      position={Position.TOP}
+      boundary="window"
+      isOpen={open}
+      content={(
+        <Menu>
+          {Object.entries(exports).map(([name, url]) => (
+            <ExportGeomLink
+              key={name}
+              name={name}
+              url={url}
+              onValidation={handleClose}
+            />
+          ))}
+        </Menu>
       )}
-      >
-        <Button
-          icon="download"
-          minimal
-          onClick={() => setOpen(prevOpen => !prevOpen)}
-          text={t('CRUD.export.label')}
-        />
-      </Popover>
-    </div>
+    >
+      <Button
+        icon="download"
+        minimal
+        onClick={() => setOpen(prevOpen => !prevOpen)}
+        text={t('CRUD.export.label')}
+      />
+    </Popover>
   );
 };
 

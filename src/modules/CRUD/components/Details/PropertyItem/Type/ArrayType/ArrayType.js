@@ -20,8 +20,10 @@ const ArrayType = props => {
   if (isHTML(displayValue[0])) {
     return (
       <div className="details__RTE">
-        {displayValue.map(item => (
+        {displayValue.map((item, index) => (
           <div
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: item }}
           />

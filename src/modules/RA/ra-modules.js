@@ -15,6 +15,7 @@ import baseLayerViews from './BaseLayer/views';
 import viewpointViews from './Viewpoint/views';
 import pictureViews from './Picture/views';
 import campaignViews from './Campaign/views';
+import themeViews from './ViewpointTheme/views';
 
 // const guessers = {
 //   edit: EditGuesser,
@@ -106,6 +107,7 @@ export const resources = [
     name: RES_THEME,
     moduleName: 'OPP',
     endpoint: 'themes',
+    ...themeViews,
   },
   {
     name: RES_BASELAYER,

@@ -1,4 +1,11 @@
 
+3.3.6 / 2021-04-24
+==================
+
+  * Add search for pictures
+  * Add ordering to OPP views
+  * Fix missing key
+
 3.3.5 / 2021-04-22
 ==================
 

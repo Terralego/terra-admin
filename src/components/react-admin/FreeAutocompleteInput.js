@@ -7,7 +7,7 @@ import { useInput, useTranslate } from 'react-admin';
 
 
 const sanitizeRestProps = ({
-  basePath, isRequired, ...rest
+  basePath, isRequired, validate, ...rest
 }) => rest;
 
 const FreeAutocompleteInput = ({ choices = [], label, ...rest }) => {

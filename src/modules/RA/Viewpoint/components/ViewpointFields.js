@@ -52,7 +52,7 @@ const SmartFileInput = props => {
   const {
     record: { document },
   } = props;
-  const isImage = mime.lookup(document).includes('image');
+  const isImage = (mime.lookup(document) || []).includes('image');
   const InputComponent = isImage ? ImageInput : RAFileInput;
   const FieldComponent = isImage ? ImageField : FileField;
   return (

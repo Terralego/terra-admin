@@ -157,7 +157,7 @@
   "opp": {
     "nav": {
       "viewpoints": "Viewpoints",
-      "compaign": "Compaigns"
+      "campaign": "Campaigns"
     },
     "project": "Landscapes Photographic Observatory",
     "viewpoint": {
@@ -738,7 +738,8 @@
       "view_list": "View list",
       "viewpoint_list": "Viewpoint list",
       "picture_list": "Picture list",
-      "campaign_list": "Campaign list"
+      "campaign_list": "Campaign list",
+      "theme_list": "Theme list"
     },
     "action": {
       "add_filter": "Add a filter",
@@ -928,6 +929,11 @@
         "more-2-year": "More than 2 years",
         "more-3-year": "More than 3 years",
         "more-5-year": "More than 5 years"
+      }
+    },
+    "theme":{
+      "fields":{
+        "label": "Label"
       }
     },
     "campaign":{

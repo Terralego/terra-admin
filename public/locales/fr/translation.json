@@ -157,7 +157,7 @@
   "opp": {
     "nav": {
       "viewpoints": "Les points de vue",
-      "compaign": "Les campagnes"
+      "campaign": "Les campagnes"
     },
     "project": "Observatoire Photographique des Paysages",
     "viewpoint": {
@@ -738,7 +738,8 @@
       "view_list": "Liste des vues",
       "viewpoint_list": "Liste des points de vue",
       "picture_list": "Liste des photographies",
-      "campaign_list": "Liste des campagnes"
+      "campaign_list": "Liste des campagnes",
+      "theme_list": "Liste des thèmes"
     },
     "action": {
       "add_filter": "Ajouter un filtre",
@@ -929,6 +930,11 @@
         "more-2-year": "Plus de 2 ans",
         "more-3-year": "Plus de 3 ans",
         "more-5-year": "Plus de 5 ans"
+      }
+    },
+    "theme":{
+      "fields":{
+        "label": "Libellé"
       }
     },
     "campaign":{

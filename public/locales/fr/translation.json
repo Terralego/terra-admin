@@ -883,6 +883,7 @@
       "viewpoint-no-number": "Pas d'id renseigné",
       "fields": {
         "label": "Nom du point de vue",
+        "active": "Actif",
         "city": "Commune",
         "pictures": "Photographies",
         "address": "Adresse",

@@ -871,7 +871,7 @@
         "cloudy": "Nuageux"
       }
     },
-    "sort":{
+    "sort": {
       "sort_by": "Trier",
       "ASC": "⬆️ Croissant",
       "DESC": "⬇️ Décroissant"
@@ -932,40 +932,40 @@
         "more-5-year": "Plus de 5 ans"
       }
     },
-    "theme":{
-      "fields":{
+    "theme": {
+      "fields": {
         "label": "Libellé"
       }
     },
-    "campaign":{
+    "campaign": {
       "forcedCaseName": "Campagne",
-      "fields":{
-        "start_date": "Date", 
-        "label": "Nom", 
+      "fields": {
+        "start_date": "Date",
+        "label": "Nom",
         "state": "État",
-        "assignee": "Photographe", 
+        "assignee": "Photographe",
         "viewpoints": "Point(s) de vue",
         "sheet_filename_prefix": "pointDeVue",
         "all_sheets_filename_prefix": "Campagne",
         "download_sheet": "Télécharger",
-        "statistics":{
+        "statistics": {
           "total": "Nombre de points de vue",
           "submited": "Photo(s) à valider",
           "accepted": "Photo(s) acceptée(s)",
           "progress": "Progression"
         }
       },
-      "actions":{
+      "actions": {
         "add_picture": "Ajouter une photo",
         "show_picture": "Voir la photo",
         "add_viewpoint": "Ajouter un point de vue",
         "remove_viewpoint": "Supprimer un point de vue",
         "download_all_sheets": "Toutes les fiches"
       },
-      "tabs":{
+      "tabs": {
         "metadata": "Informations"
       },
-      "states":{
+      "states": {
         "started": "Démarrée",
         "closed": "Terminée",
         "draft": "Brouillon"
@@ -999,12 +999,12 @@
         "no_picture": "Pas de photographie",
         "identifier": "Identifiant"
       },
-      "actions":{
+      "actions": {
         "refusal_modal_content": "Ajoutez un message expliquant le refus.",
         "accept_modal_title": "Valider la photographie",
         "accept_modal_content": "En validant, vous rendez visible la photographie sur le site publique de l'Observatoire"
       },
-      "states":{
+      "states": {
         "accepted": "Acceptée",
         "refused": "Refusée",
         "submited": "Soumise",
@@ -1013,6 +1013,13 @@
       "tabs": {
         "metadata": "Métadonnées",
         "repeat": "Rephotographie"
+      },
+      "input": {
+        "compare": "Comparer",
+        "compare-title": "Selectionnez une Photographie du point de vue à comparer",
+        "compare-target": "Photographie comparée",
+        "compare-selected": "Photographie sélectionnée dans la gallerie",
+        "gallery-image": "Photographie %{index} du point de vue"
       },
       "name": "Photographie"
     },

@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import {
   DateInput,
   FormTab,
-  ImageField,
-  ImageInput,
   NumberInput,
   ReferenceInput,
   SelectInput,
@@ -14,7 +12,6 @@ import {
   required,
   ReferenceField,
   TextField,
-  useTranslate,
 } from 'react-admin';
 
 import {  makeStyles } from '@material-ui/core/styles';
@@ -31,35 +28,12 @@ import UserNameField from '../../User/components/UserNameField';
 import PictureState from './PictureState';
 import { ISODateFormat } from '../../../../utils/date';
 
+import PictureInput from './PictureInput';
+
 const useStyles = makeStyles({
   inline: {
     display: 'inline-block',
     marginRight: '1em',
-  },
-  picture: {
-    position: 'relative',
-    float: 'right',
-    width: '50%',
-    '& .previews div': {
-      width: '100%',
-      height: 'auto',
-    },
-    '& .previews img': {
-      width: '100%',
-      height: 'auto',
-      maxHeight: 'inherit',
-    },
-    '& .refusal': {
-      position: 'absolute',
-      bottom: '1em',
-      left: 0,
-      right: 0,
-      padding: '2em',
-      fontSize: '1.5em',
-      margin: '0 -8px 0 8px',
-      color: 'orange',
-      backgroundColor: 'rgba(23, 23, 23, 0.43)',
-    },
   },
 });
 
@@ -72,23 +46,6 @@ const weatherConditions = [
 
 const Br = () => <br />;
 const ClearFloat = () => <br style={{ clear: 'both' }} />;
-
-const PictureInput = props => {
-  const classes = useStyles();
-  const translate = useTranslate();
-  const { record: { properties: { refusal_message: refusalMessage } = {}, state } = {} } = props;
-  return (
-    <div className={classes.picture}>
-      <ImageInput source="file" accept="image/*" {...props}>
-        <ImageField source="full" />
-      </ImageInput>
-      {
-        refusalMessage && state === 'refused' &&
-        (<p className="refusal">{`${translate('resources.picture.states.refused')} - ${refusalMessage}`}</p>)
-      }
-    </div>
-  );
-};
 
 const PictureFields = ({ edit, mapConfig, location, ...props }) => {
   const { hasPermission } = useUserSettings();

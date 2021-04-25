@@ -871,7 +871,7 @@
         "cloudy": "Cloudy"
       }
     },
-    "sort":{
+    "sort": {
       "sort_by": "Sort",
       "ASC": "⬆️ Ascendant",
       "DESC": "⬇️ Descendant"
@@ -931,40 +931,40 @@
         "more-5-year": "More than 5 years"
       }
     },
-    "theme":{
-      "fields":{
+    "theme": {
+      "fields": {
         "label": "Label"
       }
     },
-    "campaign":{
+    "campaign": {
       "forcedCaseName": "Campaign",
-      "fields":{
-        "start_date": "Date", 
-        "label": "Name", 
+      "fields": {
+        "start_date": "Date",
+        "label": "Name",
         "state": "Status",
-        "assignee": "Photographer", 
+        "assignee": "Photographer",
         "viewpoints": "Viewpoint",
         "sheet_filename_prefix": "viewpoint",
         "all_sheets_filename_prefix": "campaign",
         "download_sheet": "Download",
-        "statistics":{
+        "statistics": {
           "total": "Viewpoint count",
           "submited": "Pictures to validate",
           "accepted": "Accepted pictures",
           "progress": "Progress"
         }
       },
-      "actions":{
+      "actions": {
         "add_picture": "Add a picture",
         "show_picture": "Show picture",
         "add_viewpoint": "Add viewpoint",
         "remove_viewpoint": "Remove viewpoint",
         "download_all_sheets": "All sheets"
       },
-      "tabs":{
+      "tabs": {
         "metadata": "Information"
       },
-      "states":{
+      "states": {
         "started": "Started",
         "closed": "Closed",
         "draft": "Draft"
@@ -997,12 +997,12 @@
         "no_picture": "No picture",
         "identifier": "Identifier"
       },
-      "actions":{
+      "actions": {
         "refusal_modal_content": "Add a message to explain refusal",
         "accept_modal_title": "Validate picture",
         "accept_modal_content": "By validating, the picture will be available publicly."
       },
-      "states":{
+      "states": {
         "accepted": "Accepted",
         "refused": "Reused",
         "submited": "Submited",
@@ -1011,6 +1011,13 @@
       "tabs": {
         "metadata": "Meta data",
         "repeat": "Rephotography"
+      },
+      "input": {
+        "compare": "Compare",
+        "compare-title": "Select a photography from the viewpoint to compare with",
+        "compare-target": "Photography to compare",
+        "compare-selected": "Photography selected from the gallery",
+        "gallery-image": "Photography %{index} from viewpoint"
       },
       "name": "Picture"
     },

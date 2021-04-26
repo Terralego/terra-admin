@@ -9,20 +9,34 @@ import {
 } from '@blueprintjs/core';
 
 import MenuTree from '../../../components/MenuTree';
+import useUserSettings from '../../../hooks/useUserSettings';
 
-const byModule = enabledModules => ({ requiredModule }) => {
+const byModule = modules => ({ requiredModule }) => {
   if (!requiredModule) {
     return true;
   }
 
-  return enabledModules.includes(requiredModule);
+  return modules.includes(requiredModule);
 };
 
-export const MenuDropdown = ({ t, modules = [], enabledModules = [] }) => {
+const byPermissions = hasPermission => ({ requiredPermissions }) => {
+  if (!requiredPermissions) {
+    return true;
+  }
+  return hasPermission(requiredPermissions);
+};
+
+export const MenuDropdown = ({ t, modules = [], enabledModules = [], requiredPermissions }) => {
+  const { hasPermission } = useUserSettings();
+
   const menuContent = modules.reduce((acc, { config: { menu = [] } = {} }) => [
     ...acc,
     ...menu,
   ], []).filter(byModule(enabledModules));
+
+  if (requiredPermissions && !hasPermission(requiredPermissions)) {
+    return null;
+  }
 
   if (!menuContent.length) {
     return null;

@@ -13,7 +13,6 @@ const byPermissions = permissions => ({ requiredPermissions }) => {
   if (!requiredPermissions) {
     return true;
   }
-
   return permissions.includes(requiredPermissions);
 };
 

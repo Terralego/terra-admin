@@ -3,8 +3,25 @@ import { NavLink } from 'react-router-dom';
 
 import { withTranslation } from 'react-i18next';
 import { MenuItem } from '@blueprintjs/core';
+import useUserSettings from '../../hooks/useUserSettings';
 
-export const MenuTree = ({ t, href, items = [], label }) => {
+const byPermissions = hasPermission => ({ requiredPermissions }) => {
+  if (!requiredPermissions) {
+    return true;
+  }
+  return hasPermission(requiredPermissions);
+};
+
+
+export const MenuTree = ({ t, href, items: unfilteredItems = [], label }) => {
+  const { hasPermission } = useUserSettings();
+
+  const items = React.useMemo(
+    () =>
+      unfilteredItems.filter(byPermissions(hasPermission)),
+    [hasPermission, unfilteredItems],
+  );
+
   if (!items.length) {
     if (!href) {
       return <MenuItem text={t(label)} />;

@@ -16,6 +16,7 @@ import viewpointViews from './Viewpoint/views';
 import pictureViews from './Picture/views';
 import campaignViews from './Campaign/views';
 import themeViews from './ViewpointTheme/views';
+import cityViews from './ViewpointCity/views';
 
 // const guessers = {
 //   edit: EditGuesser,
@@ -102,11 +103,14 @@ export const resources = [
     name: RES_CITY,
     moduleName: 'OPP',
     endpoint: 'cities',
+    requiredPermissions: 'can_manage_viewpoints',
+    ...cityViews,
   },
   {
     name: RES_THEME,
     moduleName: 'OPP',
     endpoint: 'themes',
+    requiredPermissions: 'can_manage_viewpoints',
     ...themeViews,
   },
   {
@@ -127,36 +131,40 @@ export const config = {
       label: 'user.project',
       // requiredPermissions: 'auth.change_group',
       requiredModule: 'User',
-      items: resources.filter(byModule('User')).map(({ name, beta }) => ({
+      items: resources.filter(byModule('User')).map(({ name, requiredPermissions, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
+        requiredPermissions,
         beta,
       })),
     },
     {
       label: 'datalayer.project',
       requiredModule: 'DataSource',
-      items: resources.filter(byModule('DataSource', 'DataLayer')).map(({ name, beta }) => ({
+      items: resources.filter(byModule('DataSource', 'DataLayer')).map(({ name, requiredPermissions, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
+        requiredPermissions,
         beta,
       })),
     },
     {
       label: 'opp.project',
       requiredModule: 'OPP',
-      items: resources.filter(byModule('OPP')).map(({ name, beta }) => ({
+      items: resources.filter(byModule('OPP')).map(({ name, requiredPermissions, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
+        requiredPermissions,
         beta,
       })),
     },
     {
       label: 'baseLayer.project',
       requiredModule: 'BaseLayer',
-      items: resources.filter(byModule('BaseLayer')).map(({ name, beta }) => ({
+      items: resources.filter(byModule('BaseLayer')).map(({ name, requiredPermissions, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
+        requiredPermissions,
         beta,
       })),
     },

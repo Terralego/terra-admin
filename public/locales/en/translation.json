@@ -739,7 +739,8 @@
       "viewpoint_list": "Viewpoint list",
       "picture_list": "Picture list",
       "campaign_list": "Campaign list",
-      "theme_list": "Theme list"
+      "theme_list": "Theme list",
+      "city_list": "City list"
     },
     "action": {
       "add_filter": "Add a filter",

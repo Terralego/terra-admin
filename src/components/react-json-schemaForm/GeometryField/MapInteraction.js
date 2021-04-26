@@ -13,6 +13,7 @@ import { getLayers } from '../../../modules/CRUD/services/CRUD';
 import { CRUDContext } from '../../../modules/CRUD/services/CRUDProvider';
 import { MapContext } from '../../../modules/CRUD/services/MapProvider';
 import { useGeometryField } from './GeometryFieldProvider';
+import arrow from './arrow.png';
 
 import {
   ALL,
@@ -45,6 +46,15 @@ const MapInteraction = () => {
   } = useContext(MapContext);
 
   const layers = useMemo(() => getLayers(settings), [settings]);
+
+  useEffect(() => {
+    if (!map.hasImage('arrow')) {
+      map.loadImage(arrow, (error, image) => {
+        if (error) throw error;
+        if (!map.hasImage('arrow')) map.addImage('arrow', image);
+      });
+    }
+  }, [map]);
 
   const resetStyle = useCallback(() => {
     map && map.setFilter(getLayerId(layers, geomValues.layerName), null);
@@ -111,25 +121,41 @@ const MapInteraction = () => {
         control: CONTROL_PATH,
         directionsThemes: getDirectionsThemes({ routingSettings, accessToken }),
         layersCustomisation: {
-          pointCircleLayerCustomisation: {
+          pointLayerList: [{
             paint: {
               'circle-radius': 10,
               'circle-color': '#FFFFFF',
               'circle-stroke-width': 1,
               'circle-stroke-color': '#0D47A1',
             },
-          },
-          pointTextLayerCustomisation: { paint: { 'text-color': '#B71C1C' } },
-          lineLayerCustomisation: {
-            paint: { 'line-width': 4, 'line-color': '#0D47A1' },
-          },
-          phantomJunctionLineLayerCustomisation: {
+          }, {
             paint: {
-              'line-width': 4,
+              'text-color': '#B71C1C',
+            },
+            type: 'symbol',
+            layout: {
+              'text-field': ['to-string', ['+', ['get', 'index'], 1]],
+              'text-allow-overlap': true,
+            },
+          }],
+          lineLayerList: [{
+            paint: { 'line-width': 5, 'line-color': '#0D47A1' },
+          }, {
+            type: 'symbol',
+            layout: {
+              'icon-image': 'arrow',
+              'icon-size': 0.6,
+              'symbol-placement': 'line',
+              'icon-allow-overlap': true,
+            },
+          }],
+          phantomJunctionLineLayerList: [{
+            paint: {
+              'line-width': 5,
               'line-color': '#0D47A1',
               'line-dasharray': [1, 1],
             },
-          },
+          }],
         },
         onPathUpdate: updateGeometryFromMap,
         order: 2,

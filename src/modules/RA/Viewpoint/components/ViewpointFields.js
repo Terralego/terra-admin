@@ -243,6 +243,25 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
 
           <TextInput source="properties.keywords" />
           <TextInput source="properties.landscape-entities" />
+
+          <ArrayInput source="related" fullWidth>
+            <SimpleFormIterator>
+              <SelectInput
+                label="resources.viewpoint.fields.related.key"
+                source="key"
+                choices={[
+                  { id: 'doc', name: 'Documents' },
+                ]}
+                formClassName={classes.inline}
+              />
+              <TextInput
+                label="resources.viewpoint.fields.related.label"
+                source="properties.label"
+                formClassName={classes.inline}
+              />
+              <SmartFileInput label="resources.viewpoint.fields.related.document" />
+            </SimpleFormIterator>
+          </ArrayInput>
         </FormTab>
       )}
 

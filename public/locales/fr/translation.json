@@ -739,7 +739,8 @@
       "viewpoint_list": "Liste des points de vue",
       "picture_list": "Liste des photographies",
       "campaign_list": "Liste des campagnes",
-      "theme_list": "Liste des thèmes"
+      "theme_list": "Liste des thèmes",
+      "city_list": "Liste des villes"
     },
     "action": {
       "add_filter": "Ajouter un filtre",

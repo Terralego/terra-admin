@@ -51,8 +51,10 @@ export const CustomAdmin = ({ locale, permissions, enabledModules = [] }) => {
         if (!enabledModules.includes(moduleName)) {
           return false;
         }
-        if (requiredPermissions && !permissions.includes[requiredPermissions]) {
-          return false;
+        if (requiredPermissions && !permissions.includes(requiredPermissions)) {
+          // Don't filter by permissions. Sometimes we want resource readonly
+          // So we intentionnaly return true here
+          return true;
         }
 
         return true;

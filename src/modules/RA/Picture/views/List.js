@@ -43,7 +43,7 @@ export const PictureList = props => {
         <DateField source="date" />
 
         {hasPermission('can_manage_users') && (
-          <ReferenceField source="owner_id" reference={RES_USER}>
+          <ReferenceField source="owner_id" sortBy="owner" reference={RES_USER}>
             <UserNameField />
           </ReferenceField>
         )}

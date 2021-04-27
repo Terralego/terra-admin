@@ -9,7 +9,7 @@ import compose from '../../utils/compose';
 
 import dataProvider from '../../services/react-admin/dataProvider';
 import withResourceEndpoint from '../../services/react-admin/withResourceEndpoint';
-import enhanceDataProvider from '../../services/react-admin/enhanceDataProvider';
+import enhanceViewpointDataProvider from '../../services/react-admin/enhanceViewpointDataProvider';
 import sourceDataProvider from '../../services/react-admin/sourceDataProvider';
 import patchLayerDataProvider from '../../services/react-admin/patchLayerDataProvider';
 import patchPictureDataProvider from '../../services/react-admin/patchPictureDataProvider';
@@ -33,7 +33,7 @@ const customDataProvider = compose(
   patchLayerDataProvider,
   toMultipart,
   sourceDataProvider,
-  enhanceDataProvider,
+  enhanceViewpointDataProvider,
 )(dataProvider);
 
 export const CustomAdmin = ({ locale, permissions, enabledModules = [] }) => {

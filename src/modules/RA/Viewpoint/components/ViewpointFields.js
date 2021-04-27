@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Api from '@terralego/core/modules/Api';
 import mime from 'mime-types';
+import get from 'lodash/get';
+import { v4 as uuid } from 'uuid';
 
 import {
   minValue,
@@ -11,10 +13,8 @@ import {
   AutocompleteArrayInput,
   BooleanInput,
   FileField,
-  FileInput as RAFileInput,
   FormTab,
   ImageField,
-  ImageInput,
   Labeled,
   LinearProgress,
   NumberField,
@@ -26,6 +26,8 @@ import {
   TextField,
   SelectInput,
   TextInput,
+  FileInput,
+  useRecordContext,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
@@ -48,19 +50,26 @@ const styles = {
 
 const Br = () => <br />;
 
-const SmartFileInput = props => {
-  const {
-    record: { document },
-  } = props;
-  const isImage = (mime.lookup(document) || []).includes('image');
-  const InputComponent = isImage ? ImageInput : RAFileInput;
-  const FieldComponent = isImage ? ImageField : FileField;
-  return (
-    <InputComponent {...props}>
-      <FieldComponent source="document" title="voir le fichier" target="_blank" />
-    </InputComponent>
-  );
+const isRequired = [required()];
+
+const FilePreview = props => {
+  const { source } = props;
+  const record = useRecordContext(props);
+  const sourceValue = get(record, source);
+  let isImage = false;
+
+  if (record.rawFile) {
+    isImage = (mime.lookup(record.rawFile.name) || []).includes('image');
+  } else {
+    isImage = (mime.lookup(sourceValue) || []).includes('image');
+  }
+  if (isImage) {
+    return <ImageField {...props} />;
+  }
+
+  return <FileField {...props} title="Voir" />;
 };
+
 
 const PictureRephotography = ({ record, ...rest }) => {
   if (!record || !record.pictures || !record.pictures.length) {
@@ -198,23 +207,28 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
           <BooleanInput source="properties.difficulte" formClassName={classes.inline} />
           <TextInput multiline source="properties.rephotographie" rows={4} rowsMax={30} />
 
-          <ArrayInput source="related" fullWidth>
+          <ArrayInput source="related_rephotography" fullWidth>
             <SimpleFormIterator>
+              <TextInput source="key" defaultValue={`${uuid()}`} style={{ display: 'none' }} disabled />
               <SelectInput
-                label="resources.viewpoint.fields.related.key"
-                source="key"
+                label="resources.viewpoint.fields.related.type"
+                source="properties.type"
                 choices={[
                   { id: 'croquis', name: 'Croquis' },
                   { id: 'emplacement', name: 'Emplacement' },
                 ]}
                 formClassName={classes.inline}
+                validate={isRequired}
               />
               <TextInput
                 label="resources.viewpoint.fields.related.label"
                 source="properties.label"
                 formClassName={classes.inline}
+                validate={isRequired}
               />
-              <SmartFileInput label="resources.viewpoint.fields.related.document" />
+              <FileInput source="document">
+                <FilePreview source="url" />
+              </FileInput>
             </SimpleFormIterator>
           </ArrayInput>
         </FormTab>
@@ -223,10 +237,7 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
         <FormTab label="resources.viewpoint.tabs.landscape" path="landscape">
           <RichTextInput source="properties.paysage" />
           <RichTextInput source="properties.dynamiques" />
-          <TextInput multiline source="properties.issues" />
-          <TextInput multiline source="properties.observations" />
-          <TextInput multiline source="properties.historial-data" />
-          <TextInput multiline source="properties.cultural-references" />
+          <TextInput multiline source="properties.observations" fullWidth />
 
           {waiting && (
             <>
@@ -241,25 +252,19 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
             />
           )}
 
-          <TextInput source="properties.keywords" />
-          <TextInput source="properties.landscape-entities" />
-
-          <ArrayInput source="related" fullWidth>
+          <ArrayInput source="related_docs" fullWidth>
             <SimpleFormIterator>
-              <SelectInput
-                label="resources.viewpoint.fields.related.key"
-                source="key"
-                choices={[
-                  { id: 'doc', name: 'Documents' },
-                ]}
-                formClassName={classes.inline}
-              />
+              <TextInput source="key" defaultValue={`${uuid()}`} style={{ display: 'none' }} disabled />
+              <TextInput source="properties.type" defaultValue="doc" style={{ display: 'none' }} disabled />
               <TextInput
                 label="resources.viewpoint.fields.related.label"
                 source="properties.label"
                 formClassName={classes.inline}
+                validate={isRequired}
               />
-              <SmartFileInput label="resources.viewpoint.fields.related.document" />
+              <FileInput source="document">
+                <FilePreview source="url" />
+              </FileInput>
             </SimpleFormIterator>
           </ArrayInput>
         </FormTab>

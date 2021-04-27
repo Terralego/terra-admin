@@ -1178,5 +1178,10 @@
         "manual": "Manuelle"
       }
     }
+  },
+  "pictures": {
+    "compare": {
+      "placeholder": "Image est introuvable."
+    }
   }
 }

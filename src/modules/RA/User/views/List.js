@@ -20,7 +20,7 @@ export const UserList = props => (
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="email" />
-      <UserNameField label="resources.user.fields.fullname" />
+      <UserNameField label="resources.user.fields.fullname" sortable={false} />
       <BooleanField source="is_superuser" />
       <BooleanField source="is_active" />
       <EditButton />

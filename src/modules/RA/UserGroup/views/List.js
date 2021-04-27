@@ -22,9 +22,9 @@ export const UserGroupList = props => (
     // filters={<UserGroupListFilters />}
   >
     <Datagrid rowClick="edit">
-      <TextField source="id" />
-      <TextField source="name" />
-      <ArrayCountField source="users" />
+      <TextField source="id" sortable={false} />
+      <TextField source="name" sortable={false} />
+      <ArrayCountField source="users" sortable={false} />
       <EditButton />
     </Datagrid>
   </List>

@@ -224,7 +224,6 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
                 label="resources.viewpoint.fields.related.label"
                 source="properties.label"
                 formClassName={classes.inline}
-                validate={isRequired}
               />
               <FileInput source="document">
                 <FilePreview source="url" />

@@ -141,19 +141,19 @@ const PictureInput = props => {
           </div>
 
           <div className={classes.compareContainer}>
-            <Typography component="h4" className={classes.compareTitle}>
+            <Typography component="h2" variant="h5" className={classes.compareTitle}>
               {translate('resources.picture.input.compare-title')}
             </Typography>
             {(selectedIndex === null) && <SideBySideImages pictures={[pic]} />}
             {(selectedIndex !== null) && (
               <>
                 <div className={classes.picturesDates}>
-                  <Typography component="h5">
+                  <Typography component="h3">
                     {translate('resources.picture.input.compare-target')}
                     {' - '}
                     {toLocaleDateString(pic.date)}
                   </Typography>
-                  <Typography component="h5">
+                  <Typography component="h3">
                     {translate('resources.picture.input.compare-selected')}
                     {' - '}
                     {toLocaleDateString(picturesList[selectedIndex]?.date)}

@@ -1,4 +1,14 @@
 
+3.4.0 / 2021-04-27
+==================
+
+  * Remove filter for broken column
+  * Fix related file management
+  * Add City admin
+  * Fix crash on document addition
+  * Update layer's style related to mapbox-gl-path upgrade
+  * Upgrade @terralego/core package to 1.27.3
+
 3.3.7 / 2021-04-27
 ==================
 

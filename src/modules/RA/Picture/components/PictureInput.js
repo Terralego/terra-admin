@@ -98,6 +98,7 @@ const PictureInput = props => {
   const [showModal, setShowModal] = useState(false);
   const [picturesList, setPicturesList] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const classes = useStyles();
   const dataProvider = useDataProvider();
@@ -107,13 +108,18 @@ const PictureInput = props => {
     let isMounted = true;
 
     const loadData = async () => {
-      const { data: { pictures } } = await dataProvider.getOne(RES_VIEWPOINT, { id: viewpoint });
+      setLoading(true);
+      const {
+        data: { pictures } = {},
+      } = await dataProvider.getOne(RES_VIEWPOINT, { id: viewpoint });
+
       if (!isMounted) {
         return;
       }
       const filteredPictures = pictures.filter(({ id: picId }) => picId !== id);
       setPicturesList(filteredPictures);
       setSelectedIndex(0);
+      setLoading(false);
     };
 
     loadData();
@@ -175,7 +181,12 @@ const PictureInput = props => {
         (<p className="refusal">{`${translate('resources.picture.states.refused')} - ${refusalMessage}`}</p>)
       }
       {pic.file && (
-        <Button variant="outlined" type="button" onClick={() => setShowModal(true)}>
+        <Button
+          variant="outlined"
+          type="button"
+          onClick={() => setShowModal(true)}
+          disabled={loading}
+        >
           {translate('resources.picture.input.compare')}
         </Button>
       )}

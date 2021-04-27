@@ -914,9 +914,11 @@
         "properties.keywords": "Mots-clés",
         "properties.landscape-entities": "Entités paysagères",
         "related": "Documents associés",
-        "related.document": "Fichier",
-        "related.key": "Type",
+        "document": "Fichier",
+        "related.type": "Type",
         "related.label": "Libellé",
+        "related_rephotography": "Documents de rephotographie",
+        "related_docs": "Documents associés",
         "point.coordinates[0]": "Longitude",
         "point.coordinates[1]": "Latitude"
       },

@@ -19,13 +19,6 @@ const byModule = modules => ({ requiredModule }) => {
   return modules.includes(requiredModule);
 };
 
-const byPermissions = hasPermission => ({ requiredPermissions }) => {
-  if (!requiredPermissions) {
-    return true;
-  }
-  return hasPermission(requiredPermissions);
-};
-
 export const MenuDropdown = ({ t, modules = [], enabledModules = [], requiredPermissions }) => {
   const { hasPermission } = useUserSettings();
 

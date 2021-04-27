@@ -84,6 +84,7 @@ export const ListFilters = props => {
         label="resources.viewpoint.fields.city"
         source="city_id"
         reference="city"
+        perPage={300}
         allowEmpty
       >
         <SelectInput optionText="label" />

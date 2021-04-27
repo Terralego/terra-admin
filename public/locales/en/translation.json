@@ -913,9 +913,11 @@
         "properties.keywords": "Keywords",
         "properties.landscape-entities": "Landscape entities",
         "related": "Linked documents",
-        "related.document": "File",
-        "related.key": "Type",
+        "document": "File",
+        "related.type": "Type",
         "related.label": "Label",
+        "related.rephotography": "Rephotography files",
+        "related.docs": "Additonnal documents",
         "point.coordinates[0]": "Longitude",
         "point.coordinates[1]": "Latitude"
       },

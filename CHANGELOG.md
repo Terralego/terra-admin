@@ -1,4 +1,14 @@
 
+3.3.7 / 2021-04-27
+==================
+
+  * Add compare picture modal to picture page
+  * Fix picture sort
+  * Add theme admin
+  * Remove useless wrapper
+  * Upgrade @blueprintjs/core package version 3.44.0
+  * Fix importGeomFile for geometries not using pathControl
+
 3.3.6 / 2021-04-24
 ==================
 

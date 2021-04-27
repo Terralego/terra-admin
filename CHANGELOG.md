@@ -1,4 +1,12 @@
 
+3.4.1 / 2021-04-27
+==================
+
+  * Upgrade terra-front to 1.27.4 to use pic comparison translation
+  * Remove absolute position for picture comparison component
+  * Use better styling for picture comparison title
+  * Disable compare button when datas are loading
+
 3.4.0 / 2021-04-27
 ==================
 

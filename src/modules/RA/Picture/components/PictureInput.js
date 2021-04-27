@@ -65,7 +65,6 @@ const useStyles = makeStyles({
   compareContainer: {
     height: '70%',
     width: '80%',
-    position: 'absolute',
     left: '110px',
     top: '10px',
   },

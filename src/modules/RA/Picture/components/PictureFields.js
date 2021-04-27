@@ -66,6 +66,7 @@ const PictureFields = ({ edit, mapConfig, location, ...props }) => {
             reference={RES_VIEWPOINT}
             formClassName={classes.inline}
             validate={required()}
+            perPage={200}
           >
             <SelectInput optionText="label" />
           </ReferenceInput>

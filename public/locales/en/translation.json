@@ -936,7 +936,8 @@
     },
     "theme": {
       "fields": {
-        "label": "Label"
+        "label": "Label",
+        "category": "Category"
       }
     },
     "campaign": {

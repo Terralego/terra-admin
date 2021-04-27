@@ -29,8 +29,9 @@ export const useGetListAllPages = (
         filter,
       });
 
-      // Get first layer to know total
+      // Get first page to know total
       const { data: firstPage, total } = await dataProvider.getList(resource, genQuery(1));
+
       if (!mounted) return;
 
       setData(firstPage);
@@ -52,7 +53,11 @@ export const useGetListAllPages = (
 
       setIsLoading(false);
     };
-    loadData();
+    loadData().catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      setIsLoading(false);
+    });
     return () => {
       mounted = false;
     };

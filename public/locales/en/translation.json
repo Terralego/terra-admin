@@ -1176,5 +1176,10 @@
         "manual": "Manual"
       }
     }
+  },
+  "pictures": {
+    "compare": {
+      "placeholder": "Picture not found."
+    }
   }
 }

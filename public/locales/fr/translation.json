@@ -937,7 +937,8 @@
     },
     "theme": {
       "fields": {
-        "label": "Libellé"
+        "label": "Libellé",
+        "category": "Catégorie"
       }
     },
     "campaign": {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Api from '@terralego/core/modules/Api';
 import mime from 'mime-types';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import { v4 as uuid } from 'uuid';
 
 import {
@@ -31,15 +31,20 @@ import {
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
+import { remove } from 'diacritics';
 import { withStyles } from '@material-ui/core/styles';
 
-import { RES_PICTURE } from '../../ra-modules';
+import { RES_PICTURE, RES_THEME } from '../../ra-modules';
 
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
 import FreeAutocompleteInput from '../../../../components/react-admin/FreeAutocompleteInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
 import GridListPictures from './GridListPictures';
+import { useGetListAllPages } from '../../../../utils/react-admin/hooks';
+import useAppSettings from '../../../../hooks/useAppSettings';
+
+import themeRenderer from './themeRenderer';
 
 const styles = {
   inline: {
@@ -103,26 +108,58 @@ const PictureRephotography = ({ record, ...rest }) => {
   );
 };
 
+const themeFilter = { field: 'label', order: 'DESC' };
+
+const normalizeText = text => (text ? remove(text.toLowerCase()) : '');
+
+const matchThemeSearch = (filter, choice) =>
+  normalizeText(choice.label).includes(normalizeText(filter));
+
 const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...props }) => {
+  const { modules:
+    {
+      OPP: {
+        theme_categories: themeCategories = [],
+      } = {},
+    } = {} } = useAppSettings();
+
   const [remoteChoices, setRemoteChoices] = React.useState([]);
   const [waiting, setWaiting] = React.useState(false);
+  const { data: rawThemes, isLoading } = useGetListAllPages(RES_THEME, 50, themeFilter);
 
-  const getRemoteData = async () => {
+
+  const categoryMap = React.useMemo(() => themeCategories.reduce(
+    (acc, cat) => { acc[cat.id] = cat; return acc; }, {},
+  ),
+  [themeCategories]);
+
+  const getRemoteData = React.useCallback(async () => {
     setWaiting(true);
 
-    const { themes, cities } = await Api.request('viewpoints/filters/');
+    if (isLoading) {
+      return;
+    }
+
+    const { cities } = await Api.request('viewpoints/filters/');
 
     setRemoteChoices({
-      themes: themes.map(theme => ({ id: theme, name: theme })),
+      themes: rawThemes.map(
+        theme => ({
+          ...theme,
+          id: theme.label,
+          name: theme.label,
+          category: categoryMap[theme.category],
+        }),
+      ),
       cities,
     });
 
     setWaiting(false);
-  };
+  }, [categoryMap, isLoading, rawThemes]);
 
   React.useEffect(() => {
     getRemoteData();
-  }, []);
+  }, [getRemoteData]);
 
   return (
     <TabbedForm
@@ -243,11 +280,13 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
               <LinearProgress />
             </>
           )}
-          {!waiting && (
+          {!waiting && remoteChoices.themes && (
             <AutocompleteArrayInput
               translateChoice={false}
               source="themes"
               choices={remoteChoices.themes}
+              optionText={themeRenderer}
+              matchSuggestion={matchThemeSearch}
             />
           )}
 

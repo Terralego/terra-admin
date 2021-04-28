@@ -112,12 +112,12 @@ export const GeometryFieldProvider = ({ children, formData, onChange, name, sche
 
     setNextFormData({
       geom: {
-        ...nextFormData.geometry,
+        ...nextFormData.geom,
         coordinates: [],
       },
       routingInformation: undefined,
     });
-  }, [map, nextFormData.geometry]);
+  }, [map, nextFormData.geom]);
 
   const isRequired = schema.required?.includes('coordinates');
   const isRequiredInEditView = isRequired && params.id !== ACTION_CREATE;

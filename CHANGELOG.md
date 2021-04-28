@@ -1,4 +1,10 @@
 
+3.5.0 / 2021-04-28
+==================
+
+  * Add theme categories
+  * Change readonly CSS selector because of Firefox bug
+
 3.4.1 / 2021-04-27
 ==================
 

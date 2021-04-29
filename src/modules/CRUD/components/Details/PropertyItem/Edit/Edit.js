@@ -26,6 +26,16 @@ const sanitizeValue = (schema, value) => {
   return value;
 };
 
+const isFeatureToDelete = (isGeom, value, method) => {
+  if (!isGeom || value.geom === null) {
+    return false;
+  }
+  if (value.geom.coordinates.length === 0 && method === 'PATCH') {
+    return true;
+  }
+  return false;
+};
+
 const Edit = ({
   editable,
   editedItem,
@@ -49,7 +59,9 @@ const Edit = ({
     getFeaturesList,
     getSettings,
     settings,
+    deleteFeature,
     saveFeature,
+    fetchFeature,
   } = useContext(CRUDContext);
 
   const value = useMemo(() => {
@@ -107,7 +119,12 @@ const Edit = ({
 
     setDefaultValue(propValue);
 
-    const savedFeatures = await saveFeature(
+    const isDeleting = isFeatureToDelete(isGeom, propValue, method);
+    const saveOrDeleteFeature = isDeleting
+      ? deleteFeature
+      : saveFeature;
+
+    const savedFeatures = await saveOrDeleteFeature(
       featureEndpoint,
       endpoint,
       body,
@@ -116,15 +133,23 @@ const Edit = ({
 
     if (!isMounted.current) return;
 
-    setLoading(false);
-    if (savedFeatures.feature) {
+    if (!savedFeatures.error) {
+      getSettings(settingsEndpoint);
+      if (isDeleting) {
+        await fetchFeature(featureEndpoint, id);
+      } else {
+        getFeaturesList(featureEndpoint);
+      }
+      if (!isMounted.current) return;
       setEditedItem('');
       onRead(name);
-      getSettings(settingsEndpoint);
-      getFeaturesList(featureEndpoint);
     }
-  }, [
+    setLoading(false);
+  },
+  [
+    deleteFeature,
     featureEndpoint,
+    fetchFeature,
     getFeaturesList,
     getSettings,
     id,

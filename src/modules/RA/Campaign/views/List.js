@@ -71,7 +71,7 @@ export const CampaignList = props => {
         <ProgressField label="resources.campaign.fields.statistics.progress" sortable={false} />
 
         <EditButton />
-        <CloneCampaignButton />
+        {/* <CloneCampaignButton /> */}
       </Datagrid>
     </List>
   );

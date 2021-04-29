@@ -7,6 +7,8 @@ import IconList from '@material-ui/icons/List'; // eslint-disable-line import/no
 import FileCopy from '@material-ui/icons/FileCopy'; // eslint-disable-line import/no-extraneous-dependencies
 import Api from '@terralego/core/modules/Api';
 
+import CloneCampaignButton from '../components/CloneCampaignButton';
+
 
 const CampaignActions = ({
   basePath,
@@ -16,6 +18,15 @@ const CampaignActions = ({
   const translate = useTranslate();
   return (
     <TopToolbar>
+      {(data && data.id) && (
+      <CloneCampaignButton
+        record={data}
+        basePath={basePath}
+        variant="outlined"
+        style={{ marginRight: '1em' }}
+      />
+      )}
+
       {data && data.state === 'started' && (
       <Button
         variant="outlined"
@@ -27,6 +38,7 @@ const CampaignActions = ({
         <FileCopy />
       </Button>
       )}
+
       <Button
         component={Link}
         to={{

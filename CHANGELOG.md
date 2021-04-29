@@ -1,4 +1,13 @@
 
+3.5.1 / 2021-04-29
+==================
+
+  * Add cloneCampaignButton to edit form
+  * Add clone campaign button
+  * Add default values for lat and lng when creating a viewpoint
+  * Add some more styling to compare picture component
+  * Fix formData after the reset of GeometryField
+
 3.5.0 / 2021-04-28
 ==================
 

@@ -210,6 +210,7 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
           source="point.coordinates"
           center={mapConfig.center}
           style={{ width: '50%' }}
+          defaultValue={['', '']}
         />
       </FormTab>
 

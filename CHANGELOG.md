@@ -1,4 +1,10 @@
 
+3.5.2 / 2021-04-29
+==================
+
+  * Add default values for lat and lng when creating a viewpoint
+  * Hide duplicate button for now in List
+
 3.5.1 / 2021-04-29
 ==================
 

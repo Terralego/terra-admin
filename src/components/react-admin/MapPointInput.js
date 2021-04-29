@@ -33,7 +33,7 @@ const MapPointInput = ({ classes, input, center, mapConfig, ...rest }) => {
 
   const customProps = {};
 
-  if (input.value) {
+  if (input.value && input.value[0] && input.value[1]) {
     customProps.center = input.value;
   }
 
@@ -59,7 +59,7 @@ const MapPointInput = ({ classes, input, center, mapConfig, ...rest }) => {
         onClick={handleMapClick}
         {...customProps}
       >
-        {!!input.value && (
+        {!!input.value && input.value[0] && input.value[1] && (
         <Marker coordinates={input.value} anchor="center">
           <span className={classes.marker} />
         </Marker>

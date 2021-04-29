@@ -8,12 +8,16 @@ import {
   TextField,
   Filter,
   TextInput,
+  CloneButton,
+  useGetOne,
+  LinearProgress,
+  useTranslate,
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 import useUserSettings from '../../../../hooks/useUserSettings';
 
-import { RES_USER } from '../../ra-modules';
+import { RES_USER, RES_CAMPAIGN } from '../../ra-modules';
 import CampaignState from '../components/CampaignState';
 import UserNameField from '../../User/components/UserNameField';
 
@@ -46,6 +50,27 @@ const postRowStyle = ({ state }) => {
   }
 };
 
+const CloneCampaign = ({ record, ...rest }) => {
+  const translate = useTranslate();
+  const {
+    data: { viewpoints = [] } = {},
+    loading,
+    error,
+  } = useGetOne(RES_CAMPAIGN, record.id);
+
+  // We are creating a new campaign, state should not be set
+  const clonedRecord = { ...record, viewpoints, state: undefined };
+
+  if (loading) {
+    return <LinearProgress />;
+  }
+
+  if (error) {
+    return <span style={{ color: 'red' }}>{translate('ra.page.error')}</span>;
+  }
+
+  return <CloneButton {...rest} record={clonedRecord} />;
+};
 
 export const CampaignList = props => {
   const { hasPermission } = useUserSettings();
@@ -71,6 +96,7 @@ export const CampaignList = props => {
         <ProgressField label="resources.campaign.fields.statistics.progress" sortable={false} />
 
         <EditButton />
+        <CloneCampaign />
       </Datagrid>
     </List>
   );

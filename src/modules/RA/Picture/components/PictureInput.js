@@ -61,11 +61,13 @@ const useStyles = makeStyles({
     },
     display: 'flex',
     flexDirection: 'row-reverse',
+    borderRadius: '15px',
   },
   compareContainer: {
     height: '70%',
     width: '80%',
     left: '110px',
+    marginRight: '55px',
     top: '10px',
   },
   galleryContainer: {
@@ -152,12 +154,12 @@ const PictureInput = props => {
             {(selectedIndex !== null) && (
               <>
                 <div className={classes.picturesDates}>
-                  <Typography component="h3">
+                  <Typography component="h3" style={{ color: '#757575' }}>
                     {translate('resources.picture.input.compare-target')}
                     {' - '}
                     {toLocaleDateString(pic.date)}
                   </Typography>
-                  <Typography component="h3">
+                  <Typography component="h3" style={{ color: '#757575' }}>
                     {translate('resources.picture.input.compare-selected')}
                     {' - '}
                     {toLocaleDateString(picturesList[selectedIndex]?.date)}

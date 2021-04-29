@@ -1020,9 +1020,9 @@
       },
       "input": {
         "compare": "Comparer",
-        "compare-title": "Selectionnez une Photographie du point de vue à comparer",
+        "compare-title": "Sélectionner une Photographie du point de vue à comparer",
         "compare-target": "Photographie comparée",
-        "compare-selected": "Photographie sélectionnée dans la gallerie",
+        "compare-selected": "Photographie sélectionnée dans la galerie",
         "gallery-image": "Photographie %{index} du point de vue"
       },
       "name": "Photographie"

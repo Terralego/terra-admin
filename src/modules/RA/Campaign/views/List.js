@@ -15,7 +15,7 @@ import useUserSettings from '../../../../hooks/useUserSettings';
 
 import { RES_USER } from '../../ra-modules';
 import CampaignState from '../components/CampaignState';
-// import CloneCampaignButton from '../components/CloneCampaignButton';
+import CloneCampaignButton from '../components/CloneCampaignButton';
 import UserNameField from '../../User/components/UserNameField';
 
 const ListFilters = props => (
@@ -71,7 +71,7 @@ export const CampaignList = props => {
         <ProgressField label="resources.campaign.fields.statistics.progress" sortable={false} />
 
         <EditButton />
-        {/* <CloneCampaignButton /> */}
+        <CloneCampaignButton />
       </Datagrid>
     </List>
   );

@@ -1025,6 +1025,9 @@
       },
       "name": "Picture"
     },
+    "city": {
+      "forcedCaseName": "City"
+    },
     "user": {
       "forcedCaseName": "User",
       "fields": {

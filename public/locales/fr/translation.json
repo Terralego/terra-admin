@@ -1027,6 +1027,9 @@
       },
       "name": "Photographie"
     },
+    "city": {
+      "forcedCaseName": "Ville"
+    },
     "user": {
       "forcedCaseName": "Utilisateur",
       "fields": {

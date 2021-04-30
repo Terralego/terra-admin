@@ -24,12 +24,15 @@ const flattenMenu = menu => (
   ), [])
 );
 
-export const getView = ({ menu = [] } = {}, name) => {
+export const getView = ({ menu = [] } = {}, value, layerField = 'layer.name') => {
   const view = flattenMenu(menu);
-  if (!view.length || !name) {
+  if (!view.length || value === undefined) {
     return false;
   }
-  const viewProps = view.find(({ layer }) => layer.name === name) || {};
+  const viewProps = view.find(item => {
+    const propToFind = layerField.split('.').reduce((obj, prop) => obj?.[prop], item);
+    return propToFind === value;
+  }) || {};
 
   return viewProps.layer
     ? camelCaseKeys(viewProps)

@@ -20,12 +20,13 @@ import { usePrevious } from '../../../../../../utils/hooks';
 
 const CUSTOM_LAYER_WEIGHT = 850;
 
-const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
+const Map = ({ displayViewFeature, triggerFitBound }) => {
   const [interactions, setInteractions] = useState(null);
   const [sources, setSources] = useState([]);
 
   const {
     feature,
+    settings,
   } = useContext(CRUDContext);
 
   const {
@@ -271,13 +272,11 @@ const Map = ({ displayViewFeature, settings, triggerFitBound }) => {
 
 Map.propTypes = {
   displayViewFeature: PropTypes.bool,
-  settings: PropTypes.shape({}),
   triggerFitBound: PropTypes.string,
 };
 
 Map.defaultProps = {
   displayViewFeature: true,
-  settings: undefined,
   triggerFitBound: undefined,
 };
 

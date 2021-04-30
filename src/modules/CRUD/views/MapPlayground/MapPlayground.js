@@ -148,7 +148,6 @@ export class MapPlayground extends React.Component {
           )}
         >
           <Map
-            settings={settings}
             triggerFitBound={tableTransitioned}
           />
         </div>

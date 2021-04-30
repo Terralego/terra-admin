@@ -1,4 +1,10 @@
 
+3.5.3 / 2021-04-30
+==================
+
+  * CloneCampaignButton appear in the List again
+  * Fix map not displaying (#467)
+
 3.5.2 / 2021-04-29
 ==================
 

@@ -48,6 +48,9 @@ const MapInteraction = () => {
   const layers = useMemo(() => getLayers(settings), [settings]);
 
   useEffect(() => {
+    if (!map) {
+      return;
+    }
     if (!map.hasImage('arrow')) {
       map.loadImage(arrow, (error, image) => {
         if (error) throw error;

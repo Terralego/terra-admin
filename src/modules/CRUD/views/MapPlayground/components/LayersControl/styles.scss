@@ -1,5 +1,13 @@
 .layerGroup {
-  &__item label {
-    border: 0;
+  &__title {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+  }
+  &__item {
+      label {
+      margin: 0;
+      border: 0;
+    }
   }
 }

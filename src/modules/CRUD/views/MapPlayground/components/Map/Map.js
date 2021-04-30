@@ -46,6 +46,7 @@ const Map = ({ displayViewFeature, triggerFitBound }) => {
   const { push } = useHistory();
 
   const prevId = usePrevious(id);
+  const prevFeature = usePrevious(feature[id]);
 
   const {
     i18n: {
@@ -215,6 +216,7 @@ const Map = ({ displayViewFeature, triggerFitBound }) => {
     setInteractiveMapProps(props);
   }, [setInteractiveMapProps]);
 
+  const getMapStyle = useCallback(pk => getView(settings, pk, 'id').mapStyle, [settings]);
 
   useEffect(() => {
     if (!view) {
@@ -223,19 +225,40 @@ const Map = ({ displayViewFeature, triggerFitBound }) => {
     if (!isFeatureID) {
       removeControl(CONTROL_CUSTOM);
     } else {
-      const layersProps = layers.filter(({ source, main }) => source === `${view.layer.id}` && !main);
-      if (layersProps.length) {
+      const { relations, geometries } = feature[id] || {};
+      const layersProps = layers
+        .filter(({ source, main }) => source === `${view.layer.id}` && !main)
+        .map(item => ({
+          ...item,
+          empty: geometries?.[item['source-layer']].geom === null,
+        }));
+      if (prevFeature !== feature[id]) {
+        removeControl(CONTROL_CUSTOM);
+      }
+      if (layersProps.length && relations) {
         addControl({
           control: CONTROL_CUSTOM,
-          position: CONTROLS_TOP_LEFT,
+          featureID: id,
+          getMapStyle,
           instance: LayersControl,
           layers: layersProps,
           order: 1,
-          translate: t,
+          position: CONTROLS_TOP_LEFT,
+          relations,
         });
       }
     }
-  }, [addControl, isFeatureID, layers, removeControl, t, view]);
+  }, [
+    addControl,
+    feature,
+    getMapStyle,
+    id,
+    isFeatureID,
+    layers,
+    prevFeature,
+    removeControl,
+    view,
+  ]);
 
   const {
     terralego: { map: mapLocale },

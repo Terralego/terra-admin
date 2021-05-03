@@ -19,7 +19,8 @@ const Read = ({
     documents,
     geometry_files: geomFiles,
     geometries,
-    display_properties: properties,
+    display_properties: displayProperties,
+    properties,
   },
   ...rest
 }) => {
@@ -35,7 +36,7 @@ const Read = ({
       case 'geometries':
         return <GeomView geometries={geometries} {...rest} />;
       default:
-        return <DefaultView properties={properties} />;
+        return <DefaultView displayProperties={displayProperties} properties={properties} />;
     }
   };
 

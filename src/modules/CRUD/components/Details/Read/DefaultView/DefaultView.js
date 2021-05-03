@@ -8,17 +8,21 @@ import { generateURI } from '../../../../config';
 
 import PropertyList from '../../PropertyList';
 
-const DefaultView = ({ properties }) => {
-  const tabs = useMemo(() => Object.values(properties)
+const DefaultView = ({ displayProperties, properties }) => {
+  const tabs = useMemo(() => Object.values(displayProperties)
     .sort((a, b) => a.order - b.order),
-  [properties]);
-
+  [displayProperties]);
   const {
     category,
     id,
     layer,
     section = 'default',
   } = useParams();
+
+
+  const editProperties = useMemo(() => (
+    Object.values(properties).reduce((list, item) => ({ ...list, ...item }), {})
+  ), [properties]);
 
   const { t } = useTranslation();
 
@@ -35,7 +39,7 @@ const DefaultView = ({ properties }) => {
           key={slug}
           id={slug}
           title={<NavLink to={generateURI('layer', { layer, id, section, category: slug })}>{title || t('CRUD.details.other')}</NavLink>}
-          panel={<PropertyList properties={propertiesFromTab} />}
+          panel={<PropertyList properties={propertiesFromTab} editProperties={editProperties} />}
         />
       ))}
       <Tabs.Expander />
@@ -44,10 +48,12 @@ const DefaultView = ({ properties }) => {
 };
 
 DefaultView.propTypes = {
+  displayProperties: PropTypes.shape({}),
   properties: PropTypes.shape({}),
 };
 
 DefaultView.defaultProps = {
+  displayProperties: {},
   properties: {},
 };
 

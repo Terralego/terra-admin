@@ -39,17 +39,31 @@ const Edit = ({
   settingsEndpoint,
   ui_schema: uiSchema,
   url,
-  value,
+  value: displayValue,
 }) => {
   const { t } = useTranslation();
   const { id, layer } = useParams();
 
   const {
+    feature,
     getFeaturesList,
     getSettings,
     settings,
     saveFeature,
   } = useContext(CRUDContext);
+
+  const value = useMemo(() => {
+    if (isGeom) {
+      return sanitizeValue(schema, displayValue);
+    }
+    const { properties } = feature[id] || {};
+    const propertiesListed = Object.values(properties).reduce(
+      (list, item) => ({ ...list, ...item }
+      ), {},
+    );
+    return sanitizeValue(schema, propertiesListed[name]);
+  }, [displayValue, feature, id, isGeom, name, schema]);
+
 
   const {
     featureEndpoint,
@@ -62,7 +76,7 @@ const Edit = ({
   const canEdit =  ['', name].includes(editedItem) && editable;
   const isEdited = canEdit && isCurrentEditedItem;
   const [loading, setLoading] = useState(false);
-  const [defaultValue, setDefaultValue] = useState(() => sanitizeValue(schema, value));
+  const [defaultValue, setDefaultValue] = useState(value);
 
   useEffect(() => {
     isCurrentEditedItem && !loading ? onEdit(name) : onRead(name);

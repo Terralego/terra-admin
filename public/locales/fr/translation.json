@@ -965,7 +965,10 @@
         "add_viewpoint": "Ajouter un point de vue",
         "remove_viewpoint": "Supprimer un point de vue",
         "download_all_sheets": "Toutes les fiches",
-        "notify-admin": "Le gestionnaire a été notifié de la mise à jour de la campagne %{name}"
+        "notify-admin": {
+          "button": "Notifier le gestionnaire",
+          "success": "Le gestionnaire a été notifié de la mise à jour de la campagne %{name}"
+        }
       },
       "tabs": {
         "metadata": "Informations"

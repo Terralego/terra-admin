@@ -25,7 +25,7 @@ const CampaignActions = ({
       const { data: d = {} } = await dataProvider.getOne('campaign', { id: `${data.id}/notify_admin` });
 
       // TODO: inform user that notification has been sent to the admin
-      toast.displayToaster(d, translate('resources.campaign.actions.notify-admin', { name: d.label }));
+      toast.displayToaster(d, translate('resources.campaign.actions.notify-admin.success', { name: d.label }));
     } catch (err) {
       toast.displayError(err.message);
     }
@@ -36,8 +36,9 @@ const CampaignActions = ({
       {(data && data.id) && (
         <Button
           variant="outlined"
-          label="campaign.notify-admin"
+          label="resources.campaign.actions.notify-admin.button"
           onClick={notifyAdmin}
+          style={{ marginRight: '1em' }}
         />
       )}
       {(data && data.id) && (

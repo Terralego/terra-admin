@@ -25,11 +25,11 @@ const CampaignActions = ({
       const { data: d = {} } = await dataProvider.getOne('campaign', { id: `${data.id}/notify_admin` });
 
       // TODO: inform user that notification has been sent to the admin
-      toast.displayToaster(d, `Admin has been notify that campaign ${d.label} has been updated.`);
+      toast.displayToaster(d, translate('resources.campaign.actions.notify-admin', { name: d.label }));
     } catch (err) {
       toast.displayError(err.message);
     }
-  }, [data.id, dataProvider]);
+  }, [data.id, dataProvider, translate]);
 
   return (
     <TopToolbar>

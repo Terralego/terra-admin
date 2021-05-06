@@ -35,7 +35,7 @@ jest.mock('../../PropertyItem', () => props => <div {...props} />);
 
 
 const props = {
-  properties: {
+  displayProperties: {
     'Group 1': {
       properties: {
         foo: { display_value: 'Value of foo', title: 'Foo' },

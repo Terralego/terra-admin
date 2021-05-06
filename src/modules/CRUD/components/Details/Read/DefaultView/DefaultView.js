@@ -12,13 +12,13 @@ const DefaultView = ({ displayProperties, properties }) => {
   const tabs = useMemo(() => Object.values(displayProperties)
     .sort((a, b) => a.order - b.order),
   [displayProperties]);
+
   const {
     category,
     id,
     layer,
     section = 'default',
   } = useParams();
-
 
   const editProperties = useMemo(() => (
     Object.values(properties).reduce((list, item) => ({ ...list, ...item }), {})

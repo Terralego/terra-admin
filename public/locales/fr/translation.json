@@ -332,13 +332,24 @@
         "images": "Images",
         "openImage": "Ouvrir l'image dans une nouvelle fenêtre",
         "label": "Légende",
-        "loadFiles": "Charger un ou des fichiers",
+        "add": {
+          "attachments": "Ajouter des documents",
+          "category": "Créer une nouvelle catégorie",
+          "pictures": "Ajouter des images"
+        },
         "noFiles": "Aucun document",
         "category": {
+          "existing-list": "Catégories existantes",
+          "other-list": "Autres catégories",
+          "create": "Créer \"{{ name }}\"",
           "helper": "Les fichiers iront dans cette catégorie",
-          "select": "Choisir une catégorie",
+          "select": "Créer une catégorie",
           "input": "Saisir une catégorie",
-          "new": "+ Nouvelle catégorie"
+          "selected": "Catégorie sélectionnée :",
+          "submit": {
+            "attachments": "Valider et ajouter des documents",
+            "pictures": "Valider et ajouter des images"
+          }
         }
       }
     }

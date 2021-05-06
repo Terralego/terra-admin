@@ -12,8 +12,8 @@ class UppySetCategoryBeforeUpload extends Plugin {
   }
 
   getCategory () {
-    const { meta: { category } } = this.uppy.getState();
-    const { props: { findOrCreateAttachmentCategory } } = this.opts;
+    const { props: { category: selectedCategory, findOrCreateAttachmentCategory } } = this.opts;
+    const { meta: { category = selectedCategory } } = this.uppy.getState();
     return findOrCreateAttachmentCategory(category);
   }
 

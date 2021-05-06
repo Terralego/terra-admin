@@ -332,13 +332,24 @@
         "images": "Images",
         "openImage": "Show image in new window",
         "label": "Legend",
-        "loadFiles": "Load file(s)",
+        "add": {
+          "attachments": "Add some documents",
+          "category": "Create a new category",
+          "pictures": "Add some images"
+        },
         "noFiles": "No files",
         "category": {
+          "existing-list": "Existing categories",
+          "other-list": "Other categories",
+          "create": "Create \"{{ name }}\"",
           "helper": "Files will be linked to this category",
-          "select": "Select category",
+          "select": "Create category",
           "input": "Set category",
-          "new": "+ New category"
+          "selected": "Selected category:",
+          "submit": {
+            "attachments": "Submit and add some documents",
+            "pictures": "Submit and add some images"
+          }
         }
       }
     }

@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Tab, Tabs } from '@blueprintjs/core';
+import { Button, Intent, Tab, Tabs } from '@blueprintjs/core';
 import { NavLink } from 'react-router-dom';
 import { generateURI } from '../../../../config';
 
-import ImportFile from './ImportFile';
+import ImportFileOpener from './ImportFileOpener';
 import CategoryList from './CategoryList';
 import './styles.scss';
 
@@ -31,7 +31,18 @@ const AttachmentView = ({
           title={<NavLink to={generateURI('layer', { layer, id, section, category: tab.name })}>{tab.label}</NavLink>}
           panel={(
             <>
-              <ImportFile {...tab} />
+              <div className="attachment__header">
+                <h3 className="attachment__title">{t('CRUD.details.attachment.category.existing-list')}</h3>
+                <div className="attachment__bt-import">
+                  <ImportFileOpener {...tab}>
+                    <Button
+                      icon="cloud-upload"
+                      intent={Intent.PRIMARY}
+                      text={t('CRUD.details.attachment.add.category')}
+                    />
+                  </ImportFileOpener>
+                </div>
+              </div>
               <CategoryList {...tab} editable />
             </>
           )}

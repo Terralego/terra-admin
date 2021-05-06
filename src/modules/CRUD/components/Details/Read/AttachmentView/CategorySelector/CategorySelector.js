@@ -1,84 +1,121 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, FormGroup, HTMLSelect, InputGroup, Tag } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
+import { Button, FormGroup, Menu, MenuDivider, MenuItem, Position } from '@blueprintjs/core';
+import { remove } from 'diacritics';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Suggest } from '@blueprintjs/select';
+import { CRUDContext } from '../../../../../services/CRUDProvider';
 import './styles.scss';
 
 
-const CategorySelector = ({ attachments, attachment, onChange, onSubmit, t }) => {
-  const options = useMemo(() => (
+const CategorySelector = ({ attachments, attachment, onSubmit }) => {
+  const [isCategoriesLoaded, setCategoriesLoaded] = useState(false);
+  const { t } = useTranslation();
+
+
+  const [options, setOptions] = useState(() => (
     attachments
-      .map(({ category, [attachment]: attach }) => attach.length && category)
+      .map(({ category, [attachment]: attach }) => attach.length && { ...category, title: t('CRUD.details.attachment.category.existing-list') })
       .filter(Boolean)
-  ), [attachment, attachments]);
+  ));
 
-  const [defaultOption = {}] = options;
+  const {
+    getAttachmentCategories,
+    settings: {
+      config: {
+        attachment_categories: attachmentCategoriesEndpoint,
+      },
+    },
+  } = useContext(CRUDContext);
 
-  const [selectValue, setSelectValue] = useState(defaultOption.name || '');
+  const isMounted = useRef(true);
 
-  const [inputValue, setInputValue] = useState('');
+  useEffect(() => {
+    isMounted.current = true;
+    return () => { isMounted.current = false; };
+  }, []);
 
-  const [selectedCategory, setSelectedCategory] = useState(defaultOption);
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const getValueFromId = useCallback(id => {
-    if (id === '') {
-      return { id: null, name: inputValue };
+  useEffect(() => {
+    if (isCategoriesLoaded) {
+      return;
     }
-    return options.find(({ id: optionID }) => `${optionID}` === id);
-  }, [inputValue, options]);
+    async function fetchCategories () {
+      const list = await getAttachmentCategories(attachmentCategoriesEndpoint);
+      const categories = list.results
+        .filter(item => !options.find(option => option.id === item.id))
+        .map(item => ({ ...item, title: t('CRUD.details.attachment.category.other-list') }));
 
-  const handleChange = useCallback(({ target: { name, value } }) => {
-    let nextValue = '';
+      if (!isMounted.current) return;
 
-    if (name === 'category-selector') {
-      nextValue = value === '' ? inputValue : value;
-      setSelectedCategory(getValueFromId(nextValue));
-      setSelectValue(value);
+      setCategoriesLoaded(true);
+      setOptions(prevOptions => [...prevOptions, ...categories]);
     }
+    fetchCategories();
+  }, [attachmentCategoriesEndpoint, getAttachmentCategories, isCategoriesLoaded, options, t]);
 
-    if (name === 'category-selector-other') {
-      setInputValue(value);
-      nextValue = value;
-      setSelectedCategory({ id: null, name: nextValue });
-    }
 
-    onChange(nextValue);
-  }, [getValueFromId, inputValue, onChange]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const handleCancel = useCallback(() => {
-    setIsSubmitted(false);
-    onSubmit({});
-  }, [onSubmit]);
+  const handleValueChange = useCallback(value => {
+    setSelectedCategory(value);
+  }, []);
 
   const handleSubmit =  useCallback(event => {
     event.preventDefault();
-    setIsSubmitted(true);
     onSubmit(selectedCategory);
   }, [onSubmit, selectedCategory]);
 
-
-  const Select = ({ value }) => (
-    <HTMLSelect onChange={handleChange} name="category-selector" value={value}>
-      {options.map(({ id, name: categoryName }) => (
-        <option key={id} value={id}>{categoryName}</option>
-      ))}
-      <option value="">{t('CRUD.details.attachment.category.new')}</option>
-    </HTMLSelect>
+  const createNewItemRenderer = (
+    query,
+    active,
+    handleClick,
+  ) => (
+    <MenuItem
+      icon="add"
+      text={t('CRUD.details.attachment.category.create', { name: query })}
+      active={active}
+      onClick={handleClick}
+      shouldDismissPopover={false}
+    />
   );
 
-  if (isSubmitted) {
-    return (
-      <div className="category-selector category-selector--submitted">
-        <FormGroup
-          inline
-          helperText={t('CRUD.details.attachment.category.helper')}
-        >
-          <Tag large onRemove={handleCancel}>{selectedCategory.name}</Tag>
-        </FormGroup>
-      </div>
-    );
-  }
+  const itemRenderer = (option, { handleClick }) => (
+    <MenuItem
+      key={option.id}
+      text={option.name}
+      onClick={handleClick}
+    />
+  );
+
+  const itemListRenderer = ({ filteredItems, renderItem, renderCreateItem }) => {
+    const filteredItemsByGroupTitle = filteredItems.reduce((acc, item) => {
+      if (acc[item.title]) {
+        acc[item.title].push(item);
+      } else {
+        acc[item.title] = [item];
+      }
+      return acc;
+    }, {});
+    if (Object.values(filteredItemsByGroupTitle).length) {
+      return Object.entries(filteredItemsByGroupTitle).map(([key, value]) => (
+        <Menu key={key}>
+          <MenuDivider title={key} />
+          {value.map(renderItem)}
+        </Menu>
+      ));
+    }
+    return <Menu>{renderCreateItem()}</Menu>;
+  };
+
+  const itemPredicate = (query, option, _index, exactMatch) => {
+    const normalizedName = option.name.toLowerCase();
+    const normalizedQuery = query ? remove(query.toLowerCase()) : '';
+    if (exactMatch) {
+      return normalizedName === normalizedQuery;
+    }
+    return normalizedName.indexOf(normalizedQuery) >= 0;
+  };
 
   return (
     <div className="category-selector">
@@ -89,22 +126,36 @@ const CategorySelector = ({ attachments, attachment, onChange, onSubmit, t }) =>
           inline
           helperText={t('CRUD.details.attachment.category.helper')}
         >
-          {selectValue !== ''
-            ? <Select value={selectValue} />
-            : (
-              <InputGroup
-                autoFocus
-                id="category-selector"
-                placeholder={t('CRUD.details.attachment.category.input')}
-                name="category-selector-other"
-                onChange={handleChange}
-                rightElement={<Select value={selectValue} />}
-                required
-                value={inputValue}
-              />
-            )}
+          <Suggest
+            createNewItemFromQuery={name => ({ id: null, name })}
+            createNewItemRenderer={createNewItemRenderer}
+            fill
+            inputProps={{
+              id: 'category-selector',
+              name: 'category-selector',
+              placeholder: t('CRUD.details.attachment.category.input'),
+              required: true,
+            }}
+            inputValueRenderer={option => option.name}
+            itemRenderer={itemRenderer}
+            items={options}
+            placeholder={t('CRUD.details.attachment.category.input')}
+            itemsEqual={(a, b) => a.name.toLowerCase() === b.name.toLowerCase()}
+            itemListRenderer={itemListRenderer}
+            itemPredicate={itemPredicate}
+            onItemSelect={handleValueChange}
+            popoverProps={{
+              position: Position.BOTTOM,
+              popoverClassName: 'category-selector__suggestions',
+            }}
+          />
         </FormGroup>
-        <Button type="submit" className="category-selector__submit" intent="primary" text={t('CRUD.details.attachment.category.select')} />
+        <Button
+          className="category-selector__submit"
+          intent="primary"
+          text={t(`CRUD.details.attachment.category.submit.${attachment.toLowerCase()}`)}
+          type="submit"
+        />
       </form>
     </div>
   );
@@ -120,16 +171,12 @@ CategorySelector.propTypes = {
       }),
     }),
   ),
-  onChange: PropTypes.func,
   onSubmit: PropTypes.func,
-  t: PropTypes.func,
 };
 
 CategorySelector.defaultProps = {
   attachments: [],
-  onChange: () => {},
   onSubmit: () => {},
-  t: () => {},
 };
 
 export default CategorySelector;

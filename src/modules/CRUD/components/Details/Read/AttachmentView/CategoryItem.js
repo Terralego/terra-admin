@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Alignment, Button, Navbar } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
 
 import AttachmentList from './AttachmentList';
-import ImportFile from './ImportFileOpener';
+import ImportFileOpener from './ImportFileOpener';
 
 
 const CategoryItem = ({ category, attachments, name, ...rest }) => {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   return (
     <>
       <Navbar>
@@ -20,7 +22,13 @@ const CategoryItem = ({ category, attachments, name, ...rest }) => {
           <Navbar.Heading>{category.name}</Navbar.Heading>
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
-          <ImportFile {...rest} category={category} name={name} />
+          <ImportFileOpener {...rest} category={category} name={name}>
+            <Button
+              icon="plus"
+              minimal
+              text={t(`CRUD.details.attachment.add.${name}`)}
+            />
+          </ImportFileOpener>
         </Navbar.Group>
       </Navbar>
       {open && (

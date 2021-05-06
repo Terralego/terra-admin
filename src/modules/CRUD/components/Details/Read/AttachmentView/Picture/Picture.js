@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Classes, ControlGroup, Icon, InputGroup } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
 
-const Picture = ({ label, image, thumbnail, t, ...props }) => {
+const Picture = ({ label, image, thumbnail, ...props }) => {
+  const { t } = useTranslation();
+
   if (!thumbnail) {
     return null;
   }
@@ -30,13 +33,11 @@ const Picture = ({ label, image, thumbnail, t, ...props }) => {
 Picture.propTypes = {
   label: PropTypes.string,
   thumbnail: PropTypes.string,
-  t: PropTypes.func,
 };
 
 Picture.defaultProps = {
   label: undefined,
   thumbnail: undefined,
-  t: () => {},
 };
 
 export default Picture;

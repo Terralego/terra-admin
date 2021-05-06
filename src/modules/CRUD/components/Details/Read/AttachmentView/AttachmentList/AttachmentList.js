@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import classnames from 'classnames';
 import { getView } from '../../../../../services/CRUD';
+import { CRUDContext } from '../../../../../services/CRUDProvider';
 
 import AttachmentItem from '../AttachmentItem';
 
@@ -12,15 +13,16 @@ const AttachmentList = ({
   attachments,
   className,
   editable,
-  fetchFeature,
+  isVisible,
   name,
   onSelection,
   selectable,
-  settings,
   ...props
 }) => {
   const [isDeleting, setDeleting] = useState(null);
   const { id: paramId, layer: paramLayer } = useParams();
+
+  const { fetchFeature, settings } = useContext(CRUDContext);
 
   const updateData = useCallback(async () => {
     const { featureEndpoint } = getView(settings, paramLayer);
@@ -71,22 +73,20 @@ AttachmentList.propTypes = {
   attachments: PropTypes.arrayOf(PropTypes.shape({})),
   className: PropTypes.string,
   editable: PropTypes.bool,
-  fetchFeature: PropTypes.func,
+  isVisible: PropTypes.bool,
   name: PropTypes.oneOf(['attachments', 'pictures']),
   onSelection: PropTypes.func,
   selectable: PropTypes.bool,
-  settings: PropTypes.shape({}),
 };
 
 AttachmentList.defaultProps = {
   attachments: [],
   className: '',
   editable: false,
-  fetchFeature: () => {},
+  isVisible: true,
   name: 'attachments',
   onSelection: () => {},
   selectable: false,
-  settings: undefined,
 };
 
 export default AttachmentList;

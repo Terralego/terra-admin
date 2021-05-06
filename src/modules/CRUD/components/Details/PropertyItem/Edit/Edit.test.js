@@ -55,6 +55,11 @@ const props = {
 };
 
 const providerProps = {
+  feature: {
+    layerId: {
+      properties: [{}],
+    },
+  },
   getFeaturesList: () => {},
   getSettings: () => {},
   settings: {

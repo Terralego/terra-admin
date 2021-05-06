@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Intent } from '@blueprintjs/core';
+import { Tag } from '@blueprintjs/core';
 import Uppy from '@uppy/core';
 import { Dashboard } from '@uppy/react';
 import { buildHeaders } from '@terralego/core/modules/Api';
 
 import XHRUpload from '@uppy/xhr-upload';
-import classNames from 'classnames';
 import { getLocale } from './uppy-locales';
 
 import UppySetCategoryBeforeUpload from './UppySetCategoryBeforeUpload';
@@ -22,9 +21,7 @@ class ImportFile extends React.Component {
     super(props);
 
     this.state = {
-      category: false,
-      isCategoryActive: false,
-      isDashboardOpen: false,
+      category: props.category || false,
     };
 
     this.dashboard = React.createRef();
@@ -60,11 +57,6 @@ class ImportFile extends React.Component {
           dropPaste: `${locale.strings.dropPaste} ${dropPasteAndAllowedFileTypes}`,
         },
       },
-      onBeforeFileAdded: () => {
-        this.setState({
-          isCategoryActive: true,
-        });
-      },
       onBeforeUpload: files => {
         const file = name ===  'attachments' ? 'file' : 'image';
         const updatedFiles = {};
@@ -92,130 +84,58 @@ class ImportFile extends React.Component {
       headers: buildHeaders(),
     });
 
-    this.toggleActiveCategory = isCategoryActive => this.setState({ isCategoryActive });
-
-    this.handleActiveCategory = () => this.toggleActiveCategory(true);
-    this.handleInactiveCategory = () => this.toggleActiveCategory(false);
-    this.handleFileRemoved = () => {
-      if (!this.uppy.getFiles().length) {
-        this.toggleActiveCategory(false);
-      }
-    };
-    this.handleFileAdded = () => {
-      setTimeout(() => {
-        this.toggleUploadButton();
-      });
-    };
     this.handleComplete = () => {
       fetchFeature(featureEndpoint, id);
     };
 
-    ['dashboard:file-edit-complete', 'info-hidden'].forEach(event => {
-      this.uppy.on(event, this.handleActiveCategory);
-    });
-    ['cancel-all', 'dashboard:file-edit-start', 'info-visible', 'upload'].forEach(event => {
-      this.uppy.on(event, this.handleInactiveCategory);
-    });
-    this.uppy.on('file-removed', this.handleFileRemoved);
-    this.uppy.on('file-added', this.handleFileAdded);
     this.uppy.on('complete', this.handleComplete);
   }
 
-  componentDidUpdate = (prevProps, { category: prevCategory }) => {
-    const { category } = this.state;
-    if (prevCategory !== category) {
-      this.toggleUploadButton();
-    }
-  }
-
   componentWillUnmount () {
-    ['dashboard:file-edit-complete', 'info-hidden'].forEach(event => {
-      this.uppy.off(event, this.handleActiveCategory);
-    });
-    ['cancel-all', 'dashboard:file-edit-start', 'info-visible', 'upload'].forEach(event => {
-      this.uppy.off(event, this.handleInactiveCategory);
-    });
-    this.uppy.off('file-removed', this.handleFileRemoved);
-    this.uppy.off('file-added', this.handleFileAdded);
     this.uppy.off('complete', this.handleComplete);
     this.uppy.reset();
     this.uppy.close();
   }
 
-  toggleUploadButton = () => {
-    const { category } = this.state;
-    const { current: { container } = {} } = this.dashboard;
-    const button = container.querySelector('.uppy-StatusBar-actionBtn--upload');
-    if (button) {
-      const setOrRemoveAttribute = category.name ? 'removeAttribute' : 'setAttribute';
-      button[setOrRemoveAttribute]('disabled', true);
-    }
-  }
 
   handleCategoryChange = category => {
     this.setState({ category });
     this.uppy.setMeta({ category });
   }
 
-  toggleDashboard = () => {
-    this.setState(({ isDashboardOpen }) => ({
-      isDashboardOpen: !isDashboardOpen,
-    }), () => {
-      const { isDashboardOpen } = this.state;
-      if (!isDashboardOpen) {
-        this.uppy.reset();
-      }
-    });
-  }
-
   render () {
-    const { isCategoryActive, isDashboardOpen } = this.state;
+    const { category } = this.state;
     const { name, feature: { [name]: attachments }, t } = this.props;
 
-    return (
-      <div className={classNames({
-        importFile: true,
-        'importFile--opened': isDashboardOpen,
-      })}
-      >
-        <Button
-          className={classNames({
-            'importFile__bt-import': true,
-            'importFile__bt-import--cancel': isDashboardOpen,
-          })}
-          icon={isDashboardOpen ? 'small-cross' : 'cloud-upload'}
-          intent={Intent.PRIMARY}
-          minimal={isDashboardOpen}
-          onClick={this.toggleDashboard}
-          text={isDashboardOpen ? t('CRUD.details.close') : t('CRUD.details.attachment.loadFiles')}
+
+    if (!category) {
+      return (
+        <CategorySelector
+          attachment={name}
+          attachments={attachments}
+          onSubmit={this.handleCategoryChange}
         />
-        {isDashboardOpen && (
-          <>
-            <Dashboard
-              height={380}
-              metaFields={[
-                { id: 'name', name: t('CRUD.details.attachment.label') },
-              ]}
-              proudlyDisplayPoweredByUppy={false}
-              ref={this.dashboard}
-              replaceTargetContent
-              showProgressDetails
-              uppy={this.uppy}
-              width="auto"
-            />
-            <div className={classNames({
-              importFile__category: true,
-              'importFile__category--active': isCategoryActive,
-            })}
-            >
-              <CategorySelector
-                attachment={name}
-                attachments={attachments}
-                onSubmit={this.handleCategoryChange}
-              />
-            </div>
-          </>
-        )}
+      );
+    }
+
+    return (
+      <div className="importFile">
+        <div className="importFile__category">
+          <>{t('CRUD.details.attachment.category.selected')} </>
+          <Tag onRemove={() => this.setState({ category: null })}>{category.name}</Tag>
+        </div>
+        <Dashboard
+          height={380}
+          metaFields={[
+            { id: 'name', name: t('CRUD.details.attachment.label') },
+          ]}
+          proudlyDisplayPoweredByUppy={false}
+          ref={this.dashboard}
+          replaceTargetContent
+          showProgressDetails
+          uppy={this.uppy}
+          width="auto"
+        />
       </div>
     );
   }

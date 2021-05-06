@@ -1,10 +1,17 @@
 .category-selector {
   display: flex;
-  padding: 0 15px;
-  height: 64px;
+  padding:1rem;
+  border: 1px solid #eaeaea;
   background-color: #fafafa;
   align-items: center;
   text-align: left;
+
+  &__suggestions .bp3-popover-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 10rem;
+    padding-right: 1rem;
+  }
   
   &__inner {
     display: flex;

@@ -25,8 +25,8 @@ export const saveFeature = (endpoint, featureId, body, method) => (
     : createFeature(endpoint, body)
 );
 
-export const fetchCustomEndpoint = endpoint =>
-  Api.request(`${sanitizeCustomEndpoint(endpoint)}`);
+export const fetchCustomEndpoint = (endpoint, querystring) =>
+  Api.request(`${sanitizeCustomEndpoint(endpoint)}`, querystring);
 
 export const updateFeatureIdentifier = (feature, newFeature) => ({
   ...feature,

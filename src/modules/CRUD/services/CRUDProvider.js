@@ -17,6 +17,8 @@ export const connectCRUDProvider = connect(CRUDContext);
 
 const { Provider } = CRUDContext;
 
+const PAGE_SIZE = 999;
+
 export class CRUDProvider extends React.Component {
   state = {
     settings: undefined,
@@ -190,7 +192,9 @@ export class CRUDProvider extends React.Component {
     }
     const result = {};
     try {
-      const categories = await fetchCustomEndpoint(endpoint);
+      const categories = await fetchCustomEndpoint(`${endpoint}`, {
+        querystring: { page_size: PAGE_SIZE },
+      });
       result.attachmentCategories = categories;
     } catch (e) {
       result.error = e;
@@ -261,7 +265,7 @@ export class CRUDProvider extends React.Component {
     if (categoryInList !== undefined) {
       return categoryInList;
     }
-    const newCategory = await this.createAttachmentCategories({ name });
+    const newCategory = await this.createAttachmentCategories(name);
     return newCategory;
   }
 

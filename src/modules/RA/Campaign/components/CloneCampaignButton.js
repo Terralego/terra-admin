@@ -29,6 +29,10 @@ const CloneCampaignButton = ({ record, ...rest }) => {
           data: { viewpoints: vp = [] } = {},
         } = await dataProvider.getOne(RES_CAMPAIGN, { id: record.id });
 
+        if (!isMounted) {
+          return;
+        }
+
         setViewpoints(vp);
         setLoading(false);
       } catch (err) {

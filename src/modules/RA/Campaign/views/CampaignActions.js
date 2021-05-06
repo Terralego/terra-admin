@@ -1,13 +1,17 @@
 import React from 'react';
-import { TopToolbar, Button, useTranslate, useDataProvider } from 'react-admin';
+import {
+  TopToolbar,
+  Button,
+  useTranslate,
+  useDataProvider,
+  useNotify,
+} from 'react-admin';
 
 import { Link } from 'react-router-dom';
 import IconArrowBack from '@material-ui/icons/ArrowBack'; // eslint-disable-line import/no-extraneous-dependencies
 import IconList from '@material-ui/icons/List'; // eslint-disable-line import/no-extraneous-dependencies
 import FileCopy from '@material-ui/icons/FileCopy'; // eslint-disable-line import/no-extraneous-dependencies
 import Api from '@terralego/core/modules/Api';
-
-import { toast } from '../../../../utils/toast';
 
 import CloneCampaignButton from '../components/CloneCampaignButton';
 
@@ -19,35 +23,36 @@ const CampaignActions = ({
 }) => {
   const translate = useTranslate();
   const dataProvider = useDataProvider();
+  const notify = useNotify();
 
   const notifyAdmin = React.useCallback(async () => {
     try {
-      const { data: d = {} } = await dataProvider.getOne('campaign', { id: `${data.id}/notify_admin` });
+      const { data: { label } = {} } = await dataProvider.getOne('notify-campaign-admin', { id: `${data.id}` });
 
-      // TODO: inform user that notification has been sent to the admin
-      toast.displayToaster(d, translate('resources.campaign.actions.notify-admin.success', { name: d.label }));
+      notify(translate('resources.campaign.actions.notify-admin.success', { name: label }));
     } catch (err) {
-      toast.displayError(err.message);
+      notify(err.message, 'warning');
     }
-  }, [data.id, dataProvider, translate]);
+  }, [data.id, dataProvider, notify, translate]);
 
   return (
     <TopToolbar>
+
       {(data && data.id) && (
-        <Button
-          variant="outlined"
-          label="resources.campaign.actions.notify-admin.button"
-          onClick={notifyAdmin}
-          style={{ marginRight: '1em' }}
-        />
-      )}
-      {(data && data.id) && (
-      <CloneCampaignButton
-        record={data}
-        basePath={basePath}
-        variant="outlined"
-        style={{ marginRight: '1em' }}
-      />
+        <>
+          <Button
+            variant="outlined"
+            label="resources.campaign.actions.notify-admin.button"
+            onClick={notifyAdmin}
+            style={{ marginRight: '1em' }}
+          />
+          <CloneCampaignButton
+            record={data}
+            basePath={basePath}
+            variant="outlined"
+            style={{ marginRight: '1em' }}
+          />
+        </>
       )}
 
       {data && data.state === 'started' && (

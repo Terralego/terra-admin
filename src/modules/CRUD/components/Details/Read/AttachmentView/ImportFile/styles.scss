@@ -3,14 +3,18 @@
 
 .importFile {
   position: relative;
-  margin: 1rem 0;
-  text-align: center;
-  &--opened {
-    border: 1px solid #eaeaea;
-    background: #fafafa;
+  border: 1px solid #eaeaea;
+  background: #fafafa;
+
+  &__category {
+    padding-top: 0.3rem;
+    padding-left: 0.5rem;
+    font-weight: 600;
   }
+  
   .uppy-Root {
     position: relative;
+    text-align: center;
     z-index: 1;
     &.uppy-Dashboard--isAddFilesPanelVisible {
       z-index: 2;
@@ -36,35 +40,6 @@
     margin-bottom: 65px;
   }
 
-  &__bt-import {
-    &--cancel {
-      display: block;
-      margin-left: auto;
-      margin-top: 0.5rem;
-      margin-right: 0.5rem;
-    }
-  }
-
-  &__category {
-    border-top: 1px solid #eaeaea;
-    height: 65px;
-    position: absolute;
-    bottom: 66px;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    &--active {
-      z-index: 1;
-      opacity: 1;
-    }
-    .bp3-label {
-      display: none;
-    }
-    .bp3-form-helper-text {
-      white-space: nowrap;
-    }
-  }
-
   .uppy-c-btn.uppy-c-btn {
     @include pt-button-base();
     @include pt-button-height($pt-button-height);
@@ -84,17 +59,5 @@
   .uppy-StatusBar-actionBtn--retry svg{
     position: static;
     margin-right: 7px !important;
-  }
-}
-
-@media all and (min-width: 105em) {
-  .importFile {
-  
-    &__category {
-      .bp3-label {
-        display: block;
-      }
-    }
-  
   }
 }

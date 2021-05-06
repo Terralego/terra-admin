@@ -1,9 +1,9 @@
-import React, { Fragment, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Navbar, Intent } from '@blueprintjs/core';
+import { Intent } from '@blueprintjs/core';
 import Message from '../../../../../../../components/Message';
 
-import AttachmentList from '../AttachmentList';
+import CategoryItem from '../CategoryItem';
 
 const CategoryList = ({ categories, name, t, ...rest }) => {
   const categoryListFilled = useMemo(() =>
@@ -21,18 +21,13 @@ const CategoryList = ({ categories, name, t, ...rest }) => {
   return (
     <>
       {categoryListFilled.map(({ category, [name]: attachments }) => (
-        <Fragment key={category.id}>
-          <Navbar>
-            <Navbar.Group>
-              <Navbar.Heading>{category.name}</Navbar.Heading>
-            </Navbar.Group>
-          </Navbar>
-          <AttachmentList
-            attachments={attachments}
-            name={name}
-            {...rest}
-          />
-        </Fragment>
+        <CategoryItem
+          key={category.id}
+          category={category}
+          attachments={attachments}
+          name={name}
+          {...rest}
+        />
       ))}
     </>
   );

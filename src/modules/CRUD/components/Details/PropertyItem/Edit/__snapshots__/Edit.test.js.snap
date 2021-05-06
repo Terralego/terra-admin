@@ -34,7 +34,7 @@ exports[`should render correctly can edit 1`] = `
       Object {
         "properties": Object {
           "somePropertieName": Object {
-            "default": "null",
+            "default": undefined,
             "somePropertieName": Object {
               "foo": "foo",
             },

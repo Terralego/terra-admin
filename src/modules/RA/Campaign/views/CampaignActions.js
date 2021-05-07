@@ -14,6 +14,7 @@ import FileCopy from '@material-ui/icons/FileCopy'; // eslint-disable-line impor
 import Api from '@terralego/core/modules/Api';
 
 import CloneCampaignButton from '../components/CloneCampaignButton';
+import useUserSettings from '../../../../hooks/useUserSettings';
 
 
 const CampaignActions = ({
@@ -24,6 +25,7 @@ const CampaignActions = ({
   const translate = useTranslate();
   const dataProvider = useDataProvider();
   const notify = useNotify();
+  const { hasPermission } = useUserSettings();
 
   const notifyAdmin = React.useCallback(async () => {
     try {
@@ -37,22 +39,21 @@ const CampaignActions = ({
 
   return (
     <TopToolbar>
-
       {(data && data.id) && (
-        <>
-          <Button
-            variant="outlined"
-            label="resources.campaign.actions.notify-admin.button"
-            onClick={notifyAdmin}
-            style={{ marginRight: '1em' }}
-          />
-          <CloneCampaignButton
-            record={data}
-            basePath={basePath}
-            variant="outlined"
-            style={{ marginRight: '1em' }}
-          />
-        </>
+      <Button
+        variant="outlined"
+        label="resources.campaign.actions.notify-admin.button"
+        onClick={notifyAdmin}
+        style={{ marginRight: '1em' }}
+      />
+      )}
+      {hasPermission('can_manage_campaigns') && data?.id && (
+      <CloneCampaignButton
+        record={data}
+        basePath={basePath}
+        variant="outlined"
+        style={{ marginRight: '1em' }}
+      />
       )}
 
       {data && data.state === 'started' && (

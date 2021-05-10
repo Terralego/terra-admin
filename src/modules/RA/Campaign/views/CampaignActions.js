@@ -1,5 +1,11 @@
 import React from 'react';
-import { TopToolbar, Button, useTranslate } from 'react-admin';
+import {
+  TopToolbar,
+  Button,
+  useTranslate,
+  useDataProvider,
+  useNotify,
+} from 'react-admin';
 
 import { Link } from 'react-router-dom';
 import IconArrowBack from '@material-ui/icons/ArrowBack'; // eslint-disable-line import/no-extraneous-dependencies
@@ -13,18 +19,40 @@ import CloneCampaignButton from '../components/CloneCampaignButton';
 const CampaignActions = ({
   basePath,
   redirect,
-  data,
+  data = {},
 }) => {
   const translate = useTranslate();
+  const dataProvider = useDataProvider();
+  const notify = useNotify();
+
+  const notifyAdmin = React.useCallback(async () => {
+    try {
+      const { data: { label } = {} } = await dataProvider.getOne('notify-campaign-admin', { id: `${data.id}` });
+
+      notify(translate('resources.campaign.actions.notify-admin.success', { name: label }));
+    } catch (err) {
+      notify(err.message, 'warning');
+    }
+  }, [data.id, dataProvider, notify, translate]);
+
   return (
     <TopToolbar>
+
       {(data && data.id) && (
-      <CloneCampaignButton
-        record={data}
-        basePath={basePath}
-        variant="outlined"
-        style={{ marginRight: '1em' }}
-      />
+        <>
+          <Button
+            variant="outlined"
+            label="resources.campaign.actions.notify-admin.button"
+            onClick={notifyAdmin}
+            style={{ marginRight: '1em' }}
+          />
+          <CloneCampaignButton
+            record={data}
+            basePath={basePath}
+            variant="outlined"
+            style={{ marginRight: '1em' }}
+          />
+        </>
       )}
 
       {data && data.state === 'started' && (

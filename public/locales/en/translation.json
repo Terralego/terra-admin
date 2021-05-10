@@ -963,7 +963,11 @@
         "show_picture": "Show picture",
         "add_viewpoint": "Add viewpoint",
         "remove_viewpoint": "Remove viewpoint",
-        "download_all_sheets": "All sheets"
+        "download_all_sheets": "All sheets",
+        "notify-admin": {
+          "button": "Notify admin",
+          "success": "Admin has been notify that campaign %{name} has been updated"
+        }
       },
       "tabs": {
         "metadata": "Information"

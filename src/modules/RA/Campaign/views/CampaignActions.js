@@ -39,21 +39,23 @@ const CampaignActions = ({
 
   return (
     <TopToolbar>
-      {(data && data.id) && (
-      <Button
-        variant="outlined"
-        label="resources.campaign.actions.notify-admin.button"
-        onClick={notifyAdmin}
-        style={{ marginRight: '1em' }}
-      />
-      )}
-      {hasPermission('can_manage_campaigns') && data?.id && (
-      <CloneCampaignButton
-        record={data}
-        basePath={basePath}
-        variant="outlined"
-        style={{ marginRight: '1em' }}
-      />
+      {data?.id && (
+        <>
+          <Button
+            variant="outlined"
+            label="resources.campaign.actions.notify-admin.button"
+            onClick={notifyAdmin}
+            style={{ marginRight: '1em' }}
+          />
+          {hasPermission('can_manage_campaigns') && (
+            <CloneCampaignButton
+              record={data}
+              basePath={basePath}
+              variant="outlined"
+              style={{ marginRight: '1em' }}
+            />
+          )}
+        </>
       )}
 
       {data && data.state === 'started' && (

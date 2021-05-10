@@ -1,4 +1,16 @@
 
+3.5.5 / 2021-05-10
+==================
+
+  * Remove clone campaign for non-admin user
+  * Avoid error raised from unmounted component
+  * Fix CSS z-index
+  * Delete instead of update extraGeom if the value equals to null
+  * Add button to notify admin that campaign has been updated
+  * Increase minHeight of RTEField
+  * Use properties from feature to edit json schema values
+  * Fix add arrow map icon crash if map is not yet loaded
+
 3.5.4 / 2021-04-30
 ==================
 

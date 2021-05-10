@@ -21,6 +21,7 @@ const CloneCampaignButton = ({ record, ...rest }) => {
   const clonedRecord = { ...record, viewpoints, state: undefined };
 
   useEffect(() => {
+    let isMounted = true;
     const loadData = async () => {
       setLoading(true);
       try {
@@ -28,14 +29,25 @@ const CloneCampaignButton = ({ record, ...rest }) => {
           data: { viewpoints: vp = [] } = {},
         } = await dataProvider.getOne(RES_CAMPAIGN, { id: record.id });
 
+        if (!isMounted) {
+          return;
+        }
+
         setViewpoints(vp);
         setLoading(false);
       } catch (err) {
+        /* Error raised from unmounted component is skipped
+          to avoid setState error on unmounted component */
+        if (!isMounted) {
+          return;
+        }
+
         setError(true);
         setLoading(false);
       }
     };
     loadData();
+    return () => { isMounted = false; };
   }, [dataProvider, record.id]);
 
   if (loading) {

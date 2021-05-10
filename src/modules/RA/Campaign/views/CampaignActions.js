@@ -39,7 +39,7 @@ const CampaignActions = ({
 
   return (
     <TopToolbar>
-      {data?.id && (
+      {data.id && (
         <>
           <Button
             variant="outlined"
@@ -58,7 +58,7 @@ const CampaignActions = ({
         </>
       )}
 
-      {data && data.state === 'started' && (
+      {data.state === 'started' && (
       <Button
         variant="outlined"
         label="resources.campaign.actions.download_all_sheets"

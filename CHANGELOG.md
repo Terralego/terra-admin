@@ -1,4 +1,18 @@
 
+3.5.6 / 2021-05-11
+==================
+
+  * Notify admin button visible for non campaign admin only
+  * Import attachments as Popin
+  * Render list of attachment as accordion
+  * Improve Picture component
+  * Get all attachments categories when fetching them
+  * Add relation to LayersControl
+  * Improve getView helper to filter with whatever field
+  * Refacto by using useContext instead props to get settings props
+  * Fix edit test
+  * Fix defaultView test
+
 3.5.5 / 2021-05-10
 ==================
 

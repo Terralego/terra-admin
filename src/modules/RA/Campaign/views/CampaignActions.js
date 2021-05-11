@@ -41,12 +41,14 @@ const CampaignActions = ({
     <TopToolbar>
       {data.id && (
         <>
+          {!hasPermission('can_manage_campaigns') && (
           <Button
             variant="outlined"
             label="resources.campaign.actions.notify-admin.button"
             onClick={notifyAdmin}
             style={{ marginRight: '1em' }}
           />
+          )}
           {hasPermission('can_manage_campaigns') && (
             <CloneCampaignButton
               record={data}

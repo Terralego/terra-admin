@@ -160,7 +160,7 @@ const FilterConfigRow = ({ filter, onChange }) => {
         <>
           <FormLabel component="legend">{translate('datalayer.form.filter.type.range_format.label')}</FormLabel>
           <Select
-            value={filter.filter_settings.format}
+            value={filter.filter_settings.format_type}
             onChange={handleChangeFormatType}
           >
             <MenuItem value="number">{translate('datalayer.form.filter.type.range_format.number')}</MenuItem>

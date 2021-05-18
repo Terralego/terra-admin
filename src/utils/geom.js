@@ -8,8 +8,6 @@ export const MULTI_POLYGON = 6;
 export const GEOMETRY_COLLECTION = 7;
 export const GEOM_UNDEFINED = '8';
 
-export const geomTypeList = ['Point', 'LineString', 'LinearRing', 'Polygon', 'MultiPoint', 'MultiLineString', 'MultiPolygon', 'GeometryCollection'];
-
 export const getShapeFromGeomType = geomType => {
   switch (geomType) {
     case POINT:

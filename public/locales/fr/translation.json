@@ -3,7 +3,6 @@
     "add": "Ajouter",
     "cancel": "Annuler",
     "close": "Fermer",
-    "confirmDeletion": "Confirmer la suppression",
     "delete": "Supprimer {{name}}",
     "error": {
       "title": "Un problème est survenu. ",
@@ -23,22 +22,8 @@
     "loading": "Chargement en cours…",
     "logout": "Se déconnecter"
   },
-  "quill": {
-    "linkLabel": "Lien",
-    "linkSave": "Enregistrer"
-  },
   "main": {
     "title": "Terralego"
-  },
-  "gl-pathControl": {
-    "followDirection": "Suivre les voies",
-    "enableFollowDirectionMode": "Activer le suivi de voie",
-    "disableFollowDirectionMode": "Désactiver le suivi de voie",
-    "createPoint": "Créer un point",
-    "createIntermediatePoint": "Créer un point intermédiaire",
-    "deletePoint": "Supprimer le point",
-    "loopPoint": "Boucler le tracé",
-    "oneWayPoint": "Aller simple"
   },
   "auth": {
     "loginform": {
@@ -138,22 +123,6 @@
       "placeholder-end-date": "JJ/MM/AAAA"
     }
   },
-  "importGeomFile": {
-    "accept": "Format acceptés : {{accept}}",
-    "button": "Fichier ({{accept}})",
-    "intro1": "Lors de la sélection du fichier, il est analysé par l'application. Vous serez ensuite informé de la compatibilité du fichier avec le type de géométrie courant.",
-    "intro2": "Dès validation de l'import, l'application propose sur la carte un aperçu de la nouvelle géométrie.",
-    "intro3": "Dès validation de ce nouveau tracé importé, il remplace le précédent.",
-    "nothingToImport": "Aucun tracé de {{fileName}} ne peut être importé.",
-    "readyToImport": "Le tracé de {{fileName}} est prêt à être importé.",
-    "readyToImport_plural": "les tracés de {{fileName}} sont prêts à être importés.",
-    "submit": "Valider la sélection",
-    "title": "Importer un fichier (WGS84 Décimal)",
-    "unableToImport": "Les données du fichier <1>{{fileName}}</1> n'ont pas pu être récupéré.",
-    "warnGeomOtherType": "Le fichier contient d'autres types de géométries qui ont été ignorés.",
-    "warnGeomSameType": "Le fichier contient d'autres géométries du même type. Seul le premier a été sélectionné.",
-    "warnNoGeomFound": "Le fichier ne contient pas de géométries du type demandé."
-  },
   "opp": {
     "nav": {
       "viewpoints": "Les points de vue",
@@ -234,123 +203,6 @@
         "notification_edit": "Le point de vue {{name, uppercase}} a été modifié.",
         "notification_create": "Le point de vue {{name}} a été créé.",
         "notification_add-picture": "Une image a été ajoutée au point de vue : {{name}}."
-      }
-    }
-  },
-  "CRUD": {
-    "project": "Éditeur de données",
-    "nav": {
-      "map": "Carte",
-      "foldMenu": "Replier le menu",
-      "unfoldMenu": "Déplier le menu"
-    },
-    "map": {
-      "controls": {
-        "layers": {
-          "label": "Affichage des couches"
-        }
-      }
-    },
-    "export": {
-      "generate": "Générer",
-      "label": "Exporter la couche",
-      "title": "Exporter la couche au format {{name}}",
-      "request": "En confirmant l'exportation, le serveur va générer le fichier {{name}} et lorsque ce sera prêt, un lien vous sera directement envoyé à votre adresse email.",
-      "success": "Votre demande a bien été prise en compte. Lorsque le fichier {{name}} sera prêt, un lien vous sera directement envoyé à votre adresse email.",
-      "error": "Une erreur s'est produite, veuillez re-essayer ultérieurement"
-    },
-    "settings": {
-      "unableToLoad": "Impossible de charger la configuration du module. Veuillez contacter un administrateur.",
-      "unableToLoadMap": "Impossible de charger la configuration de la carte. Veuillez contacter un administrateur."
-    },
-    "table": {
-      "sortAsc": "Tri croissant",
-      "sortDesc": "Tri décroissant",
-      "filterProps": "Filtrer les propriétés",
-      "columnsDisplay": "Afficher toutes les colonnes",
-      "columnsHide": "Cacher toutes les colonnes",
-      "maximize": "Agrandir",
-      "minimize": "Réduire",
-      "hide": "Cacher",
-      "noFeature": "Aucun objet à afficher pour cette couche.",
-      "readMessage": "<0>Voir</0> cet objet.",
-      "results": "{{ count }} résultat :",
-      "results_singular": "{{ count }} résultat :",
-      "results_plural": "{{ count }} résultats :",
-      "pagination": {
-        "display": "Afficher",
-        "results": "résultats par page"
-      },
-      "search": "Rechercher dans la table"
-    },
-    "layer": {
-      "errorNoLayer": "La couche recherchée n'existe pas"
-    },
-    "details": {
-      "create": "Ajouter {{layer}}",
-      "update": "Modifier",
-      "noValue": "Non renseigné",
-      "save": "Enregistrer",
-      "close": "Fermer",
-      "cancel": "Annuler",
-      "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer l'objet {{name}} ? Cette action est irrévocable.",
-      "errorNoFeature": "L'objet recherché n'existe pas",
-      "errorNoGeometry": "Il est obligatoire de positionner un objet sur la carte",
-      "successCreateFeature": "L'objet a été enregistré avec succès",
-      "failCreateFeature": "L'objet n'a pas été enregistré :",
-      "successDeleteFeature": "L'objet a été supprimé avec succès",
-      "failDeleteFeature": "L'objet n'a pu être supprimé",
-      "noAccess": "Vous n'avez pas les droits pour accéder à cette ressource.",
-      "notAllowedToEdit": "Cette propriété est calculée et ne peut être modifiée",
-      "geometry": "Géométrie",
-      "true": "Oui",
-      "false": "Non",
-      "other": "Autre",
-      "exportFiles": "Exporter",
-      "generatedDocument": "Document généré",
-      "generatedDocument_plural": "Documents générés",
-      "generatedGeomFile": "Donnée géographique",
-      "generatedGeomFile_plural": "Données géographiques",
-      "fitBoundButton": "Centrer la carte sur \"{{name}}\"",
-      "mandatory": "Champ obligatoire",
-      "mandatory_plural": "Champs obligatoires",
-      "menu": {
-        "default": "Informations",
-        "geometries": "Géométries",
-        "attachments": "Documents annexes"
-      },
-      "placeholderSelect": "Sélectionnez une valeur",
-      "attachment": {
-        "allowedFileTypes": "Fichiers ({{files}}) autorisés",
-        "confirmDeletionText": "Êtes-vous sûr de vouloir supprimer le fichier {{name}} ? Cette action est irrévocable.",
-        "delete": "Supprimer le fichier",
-        "empty": "Aucun fichier repertorié pour cet objet",
-        "figcaptionCancel": "Annuler la modification",
-        "figcaptionEdit": "Modifier la légende",
-        "figcaptionSubmit": "Valider la légende",
-        "files": "Documents",
-        "images": "Images",
-        "openImage": "Ouvrir l'image dans une nouvelle fenêtre",
-        "label": "Légende",
-        "add": {
-          "attachments": "Ajouter des documents",
-          "category": "Créer une nouvelle catégorie",
-          "pictures": "Ajouter des images"
-        },
-        "noFiles": "Aucun document",
-        "category": {
-          "existing-list": "Catégories existantes",
-          "other-list": "Autres catégories",
-          "create": "Créer \"{{ name }}\"",
-          "helper": "Les fichiers iront dans cette catégorie",
-          "select": "Créer une catégorie",
-          "input": "Saisir une catégorie",
-          "selected": "Catégorie sélectionnée :",
-          "submit": {
-            "attachments": "Valider et ajouter des documents",
-            "pictures": "Valider et ajouter des images"
-          }
-        }
       }
     }
   },

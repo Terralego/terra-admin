@@ -3,7 +3,6 @@
     "add": "Add",
     "cancel": "Cancel",
     "close": "Close",
-    "confirmDeletion": "Confirm deletion",
     "delete": "Delete {{name}}",
     "error": {
       "title": "An error occurred. ",
@@ -23,22 +22,8 @@
     "loading": "Loading…",
     "logout": "Log out"
   },
-  "quill": {
-    "linkLabel": "Link",
-    "linkSave": "Save"
-  },
   "main": {
     "title": "Terralego"
-  },
-  "gl-pathControl": {
-    "followDirection": "Follow direction",
-    "enableFollowDirectionMode": "Enable direction",
-    "disableFollowDirectionMode": "Disable direction",
-    "createPoint": "Create point",
-    "createIntermediatePoint": "Create intermediate point",
-    "deletePoint": "Delete point",
-    "loopPoint": "Round trip",
-    "oneWayPoint": "One way"
   },
   "auth": {
     "loginform": {
@@ -138,22 +123,6 @@
       "placeholder-end-date": "MM/DD/YYYY"
     }
   },
-  "importGeomFile": {
-    "accept": "Accepted format: {{accept}}",
-    "button": "File ({{accept}})",
-    "intro1": "When selecting the file, it is analyzed by the application. You will then be informed about the compatibility of the file with the current geometry type.",
-    "intro2": "Upon validation of the import, the application offers on the map an overview of the new geometry.",
-    "intro3": "Upon validation of this new imported sketch, it replaces the previous one.",
-    "nothingToImport": "No one geometry from {{fileName}} could be imported.",
-    "readyToImport": "{{fileName}} geometry is ready to be imported.",
-    "readyToImport_plural": "{{fileName}} geometries are ready to be imported.",
-    "submit": "Confirm selection",
-    "title": "Import a file (WGS84 Decimal)",
-    "unableToImport": "Unable to load and read <1>{{fileName}}</1> data.",
-    "warnGeomOtherType": "The file contains other types of geometries which have been ignored.",
-    "warnGeomSameType": "The file contains other geometries of the same type. Only the first was selected.",
-    "warnNoGeomFound": "The file does not contain geometries of the requested type."
-  },
   "opp": {
     "nav": {
       "viewpoints": "Viewpoints",
@@ -237,177 +206,8 @@
       }
     }
   },
-  "CRUD": {
-    "project": "Geographic editor",
-    "nav": {
-      "map": "Map",
-      "foldMenu": "Fold menu",
-      "unfoldMenu": "Unfold menu"
-    },
-    "map": {
-      "controls": {
-        "layers": {
-          "label": "Layer display"
-        }
-      }
-    },
-    "export": {
-      "generate": "Generate",
-      "label": "Export the layer",
-      "title": "Export the layer as {{name}}",
-      "request": "By confirming the export, the server will generate the file {{name}} and when it is ready, a link will be sent directly to your email address.",
-      "success": "Your request has successfully been registered. When the {{name}} file is ready, a link will be sent directly to your email address.",
-      "error": "An error occurred, please retry later"
-    },
-    "settings": {
-      "unableToLoad": "Unable to load settings. Please contact your administrator.",
-      "unableToLoadMap": "Unable to load map settings. Please contact your administrator."
-    },
-    "table": {
-      "sortAsc": "Sort asc.",
-      "sortDesc": "Sort desc.",
-      "filterProps": "Filter properties",
-      "columnsDisplay": "Show all columns",
-      "columnsHide": "Hide all columns",
-      "maximize": "Maximize",
-      "minimize": "Minimize",
-      "hide": "Hide",
-      "noFeature": "No feature in this layer.",
-      "readMessage": "<0>Show</0> this feature.",
-      "results": "{{ count }} results :",
-      "results_singular": "{{ count }} result:",
-      "results_plural": "{{ count }} results:",
-      "pagination": {
-        "display": "Show",
-        "results": "results per page"
-      },
-      "search": "Search in table"
-    },
-    "layer": {
-      "errorNoLayer": "This layer does not exist."
-    },
-    "details": {
-      "create": "Add {{layer}}",
-      "update": "Update",
-      "noValue": "unfilled",
-      "save": "Save",
-      "close": "Close",
-      "cancel": "Cancel",
-      "confirmDeletionText": "Are you sure to want to delete {{name}}? This can't be cancelled.",
-      "errorNoFeature": "This feature does not exist",
-      "errorNoGeometry": "Geometry on map is required",
-      "successCreateFeature": "Feature has been created.",
-      "failCreateFeature": "Unable to create feature :",
-      "successDeleteFeature": "Feature has been successfully deleted.",
-      "failDeleteFeature": "Feature has not been deleted.",
-      "noAccess": "You are not allowed to access this resource.",
-      "notAllowedToEdit": "This is a generated property and couldn't be edited",
-      "geometry": "Geometry",
-      "true": "Yes",
-      "false": "No",
-      "other": "Other",
-      "exportFiles": "Export",
-      "generatedDocument": "Generated document",
-      "generatedDocument_plural": "Generated documents",
-      "generatedGeomFile": "Geom file",
-      "generatedGeomFile_plural": "Geom files",
-      "fitBoundButton": "Center map to \"{{name}}\"",
-      "mandatory": "Mandatory field",
-      "mandatory_plural": "Mandatory fields",
-      "menu": {
-        "default": "Informations",
-        "geometries": "Geometries",
-        "attachments": "Attachments"
-      },
-      "placeholderSelect": "Choose a value",
-      "attachment": {
-        "allowedFileTypes": "Files ({{files}}) allowed",
-        "confirmDeletionText": "Are you sure you want to delete {{name}}? This can't be canceled.",
-        "delete": "Delete file",
-        "empty": "No file for this feature",
-        "figcaptionCancel": "Cancel",
-        "figcaptionEdit": "Edit legend",
-        "figcaptionSubmit": "Submit legend",
-        "files": "Files",
-        "images": "Images",
-        "openImage": "Show image in new window",
-        "label": "Legend",
-        "add": {
-          "attachments": "Add some documents",
-          "category": "Create a new category",
-          "pictures": "Add some images"
-        },
-        "noFiles": "No files",
-        "category": {
-          "existing-list": "Existing categories",
-          "other-list": "Other categories",
-          "create": "Create \"{{ name }}\"",
-          "helper": "Files will be linked to this category",
-          "select": "Create category",
-          "input": "Set category",
-          "selected": "Selected category:",
-          "submit": {
-            "attachments": "Submit and add some documents",
-            "pictures": "Submit and add some images"
-          }
-        }
-      }
-    }
-  },
   "help": {
     "block-heading": "Advices:"
-  },
-  "jsonSchema": {
-    "geometryField": {
-      "type": {
-        "Point": {
-          "create": "a point",
-          "edit": "the point"
-        },
-        "LineString": {
-          "create": "a line",
-          "edit": "the line"
-        },
-        "Polygon": {
-          "create": "an area",
-          "edit": "the area"
-        },
-        "MultiPoint": {
-          "create": "some points",
-          "edit": "points"
-        },
-        "MultiLineString": {
-          "create": "some lines",
-          "edit": "lines"
-        },
-        "MultiPolygon": {
-          "create": "some areas",
-          "edit": "areas"
-        },
-        "GeometryCollection": {
-          "create": "some geometries",
-          "edit": "geometries"
-        }
-      },
-      "label": "Or enter coordinates",
-      "title": "Coordinates (decimal WGS84)",
-      "information-create": "Draw $t(jsonSchema.geometryField.type.{{type}}.create) on map.",
-      "information-edit": "Edit $t(jsonSchema.geometryField.type.{{type}}.edit) on map.",
-      "helper": "Enter coordinates by using the tool <1></1> on map",
-      "helper-routing": "Draw a route by clicking directly on the map. You can automatically follow the paths by checking the corresponding box and selecting a follow mode",
-      "or": "or",
-      "reset": {
-        "label": "Reset $t(jsonSchema.geometryField.type.{{type}}.edit)",
-        "confirmation": "Are you sure to reset $t(jsonSchema.geometryField.type.{{type}}.edit}?"
-      }
-    },
-    "panelError": {
-      "title": "Your input contains errors"
-    },
-    "RTEField": {
-      "close": "Close",
-      "pick-image": "Select picture"
-    }
   },
   "user": {
     "project": "Users",

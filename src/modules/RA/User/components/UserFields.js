@@ -21,6 +21,7 @@ import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import UserFieldsHelp from './UserFieldsHelp';
 
 import { RES_USERGROUP } from '../../ra-modules';
+import UserPasswordInput from './UserPasswordInput';
 
 const useStyles = makeStyles({
   inline: {
@@ -57,7 +58,7 @@ const UserFields = ({ edit = false, user: { is_superuser: isSuperUser } = {}, ..
       <Br />
 
       <TextInput source="email" type="email" />
-      {!edit && <TextInput source="password" type="password" />}
+      {!edit && <UserPasswordInput source="password" />}
 
       <Br />
 

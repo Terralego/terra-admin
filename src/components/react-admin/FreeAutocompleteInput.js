@@ -13,7 +13,7 @@ const sanitizeRestProps = ({
 const FreeAutocompleteInput = ({ choices = [], label, ...rest }) => {
   const translate = useTranslate();
   const {
-    input: { value, onChange },
+    input: { value },
     meta: { touched, error },
   } = useInput(rest);
 
@@ -22,9 +22,7 @@ const FreeAutocompleteInput = ({ choices = [], label, ...rest }) => {
       <Autocomplete
         freeSolo
         value={value}
-        onChange={(e, val) => onChange(val)}
         options={choices}
-        onBlur={onChange}
 
         renderInput={params => (
           <UITextField

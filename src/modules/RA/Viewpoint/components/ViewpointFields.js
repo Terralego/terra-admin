@@ -11,6 +11,7 @@ import {
   translate,
   ArrayInput,
   AutocompleteArrayInput,
+  AutocompleteInput,
   BooleanInput,
   FileField,
   FormTab,
@@ -37,7 +38,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { RES_PICTURE, RES_THEME } from '../../ra-modules';
 
 import MapPointInput from '../../../../components/react-admin/MapPointInput';
-import FreeAutocompleteInput from '../../../../components/react-admin/FreeAutocompleteInput';
 import compose from '../../../../utils/compose';
 import { withMapConfig } from '../../../../hoc/withAppSettings';
 import GridListPictures from './GridListPictures';
@@ -151,7 +151,7 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
           category: categoryMap[theme.category],
         }),
       ),
-      cities,
+      cities: cities.map((city, index) => ({ id: index, name: city })),
     });
 
     setWaiting(false);
@@ -187,9 +187,9 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
           </>
         )}
         {!waiting && (
-          <FreeAutocompleteInput
-            choices={remoteChoices.cities}
+          <AutocompleteInput
             source="city"
+            choices={remoteChoices.cities}
             label="resources.viewpoint.fields.city"
             validate={required()}
           />

@@ -1,4 +1,14 @@
 
+4.0.0 / 2021-06-29
+==================
+
+  * Do not allow new city in viewpoint creation (#482)
+  * Add password visibility button when creating user
+  * Remove geomTypeList useless helper
+  * Remove uncessary blueprint package
+  * Remove all unnecessary packages
+  * Remove all files related to CRUD module
+
 3.5.7 / 2021-05-31
 ==================
 

@@ -13,6 +13,7 @@ import enhanceViewpointDataProvider from '../../services/react-admin/enhanceView
 import sourceDataProvider from '../../services/react-admin/sourceDataProvider';
 import patchLayerDataProvider from '../../services/react-admin/patchLayerDataProvider';
 import patchPictureDataProvider from '../../services/react-admin/patchPictureDataProvider';
+import patchNullValueProvider from '../../services/react-admin/patchNullValueProvider';
 import toMultipart from '../../services/react-admin/toMultipart';
 
 import authProvider from '../../services/react-admin/authProvider';
@@ -31,6 +32,7 @@ const customDataProvider = compose(
   withResourceEndpoint,
   patchPictureDataProvider,
   patchLayerDataProvider,
+  patchNullValueProvider,
   toMultipart,
   sourceDataProvider,
   enhanceViewpointDataProvider,

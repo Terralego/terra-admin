@@ -63,6 +63,13 @@ const DefinitionTab = ({ onSwitch, external }) => {
         <SelectInput />
       </ReferenceInput>
 
+      <TextInput
+        multiline
+        source="source_filter"
+        label="datalayer.form.source-filter"
+        fullWidth
+        helperText={translate('datalayer.form.source-filter-helper')}
+      />
 
       <FormGroup
         helperText={translate('datalayer.form.search.main-field.helpertext')}

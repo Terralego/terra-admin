@@ -399,6 +399,8 @@
       "name": "Nom",
       "data-source": "Source des données",
       "definition": "Définition",
+      "source-filter": "Filtrer la source",
+      "source-filter-helper": "Vous pouvez filtrer les données provenant de la source en saisissant une expression ici.",
       "fields-settings": "Configuration des champs",
       "view": "Vue",
       "ordering": "Classement",

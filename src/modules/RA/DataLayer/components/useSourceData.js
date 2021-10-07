@@ -23,12 +23,18 @@ export const useSourceData = sourceFieldName => {
     const loadSourceData = async () => {
       const dataSourceResult = await dataProvider.getOne(RES_DATASOURCE, { id: sourceId });
 
-      if (!isMounted || !dataSourceResult) {
+      if (!isMounted) {
         return;
       }
+
+      loadingRef.current = false;
+
+      if (!dataSourceResult) {
+        return;
+      }
+
       const { data } = dataSourceResult;
       setSourceData(data);
-      loadingRef.current = false;
     };
 
     if (sourceId && !loadingRef.current) {

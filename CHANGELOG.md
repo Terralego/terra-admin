@@ -1,4 +1,14 @@
 
+4.0.1 / 2021-10-07
+==================
+
+  * Fix pivotql version
+  * Fix missing loading false
+  * Update pivot parser version
+  * Add expression validation
+  * Add pivotql expression parser
+  * Add source filter field
+
 4.0.0 / 2021-06-29
 ==================
 

@@ -14,6 +14,7 @@ import { useField, useForm } from 'react-final-form';
 
 import { FormGroup } from '@blueprintjs/core';
 
+import parser from 'pivotql-parser-expression';
 import FieldUpdater, { updateFieldFromSource } from '../FieldUpdater';
 import { required } from '../../../../../utils/react-admin/validate';
 import { RES_DATASOURCE } from '../../../ra-modules';
@@ -23,6 +24,18 @@ import useSourceData from '../useSourceData';
 const Br = () => <br />;
 
 const defaultRequired = required();
+
+const validateSourceFilter = value => {
+  if (!value) {
+    return undefined;
+  }
+  try {
+    parser(value);
+    return undefined;
+  } catch (e) {
+    return 'datalayer.form.source-filter-error';
+  }
+};
 
 const DefinitionTab = ({ onSwitch, external }) => {
   const translate = useTranslate();
@@ -64,11 +77,11 @@ const DefinitionTab = ({ onSwitch, external }) => {
       </ReferenceInput>
 
       <TextInput
-        multiline
         source="source_filter"
         label="datalayer.form.source-filter"
         fullWidth
         helperText={translate('datalayer.form.source-filter-helper')}
+        validate={validateSourceFilter}
       />
 
       <FormGroup

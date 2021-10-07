@@ -25,7 +25,7 @@
     "mime-types": "^2.1.29",
     "node-sass": "^4.14.1",
     "normalize.css": "^8.0.1",
-    "pivotql-parser-expression": "^0.0.2",
+    "pivotql-parser-expression": "^0.0.3",
     "prop-types": "~15.7.2",
     "ra-data-drf": "github:synaptic-cl/ra-data-drf#3e2a4deb77dc467a19581b308f4a1284cd2dc9b2",
     "ra-input-rich-text": "^3.8.3",

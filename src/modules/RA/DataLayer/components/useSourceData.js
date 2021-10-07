@@ -21,10 +21,12 @@ export const useSourceData = sourceFieldName => {
     let isMounted = true;
 
     const loadSourceData = async () => {
-      const { data } = await dataProvider.getOne(RES_DATASOURCE, { id: sourceId });
-      if (!isMounted) {
+      const dataSourceResult = await dataProvider.getOne(RES_DATASOURCE, { id: sourceId });
+
+      if (!isMounted || !dataSourceResult) {
         return;
       }
+      const { data } = dataSourceResult;
       setSourceData(data);
       loadingRef.current = false;
     };

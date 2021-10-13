@@ -1,26 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDataProvider, useTranslate, LinearProgress, CloneButton } from 'react-admin';
 
-import { RES_DATASOURCE } from '../../ra-modules';
-
-const CloneDataSourceButton = ({ record, ...rest }) => {
-  const [datasource, setDatasource] = useState({});
+const CustomCloneButton = ({
+  record,
+  endpoint,
+  mergeWithRecord = (rec, data) => ({ ...rec, ...data }),
+  parseData = d => d,
+  ...rest
+}) => {
+  const [fetchedData, setFetchedData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const dataProvider = useDataProvider();
   const translate = useTranslate();
 
+  // merge record & fetched data
+  const clonedRecord = mergeWithRecord(record, fetchedData);
+
   useEffect(() => {
     let isMounted = true;
     const loadData = async () => {
       try {
-        const { data = {} } = await dataProvider.getOne(RES_DATASOURCE, { id: record.id });
+        const { data = {} } = await dataProvider.getOne(endpoint, { id: record.id });
 
         if (!isMounted) {
           return;
         }
-        setDatasource(data);
+
+        // retrieve only needed infos to be cloned from data.
+        const parsedData = parseData(data);
+        setFetchedData(parsedData);
         setLoading(false);
       } catch (err) {
         /* Error raised from unmounted component is skipped
@@ -35,7 +45,7 @@ const CloneDataSourceButton = ({ record, ...rest }) => {
     };
     loadData();
     return () => { isMounted = false; };
-  }, [dataProvider, record.id]);
+  }, [dataProvider, endpoint, parseData, record.id]);
 
   if (loading) {
     return <LinearProgress />;
@@ -45,8 +55,7 @@ const CloneDataSourceButton = ({ record, ...rest }) => {
     return <span style={{ color: 'red' }}>{translate('ra.page.error')}</span>;
   }
 
-  const newRecord = { ...record, ...datasource };
-  return <CloneButton {...rest} record={newRecord} />;
+  return <CloneButton {...rest} record={clonedRecord} />;
 };
 
-export default CloneDataSourceButton;
+export default CustomCloneButton;

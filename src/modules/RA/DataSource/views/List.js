@@ -21,7 +21,8 @@ import {
 import CommonBulkActionButtons
   from '../../../../components/react-admin/CommonBulkActionButtons';
 
-import CloneDataSourceButton from '../components/CloneDataSourceButton';
+import CustomCloneButton from '../../../../components/react-admin/CustomCloneButton';
+import { RES_DATASOURCE } from '../../ra-modules';
 
 const ListFilters = props => (
   <Filter {...props}>
@@ -73,7 +74,7 @@ export const DataSourceList = props => (
         render={({ status }) => <StatusChip status={status} />}
       />
       <EditButton />
-      <CloneDataSourceButton />
+      <CustomCloneButton endpoint={RES_DATASOURCE} />
     </Datagrid>
   </List>
 );

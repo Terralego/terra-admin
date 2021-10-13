@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  CloneButton,
   Datagrid,
   EditButton,
   Filter,
@@ -21,6 +20,8 @@ import {
 } from '..';
 import CommonBulkActionButtons
   from '../../../../components/react-admin/CommonBulkActionButtons';
+
+import CloneDataSourceButton from '../components/CloneDataSourceButton';
 
 const ListFilters = props => (
   <Filter {...props}>
@@ -72,7 +73,7 @@ export const DataSourceList = props => (
         render={({ status }) => <StatusChip status={status} />}
       />
       <EditButton />
-      <CloneButton />
+      <CloneDataSourceButton />
     </Datagrid>
   </List>
 );

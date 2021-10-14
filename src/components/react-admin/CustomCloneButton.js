@@ -6,7 +6,6 @@ import {
   LinearProgress,
   Button,
   useResourceContext,
-  // CloneButton,
 } from 'react-admin';
 import { stringify } from 'query-string';
 

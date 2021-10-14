@@ -7,5 +7,5 @@ module.exports = app => {
     // eslint-disable-next-line no-console
     console.error('You must set your REACT_APP_API_HOST in your .env file');
   }
-  app.use(proxy(['/api', '/static_dj', '/media'], { target: API_HOST, changeOrigin: true }));
+  app.use(proxy(['/api', '/static_dj', '/media', '/elasticsearch'], { target: API_HOST, changeOrigin: true }));
 };

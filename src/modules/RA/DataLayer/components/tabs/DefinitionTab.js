@@ -14,28 +14,16 @@ import { useField, useForm } from 'react-final-form';
 
 import { FormGroup } from '@blueprintjs/core';
 
-import parser from 'pivotql-parser-expression';
 import FieldUpdater, { updateFieldFromSource } from '../FieldUpdater';
 import { required } from '../../../../../utils/react-admin/validate';
 import { RES_DATASOURCE } from '../../../ra-modules';
 import { WMTS } from '../../../DataSource';
 import useSourceData from '../useSourceData';
+import SourceFilterField from '../SourceFilterField';
 
 const Br = () => <br />;
 
 const defaultRequired = required();
-
-const validateSourceFilter = value => {
-  if (!value) {
-    return undefined;
-  }
-  try {
-    parser(value);
-    return undefined;
-  } catch (e) {
-    return 'datalayer.form.source-filter-error';
-  }
-};
 
 const DefinitionTab = ({ onSwitch, external }) => {
   const translate = useTranslate();
@@ -76,12 +64,12 @@ const DefinitionTab = ({ onSwitch, external }) => {
         <SelectInput />
       </ReferenceInput>
 
-      <TextInput
+      <SourceFilterField
         source="source_filter"
-        label="datalayer.form.source-filter"
+        disabled={!sourceId}
+        label="datalayer.form.source-filter.label"
+        helperText={translate('datalayer.form.source-filter.helper')}
         fullWidth
-        helperText={translate('datalayer.form.source-filter-helper')}
-        validate={validateSourceFilter}
       />
 
       <FormGroup
@@ -92,7 +80,6 @@ const DefinitionTab = ({ onSwitch, external }) => {
           allowEmpty
           label="datalayer.form.search.main-field.label"
           choices={fields.map(({ label: name, field: id }) => ({ id, name }))}
-          fullWidth
           disabled={!fields || !fields.length}
         />
       </FormGroup>

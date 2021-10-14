@@ -1,51 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { useDataProvider, useTranslate, LinearProgress, CloneButton } from 'react-admin';
+import React, { useState, useCallback } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import {
+  useDataProvider,
+  useTranslate,
+  LinearProgress,
+  Button,
+  useResourceContext,
+  // CloneButton,
+} from 'react-admin';
+import { stringify } from 'query-string';
+
+import Queue from '@material-ui/icons/Queue';
 
 const CustomCloneButton = ({
   record,
   endpoint,
+  label = 'ra.action.clone',
+  basePath = '',
   mergeWithRecord = (rec, data) => ({ ...rec, ...data }),
   parseData = d => d,
+  icon = <Queue />,
   ...rest
 }) => {
-  const [fetchedData, setFetchedData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const dataProvider = useDataProvider();
   const translate = useTranslate();
+  const history = useHistory();
+  const resource = useResourceContext();
 
-  // merge record & fetched data
-  const clonedRecord = mergeWithRecord(record, fetchedData);
+  const pathname = basePath ? `${basePath}/create` : `/${resource}/create`;
+  const omitId = ({ id, ...restOfRecord }) => restOfRecord;
 
-  useEffect(() => {
-    let isMounted = true;
-    const loadData = async () => {
-      try {
-        const { data = {} } = await dataProvider.getOne(endpoint, { id: record.id });
+  const loadData = useCallback(async e => {
+    e.stopPropagation();
+    try {
+      const { data = {} } = await dataProvider.getOne(endpoint, { id: record.id });
 
-        if (!isMounted) {
-          return;
-        }
+      // retrieve only needed infos to be cloned from data.
+      const parsedData = parseData(data);
 
-        // retrieve only needed infos to be cloned from data.
-        const parsedData = parseData(data);
-        setFetchedData(parsedData);
-        setLoading(false);
-      } catch (err) {
-        /* Error raised from unmounted component is skipped
-          to avoid setState error on unmounted component */
-        if (!isMounted) {
-          return;
-        }
+      // need to be merged to record to be stringified
+      const clonedRecord = mergeWithRecord(record, parsedData);
+      const stringifiedData = stringify({
+        source: JSON.stringify(omitId(clonedRecord)),
+      });
+      setLoading(false);
+      history.push(`${pathname}?${stringifiedData}`);
+    } catch (err) {
+      setError(true);
+      setLoading(false);
+    }
+  }, [dataProvider, endpoint, history, mergeWithRecord, parseData, pathname, record]);
 
-        setError(true);
-        setLoading(false);
-      }
-    };
-    loadData();
-    return () => { isMounted = false; };
-  }, [dataProvider, endpoint, parseData, record.id]);
 
   if (loading) {
     return <LinearProgress />;
@@ -55,7 +63,16 @@ const CustomCloneButton = ({
     return <span style={{ color: 'red' }}>{translate('ra.page.error')}</span>;
   }
 
-  return <CloneButton {...rest} record={clonedRecord} />;
+  return (
+    <Button
+      component={Link}
+      label={translate(label)}
+      onClick={loadData}
+      {...rest}
+    >
+      {icon}
+    </Button>
+  );
 };
 
 export default CustomCloneButton;

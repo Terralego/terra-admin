@@ -11,11 +11,11 @@ import {
 } from 'react-admin';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
+import CustomCloneButton from '../../../../components/react-admin/CustomCloneButton';
 import useUserSettings from '../../../../hooks/useUserSettings';
 
-import { RES_USER } from '../../ra-modules';
+import { RES_USER, RES_CAMPAIGN } from '../../ra-modules';
 import CampaignState from '../components/CampaignState';
-import CloneCampaignButton from '../components/CloneCampaignButton';
 import UserNameField from '../../User/components/UserNameField';
 
 const ListFilters = props => (
@@ -50,6 +50,14 @@ const postRowStyle = ({ state }) => {
 export const CampaignList = props => {
   const { hasPermission } = useUserSettings();
 
+  const mergeViewpoints = (record, viewpoints) => ({
+    ...record,
+    viewpoints,
+    state: undefined,
+  });
+
+  const parseData = ({ viewpoints = [] }) => viewpoints;
+
   return (
     <List
       {...props}
@@ -71,7 +79,13 @@ export const CampaignList = props => {
         <ProgressField label="resources.campaign.fields.statistics.progress" sortable={false} />
 
         <EditButton />
-        { hasPermission('can_manage_campaigns') && <CloneCampaignButton />}
+        { hasPermission('can_manage_campaigns') && (
+          <CustomCloneButton
+            endpoint={RES_CAMPAIGN}
+            mergeWithRecord={mergeViewpoints}
+            parseData={parseData}
+          />
+        )}
       </Datagrid>
     </List>
   );

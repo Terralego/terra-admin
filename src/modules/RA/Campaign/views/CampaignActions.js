@@ -13,9 +13,10 @@ import IconList from '@material-ui/icons/List'; // eslint-disable-line import/no
 import FileCopy from '@material-ui/icons/FileCopy'; // eslint-disable-line import/no-extraneous-dependencies
 import Api from '@terralego/core/modules/Api';
 
-import CloneCampaignButton from '../components/CloneCampaignButton';
 import useUserSettings from '../../../../hooks/useUserSettings';
 
+import CustomCloneButton from '../../../../components/react-admin/CustomCloneButton';
+import { RES_CAMPAIGN } from '../../ra-modules';
 
 const CampaignActions = ({
   basePath,
@@ -37,6 +38,14 @@ const CampaignActions = ({
     }
   }, [data.id, dataProvider, notify, translate]);
 
+  const mergeViewpoints = (record, viewpoints) => ({
+    ...record,
+    viewpoints,
+    state: undefined,
+  });
+
+  const parseData = ({ viewpoints = [] }) => viewpoints;
+
   return (
     <TopToolbar>
       {data.id && (
@@ -50,9 +59,12 @@ const CampaignActions = ({
           />
           )}
           {hasPermission('can_manage_campaigns') && (
-            <CloneCampaignButton
+            <CustomCloneButton
               record={data}
+              mergeWithRecord={mergeViewpoints}
+              parseData={parseData}
               basePath={basePath}
+              endpoint={RES_CAMPAIGN}
               variant="outlined"
               style={{ marginRight: '1em' }}
             />

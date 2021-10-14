@@ -5,6 +5,7 @@ import AuthProvider from '@terralego/core/modules/Auth';
 
 import './config/i18n';
 import AppProvider from './components/AppProvider';
+import SearchProvider from './components/SearchProvider';
 import Main from './views/Main';
 
 import 'normalize.css';
@@ -18,11 +19,13 @@ const App = () => (
   <BrowserRouter basename={PUBLIC_URL}>
     <ApiProvider host="/api">
       <AppProvider>
-        <AuthProvider>
-          <BetaProvider>
-            <Main />
-          </BetaProvider>
-        </AuthProvider>
+        <SearchProvider host="/elasticsearch">
+          <AuthProvider>
+            <BetaProvider>
+              <Main />
+            </BetaProvider>
+          </AuthProvider>
+        </SearchProvider>
       </AppProvider>
     </ApiProvider>
   </BrowserRouter>

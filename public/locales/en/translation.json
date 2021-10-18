@@ -539,7 +539,10 @@
       "icon": "Icon",
       "ordering": "Ordering",
       "import-report": "Import reporting",
-      "baselayer": "Map baselayers"
+      "baselayer": "Map baselayers",
+      "longitude": "longitude",
+      "latitude": "latitude",
+      "zoom": "zoom"
     }
   },
   "ra": {

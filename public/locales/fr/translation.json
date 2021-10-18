@@ -400,9 +400,9 @@
       "data-source": "Source des données",
       "definition": "Définition",
       "source-filter": {
-        "label":"Filtrer la source",
+        "label": "Filtrer la source",
         "helper": "Vous pouvez filtrer les données provenant de la source en saisissant une expression ici. ex: « name == \"jean\" and age > 18 »",
-        "error": "Votre saisie contient une erreur.",        
+        "error": "Votre saisie contient une erreur.",
         "error-invalid": "Votre saisie est invalide, merci de la corriger.",
         "error-localisation": "Localisation de l'erreur : ",
         "error-missing": "La variable « %{missing} » n'a pas été trouvée dans les propriétés de la source.",
@@ -603,7 +603,10 @@
       "icon": "Icône",
       "ordering": "Classement",
       "import-report": "Rapport d'importation",
-      "baselayer": "Fonds de plan"
+      "baselayer": "Fonds de plan",
+      "longitude": "longitude",
+      "latitude": "latitude",
+      "zoom": "zoom"
     }
   },
   "ra": {

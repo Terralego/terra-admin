@@ -79,9 +79,21 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
 
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
 
-      <NumberInput source="config.map_settings.center.0" label="longitude" formClassName={classes.inline} />
-      <NumberInput source="config.map_settings.center.1" label="lattitude" formClassName={classes.inline} />
-      <NumberInput source="config.map_settings.zoom" label="zoom" formClassName={classes.inline} />
+      <NumberInput
+        source="config.map_settings.center.0"
+        label="view.form.longitude"
+        formClassName={classes.inline}
+      />
+      <NumberInput
+        source="config.map_settings.center.1"
+        label="view.form.latitude"
+        formClassName={classes.inline}
+      />
+      <NumberInput
+        source="config.map_settings.zoom"
+        label="view.form.zoom"
+        formClassName={classes.inline}
+      />
 
       <ReferenceArrayInput
         source="baselayer"

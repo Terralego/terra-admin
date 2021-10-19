@@ -1,4 +1,11 @@
 
+4.0.3 / 2021-10-19
+==================
+
+  * Update pivotql (#489)
+  * Add center coord & zoom input for view (#488)
+  * Correctly fetch record to populate cloned source (#486)
+
 4.0.2 / 2021-10-14
 ==================
 

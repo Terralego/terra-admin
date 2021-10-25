@@ -25,6 +25,9 @@ import compose from '../../../../utils/compose';
 import TreeInput from './TreeInput';
 import SceneFormNameField from './SceneFormNameField';
 import { RES_BASELAYER } from '../../ra-modules';
+import { withMapConfig } from '../../../../hoc/withAppSettings';
+
+import MapInput from './MapInput';
 
 const styles = {
   inline: {
@@ -50,7 +53,7 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
 };
 
 const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
-  const { record } = props;
+  const { record, mapConfig } = props;
 
   /* sanitizeEmptyValues is false for this form to prevent
    * this issue with the layer tree https://github.com/marmelab/react-admin/issues/5427
@@ -79,21 +82,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
 
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
 
-      <NumberInput
-        source="config.map_settings.center.0"
-        label="view.form.longitude"
-        formClassName={classes.inline}
-      />
-      <NumberInput
-        source="config.map_settings.center.1"
-        label="view.form.latitude"
-        formClassName={classes.inline}
-      />
-      <NumberInput
-        source="config.map_settings.zoom"
-        label="view.form.zoom"
-        formClassName={classes.inline}
-      />
+      <MapInput mapConfig={mapConfig} />
 
       <ReferenceArrayInput
         source="baselayer"
@@ -130,4 +119,5 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
 export default compose(
   translate,
   withStyles(styles),
+  withMapConfig,
 )(SceneForm);

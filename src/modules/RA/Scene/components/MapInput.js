@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useField, useForm } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -12,9 +12,16 @@ import IconButton from '@material-ui/core/IconButton';
 import RectangleIcon from '@material-ui/icons/Crop169';
 import Typography from '@material-ui/core/Typography';
 
+import { withMapConfig } from '../../../../hoc/withAppSettings';
+
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
-let Map = null;
+const MAPBOX_STYLE = 'mapbox://styles/mapbox/streets-v9';
+
+const Map = ({ accessToken, ...rest }) => {
+  const MapComponent = useMemo(() => ReactMapboxGl({ accessToken }), [accessToken]);
+  return <MapComponent {...rest} />;
+};
 
 const MapInput = ({ mapConfig }) => {
   const [loaded, setLoaded] = useState(false);
@@ -22,13 +29,11 @@ const MapInput = ({ mapConfig }) => {
   const { input: { value: mapSettings } } = useField('config.map_settings');
 
   const form = useForm();
-  const mapRef = useRef(null);
   const drawRef = useRef(null);
   const translate = useTranslate();
 
   useEffect(() => {
     if (mapConfig.accessToken) {
-      Map = ReactMapboxGl({ accessToken: mapConfig.accessToken });
       setLoaded(true);
     }
   }, [mapConfig.accessToken]);
@@ -83,7 +88,6 @@ const MapInput = ({ mapConfig }) => {
     });
   }, [form]);
 
-
   if (!loaded) {
     return null;
   }
@@ -99,15 +103,15 @@ const MapInput = ({ mapConfig }) => {
     <div id="mapInput">
       <Typography variant="body1">{translate('view.form.extent-label')}</Typography>
       <Map
-        ref={mapRef}
-        style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
+        accessToken={mapConfig.accessToken}
+        style={MAPBOX_STYLE} // eslint-disable-line react/style-prop-object
         containerStyle={{ height: '300px', width: '600px' }}
         center={mapConfig.center}
         zoom={[mapConfig.zoom]}
         onStyleLoad={loadBbox}
       >
         <DrawControl
-          ref={drawControl => { drawRef.current = drawControl; }}
+          ref={drawRef}
           modes={modes}
           displayControlsDefault={false}
           controls={{ trash: true }}
@@ -135,4 +139,4 @@ const MapInput = ({ mapConfig }) => {
   );
 };
 
-export default MapInput;
+export default withMapConfig(MapInput);

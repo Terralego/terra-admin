@@ -26,7 +26,7 @@ import TreeInput from './TreeInput';
 import SceneFormNameField from './SceneFormNameField';
 import { RES_BASELAYER } from '../../ra-modules';
 
-import MapInput from './MapInput';
+import MapExtentInput from './MapExtentInput';
 
 const styles = {
   inline: {
@@ -81,7 +81,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
 
       <NumberInput source="order" label="view.form.ordering" validate={required()} />
 
-      <MapInput />
+      <MapExtentInput />
 
       <ReferenceArrayInput
         source="baselayer"

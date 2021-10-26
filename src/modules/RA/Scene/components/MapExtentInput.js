@@ -48,11 +48,7 @@ const MapInput = ({ mapConfig }) => {
     }
   }, [mapSettings]);
 
-  const addBbox = useCallback(({ features }) => {
-    setDisabled(true);
-    const [feature] = features;
-    const bbox = getBbox(feature);
-
+  const updateBbox = useCallback(({ features, type }) => {
     const {
       values: {
         config: { map_settings: settings = {} } = {},
@@ -60,30 +56,22 @@ const MapInput = ({ mapConfig }) => {
       },
     } = form.getState();
 
-    form.change('config', {
-      ...config,
-      map_settings: {
-        ...settings,
-        fitBounds: { coordinates: bbox },
-      },
-    });
-  }, [form]);
+    const fitBounds = {};
 
-  const removeBbox = useCallback(() => {
-    setDisabled(false);
-
-    const {
-      values: {
-        config: { map_settings: settings = {} } = {},
-        config,
-      },
-    } = form.getState();
+    if (type === 'draw.create') {
+      setDisabled(true);
+      const [feature] = features;
+      const bbox = getBbox(feature);
+      fitBounds.coordinates = bbox;
+    } else {
+      setDisabled(false);
+    }
 
     form.change('config', {
       ...config,
       map_settings: {
         ...settings,
-        fitBounds: {},
+        fitBounds,
       },
     });
   }, [form]);
@@ -115,8 +103,8 @@ const MapInput = ({ mapConfig }) => {
           modes={modes}
           displayControlsDefault={false}
           controls={{ trash: true }}
-          onDrawCreate={addBbox}
-          onDrawDelete={removeBbox}
+          onDrawCreate={updateBbox}
+          onDrawDelete={updateBbox}
         />
         <IconButton
           variant="contained"

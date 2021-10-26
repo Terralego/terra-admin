@@ -607,7 +607,7 @@
       "longitude": "longitude",
       "latitude": "latitude",
       "zoom": "zoom",
-      "extent-label": "Définnissez la zone à afficher"
+      "extent-label": "Définissez la zone à afficher"
     }
   },
   "ra": {

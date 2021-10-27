@@ -554,7 +554,8 @@
       "baselayer": "Map baselayers",
       "longitude": "longitude",
       "latitude": "latitude",
-      "zoom": "zoom"
+      "zoom": "zoom",
+      "extent-label": "Define map extent"
     }
   },
   "ra": {

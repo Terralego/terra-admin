@@ -606,7 +606,8 @@
       "baselayer": "Fonds de plan",
       "longitude": "longitude",
       "latitude": "latitude",
-      "zoom": "zoom"
+      "zoom": "zoom",
+      "extent-label": "Définissez la zone à afficher"
     }
   },
   "ra": {

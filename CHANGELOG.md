@@ -1,4 +1,9 @@
 
+4.0.4 / 2021-10-27
+==================
+
+  * Map extend for specific view is now draw directly on a map (#490)
+
 4.0.3 / 2021-10-19
 ==================
 

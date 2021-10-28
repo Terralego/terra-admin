@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import RectangleIcon from '@material-ui/icons/Crop169';
 import Typography from '@material-ui/core/Typography';
 
-import { withMapConfig } from '../../../../hoc/withAppSettings';
+import useAppSettings from '../../../../hooks/useAppSettings';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
@@ -23,7 +23,7 @@ const Map = ({ accessToken, ...rest }) => {
   return <MapComponent {...rest} />;
 };
 
-const MapInput = ({ mapConfig }) => {
+const MapInput = () => {
   const [loaded, setLoaded] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const { input: { value: mapSettings } } = useField('config.map_settings');
@@ -31,12 +31,13 @@ const MapInput = ({ mapConfig }) => {
   const form = useForm();
   const drawRef = useRef(null);
   const translate = useTranslate();
+  const { map: mapConfig } = useAppSettings();
 
   useEffect(() => {
-    if (mapConfig.accessToken) {
+    if (mapConfig?.accessToken) {
       setLoaded(true);
     }
-  }, [mapConfig.accessToken]);
+  }, [mapConfig]);
 
   const loadBbox = useCallback(map => {
     const { draw } = drawRef.current;
@@ -127,4 +128,4 @@ const MapInput = ({ mapConfig }) => {
   );
 };
 
-export default withMapConfig(MapInput);
+export default MapInput;

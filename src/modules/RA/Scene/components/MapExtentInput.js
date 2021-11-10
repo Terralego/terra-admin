@@ -10,6 +10,7 @@ import getBboxPolygon from '@turf/bbox-polygon';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import HomeIcon from '@material-ui/icons/Home';
 
 import DrawRectangle from '../../../../components/DrawRectangle';
 import useAppSettings from '../../../../hooks/useAppSettings';
@@ -28,6 +29,7 @@ const MapInput = () => {
   const { input: { value: mapSettings } } = useField('config.map_settings');
 
   const form = useForm();
+  const mapRef = useRef(null);
   const drawRef = useRef(null);
   const translate = useTranslate();
   const { map: mapConfig } = useAppSettings();
@@ -39,6 +41,7 @@ const MapInput = () => {
   }, [mapConfig]);
 
   const loadBbox = useCallback(map => {
+    mapRef.current = map;
     const { draw } = drawRef.current;
 
     const { fitBounds: { coordinates = [] } = {} } = mapSettings;
@@ -95,6 +98,12 @@ const MapInput = () => {
     updateBbox({ type: 'draw.delete' });
   }, [updateBbox]);
 
+  const resetExtent = useCallback(() => {
+    const { current: map } = mapRef;
+    map.setCenter(mapConfig.center);
+    map.setZoom(mapConfig.zoom);
+  }, [mapConfig.center, mapConfig.zoom]);
+
   if (!loaded) {
     return null;
   }
@@ -135,6 +144,21 @@ const MapInput = () => {
           onClick={deleteAll}
         >
           <DeleteIcon />
+        </IconButton>
+        <IconButton
+          variant="contained"
+          className="mapboxgl-ctrl-group"
+          size="small"
+          style={{
+            position: 'absolute',
+            marginTop: '50px',
+            marginLeft: '10px',
+            backgroundColor: 'white',
+
+          }}
+          onClick={resetExtent}
+        >
+          <HomeIcon />
         </IconButton>
       </Map>
     </div>

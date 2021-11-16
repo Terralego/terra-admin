@@ -1,4 +1,10 @@
 
+4.0.5 / 2021-11-16
+==================
+
+  * Improve map extent input for scene form (#492)
+  * Use hook instead of HOC for mapsetting (#491)
+
 4.0.4 / 2021-10-27
 ==================
 

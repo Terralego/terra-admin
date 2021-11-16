@@ -4,14 +4,15 @@ import { useTranslate } from 'react-admin';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import ReactMapboxGl from 'react-mapbox-gl';
 import DrawControl from 'react-mapbox-gl-draw';
-import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import getBbox from '@turf/bbox';
 import getBboxPolygon from '@turf/bbox-polygon';
 
-import IconButton from '@material-ui/core/IconButton';
-import RectangleIcon from '@material-ui/icons/Crop169';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import HomeIcon from '@material-ui/icons/Home';
 
+import DrawRectangle from '../../../../components/DrawRectangle';
 import useAppSettings from '../../../../hooks/useAppSettings';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
@@ -25,10 +26,10 @@ const Map = ({ accessToken, ...rest }) => {
 
 const MapInput = () => {
   const [loaded, setLoaded] = useState(false);
-  const [disabled, setDisabled] = useState(false);
   const { input: { value: mapSettings } } = useField('config.map_settings');
 
   const form = useForm();
+  const mapRef = useRef(null);
   const drawRef = useRef(null);
   const translate = useTranslate();
   const { map: mapConfig } = useAppSettings();
@@ -40,7 +41,9 @@ const MapInput = () => {
   }, [mapConfig]);
 
   const loadBbox = useCallback(map => {
+    mapRef.current = map;
     const { draw } = drawRef.current;
+
     const { fitBounds: { coordinates = [] } = {} } = mapSettings;
     if (coordinates.length > 0) {
       map.fitBounds(coordinates, { padding: 20 });
@@ -50,6 +53,7 @@ const MapInput = () => {
   }, [mapSettings]);
 
   const updateBbox = useCallback(({ features, type }) => {
+    const { draw } = drawRef.current;
     const {
       values: {
         config: { map_settings: settings = {} } = {},
@@ -60,12 +64,18 @@ const MapInput = () => {
     const fitBounds = {};
 
     if (type === 'draw.create') {
-      setDisabled(true);
       const [feature] = features;
       const bbox = getBbox(feature);
       fitBounds.coordinates = bbox;
-    } else {
-      setDisabled(false);
+
+      const { features: allfeatures } = draw.getAll();
+      const featuresToDelete = allfeatures.reduce((toDelete, f) => {
+        if (f.id === feature.id) {
+          return toDelete;
+        }
+        return [...toDelete, f.id];
+      }, []);
+      draw.delete(featuresToDelete);
     }
 
     form.change('config', {
@@ -77,16 +87,29 @@ const MapInput = () => {
     });
   }, [form]);
 
+  const deleteAll = useCallback(() => {
+    // clear drawing on map
+    const { draw } = drawRef.current;
+    const { features } = draw.getAll();
+    const ids = features.map(f => f.id);
+    draw.deleteAll(ids);
+
+    // clear form
+    updateBbox({ type: 'draw.delete' });
+  }, [updateBbox]);
+
+  const resetExtent = useCallback(() => {
+    const { current: map } = mapRef;
+    map.setCenter(mapConfig.center);
+    map.setZoom(mapConfig.zoom);
+  }, [mapConfig.center, mapConfig.zoom]);
+
   if (!loaded) {
     return null;
   }
 
-  const modes = { ...MapboxDraw.modes, draw_rectangle: DrawRectangle };
 
-  const triggerRectangleMode = () => {
-    const { draw } = drawRef.current;
-    draw.changeMode('draw_rectangle');
-  };
+  const modes = { ...MapboxDraw.modes, draw_rectangle: DrawRectangle };
 
   return (
     <div id="mapInput">
@@ -103,10 +126,25 @@ const MapInput = () => {
           ref={drawRef}
           modes={modes}
           displayControlsDefault={false}
-          controls={{ trash: true }}
           onDrawCreate={updateBbox}
           onDrawDelete={updateBbox}
+          defaultMode="draw_rectangle"
         />
+        <IconButton
+          variant="contained"
+          className="mapboxgl-ctrl-group"
+          size="small"
+          style={{
+            position: 'absolute',
+            marginTop: '10px',
+            marginLeft: '10px',
+            backgroundColor: 'white',
+
+          }}
+          onClick={deleteAll}
+        >
+          <DeleteIcon />
+        </IconButton>
         <IconButton
           variant="contained"
           className="mapboxgl-ctrl-group"
@@ -118,10 +156,9 @@ const MapInput = () => {
             backgroundColor: 'white',
 
           }}
-          onClick={triggerRectangleMode}
-          disabled={disabled}
+          onClick={resetExtent}
         >
-          <RectangleIcon />
+          <HomeIcon />
         </IconButton>
       </Map>
     </div>

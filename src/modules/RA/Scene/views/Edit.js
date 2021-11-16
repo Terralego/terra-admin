@@ -3,6 +3,9 @@ import { Edit } from 'react-admin';
 
 import SceneForm from '../components/SceneForm';
 import DefaultActions from '../../../../components/react-admin/DefaultActions';
+import PreventPartialData from '../../../../components/react-admin/PreventPartialData';
+
+const EditSceneForm = PreventPartialData('config', SceneForm);
 
 export const SceneEdit = props => (
   <Edit
@@ -11,7 +14,7 @@ export const SceneEdit = props => (
     actions={<DefaultActions />}
 
   >
-    <SceneForm edit />
+    <EditSceneForm edit />
   </Edit>
 );
 

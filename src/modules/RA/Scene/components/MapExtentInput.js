@@ -92,7 +92,10 @@ const MapInput = () => {
     const { draw } = drawRef.current;
     const { features } = draw.getAll();
     const ids = features.map(f => f.id);
-    draw.deleteAll(ids);
+
+    // force 'rectangle_mode' to be able to instantly draw after 'deleteAll'
+    // (for some obscur reason)
+    draw.deleteAll(ids).changeMode('draw_rectangle');
 
     // clear form
     updateBbox({ type: 'draw.delete' });

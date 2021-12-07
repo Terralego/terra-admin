@@ -1,4 +1,9 @@
 
+4.0.6 / 2021-12-07
+==================
+
+  * Fix MapExtentInput bug putting out of draw rectanglge mode after delete all(#493)
+
 4.0.5 / 2021-11-16
 ==================
 

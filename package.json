@@ -27,7 +27,7 @@
     "mapbox-gl-draw-rectangle-mode": "^1.0.4",
     "material-ui-chip-input": "^1.1.0",
     "mime-types": "^2.1.29",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "normalize.css": "^8.0.1",
     "pivotql-compiler-elasticsearch": "^0.2.0",
     "pivotql-parser-expression": "^0.2.0",

@@ -1,4 +1,9 @@
 
+4.0.7 / 2022-08-29
+==================
+
+  * Use city name instead of id in viewpoint creation
+
 4.0.6 / 2021-12-07
 ==================
 

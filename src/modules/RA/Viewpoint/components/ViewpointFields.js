@@ -190,6 +190,7 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
           <AutocompleteInput
             source="city"
             choices={remoteChoices.cities}
+            optionValue="name"
             label="resources.viewpoint.fields.city"
             validate={required()}
           />

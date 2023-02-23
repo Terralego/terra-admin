@@ -2,7 +2,7 @@
 
 ## Install
 
-    $ npm ci
+    $ npm ci --legacy-peer-deps
 
 ## Configuration
 

@@ -98,7 +98,7 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\](?!dnd-core|react-dnd).+\\.(js|jsx|ts|tsx)$"
+      "[/\\\\]node_modules[/\\\\](?!dnd-core|react-dnd|unist-util-.*).+\\.(js|jsx|ts|tsx)$"
     ]
   }
 }

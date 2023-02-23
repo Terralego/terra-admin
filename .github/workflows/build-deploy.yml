@@ -23,8 +23,7 @@ jobs:
         with:
           node-version: 14
 
-      - run: npm install -g npm && npm rebuild node-sass
-      - run: npm ci && npm rebuild node-sass && npm run build
+      - run: npm ci && npm run build
         env:
           PUBLIC_URL: "/admin/"
       - run: |

@@ -62,10 +62,10 @@
     "uuid": "~7.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "postbuild": "echo $npm_package_version > build/build.txt && git describe --tags >> build/build.txt && date -R >> build/build.txt",
-    "test": "react-scripts test",
+    "test": "react-scripts --openssl-legacy-provider test",
     "version": "git changelog -n -t $npm_package_version && git add CHANGELOG.md",
     "lint": "eslint src"
   },

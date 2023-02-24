@@ -66,7 +66,6 @@ const UserFields = ({ edit = false, user: { is_superuser: isSuperUser } = {}, ..
         source="is_superuser"
         disabled={!isSuperUser}
         helperText={!isSuperUser && translate('user.form.not-allowed-to-edit')}
-
         formClassName={classes.inline}
       />
       <BooleanInput

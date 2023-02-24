@@ -73,7 +73,6 @@ const TimeInput = ({
       }}
       {...options}
       {...sanitizeRestProps(rest)}
-
       value={value}
       onBlur={handleChange}
       onChange={handleChange}

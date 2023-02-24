@@ -34,8 +34,16 @@ const TimeInput = ({
   const value = convertDateToTimeString(new Date(input.value));
 
   const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
-  React.useEffect(forceUpdate, [input.value]);
+
+  const forceUpdate = React.useCallback(
+    () => updateState({}),
+    [],
+  );
+
+  React.useEffect(
+    () => forceUpdate(),
+    [forceUpdate, input.value],
+  );
 
   const handleChange = event => {
     const [hh, mm] = event.target.value.split(':');
@@ -73,7 +81,6 @@ const TimeInput = ({
       }}
       {...options}
       {...sanitizeRestProps(rest)}
-
       value={value}
       onBlur={handleChange}
       onChange={handleChange}

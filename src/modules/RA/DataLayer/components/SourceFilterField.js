@@ -116,28 +116,31 @@ const SourceFilterField = props => {
   /**
    * Debounced function to update result count.
    */
-  const updateResultCount = React.useCallback(debounce(async computedQuery => {
-    if (!sourceData.slug) {
-      return;
-    }
-    let count = 0;
-    try {
-      const { responses: [{ hits: { total: { value: resultCount } } }] } =
-        await searchService.msearch([{
-          index: sourceData.slug,
-          include: [],
-          baseQuery: computedQuery,
-          size: 0,
-        }]);
-      count = resultCount;
-    } catch (e) {
-      count = 0;
-    }
-    if (!mountedRef.current) {
-      return;
-    }
-    setFeatureCount(count);
-  }, 1000), [sourceData]);
+  const updateResultCount = React.useMemo(
+    () => debounce(async computedQuery => {
+      if (!sourceData.slug) {
+        return;
+      }
+      let count = 0;
+      try {
+        const { responses: [{ hits: { total: { value: resultCount } } }] } =
+          await searchService.msearch([{
+            index: sourceData.slug,
+            include: [],
+            baseQuery: computedQuery,
+            size: 0,
+          }]);
+        count = resultCount;
+      } catch (e) {
+        count = 0;
+      }
+      if (!mountedRef.current) {
+        return;
+      }
+      setFeatureCount(count);
+    }, 1000),
+    [sourceData],
+  );
 
   React.useEffect(() => {
     /**

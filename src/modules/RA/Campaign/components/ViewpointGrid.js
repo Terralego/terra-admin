@@ -86,33 +86,6 @@ const RemoveViewpoint = ({ record: viewpoint, onRemove, pictureMap }) => {
   );
 };
 
-const postRowStyle = pictureMap => ({ id }) => {
-  let state = 'missing';
-
-  if (pictureMap[id]) {
-    state = pictureMap[id].state;
-  }
-
-  switch (state) {
-    case 'submited':
-      return {
-        borderLeft: '4px solid orange',
-      };
-    case 'accepted':
-      return {
-        borderLeft: '4px solid green',
-      };
-    case 'refused':
-      return {
-        borderLeft: '4px solid red',
-      };
-    default: {
-      return {};
-    }
-  }
-};
-
-
 const ViewpointGrid = ({ record }) => {
   const { hasPermission } = useUserSettings();
 
@@ -208,7 +181,34 @@ const ViewpointGrid = ({ record }) => {
     [onChange, viewpoints],
   );
 
-  const postRowStyleCallback = React.useCallback(postRowStyle(pictureMap), [pictureMap]);
+  const postRowStyleCallback = React.useCallback(
+    ({ id }) => {
+      let pictureState = 'missing';
+
+      if (pictureMap[id]) {
+        pictureState = pictureMap[id].state;
+      }
+
+      switch (pictureState) {
+        case 'submited':
+          return {
+            borderLeft: '4px solid orange',
+          };
+        case 'accepted':
+          return {
+            borderLeft: '4px solid green',
+          };
+        case 'refused':
+          return {
+            borderLeft: '4px solid red',
+          };
+        default: {
+          return {};
+        }
+      }
+    },
+    [pictureMap],
+  );
 
   return (
     <>

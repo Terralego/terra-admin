@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useField, useForm } from 'react-final-form';
 import {
   TextInput,
@@ -46,22 +46,25 @@ const PopupTab = () => {
 
   const { input: { value: fields } } = useField('fields');
 
-  const updateTemplate = useCallback(debounce(() => {
-    const {
-      values: {
-        popup_config: {
-          wizard: {
-            fields: popupfields = [],
-          } = {},
+  const updateTemplate = React.useMemo(
+    () => debounce(() => {
+      const {
+        values: {
+          popup_config: {
+            wizard: {
+              fields: popupfields = [],
+            } = {},
+          },
         },
-      },
-    } = form.getState();
-    if (popupfields.length > 0) {
-      const lines = createTemplate(popupfields, fields);
+      } = form.getState();
+      if (popupfields.length > 0) {
+        const lines = createTemplate(popupfields, fields);
 
-      form.change('popup_config.template', lines.join('\n'));
-    }
-  }, 200), [form, fields]);
+        form.change('popup_config.template', lines.join('\n'));
+      }
+    }, 200),
+    [form, fields],
+  );
 
 
   if (geomType === undefined || !sourceId) {

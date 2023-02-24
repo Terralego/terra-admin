@@ -75,22 +75,25 @@ const MinisheetTab = () => {
 
   const availableFields = useMemo(() => getAvailableFields(), [getAvailableFields]);
 
-  const updateTemplate = useCallback(debounce(() => {
-    const {
-      values: {
-        minisheet_config: {
-          wizard: {
-            title: titleField = {},
-            tree: treeData = [],
+  const updateTemplate = useMemo(
+    () => debounce(() => {
+      const {
+        values: {
+          minisheet_config: {
+            wizard: {
+              title: titleField = {},
+              tree: treeData = [],
+            } = {},
           } = {},
-        } = {},
-      },
-    } = form.getState();
+        },
+      } = form.getState();
 
-    const template = createTemplate(titleField, treeData, fields, translate);
+      const template = createTemplate(titleField, treeData, fields, translate);
 
-    form.change('minisheet_config.template', template);
-  }, 200), [fields, form, translate]);
+      form.change('minisheet_config.template', template);
+    }, 200),
+    [fields, form, translate],
+  );
 
 
   if (geomType === undefined || !sourceId) {

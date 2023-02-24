@@ -58,6 +58,7 @@ const FieldRow = ({ field, onChange, exportEnabled }) => {
     onChange(newValue);
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   const onShownChange = React.useCallback(
     handleToggleField('shown'),
     [field, onChange],
@@ -70,6 +71,7 @@ const FieldRow = ({ field, onChange, exportEnabled }) => {
     handleToggleField('exportable'),
     [field, onChange],
   );
+  /* eslint-enable */
 
   const labelInError = !field.label;
 

@@ -23,7 +23,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "lodash.uniqby": "^4.7.0",
-    "mapbox-gl": "^1.13.2",
+    "mapbox-gl": "^1.13.3",
     "mapbox-gl-draw-rectangle-mode": "^1.0.4",
     "material-ui-chip-input": "^1.1.0",
     "mime-types": "^2.1.29",

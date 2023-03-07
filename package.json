@@ -19,7 +19,7 @@
     "i18next-browser-languagedetector": "^2.2.4",
     "i18next-xhr-backend": "^1.5.1",
     "inflection": "^1.13.4",
-    "jsoneditor": "^7.0.5",
+    "jsoneditor": "^7.5.0",
     "jsoneditor-react": "^1.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",

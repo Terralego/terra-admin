@@ -44,7 +44,7 @@
     "react-autosuggest": "^10.1.0",
     "react-color": "^2.19.3",
     "react-ctx-connect": "^1.0.3",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.14.0",
     "react-final-form": "^6.5.1",
     "react-helmet": "^5.2.1",
     "react-i18next": "^11.18.6",

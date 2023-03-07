@@ -1,4 +1,4 @@
-import drfProvider from 'ra-data-drf';
+import drfProvider from '@terralego/ra-data-drf';
 import { fetchUtils } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 import auth from '@terralego/core/modules/Auth/services/auth';

@@ -29,7 +29,7 @@
     "material-ui-chip-input": "^1.1.0",
     "mime-types": "^2.1.35",
     "normalize.css": "^8.0.1",
-    "pivotql-compiler-elasticsearch": "^0.2.0",
+    "pivotql-compiler-elasticsearch": "^0.4.1",
     "pivotql-parser-expression": "^0.2.0",
     "prop-types": "^15.8.1",
     "query-string": "^7.1.3",

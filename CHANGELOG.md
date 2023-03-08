@@ -1,4 +1,52 @@
 
+5.0.0-rc.1 / 2023-03-08
+=======================
+
+  * Update ra-input-rich-text from 3.8.3 to 3.19.12
+  * Update eslint-plugin-react-hooks from 2.3.0 to 2.5.1
+  * Update eslint-plugin-flowtype from 4.0.0 to 4.7.0
+  * Update uuid from 7.0.3 to 9.0.0
+  * Update npm-ra-data-drf to @terralego/ra-data-drf (bypass http/ssh issue)
+  * Update http-proxy-middleware from 0.19.2 to 2.0.6
+  * Update react-app-polyfill from 1.0.6 to 3.0.0
+  * Update jsoneditor from 7.0.5 to 7.5.0
+  * Update react-test-renderer from 16.13.1 to 16.14.0
+  * Update react-dom from 16.13.1 to 16.14.0
+  * Update react from 16.13.1 to 16.14.0
+  * Update @blueprintjs/icons from 3.15.1 to 3.33.0
+  * Update @blueprintjs/core from 3.44.0 to 3.54.0
+  * Update eslint-plugin-react from 7.19.0 to 7.32.2
+  * Update eslint-plugin-jsx-a11y from 6.2.3 to 6.7.1
+  * Update eslint-plugin-import from 2.20.2 to 2.27.5
+  * Update pivotql-parser-expression from 0.2.0 to 0.4.2
+  * Update pivotql-compiler-elasticsearch from 0.2.0 to 0.4.1
+  * Update @material-ui/lab from 4.0.0-alpha.57 to 4.0.0-alpha.61
+  * Update prop-types from 15.7.2 to 15.8.1
+  * Update react-i18next from 11.7.2 to 11.18.6
+  * Pin @babel/runtime to version 7.13
+  * Update react-router-dom from 5.2.0 to 5.3.4
+  * Update react-router from 5.2.0 to 5.3.4
+  * Update tinycolor2 from 1.4.2 to 1.6.0
+  * Update react-color from 2.18.1 to 2.19.3
+  * Update react-autosuggest from 10.0.2 to 10.1.0
+  * Update query-string from 7.0.1 to 7.1.3
+  * Update inflection from 1.12.0 to 1.13.4
+  * Update i18next from 19.7.0 to 19.9.2
+  * Update @mapbox/mapbox-gl-draw from 1.3.0 to 1.4.1
+  * Update unist-util-visit from 4.1.0 to 4.1.2
+  * Update react-ctx-connect from 1.0.2 to 1.0.3
+  * Update mime-types from 2.1.29 to 2.1.35
+  * Update mapbox-gl from 1.13.2 to 1.13.3
+  * Update http-proxy-middleware from 0.19.1 to 0.19.2
+  * Update @terralego/core from 1.28.1 to 1.28.19
+  * Update @blueprintjs/icons from 3.15.0 to 3.15.1
+  * Update final-form from 4.20.2 to 4.20.9
+  * Update enzyme-adapter-react-16 from 1.15.4 to 1.15.7
+  * Update classnames from 2.2.6 to 2.3.2
+  * Upgrade react-scripts (3>4), switch from node-sass to sass
+  * Upgrade from node 12 to 18
+  * Fix blocking linting issues
+
 4.0.7 / 2022-08-29
 ==================
 

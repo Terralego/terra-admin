@@ -1,7 +1,3 @@
-4.0.7+dev
-=========
-
-* Fix group creation / edition
 
 5.0.0-rc.1 / 2023-03-08
 =======================
@@ -49,6 +45,7 @@
   * Update classnames from 2.2.6 to 2.3.2
   * Upgrade react-scripts (3>4), switch from node-sass to sass
   * Upgrade from node 12 to 18
+  * Fix group creation / edition
   * Fix blocking linting issues
 
 4.0.7 / 2022-08-29

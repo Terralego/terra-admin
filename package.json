@@ -39,7 +39,7 @@
     "ra-language-french": "^3.8.5",
     "randomcolor": "^0.6.2",
     "react": "^16.14.0",
-    "react-admin": "^3.13.5",
+    "react-admin": "3.19.0",
     "react-admin-color-input": "^3.0.0-beta.0",
     "react-app-polyfill": "^3.0.0",
     "react-autosuggest": "^10.1.0",

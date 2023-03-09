@@ -1,4 +1,10 @@
 
+5.0.1-rc.1 / 2023-03-09
+=======================
+
+  * Allow CI on all pull requests
+  * Fix group creation and edition by allowing multiple select
+
 5.0.0-rc.1 / 2023-03-08
 =======================
 

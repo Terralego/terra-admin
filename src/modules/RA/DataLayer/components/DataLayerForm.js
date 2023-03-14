@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TabbedForm, FormTab } from 'react-admin';
+import { TabbedForm, FormTab, ArrayInput, SimpleFormIterator } from 'react-admin';
 
 import JSONInput from '../../../../components/react-admin/JSONInput';
 import CustomFormTab from '../../../../components/react-admin/CustomFormTab';
@@ -12,6 +12,7 @@ import PopupTab from './tabs/PopupTab';
 import MinisheetTab from './tabs/MinisheetTab';
 import FilterTab from './tabs/FilterTab';
 import TableTab from './tabs/TableTab';
+import StyleImageField from './StyleImageField';
 
 const initialErrorState = {
   definition: false,
@@ -132,6 +133,15 @@ const DataLayerForm = React.memo(props => {
       >
         <DefinitionTab onSwitch={setExternal} external={external} />
       </CustomFormTab>
+
+      <FormTab disabled={external} label="datalayer.form.style-images.tab" path="style-images">
+        <ArrayInput source="style_images">
+          <SimpleFormIterator>
+            <StyleImageField />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </FormTab>
+
       <CustomFormTab
         disabled={external}
         label="datalayer.form.styles.tab"

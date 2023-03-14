@@ -561,6 +561,9 @@
         "tab": "Style",
         "no-source": "Veuillez choisir une source de données avant de configurer les styles",
         "secondarylabels": "Styles secondaires"
+      },
+      "style-images": {
+        "tab": "Icônes"
       }
     }
   },
@@ -1036,7 +1039,9 @@
     },
     "icon": {
       "icon-image": "Icône",
-      "icon-size": "Taille de l'icône"
+      "icon-size": "Taille de l'icône",
+      "icon-image-custom": "Icônes personnalisées",
+      "icon-image-native": "Icônes de base"
     },
     "fixed": {
       "diameter": "Diamètre",

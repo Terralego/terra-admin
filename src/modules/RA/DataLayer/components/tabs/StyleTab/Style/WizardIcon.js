@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { useTranslate, RadioButtonGroupInput } from 'react-admin';
+import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
+import { useFormState } from 'react-final-form';
 
 import useAppSettings from '../../../../../../../hooks/useAppSettings';
 import TextStyleField from './TextStyleField';
@@ -19,6 +21,8 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
   const translate = useTranslate();
   const [iconChoices, setIconChoices] = React.useState([]);
   const { spriteBaseUrl = defaultSpriteBaseUrl } = useAppSettings();
+
+  const { values: { style_images: styleImages } = {} } = useFormState();
 
   React.useEffect(() => {
     let mounted = true;
@@ -38,7 +42,41 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
         console.error('Error while getting icons', e);
         choices = [];
       }
+
       if (mounted) {
+        const customImages = styleImages
+          ?.filter(({ name, slug, file } = {}) => Boolean(name && slug && file));
+
+        choices.unshift({
+          id: 'separator-native',
+          name: translate('style-editor.icon.icon-image-native'),
+          disabled: true,
+        });
+
+        if (customImages?.length) {
+          const customChoices = customImages.map(customImage => ({
+            id: customImage.slug,
+            name: (
+              <>
+                {customImage.name}
+                <Box
+                  component="img"
+                  src={customImage.file}
+                  sx={{ maxWidth: 24, maxHeight: 24, ml: 'auto' }}
+                />
+              </>
+            ),
+          }));
+          choices.unshift(
+            {
+              id: 'separator-custom',
+              name: translate('style-editor.icon.icon-image-custom'),
+              disabled: true,
+            },
+            ...customChoices,
+          );
+        }
+
         setIconChoices(choices);
       }
     };
@@ -47,7 +85,7 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
     return () => {
       mounted = false;
     };
-  }, [spriteBaseUrl]);
+  }, [styleImages, spriteBaseUrl, translate]);
 
   return (
     <>
@@ -68,6 +106,7 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
           choices={iconChoices}
+          translateChoice={false}
         />
       </div>
       <div className={classes.configLine}>

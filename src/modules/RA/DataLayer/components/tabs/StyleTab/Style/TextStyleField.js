@@ -31,6 +31,7 @@ const SizeStyleField = ({
   fields,
   getValuesOfProperty,
   choices,
+  translateChoice = true,
   format = val => val,
   parse = val => val,
 }) => {
@@ -63,6 +64,7 @@ const SizeStyleField = ({
             format={format}
             parse={parse}
             validate={required()}
+            translateChoice={translateChoice}
           />
         ) : (
           <TextInput

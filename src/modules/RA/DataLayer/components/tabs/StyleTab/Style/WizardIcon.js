@@ -20,7 +20,7 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
   const [iconChoices, setIconChoices] = React.useState([]);
   const { spriteBaseUrl = defaultSpriteBaseUrl } = useAppSettings();
 
-  React.useState(() => {
+  React.useEffect(() => {
     let mounted = true;
     const loadIconChoices = async () => {
       let choices;
@@ -43,10 +43,11 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
       }
     };
     loadIconChoices();
+
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [spriteBaseUrl]);
 
   return (
     <>

@@ -11,31 +11,55 @@ import {
 } from 'react-admin';
 
 import Typography from '@material-ui/core/Typography';
-import { Field, useFormState } from 'react-final-form';
+import { Field } from 'react-final-form';
 import FormLabel from '@material-ui/core/FormLabel';
+import Box from '@material-ui/core/Box';
 
 import Condition from '../../../../../../components/react-admin/Condition';
 import ColorPicker from '../../../../../../components/react-admin/ColorPicker';
-
+import useSprites from '../../../../../../hooks/useSprites';
+import useCustomStyleImages from '../../../../../../hooks/useCustomStyleImages';
 
 const isRequired = [required()];
 
 const LegendItemInput = ({ source, parentSource }) => {
   const translate = useTranslate();
-  const { values: { style_images: styleImages } = {} } = useFormState();
+  const defaultSprites = useSprites();
+  const customStyleImages = useCustomStyleImages();
 
-  const choices = React.useMemo(
-    () => {
-      const customImages = styleImages
-        ?.filter(({ name, slug, file } = {}) => Boolean(name && slug && file));
+  const customStyleImagesChoices = React.useMemo(
+    () => customStyleImages.map(customImage => ({
+      id: customImage.slug,
+      name: (
+        <>
+          {customImage.name}
+          <Box
+            component="img"
+            src={customImage.file}
+            sx={{ maxWidth: 24, maxHeight: 24, ml: 'auto' }}
+          />
+        </>
+      ),
+    })),
+    [customStyleImages],
+  );
 
-      if (customImages) {
-        return customImages.map(({ name, slug } = {}) => ({ id: slug, name }));
-      }
-
-      return [];
-    },
-    [styleImages],
+  const iconChoices = React.useMemo(
+    () => [
+      {
+        id: 'separator-custom',
+        name: translate('style-editor.icon.icon-image-custom'),
+        disabled: true,
+      },
+      ...customStyleImagesChoices,
+      {
+        id: 'separator-native',
+        name: translate('style-editor.icon.icon-image-native'),
+        disabled: true,
+      },
+      ...defaultSprites,
+    ],
+    [translate, customStyleImagesChoices, defaultSprites],
   );
 
   return (
@@ -62,7 +86,8 @@ const LegendItemInput = ({ source, parentSource }) => {
         <SelectInput
           source={`${source}.style-image`}
           label="datalayer.form.legend.icon"
-          choices={choices}
+          choices={iconChoices}
+          translateChoice={false}
           helperText={false}
         />
       </Condition>

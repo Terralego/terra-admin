@@ -549,7 +549,9 @@
         "line": "Lignes",
         "circle": "Cercles",
         "stacked-circle": "Cercles empilés",
-        "automsg": "Le contenu de cette légende est automatiquement généré et ne peut être modifié."
+        "automsg": "Le contenu de cette légende est automatiquement généré et ne peut être modifié.",
+        "icon": "Icône",
+        "icons": "Icônes"
       },
       "search": {
         "main-field": {

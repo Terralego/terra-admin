@@ -497,7 +497,9 @@
         "line": "Lines",
         "circle": "Circles",
         "stacked-circle": "Stacked circles",
-        "automsg": "This content is automatically generated, can't be edited."
+        "automsg": "This content is automatically generated, can't be edited.",
+        "icon": "Icon",
+        "icons": "Icons"
       },
       "search": {
         "main-field": {

@@ -11,7 +11,7 @@ import {
 } from 'react-admin';
 
 import Typography from '@material-ui/core/Typography';
-import {  Field } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
 import FormLabel from '@material-ui/core/FormLabel';
 
 import Condition from '../../../../../../components/react-admin/Condition';
@@ -20,24 +20,53 @@ import ColorPicker from '../../../../../../components/react-admin/ColorPicker';
 
 const isRequired = [required()];
 
-const LegendItemInput = ({ source }) => {
+const LegendItemInput = ({ source, parentSource }) => {
   const translate = useTranslate();
+  const { values: { style_images: styleImages } = {} } = useFormState();
+
+  const choices = React.useMemo(
+    () => {
+      const customImages = styleImages
+        ?.filter(({ name, slug, file } = {}) => Boolean(name && slug && file));
+
+      if (customImages) {
+        return customImages.map(({ name, slug } = {}) => ({ id: slug, name }));
+      }
+
+      return [];
+    },
+    [styleImages],
+  );
+
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
-      <FormLabel>{translate('datalayer.form.legend.shape')}</FormLabel>
-      <Field name={`${source}.color`} defaultValue="#00000000">
-        {({ input: { onChange, value } }) => (
-          <ColorPicker value={value || '#000000'} onChange={onChange} />
-        )}
-      </Field>
-      <NumberInput source={`${source}.size`} label="datalayer.form.legend.size" style={{ width: '8em' }} helperText={false} />
-      <FormLabel>{translate('datalayer.form.legend.stroke')}</FormLabel>
-      <Field name={`${source}.strokeColor`} defaultValue={undefined}>
-        {({ input: { onChange, value } }) => (
-          <ColorPicker value={value || '#00000000'} onChange={onChange} />
-        )}
-      </Field>
-      <NumberInput source={`${source}.strokeWidth`} label="datalayer.form.legend.width" style={{ width: '8em' }} helperText={false} />
+      <Condition when={parentSource} is={({ shape }) => shape !== 'icon'}>
+        <FormLabel>{translate('datalayer.form.legend.shape')}</FormLabel>
+        <Field name={`${source}.color`} defaultValue="#00000000">
+          {({ input: { onChange, value } }) => (
+            <ColorPicker value={value || '#000000'} onChange={onChange} />
+          )}
+        </Field>
+        <NumberInput source={`${source}.size`} label="datalayer.form.legend.size" style={{ width: '8em' }} helperText={false} />
+
+        <FormLabel>{translate('datalayer.form.legend.stroke')}</FormLabel>
+        <Field name={`${source}.strokeColor`} defaultValue={undefined}>
+          {({ input: { onChange, value } }) => (
+            <ColorPicker value={value || '#00000000'} onChange={onChange} />
+          )}
+        </Field>
+        <NumberInput source={`${source}.strokeWidth`} label="datalayer.form.legend.width" style={{ width: '8em' }} helperText={false} />
+      </Condition>
+
+      <Condition when={parentSource} is={({ shape }) => shape === 'icon'}>
+        <SelectInput
+          source={`${source}.style-image`}
+          label="datalayer.form.legend.icon"
+          choices={choices}
+          helperText={false}
+        />
+      </Condition>
+
       <TextInput source={`${source}.label`} label="datalayer.form.legend.item-label" helperText={false} />
     </div>
   );
@@ -62,15 +91,17 @@ const LegendField = ({ source }) => {
             { id: 'line', name: 'datalayer.form.legend.line' },
             { id: 'circle', name: 'datalayer.form.legend.circle' },
             { id: 'stackedCircle', name: 'datalayer.form.legend.stacked-circle' },
+            { id: 'icon', name: 'datalayer.form.legend.icon' },
           ]}
           helperText={false}
           validate={isRequired}
           initialValue="square"
           style={{ display: 'block' }}
         />
+
         <ArrayInput source={`${source}.items`} label="datalayer.form.legend.items">
           <SimpleFormIterator>
-            <LegendItemInput />
+            <LegendItemInput parentSource={source} />
           </SimpleFormIterator>
         </ArrayInput>
       </Condition>

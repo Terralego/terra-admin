@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslate } from 'ra-core';
 import { Box, IconButton } from '@material-ui/core';
 import BackupIcon from '@material-ui/icons/Backup';
 import { Field } from 'react-final-form';

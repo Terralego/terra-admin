@@ -5,6 +5,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { SketchPicker } from 'react-color';
 import tinycolor from 'tinycolor2';
+import useCustomStyleImages from '../../hooks/useCustomStyleImages';
+import PatternMaker from './PatternMaker';
 
 const useStyles = makeStyles({
   color: props => ({
@@ -63,17 +65,30 @@ const PatternPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) =
 
   const [currentColor, setCurrentColor] = React.useState(value);
   const [showPicker, setShowPicker] = React.useState(false);
+  const [pattern, setPattern] = React.useState();
 
-  const handleChange = React.useCallback(newColor => {
+  // const defaultSprites = useSprites();
+  const customStyleImages = useCustomStyleImages();
+
+  const handleColorChange = React.useCallback(newColor => {
     setCurrentColor(newColor.hsl);
   }, []);
 
-  const handleChangeComplete = React.useCallback(
-    newColor => {
-      setCurrentColor(newColor.hsl);
-      onChange(tinycolor(newColor.rgb).toHslString());
+  const handleColorChangeComplete = React.useCallback(newColor => {
+    setCurrentColor(newColor.hsl);
+  }, []);
+
+  const handlePatternChange = React.useCallback(imageData => {
+    setPattern(imageData);
+  }, []);
+
+  React.useEffect(
+    () => {
+      if (!showPicker && pattern) {
+        onChange(pattern);
+      }
     },
-    [onChange],
+    [showPicker, onChange, pattern],
   );
 
   return (
@@ -84,18 +99,26 @@ const PatternPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) =
       >
         <div />
       </div>
+
       {showPicker && (
-      <>
-        <div style={cover} onClick={() => setShowPicker(false)} />
-        <div style={popover} className="popover">
-          <SketchPicker
-            color={currentColor}
-            presetColors={presetColors}
-            onChange={handleChange}
-            onChangeComplete={handleChangeComplete}
-          />
-        </div>
-      </>
+        <>
+          <div style={cover} onClick={() => setShowPicker(false)} />
+
+          <div style={popover} className="popover">
+            <PatternMaker
+              patterns={customStyleImages}
+              color={tinycolor(currentColor).toRgb()}
+              onChange={handlePatternChange}
+            />
+
+            <SketchPicker
+              color={currentColor}
+              presetColors={presetColors}
+              onChange={handleColorChange}
+              onChangeComplete={handleColorChangeComplete}
+            />
+          </div>
+        </>
       )}
     </div>
   );

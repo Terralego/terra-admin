@@ -8,6 +8,7 @@ import randomColor from 'randomcolor';
 import { fieldTypes } from '../../../../../DataSource';
 import Condition from '../../../../../../../components/react-admin/Condition';
 import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
+import PatternPicker from '../../../../../../../components/react-admin/PatternPicker';
 import FieldOption from '../../FieldOption';
 
 import GraduateValue from './GraduateValue';
@@ -105,12 +106,13 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                       className="generate-legend"
                     />
                   </Condition>
+
                   <Condition when={`${path}.analysis`} is="categorized">
                     <CategorizeValue
                       path={path}
                       fields={fields}
                       getValuesOfProperty={getValuesOfProperty}
-                      Component={ColorPicker}
+                      Component={PatternPicker}
                       defaultValueGenerator={defaultValueGenerator}
                     />
                     <BooleanInput

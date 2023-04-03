@@ -50,6 +50,14 @@ const StyleImageField = ({ source }) => (
               />
             </IconButton>
           )}
+
+          {value && (
+            <Box
+              component="img"
+              src={value}
+              style={{ maxWidth: 64 }}
+            />
+          )}
         </>
       )}
     </Field>

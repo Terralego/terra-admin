@@ -19,32 +19,37 @@ const StyleImageField = ({ source }) => (
     />
 
     <Field name={`${source}.file`}>
+      {({ input: { value } }) => (
+        <Box
+          component="img"
+          src={value}
+          style={{ maxWidth: 64 }}
+        />
+      )}
+    </Field>
+
+    <Field name={`${source}.data`}>
       {({ input: { value, onChange } }) => (
         <>
           {!value && (
-          <IconButton variant="outlined" component="label">
-            <BackupIcon />
-            <Box
-              component="input"
-              type="file"
-              accept="image/*"
-              onChange={async event => {
-                const [file] = event.target.files;
+            <IconButton variant="outlined" component="label">
+              <BackupIcon />
+              <Box
+                component="input"
+                type="file"
+                accept="image/*"
+                onChange={async event => {
+                  const [file] = event.target.files;
 
-                if (file) {
-                  const daraURI = await readFile(file);
-                  onChange(daraURI);
-                }
-              }}
-              hidden
-            />
-          </IconButton>
+                  if (file) {
+                    const daraURI = await readFile(file);
+                    onChange(daraURI);
+                  }
+                }}
+                hidden
+              />
+            </IconButton>
           )}
-
-          <Box
-            component="img"
-            src={value}
-          />
         </>
       )}
     </Field>

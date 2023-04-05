@@ -1,8 +1,13 @@
 import React from 'react';
-import { Box, IconButton } from '@material-ui/core';
-import BackupIcon from '@material-ui/icons/Backup';
+import { Box, Button, Grid } from '@material-ui/core';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import FormatPaintIcon from '@material-ui/icons/FormatPaint';
 import { Field } from 'react-final-form';
-import { TextInput, required } from 'react-admin';
+import { TextInput, useTranslate } from 'react-admin';
+
+import { required } from '../../../../utils/react-admin/validate';
+import PatternPicker from '../../../../components/react-admin/PatternPicker';
+import transparency from './transparency-pattern.png';
 
 const readFile = file => new Promise((resolve, reject) => {
   const fr = new FileReader();
@@ -13,58 +18,101 @@ const readFile = file => new Promise((resolve, reject) => {
 
 const isRequired = [required()];
 
-const StyleImageField = ({ source }) => (
-  <Box>
-    <TextInput
-      source={`${source}.name`}
-      label="datalayer.form.style-images.name"
-      validate={isRequired}
-    />
+const StyleImageField = ({ source }) => {
+  const translate = useTranslate();
 
-    <Field name={`${source}.file`}>
-      {({ input: { value } }) => (
-        <Box
-          component="img"
-          src={value}
-          style={{ maxWidth: 64 }}
+  return (
+    <Grid container spacing={1} alignItems="center">
+      <Grid item>
+        <TextInput
+          source={`${source}.name`}
+          label="datalayer.form.style-images.name"
+          validate={isRequired}
         />
-      )}
-    </Field>
+      </Grid>
 
-    <Field name={`${source}.data`}>
-      {({ input: { value, onChange } }) => (
-        <>
-          {!value && (
-            <IconButton variant="outlined" component="label">
-              <BackupIcon />
-              <Box
-                component="input"
-                type="file"
-                accept="image/*"
-                onChange={async event => {
-                  const [file] = event.target.files;
+      <Grid item>
+        <Field name={`${source}.file`}>
+          {({ input: { value: existingFile } }) => {
+            if (existingFile) {
+              return (
+                <Box
+                  component="img"
+                  src={existingFile}
+                  style={{
+                    maxWidth: 64,
+                    maxHeight: 64,
+                    background: `url(${transparency})`,
+                    border: '1px solid rgba(0 0 0 / 0.25)',
+                  }}
+                />
+              );
+            }
 
-                  if (file) {
-                    const daraURI = await readFile(file);
-                    onChange(daraURI);
-                  }
-                }}
-                hidden
-              />
-            </IconButton>
-          )}
+            return (
+              <Field name={`${source}.data`}>
+                {({ input: { value, onChange } }) => (
+                  <>
+                    {!value && (
+                      <>
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          endIcon={<AttachFileIcon />}
+                        >
+                          {translate('datalayer.form.style-images.upload')}
+                          <Box
+                            component="input"
+                            type="file"
+                            accept="image/*"
+                            onChange={async event => {
+                              const [file] = event.target.files;
 
-          {value && (
-            <Box
-              component="img"
-              src={value}
-              style={{ maxWidth: 64 }}
-            />
-          )}
-        </>
-      )}
-    </Field>
-  </Box>
-);
+                              if (file) {
+                                onChange(await readFile(file));
+                              }
+                            }}
+                            hidden
+                          />
+                        </Button>
+
+                        {' ou '}
+
+                        <PatternPicker
+                          onChange={onChange}
+                          endIcon={<FormatPaintIcon />}
+                        >
+                          {translate('datalayer.form.style-images.compose')}
+                        </PatternPicker>
+                      </>
+                    )}
+
+                    <Button
+                      onClick={() => onChange(null)}
+                      style={{
+                        padding: 0,
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={value}
+                        style={{
+                          maxWidth: 64,
+                          maxHeight: 64,
+                          background: `url(${transparency})`,
+                          border: '1px solid rgba(0 0 0 / 0.25)',
+                        }}
+                      />
+                    </Button>
+                  </>
+                )}
+              </Field>
+            );
+          }}
+        </Field>
+      </Grid>
+    </Grid>
+  );
+};
 
 export default React.memo(StyleImageField);

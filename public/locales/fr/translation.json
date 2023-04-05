@@ -566,7 +566,9 @@
       },
       "style-images": {
         "tab": "Icônes",
-        "name": "Nom"
+        "name": "Nom",
+        "compose": "Composer",
+        "upload": "Envoyer"
       }
     }
   },

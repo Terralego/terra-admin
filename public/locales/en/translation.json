@@ -514,7 +514,9 @@
       },
       "style-images": {
         "tab": "Icons",
-        "name": "Name"
+        "name": "Name",
+        "compose": "Compose",
+        "upload": "Upload"
       }
     }
   },

@@ -58,7 +58,7 @@ const cover = {
 
 const presetColors = [];
 
-const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => {
+const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled, style = {}, ...props }) => {
   const classes = useStyles({ value, disabled });
 
   const [currentColor, setCurrentColor] = React.useState(value);
@@ -77,7 +77,7 @@ const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled }) => 
   );
 
   return (
-    <div style={{ position: 'relative', display: 'inline' }}>
+    <div style={{ position: 'relative', display: 'inline', ...style }} {...props}>
       <div
         className={classes.color}
         onClick={() => !disabled && setShowPicker(prevShowPicker => !prevShowPicker)}

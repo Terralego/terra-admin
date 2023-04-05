@@ -513,7 +513,8 @@
         "secondarylabels": "Secondary styles"
       },
       "style-images": {
-        "tab": "Icons"
+        "tab": "Icons",
+        "name": "Name"
       }
     }
   },

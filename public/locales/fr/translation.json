@@ -565,7 +565,8 @@
         "secondarylabels": "Styles secondaires"
       },
       "style-images": {
-        "tab": "Icônes"
+        "tab": "Icônes",
+        "name": "Nom"
       }
     }
   },

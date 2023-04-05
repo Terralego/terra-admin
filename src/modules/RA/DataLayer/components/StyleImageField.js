@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, IconButton } from '@material-ui/core';
 import BackupIcon from '@material-ui/icons/Backup';
 import { Field } from 'react-final-form';
-import { TextInput } from 'react-admin';
+import { TextInput, required } from 'react-admin';
 
 const readFile = file => new Promise((resolve, reject) => {
   const fr = new FileReader();
@@ -11,11 +11,14 @@ const readFile = file => new Promise((resolve, reject) => {
   fr.readAsDataURL(file);
 });
 
+const isRequired = [required()];
+
 const StyleImageField = ({ source }) => (
   <Box>
     <TextInput
       source={`${source}.name`}
-      label="field name"
+      label="datalayer.form.style-images.name"
+      validate={isRequired}
     />
 
     <Field name={`${source}.file`}>

@@ -3,7 +3,7 @@ import { Box, Button, Grid } from '@material-ui/core';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import FormatPaintIcon from '@material-ui/icons/FormatPaint';
 import { Field } from 'react-final-form';
-import { TextInput, useTranslate } from 'react-admin';
+import { TextField, TextInput, useTranslate } from 'react-admin';
 
 import { required } from '../../../../utils/react-admin/validate';
 import PatternPicker from '../../../../components/react-admin/PatternPicker';
@@ -22,14 +22,35 @@ const StyleImageField = ({ source }) => {
   const translate = useTranslate();
 
   return (
-    <Grid container spacing={1} alignItems="center">
-      <Grid item>
-        <TextInput
-          source={`${source}.name`}
-          label="datalayer.form.style-images.name"
-          validate={isRequired}
-        />
-      </Grid>
+    <Grid container spacing={1} alignItems="center" style={{ minHeight: 60 }}>
+      <Field name={`${source}.slug`}>
+        {({ input: { value } }) => {
+          if (value) {
+            return (
+              <>
+                <Grid item xs={2} style={{ textAlign: 'center' }}>
+                  <TextField source={`${source}.name`} />
+                </Grid>
+
+                <Grid item xs={2} style={{ textAlign: 'center', opacity: 0.5 }}>
+                  <tt>{value}</tt>
+                </Grid>
+              </>
+            );
+          }
+
+          return (
+            <Grid item xs={4}>
+              <TextInput
+                source={`${source}.name`}
+                label="datalayer.form.style-images.name"
+                validate={isRequired}
+                fullWidth
+              />
+            </Grid>
+          );
+        }}
+      </Field>
 
       <Grid item>
         <Field name={`${source}.file`}>

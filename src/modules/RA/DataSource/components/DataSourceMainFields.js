@@ -24,7 +24,7 @@ const DataSourceMainFields = props => (
 
     <TextInput multiline source="description" defaultValue="" style={{ width: '100%' }} />
 
-    <ReferenceArrayInput source="settings.groups" reference={RES_USERGROUP}>
+    <ReferenceArrayInput source="groups" reference={RES_USERGROUP}>
       <SelectArrayInput optionText="name" />
     </ReferenceArrayInput>
   </FieldGroup>

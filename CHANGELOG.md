@@ -1,4 +1,26 @@
 
+5.1.0-rc.1 / 2023-04-18
+=======================
+
+  * Display name & slug of existing style-images as read-only
+  * Enhance PatternPicker
+  * Allow ColorPicker to forward given props
+  * Create basic features of PatternPicker
+  * Create PatternPicker by cloning ColorPicker
+  * Add translation & validation for style-image list fields
+  * Display ready to upload image
+  * Split icon field between readonly `file` and writeonly `data`
+  * Remove extraneous import
+  * Use same icon list in legend as in styles
+  * Turn sprite gathering function into hook
+  * Add ability to select icons for legend items
+  * Basic images field for geolayers
+  * Replace weird useState by classic useEffect
+  * Stick react-error-overlay to 6.0.9 to avoid issues
+  * Update ra-language-french from 3.8.5 to 3.19.12
+  * Update react-admin from 3.13.5 to 3.19.0
+  * Update ra-core from 3.13.5 to 3.19.0
+
 5.0.1-rc.2 / 2023-03-09
 =======================
 

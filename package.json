@@ -1,6 +1,6 @@
 {
   "name": "terra-admin",
-  "version": "5.0.1-rc.2",
+  "version": "5.1.0-rc.1",
   "private": true,
   "dependencies": {
     "@babel/runtime": "7.13",

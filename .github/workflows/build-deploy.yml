@@ -30,7 +30,7 @@ jobs:
           mv ./build ./tmp/admin
           mv ./tmp/admin/_* ./tmp/
       - name: Upload build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: latest-build
           path: tmp/

@@ -1,3 +1,4 @@
+import Api from '@terralego/core/modules/Api';
 import { GET_ONE  } from 'react-admin';
 import { RES_DATALAYER } from '../../modules/RA/ra-modules';
 
@@ -42,6 +43,12 @@ const patchLegend = ({ stackedCircles, content, source, items = [], ...rest }) =
 
 
 const patchLayerDataProvider = nextDataProvider => async (type, resource, params, meta = {}) => {
+  const { endpoint = resource } = meta;
+
+  if (resource === RES_DATALAYER && type === 'DUPLICATE_ONE') {
+    return Api.request(`${endpoint}/${params.id}/duplicate/`, { method: 'POST' });
+  }
+
   if (resource === RES_DATALAYER && type === GET_ONE) {
     return nextDataProvider(type, resource, params, meta).then(toBeModified => {
       // eslint-disable-next-line no-param-reassign

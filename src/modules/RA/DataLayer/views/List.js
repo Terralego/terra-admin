@@ -2,7 +2,6 @@ import React from 'react';
 import {
   BooleanField,
   BooleanInput,
-  CloneButton,
   Datagrid,
   EditButton,
   Filter,
@@ -18,6 +17,8 @@ import {
   RES_DATASOURCE,
   RES_VIEW,
 } from '../../ra-modules';
+
+import CustomCloneButton2 from '../../../../components/react-admin/CustomCloneButton2';
 
 const ListFilters = props => (
   <Filter {...props}>
@@ -68,7 +69,7 @@ export const DataLayerList = ({ viewList, ...props }) => (
       </ReferenceField>
       <BooleanField source="active_by_default" label="resources.datalayer.fields.active_by_default_pastpart" />
       <EditButton />
-      <CloneButton />
+      <CustomCloneButton2 />
     </Datagrid>
   </List>
 );

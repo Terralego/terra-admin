@@ -952,7 +952,7 @@
       "fields": {
         "description": "Description",
         "name": "Nom",
-        "settings.groups": "Groupes utilisateurs",
+        "groups": "Groupes utilisateurs",
         "credit": "Source de la donnée"
       }
     },

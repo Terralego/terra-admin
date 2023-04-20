@@ -898,7 +898,7 @@
       "fields": {
         "description": "Description",
         "name": "Name",
-        "settings.groups": "User groups",
+        "groups": "User groups",
         "credit": "Data credit"
       }
     },

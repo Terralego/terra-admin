@@ -911,6 +911,9 @@
         "table_enable": "Shown data table",
         "popup_enable": "Show contextual window",
         "minisheet_enable": "Shown mini-sheet"
+      },
+      "notification": {
+        "duplication_success": "Layer has been correctly duplicated"
       }
     },
     "view": {

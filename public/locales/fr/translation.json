@@ -967,7 +967,7 @@
         "minisheet_enable": "Minifiche affichée"
       },
       "notification": {
-        "duplicated": "La couche a bien été dupliquée"
+        "duplication_success": "La couche a bien été dupliquée"
       }
     },
     "view": {

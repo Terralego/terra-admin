@@ -4,6 +4,8 @@ import {
   SelectInput,
   translate,
   required,
+  PasswordInput,
+  NumberInput,
 } from 'react-admin';
 
 import { geomTypeChoices } from '..';
@@ -20,16 +22,15 @@ const DataSourceDbFields = ({ translate: t, ...props }) => (
       parse={v => +v}
     />
 
-    <TextInput source="db_host" type="text" label="datasource.form.request.host-server" />
-    <TextInput source="db_port" type="number" label="datasource.form.request.host-port" />
-    <TextInput source="db_name" type="text" label="datasource.form.request.database-name" />
-    <TextInput source="db_username" type="text" label="datasource.form.request.user-name" />
-    <TextInput source="db_password" type="password" label="datasource.form.request.user-password" />
+    <TextInput source="db_host" label="datasource.form.request.host-server" autoComplete="off" />
+    <NumberInput source="db_port" label="datasource.form.request.host-port" autoComplete="off" />
+    <TextInput source="db_name" label="datasource.form.request.database-name" autoComplete="off" />
+    <TextInput source="db_username" label="datasource.form.request.user-name" autoComplete="off" />
+    <PasswordInput source="db_password" label="datasource.form.request.user-password" autoComplete="off" />
 
     <TextInput
       multiline
       source="query"
-      type="text"
       label="datasource.form.request.query"
       helperText={t('datasource.form.request.query-help')}
       style={{ width: '100%' }}
@@ -37,7 +38,6 @@ const DataSourceDbFields = ({ translate: t, ...props }) => (
 
     <TextInput
       source="geom_field"
-      type="text"
       label="datasource.form.geom-field"
       helperText={t('datasource.form.geom-field-help')}
     />
@@ -54,7 +54,6 @@ const DataSourceDbFields = ({ translate: t, ...props }) => (
     />
 
     <TextInput
-      type="text"
       source="id_field"
       label="datasource.form.uid-field"
       validate={required()}

@@ -7,6 +7,7 @@ import {
   Button,
   useRedirect,
   useResourceContext,
+  useNotify,
 } from 'react-admin';
 
 import Queue from '@material-ui/icons/Queue';
@@ -27,6 +28,8 @@ const CustomCloneButton2 = ({
   const resource = useResourceContext();
   const redirect = useRedirect();
 
+  const notify = useNotify();
+
   const handleButtonClick = useCallback(async e => {
     e.stopPropagation();
     e.preventDefault();
@@ -36,12 +39,13 @@ const CustomCloneButton2 = ({
       setLoading(false);
 
       const pathname = basePath ? `${basePath}/${id}` : `/${resource}/${id}`;
+      notify('resources.datalayer.notification.duplication_success', { type: 'success' });
       redirect(pathname);
     } catch (err) {
       setError(true);
       setLoading(false);
     }
-  }, [basePath, dataProvider, redirect, resource]);
+  }, [basePath, dataProvider, notify, redirect, resource]);
 
 
   if (loading) {

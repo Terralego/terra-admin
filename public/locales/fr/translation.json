@@ -965,6 +965,9 @@
         "table_enable": "Tableau de données affiché",
         "popup_enable": "Fenêtre contextuelle affichée",
         "minisheet_enable": "Minifiche affichée"
+      },
+      "notification": {
+        "duplicated": "La couche a bien été dupliquée"
       }
     },
     "view": {

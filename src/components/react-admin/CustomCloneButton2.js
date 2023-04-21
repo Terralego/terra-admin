@@ -35,7 +35,7 @@ const CustomCloneButton2 = ({
     e.preventDefault();
 
     try {
-      const { id } = await dataProvider('DUPLICATE_ONE', RES_DATALAYER, { id: 1 });
+      const { id } = await dataProvider('DUPLICATE_ONE', RES_DATALAYER, { id: record.id });
       setLoading(false);
 
       const pathname = basePath ? `${basePath}/${id}` : `/${resource}/${id}`;

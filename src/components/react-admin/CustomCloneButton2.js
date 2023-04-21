@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import {
   useDataProvider,
   useTranslate,
@@ -58,7 +57,6 @@ const CustomCloneButton2 = ({
 
   return (
     <Button
-      component={Link}
       label={translate(label)}
       onClick={handleButtonClick}
       {...rest}

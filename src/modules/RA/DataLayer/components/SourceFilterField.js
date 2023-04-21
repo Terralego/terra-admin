@@ -173,11 +173,11 @@ const SourceFilterField = props => {
   );
 
   const helper = (
-    <div>
+    <>
       {!touched ?
         helperContent :
         errorMessage || helperContent}
-    </div>
+    </>
   );
 
 

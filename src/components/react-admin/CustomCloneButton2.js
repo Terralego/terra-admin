@@ -45,7 +45,7 @@ const CustomCloneButton2 = ({
       setError(true);
       setLoading(false);
     }
-  }, [basePath, dataProvider, notify, redirect, resource]);
+  }, [basePath, dataProvider, notify, record.id, redirect, resource]);
 
 
   if (loading) {

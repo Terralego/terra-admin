@@ -8,7 +8,6 @@ import randomColor from 'randomcolor';
 import { fieldTypes } from '../../../../../DataSource';
 import Condition from '../../../../../../../components/react-admin/Condition';
 import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
-import PatternPicker from '../../../../../../../components/react-admin/PatternPicker';
 import FieldOption from '../../FieldOption';
 
 import GraduateValue from './GraduateValue';
@@ -112,7 +111,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                       path={path}
                       fields={fields}
                       getValuesOfProperty={getValuesOfProperty}
-                      Component={PatternPicker}
+                      Component={ColorPicker}
                       defaultValueGenerator={defaultValueGenerator}
                     />
                     <BooleanInput

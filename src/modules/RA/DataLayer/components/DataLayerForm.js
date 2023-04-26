@@ -125,7 +125,7 @@ const DataLayerForm = React.memo(props => {
   }, []);
 
   return (
-    <TabbedForm {...props} initialValues={{ fields: [] }}>
+    <TabbedForm sanitizeEmptyValues={false} {...props} initialValues={{ fields: [] }}>
       <CustomFormTab
         label="datalayer.form.definition"
         onChange={onDefinitionErrorChange}

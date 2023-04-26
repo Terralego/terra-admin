@@ -14,7 +14,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const DEFAULT_MAX_CATEGORIES = 20;
+const DEFAULT_MAX_CATEGORIES = 100;
 
 const CategorizedValue = ({ path, category, Component }) => {
   const translate = useTranslate();

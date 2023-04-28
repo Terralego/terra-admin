@@ -1012,7 +1012,8 @@
     "style-type": {
       "none": "Aucun",
       "fixed": "Fixe",
-      "variable": "Variable"
+      "variable": "Variable",
+      "allow": "Autoriser"
     },
     "fill": {
       "fill-color": "Couleur du polygone",
@@ -1048,6 +1049,7 @@
     "icon": {
       "icon-image": "Icône",
       "icon-size": "Taille de l'icône",
+      "icon-overlap": "Superposition des icônes",
       "icon-image-custom": "Icônes personnalisées",
       "icon-image-native": "Icônes de base"
     },

@@ -958,7 +958,8 @@
     "style-type": {
       "none": "None",
       "fixed": "Fixed",
-      "variable": "Variable"
+      "variable": "Variable",
+      "allow": "Allow"
     },
     "fill": {
       "fill-color": "Background color",
@@ -994,6 +995,7 @@
     "icon": {
       "icon-image": "Icon",
       "icon-size": "Icon size",
+      "icon-overlap": "Icon overlap",
       "icon-image-custom": "Custom icons",
       "icon-image-native": "Base icons"
     },

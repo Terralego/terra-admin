@@ -4,12 +4,12 @@ import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
-import TextStyleField from './TextStyleField';
 import SizeStyleField from './SizeStyleField';
 
 import styles from './styles';
 import useSprites from '../../../../../../../hooks/useSprites';
 import useCustomStyleImages from '../../../../../../../hooks/useCustomStyleImages';
+import IconStyleField from './IconStyleField';
 
 const useStyles = makeStyles(styles);
 
@@ -63,12 +63,15 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
             label=""
             source={`${path}.style.icon_image.type`}
             helperText={false}
-            choices={[{ id: 'fixed', name: translate('style-editor.style-type.fixed') }]}
+            choices={[
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
+            ]}
             initialValue="fixed"
           />
         </header>
 
-        <TextStyleField
+        <IconStyleField
           path={`${path}.style.icon_image`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}

@@ -499,7 +499,10 @@
         "stacked-circle": "Stacked circles",
         "automsg": "This content is automatically generated, can't be edited.",
         "icon": "Icon",
-        "icons": "Icons"
+        "icons": "Icons",
+        "hide-title": "Hide title",
+        "activate": "Yes",
+        "deactivate": "No"
       },
       "search": {
         "main-field": {

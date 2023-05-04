@@ -7,7 +7,7 @@ const patchLegend = ({ stackedCircles, content, source, items = [], ...rest }) =
   const compatible = { ...rest };
 
   if (!rest.shape) {
-    if (items.length) {
+    if (items.filter(Boolean).length) {
       compatible.shape = items[0].shape || 'square';
     }
   }
@@ -20,7 +20,7 @@ const patchLegend = ({ stackedCircles, content, source, items = [], ...rest }) =
     compatible.comment = source;
   }
 
-  compatible.items = items.filter(({ items: subItems }) => !subItems)
+  compatible.items = items.filter(Boolean).filter(({ items: subItems }) => !subItems)
     .map(({ radius, diameter, size, shape, ...itemRest }) => {
       let newSize;
       if (radius) {

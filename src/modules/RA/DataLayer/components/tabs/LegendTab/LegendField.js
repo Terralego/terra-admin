@@ -104,7 +104,6 @@ const LegendField = ({ source }) => {
       <TextInput
         source={`${source}.title`}
         label="datalayer.form.legend.title"
-        validate={isRequired}
       />
 
       <Condition when={`${source}.auto`} is={val => !val}>

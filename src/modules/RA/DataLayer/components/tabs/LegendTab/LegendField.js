@@ -8,7 +8,6 @@ import {
   NumberInput,
   required,
   useTranslate,
-  RadioButtonGroupInput,
 } from 'react-admin';
 
 import Typography from '@material-ui/core/Typography';
@@ -106,15 +105,7 @@ const LegendField = ({ source }) => {
         source={`${source}.title`}
         label="datalayer.form.legend.title"
       />
-      <RadioButtonGroupInput
-        source={`${source}.hideTitle`}
-        label={translate('datalayer.form.legend.hide-title')}
-        choices={[
-          { id: false, name: translate('datalayer.form.legend.deactivate') },
-          { id: true, name: translate('datalayer.form.legend.activate') },
-        ]}
-        initialValue={false}
-      />
+
       <Condition when={`${source}.auto`} is={val => !val}>
         <SelectInput
           label="datalayer.form.legend.shape"

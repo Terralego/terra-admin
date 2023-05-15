@@ -551,10 +551,7 @@
         "stacked-circle": "Cercles empilés",
         "automsg": "Le contenu de cette légende est automatiquement généré et ne peut être modifié.",
         "icon": "Icône",
-        "icons": "Icônes",
-        "hide-title": "Masquer le titre",
-        "activate": "Activé",
-        "deactivate": "Désactivé"
+        "icons": "Icônes"
       },
       "search": {
         "main-field": {

@@ -64,32 +64,32 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => {
             disabled
             source="report.message"
             type="text"
-            label="(TO BE CHANGED): global infos"
+            label="datasource.form.report.message"
             fullWidth
           />
 
-          <DateField source="report.started" label="started" showTime />
-          <DateField source="report.ended" label="ended" showTime />
+          <DateField source="report.started" label="datasource.form.report.started" showTime />
+          <DateField source="report.ended" label="datasource.form.report.ended" showTime />
 
           <TextField
             disabled
             source="report.added_lines"
-            label="Added lines"
+            label="datasource.form.report.added"
             fullWidth
           />
           <TextField
             disabled
             source="report.modified_lines"
-            label="Modified lines"
+            label="datasource.form.report.modified"
             fullWidth
           />
           <TextField
             disabled
             source="report.deleted_lines"
-            label="Deleted lines"
+            label="datasource.form.report.deleted"
             fullWidth
           />
-          <Labeled label="Errors">
+          <Labeled label="datasource.form.report.errors">
             <ul>
               {record.report.errors.map(e => <li>{e}</li>)}
             </ul>

@@ -388,7 +388,12 @@
         "title": "Rapport d'importation",
         "status": "Statut",
         "message": "Rapport global",
-        "line": "Rapport par ligne"
+        "errors": "Erreurs",
+        "added": "Nombre de lignes ajoutées",
+        "modified": "Nombre de lignes modifiées",
+        "deleted": "Nombre de lignes supprimées",
+        "started": "Commencée à",
+        "ended": "Finie à"
       }
     },
     "edit": {

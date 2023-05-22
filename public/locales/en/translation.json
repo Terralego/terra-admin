@@ -336,7 +336,12 @@
         "title": "Report",
         "status": "Status",
         "message": "Global report",
-        "line": "Line reports"
+        "errors": "Errors",
+        "added": "Added lines",
+        "modified": "Modified lines",
+        "deleted": "Deleted lines",
+        "started": "Started at",
+        "ended": "Ended at"
       }
     },
     "edit": {

@@ -68,10 +68,9 @@ export const DataSourceList = props => (
         render={({ geom_type: geomType }) => geomTypes[geomType] || ''}
       />
       <FunctionField
-        source="status.state"
         label="datasource.form.status"
         sortable={false}
-        render={({ status }) => <StatusChip status={status} />}
+        render={({ report }) => <StatusChip status={report} />}
       />
       <EditButton />
       <CustomCloneButton endpoint={RES_DATASOURCE} />

@@ -20,7 +20,7 @@ const style = () => ({
 
 const DataSourceEditActions = ({
   dataProvider,
-  data: { id, status } = {},
+  data: { id, report } = {},
   basePath,
   classes,
 }) => (
@@ -31,7 +31,7 @@ const DataSourceEditActions = ({
       label="ra.action.back-to-list"
       className={classes.list}
     />
-    <StatusChip status={status} />
+    <StatusChip status={report} />
     <RefreshButton
       color="primary"
       variant="contained"

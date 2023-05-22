@@ -22,9 +22,21 @@ import MainTab from './MainTab';
 
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
+const ErrorsDisplay = ({ errors }) => {
+  if (!errors.length) {
+    return null;
+  }
+  return (
+    <Labeled label="datasource.form.report.errors">
+      <ul>
+        {errors.map(e => <li>{e}</li>)}
+      </ul>
+    </Labeled>
+  );
+};
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => {
-  const record = useRecordContext();
+  const { report: { errors } } = useRecordContext();
   return (
     <TabbedForm {...props}>
       <FormTab label="datasource.form.definition">
@@ -89,11 +101,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => {
             label="datasource.form.report.deleted"
             fullWidth
           />
-          <Labeled label="datasource.form.report.errors">
-            <ul>
-              {record.report.errors.map(e => <li>{e}</li>)}
-            </ul>
-          </Labeled>
+          <ErrorsDisplay errors={errors} />
         </FieldGroup>
       </FormTab>
     </TabbedForm>

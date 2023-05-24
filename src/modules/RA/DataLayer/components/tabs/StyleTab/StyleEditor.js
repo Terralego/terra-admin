@@ -16,6 +16,7 @@ import WizardFill from './Style/WizardFill';
 import WizardFillExtrusion from './Style/WizardFillExtrusion';
 import WizardLine from './Style/WizardLine';
 import WizardCircle from './Style/WizardCircle';
+import WizardPiechart from './Style/WizardPiechart';
 import WizardIcon from './Style/WizardIcon';
 import WizardText from './Style/WizardText';
 
@@ -116,6 +117,10 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
                 id: 'circle',
                 name: translate('style-editor.map-style-type.circle'),
               },
+              {
+                id: 'piechart',
+                name: translate('style-editor.map-style-type.piechart'),
+              },
               /* {
                 id: 'heatmap',
                 name: translate('style-editor.map-style-type.heatmap'),
@@ -176,6 +181,13 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
         </Condition>
         <Condition when={`${path}.map_style_type`} is="heatmap">
           <p>To be done</p>
+        </Condition>
+        <Condition when={`${path}.map_style_type`} is="piechart">
+          <WizardPiechart
+            path={path}
+            fields={fields}
+            getValuesOfProperty={getValuesOfProperty}
+          />
         </Condition>
       </Condition>
 

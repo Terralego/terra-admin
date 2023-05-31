@@ -36,7 +36,9 @@ const ErrorsDisplay = ({ errors }) => {
 };
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => {
-  const { report: { errors } } = useRecordContext();
+  const { report } = useRecordContext();
+  // report is null when a source has been created and no refresh has been done
+  const errors = report?.errors ?? [];
   return (
     <TabbedForm {...props}>
       <FormTab label="datasource.form.definition">

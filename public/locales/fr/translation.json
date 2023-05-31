@@ -394,7 +394,8 @@
         "deleted": "Nombre de lignes supprimées",
         "started": "Commencée à",
         "ended": "Finie à"
-      }
+      },
+      "status": "status"
     },
     "edit": {
       "refresh": "Actualiser les données",

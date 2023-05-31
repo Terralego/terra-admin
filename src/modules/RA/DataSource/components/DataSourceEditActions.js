@@ -31,7 +31,8 @@ const DataSourceEditActions = ({
       label="ra.action.back-to-list"
       className={classes.list}
     />
-    <StatusChip status={report} />
+    {/* 'report' is null when a source has just been created */}
+    <StatusChip label="datasource.form.status" status={report ?? {}} />
     <RefreshButton
       color="primary"
       variant="contained"

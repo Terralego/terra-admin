@@ -70,7 +70,10 @@ export const DataSourceList = props => (
       <FunctionField
         label="datasource.form.status"
         sortable={false}
-        render={({ report }) => <StatusChip status={report} />}
+        render={
+          ({ status, report, id }) =>
+            <StatusChip sourceId={id} status={status ? { status, report } : {}} />
+        }
       />
       <EditButton />
       <CustomCloneButton endpoint={RES_DATASOURCE} />

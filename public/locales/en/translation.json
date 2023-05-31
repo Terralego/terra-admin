@@ -342,7 +342,8 @@
         "deleted": "Deleted lines",
         "started": "Started at",
         "ended": "Ended at"
-      }
+      },
+      "status": "status"
     },
     "edit": {
       "refresh": "Refresh data",

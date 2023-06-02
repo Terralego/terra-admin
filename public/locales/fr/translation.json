@@ -1051,6 +1051,10 @@
       "icon-image-custom": "Icônes personnalisées",
       "icon-image-native": "Icônes de base"
     },
+    "pie-chart": {
+      "color": "Couleur",
+      "use": "Utiliser"
+    },
     "fixed": {
       "diameter": "Diamètre",
       "value": "Valeur"

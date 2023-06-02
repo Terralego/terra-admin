@@ -23,17 +23,10 @@ const WizardPiechart = ({ path, fields, getValuesOfProperty }) => {
         <header>
           <FormLabel>{translate('style-editor.circle.piechart-fields')}</FormLabel>
           <div style={{ height: 56 }} />
-          {/* <RadioButtonGroupInput
-            label=""
-            source=""
-            helperText={false}
-            choices={[{ id: 'a', name: 'a' }]}
-            initialValue="none"
-          /> */}
         </header>
 
         <PiePieceStyleField
-          path={`${path}.style.piechart-fields`}
+          path={`${path}.piechart`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
         />

@@ -21,7 +21,7 @@ export const Main = ({ locale }) => {
   const { authenticated } = useContext(AuthContext);
 
   const {
-    env: { title = 'Terralego Admin', favicon, language } = {},
+    env: { title = 'Terralego Admin', favicon, language, ssoAuth } = {},
     errorSettings: { message: errorMessage } = {},
   } = useContext(AppContext);
 
@@ -54,7 +54,7 @@ export const Main = ({ locale }) => {
       <div className="main-container">
         {authenticated
           ? <Content />
-          : <LoginForm translate={t} />}
+          : <LoginForm translate={t} ssoLink={ssoAuth?.loginUrl} />}
       </div>
     </div>
   );

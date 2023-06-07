@@ -27,6 +27,7 @@
   },
   "auth": {
     "loginform": {
+      "sso": "SSO connection",
       "email": {
         "invalid": "Invalid email",
         "helper": "Enter your email address",

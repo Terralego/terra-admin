@@ -54,7 +54,7 @@ export const Main = ({ locale }) => {
       <div className="main-container">
         {authenticated
           ? <Content />
-          : <LoginForm translate={t} ssoLink={ssoAuth.loginUrl} />}
+          : <LoginForm translate={t} ssoLink={ssoAuth?.loginUrl} />}
       </div>
     </div>
   );

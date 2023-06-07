@@ -13,7 +13,6 @@ import { AppContext } from '../../../components/AppProvider';
 
 export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => {
   const { env: { ssoAuth: { logoutUrl } = {} } = {} } = React.useContext(AppContext);
-  const logoutLink = (logoutUrl && logoutUrl.startsWith('/')) ? logoutUrl.substring(1) : logoutUrl;
 
   return (
     <Popover
@@ -21,7 +20,7 @@ export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => {
         <Menu>
           <MenuItem
             className={Classes.MINIMAL}
-            onClick={() => logoutAction(logoutLink)}
+            onClick={() => logoutAction(logoutUrl)}
             icon="log-out"
             text={t('common.logout')}
           />

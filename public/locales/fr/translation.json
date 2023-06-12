@@ -42,6 +42,11 @@
         "info": "requis",
         "placeholder": "Mot de passe"
       },
+      "renderer": {
+        "sso": "Connexion SSO",
+        "internal": "Connexion interne",
+        "separator": "ou"
+      },
       "submit": "Connexion",
       "error_generic": "Informations d'identification invalides"
     }

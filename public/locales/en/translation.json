@@ -42,6 +42,11 @@
         "info": "required",
         "placeholder": "Password"
       },
+      "renderer": {
+        "sso": "SSO Connection ",
+        "internal": "Internal connection",
+        "separator": "or"
+      },
       "submit": "Log in",
       "error_generic": "Invalid authentication credentials."
     }

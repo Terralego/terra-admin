@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  AutocompleteInput,
   TextInput,
   BooleanInput,
   SelectInput,
@@ -61,7 +62,7 @@ const DefinitionTab = ({ onSwitch, external }) => {
         validate={defaultRequired}
         perPage={100}
       >
-        <SelectInput />
+        <AutocompleteInput />
       </ReferenceInput>
 
       <SourceFilterField

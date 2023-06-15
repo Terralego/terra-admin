@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  AutocompleteInput,
   BooleanField,
   BooleanInput,
   Datagrid,
@@ -29,7 +30,7 @@ const ListFilters = props => (
       reference={RES_DATASOURCE}
       label="datalayer.form.data-source"
     >
-      <SelectInput />
+      <AutocompleteInput />
     </ReferenceInput>
     <ReferenceInput
       source="group__view"

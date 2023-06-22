@@ -1,34 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import get from 'lodash.get';
-import { Field, useField, useForm } from 'react-final-form';
-import { SelectInput, RadioButtonGroupInput, NumberInput, BooleanInput, useTranslate, required, ArrayField, TextField, ReferenceField, FunctionField } from 'react-admin';
-import { fieldTypes } from '../../../../../DataSource';
-
-import Condition from '../../../../../../../components/react-admin/Condition';
-import FieldOption from '../../FieldOption';
-
-import GraduateValue from './GraduateValue';
-import CategorizeValue from './CategorizeValue';
-
-import styles from './styles';
-import TableConfigField from '../../TableTab/TableConfigField';
-import { Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Field, useField } from 'react-final-form';
+import { useTranslate } from 'react-admin';
+import { FormControlLabel, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { ColorField } from 'react-admin-color-input';
+import randomColor from 'randomcolor';
+import styles from './styles';
 import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
 import DragHandle from '../../../DragHandle';
-import randomColor from 'randomcolor';
-
-const isRequired = [required()];
+import { fieldTypes } from '../../../../../DataSource';
 
 const useStyles = makeStyles(styles);
 
-const genDefaultValue = () => 0;
-
-const FieldRow = ({ field, onChange, exportEnabled, path }) => {
-  const translate = useTranslate();
+const FieldRow = ({ field, onChange, path }) => {
+  const onUseChange = React.useCallback(e =>
+    onChange({ ...field, use: e.target.checked }),
+  [field, onChange]);
 
   return (
     <TableRow>
@@ -46,10 +34,9 @@ const FieldRow = ({ field, onChange, exportEnabled, path }) => {
         </Field>
       </TableCell>
       <TableCell align="right">
-        <BooleanInput
-          source={`${path}.use`}
-          defaultValue={false}
-          label=""
+        <Switch
+          checked={Boolean(field.use)}
+          onChange={onUseChange}
         />
       </TableCell>
     </TableRow>
@@ -58,16 +45,15 @@ const FieldRow = ({ field, onChange, exportEnabled, path }) => {
 
 const MemoFieldRow = SortableElement(React.memo(FieldRow));
 
-export const SortableTable = SortableContainer(({ fields, exportEnabled, path }) => {
-  console.log('sortabletable', fields);
-  // const onChange = React.useCallback(newField => {
-  //   form.change('fields', form.getState().values.fields.map(field => {
-  //     if (field.sourceFieldId === newField.sourceFieldId) {
-  //       return newField;
-  //     }
-  //     return field;
-  //   }));
-  // }, [form]);
+export const SortableTable = SortableContainer(({ fields, updateFields, path }) => {
+  const onChange = React.useCallback(newField => {
+    updateFields(fields.map(field => {
+      if (field.name === newField.name) {
+        return newField;
+      }
+      return field;
+    }));
+  }, [fields, updateFields]);
 
   return (
     <TableBody>
@@ -76,7 +62,7 @@ export const SortableTable = SortableContainer(({ fields, exportEnabled, path })
           <MemoFieldRow
             path={`${path}.fields.${index}`}
             field={field}
-            exportEnabled={exportEnabled}
+            onChange={onChange}
             key={field.name}
             index={index}
           />
@@ -86,38 +72,78 @@ export const SortableTable = SortableContainer(({ fields, exportEnabled, path })
   );
 });
 
-const PiePieceStyleField = ({ path, fields, getValuesOfProperty }) => {
+const PiePieceStyleField = ({ path, fields }) => {
   const classes = useStyles();
   const translate = useTranslate();
-  const form = useForm();
+
   const { input: { value: type } } = useField(`${path}.type`);
-  const { input: { value: fieldList, onChange: initFields } } = useField(`${path}.fields`);
+  const { input: { value: layerName } } = useField('name');
+  const { input: { value: fieldList = [], onChange: updateFields } } = useField(`${path}.fields`);
+  const { input: { value: legendList = [], onChange: updateLegendList } } = useField(`${path}.legends`);
 
   useEffect(() => {
-    const numberFields = fields.filter(field => ['Integer', 'Float'].includes(fieldTypes[field.data_type]));
+    const numberFields = fields;
+    // .filter(field => ['Integer', 'Float'].includes(fieldTypes[field.data_type]));
+    const updatedFields = fieldList.filter(piechartField =>
+      numberFields.find(field => {
+        if (!field.name) return true;
+        return field.name === piechartField.name;
+      }));
 
-    const missingFields = numberFields
-      .filter(field => !fieldList.some(pieField => pieField.name === field.name))
-      .map(field => ({ name: field.name, use: false }));
+    const newFields = numberFields
+      .filter(field => {
+        if (!field.name) return false;
+        return !fieldList.find(piechartField => piechartField.name === field.name);
+      })
+      .map(field => ({
+        name: field.name,
+        use: false,
+        color: randomColor(),
+        label: field.label,
+      }));
 
-    initFields([...fieldList, ...missingFields]);
-  }, []);
+    updateFields([...updatedFields, ...newFields]);
+  }, [fields]);
 
+  const handleUpdateFields = newFields => {
+    updateFields(newFields);
+  };
+
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    if (oldIndex !== newIndex) {
+      const newOrderFields = [...fieldList];
+      newOrderFields.splice(newIndex, 0, newOrderFields.splice(oldIndex, 1)[0]);
+      updateFields(newOrderFields);
+    }
+  };
+
+  const generateLegend = useCallback(() => {
+    const legend = {
+      title: layerName,
+      items: fieldList
+        .filter(field => field.use)
+        .map(({ color, name, label }) => ({ color, name, label })),
+      shape: 'square',
+    };
+
+    updateLegendList([legend]);
+  }, [fieldList, layerName]);
+
+  const handleGenerateLegendChange = e => {
+    if (e.target.checked) {
+      generateLegend();
+    } else {
+      updateLegendList([]);
+    }
+  };
+
+  useEffect(() => {
+    generateLegend();
+  }, [fieldList, generateLegend, layerName]);
 
   if (type === 'none') {
     return null;
   }
-
-  const onSortEnd = ({ oldIndex, newIndex }) => {
-    const { values } = form.getState();
-    const formFields = get(values, `${path}.fields`);
-    console.log(formFields, values, path);
-    if (oldIndex !== newIndex) {
-      // formFields.splice(newIndex, 0, formFields.splice(oldIndex, 1)[0]);
-      console.log('formChange', `${path}.fields`, [...formFields]);
-      // form.change(`${path}.fields`, [...formFields]);
-    }
-  };
 
   return (
     <div className={classes.styleField}>
@@ -138,6 +164,7 @@ const PiePieceStyleField = ({ path, fields, getValuesOfProperty }) => {
                 path={path}
                 fields={fieldList}
                 onSortEnd={onSortEnd}
+                updateFields={handleUpdateFields}
                 useDragHandle
                 lockAxis="y"
               />
@@ -145,6 +172,17 @@ const PiePieceStyleField = ({ path, fields, getValuesOfProperty }) => {
           </TableContainer>
         </>
       )}
+
+      <FormControlLabel
+        control={(
+          <Switch
+            defaultChecked
+            checked={legendList.length > 0}
+            onChange={handleGenerateLegendChange}
+          />
+        )}
+        label={translate('style-editor.generate-legend')}
+      />
     </div>
   );
 };

@@ -1007,6 +1007,7 @@
       "circle": "Cercle",
       "icon": "Icône",
       "text": "Texte",
+      "piechart": "Diagramme circulaire",
       "heatmap": "Heatmap"
     },
     "style-type": {
@@ -1052,6 +1053,7 @@
       "icon-image-native": "Icônes de base"
     },
     "pie-chart": {
+      "fields": "Champs",
       "color": "Couleur",
       "use": "Utiliser"
     },
@@ -1061,6 +1063,7 @@
     },
     "proportionnal": {
       "max-diameter": "Diamètre maximal",
+      "min-diameter": "Diamètre minimal",
       "max-value": "Valeur maximale"
     },
     "categorize": {

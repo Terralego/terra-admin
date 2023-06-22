@@ -121,7 +121,6 @@ const MemoFieldRow = SortableElement(React.memo(FieldRow));
 
 export const SortableTable = SortableContainer(({ fields, exportEnabled }) => {
   const form = useForm();
-  console.log('form', form);
 
   const onChange = React.useCallback(newField => {
     form.change('fields', form.getState().values.fields.map(field => {

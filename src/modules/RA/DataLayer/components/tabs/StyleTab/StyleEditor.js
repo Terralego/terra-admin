@@ -184,7 +184,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
         </Condition>
         <Condition when={`${path}.map_style_type`} is="piechart">
           <WizardPiechart
-            path={path}
+            path=""
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
           />

@@ -10,7 +10,7 @@ const useCustomStyleImages = () => {
     [styleImages],
   );
 
-  return customImages;
+  return customImages || [];
 };
 
 export default useCustomStyleImages;

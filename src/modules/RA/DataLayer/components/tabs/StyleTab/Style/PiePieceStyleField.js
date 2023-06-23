@@ -74,6 +74,8 @@ export const SortableTable = SortableContainer(({ fields, updateFields, path }) 
   );
 });
 
+const DEFAULT_FIELDLIST_VALUE = [];
+
 const PiePieceStyleField = ({ path, fields }) => {
   const classes = useStyles();
   const translate = useTranslate();
@@ -82,13 +84,10 @@ const PiePieceStyleField = ({ path, fields }) => {
 
   const { input: { value: type } } = useField(`${path}.type`);
   const { input: { value: layerName } } = useField('name');
-  const { input: { value: fieldList = [], onChange: updateFields } } = useField(`${path}.fields`);
+  const { input: { value: fieldList, onChange: updateFields } } = useField(`${path}.fields`, { initialValue: DEFAULT_FIELDLIST_VALUE });
   const { input: { onChange: updateLegendList } } = useField(`${path}.legends`);
 
   useEffect(() => {
-    if (!Array.isArray(fieldList)) {
-      updateFields([]);
-    }
     const numberFields = fields
       .filter(field => ['Integer', 'Float'].includes(fieldTypes[field.data_type]));
 

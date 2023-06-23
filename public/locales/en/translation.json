@@ -959,6 +959,7 @@
       "circle": "Circle",
       "icon": "Icon",
       "text": "Text",
+      "piechart": "Pie chart",
       "heatmap": "Heatmap"
     },
     "style-type": {
@@ -1005,12 +1006,18 @@
       "icon-image-custom": "Custom icons",
       "icon-image-native": "Base icons"
     },
+    "pie-chart": {
+      "fields": "Fields",
+      "color": "Color",
+      "use": "Use"
+    },
     "fixed": {
       "diameter": "Diameter",
       "value": "Value"
     },
     "proportionnal": {
       "max-diameter": "Maximal diameter",
+      "min-diameter": "Minimal diameter",
       "max-value": "Maximal value"
     },
     "categorize": {

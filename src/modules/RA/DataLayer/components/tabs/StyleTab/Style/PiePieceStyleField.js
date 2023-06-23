@@ -1,15 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
-
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Field, useField } from 'react-final-form';
 import { useTranslate } from 'react-admin';
-import { FormControlLabel, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+
+import { FormControlLabel, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import randomColor from 'randomcolor';
-import styles from './styles';
+
 import ColorPicker from '../../../../../../../components/react-admin/ColorPicker';
-import DragHandle from '../../../DragHandle';
 import { fieldTypes } from '../../../../../DataSource';
+import DragHandle from '../../../DragHandle';
+
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
@@ -76,14 +78,21 @@ const PiePieceStyleField = ({ path, fields }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
+  const [isGeneratedLegend, setIsGeneratedLegend] = useState(false);
+
   const { input: { value: type } } = useField(`${path}.type`);
   const { input: { value: layerName } } = useField('name');
   const { input: { value: fieldList = [], onChange: updateFields } } = useField(`${path}.fields`);
-  const { input: { value: legendList = [], onChange: updateLegendList } } = useField(`${path}.legends`);
+  const { input: { onChange: updateLegendList } } = useField(`${path}.legends`);
 
   useEffect(() => {
-    const numberFields = fields;
-    // .filter(field => ['Integer', 'Float'].includes(fieldTypes[field.data_type]));
+    if (!Array.isArray(fieldList)) {
+      updateFields([]);
+    }
+    const numberFields = fields
+      .filter(field => ['Integer', 'Float'].includes(fieldTypes[field.data_type]));
+
+    if (numberFields.length === 0) return;
     const updatedFields = fieldList.filter(piechartField =>
       numberFields.find(field => {
         if (!field.name) return true;
@@ -103,7 +112,13 @@ const PiePieceStyleField = ({ path, fields }) => {
       }));
 
     updateFields([...updatedFields, ...newFields]);
-  }, [fields]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    // fieldList, -> Unstable value from useField from React-Final-Form
+    fields,
+    // updateFields -> Unstable function from useField from React-Final-Form
+  ]);
 
   const handleUpdateFields = newFields => {
     updateFields(newFields);
@@ -118,6 +133,7 @@ const PiePieceStyleField = ({ path, fields }) => {
   };
 
   const generateLegend = useCallback(() => {
+    if (!Array.isArray(fieldList)) return;
     const legend = {
       title: layerName,
       items: fieldList
@@ -127,19 +143,30 @@ const PiePieceStyleField = ({ path, fields }) => {
     };
 
     updateLegendList([legend]);
-  }, [fieldList, layerName]);
 
-  const handleGenerateLegendChange = e => {
-    if (e.target.checked) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    fieldList,
+    layerName,
+    // updateLegendList -> Unstable function from useField from React-Final-Form
+  ]);
+
+  const handleGenerateLegendChange = e => setIsGeneratedLegend(e.target.checked);
+
+  useEffect(() => {
+    if (isGeneratedLegend) {
       generateLegend();
     } else {
       updateLegendList([]);
     }
-  };
-
-  useEffect(() => {
-    generateLegend();
-  }, [fieldList, generateLegend, layerName]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    fieldList,
+    generateLegend,
+    layerName,
+    isGeneratedLegend,
+    // updateLegendList -> Unstable function from useField from React-Final-Form
+  ]);
 
   if (type === 'none') {
     return null;
@@ -177,7 +204,7 @@ const PiePieceStyleField = ({ path, fields }) => {
         control={(
           <Switch
             defaultChecked
-            checked={legendList.length > 0}
+            checked={isGeneratedLegend}
             onChange={handleGenerateLegendChange}
           />
         )}

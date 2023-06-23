@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { useField } from 'react-final-form';
@@ -20,6 +20,15 @@ const PieChartRadiusStyleField = ({ path, fields }) => {
   const {
     input: { value: type },
   } = useField(`${path}.type`);
+
+  const memoizedFields = useMemo(() => fields
+    .filter(field => ['Integer', 'Float'].includes(fieldTypes[field.data_type]))
+    .map(field => ({
+      id: field.name,
+      label: `${field.label || field.name}`,
+      name: field.name,
+      type: fieldTypes[field.data_type],
+    })), [fields]);
 
   if (type === 'none') {
     return null;
@@ -44,15 +53,7 @@ const PieChartRadiusStyleField = ({ path, fields }) => {
               label="style-editor.field"
               validate={isRequired}
               optionText={<FieldOption />}
-              choices={fields
-                .filter(field =>
-                  ['Integer', 'Float'].includes(fieldTypes[field.data_type]))
-                .map(field => ({
-                  id: field.name,
-                  label: `${field.label || field.name}`,
-                  name: field.name,
-                  type: fieldTypes[field.data_type],
-                }))}
+              choices={memoizedFields}
             />
             <NumberInput
               source={`${path}.min_radius`}

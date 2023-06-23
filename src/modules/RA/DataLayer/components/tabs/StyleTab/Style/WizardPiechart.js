@@ -4,10 +4,10 @@ import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 
+import PieChartRadiusStyleField from './PieChartRadiusStyleField';
 import PiePieceStyleField from './PiePieceStyleField';
 
 import styles from './styles';
-import PieChartRadiusStyleField from './PieChartRadiusStyleField';
 
 const useStyles = makeStyles(styles);
 

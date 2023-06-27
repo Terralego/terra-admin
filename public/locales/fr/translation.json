@@ -1063,7 +1063,10 @@
     "pie-chart": {
       "fields": "Champs",
       "color": "Couleur",
-      "use": "Utiliser"
+      "use": "Utiliser",
+      "total": "Total",
+      "hide": "Ne pas afficher",
+      "show": "Afficher"
     },
     "fixed": {
       "diameter": "Diamètre",

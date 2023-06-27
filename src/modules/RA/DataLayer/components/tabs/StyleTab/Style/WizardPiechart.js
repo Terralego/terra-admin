@@ -51,6 +51,22 @@ const WizardPiechart = ({ path, fields, getValuesOfProperty }) => {
           fields={fields}
         />
       </div>
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel>{translate('style-editor.pie-chart.total')}</FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.advanced_style.show_total`}
+            optionValue="value"
+            choices={[
+              { id: 'hide', value: false, name: translate('style-editor.pie-chart.hide') },
+              { id: 'show', value: true, name: translate('style-editor.pie-chart.show') },
+            ]}
+            helperText={false}
+            initialValue="show"
+          />
+        </header>
+      </div>
     </>
   );
 };

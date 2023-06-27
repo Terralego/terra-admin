@@ -37,12 +37,11 @@ const WizardPiechart = ({ path, fields, getValuesOfProperty }) => {
             label=""
             source={`${path}.advanced_style.chart_radius.type`}
             choices={[
-              { id: 'none', name: translate('style-editor.style-type.none') },
               { id: 'fixed', name: translate('style-editor.style-type.fixed') },
               { id: 'variable', name: translate('style-editor.style-type.variable') },
             ]}
             helperText={false}
-            initialValue="none"
+            initialValue="fixed"
           />
         </header>
 

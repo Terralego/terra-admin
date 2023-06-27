@@ -80,12 +80,12 @@ const PiePieceStyleField = ({ path, fields }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
-  const [isGeneratedLegend, setIsGeneratedLegend] = useState(false);
+  const [isGeneratedLegend, setIsGeneratedLegend] = useState(true);
 
   const { input: { value: type } } = useField(`${path}.type`);
   const { input: { value: layerName } } = useField('name');
   const { input: { value: fieldList, onChange: updateFields } } = useField(`${path}.fields`, { initialValue: DEFAULT_FIELDLIST_VALUE });
-  const { input: { onChange: updateLegendList } } = useField(`${path}.legends`);
+  const { input: { value: legendList, onChange: updateLegendList } } = useField(`${path}.legends`);
 
   useEffect(() => {
     const numberFields = fields
@@ -167,6 +167,11 @@ const PiePieceStyleField = ({ path, fields }) => {
     // updateLegendList -> Unstable function from useField from React-Final-Form
   ]);
 
+  useEffect(() => {
+    setIsGeneratedLegend(legendList.length > 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Unstable legendList value
+  }, []);
+
   if (type === 'none') {
     return null;
   }
@@ -202,7 +207,6 @@ const PiePieceStyleField = ({ path, fields }) => {
       <FormControlLabel
         control={(
           <Switch
-            defaultChecked
             checked={isGeneratedLegend}
             onChange={handleGenerateLegendChange}
           />

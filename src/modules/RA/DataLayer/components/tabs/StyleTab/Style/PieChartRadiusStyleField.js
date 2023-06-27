@@ -40,6 +40,7 @@ const PieChartRadiusStyleField = ({ path, fields }) => {
         <NumberInput
           source={`${path}.value`}
           label="style-editor.fixed.diameter"
+          defaultValue={30}
         />
       </Condition>
 

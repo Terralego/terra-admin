@@ -1009,7 +1009,10 @@
     "pie-chart": {
       "fields": "Fields",
       "color": "Color",
-      "use": "Use"
+      "use": "Use",
+      "total": "Total",
+      "hide": "Don't show",
+      "show": "Show"
     },
     "fixed": {
       "diameter": "Diameter",

@@ -4,8 +4,8 @@ import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 
-import PieChartRadiusStyleField from './PieChartRadiusStyleField';
 import PiePieceStyleField from './PiePieceStyleField';
+import RadiusStyleField from './RadiusStyleField';
 
 import styles from './styles';
 
@@ -35,21 +35,24 @@ const WizardPiechart = ({ path, fields, getValuesOfProperty }) => {
           <FormLabel>{translate('style-editor.circle.circle-radius')}</FormLabel>
           <RadioButtonGroupInput
             label=""
-            source={`${path}.advanced_style.chart_radius.type`}
+            source="main_style.style.piechart_radius.type"
             choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
               { id: 'fixed', name: translate('style-editor.style-type.fixed') },
               { id: 'variable', name: translate('style-editor.style-type.variable') },
             ]}
             helperText={false}
-            initialValue="fixed"
+            initialValue="none"
           />
         </header>
 
-        <PieChartRadiusStyleField
-          path={`${path}.advanced_style.chart_radius`}
+        <RadiusStyleField
+          path="main_style.style.piechart_radius"
           fields={fields}
+          getValuesOfProperty={getValuesOfProperty}
         />
       </div>
+
       <div className={classes.configLine}>
         <header>
           <FormLabel>{translate('style-editor.pie-chart.total')}</FormLabel>

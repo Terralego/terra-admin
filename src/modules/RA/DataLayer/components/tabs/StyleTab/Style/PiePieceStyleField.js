@@ -37,6 +37,7 @@ const FieldRow = ({ field, onChange, path }) => {
       </TableCell>
       <TableCell align="right">
         <Switch
+          color="primary"
           checked={Boolean(field.use)}
           onChange={onUseChange}
         />
@@ -205,8 +206,10 @@ const PiePieceStyleField = ({ path, fields }) => {
       )}
 
       <FormControlLabel
+        className={classes.piechartLegendSwitch}
         control={(
           <Switch
+            color="primary"
             checked={isGeneratedLegend}
             onChange={handleGenerateLegendChange}
           />

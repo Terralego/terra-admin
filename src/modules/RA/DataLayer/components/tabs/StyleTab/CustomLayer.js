@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  SelectInput,
+  AutocompleteInput,
   ReferenceInput,
   useDataProvider,
   required,
@@ -33,7 +33,7 @@ export const CustomLayer = ({ source }) => {
         perPage={100}
         validate={isRequired}
       >
-        <SelectInput
+        <AutocompleteInput
           validate={isRequired}
         />
       </ReferenceInput>

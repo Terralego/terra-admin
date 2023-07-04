@@ -21,6 +21,9 @@ export class AppProvider extends React.Component {
     try {
       const settings = await getSettings();
       result.settings = settings;
+      if (settings.token && !localStorage.getItem('tf:auth:token')) {
+        localStorage.setItem('tf:auth:token', settings.token);
+      }
     } catch (e) {
       result.error = e;
     }

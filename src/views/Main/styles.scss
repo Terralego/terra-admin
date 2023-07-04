@@ -25,4 +25,15 @@
   &-content {
     flex: auto;
   }
+
+  & .login-form {
+    display: flex; 
+    flex-direction: column;
+    width: 20rem;
+  }
+
+  & .login-form__separator {
+    margin: 6px;
+    text-align: center;
+  }
 }

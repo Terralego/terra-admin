@@ -2,6 +2,7 @@ import React, { useContext, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import { LoginForm } from '@terralego/core/modules/Auth';
 import { context as AuthContext } from '@terralego/core/modules/Auth/services/context';
+import SSOLoginFormRenderer from '@terralego/core/modules/Auth/components/LoginForm/SSOLoginFormRenderer';
 
 import { useTranslation } from 'react-i18next';
 import Helmet from 'react-helmet';
@@ -10,7 +11,6 @@ import { AppContext } from '../../components/AppProvider';
 
 import Header from './Header';
 import Content from './Content';
-
 import Message from '../../components/Message';
 
 import './styles.scss';
@@ -21,7 +21,7 @@ export const Main = ({ locale }) => {
   const { authenticated } = useContext(AuthContext);
 
   const {
-    env: { title = 'Terralego Admin', favicon, language } = {},
+    env: { title = 'Terralego Admin', favicon, language, ssoAuth } = {},
     errorSettings: { message: errorMessage } = {},
   } = useContext(AppContext);
 
@@ -47,14 +47,22 @@ export const Main = ({ locale }) => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={global.location.href} />
         {!!favicon && (
-        <link rel="shortcut icon" href={favicon} />
+          <link rel="shortcut icon" href={favicon} />
         )}
       </Helmet>
       <Header />
       <div className="main-container">
         {authenticated
           ? <Content />
-          : <LoginForm translate={t} />}
+          : (
+            <LoginForm
+              translate={t}
+              ssoLink={ssoAuth?.loginUrl}
+              ssoButtonText={ssoAuth?.ssoButtonText}
+              defaultButtonText={ssoAuth?.defaultButtonText}
+              render={ssoAuth?.loginUrl ? SSOLoginFormRenderer : undefined}
+            />
+          )}
       </div>
     </div>
   );

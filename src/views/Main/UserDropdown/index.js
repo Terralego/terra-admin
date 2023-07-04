@@ -9,28 +9,33 @@ import {
 } from '@blueprintjs/core';
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { withTranslation } from 'react-i18next';
+import { AppContext } from '../../../components/AppProvider';
 
-export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => (
-  <Popover
-    content={(
-      <Menu>
-        <MenuItem
-          className={Classes.MINIMAL}
-          onClick={logoutAction}
-          icon="log-out"
-          text={t('common.logout')}
-        />
-      </Menu>
+export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => {
+  const { env: { ssoAuth: { logoutUrl } = {} } = {} } = React.useContext(AppContext);
+
+  return (
+    <Popover
+      content={(
+        <Menu>
+          <MenuItem
+            className={Classes.MINIMAL}
+            onClick={() => logoutAction(logoutUrl)}
+            icon="log-out"
+            text={t('common.logout')}
+          />
+        </Menu>
       )}
-    position={Position.BOTTOM_RIGHT}
-  >
-    <Button
-      className={Classes.MINIMAL}
-      icon="user"
-      rightIcon="caret-down"
-      text={email}
-    />
-  </Popover>
-);
+      position={Position.BOTTOM_RIGHT}
+    >
+      <Button
+        className={Classes.MINIMAL}
+        icon="user"
+        rightIcon="caret-down"
+        text={email}
+      />
+    </Popover>
+  );
+};
 
 export default connectAuthProvider('user', 'logoutAction')(withTranslation()(UserDropdown));

@@ -100,6 +100,28 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
           getValuesOfProperty={getValuesOfProperty}
         />
       </div>
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel>{translate('style-editor.icon.icon-overlap')}</FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source={`${path}.style.icon_allow_overlap.type`}
+            helperText={false}
+            choices={[{ id: 'fixed', name: translate('style-editor.style-type.fixed') }]}
+            initialValue="fixed"
+          />
+        </header>
+        <RadioButtonGroupInput
+          label=""
+          source={`${path}.style.icon_allow_overlap.value`}
+          choices={[
+            { id: false, name: translate('style-editor.style-type.none') },
+            { id: true, name: translate('style-editor.style-type.allow') },
+          ]}
+          helperText={false}
+          initialValue={false}
+        />
+      </div>
     </>
   );
 };

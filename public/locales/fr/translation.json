@@ -27,6 +27,7 @@
   },
   "auth": {
     "loginform": {
+      "sso": "Connexion SSO",
       "email": {
         "invalid": "Email invalide",
         "helper": "Saisir votre email",
@@ -40,6 +41,11 @@
         "label": "Mot de passe",
         "info": "requis",
         "placeholder": "Mot de passe"
+      },
+      "renderer": {
+        "sso": "Connexion SSO",
+        "internal": "Connexion interne",
+        "separator": "ou"
       },
       "submit": "Connexion",
       "error_generic": "Informations d'identification invalides"
@@ -1007,12 +1013,14 @@
       "circle": "Cercle",
       "icon": "Icône",
       "text": "Texte",
+      "piechart": "Diagramme circulaire",
       "heatmap": "Heatmap"
     },
     "style-type": {
       "none": "Aucun",
       "fixed": "Fixe",
-      "variable": "Variable"
+      "variable": "Variable",
+      "allow": "Autoriser"
     },
     "fill": {
       "fill-color": "Couleur du polygone",
@@ -1048,8 +1056,17 @@
     "icon": {
       "icon-image": "Icône",
       "icon-size": "Taille de l'icône",
+      "icon-overlap": "Superposition des icônes",
       "icon-image-custom": "Icônes personnalisées",
       "icon-image-native": "Icônes de base"
+    },
+    "pie-chart": {
+      "fields": "Champs",
+      "color": "Couleur",
+      "use": "Utiliser",
+      "total": "Total",
+      "hide": "Ne pas afficher",
+      "show": "Afficher"
     },
     "fixed": {
       "diameter": "Diamètre",
@@ -1057,6 +1074,7 @@
     },
     "proportionnal": {
       "max-diameter": "Diamètre maximal",
+      "min-diameter": "Diamètre minimal",
       "max-value": "Valeur maximale"
     },
     "categorize": {

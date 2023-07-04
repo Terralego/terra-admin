@@ -67,6 +67,9 @@ const styles = {
       padding: '0px',
     },
   },
+  piechartLegendSwitch: {
+    marginTop: '1em',
+  },
 };
 
 export default styles;

@@ -27,6 +27,7 @@
   },
   "auth": {
     "loginform": {
+      "sso": "SSO connection",
       "email": {
         "invalid": "Invalid email",
         "helper": "Enter your email address",
@@ -40,6 +41,11 @@
         "label": "Password",
         "info": "required",
         "placeholder": "Password"
+      },
+      "renderer": {
+        "sso": "SSO Connection ",
+        "internal": "Internal connection",
+        "separator": "or"
       },
       "submit": "Log in",
       "error_generic": "Invalid authentication credentials."
@@ -953,12 +959,14 @@
       "circle": "Circle",
       "icon": "Icon",
       "text": "Text",
+      "piechart": "Pie chart",
       "heatmap": "Heatmap"
     },
     "style-type": {
       "none": "None",
       "fixed": "Fixed",
-      "variable": "Variable"
+      "variable": "Variable",
+      "allow": "Allow"
     },
     "fill": {
       "fill-color": "Background color",
@@ -994,8 +1002,17 @@
     "icon": {
       "icon-image": "Icon",
       "icon-size": "Icon size",
+      "icon-overlap": "Icon overlap",
       "icon-image-custom": "Custom icons",
       "icon-image-native": "Base icons"
+    },
+    "pie-chart": {
+      "fields": "Fields",
+      "color": "Color",
+      "use": "Use",
+      "total": "Total",
+      "hide": "Don't show",
+      "show": "Show"
     },
     "fixed": {
       "diameter": "Diameter",
@@ -1003,6 +1020,7 @@
     },
     "proportionnal": {
       "max-diameter": "Maximal diameter",
+      "min-diameter": "Minimal diameter",
       "max-value": "Maximal value"
     },
     "categorize": {

@@ -26,12 +26,14 @@ import styles from './Style/styles';
 
 const useStyles = makeStyles(styles);
 
-const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
+const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyles }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const [defaultUid] = React.useState(`${uuid()}`);
 
   const styleType = getShapeFromGeomType(geomType);
+
+  const shouldDisplayPieChart = !isExtraStyles;
 
   return (
     <div className={classes.styleEditor}>
@@ -117,10 +119,10 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
                 id: 'circle',
                 name: translate('style-editor.map-style-type.circle'),
               },
-              {
+              ...shouldDisplayPieChart ? [{
                 id: 'piechart',
                 name: translate('style-editor.map-style-type.piechart'),
-              },
+              }] : [],
               /* {
                 id: 'heatmap',
                 name: translate('style-editor.map-style-type.heatmap'),
@@ -197,6 +199,15 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty }) => {
           label="style-editor.advanced-style"
           fullWidth
         />
+        {shouldDisplayPieChart && (
+          <Condition when={`${path}.map_style.type`} is="piechart">
+            <ExpertStyleField
+              source="advanced_style"
+              label="style-editor.expert-advanced-style"
+              fullWidth
+            />
+          </Condition>
+        )}
       </Condition>
     </div>
   );

@@ -945,6 +945,7 @@
     "field-help": "Choose an available field from source",
     "generate-legend": "Generate legend",
     "advanced-style": "Expert style",
+    "expert-advanced-style": "Advanced styles (for pie charts)",
     "zoom-extend": "Visibility zoom extend",
     "type": {
       "input": "Style wizard",

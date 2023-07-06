@@ -43,6 +43,7 @@ export const CustomLayer = ({ source }) => {
           geomType={geomType}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          isExtraStyles
         />
       )}
     </FieldGroup>

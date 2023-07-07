@@ -999,6 +999,7 @@
     "field-help": "Sélectionnez un champ de la source parmi ceux disponibles",
     "generate-legend": "Générer la légende associée",
     "advanced-style": "Style expert",
+    "expert-advanced-style": "Style avancés (pour diagrames circulaires)",
     "zoom-extend": "Plage de visibilité",
     "type": {
       "input": "Assistant de style",

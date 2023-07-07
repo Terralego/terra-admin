@@ -5,11 +5,12 @@ import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import SizeStyleField from './SizeStyleField';
+import IconStyleField from './IconStyleField';
 
-import styles from './styles';
 import useSprites from '../../../../../../../hooks/useSprites';
 import useCustomStyleImages from '../../../../../../../hooks/useCustomStyleImages';
-import IconStyleField from './IconStyleField';
+
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
@@ -88,6 +89,7 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
             choices={[
               { id: 'none', name: translate('style-editor.style-type.none') },
               { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
             ]}
             helperText={false}
             initialValue="none"
@@ -97,6 +99,8 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
         <SizeStyleField
           path={`${path}.style.icon_size`}
           fields={fields}
+          step="0.1"
+          canGenerateLegend={false}
           getValuesOfProperty={getValuesOfProperty}
         />
       </div>

@@ -70,6 +70,10 @@ const styles = {
   piechartLegendSwitch: {
     marginTop: '1em',
   },
+  iconSelect: {
+    width: '10em',
+    marginRight: '2em',
+  },
 };
 
 export default styles;

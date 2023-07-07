@@ -1,20 +1,18 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { MenuItem, TextField } from '@material-ui/core';
 import { Field, useField } from 'react-final-form';
 import {
   SelectInput,
   RadioButtonGroupInput,
-  TextInput,
-  BooleanInput,
   useTranslate,
   required,
 } from 'react-admin';
-import { fieldTypes } from '../../../../../DataSource';
 
+import { fieldTypes } from '../../../../../DataSource';
 import Condition from '../../../../../../../components/react-admin/Condition';
 
-import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
 
 import styles from './styles';
@@ -23,35 +21,36 @@ const isRequired = [required()];
 
 const useStyles = makeStyles(styles);
 
-const genDefaultValue = () => 0;
-
 const IconStyleField = ({
   path,
   fields,
   getValuesOfProperty,
-  choices,
-  translateChoice = true,
-  format = val => val,
-  parse = val => val,
+  choices = [],
 }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
+  const genDefaultValue = React.useCallback(
+    () => choices.find(e => !e.disabled).id,
+    [choices],
+  );
+
   const Component = React.useCallback(
     ({ value: fieldValue, onChange }) => (
-      <SelectInput
-        source={`${path}.value`}
+      <TextField
         value={fieldValue}
-        // eslint-disable-next-line no-sequences
-        onChange={e => (console.log(e), onChange)}
-        label="style-editor.fixed.value"
-        choices={choices}
-        format={format}
-        parse={parse}
-        translateChoice={translateChoice}
-      />
+        onChange={onChange}
+        select
+        className={classes.iconSelect}
+      >
+        {choices.map(option => (
+          <MenuItem key={option.id} value={option.id} disabled={option.disabled}>
+            {option.name}
+          </MenuItem>
+        ))}
+      </TextField>
     ),
-    [format, parse, choices],
+    [choices, classes],
   );
 
   const {
@@ -62,30 +61,15 @@ const IconStyleField = ({
     return null;
   }
 
-  console.log('values', path, fields, getValuesOfProperty, Component, genDefaultValue);
-
   return (
     <div className={classes.styleField}>
       <Condition when={`${path}.type`} is="fixed">
-        {choices ? (
-          <SelectInput
-            source={`${path}.value`}
-            label="style-editor.fixed.value"
-            choices={choices}
-            format={format}
-            parse={parse}
-            validate={required()}
-            translateChoice={translateChoice}
-          />
-        ) : (
-          <TextInput
-            source={`${path}.value`}
-            label="style-editor.fixed.value"
-            format={format}
-            parse={parse}
-            validate={required()}
-          />
-        )}
+        <SelectInput
+          source={`${path}.value`}
+          label="style-editor.fixed.value"
+          choices={choices}
+          validate={required()}
+        />
       </Condition>
 
       <Condition when={`${path}.type`} is="variable">
@@ -110,24 +94,12 @@ const IconStyleField = ({
               {({ input: { value } }) => {
                 const selectedField = fields.find(({ name }) => name === value);
                 if (!selectedField) return null;
-                const isNumber = ['Integer', 'Float'].includes(fieldTypes[selectedField.data_type]);
-                const analysisChoices = isNumber
-                  ? [
-                    {
-                      id: 'graduated',
-                      name: translate('style-editor.analysis.graduate'),
-                    },
-                    {
-                      id: 'categorized',
-                      name: translate('style-editor.analysis.categorize'),
-                    },
-                  ]
-                  : [
-                    {
-                      id: 'categorized',
-                      name: translate('style-editor.analysis.categorize'),
-                    },
-                  ];
+                const analysisChoices = [
+                  {
+                    id: 'categorized',
+                    name: translate('style-editor.analysis.categorize'),
+                  },
+                ];
                 return (
                   <>
                     <RadioButtonGroupInput
@@ -136,14 +108,6 @@ const IconStyleField = ({
                       choices={analysisChoices}
                       initialValue="categorized"
                     />
-                    <Condition when={`${path}.analysis`} is="graduated">
-                      <GraduateValue path={path} />
-                      <BooleanInput
-                        source={`${path}.generate_legend`}
-                        label="style-editor.generate-legend"
-                        className="generate-legend"
-                      />
-                    </Condition>
                     <Condition when={`${path}.analysis`} is="categorized">
                       <CategorizeValue
                         path={path}
@@ -152,29 +116,12 @@ const IconStyleField = ({
                         Component={Component}
                         defaultValueGenerator={genDefaultValue}
                       />
-
-                      <BooleanInput
-                        source={`${path}.generate_legend`}
-                        label="style-editor.generate-legend"
-                        className="generate-legend"
-                      />
                     </Condition>
                   </>
                 );
               }}
             </Field>
           </>
-        )}
-        {choices && (
-          <SelectInput
-            source={`${path}.value`}
-            label="style-editor.fixed.value"
-            choices={choices}
-            format={format}
-            parse={parse}
-            validate={required()}
-            translateChoice={translateChoice}
-          />
         )}
       </Condition>
     </div>

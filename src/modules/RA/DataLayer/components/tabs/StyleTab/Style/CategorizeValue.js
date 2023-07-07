@@ -101,7 +101,6 @@ const CategorizeValue = ({
       const nameList = newValueList.map(({ name }) => name);
       const toAdd = result.filter(name => !nameList.includes(name));
 
-
       if (newValueList.length < (valueList || []).length || toAdd.length) {
         const newValues = [
           ...newValueList,

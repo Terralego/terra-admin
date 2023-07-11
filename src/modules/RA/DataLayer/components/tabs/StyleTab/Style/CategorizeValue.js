@@ -60,6 +60,7 @@ const CategorizeValue = ({
   getValuesOfProperty,
   Component,
   defaultValueGenerator,
+  hasDefaultValue,
 }) => {
   const translate = useTranslate();
   const mountedRef = React.useRef(true);
@@ -86,7 +87,8 @@ const CategorizeValue = ({
   React.useEffect(() => {
     const getValueList = async () => {
       setTooManyValues(false);
-      const result = await getValuesOfProperty(field);
+      const resultRaw = await getValuesOfProperty(field);
+      const result = hasDefaultValue ? [null, ...resultRaw] : resultRaw;
 
       if (!mountedRef.current) return;
 
@@ -122,6 +124,7 @@ const CategorizeValue = ({
     setValueList,
     valueList,
     valuesLoaded,
+    hasDefaultValue,
   ]);
 
   const onSortEnd = ({ oldIndex, newIndex }) => {

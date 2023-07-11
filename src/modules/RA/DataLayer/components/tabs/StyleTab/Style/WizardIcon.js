@@ -4,12 +4,13 @@ import { useTranslate, RadioButtonGroupInput } from 'react-admin';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
-import TextStyleField from './TextStyleField';
 import SizeStyleField from './SizeStyleField';
+import IconStyleField from './IconStyleField';
 
-import styles from './styles';
 import useSprites from '../../../../../../../hooks/useSprites';
 import useCustomStyleImages from '../../../../../../../hooks/useCustomStyleImages';
+
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
@@ -63,12 +64,15 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
             label=""
             source={`${path}.style.icon_image.type`}
             helperText={false}
-            choices={[{ id: 'fixed', name: translate('style-editor.style-type.fixed') }]}
+            choices={[
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
+            ]}
             initialValue="fixed"
           />
         </header>
 
-        <TextStyleField
+        <IconStyleField
           path={`${path}.style.icon_image`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
@@ -85,6 +89,7 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
             choices={[
               { id: 'none', name: translate('style-editor.style-type.none') },
               { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
             ]}
             helperText={false}
             initialValue="none"
@@ -94,6 +99,8 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
         <SizeStyleField
           path={`${path}.style.icon_size`}
           fields={fields}
+          step="0.1"
+          canGenerateLegend={false}
           getValuesOfProperty={getValuesOfProperty}
         />
       </div>

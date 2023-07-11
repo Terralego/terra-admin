@@ -20,13 +20,22 @@ const useStyles = makeStyles(styles);
 
 const genDefaultValue = () => 0;
 
-const SizeStyleField = ({ path, fields, getValuesOfProperty, canGenerateLegend = true }) => {
+const SizeStyleField = ({
+  path,
+  fields,
+  getValuesOfProperty,
+  canGenerateLegend = true,
+  step = 'any',
+}) => {
   const classes = useStyles();
   const translate = useTranslate();
 
   const Component = React.useCallback(({ value: fieldValue, onChange }) => (
     <TextField
       type="number"
+      inputProps={{
+        step,
+      }}
       value={`${fieldValue}`}
       onChange={event => {
         const newValue = parseFloat(event.target.value);
@@ -35,7 +44,7 @@ const SizeStyleField = ({ path, fields, getValuesOfProperty, canGenerateLegend =
         }
       }}
     />
-  ), []);
+  ), [step]);
 
   const { input: { value: type } } = useField(`${path}.type`);
 
@@ -46,7 +55,7 @@ const SizeStyleField = ({ path, fields, getValuesOfProperty, canGenerateLegend =
   return (
     <div className={classes.styleField}>
       <Condition when={`${path}.type`} is="fixed">
-        <NumberInput source={`${path}.value`} label="style-editor.fixed.value" />
+        <NumberInput step={step} source={`${path}.value`} label="style-editor.fixed.value" />
       </Condition>
 
       <Condition when={`${path}.type`} is="variable">

@@ -115,6 +115,7 @@ const IconStyleField = ({
                         getValuesOfProperty={getValuesOfProperty}
                         Component={Component}
                         defaultValueGenerator={genDefaultValue}
+                        hasDefaultValue
                       />
                     </Condition>
                   </>

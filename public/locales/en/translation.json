@@ -348,6 +348,15 @@
     "edit": {
       "refresh": "Refresh data",
       "message": "You need to include fields in vector tiles if you want to make them available in popups and mini-sheets."
+    },
+    "refreshStatus": {
+      "syncNeeded": "Sync needed",
+      "pending": "Pending",
+      "done": "Done",
+      "notNeeded": "Not needed",
+      "success": "Success",
+      "warning": "Warning",
+      "error": "Error"
     }
   },
   "datalayer": {

@@ -72,7 +72,7 @@ export const DataSourceList = props => (
         sortable={false}
         render={
           ({ status, report, id }) =>
-            <StatusChip sourceId={id} status={status ? { status, report } : {}} />
+            <StatusChip sourceId={id} status={{ status, report }} />
         }
       />
       <EditButton />

@@ -30,6 +30,7 @@
     "material-ui-chip-input": "^1.1.0",
     "mime-types": "^2.1.35",
     "normalize.css": "^8.0.1",
+    "pivotql": "github:jrmi/pivotql#1b8a2393641deb976dd92be2e9f4d5b6fc674446",
     "pivotql-compiler-elasticsearch": "^0.4.1",
     "pivotql-parser-expression": "^0.4.2",
     "prop-types": "^15.8.1",

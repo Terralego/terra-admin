@@ -10,7 +10,7 @@ import debounce  from 'lodash.debounce';
 
 import searchService from '@terralego/core/modules/Visualizer/services/search';
 
-import parser from 'pivotql-parser-expression';
+import parser from 'pivotql/packages/pivotql-parser-expression/src';
 import compilerEs from 'pivotql-compiler-elasticsearch';
 
 import TextField from '@material-ui/core/TextField';

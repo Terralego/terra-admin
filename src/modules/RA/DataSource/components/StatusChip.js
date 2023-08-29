@@ -53,6 +53,7 @@ const getStateKey = state => {
     case 0:
       return SYNC_NEEDED;
     case 1:
+    case 'Pending':
       return PENDING;
     case 2:
       return DONE;

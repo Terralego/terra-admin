@@ -52,10 +52,10 @@ const chipIconProps = (state, report, { success, warning, error }) => {
         return { icon: <SuccessIcon className={success} />, className: success };
       }
       if (report?.status && report.status.toUpperCase() === 'WARNING') {
-        return { icon: <SuccessIcon className={warning} />, className: warning };
+        return { icon: <WarningIcon className={warning} />, className: warning };
       }
       if (report?.status && report.status.toUpperCase() === 'ERROR') {
-        return { icon: <SuccessIcon className={error} />, className: error };
+        return { icon: <FailureIcon className={error} />, className: error };
       }
       return { icon: <SuccessIcon />, color: 'primary' };
     }

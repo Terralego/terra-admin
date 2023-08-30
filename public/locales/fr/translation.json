@@ -395,7 +395,11 @@
         "started": "Commencée à",
         "ended": "Finie à"
       },
-      "status": "Statut"
+      "status": "Statut",
+      "refresh": {
+        "accepted": "Actualisation acceptée",
+        "notAllowed": "Actualisation impossible"
+      }
     },
     "edit": {
       "refresh": "Actualiser les données",

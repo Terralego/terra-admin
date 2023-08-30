@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useRedirect } from 'ra-core';
 import { useTranslate } from 'react-admin';
+import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import SuccessIcon from '@material-ui/icons/Done';
@@ -19,25 +20,44 @@ const PENDING = 'datasource.refreshStatus.pending';
 const DONE = 'datasource.refreshStatus.done';
 const NOT_NEEDED = 'datasource.refreshStatus.notNeeded';
 
+const useStyles = makeStyles({
+  success: {
+    color: 'green',
+    borderColor: 'green',
+  },
+  warning: {
+    color: 'orange',
+    borderColor: 'orange',
+  },
+  error: {
+    color: 'red',
+    borderColor: 'red',
+  },
+});
 
-const chipIconProps = (state, report) => {
+const chipIconProps = (state, report, { success, warning, error }) => {
   switch (state) {
     case ERROR:
-      return { icon: <FailureIcon />, color: 'primary' };
+      return { icon: <FailureIcon className={error} />, className: error };
     case SUCCESS:
-      return { icon: <SuccessIcon />, color: 'secondary' };
+      return { icon: <SuccessIcon className={success} />, className: success };
     case WARNING:
-      return { icon: <WarningIcon />, color: 'primary' };
+      return { icon: <WarningIcon className={warning} />, className: warning };
     case PENDING:
       return { icon: <PendingIcon />, color: 'secondary' };
     case NOT_NEEDED:
       return { icon: <CheckCircleOutline />, color: '' };
     case DONE: {
-      let color = 'primary';
       if (report?.status && report.status.toUpperCase() === 'SUCCESS') {
-        color = 'secondary';
+        return { icon: <SuccessIcon className={success} />, className: success };
       }
-      return { icon: <SuccessIcon />, color };
+      if (report?.status && report.status.toUpperCase() === 'WARNING') {
+        return { icon: <SuccessIcon className={warning} />, className: warning };
+      }
+      if (report?.status && report.status.toUpperCase() === 'ERROR') {
+        return { icon: <SuccessIcon className={error} />, className: error };
+      }
+      return { icon: <SuccessIcon />, color: 'primary' };
     }
     default:
       return { icon: <></>, color: '' };
@@ -73,6 +93,7 @@ const getStateKey = state => {
 const StatusChip = ({ status, status: { status: state, report }, sourceId }) => {
   const redirect = useRedirect();
   const translate = useTranslate();
+  const classes = useStyles();
   const stateKey = getStateKey(state);
 
   const redirectToReport = React.useCallback(e => {
@@ -88,7 +109,7 @@ const StatusChip = ({ status, status: { status: state, report }, sourceId }) => 
     return null;
   }
 
-  const chipProps = chipIconProps(stateKey, report);
+  const chipProps = chipIconProps(stateKey, report, classes);
 
   return (
     <Tooltip title={<pre>{JSON.stringify(status, null, 2)}</pre>}>

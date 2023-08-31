@@ -21,7 +21,7 @@ const style = () => ({
 
 const DataSourceEditActions = ({
   dataProvider,
-  data: { id, report, _type } = {},
+  data: { id, report, _type, status } = {},
   basePath,
   classes,
 }) => {
@@ -40,10 +40,10 @@ const DataSourceEditActions = ({
   }, [setPending, dataProvider, notify, id]);
 
   React.useEffect(() => {
-    if (report?.status === 'Pending') {
+    if (status === 'Pending') {
       setPending(true);
     }
-  }, [report, report.status, pending]);
+  }, [status, pending]);
 
   return (
     <TopToolbar>

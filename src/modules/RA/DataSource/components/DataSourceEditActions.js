@@ -39,6 +39,12 @@ const DataSourceEditActions = ({
     }
   }, [setPending, dataProvider, notify, id]);
 
+  React.useEffect(() => {
+    if (report?.status === 'Pending') {
+      setPending(true);
+    }
+  }, [report, report.status, pending]);
+
   return (
     <TopToolbar>
       <ListButton

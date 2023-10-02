@@ -134,7 +134,7 @@ const DataLayerForm = React.memo(props => {
         <DefinitionTab onSwitch={setExternal} external={external} />
       </CustomFormTab>
 
-      <FormTab disabled={external} label="datalayer.form.style-images.tab" path="style-images">
+      <FormTab label="datalayer.form.style-images.tab" path="style-images">
         <ArrayInput source="style_images">
           <SimpleFormIterator>
             <StyleImageField />
@@ -153,7 +153,6 @@ const DataLayerForm = React.memo(props => {
       </CustomFormTab>
 
       <CustomFormTab
-        disabled={external}
         label="datalayer.form.legend.tab"
         path="legend"
         onChange={onLegendErrorChange}

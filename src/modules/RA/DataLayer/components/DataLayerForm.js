@@ -13,6 +13,7 @@ import MinisheetTab from './tabs/MinisheetTab';
 import FilterTab from './tabs/FilterTab';
 import TableTab from './tabs/TableTab';
 import StyleImageField from './StyleImageField';
+import EmbedTab from './tabs/EmbedTab';
 
 const initialErrorState = {
   definition: false,
@@ -22,6 +23,7 @@ const initialErrorState = {
   minisheet: false,
   filter: false,
   table: false,
+  embed: false,
 };
 
 const inErrorReducer = (state, { type, payload }) => {
@@ -89,6 +91,10 @@ const DataLayerForm = React.memo(props => {
     }
 
     dispatch({ type: 'minisheet', payload: inError });
+  }, []);
+
+  const onEmbedErrorChange = React.useCallback(() => {
+    dispatch({ type: 'embed', paylaod: false });
   }, []);
 
   const onTableErrorChange = React.useCallback(({
@@ -205,6 +211,16 @@ const DataLayerForm = React.memo(props => {
       <FormTab disabled={external} label="datalayer.form.widget.tab" path="other">
         <JSONInput source="settings.widgets" label="resources.datalayer.fields.settings-widgets" fullWidth />
       </FormTab>
+
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.embed.tab"
+        path="embed"
+        inError={errorState.embed}
+        onChange={onEmbedErrorChange}
+      >
+        <EmbedTab />
+      </CustomFormTab>
     </TabbedForm>
   );
 });

@@ -542,6 +542,18 @@
         "name": "Name",
         "compose": "Compose",
         "upload": "Upload"
+      },
+      "embed": {
+        "tab": "Embed",
+        "no-embed": "To add an embed, click on",
+        "allow": "Enable",
+        "allow-display-data-embed": "Disable",
+        "all-fields": "Embeds",
+        "icon": "Icon",
+        "title": "Embed title",
+        "title-help": "",
+        "src": "Address",
+        "src-help": "Embed address (iframe)"
       }
     }
   },

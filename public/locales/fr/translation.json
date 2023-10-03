@@ -594,6 +594,18 @@
         "name": "Nom",
         "compose": "Composer",
         "upload": "Envoyer"
+      },
+      "embed": {
+        "tab": "Inclusions",
+        "no-embed": "Pour activer les inclusions, cliquer sur",
+        "allow": "Activer",
+        "allow-display-data-embed": "Désactiver",
+        "all-fields": "Inclusions",
+        "icon": "Icône",
+        "title": "Titre de l'inclusion",
+        "title-help": "",
+        "src": "Adresse",
+        "src-help": "Adresse de la page à inclure (iframe)"
       }
     }
   },

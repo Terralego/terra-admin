@@ -97,6 +97,11 @@ const DefinitionTab = ({ onSwitch, external }) => {
         fullWidth
       />
 
+      <BooleanInput
+        source="settings.description.show_in_tree"
+        label="datalayer.form.show-description"
+      />
+
       <FieldUpdater />
     </FormGroupContextProvider>
   );

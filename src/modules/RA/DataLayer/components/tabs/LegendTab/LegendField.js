@@ -66,7 +66,7 @@ const LegendItemInput = ({ source, parentSource }) => {
     <div style={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
       <Condition when={parentSource} is={({ shape }) => shape !== 'icon'}>
         <FormLabel>{translate('datalayer.form.legend.shape')}</FormLabel>
-        <Field name={`${source}.color`} defaultValue="#00000000">
+        <Field name={`${source}.color`} defaultValue="#000000">
           {({ input: { onChange, value } }) => (
             <ColorPicker value={value || '#000000'} onChange={onChange} />
           )}
@@ -76,7 +76,7 @@ const LegendItemInput = ({ source, parentSource }) => {
         <FormLabel>{translate('datalayer.form.legend.stroke')}</FormLabel>
         <Field name={`${source}.strokeColor`} defaultValue={undefined}>
           {({ input: { onChange, value } }) => (
-            <ColorPicker value={value || '#00000000'} onChange={onChange} />
+            <ColorPicker value={value || '#000000'} onChange={onChange} />
           )}
         </Field>
         <NumberInput source={`${source}.strokeWidth`} label="datalayer.form.legend.width" style={{ width: '8em' }} helperText={false} />

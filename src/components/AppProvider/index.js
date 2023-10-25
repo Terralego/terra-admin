@@ -27,7 +27,7 @@ export class AppProvider extends React.Component {
         localStorage.setItem('tf:auth:token', settings.token);
       }
 
-      if (settings.sentry.dsn !== '') {
+      if (settings.sentry?.dsn !== '') {
         Sentry.init({
           sendDefaultPii: settings.sentry.sendDefaultPii,
           dsn: settings.sentry.dsn,

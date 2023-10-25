@@ -395,7 +395,6 @@
         "started": "Commencée à",
         "ended": "Finie à"
       },
-      "status": "Statut",
       "refresh": {
         "accepted": "Actualisation acceptée",
         "notAllowed": "Actualisation impossible"
@@ -443,6 +442,7 @@
       "view": "Vue",
       "ordering": "Classement",
       "description": "Description",
+      "show-description": "Afficher la description dans l'arbre des couches",
       "interactions": "Interactions",
       "all-data-available": " Toutes les données disponibles",
       "error-required": "Ce champ est requis",

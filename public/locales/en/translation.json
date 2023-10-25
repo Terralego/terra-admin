@@ -343,7 +343,6 @@
         "started": "Started at",
         "ended": "Ended at"
       },
-      "status": "Status",
       "refresh": {
         "accepted": "Refresh accepted",
         "notAllowed": "Refresh not possible"
@@ -391,6 +390,7 @@
       "view": "View",
       "ordering": "Ordering",
       "description": "Description",
+      "show-description": "Display description in layers tree",
       "interactions": "Interactions",
       "all-data-available": " All available data",
       "error-required": "This field is required",

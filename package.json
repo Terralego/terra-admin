@@ -8,6 +8,7 @@
     "@blueprintjs/icons": "^3.33.0",
     "@mapbox/mapbox-gl-draw": "^1.4.1",
     "@material-ui/lab": "^4.0.0-alpha.61",
+    "@sentry/react": "^7.75.1",
     "@terralego/core": "^1.31.4",
     "@terralego/ra-data-drf": "^2.0.1-mkc.0",
     "@turf/bbox": "^6.5.0",

@@ -1,6 +1,8 @@
 import React from 'react';
 import connect from 'react-ctx-connect';
+import * as Sentry from '@sentry/react';
 
+import { useLocation } from 'react-router-dom';
 import { getSettings } from '../../services/settings';
 import Loading from '../Loading';
 
@@ -23,6 +25,29 @@ export class AppProvider extends React.Component {
       result.settings = settings;
       if (settings.token && !localStorage.getItem('tf:auth:token')) {
         localStorage.setItem('tf:auth:token', settings.token);
+      }
+
+      if (settings.sentry.dsn !== '') {
+        Sentry.init({
+          sendDefaultPii: settings.sentry.sendDefaultPii,
+          dsn: settings.sentry.dsn,
+          release: settings.sentry.release,
+          environment: settings.sentry.environment,
+          integrations: [
+            new Sentry.BrowserTracing({
+              // See docs for support of different versions of variation of react router
+              // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
+              routingInstrumentation: Sentry.reactRouterV5Instrumentation(
+                React.useEffect,
+                useLocation,
+              ),
+            }),
+            new Sentry.Replay(),
+          ],
+          tracesSampleRate: settings.sentry.tracesSampleRate,
+          replaysSessionSampleRate: settings.sentry.replaysSessionSampleRate,
+          replaysOnErrorSampleRate: settings.sentry.replaysOnErrorSampleRate,
+        });
       }
     } catch (e) {
       result.error = e;

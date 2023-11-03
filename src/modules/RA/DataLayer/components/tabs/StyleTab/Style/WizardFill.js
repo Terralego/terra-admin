@@ -7,12 +7,22 @@ import FormLabel from '@material-ui/core/FormLabel';
 import ColorStyleField from './ColorStyleField';
 
 import styles from './styles';
+import MapLabelField from './MapLabelField';
 
 const useStyles = makeStyles(styles);
 
 const WizardPolygon = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
   const translate = useTranslate();
+
+  const fieldChoices = React.useMemo(
+    () =>
+      fields.map(field => ({
+        id: field.name,
+        name: `${field.label} (${field.name})`,
+      })),
+    [fields],
+  );
 
   return (
     <>
@@ -65,6 +75,27 @@ const WizardPolygon = ({ path, fields, getValuesOfProperty }) => {
           path={`${path}.style.fill_outline_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+        />
+      </div>
+
+      <div className={classes.configLine}>
+        <header>
+          <FormLabel>Show value on map</FormLabel>
+          <RadioButtonGroupInput
+            label=""
+            source="advanced_style.show_value_on_map.type"
+            helperText={false}
+            choices={[
+              { id: 'none', name: translate('style-editor.style-type.none') },
+              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+            ]}
+            initialValue="none"
+          />
+        </header>
+
+        <MapLabelField
+          path="advanced_style.show_value_on_map"
+          choices={fieldChoices}
         />
       </div>
 

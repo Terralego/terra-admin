@@ -1015,6 +1015,9 @@
       "text-field": "Displayed field",
       "text-color": "Text color",
       "text-size": "Text size",
+      "anchor": "Anchor",
+      "offset-x": "Offset X",
+      "offset-y": "Offset Y",
       "halo-color": "Halo color",
       "halo-width": "Halo width",
       "text-font": "Text font"

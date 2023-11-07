@@ -92,6 +92,18 @@ const MapLabelField = ({
             defaultValue={0}
           />
         </div>
+        <Condition when="main_style.map_style_type" is={['line', 'fill']}>
+          <SelectInput
+            source={`${path}.placement`}
+            defaultValue="point"
+            label="style-editor.text.anchor"
+            choices={[
+              { id: 'point', name: 'Point' },
+              { id: 'line', name: 'Line' },
+              { id: 'line-center', name: 'Line center' },
+            ]}
+          />
+        </Condition>
       </Condition>
     </div>
   );

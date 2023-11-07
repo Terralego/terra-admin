@@ -8,6 +8,9 @@ const Condition = ({ when, is, children }) => (
       if (is instanceof Function) {
         return (is(value) ? children : null);
       }
+      if (is instanceof Array) {
+        return (is.includes(value) ? children : null);
+      }
       return (value === is ? children : null);
     }}
   </Field>

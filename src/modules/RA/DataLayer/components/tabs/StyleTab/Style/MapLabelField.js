@@ -82,13 +82,13 @@ const MapLabelField = ({
           <NumberInput
             source={`${path}.offset_x`}
             label="style-editor.text.offset-x"
-            style={{ width: '5rem' }}
+            style={{ width: '6rem' }}
             defaultValue={0}
           />
           <NumberInput
             source={`${path}.offset_y`}
             label="style-editor.text.offset-y"
-            style={{ width: '5rem' }}
+            style={{ width: '6rem' }}
             defaultValue={0}
           />
         </div>
@@ -96,7 +96,7 @@ const MapLabelField = ({
           <SelectInput
             source={`${path}.placement`}
             defaultValue="point"
-            label="style-editor.text.anchor"
+            label="style-editor.text.placement"
             choices={[
               { id: 'point', name: 'Point' },
               { id: 'line', name: 'Line' },

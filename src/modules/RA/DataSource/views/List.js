@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Datagrid,
-  EditButton,
   Filter,
   FunctionField,
   List,
@@ -75,7 +74,6 @@ export const DataSourceList = props => (
             <StatusChip sourceId={id} status={{ status, report }} />
         }
       />
-      <EditButton />
       <CustomCloneButton endpoint={RES_DATASOURCE} />
     </Datagrid>
   </List>

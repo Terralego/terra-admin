@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Datagrid,
-  EditButton,
   List,
   TextField,
 } from 'react-admin';
@@ -21,7 +20,6 @@ export const BaseLayerList = props => (
     <Datagrid rowClick="edit">
       <TextField source="name" label="baseLayer.form.name" />
       <TextField source="base_layer_type" label="baseLayer.form.type.select" />
-      <EditButton />
     </Datagrid>
   </List>
 );

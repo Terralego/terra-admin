@@ -4,7 +4,6 @@ import {
   // Filter,
   Datagrid,
   TextField,
-  EditButton,
 } from 'react-admin';
 import ArrayCountField from '../../../../components/react-admin/ArrayCountField';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
@@ -25,7 +24,6 @@ export const UserGroupList = props => (
       <TextField source="id" sortable={false} />
       <TextField source="name" sortable={false} />
       <ArrayCountField source="users" sortable={false} />
-      <EditButton />
     </Datagrid>
   </List>
 );

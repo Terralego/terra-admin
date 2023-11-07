@@ -4,7 +4,6 @@ import {
   BooleanField,
   BooleanInput,
   Datagrid,
-  EditButton,
   Filter,
   List,
   ReferenceField,
@@ -69,7 +68,6 @@ export const DataLayerList = ({ viewList, ...props }) => (
         <TextField source="name" />
       </ReferenceField>
       <BooleanField source="active_by_default" label="resources.datalayer.fields.active_by_default_pastpart" />
-      <EditButton />
       <CustomCloneButton2 />
     </Datagrid>
   </List>

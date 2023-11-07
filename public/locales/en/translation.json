@@ -1012,10 +1012,12 @@
       "extrusion-opacity": "Extrusion opacity"
     },
     "text": {
+      "show-label": "Show value on map",
       "text-field": "Displayed field",
       "text-color": "Text color",
       "text-size": "Text size",
       "anchor": "Anchor",
+      "placement": "Placement",
       "offset-x": "Offset X",
       "offset-y": "Offset Y",
       "halo-color": "Halo color",

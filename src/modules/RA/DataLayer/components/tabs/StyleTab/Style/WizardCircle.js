@@ -121,7 +121,7 @@ const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
 
       <div className={classes.configLine}>
         <header>
-          <FormLabel>Show value on map</FormLabel>
+          <FormLabel>{translate('style-editor.text.show-label')}</FormLabel>
           <RadioButtonGroupInput
             label=""
             source="advanced_style.show_value_on_map.type"

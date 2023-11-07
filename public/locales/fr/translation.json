@@ -1066,10 +1066,12 @@
       "extrusion-opacity": "Opacité de l'extrusion"
     },
     "text": {
+      "show-label": "Montrer la valeur sur la carte",
       "text-field": "Champs à afficher",
       "text-color": "Couleur du texte",
       "text-size": "Taille du texte",
-      "anchor": "Ancre",
+      "anchor": "Ancrage",
+      "placement": "Placement",
       "offset-x": "Décalage X",
       "offset-y": "Décalage Y",
       "halo-color": "Couleur du halo",

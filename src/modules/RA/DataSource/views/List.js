@@ -74,7 +74,7 @@ export const DataSourceList = props => (
             <StatusChip sourceId={id} status={{ status, report }} />
         }
       />
-      <CustomCloneButton endpoint={RES_DATASOURCE} />
+      <CustomCloneButton endpoint={RES_DATASOURCE} label="" />
     </Datagrid>
   </List>
 );

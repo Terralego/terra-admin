@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Datagrid,
-  EditButton,
   List,
   TextField,
   ImageField,
@@ -23,7 +22,6 @@ export const SceneList = props => (
       <TextField source="name" label="view.form.name" />
       <TextField source="category" label="view.form.category" />
       <ImageField source="custom_icon" label="view.form.icon" />
-      <EditButton />
     </Datagrid>
   </List>
 );

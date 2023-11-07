@@ -3,7 +3,6 @@ import {
   List,
   Datagrid,
   TextField,
-  EditButton,
   BooleanField,
 } from 'react-admin';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
@@ -23,7 +22,6 @@ export const UserList = props => (
       <UserNameField label="resources.user.fields.fullname" sortable={false} />
       <BooleanField source="is_superuser" />
       <BooleanField source="is_active" />
-      <EditButton />
     </Datagrid>
   </List>
 );

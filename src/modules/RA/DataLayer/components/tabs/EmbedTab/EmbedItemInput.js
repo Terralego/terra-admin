@@ -1,99 +1,109 @@
-import React from 'react';
-import { SelectInput, TextInput } from 'react-admin';
+import React, { useEffect } from 'react';
+import { BooleanInput, NumberInput, SelectInput, TextInput, useTranslate } from 'react-admin';
 
-import { Icon } from '@blueprintjs/core';
-
-const bpIcons = [
-  'chart',
-  'curved-range-chart',
-  'database',
-  'diagram-tree',
-  'doughnut-chart',
-  'flow-branch',
-  'flow-end',
-  'flow-linear',
-  'flow-review',
-  'flow-review-branch',
-  'flows',
-  'form',
-  'full-stacked-chart',
-  'gantt-chart',
-  'graph',
-  'grid',
-  'grouped-bar-chart',
-  'heat-grid',
-  'heatmap',
-  'horizontal-bar-chart',
-  'horizontal-bar-chart-asc',
-  'horizontal-bar-chart-desc',
-  'layout',
-  'layout-auto',
-  'layout-balloon',
-  'layout-circle',
-  'layout-grid',
-  'layout-group-by',
-  'layout-hierarchy',
-  'layout-linear',
-  'layout-skew-grid',
-  'layout-sorted-clusters',
-  'many-to-many',
-  'many-to-one',
-  'one-to-many',
-  'one-to-one',
-  'pie-chart',
-  'polygon-filter',
-  'regression-chart',
-  'scatter-plot',
-  'series-add',
-  'series-configuration',
-  'series-derived',
-  'series-filtered',
-  'series-search',
-  'stacked-chart',
-  'step-chart',
-  'timeline-area-chart',
-  'timeline-bar-chart',
-  'timeline-line-chart',
-  'trending-down',
-  'trending-up',
-  'vertical-bar-chart-asc',
-  'vertical-bar-chart-desc',
-  'waterfall-chart',
-].sort();
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { useField } from 'react-final-form';
+import Condition from '../../../../../../components/react-admin/Condition';
+import BPIcon, { graphIcons } from '../../../../../../components/BPIcon';
 
 const EmbedItemInput = ({ source }) => {
+  const [previewExpanded, setPreviewExpanded] = React.useState(false);
+  const translate = useTranslate();
+
   const iconChoices = React.useMemo(
-    () => bpIcons.map(bpIcon => ({
-      id: bpIcon,
-      name: <><Icon icon={bpIcon} style={{ marginRight: '1em' }} /> {bpIcon}</>,
-    })),
+    () =>
+      graphIcons.map(bpIcon => ({
+        id: bpIcon,
+        name: <BPIcon icon={bpIcon} displayIconName />,
+      })),
     [],
   );
 
+  const {
+    input: { value: url },
+  } = useField(`${source}.src`);
+
+  useEffect(() => {
+    setPreviewExpanded(false);
+  }, [url]);
+
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1em' }}>
-      <SelectInput
-        source={`${source}.icon`}
-        label="datalayer.form.embed.icon"
-        choices={iconChoices}
-        translateChoice={false}
-        helperText={false}
-      />
+    <div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1em' }}>
+        <SelectInput
+          source={`${source}.icon`}
+          label="datalayer.form.embed.icon"
+          choices={iconChoices}
+          translateChoice={false}
+          helperText={false}
+          SelectProps={{
+            renderValue: value => <BPIcon icon={value} />,
+          }}
+          style={{ width: '5em', minWidth: '5em' }}
+        />
 
-      <TextInput
-        label="datalayer.form.embed.title"
-        source={`${source}.title`}
-        type="text"
-        helperText="datalayer.form.embed.title-help"
-      />
-
+        <TextInput
+          label="datalayer.form.embed.title"
+          source={`${source}.title`}
+          type="text"
+          style={{ width: '34em' }}
+          helperText="datalayer.form.embed.title-help"
+        />
+      </div>
       <TextInput
         label="datalayer.form.embed.src"
         source={`${source}.src`}
         type="url"
+        style={{ width: '40em' }}
         placeholder="https://myiframe.page"
         helperText="datalayer.form.embed.src-help"
       />
+      <Condition
+        when={`${source}.src`}
+        is={val => val.match(/(^(https?:)?\/\/.)/)}
+      >
+        <Accordion
+          expanded={previewExpanded}
+          onChange={(_, val) => setPreviewExpanded(val)}
+          style={{ width: '40em', marginBottom: '2em' }}
+        >
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>{translate('datalayer.form.embed.preview')}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {previewExpanded && (
+              <iframe width="100%" height="300px" title="preview" src={url} />
+            )}
+          </AccordionDetails>
+        </Accordion>
+      </Condition>
+      <BooleanInput
+        label="datalayer.form.embed.fullscreen"
+        source={`${source}.fullScreen`}
+        defaultValue
+      />
+      <Condition when={`${source}.fullScreen`} is={false}>
+        <div style={{ display: 'flex', gap: '2em' }}>
+          <NumberInput
+            source={`${source}.size.width`}
+            label="datalayer.form.embed.width"
+            min={0}
+            step={1}
+          />
+          <NumberInput
+            source={`${source}.size.height`}
+            label="datalayer.form.embed.height"
+            min={0}
+            step={1}
+          />
+        </div>
+      </Condition>
     </div>
   );
 };

@@ -11,6 +11,8 @@ import PendingIcon from '@material-ui/icons/History';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import WarningIcon from '@material-ui/icons/Warning';
 
+import TooltipStatus from './Tooltip';
+
 
 const SUCCESS = 'datasource.refreshStatus.success';
 const WARNING = 'datasource.refreshStatus.warning';
@@ -90,6 +92,7 @@ const getStateKey = state => {
   }
 };
 
+
 const StatusChip = ({ status, status: { status: state, report }, sourceId }) => {
   const redirect = useRedirect();
   const translate = useTranslate();
@@ -112,7 +115,13 @@ const StatusChip = ({ status, status: { status: state, report }, sourceId }) => 
   const chipProps = chipIconProps(stateKey, report, classes);
 
   return (
-    <Tooltip title={<pre>{JSON.stringify(status, null, 2)}</pre>}>
+    <Tooltip
+      title={
+        status.report
+          ? <TooltipStatus translate={translate} status={status.status} {...status.report} />
+          : <TooltipStatus translate={translate} {...status} />
+      }
+    >
       <Chip
         variant="outlined"
         label={translate(stateKey)}

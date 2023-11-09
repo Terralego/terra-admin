@@ -360,6 +360,31 @@
       "success": "Success",
       "warning": "Warning",
       "error": "Error"
+    },
+    "tooltip": {
+     "times": "Times",
+     "started": "Started on",
+     "finished": "Finished on",
+     "lines": {
+       "singular": "line",
+       "plural": "lines"
+     },
+     "added": {
+       "singular": "line added",
+       "plural": "lines added"
+     },
+     "modified": {
+       "singular": "line modified",
+       "plural": "lines modified"
+     },
+     "deleted": {
+       "singular": "line deleted",
+       "plural": "lines deleted"
+     },
+     "errors": {
+       "singular": "error",
+       "plural": "errors"
+     }
     }
   },
   "datalayer": {

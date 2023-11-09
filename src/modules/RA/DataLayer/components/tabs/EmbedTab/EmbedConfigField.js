@@ -17,17 +17,27 @@ const EmbedConfigField = ({ label, ...rest }) => {
 
   return (
     <>
-      <Typography variant="h5" component="h2">{translate(label)}</Typography>
+      <Typography variant="h5" component="h2">
+        {translate(label)}
+      </Typography>
 
-      {error && error.length > 0 && error.flatMap(err =>
-        err && Object.entries(err).map(([key, value]) => (
-          <Typography color="error">{key}: {translate(value)}</Typography>)))}
-
-      <ArrayInput source="settings.embed" label="">
-        <SimpleFormIterator>
-          <EmbedItemInput />
-        </SimpleFormIterator>
-      </ArrayInput>
+      {error?.length > 0 &&
+        error.flatMap(
+          err =>
+            err &&
+            Object.entries(err).map(([key, value]) => (
+              <Typography color="error">
+                {key}: {translate(value)}
+              </Typography>
+            )),
+        )}
+      <div style={{ maxWidth: '60em' }}>
+        <ArrayInput source="settings.embed" label="">
+          <SimpleFormIterator>
+            <EmbedItemInput />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </div>
     </>
   );
 };

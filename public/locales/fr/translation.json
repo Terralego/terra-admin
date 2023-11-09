@@ -632,7 +632,11 @@
         "title": "Titre de l'inclusion",
         "title-help": "",
         "src": "Adresse",
-        "src-help": "Adresse de la page à inclure (iframe)"
+        "src-help": "Adresse de la page à inclure (iframe)",
+        "preview": "Prévisualiser",
+        "fullscreen": "Plein écran",
+        "width": "Largeur (px)",
+        "height": "Hauteur (px)"
       }
     }
   },

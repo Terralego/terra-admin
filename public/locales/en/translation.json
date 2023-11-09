@@ -580,7 +580,11 @@
         "title": "Embed title",
         "title-help": "",
         "src": "Address",
-        "src-help": "Embed address (iframe)"
+        "src-help": "Embed address (iframe)",
+        "preview": "Preview",
+        "fullscreen": "Fullscreen",
+        "width": "Width (px)",
+        "height": "Height (px)"
       }
     }
   },

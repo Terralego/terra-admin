@@ -13,14 +13,15 @@ import WarningIcon from '@material-ui/icons/Warning';
 
 import TooltipStatus from './Tooltip';
 
-
-const SUCCESS = 'datasource.refreshStatus.success';
-const WARNING = 'datasource.refreshStatus.warning';
-const ERROR = 'datasource.refreshStatus.error';
-const SYNC_NEEDED = 'datasource.refreshStatus.syncNeeded';
-const PENDING = 'datasource.refreshStatus.pending';
-const DONE = 'datasource.refreshStatus.done';
-const NOT_NEEDED = 'datasource.refreshStatus.notNeeded';
+import {
+  SUCCESS,
+  WARNING,
+  ERROR,
+  SYNC_NEEDED,
+  PENDING,
+  DONE,
+  NOT_NEEDED,
+} from '../DataSourceStatus';
 
 const useStyles = makeStyles({
   success: {

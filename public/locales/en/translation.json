@@ -341,7 +341,9 @@
         "modified": "Modified lines",
         "deleted": "Deleted lines",
         "started": "Started at",
-        "ended": "Ended at"
+        "ended": "Ended at",
+        "total": "Total lines processed",
+        "errors-detail": "Detailed errors by line"
       },
       "refresh": {
         "accepted": "Refresh accepted",

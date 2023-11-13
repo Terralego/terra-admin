@@ -5,6 +5,7 @@
   flex: 1 0 auto;
 
   &-content {
+    max-width: calc(100vw - 15px);
     min-height: 100%;
     display: flex;
     flex-direction: column;
@@ -36,4 +37,12 @@
     margin: 6px;
     text-align: center;
   }
+}
+
+.layout {
+  min-width: unset !important;
+}
+
+#main-content {
+  width: 100%;
 }

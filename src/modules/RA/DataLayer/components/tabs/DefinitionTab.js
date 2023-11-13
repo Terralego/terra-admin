@@ -21,6 +21,7 @@ import { RES_DATASOURCE } from '../../../ra-modules';
 import { WMTS } from '../../../DataSource';
 import useSourceData from '../useSourceData';
 import SourceFilterField from '../SourceFilterField';
+import DescriptionInput from '../DescriptionInput';
 
 const Br = () => <br />;
 
@@ -31,15 +32,21 @@ const DefinitionTab = ({ onSwitch, external }) => {
   const dataProvider = useDataProvider();
   const form = useForm();
 
-  const { input: { value: sourceId } } = useField('source');
-  const { input: { value: fields } } = useField('fields');
+  const {
+    input: { value: sourceId },
+  } = useField('source');
+  const {
+    input: { value: fields },
+  } = useField('fields');
 
   const { _type: type } = useSourceData('source');
 
   React.useEffect(() => onSwitch(type === WMTS), [onSwitch, type]);
 
   React.useEffect(() => {
-    if (external) { return; }
+    if (external) {
+      return;
+    }
     updateFieldFromSource(fields, form, dataProvider, sourceId);
   }, [dataProvider, external, fields, form, sourceId]);
 
@@ -90,12 +97,7 @@ const DefinitionTab = ({ onSwitch, external }) => {
         label="resources.datalayer.fields.active_by_default_pastpart"
       />
 
-      <TextInput
-        multiline
-        source="description"
-        label="datalayer.form.description"
-        fullWidth
-      />
+      <DescriptionInput source="description" label="datalayer.form.description" />
 
       <BooleanInput
         source="settings.description.show_in_tree"

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TabbedForm, FormTab, ArrayInput, SimpleFormIterator } from 'react-admin';
+import { TabbedForm, FormTab, ArrayInput, SimpleFormIterator, TabbedFormTabs } from 'react-admin';
 
 import JSONInput from '../../../../components/react-admin/JSONInput';
 import CustomFormTab from '../../../../components/react-admin/CustomFormTab';
@@ -131,7 +131,7 @@ const DataLayerForm = React.memo(props => {
   }, []);
 
   return (
-    <TabbedForm sanitizeEmptyValues={false} {...props} initialValues={{ fields: [] }}>
+    <TabbedForm tabs={<TabbedFormTabs variant="scrollable" scrollButtons="auto" />} sanitizeEmptyValues={false} {...props} initialValues={{ fields: [] }}>
       <CustomFormTab
         label="datalayer.form.definition"
         onChange={onDefinitionErrorChange}

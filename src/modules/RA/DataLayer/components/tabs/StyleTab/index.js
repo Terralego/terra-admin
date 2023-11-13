@@ -56,7 +56,7 @@ const StyleTab = ({ external, ...rest }) => {
 
   return (
     <> {/* Protect div element */}
-      <div style={{ width: '70%' }}>
+      <div>
         <StyleEditor path="main_style" geomType={geomType} fields={fields} getValuesOfProperty={getValuesOfProperty} />
 
         <ArrayInput source="extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>

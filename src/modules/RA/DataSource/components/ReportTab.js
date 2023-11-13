@@ -2,16 +2,18 @@ import React from 'react';
 import { FixedSizeList } from 'react-window';
 import { List, ListItem, ListItemText, ListItemIcon, makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
-import FlashOnOutlinedIcon from '@material-ui/icons/FlashOnOutlined';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined';
-import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
-import WarningOutlinedIcon from '@material-ui/icons/WarningOutlined';
-import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
-import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import DescriptionIcon from '@material-ui/icons/Description';
+import {
+  FlashOnOutlined as FlashOnOutlinedIcon,
+  AddCircleOutlineOutlined as AddCircleOutlineOutlinedIcon,
+  DeleteOutlined as DeleteOutlinedIcon,
+  AssessmentOutlined as AssessmentOutlinedIcon,
+  CreateOutlined as CreateOutlinedIcon,
+  WarningOutlined as WarningOutlinedIcon,
+  PlayArrowOutlined as PlayArrowOutlinedIcon,
+  DoneAllOutlined as DoneAllOutlinedIcon,
+  Feedback as FeedbackIcon,
+  Description as DescriptionIcon,
+} from '@material-ui/icons';
 
 import STATUS from './DataSourceStatus';
 

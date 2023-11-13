@@ -8,15 +8,17 @@ import {
   ListItemText,
   makeStyles,
 } from '@material-ui/core';
-import FlashOnOutlinedIcon from '@material-ui/icons/FlashOnOutlined';
-import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined';
-import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
-import WarningOutlinedIcon from '@material-ui/icons/WarningOutlined';
-import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
-import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
+import {
+  FlashOnOutlined as FlashOnOutlinedIcon,
+  TimerOutlined as TimerOutlinedIcon,
+  AddCircleOutlineOutlined as AddCircleOutlineOutlinedIcon,
+  DeleteOutlined as DeleteOutlinedIcon,
+  AssessmentOutlined as AssessmentOutlinedIcon,
+  CreateOutlined as CreateOutlinedIcon,
+  WarningOutlined as WarningOutlinedIcon,
+  PlayArrowOutlined as PlayArrowOutlinedIcon,
+  DoneAllOutlined as DoneAllOutlinedIcon,
+} from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   nested: {

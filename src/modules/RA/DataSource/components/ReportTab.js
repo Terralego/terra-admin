@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function ReportTab ({ report, translate }) {
+const ReportTab = ({ report, translate }) => {
   const classes = useStyles();
 
   const renderRow = React.useCallback(({ index, style }) => (

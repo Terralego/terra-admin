@@ -343,7 +343,8 @@
         "started": "Started at",
         "ended": "Ended at",
         "total": "Total lines processed",
-        "errors-detail": "Detailed errors by line"
+        "errors-detail": "Detailed errors by line",
+        "no-error": "No error found"
       },
       "refresh": {
         "accepted": "Refresh accepted",

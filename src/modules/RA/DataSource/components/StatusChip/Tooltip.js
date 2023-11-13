@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TooltipStatus = ({
+const Tooltip = ({
   translate,
   status,
   started,
@@ -120,4 +120,4 @@ const TooltipStatus = ({
   );
 };
 
-export default TooltipStatus;
+export default Tooltip;

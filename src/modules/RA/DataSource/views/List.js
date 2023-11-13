@@ -16,6 +16,8 @@ import {
   geomTypeChoices,
   sourceTypes,
   sourceTypeChoices,
+  sourceStatusChoices,
+  reportStatusChoices,
 } from '..';
 import CommonBulkActionButtons
   from '../../../../components/react-admin/CommonBulkActionButtons';
@@ -38,6 +40,16 @@ const ListFilters = props => (
       source="geom_type"
       label="datasource.form.geometry"
       choices={geomTypeChoices}
+    />
+    <SelectInput
+      source="status"
+      label="datasource.form.status"
+      choices={sourceStatusChoices}
+    />
+    <SelectInput
+      source="report__status"
+      label="datasource.form.report.title"
+      choices={reportStatusChoices}
     />
   </Filter>
 );

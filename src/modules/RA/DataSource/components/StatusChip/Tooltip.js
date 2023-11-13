@@ -53,7 +53,7 @@ const Tooltip = ({
       <List disablePadding dense>
         <ListItem>
           <ListItemIcon><FlashOnOutlinedIcon fontSize="small" /></ListItemIcon>
-          <ListItemText primary={translate(`datasource.refreshStatus.${status.toLowerCase()}`)} />
+          <ListItemText primary={status && translate(`datasource.refreshStatus.${status.toLowerCase()}`)} />
         </ListItem>
 
         <Divider variant="middle" />
@@ -88,7 +88,7 @@ const Tooltip = ({
         </ListItem>
 
         <List disablePadding dense>
-          {errors.length > 0 && (
+          {errors?.length > 0 && (
             <ListItem className={classes.nested}>
               <ListItemIcon>
                 <WarningOutlinedIcon fontSize="small" />

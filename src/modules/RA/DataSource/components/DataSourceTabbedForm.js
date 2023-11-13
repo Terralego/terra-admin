@@ -50,9 +50,11 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => {
         </ArrayInput>
       </FormTab>
 
-      <FormTab label="datasource.form.report.title" path="report">
-        <ReportTab report={report} errors={errors} translate={t} />
-      </FormTab>
+      {report?.status && (
+        <FormTab label="datasource.form.report.title" path="report">
+          <ReportTab report={report} errors={errors} translate={t} />
+        </FormTab>
+      )}
     </TabbedForm>
   );
 };

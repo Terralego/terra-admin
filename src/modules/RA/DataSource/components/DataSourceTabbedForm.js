@@ -2,16 +2,13 @@ import React from 'react';
 import {
   TabbedForm,
   TextInput,
-  TextField,
   BooleanInput,
   SelectInput,
   ArrayInput,
   SimpleFormIterator,
   FormTab,
-  DateField,
   translate,
   useRecordContext,
-  Labeled,
 } from 'react-admin';
 
 import FieldSample from '../../../../components/react-admin/FieldSample';
@@ -19,21 +16,8 @@ import AttributeMessage from './AttributeMessage';
 import { fieldTypeChoices } from '..';
 
 import MainTab from './MainTab';
+import ReportTab from './ReportTab';
 
-import FieldGroup from '../../../../components/react-admin/FieldGroup';
-
-const ErrorsDisplay = ({ errors }) => {
-  if (!errors.length) {
-    return null;
-  }
-  return (
-    <Labeled label="datasource.form.report.errors">
-      <ul>
-        {errors.map(e => <li>{e}</li>)}
-      </ul>
-    </Labeled>
-  );
-};
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => {
   const { report } = useRecordContext();
@@ -67,44 +51,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => {
       </FormTab>
 
       <FormTab label="datasource.form.report.title" path="report">
-        <FieldGroup>
-          <TextField
-            source="report.status"
-            type="text"
-            label="datasource.form.report.status"
-            fullWidth
-          />
-          <TextField
-            disabled
-            source="report.message"
-            type="text"
-            label="datasource.form.report.message"
-            fullWidth
-          />
-
-          <DateField source="report.started" label="datasource.form.report.started" showTime />
-          <DateField source="report.ended" label="datasource.form.report.ended" showTime />
-
-          <TextField
-            disabled
-            source="report.added_lines"
-            label="datasource.form.report.added"
-            fullWidth
-          />
-          <TextField
-            disabled
-            source="report.modified_lines"
-            label="datasource.form.report.modified"
-            fullWidth
-          />
-          <TextField
-            disabled
-            source="report.deleted_lines"
-            label="datasource.form.report.deleted"
-            fullWidth
-          />
-          <ErrorsDisplay errors={errors} />
-        </FieldGroup>
+        <ReportTab report={report} errors={errors} translate={t} />
       </FormTab>
     </TabbedForm>
   );

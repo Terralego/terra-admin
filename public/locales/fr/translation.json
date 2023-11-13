@@ -393,7 +393,9 @@
         "modified": "Nombre de lignes modifiées",
         "deleted": "Nombre de lignes supprimées",
         "started": "Commencée à",
-        "ended": "Finie à"
+        "ended": "Finie à",
+        "total": "Nombre total de lignes traitées",
+        "errors-detail": "Erreurs détaillées des lignes concernées"
       },
       "refresh": {
         "accepted": "Actualisation acceptée",
@@ -412,6 +414,31 @@
       "success": "Succes",
       "warning": "Alerte",
       "error": "Erreur"
+    },
+    "tooltip": {
+     "times": "Temps",
+     "started": "Commencé le",
+     "finished": "Finit le",
+     "lines": {
+       "singular": "ligne",
+       "plural": "lignes"
+     },
+     "added": {
+       "singular": "ligne ajoutée",
+       "plural": "lignes ajoutées"
+     },
+     "modified": {
+       "singular": "ligne modifiée",
+       "plural": "lignes modifiées"
+     },
+     "deleted": {
+       "singular": "ligne supprimée",
+       "plural": "lignes supprimées"
+     },
+     "errors": {
+       "singular": "erreur",
+       "plural": "erreurs"
+     }
     }
   },
   "datalayer": {

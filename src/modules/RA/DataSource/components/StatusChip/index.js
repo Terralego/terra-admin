@@ -11,14 +11,17 @@ import PendingIcon from '@material-ui/icons/History';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import WarningIcon from '@material-ui/icons/Warning';
 
+import TooltipStatus from './Tooltip';
 
-const SUCCESS = 'datasource.refreshStatus.success';
-const WARNING = 'datasource.refreshStatus.warning';
-const ERROR = 'datasource.refreshStatus.error';
-const SYNC_NEEDED = 'datasource.refreshStatus.syncNeeded';
-const PENDING = 'datasource.refreshStatus.pending';
-const DONE = 'datasource.refreshStatus.done';
-const NOT_NEEDED = 'datasource.refreshStatus.notNeeded';
+import {
+  SUCCESS,
+  WARNING,
+  ERROR,
+  SYNC_NEEDED,
+  PENDING,
+  DONE,
+  NOT_NEEDED,
+} from '../DataSourceStatus';
 
 const useStyles = makeStyles({
   success: {
@@ -90,6 +93,7 @@ const getStateKey = state => {
   }
 };
 
+
 const StatusChip = ({ status, status: { status: state, report }, sourceId }) => {
   const redirect = useRedirect();
   const translate = useTranslate();
@@ -112,7 +116,13 @@ const StatusChip = ({ status, status: { status: state, report }, sourceId }) => 
   const chipProps = chipIconProps(stateKey, report, classes);
 
   return (
-    <Tooltip title={<pre>{JSON.stringify(status, null, 2)}</pre>}>
+    <Tooltip
+      title={
+        status.report
+          ? <TooltipStatus translate={translate} status={status.status} {...status.report} />
+          : <TooltipStatus translate={translate} {...status} />
+      }
+    >
       <Chip
         variant="outlined"
         label={translate(stateKey)}

@@ -470,6 +470,8 @@
       "ordering": "Classement",
       "description": "Description",
       "show-description": "Afficher la description dans l'arbre des couches",
+      "description-rich": "Texte riche",
+      "description-html": "HTML",
       "interactions": "Interactions",
       "all-data-available": " Toutes les données disponibles",
       "error-required": "Ce champ est requis",

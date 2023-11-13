@@ -31,7 +31,7 @@ const CategorizedValue = ({ path, category, Component }) => {
           />
         )}
       </Field>
-      <span>
+      <span style={{ marginLeft: '1em' }}>
         {category.name || translate('style-editor.categorize.empty-category')}
       </span>
     </div>

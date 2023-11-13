@@ -80,7 +80,7 @@ const FieldRow = ({ field, onChange, exportEnabled }) => {
       <TableCell scope="row">
         <DragHandle />
       </TableCell>
-      <TableCell style={{ userSelect: 'none' }}>
+      <TableCell>
         {field.name}
       </TableCell>
       <TableCell>

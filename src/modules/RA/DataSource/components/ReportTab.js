@@ -188,4 +188,6 @@ const ReportTab = ({ report, translate }) => {
       </List>
     </div>
   );
-}
+};
+
+export default ReportTab;

@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function TooltipStatus ({
+const TooltipStatus = ({
   translate,
   status,
   started,
@@ -36,7 +36,7 @@ export default function TooltipStatus ({
   added_lines: added,
   deleted_lines: deleted,
   modified_lines: modified,
-}) {
+}) => {
   const classes = useStyles();
   const translatePlural = (key, count) => {
     if (count > 1) {

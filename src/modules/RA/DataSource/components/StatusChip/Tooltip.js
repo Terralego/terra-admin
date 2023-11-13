@@ -118,4 +118,6 @@ const TooltipStatus = ({
       </List>
     </div>
   );
-}
+};
+
+export default TooltipStatus;

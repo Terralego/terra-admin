@@ -395,7 +395,8 @@
         "started": "Commencée à",
         "ended": "Finie à",
         "total": "Nombre total de lignes traitées",
-        "errors-detail": "Erreurs détaillées des lignes concernées"
+        "errors-detail": "Erreurs détaillées des lignes concernées",
+        "no-error": "Aucune erreur détectée"
       },
       "refresh": {
         "accepted": "Actualisation acceptée",

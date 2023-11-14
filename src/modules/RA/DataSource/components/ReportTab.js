@@ -1,7 +1,14 @@
 import React from 'react';
 import { FixedSizeList } from 'react-window';
-import { List, ListItem, ListItemText, ListItemIcon, makeStyles } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
+import {
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import {
   FlashOnOutlined as FlashOnOutlinedIcon,
   AddCircleOutlineOutlined as AddCircleOutlineOutlinedIcon,
@@ -185,6 +192,20 @@ const ReportTab = ({ report, translate }) => {
                 </FixedSizeList>
               </List>
             </>
+          )}
+          {report.errors.length === 0 && (
+            <List className={`${classes.centered} ${classes.errorPanel}`}>
+              <ListItem>
+                <ListItemText
+                  align="center"
+                  primary={(
+                    <Typography variant="h6">
+                      {translate('datasource.form.report.no-error')}
+                    </Typography>
+                  )}
+                />
+              </ListItem>
+            </List>
           )}
         </div>
       </List>

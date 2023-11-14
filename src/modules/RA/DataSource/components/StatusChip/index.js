@@ -122,6 +122,7 @@ const StatusChip = ({ status, status: { status: state, report }, sourceId }) => 
           ? <TooltipStatus translate={translate} status={status.status} {...status.report} />
           : <TooltipStatus translate={translate} {...status} />
       }
+      disableHoverListener={status.report === null}
     >
       <Chip
         variant="outlined"

@@ -4,6 +4,7 @@ import {
   addNodeUnderParent,
   removeNodeAtPath,
   changeNodeAtPath,
+  getNodeAtPath,
   getFlatDataFromTree,
 } from 'react-sortable-tree';
 
@@ -16,7 +17,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Modal from '@material-ui/core/Modal';
-import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import TextField from '@material-ui/core/TextField';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import GeolayerSelect from './GeolayerSelect';
@@ -54,6 +58,18 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
 
   const [newLayerProps, setNewLayerProps] = React.useState({});
   const [groupNewSettings, setGroupNewSettings] = React.useState({});
+  React.useEffect(
+    () => {
+      if (displaySettingsModal.node) {
+        setGroupNewSettings({
+          exclusive: Boolean(displaySettingsModal.node.exclusive),
+          byVariable: Boolean(displaySettingsModal.node.byVariable),
+          variables: displaySettingsModal.node.variables || [],
+        });
+      }
+    },
+    [displaySettingsModal],
+  );
 
   const handleClick = ({ currentTarget }) => setAnchorEl(currentTarget);
   const closeMenu = () => setAnchorEl(null);
@@ -130,7 +146,11 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
    */
   const openSettingsModal = () => {
     closeMenu();
-    setDisplaySettingsModal(true);
+    setDisplaySettingsModal(getNodeAtPath({
+      treeData,
+      path,
+      getNodeKey: ({ treeIndex }) => treeIndex,
+    }));
   };
 
   /**
@@ -148,9 +168,14 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     setDisplaySettingsModal(false);
   };
 
-  const isGroupExclusive = typeof groupNewSettings.exclusive !== 'undefined'
-    ? groupNewSettings.exclusive
-    : node.exclusive;
+  const getRadioValue = React.useCallback(
+    () => {
+      if (groupNewSettings.byVariable) { return 'byVariable'; }
+      return groupNewSettings.exclusive ? 'exclusive' : 'inclusive';
+    },
+    [groupNewSettings.byVariable, groupNewSettings.exclusive],
+  );
+  const radioValue = getRadioValue();
 
   /**
    * Array of all nodes in treeData
@@ -177,7 +202,9 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
 
       <Menu anchorEl={anchorEl} onClose={closeMenu} open={!!anchorEl}>
         {isGroup && <MenuItem onClick={openNewLayerModal}>Ajouter une couche</MenuItem>}
-        {isGroup && <MenuItem onClick={newSubItem({ label: 'Groupe', group: true })}>Ajouter un sous-groupe</MenuItem>}
+        {isGroup && !node.byVariable && (
+          <MenuItem onClick={newSubItem({ label: 'Groupe', group: true })}>Ajouter un sous-groupe</MenuItem>
+        )}
         {isGroup && <MenuItem onClick={openSettingsModal}>Paramètres</MenuItem>}
         <MenuItem onClick={deleteItem}>Supprimer</MenuItem>
       </Menu>
@@ -203,17 +230,53 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
 
       <Modal open={displaySettingsModal} onClose={closeSettingsModal()}>
         <div style={style.modal}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Mode de sélection des couches</FormLabel>
+            <RadioGroup
+              name="groupMode"
+              value={radioValue}
+              onChange={(event, choice) => {
+                switch (choice) {
+                  case 'inclusive':
+                    setGroupNewSettings(
+                      { ...groupNewSettings, exclusive: false, byVariable: false },
+                    );
+                    break;
+                  case 'exclusive':
+                    setGroupNewSettings(
+                      { ...groupNewSettings, exclusive: true, byVariable: false },
+                    );
+                    break;
+                  case 'byVariable':
+                    setGroupNewSettings(
+                      { ...groupNewSettings, exclusive: true, byVariable: true },
+                    );
+                    break;
+                  default:
+                }
+              }}
+            >
+              <FormControlLabel value="inclusive" control={<Radio />} label="Inclusif" />
+              <FormControlLabel value="exclusive" control={<Radio />} label="Exclusif" />
+              <FormControlLabel value="byVariable" control={<Radio />} label="Par variables" />
+            </RadioGroup>
+          </FormControl>
+
           <FormControl fullWidth>
-            <FormLabel>Mode de sélection des couches</FormLabel>
-            <div style={style.groupModeSwitch}>
-              Inclusif
-              <Switch
-                checked={isGroupExclusive}
-                onChange={(event, exclusive) =>
-                  setGroupNewSettings({ ...groupNewSettings, exclusive })}
-              />
-              Exclusif
-            </div>
+            <TextField
+              disabled={!groupNewSettings.byVariable}
+              multiline
+              helperText="Saisir une nom de variable par ligne"
+              placeholder={['Label 1', 'Label 2'].join('\n')}
+              variant="outlined"
+              value={groupNewSettings.variables?.join('\n')}
+              onChange={event => {
+                setGroupNewSettings({
+                  ...groupNewSettings,
+                  variables: event.target.value.split('\n'),
+                });
+              }}
+            />
           </FormControl>
 
           <div style={style.modalButtons}>

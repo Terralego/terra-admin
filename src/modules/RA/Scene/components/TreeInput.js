@@ -35,6 +35,7 @@ const generateNodeProps = (treeData, setTreeData, includeIds) =>
       className: classnames({
         treeGroup: node.group,
         treeGroupExclusive: node.exclusive,
+        treeGroupByVariable: node.byVariable,
       }),
       buttons: [<TreeNodeToolbar {...menuProps} />],
     };
@@ -91,7 +92,7 @@ const TreeInput = ({ input: { value, onChange }, ...props }) => {
    */
   const addGroup = () => onChange([
     ...value,
-    { label: 'New group name', group: true },
+    { label: 'New group name', group: true, children: [], expanded: true },
   ]);
 
   if (!value) {

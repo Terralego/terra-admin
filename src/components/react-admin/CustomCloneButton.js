@@ -64,6 +64,7 @@ const CustomCloneButton = ({
 
   return (
     <Button
+      title={translate('common.clone')}
       component={Link}
       label={translate(label)}
       onClick={loadData}

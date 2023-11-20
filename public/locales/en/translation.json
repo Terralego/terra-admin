@@ -4,6 +4,7 @@
     "cancel": "Cancel",
     "close": "Close",
     "delete": "Delete {{name}}",
+    "clone": "Duplicate",
     "error": {
       "title": "An error occurred. ",
       "text": "Back to home: ",

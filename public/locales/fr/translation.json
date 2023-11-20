@@ -4,6 +4,7 @@
     "cancel": "Annuler",
     "close": "Fermer",
     "delete": "Supprimer {{name}}",
+    "clone": "Dupliquer",
     "error": {
       "title": "Un problème est survenu. ",
       "text": "Retourner à la page d'accueil : ",

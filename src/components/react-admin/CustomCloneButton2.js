@@ -58,6 +58,7 @@ const CustomCloneButton2 = ({
   return (
     <Button
       label={translate(label)}
+      title={translate('common.clone')}
       onClick={handleButtonClick}
       {...rest}
     >

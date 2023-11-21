@@ -114,13 +114,13 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     closeMenu();
 
     // Remove dropped variables from children
-    const removedVariables = node.variables.filter(
+    const removedVariables = node.variables?.filter(
       variable => !newProps.variables.includes(variable),
     );
 
     const newChildren = JSON.parse(JSON.stringify(node.children));
-    newChildren.forEach(child => {
-      removedVariables.forEach(removedVariable => {
+    newChildren?.forEach(child => {
+      removedVariables?.forEach(removedVariable => {
         delete child[removedVariable.id]; // eslint-disable-line no-param-reassign
       });
     });
@@ -230,7 +230,10 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     path: path.slice(0, -1),
     getNodeKey: ({ treeIndex }) => treeIndex,
   })?.node;
-  const variables = node.variables || parentNode?.variables || [];
+  const variables =
+    node.variables?.length
+      ? node.variables
+      : (parentNode?.variables || []);
 
   const newVariableFieldRef = React.useRef();
   const handleVariableAdd = React.useCallback(
@@ -301,15 +304,20 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
 
           {(node.byVariable || Boolean(displayLayerModal.geolayer)) && (
             <Box style={{ display: 'flex', flexDirection: 'column' }}>
-              {variables.map(({ id, label }) => (
+              {variables?.map(({ id, label }) => (
                 <TextField
                   key={id}
                   label={label}
                   style={{ marginTop: 10 }}
-                  value={newLayerProps[id]}
+                  value={newLayerProps.variables?.[id]}
                   onChange={event => {
                     const fieldValue = event?.target?.value;
-                    setNewLayerProps(prevProps => ({ ...prevProps, [id]: fieldValue }));
+                    setNewLayerProps(
+                      prevProps => ({
+                        ...prevProps,
+                        variables: { ...prevProps.variables, [id]: fieldValue },
+                      }),
+                    );
                   }}
                 />
               ))}
@@ -406,8 +414,8 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
           </Box>
 
           <div style={style.modalButtons}>
-            <Button variant="outlined" color="primary" onClick={closeSettingsModal(true)}>Valider</Button>
             <Button variant="outlined" color="secondary" onClick={closeSettingsModal(false)}>Annuler</Button>
+            <Button variant="outlined" color="primary" onClick={closeSettingsModal(true)}>Valider</Button>
           </div>
         </div>
       </Modal>

@@ -112,6 +112,19 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
    */
   const editItem = newProps => {
     closeMenu();
+
+    // Remove dropped variables from children
+    const removedVariables = node.variables.filter(
+      variable => !newProps.variables.includes(variable),
+    );
+
+    const newChildren = JSON.parse(JSON.stringify(node.children));
+    newChildren.forEach(child => {
+      removedVariables.forEach(removedVariable => {
+        delete child[removedVariable.id]; // eslint-disable-line no-param-reassign
+      });
+    });
+
     setTreeData(changeNodeAtPath({
       treeData,
       path,
@@ -119,6 +132,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
       newNode: {
         ...node,
         ...newProps,
+        children: newChildren,
       },
     }));
   };

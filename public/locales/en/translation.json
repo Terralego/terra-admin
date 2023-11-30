@@ -360,6 +360,7 @@
       "syncNeeded": "Sync needed",
       "pending": "Pending",
       "done": "Done",
+      "inProgress": "In progress",
       "notNeeded": "Not needed",
       "success": "Success",
       "warning": "Warning",
@@ -369,6 +370,8 @@
      "times": "Times",
      "started": "Started on",
      "finished": "Finished on",
+     "notStarted": "Not started yet",,
+     "notFinished": "Not finished yet",
      "lines": {
        "singular": "line",
        "plural": "lines"

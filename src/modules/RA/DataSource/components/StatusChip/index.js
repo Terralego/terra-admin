@@ -14,13 +14,11 @@ import WarningIcon from '@material-ui/icons/Warning';
 import TooltipStatus from './Tooltip';
 
 import {
-  SUCCESS,
-  WARNING,
-  ERROR,
   SYNC_NEEDED,
   PENDING,
   DONE,
   NOT_NEEDED,
+  IN_PROGRESS,
 } from '../DataSourceStatus';
 
 const useStyles = makeStyles({
@@ -40,25 +38,20 @@ const useStyles = makeStyles({
 
 const chipIconProps = (state, report, { success, warning, error }) => {
   switch (state) {
-    case ERROR:
-      return { icon: <FailureIcon className={error} />, className: error };
-    case SUCCESS:
-      return { icon: <SuccessIcon className={success} />, className: success };
-    case WARNING:
-      return { icon: <WarningIcon className={warning} />, className: warning };
     case PENDING:
+    case IN_PROGRESS:
       return { icon: <PendingIcon />, color: 'secondary' };
     case NOT_NEEDED:
       return { icon: <CheckCircleOutline />, color: '' };
     case DONE: {
-      if (report?.status && report.status.toUpperCase() === 'SUCCESS') {
+      if (report?.status === 0) {
         return { icon: <SuccessIcon className={success} />, className: success };
       }
-      if (report?.status && report.status.toUpperCase() === 'WARNING') {
-        return { icon: <WarningIcon className={warning} />, className: warning };
-      }
-      if (report?.status && report.status.toUpperCase() === 'ERROR') {
+      if (report?.status === 1) {
         return { icon: <FailureIcon className={error} />, className: error };
+      }
+      if (report?.status === 2) {
+        return { icon: <WarningIcon className={warning} />, className: warning };
       }
       return { icon: <SuccessIcon />, color: 'primary' };
     }
@@ -67,38 +60,25 @@ const chipIconProps = (state, report, { success, warning, error }) => {
   }
 };
 
-const getStateKey = state => {
-  // Since the StatusChip component is used for the Datasource & its report,
-  // both case are processed here.
-  // 0, 1, 2 is the state of the source
-  // Success, Warning, Error is the state of the source report.
-  switch (state) {
-    case 0:
-      return SYNC_NEEDED;
-    case 1:
-    case 'Pending':
-      return PENDING;
-    case 2:
-      return DONE;
-    case 'Success':
-      return SUCCESS;
-    case 'Warning':
-      return WARNING;
-    case 'Error':
-      return ERROR;
-    case null:
-      return NOT_NEEDED;
-    default:
-      return null;
-  }
+
+const defaultChoices = {
+  0: SYNC_NEEDED,
+  1: PENDING,
+  2: DONE,
+  3: IN_PROGRESS,
+  default: NOT_NEEDED,
 };
 
-
-const StatusChip = ({ status, status: { status: state, report }, sourceId }) => {
+const StatusChip = ({
+  status,
+  status: { status: state, report },
+  sourceId,
+  choices = defaultChoices,
+}) => {
   const redirect = useRedirect();
   const translate = useTranslate();
   const classes = useStyles();
-  const stateKey = getStateKey(state);
+  const stateKey =  choices[state] || choices.default;
 
   const redirectToReport = React.useCallback(e => {
     if (sourceId) {
@@ -117,12 +97,8 @@ const StatusChip = ({ status, status: { status: state, report }, sourceId }) => 
 
   return (
     <Tooltip
-      title={
-        status.report
-          ? <TooltipStatus translate={translate} status={status.status} {...status.report} />
-          : <TooltipStatus translate={translate} {...status} />
-      }
-      disableHoverListener={status.report === null}
+      title={report && <TooltipStatus translate={translate} {...status} />}
+      disableHoverListener={!report}
     >
       <Chip
         variant="outlined"

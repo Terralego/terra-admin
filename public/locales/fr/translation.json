@@ -410,8 +410,9 @@
     },
     "refreshStatus": {
       "syncNeeded": "À synchroniser",
-      "pending": "En cours",
+      "pending": "En attente",
       "done": "Terminé",
+      "inProgress": "En cours",
       "notNeeded": "Inutile",
       "success": "Succès",
       "warning": "Alerte",
@@ -421,6 +422,8 @@
      "times": "Temps",
      "started": "Commencé le",
      "finished": "Finit le",
+      "notStarted": "Pas encore commencé",
+      "notFinished": "Pas encore fini",
      "lines": {
        "singular": "ligne",
        "plural": "lignes"

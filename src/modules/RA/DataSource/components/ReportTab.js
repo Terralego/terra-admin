@@ -49,6 +49,18 @@ const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(8),
   },
+  success: {
+    color: 'green',
+  },
+  warning: {
+    color: 'orange',
+  },
+  error: {
+    color: 'red',
+  },
+  pending: {
+    color: '#2f9df3',
+  },
 }));
 
 
@@ -65,7 +77,16 @@ const ReportTab = ({ report, translate }) => {
     </ListItem>
   ), [report, classes.errorItemEven, classes.errorItemOdd]);
 
-  const statusKey = STATUS[report.status.toLowerCase()];
+  const status = React.useMemo(() => {
+    const statusChoices = {
+      0: 'success',
+      1: 'error',
+      2: 'warning',
+      3: 'pending',
+    };
+    return statusChoices[report.status];
+  }, [report.status]);
+  const statusKey = STATUS[status];
 
   return (
     <div>
@@ -76,6 +97,7 @@ const ReportTab = ({ report, translate }) => {
               <FlashOnOutlinedIcon />
             </ListItemIcon>
             <ListItemText
+              classes={{ secondary: classes[status] }}
               primary={translate('datasource.form.status')}
               secondary={translate(statusKey)}
             />
@@ -87,7 +109,11 @@ const ReportTab = ({ report, translate }) => {
             </ListItemIcon>
             <ListItemText
               primary={translate('datasource.form.report.started')}
-              secondary={new Date(report.started).toLocaleString()}
+              secondary={(
+                report.started
+                  ? new Date(report.started).toLocaleString()
+                  : translate('datasource.tooltip.notStarted')
+              )}
             />
           </ListItem>
           <ListItem>
@@ -96,7 +122,11 @@ const ReportTab = ({ report, translate }) => {
             </ListItemIcon>
             <ListItemText
               primary={translate('datasource.form.report.ended')}
-              secondary={new Date(report.ended).toLocaleString()}
+              secondary={(
+                report.ended
+                  ? new Date(report.ended).toLocaleString()
+                  : translate('datasource.tooltip.notFinished')
+              )}
             />
           </ListItem>
         </List>

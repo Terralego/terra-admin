@@ -54,7 +54,7 @@ const DataSourceEditActions = ({
         className={classes.list}
       />
       {/* 'report' is null when a source has just been created */}
-      <StatusChip label="datasource.form.status" status={report ?? {}} sourceId={id} />
+      <StatusChip label="datasource.form.status" status={{ status, report }} sourceId={id} />
       { _type !== 'WMTSSource' && (
         <RefreshButton
           color="primary"

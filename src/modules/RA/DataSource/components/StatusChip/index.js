@@ -13,12 +13,12 @@ import WarningIcon from '@material-ui/icons/Warning';
 
 import TooltipStatus from './Tooltip';
 
-import {
-  SYNC_NEEDED,
+import STATUS, {
   PENDING,
   DONE,
   NOT_NEEDED,
   IN_PROGRESS,
+  sourceStatus,
 } from '../DataSourceStatus';
 
 const useStyles = makeStyles({
@@ -70,14 +70,8 @@ const StatusChip = ({
   const translate = useTranslate();
   const classes = useStyles();
   const stateKey = React.useMemo(() => {
-    const choices = {
-      0: SYNC_NEEDED,
-      1: PENDING,
-      2: DONE,
-      3: IN_PROGRESS,
-      default: NOT_NEEDED,
-    };
-    return choices[state] || choices.default;
+    const statusName = sourceStatus[state];
+    return STATUS[statusName] || NOT_NEEDED;
   }, [state]);
 
   const redirectToReport = React.useCallback(e => {
@@ -97,7 +91,7 @@ const StatusChip = ({
 
   return (
     <Tooltip
-      title={report && <TooltipStatus translate={translate} {...status} />}
+      title={report && <TooltipStatus translate={translate} {...report} />}
       disableHoverListener={!report}
     >
       <Chip

@@ -22,7 +22,7 @@ import {
   Description as DescriptionIcon,
 } from '@material-ui/icons';
 
-import STATUS from './DataSourceStatus';
+import STATUS, { reportStatus } from './DataSourceStatus';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -77,15 +77,7 @@ const ReportTab = ({ report, translate }) => {
     </ListItem>
   ), [report, classes.errorItemEven, classes.errorItemOdd]);
 
-  const status = React.useMemo(() => {
-    const statusChoices = {
-      0: 'success',
-      1: 'error',
-      2: 'warning',
-      3: 'pending',
-    };
-    return statusChoices[report.status];
-  }, [report.status]);
+  const status = React.useMemo(() => reportStatus[report.status], [report.status]);
   const statusKey = STATUS[status];
 
   return (

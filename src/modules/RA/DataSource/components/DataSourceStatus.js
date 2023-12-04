@@ -24,3 +24,10 @@ export const sourceStatus = {
   2: 'done',
   3: 'inProgress',
 };
+
+export const reportStatus = {
+  0: 'success',
+  1: 'error',
+  2: 'warning',
+  3: 'pending',
+};

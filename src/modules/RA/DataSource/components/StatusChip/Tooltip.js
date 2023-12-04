@@ -20,6 +20,8 @@ import {
   DoneAllOutlined as DoneAllOutlinedIcon,
 } from '@material-ui/icons';
 
+import { reportStatus } from '../DataSourceStatus';
+
 const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(6),
@@ -55,19 +57,13 @@ const Tooltip = ({
     ? `${translate('datasource.tooltip.finished')} ${endingDate.toLocaleString()}`
     : translate('datasource.tooltip.notFinished');
 
-  const statusChoices = {
-    0: 'success',
-    1: 'error',
-    2: 'warning',
-    3: 'pending',
-  };
 
   return (
     <div>
       <List disablePadding dense>
         <ListItem>
           <ListItemIcon><FlashOnOutlinedIcon fontSize="small" /></ListItemIcon>
-          <ListItemText primary={status && translate(`datasource.refreshStatus.${statusChoices[status]}`)} />
+          <ListItemText primary={status && translate(`datasource.refreshStatus.${reportStatus[status]}`)} />
         </ListItem>
 
         <Divider variant="middle" />

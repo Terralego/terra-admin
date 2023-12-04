@@ -61,24 +61,24 @@ const chipIconProps = (state, report, { success, warning, error }) => {
 };
 
 
-const defaultChoices = {
-  0: SYNC_NEEDED,
-  1: PENDING,
-  2: DONE,
-  3: IN_PROGRESS,
-  default: NOT_NEEDED,
-};
-
 const StatusChip = ({
   status,
   status: { status: state, report },
   sourceId,
-  choices = defaultChoices,
 }) => {
   const redirect = useRedirect();
   const translate = useTranslate();
   const classes = useStyles();
-  const stateKey =  choices[state] || choices.default;
+  const stateKey = React.useMemo(() => {
+    const choices = {
+      0: SYNC_NEEDED,
+      1: PENDING,
+      2: DONE,
+      3: IN_PROGRESS,
+      default: NOT_NEEDED,
+    };
+    return choices[state] || choices.default;
+  }, [state]);
 
   const redirectToReport = React.useCallback(e => {
     if (sourceId) {

@@ -349,7 +349,13 @@
       },
       "refresh": {
         "accepted": "Refresh accepted",
-        "notAllowed": "Refresh not possible"
+        "notAllowed": "Refresh not possible",
+        "force": {
+          "title": "Force refresh?",
+          "content": "Refresh pending or in progress. Are you sure you want to force a new one?",
+          "confirm": "Yes",
+          "cancel": "No"
+        }
       }
     },
     "edit": {

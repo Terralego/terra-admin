@@ -15,7 +15,11 @@ const enhanceDataProvider = nextDataProvider => async (...args) => {
    * Manage custom REFRESH query type
    */
   if (type === REFRESH) {
-    return Api.request(`${endpoint}/${params.id}/refresh/`);
+    let refreshUrl = `${endpoint}/${params.id}/refresh/`;
+    if (params.force) {
+      refreshUrl += `?force=${params.force}`;
+    }
+    return Api.request(refreshUrl);
   }
 
   /**

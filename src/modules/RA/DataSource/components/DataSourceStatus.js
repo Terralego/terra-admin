@@ -17,3 +17,10 @@ export default {
   notNeeded: NOT_NEEDED,
   inProgress: IN_PROGRESS,
 };
+
+export const sourceStatus = {
+  0: 'syncNeeded',
+  1: 'pending',
+  2: 'done',
+  3: 'inProgress',
+};

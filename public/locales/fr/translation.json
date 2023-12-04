@@ -401,7 +401,13 @@
       },
       "refresh": {
         "accepted": "Actualisation acceptée",
-        "notAllowed": "Actualisation impossible"
+        "notAllowed": "Actualisation impossible",
+        "force": {
+          "title": "Forcer l'actualisation ?",
+          "content": "L'actualisation de la source est en cours ou en attente, souhaitez vous forcer une nouvelle actualisation ?",
+          "confirm": "Oui",
+          "cancel": "Non"
+        }
       }
     },
     "edit": {

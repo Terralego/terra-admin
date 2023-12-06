@@ -325,6 +325,7 @@
       "label": "Libellé",
       "name": "Nom",
       "fields": "Champs",
+      "layers": "Couches associées",
       "file": {
         "related-files": "Fichiers associés",
         "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile",

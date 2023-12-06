@@ -273,6 +273,7 @@
       "label": "Label",
       "name": "Name",
       "fields": "Fields",
+      "layers": "associated layers",
       "file": {
         "related-files": "Linked files",
         "placeholder": "Drop here GeoJSON or zipped shapefile.",

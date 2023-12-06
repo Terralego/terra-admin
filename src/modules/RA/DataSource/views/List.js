@@ -7,6 +7,9 @@ import {
   SelectInput,
   TextField,
   TextInput,
+  ReferenceArrayField,
+  SingleFieldList,
+  ChipField,
 } from 'react-admin';
 
 import StatusChip from '../components/StatusChip';
@@ -21,7 +24,7 @@ import CommonBulkActionButtons
   from '../../../../components/react-admin/CommonBulkActionButtons';
 
 import CustomCloneButton from '../../../../components/react-admin/CustomCloneButton';
-import { RES_DATASOURCE } from '../../ra-modules';
+import { RES_DATALAYER, RES_DATASOURCE } from '../../ra-modules';
 
 const ListFilters = props => (
   <Filter {...props}>
@@ -66,6 +69,11 @@ export const DataSourceList = props => (
         label="datasource.form.geometry"
         render={({ geom_type: geomType }) => geomTypes[geomType] || ''}
       />
+      <ReferenceArrayField source="layers" reference={RES_DATALAYER} label="datasource.form.layers">
+        <SingleFieldList>
+          <ChipField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
       <FunctionField
         label="datasource.form.status"
         sortable={false}

@@ -351,6 +351,17 @@
       "refresh": {
         "accepted": "Refresh accepted",
         "notAllowed": "Refresh not possible"
+      },
+      "infos": {
+        "title": "General informations",
+        "created": "Created at",
+        "updated": "Updated at",
+        "description": "Description",
+        "no-description": "No description available",
+        "credit": "Credit",
+        "no-credit": "No credit available",
+        "author": "Author",
+        "no-author": "Unkown"
       }
     },
     "edit": {

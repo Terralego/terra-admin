@@ -403,6 +403,17 @@
       "refresh": {
         "accepted": "Actualisation acceptée",
         "notAllowed": "Actualisation impossible"
+      },
+      "infos": {
+        "title": "Informations Générales",
+        "created": "Créé le",
+        "updated": "Modifié le",
+        "description": "Description",
+        "no-description": "Aucune description disponible",
+        "credit": "Crédits",
+        "no-credit": "Aucun crédit disponible",
+        "author": "Auteur",
+        "no-author": "Inconnu"
       }
     },
     "edit": {

@@ -401,7 +401,8 @@
       "refresh": {
         "accepted": "Actualisation acceptée",
         "notAllowed": "Actualisation impossible"
-      }
+      },
+      "updated": "Dernière mise à jour"
     },
     "edit": {
       "refresh": "Actualiser les données",

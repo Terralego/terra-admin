@@ -86,6 +86,12 @@ export const DataSourceList = props => (
             <StatusChip sourceId={id} status={{ status, report }} />
         }
       />
+      <FunctionField
+        source="updated_at"
+        label="datasource.form.updated"
+        render={({ updated_at: updatedAt }) => new Date(updatedAt).toLocaleDateString()}
+      />
+
       <CustomCloneButton endpoint={RES_DATASOURCE} label="" />
     </Datagrid>
   </List>

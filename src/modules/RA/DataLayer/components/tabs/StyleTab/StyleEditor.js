@@ -34,6 +34,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
   const styleType = getShapeFromGeomType(geomType);
 
   const shouldDisplayPieChart = !isExtraStyles;
+  const shouldDisplayLabels = !isExtraStyles;
 
   return (
     <div className={classes.styleEditor}>
@@ -144,6 +145,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             path={path}
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
+            shouldDisplayLabels={shouldDisplayLabels}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="fill-extrusion">
@@ -158,6 +160,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             path={path}
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
+            shouldDisplayLabels={shouldDisplayLabels}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="circle">
@@ -165,6 +168,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             path={path}
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
+            shouldDisplayLabels={shouldDisplayLabels}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="icon">

@@ -7,18 +7,36 @@ import {
   SimpleFormIterator,
   TextInput,
   useInput,
+  useTranslate,
 } from 'react-admin';
 
-import { Card, CardContent, Divider, IconButton } from '@material-ui/core';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Card,
+  CardContent,
+  Divider,
+  IconButton,
+  Typography,
+} from '@material-ui/core';
+
 import { Delete } from '@material-ui/icons';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BPIcon, { widgetIcons } from '../../../../../../components/BPIcon';
 import Condition from '../../../../../../components/react-admin/Condition';
+import JSONInput from '../../../../../../components/react-admin/JSONInput';
 import MapBoundingBoxInput from './MapBoundingBoxInput';
 
-const WidgetsTab = ({ source }) =>
-  (
+const WidgetsTab = ({ source }) => {
+  const translate = useTranslate();
+
+  return (
     <>
-      <ArrayInput source={`${source}.widgets`} label="Widgets">
+      <ArrayInput
+        source={`${source}.widgets`}
+        label="resources.datalayer.fields.settings-widgets"
+      >
         <SimpleFormIterator
           disableReordering
           removeButton={(
@@ -30,8 +48,21 @@ const WidgetsTab = ({ source }) =>
           <WidgetCard />
         </SimpleFormIterator>
       </ArrayInput>
+      <Accordion style={{ marginTop: '5em' }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>{translate('resources.datalayer.widgets-editor.json-editor')}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <JSONInput
+            source="settings.widgets"
+            label="resources.datalayer.fields.settings-widgets"
+            fullWidth
+          />
+        </AccordionDetails>
+      </Accordion>
     </>
   );
+};
 
 const WidgetItemInput = ({ source }) => {
   const {
@@ -51,7 +82,7 @@ const WidgetItemInput = ({ source }) => {
     >
       <TextInput
         required
-        label="Label"
+        label="resources.datalayer.widgets-editor.label"
         source={`${source}.label`}
         onChange={e => onChangeName(e.target.value)}
       />
@@ -67,9 +98,9 @@ const WidgetItemInput = ({ source }) => {
         translateChoice={false}
         helperText={false}
       />
-      <TextInput label="Field" required source={`${source}.field`} />
+      <TextInput label="resources.datalayer.widgets-editor.field" required source={`${source}.field`} />
       <TextInput
-        label="Template"
+        label="resources.datalayer.widgets-editor.template"
         required
         defaultValue="{{value}}"
         source={`${source}.template`}
@@ -94,11 +125,11 @@ const WidgetCard = ({ source }) => {
     <>
       <Card style={{ padding: 15, marginBottom: 15, marginTop: 15 }}>
         <div style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
-          <TextInput required source={`${source}.title`} label="Name" />
+          <TextInput required source={`${source}.title`} label="resources.datalayer.widgets-editor.name" />
           <SelectInput
             required
             source={`${source}.icon`}
-            label="Icon"
+            label="resources.datalayer.widgets-editor.icon"
             choices={iconChoices}
             translateChoice={false}
             SelectProps={{
@@ -114,10 +145,10 @@ const WidgetCard = ({ source }) => {
           <RadioButtonGroupInput
             required
             source={`${source}.boundingbox_mode`}
-            label="Bounding box"
+            label="resources.datalayer.widgets-editor.bounding-box"
             choices={[
-              { id: 'visible', name: 'Viewport' },
-              { id: 'defined', name: 'Defined value' },
+              { id: 'visible', name: 'resources.datalayer.widgets-editor.bounding-box-visible' },
+              { id: 'defined', name: 'resources.datalayer.widgets-editor.bounding-box-defined' },
             ]}
             initialValue="visible"
           />
@@ -127,7 +158,7 @@ const WidgetCard = ({ source }) => {
         </Condition>
         <Divider />
         <CardContent>
-          <ArrayInput source={`${source}.items`} label="Items">
+          <ArrayInput source={`${source}.items`} label="resources.datalayer.widgets-editor.items">
             <SimpleFormIterator>
               <WidgetItemInput />
             </SimpleFormIterator>

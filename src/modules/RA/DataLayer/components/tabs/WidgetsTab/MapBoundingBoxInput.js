@@ -66,13 +66,18 @@ const MapBoundingBoxInput = ({ field }) => {
           [mapConfig.bounds.minLon, mapConfig.bounds.maxLat],
           [mapConfig.bounds.maxLon, mapConfig.bounds.MinLat],
         ];
-        map.fitBounds(mapConfigBbox, { padding: 20 });
-        const rectangle = getBboxPolygon(mapConfigBbox.flat());
-        draw.add(rectangle);
-        onChange(mapConfigBbox);
+        try {
+          map.fitBounds(mapConfigBbox, { padding: 20 });
+          const rectangle = getBboxPolygon(mapConfigBbox.flat());
+          draw.add(rectangle);
+          onChange(mapConfigBbox);
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error(e);
+        }
       }
     },
-    [boundingBox],
+    [boundingBox, mapConfig, onChange],
   );
 
   const updateBbox = useCallback(
@@ -131,7 +136,7 @@ const MapBoundingBoxInput = ({ field }) => {
   return (
     <div id="mapInput">
       <Typography variant="body1">
-        Define bounding box
+        {translate('resources.datalayer.widgets-editor.bounding-box-editor-title')}
       </Typography>
       <Map
         accessToken={mapConfig.accessToken}

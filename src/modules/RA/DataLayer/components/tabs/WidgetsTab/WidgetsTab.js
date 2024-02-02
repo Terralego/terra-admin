@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { ArrayInput, SimpleFormIterator, useTranslate } from 'react-admin';
+import { ArrayInput, SimpleFormIterator, useTranslate, useUpdate } from 'react-admin';
 
 import {
   Accordion,
@@ -15,8 +15,24 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import JSONInput from '../../../../../../components/react-admin/JSONInput';
 import WidgetCard from './WidgetCard';
 
-const WidgetsTab = ({ source }) => {
+const isEmptyObject = obj => JSON.stringify(obj) === '{}';
+
+const WidgetsTab = ({ source, record }) => {
   const translate = useTranslate();
+
+  // if widgets field is an empty object, we need to update it to an empty array
+  const [update] = useUpdate(
+    'datalayer',
+    record.id,
+    { ...record, settings: { ...record.settings, widgets: [] } },
+    record,
+  );
+
+  useState(() => {
+    if (isEmptyObject(record.settings.widgets)) {
+      update();
+    }
+  }, [record.settings.widgets]);
 
   return (
     <>

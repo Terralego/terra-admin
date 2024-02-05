@@ -5,6 +5,7 @@ import { LinearProgress, withDataProvider, GET_LIST } from 'react-admin';
 import debounce from 'lodash.debounce';
 import uniqBy from 'lodash.uniqby';
 
+import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -120,7 +121,11 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
    * Display progress bar until we have geolayers
    */
   if (!geolayers) {
-    return <LinearProgress />;
+    return (
+      <Box>
+        <LinearProgress timeout={0} style={{ marginTop: 30, marginBottom: 30 }} />
+      </Box>
+    );
   }
 
   if (!geolayers.length) {

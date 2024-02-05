@@ -1042,6 +1042,23 @@
     },
     "datalayer": {
       "forcedCaseName": "Couche",
+      "widgets-editor": {
+        "title": "Configuration des widgets",
+        "json-editor": "Éditeur JSON",
+        "label": "Label",
+        "type": "Type",
+        "field": "Champ",
+        "template": "Modèle",
+        "name": "Nom",
+        "icon": "Icône",
+        "items": "Éléments",
+        "bounding-box": "Étendue géographique",
+        "bounding-box-visible": "Zone visible",
+        "bounding-box-defined": "Valeur définie",
+        "bounding-box-editor-title": "Définir l'étendue géographique",
+        "error-empty-object": "La configuration des widgets doit être un tableau mais un objet vide a été détecté. Mettez à jour le JSON et sauvegardez le formulaire",
+        "error-empty-object-action": "Mettre à jour le JSON"
+      },
       "fields": {
         "settings-widgets": "Configuration des widgets",
         "active_by_default": "Afficher par défaut",

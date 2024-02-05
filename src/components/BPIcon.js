@@ -1,6 +1,26 @@
 import React from 'react';
 import { Icon } from '@blueprintjs/core';
 
+export const widgetIcons = [
+  'add',
+  'add-column-left',
+  'add-column-right',
+  'add-row-bottom',
+  'add-row-top',
+  'alignment-bottom',
+  'alignment-horizontal-center',
+  'alignment-left',
+  'alignment-right',
+  'alignment-top',
+  'alignment-vertical-center',
+  'equals',
+  'greater-than',
+  'greater-than-or-equal-to',
+  'less-than',
+  'less-than-or-equal-to',
+  'not-equal-to',
+];
+
 export const graphIcons = [
   'chart',
   'curved-range-chart',

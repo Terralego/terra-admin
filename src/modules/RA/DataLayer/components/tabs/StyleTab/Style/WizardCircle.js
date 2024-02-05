@@ -13,7 +13,7 @@ import MapLabelField from './MapLabelField';
 
 const useStyles = makeStyles(styles);
 
-const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
+const WizardCircle = ({ path, fields, getValuesOfProperty, shouldDisplayLabels }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -119,26 +119,31 @@ const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
         />
       </div>
 
-      <div className={classes.configLine}>
-        <header>
-          <FormLabel>{translate('style-editor.text.show-label')}</FormLabel>
-          <RadioButtonGroupInput
-            label=""
-            source="advanced_style.show_value_on_map.type"
-            helperText={false}
-            choices={[
-              { id: 'none', name: translate('style-editor.style-type.none') },
-              { id: 'fixed', name: translate('style-editor.style-type.fixed') },
-            ]}
-            initialValue="none"
-          />
-        </header>
+      {shouldDisplayLabels && (
+        <div className={classes.configLine}>
+          <header>
+            <FormLabel>{translate('style-editor.text.show-label')}</FormLabel>
+            <RadioButtonGroupInput
+              label=""
+              source="advanced_style.show_value_on_map.type"
+              helperText={false}
+              choices={[
+                { id: 'none', name: translate('style-editor.style-type.none') },
+                {
+                  id: 'fixed',
+                  name: translate('style-editor.style-type.fixed'),
+                },
+              ]}
+              initialValue="none"
+            />
+          </header>
 
-        <MapLabelField
-          path="advanced_style.show_value_on_map"
-          choices={fieldChoices}
-        />
-      </div>
+          <MapLabelField
+            path="advanced_style.show_value_on_map"
+            choices={fieldChoices}
+          />
+        </div>
+      )}
     </>
   );
 };

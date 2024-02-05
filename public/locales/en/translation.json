@@ -989,7 +989,9 @@
         "bounding-box": "Bounding box",
         "bounding-box-visible": "Viewport",
         "bounding-box-defined": "Defined value",
-        "bounding-box-editor-title": "Define bounding box"
+        "bounding-box-editor-title": "Define bounding box",
+        "error-empty-object": "Widgets configuration should be an array, found an object. Update JSON and save form",
+        "error-empty-object-action": "Update JSON"
       },
       "fields": {
         "settings-widgets": "Widget configuration",

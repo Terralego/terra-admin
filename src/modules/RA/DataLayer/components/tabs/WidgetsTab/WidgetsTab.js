@@ -6,36 +6,64 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
+  Button,
   IconButton,
   Typography,
 } from '@material-ui/core';
 
 import { Delete } from '@material-ui/icons';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Alert } from '@material-ui/lab';
+import { useField } from 'react-final-form';
 import JSONInput from '../../../../../../components/react-admin/JSONInput';
 import WidgetCard from './WidgetCard';
 
-const WidgetsTab = ({ source }) => {
+const WidgetsTab = ({ source, record }) => {
   const translate = useTranslate();
+
+  const {
+    input: { onChange: onWidgetsChange },
+  } = useField(`${source}.widgets`);
+
+  const displayArrayInput =
+    !record.settings || record?.settings?.widgets instanceof Array;
 
   return (
     <>
-      <ArrayInput
-        source={`${source}.widgets`}
-        label="resources.datalayer.fields.settings-widgets"
-      >
-        <SimpleFormIterator
-          disableReordering
-          removeButton={(
-            <IconButton>
-              <Delete />
-            </IconButton>
+      {displayArrayInput ? (
+        <Box style={{ marginBottom: '5em' }}>
+          <ArrayInput
+            source={`${source}.widgets`}
+            label="resources.datalayer.fields.settings-widgets"
+          >
+            <SimpleFormIterator
+              disableReordering
+              removeButton={(
+                <IconButton>
+                  <Delete />
+                </IconButton>
+              )}
+            >
+              <WidgetCard />
+            </SimpleFormIterator>
+          </ArrayInput>
+        </Box>
+      ) : (
+        <Alert
+          severity="error"
+          action={(
+            <Button color="inherit" size="small" onClick={() => onWidgetsChange([])}>
+              {translate(
+                'resources.datalayer.widgets-editor.error-empty-object-action',
+              )}
+            </Button>
           )}
         >
-          <WidgetCard />
-        </SimpleFormIterator>
-      </ArrayInput>
-      <Accordion style={{ marginTop: '5em' }}>
+          {translate('resources.datalayer.widgets-editor.error-empty-object')}
+        </Alert>
+      )}
+      <Accordion defaultExpanded={!displayArrayInput}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>
             {translate('resources.datalayer.widgets-editor.json-editor')}
@@ -43,7 +71,8 @@ const WidgetsTab = ({ source }) => {
         </AccordionSummary>
         <AccordionDetails>
           <JSONInput
-            source="settings.widgets"
+            source={`${source}.widgets`}
+            initialValue={[]}
             label="resources.datalayer.fields.settings-widgets"
             fullWidth
           />

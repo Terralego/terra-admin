@@ -408,7 +408,8 @@
           "confirm": "Oui",
           "cancel": "Non"
         }
-      }
+      },
+      "updated": "Dernière mise à jour"
     },
     "edit": {
       "refresh": "Actualiser les données",

@@ -356,7 +356,8 @@
           "confirm": "Yes",
           "cancel": "No"
         }
-      }
+      },
+      "updated": "Last update"
     },
     "edit": {
       "refresh": "Refresh data",

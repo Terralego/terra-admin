@@ -273,6 +273,7 @@
       "label": "Label",
       "name": "Name",
       "fields": "Fields",
+      "layers": "associated layers",
       "file": {
         "related-files": "Linked files",
         "placeholder": "Drop here GeoJSON or zipped shapefile.",
@@ -356,6 +357,17 @@
           "confirm": "Yes",
           "cancel": "No"
         }
+      },
+      "infos": {
+        "title": "General informations",
+        "created": "Created at",
+        "updated": "Updated at",
+        "description": "Description",
+        "no-description": "No description available",
+        "credit": "Credit",
+        "no-credit": "No credit available",
+        "author": "Author",
+        "no-author": "Unkown"
       },
       "updated": "Last update"
     },

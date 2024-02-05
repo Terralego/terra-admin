@@ -325,6 +325,7 @@
       "label": "Libellé",
       "name": "Nom",
       "fields": "Champs",
+      "layers": "Couches associées",
       "file": {
         "related-files": "Fichiers associés",
         "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile",
@@ -408,6 +409,17 @@
           "confirm": "Oui",
           "cancel": "Non"
         }
+      },
+      "infos": {
+        "title": "Informations Générales",
+        "created": "Créé le",
+        "updated": "Modifié le",
+        "description": "Description",
+        "no-description": "Aucune description disponible",
+        "credit": "Crédits",
+        "no-credit": "Aucun crédit disponible",
+        "author": "Auteur",
+        "no-author": "Inconnu"
       },
       "updated": "Dernière mise à jour"
     },

@@ -17,6 +17,7 @@ import { fieldTypeChoices } from '..';
 
 import MainTab from './MainTab';
 import ReportTab from './ReportTab';
+import GeneralInfoTab from './GeneralInfoTab';
 
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => {
@@ -55,6 +56,9 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => {
           <ReportTab report={report} errors={errors} translate={t} />
         </FormTab>
       )}
+      <FormTab label="datasource.form.infos.title">
+        <GeneralInfoTab translate={t} />
+      </FormTab>
     </TabbedForm>
   );
 };

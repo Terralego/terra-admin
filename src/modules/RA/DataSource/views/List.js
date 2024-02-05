@@ -79,6 +79,11 @@ export const DataSourceList = props => (
         render={({ geom_type: geomType }) => geomTypes[geomType] || ''}
       />
       <FunctionField
+        source="layers"
+        label="datasource.form.layers"
+        render={({ layers }) => layers.length}
+      />
+      <FunctionField
         label="datasource.form.status"
         sortable={false}
         render={

@@ -16,6 +16,8 @@ import {
   geomTypeChoices,
   sourceTypes,
   sourceTypeChoices,
+  sourceStatusChoices,
+  reportStatusChoices,
 } from '..';
 import CommonBulkActionButtons
   from '../../../../components/react-admin/CommonBulkActionButtons';
@@ -38,6 +40,16 @@ const ListFilters = props => (
       source="geom_type"
       label="datasource.form.geometry"
       choices={geomTypeChoices}
+    />
+    <SelectInput
+      source="status"
+      label="datasource.form.status"
+      choices={sourceStatusChoices}
+    />
+    <SelectInput
+      source="report__status"
+      label="datasource.form.report.title"
+      choices={reportStatusChoices}
     />
   </Filter>
 );
@@ -79,6 +91,12 @@ export const DataSourceList = props => (
             <StatusChip sourceId={id} status={{ status, report }} />
         }
       />
+      <FunctionField
+        source="updated_at"
+        label="datasource.form.updated"
+        render={({ updated_at: updatedAt }) => new Date(updatedAt).toLocaleDateString()}
+      />
+
       <CustomCloneButton endpoint={RES_DATASOURCE} label="" />
     </Datagrid>
   </List>

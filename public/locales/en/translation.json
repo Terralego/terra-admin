@@ -350,7 +350,13 @@
       },
       "refresh": {
         "accepted": "Refresh accepted",
-        "notAllowed": "Refresh not possible"
+        "notAllowed": "Refresh not possible",
+        "force": {
+          "title": "Force refresh?",
+          "content": "Refresh pending or in progress. Are you sure you want to force a new one?",
+          "confirm": "Yes",
+          "cancel": "No"
+        }
       },
       "infos": {
         "title": "General informations",
@@ -362,7 +368,8 @@
         "no-credit": "No credit available",
         "author": "Author",
         "no-author": "Unkown"
-      }
+      },
+      "updated": "Last update"
     },
     "edit": {
       "refresh": "Refresh data",
@@ -372,6 +379,7 @@
       "syncNeeded": "Sync needed",
       "pending": "Pending",
       "done": "Done",
+      "inProgress": "In progress",
       "notNeeded": "Not needed",
       "success": "Success",
       "warning": "Warning",
@@ -381,6 +389,8 @@
      "times": "Times",
      "started": "Started on",
      "finished": "Finished on",
+     "notStarted": "Not started yet",,
+     "notFinished": "Not finished yet",
      "lines": {
        "singular": "line",
        "plural": "lines"

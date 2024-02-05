@@ -20,6 +20,8 @@ import {
   DoneAllOutlined as DoneAllOutlinedIcon,
 } from '@material-ui/icons';
 
+import { reportStatus } from '../DataSourceStatus';
+
 const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(6),
@@ -48,12 +50,20 @@ const Tooltip = ({
   const startingDate = new Date(started);
   const endingDate = new Date(ended);
 
+  const startedLabel = started
+    ? `${translate('datasource.tooltip.started')} ${startingDate.toLocaleString()}`
+    : translate('datasource.tooltip.notStarted');
+  const endedLabel = ended
+    ? `${translate('datasource.tooltip.finished')} ${endingDate.toLocaleString()}`
+    : translate('datasource.tooltip.notFinished');
+
+
   return (
     <div>
       <List disablePadding dense>
         <ListItem>
           <ListItemIcon><FlashOnOutlinedIcon fontSize="small" /></ListItemIcon>
-          <ListItemText primary={status && translate(`datasource.refreshStatus.${status.toLowerCase()}`)} />
+          <ListItemText primary={translate(`datasource.refreshStatus.${reportStatus[status]}`)} />
         </ListItem>
 
         <Divider variant="middle" />
@@ -68,13 +78,13 @@ const Tooltip = ({
             <ListItemIcon>
               <PlayArrowOutlinedIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary={`${translate('datasource.tooltip.started')} ${startingDate.toLocaleString()}`} />
+            <ListItemText primary={startedLabel} />
           </ListItem>
           <ListItem className={classes.nested}>
             <ListItemIcon>
               <DoneAllOutlinedIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary={`${translate('datasource.tooltip.finished')} ${endingDate.toLocaleString()}`} />
+            <ListItemText primary={endedLabel} />
           </ListItem>
         </List>
 

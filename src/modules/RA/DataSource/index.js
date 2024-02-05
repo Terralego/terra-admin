@@ -66,3 +66,18 @@ export const scrTypes = {
   [EPSG3857]: 'EPSG:3857 - WGS 84 / Pseudo-Mercator',
 };
 export const fieldSCRChoices = typesToChoices(scrTypes);
+
+export const sourceStatusTypes = {
+  0: 'datasource.refreshStatus.syncNeeded',
+  1: 'datasource.refreshStatus.pending',
+  2: 'datasource.refreshStatus.done',
+};
+export const sourceStatusChoices = typesToChoices(sourceStatusTypes);
+
+export const reportStatusTypes = {
+  0: 'datasource.refreshStatus.success',
+  1: 'datasource.refreshStatus.error',
+  2: 'datasource.refreshStatus.warning',
+  3: 'datasource.refreshStatus.pending',
+};
+export const reportStatusChoices = typesToChoices(reportStatusTypes);

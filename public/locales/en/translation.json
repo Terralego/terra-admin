@@ -350,7 +350,8 @@
       "refresh": {
         "accepted": "Refresh accepted",
         "notAllowed": "Refresh not possible"
-      }
+      },
+      "updated": "Last update"
     },
     "edit": {
       "refresh": "Refresh data",

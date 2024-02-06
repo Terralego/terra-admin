@@ -68,7 +68,7 @@ export const DataSourceList = props => (
     <Datagrid rowClick="edit">
       <TextField source="name" label="datasource.form.name" />
       <FunctionField
-        source="polymorphic_ctype__model"
+        source="source_type"
         label="datasource.form.data-type"
         render={({ _type: type }) => sourceTypes[type] || ''}
       />

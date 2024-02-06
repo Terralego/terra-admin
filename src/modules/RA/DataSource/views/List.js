@@ -68,9 +68,8 @@ export const DataSourceList = props => (
     <Datagrid rowClick="edit">
       <TextField source="name" label="datasource.form.name" />
       <FunctionField
-        source="_type"
+        source="polymorphic_ctype__model"
         label="datasource.form.data-type"
-        sortable={false}
         render={({ _type: type }) => sourceTypes[type] || ''}
       />
       <FunctionField
@@ -84,8 +83,8 @@ export const DataSourceList = props => (
         render={({ layers }) => layers.length}
       />
       <FunctionField
+        source="status"
         label="datasource.form.status"
-        sortable={false}
         render={
           ({ status, report, id }) =>
             <StatusChip sourceId={id} status={{ status, report }} />

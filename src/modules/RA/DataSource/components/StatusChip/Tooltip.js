@@ -63,7 +63,7 @@ const Tooltip = ({
       <List disablePadding dense>
         <ListItem>
           <ListItemIcon><FlashOnOutlinedIcon fontSize="small" /></ListItemIcon>
-          <ListItemText primary={translate(`datasource.refreshStatus.${reportStatus[status]}`)} />
+          <ListItemText primary={translate(`datasource.refreshStatus.${reportStatus[status] ? reportStatus[status] : 'syncNeeded'}`)} />
         </ListItem>
 
         <Divider variant="middle" />

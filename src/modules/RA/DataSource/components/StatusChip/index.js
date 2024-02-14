@@ -17,6 +17,7 @@ import STATUS, {
   PENDING,
   DONE,
   NOT_NEEDED,
+  SYNC_NEEDED,
   IN_PROGRESS,
   sourceStatus,
 } from '../DataSourceStatus';
@@ -43,6 +44,8 @@ const chipIconProps = (state, report, { success, warning, error }) => {
       return { icon: <PendingIcon />, color: 'secondary' };
     case NOT_NEEDED:
       return { icon: <CheckCircleOutline />, color: '' };
+    case SYNC_NEEDED:
+      return { icon: <WarningIcon className={warning} />, className: warning };
     case DONE: {
       if (report?.status === 0) {
         return { icon: <SuccessIcon className={success} />, className: success };

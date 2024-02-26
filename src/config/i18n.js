@@ -28,6 +28,9 @@ i18n
       nsMode: 'default',
       useSuspense: false,
     },
+  }, error => {
+    // eslint-disable-next-line no-console
+    if (error) console.error('i18n init error', error);
   });
 
 export default i18n;

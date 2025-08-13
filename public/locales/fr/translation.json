@@ -296,7 +296,8 @@
     "help": {
       "superuser-create-user": "Seul un superutilisateur peut créer un utilisateur",
       "is_superuser": "Le mode \"Superutilisateur\" donne  tous les droits d'administration",
-      "is_active": "Le mode \"Actif\" rend disponible le profil de l'utilisateur"
+      "is_active": "Le mode \"Actif\" rend disponible le profil de l'utilisateur",
+      "is_report_and_declaration_manager": "Le mode \"Gestionnaire\" permet à l'utilisateur de recevoir des notifications par e-mail si un signalement ou une déclaration est reçu(e)"
     }
   },
   "usergroup": {
@@ -1028,6 +1029,7 @@
         "password": "Mot de passe",
         "is_superuser": "Superutilisateur",
         "is_active": "Actif",
+        "is_report_and_declaration_manager": "Gestionnaire des signalements et déclarations",
         "permissions": "Permissions",
         "fullname": "Nom"
       }

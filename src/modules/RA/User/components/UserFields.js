@@ -72,6 +72,10 @@ const UserFields = ({ edit = false, user: { is_superuser: isSuperUser } = {}, ..
         source="is_active"
         formClassName={classes.inline}
       />
+      <BooleanInput
+        source="is_report_and_declaration_manager"
+        formClassName={classes.inline}
+      />
 
       <Br />
 

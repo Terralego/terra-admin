@@ -13,6 +13,7 @@ const Help = ({ translate: t }) => (
         <Typography color="textSecondary" paragraph>{t('user.help.superuser-create-user')}</Typography>
         <Typography color="textSecondary">{t('user.help.is_superuser')}</Typography>
         <Typography color="textSecondary">{t('user.help.is_active')}</Typography>
+        <Typography color="textSecondary">{t('user.help.is_report_and_declaration_manager')}</Typography>
       </CardContent>
     </Card>
   </>

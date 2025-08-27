@@ -245,7 +245,8 @@
       "superuser-create-user": "Only superuser can create user.",
       "is_superuser": "\"Super user\" give all administration rights",
       "is_active": "\"Active\" mode set if user could connect.",
-      "is_report_and_declaration_manager": "\"Manager\" mode set if user should receive email notifications when reports or declarations are submitted."
+      "is_report_manager": "\"Reports manager\" mode set if user should receive email notifications when reports are submitted, and monthly reports summary.",
+      "is_declaration_manager": "\"Declarations manager\" mode set if user should receive email notifications when declarations are submitted, and monthly declarations summary."
     }
   },
   "usergroup": {
@@ -975,7 +976,8 @@
         "password": "Password",
         "is_superuser": "Super user",
         "is_active": "Active",
-        "is_report_and_declaration_manager": "Reports and declarations manager",
+        "is_report_manager": "Reports manager",
+        "is_declaration_manager": "Declarations manager",
         "permissions": "Permissions",
         "fullname": "Fullname"
       }

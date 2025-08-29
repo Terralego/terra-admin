@@ -22,7 +22,8 @@ export const UserList = props => (
       <UserNameField label="resources.user.fields.fullname" sortable={false} />
       <BooleanField source="is_superuser" />
       <BooleanField source="is_active" />
-      <BooleanField source="is_report_and_declaration_manager" />
+      <BooleanField source="is_report_manager" />
+      <BooleanField source="is_declaration_manager" />
     </Datagrid>
   </List>
 );

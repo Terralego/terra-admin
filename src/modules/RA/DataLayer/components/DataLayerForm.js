@@ -1,18 +1,19 @@
 import React from 'react';
 
-import { TabbedForm, FormTab, ArrayInput, SimpleFormIterator, TabbedFormTabs } from 'react-admin';
+import { ArrayInput, FormTab, SimpleFormIterator, TabbedForm, TabbedFormTabs } from 'react-admin';
 
 import CustomFormTab from '../../../../components/react-admin/CustomFormTab';
 
-import DefinitionTab from './tabs/DefinitionTab';
-import StyleTab from './tabs/StyleTab';
-import LegendTab from './tabs/LegendTab';
-import PopupTab from './tabs/PopupTab';
-import MinisheetTab from './tabs/MinisheetTab';
-import FilterTab from './tabs/FilterTab';
-import TableTab from './tabs/TableTab';
 import StyleImageField from './StyleImageField';
+import DefinitionTab from './tabs/DefinitionTab';
 import EmbedTab from './tabs/EmbedTab';
+import FilterTab from './tabs/FilterTab';
+import LegendTab from './tabs/LegendTab';
+import MinisheetTab from './tabs/MinisheetTab';
+import PopupTab from './tabs/PopupTab';
+import ReportingTab from './tabs/ReportingTab';
+import StyleTab from './tabs/StyleTab';
+import TableTab from './tabs/TableTab';
 import WidgetsTab from './tabs/WidgetsTab/WidgetsTab';
 
 const initialErrorState = {
@@ -24,6 +25,7 @@ const initialErrorState = {
   filter: false,
   table: false,
   embed: false,
+  reporting: false,
 };
 
 const inErrorReducer = (state, { type, payload }) => {
@@ -40,69 +42,90 @@ const DataLayerForm = React.memo(props => {
   const [external, setExternal] = React.useState(true);
   const [errorState, dispatch] = React.useReducer(inErrorReducer, initialErrorState);
 
-  const onPopupErrorChange = React.useCallback(({
-    values: {
-      fields: sourcefields,
-      popup_config: { wizard: { fields: popupfields = [] } = {} } = {},
-    },
-    errors: { fields = [],
-      popup_config: { wizard: { fields: popupfieldsErrors = [] } = {} } = {} },
-    touched,
-  }) => {
-    const popupfieldIds = popupfields.flatMap(({ sourceFieldId }) => sourceFieldId);
-    const fieldIndexes = sourcefields
-      .map((field, index) => (
-        popupfieldIds.includes(field.sourceFieldId) ? index : null))
-      .filter(Boolean);
-    const fieldsInError = fields.filter((f, index) => f && fieldIndexes.includes(index));
+  const onPopupErrorChange = React.useCallback(
+    ({
+      values: {
+        fields: sourcefields,
+        popup_config: { wizard: { fields: popupfields = [] } = {} } = {},
+      },
+      errors: {
+        fields = [],
+        popup_config: { wizard: { fields: popupfieldsErrors = [] } = {} } = {},
+      },
+      touched,
+    }) => {
+      const popupfieldIds = popupfields.flatMap(({ sourceFieldId }) => sourceFieldId);
+      const fieldIndexes = sourcefields
+        .map((field, index) => (popupfieldIds.includes(field.sourceFieldId) ? index : null))
+        .filter(Boolean);
+      const fieldsInError = fields.filter((f, index) => f && fieldIndexes.includes(index));
 
-    let inError = false;
-    if (fieldsInError.length > 0) {
-      inError = true;
-    }
-    if (popupfieldsErrors[0]?.sourceFieldId && touched['popup_config.wizard.fields[0]']) {
-      inError = true;
-    }
-    dispatch({ type: 'popup', payload: inError });
-  }, []);
-
-  const onMiniSheetErrorChange = React.useCallback(({
-    values: {
-      fields: sourcefields,
-      minisheet_config: { wizard: { tree = [] } = {} } = {},
-    },
-    errors: { fields = [] },
-  }) => {
-    const minisheetFieldIds = tree.flatMap(({ children, sourceFieldId }) => {
-      if (sourceFieldId) {
-        return sourceFieldId;
+      let inError = false;
+      if (fieldsInError.length > 0) {
+        inError = true;
       }
-      const ids = children.flatMap(({ sourceFieldId: id }) => id);
-      return ids;
-    });
-    const fieldIndexes = sourcefields
-      .map((field, index) => (minisheetFieldIds.includes(field.sourceFieldId) ? index : null))
-      .filter(Boolean);
-    const fieldsInError = fields.filter((f, index) => f && fieldIndexes.includes(index));
+      if (popupfieldsErrors[0]?.sourceFieldId && touched['popup_config.wizard.fields[0]']) {
+        inError = true;
+      }
+      dispatch({ type: 'popup', payload: inError });
+    },
+    [],
+  );
 
-    let inError = false;
-    if (fieldsInError.length > 0) {
-      inError = true;
-    }
+  const onMiniSheetErrorChange = React.useCallback(
+    ({
+      values: { fields: sourcefields, minisheet_config: { wizard: { tree = [] } = {} } = {} },
+      errors: { fields = [] },
+    }) => {
+      const minisheetFieldIds = tree.flatMap(({ children, sourceFieldId }) => {
+        if (sourceFieldId) {
+          return sourceFieldId;
+        }
+        const ids = children.flatMap(({ sourceFieldId: id }) => id);
+        return ids;
+      });
+      const fieldIndexes = sourcefields
+        .map((field, index) => (minisheetFieldIds.includes(field.sourceFieldId) ? index : null))
+        .filter(Boolean);
+      const fieldsInError = fields.filter((f, index) => f && fieldIndexes.includes(index));
 
-    dispatch({ type: 'minisheet', payload: inError });
-  }, []);
+      let inError = false;
+      if (fieldsInError.length > 0) {
+        inError = true;
+      }
+
+      dispatch({ type: 'minisheet', payload: inError });
+    },
+    [],
+  );
 
   const onEmbedErrorChange = React.useCallback(() => {
-    dispatch({ type: 'embed', paylaod: false });
+    dispatch({ type: 'embed', payload: false });
   }, []);
 
-  const onTableErrorChange = React.useCallback(({
-    values: { fields = [], table_enable: tableEnable },
-  }) => {
-    const someLabelMissing = tableEnable && fields.some(({ label }) => !label);
-    dispatch({ type: 'table', paylaod: someLabelMissing });
-  }, []);
+  const onReportingErrorChange = React.useCallback(
+    ({ values: { report_configs: reportConfigs = [] } }) => {
+      const hasInvalidConfig = reportConfigs.some(config => {
+        if (!config.label || !config.label.trim()) {
+          return true;
+        }
+        if (config.report_fields && config.report_fields.some(field => !field?.sourceFieldId)) {
+          return true;
+        }
+        return false;
+      });
+      dispatch({ type: 'reporting', payload: hasInvalidConfig });
+    },
+    [],
+  );
+
+  const onTableErrorChange = React.useCallback(
+    ({ values: { fields = [], table_enable: tableEnable } }) => {
+      const someLabelMissing = tableEnable && fields.some(({ label }) => !label);
+      dispatch({ type: 'table', payload: someLabelMissing });
+    },
+    [],
+  );
 
   const onFilterErrorChange = React.useCallback(({ values: { fields = [] } }) => {
     const someLabelMissing = fields
@@ -112,26 +135,31 @@ const DataLayerForm = React.memo(props => {
   }, []);
 
   const onLegendErrorChange = React.useCallback(({ errors }) => {
-    dispatch({ type: 'legend', payload: ('legends' in errors) });
+    dispatch({ type: 'legend', payload: 'legends' in errors });
   }, []);
 
   const onStyleErrorChange = React.useCallback(({ errors }) => {
-    dispatch({ type: 'style', payload: ('main_style' in errors) });
+    dispatch({ type: 'style', payload: 'main_style' in errors });
   }, []);
 
   const onDefinitionErrorChange = React.useCallback(({ errors, touched }) => {
     let inError = false;
-    if (touched.name && ('name' in errors)) {
+    if (touched.name && 'name' in errors) {
       inError = true;
     }
-    if (touched.source && ('source' in errors)) {
+    if (touched.source && 'source' in errors) {
       inError = true;
     }
     dispatch({ type: 'definition', payload: inError });
   }, []);
 
   return (
-    <TabbedForm tabs={<TabbedFormTabs variant="scrollable" scrollButtons="auto" />} sanitizeEmptyValues={false} {...props} initialValues={{ fields: [] }}>
+    <TabbedForm
+      tabs={<TabbedFormTabs variant="scrollable" scrollButtons="auto" />}
+      sanitizeEmptyValues={false}
+      {...props}
+      initialValues={{ fields: [] }}
+    >
       <CustomFormTab
         label="datalayer.form.definition"
         onChange={onDefinitionErrorChange}
@@ -219,6 +247,16 @@ const DataLayerForm = React.memo(props => {
         onChange={onEmbedErrorChange}
       >
         <EmbedTab />
+      </CustomFormTab>
+
+      <CustomFormTab
+        disabled={external}
+        label="datalayer.form.reporting.tab"
+        path="reporting"
+        inError={errorState.reporting}
+        onChange={onReportingErrorChange}
+      >
+        <ReportingTab />
       </CustomFormTab>
     </TabbedForm>
   );

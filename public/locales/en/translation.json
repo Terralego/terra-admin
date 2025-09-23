@@ -613,6 +613,19 @@
         "fullscreen": "Fullscreen",
         "width": "Width (px)",
         "height": "Height (px)"
+      },
+      "reporting": {
+        "tab": "Reporting",
+        "no-source": "Choose a data source before configuring reporting",
+        "configs": "Report configurations",
+        "config-title": "Report configuration",
+        "config-label": "Configuration label",
+        "config-in-error": "Please verify your configuration",
+        "fields": "Report fields",
+        "field-order": "Order",
+        "field-source": "Source field",
+        "field-required": "Required",
+        "field-helptext": "Help text"
       }
     }
   },

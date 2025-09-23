@@ -665,6 +665,19 @@
         "fullscreen": "Plein écran",
         "width": "Largeur (px)",
         "height": "Hauteur (px)"
+      },
+      "reporting": {
+        "tab": "Signalements",
+        "no-source": "Choisissez une source de données avant de configurer les signalements",
+        "configs": "Configurations de signalement",
+        "config-title": "Configuration de signalement",
+        "config-label": "Label de la configuration",
+        "config-in-error": "Veuillez vérifier votre configuration",
+        "fields": "Champs de signalement",
+        "field-order": "Ordre",
+        "field-source": "Champ source",
+        "field-required": "Requis",
+        "field-helptext": "Texte d'aide"
       }
     }
   },

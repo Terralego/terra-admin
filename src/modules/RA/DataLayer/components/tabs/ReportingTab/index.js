@@ -48,14 +48,12 @@ const ReportingTabContent = props => {
   }
 
   return (
-    <>
-      <ReportConfigField
-        source="report_configs"
-        label="datalayer.form.reporting.configs"
-        validate={validateReportConfigs}
-        {...props}
-      />
-    </>
+    <ReportConfigField
+      source="report_configs"
+      label="datalayer.form.reporting.configs"
+      validate={validateReportConfigs}
+      {...props}
+    />
   );
 };
 

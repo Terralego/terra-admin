@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { Box } from '@material-ui/core';
 
 import ReportFieldItem from './ReportFieldItem';
 
@@ -26,9 +27,9 @@ const ReportConfigItem = ({ source }) => {
 
   return (
     <Card className={classes.configCard}>
-      <div className={classes.configHeader}>
+      <Box className={classes.configHeader}>
         <Typography variant="h6">{translate('datalayer.form.reporting.config-title')}</Typography>
-      </div>
+      </Box>
       <CardContent>
         <TextInput
           source={`${source}.label`}

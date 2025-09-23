@@ -9,6 +9,7 @@ import {
 import { useField } from 'react-final-form';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   fieldRow: {
@@ -39,8 +40,8 @@ const ReportFieldItem = ({ source }) => {
   }
 
   return (
-    <div>
-      <div className={classes.fieldRow}>
+    <Box>
+      <Box className={classes.fieldRow}>
         <NumberInput
           source={`${source}.order`}
           label="datalayer.form.reporting.field-order"
@@ -55,13 +56,13 @@ const ReportFieldItem = ({ source }) => {
           style={{ minWidth: 200 }}
         />
         <BooleanInput source={`${source}.required`} label="datalayer.form.reporting.field-required" />
-      </div>
+      </Box>
       <TextInput
         source={`${source}.helptext`}
         label="datalayer.form.reporting.field-helptext"
         fullWidth
       />
-    </div>
+    </Box>
   );
 };
 

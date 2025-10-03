@@ -13,7 +13,7 @@ export const UserEdit = props => (
     mutationMode="optimistic"
     actions={<DefaultActions />}
   >
-    <UserFields edit />
+    <UserFields />
   </Edit>
 );
 

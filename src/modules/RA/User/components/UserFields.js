@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 
 const Br = () => <br />;
 
-const UserFields = ({ edit = false, user: { is_superuser: isSuperUser } = {}, ...props }) => {
+const UserFields = ({ user: { is_superuser: isSuperUser } = {}, ...props }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -58,7 +58,7 @@ const UserFields = ({ edit = false, user: { is_superuser: isSuperUser } = {}, ..
       <Br />
 
       <TextInput source="email" type="email" />
-      {!edit && <UserPasswordInput source="password" />}
+      <UserPasswordInput source="password" autoComplete="new-password" />
 
       <Br />
 

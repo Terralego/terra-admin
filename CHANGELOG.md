@@ -1,5 +1,9 @@
+5.1.0+dev    XXXX-XX-XX
+=======================
 
-5.1.0-rc.1 / 2023-04-18
+  * Allow to change user passwords
+
+5.1.0-rc.3 / 2023-04-18
 =======================
 
   * Display name & slug of existing style-images as read-only

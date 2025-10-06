@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { ArrayInput, FormTab, SimpleFormIterator, TabbedFormTabs } from 'react-admin';
+import { FormTab, TabbedFormTabs } from 'react-admin';
 
 import CustomFormTab from '../../../../components/react-admin/CustomFormTab';
 
-import StyleImageField from './StyleImageField';
 import DefinitionTab from './tabs/DefinitionTab';
 import EmbedTab from './tabs/EmbedTab';
 import FilterTab from './tabs/FilterTab';
@@ -168,14 +167,6 @@ const DataLayerForm = React.memo(props => {
       >
         <DefinitionTab onSwitch={setExternal} external={external} />
       </CustomFormTab>
-
-      <FormTab label="datalayer.form.style-images.tab" path="style-images">
-        <ArrayInput source="style_images">
-          <SimpleFormIterator>
-            <StyleImageField />
-          </SimpleFormIterator>
-        </ArrayInput>
-      </FormTab>
 
       <CustomFormTab
         disabled={external}

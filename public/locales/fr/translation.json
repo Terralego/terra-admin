@@ -680,6 +680,7 @@
       "name": "Nom",
       "file": {
         "label": "Fichier",
+        "picker": "Choisir une icône",
         "compose": "Composer",
         "upload": "Envoyer"
       }

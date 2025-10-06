@@ -628,6 +628,7 @@
       "name": "Name",
       "file": {
         "label": "File",
+        "picker": "Choose an icon",
         "compose": "Compose",
         "upload": "Upload"
       }
@@ -720,7 +721,7 @@
       "start": "Start",
       "close": "Close",
       "submit": "Submit",
-      "validate": "Vaidate",
+      "validate": "Validate",
       "refuse": "Refuse",
       "unselect": "Unselect"
     },

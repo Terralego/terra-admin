@@ -1,13 +1,17 @@
+import { useGetList } from 'ra-core';
 import React from 'react';
-import { useFormState } from 'react-final-form';
+import { RES_ICON } from '../modules/RA/ra-modules';
 
 const useCustomStyleImages = () => {
-  const { values: { style_images: styleImages } = {} } = useFormState();
+  const { data, ids } = useGetList(RES_ICON);
 
   const customImages = React.useMemo(
-    () => styleImages
-      ?.filter(({ name, slug, file } = {}) => Boolean(name && slug && file)),
-    [styleImages],
+    () => {
+      const styleImages = ids.map(i => data[i]);
+      return styleImages
+      ?.filter(({ name, slug, file } = {}) => Boolean(name && slug && file));
+    },
+    [data, ids],
   );
 
   return customImages || [];

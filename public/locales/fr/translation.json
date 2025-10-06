@@ -440,31 +440,31 @@
       "error": "Erreur"
     },
     "tooltip": {
-     "times": "Temps",
-     "started": "Commencé le",
-     "finished": "Finit le",
+      "times": "Temps",
+      "started": "Commencé le",
+      "finished": "Finit le",
       "notStarted": "Pas encore commencé",
       "notFinished": "Pas encore fini",
-     "lines": {
-       "singular": "ligne",
-       "plural": "lignes"
-     },
-     "added": {
-       "singular": "ligne ajoutée",
-       "plural": "lignes ajoutées"
-     },
-     "modified": {
-       "singular": "ligne modifiée",
-       "plural": "lignes modifiées"
-     },
-     "deleted": {
-       "singular": "ligne supprimée",
-       "plural": "lignes supprimées"
-     },
-     "errors": {
-       "singular": "erreur",
-       "plural": "erreurs"
-     }
+      "lines": {
+        "singular": "ligne",
+        "plural": "lignes"
+      },
+      "added": {
+        "singular": "ligne ajoutée",
+        "plural": "lignes ajoutées"
+      },
+      "modified": {
+        "singular": "ligne modifiée",
+        "plural": "lignes modifiées"
+      },
+      "deleted": {
+        "singular": "ligne supprimée",
+        "plural": "lignes supprimées"
+      },
+      "errors": {
+        "singular": "erreur",
+        "plural": "erreurs"
+      }
     }
   },
   "datalayer": {
@@ -644,12 +644,6 @@
         "no-source": "Veuillez choisir une source de données avant de configurer les styles",
         "secondarylabels": "Styles secondaires"
       },
-      "style-images": {
-        "tab": "Icônes",
-        "name": "Nom",
-        "compose": "Composer",
-        "upload": "Envoyer"
-      },
       "embed": {
         "tab": "Inclusions",
         "no-embed": "Pour activer les inclusions, cliquer sur",
@@ -678,6 +672,16 @@
         "field-source": "Champ source",
         "field-required": "Requis",
         "field-helptext": "Texte d'aide"
+      }
+    }
+  },
+  "icon": {
+    "form": {
+      "name": "Nom",
+      "file": {
+        "label": "Fichier",
+        "compose": "Composer",
+        "upload": "Envoyer"
       }
     }
   },
@@ -731,6 +735,7 @@
     "nav": {
       "baselayer_list": "Liste des fonds de carte",
       "user_list": "Liste des utilisateurs",
+      "icon_list": "Liste des icônes",
       "usergroup_list": "Liste des groupes utilisateurs",
       "datalayer_list": "Liste des couches",
       "datasource_list": "Liste des sources de données",

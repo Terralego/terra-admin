@@ -5,6 +5,9 @@ import Api from '@terralego/core/modules/Api';
 import userViews from './User/views';
 import userGroupViews from './UserGroup/views';
 
+// Icon
+import iconViews from './Icon/views';
+
 // Visu
 import dataSourceViews from './DataSource/views';
 import dataLayerViews from './DataLayer/views';
@@ -30,6 +33,9 @@ export const RES_BASELAYER = 'baselayer';
 export const RES_USER = 'user';
 export const RES_USERGROUP = 'usergroup';
 export const RES_PERMISSION = 'permissions';
+
+// Icon
+export const RES_ICON = 'icon';
 
 // Visu
 export const RES_DATASOURCE = 'datasource';
@@ -62,6 +68,13 @@ export const resources = [
     // requiredPermissions: 'auth.change_group',
     endpoint: 'groups',
     ...userGroupViews,
+  },
+  {
+    name: RES_ICON,
+    // Let the user edit the icons if they can edit the layers
+    moduleName: 'DataLayer',
+    endpoint: 'icon',
+    ...iconViews,
   },
   {
     name: RES_DATASOURCE,
@@ -132,6 +145,16 @@ export const config = {
       // requiredPermissions: 'auth.change_group',
       requiredModule: 'User',
       items: resources.filter(byModule('User')).map(({ name, requiredPermissions, beta }) => ({
+        label: `ra.nav.${name}_list`,
+        href: `/${name}`,
+        requiredPermissions,
+        beta,
+      })),
+    },
+    {
+      label: 'icon.project',
+      requiredModule: 'Icon',
+      items: resources.filter(byModule('Icon')).map(({ name, requiredPermissions, beta }) => ({
         label: `ra.nav.${name}_list`,
         href: `/${name}`,
         requiredPermissions,

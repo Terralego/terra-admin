@@ -592,12 +592,6 @@
         "no-source": "Please select a source before configuring style",
         "secondarylabels": "Secondary styles"
       },
-      "style-images": {
-        "tab": "Icons",
-        "name": "Name",
-        "compose": "Compose",
-        "upload": "Upload"
-      },
       "embed": {
         "tab": "Embed",
         "no-embed": "To add an embed, click on",
@@ -626,6 +620,16 @@
         "field-source": "Source field",
         "field-required": "Required",
         "field-helptext": "Help text"
+      }
+    }
+  },
+  "icon": {
+    "form": {
+      "name": "Name",
+      "file": {
+        "label": "File",
+        "compose": "Compose",
+        "upload": "Upload"
       }
     }
   },
@@ -679,6 +683,7 @@
     "nav": {
       "baselayer_list": "Base layer list",
       "user_list": "User list",
+      "icon_list": "Icon list",
       "usergroup_list": "User group list",
       "datalayer_list": "Layer list",
       "datasource_list": "Data source list",

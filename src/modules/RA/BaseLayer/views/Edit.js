@@ -6,7 +6,7 @@ import DefaultActions from '../../../../components/react-admin/DefaultActions';
 
 export const BaseLayerEdit = props => (
   <Edit
-    mutationMode="optimistic"
+    mutationMode="pessimistic"
     {...props}
     actions={<DefaultActions />}
   >

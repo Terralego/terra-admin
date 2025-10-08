@@ -17,7 +17,7 @@ export const DataSourceEdit = props => {
 
   return (
     <Edit
-      mutationMode="optimistic"
+      mutationMode="pessimistic"
       actions={<DataSourceEditActions {...props} />}
       {...props}
     >

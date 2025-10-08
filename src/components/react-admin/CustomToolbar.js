@@ -58,7 +58,7 @@ const CustomToolbar = ({
     <CancelButton redirect={redirect || basePath} className={classes.cancel} />
     <DeleteWithConfirmButton
       redirect={redirect || 'list'}
-      mutationMode="optimistic"
+      mutationMode="pessimistic"
     />
   </Toolbar>
 );

@@ -9,7 +9,7 @@ const EditSceneForm = PreventPartialData('config', SceneForm);
 
 export const SceneEdit = props => (
   <Edit
-    mutationMode="optimistic"
+    mutationMode="pessimistic"
     {...props}
     actions={<DefaultActions />}
 

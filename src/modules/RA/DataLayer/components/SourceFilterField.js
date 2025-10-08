@@ -107,7 +107,7 @@ const SourceFilterField = props => {
       if (!mountedRef.current) {
         return;
       }
-      setTotalCount(result.hits.total.value);
+      setTotalCount(result.hits?.total.value ?? 0);
     };
 
     setTotal();

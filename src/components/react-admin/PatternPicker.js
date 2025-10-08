@@ -4,7 +4,7 @@ import React from 'react';
 
 import { SketchPicker } from 'react-color';
 import tinycolor from 'tinycolor2';
-import { FormControl, Button, MenuItem, Paper, Select } from '@material-ui/core';
+import { FormControl, Button, MenuItem, Paper, Select, InputLabel } from '@material-ui/core';
 import { useTranslate } from 'react-admin';
 import useCustomStyleImages from '../../hooks/useCustomStyleImages';
 
@@ -54,15 +54,10 @@ const PatternPicker = ({
 
   React.useEffect(
     () => {
-      if (!showPicker && preview) {
-        onChange(preview);
+      if (!sourceImage) {
+        return;
       }
-    },
-    [showPicker, onChange, preview],
-  );
 
-  React.useEffect(
-    () => {
       const canvas = document.createElement('canvas');
       const image = new Image();
       image.crossOrigin = 'anonymous';
@@ -103,7 +98,11 @@ const PatternPicker = ({
     <>
       <Button
         variant="outlined"
-        onClick={() => !disabled && setShowPicker(prevShowPicker => !prevShowPicker)}
+        onClick={() => {
+          if (!disabled) {
+            setShowPicker(true);
+          }
+        }}
         {...props}
       />
 
@@ -112,46 +111,63 @@ const PatternPicker = ({
           <div style={cover} onClick={() => setShowPicker(false)} />
 
           <div style={popover} className="popover">
-            <Paper style={{ marginBottom: 10 }}>
-              <FormControl variant="outlined" size="small" fullWidth>
-                <Select onChange={handleSourceChange}>
-                  {customStyleImages.map(({ file, name, slug, data }) => (
-                    <MenuItem key={slug} value={file || data}>
-                      {slug || name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Paper>
+            <Paper style={{ padding: 10 }}>
+              <Paper style={{ marginBottom: 10 }}>
+                <FormControl variant="outlined" size="small" fullWidth>
+                  <InputLabel id="pattern-picker-label">{translate('icon.form.file.picker')}</InputLabel>
+                  <Select
+                    onChange={handleSourceChange}
+                    value={sourceImage}
+                    labelId="pattern-picker-label"
+                    label={translate('icon.form.file.picker')}
+                    style={{ minWidth: 250 }}
+                  >
+                    {customStyleImages.map(({ file, name, slug, data }) => (
+                      <MenuItem key={slug} value={file || data}>
+                        {slug || name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Paper>
 
-            <SketchPicker
-              color={currentColor}
-              presetColors={presetColors}
-              onChange={handleColorChange}
-              onChangeComplete={handleColorChange}
-            />
+              {sourceImage ? (
+                <>
+                  <SketchPicker
+                    color={currentColor}
+                    presetColors={presetColors}
+                    onChange={handleColorChange}
+                    onChangeComplete={handleColorChange}
+                    width={250}
+                  />
+                  <Paper style={{ marginTop: 10, padding: 10 }}>
+                    <img
+                      src={preview}
+                      alt=""
+                      style={{
+                        maxWidth: 128,
+                        display: 'block',
+                        margin: 'auto',
+                      }}
+                    />
+                  </Paper>
+                </>
+              ) : null}
 
-            <Paper style={{ marginTop: 10, padding: 10 }}>
-              <img
-                src={preview}
-                alt=""
-                style={{
-                  maxWidth: 128,
-                  display: 'block',
-                  margin: 'auto',
+
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginTop: 10 }}
+                fullWidth
+                onClick={() => {
+                  onChange(preview);
+                  setShowPicker(false);
                 }}
-              />
+              >
+                {translate('ra.action.validate')}
+              </Button>
             </Paper>
-
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginTop: 10 }}
-              fullWidth
-              onClick={() => setShowPicker(false)}
-            >
-              {translate('ra.action.validate')}
-            </Button>
           </div>
         </>
       )}

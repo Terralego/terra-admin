@@ -7,10 +7,10 @@ import DefaultActions from '../../../../components/react-admin/DefaultActions';
 export const ViewpointEdit = props => (
   <Edit
     {...props}
-    mutationMode="optimistic"
+    mutationMode="pessimistic"
     actions={<DefaultActions />}
   >
-    <CityFields edit />
+    <CityFields />
   </Edit>
 );
 

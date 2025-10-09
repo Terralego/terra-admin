@@ -15,10 +15,10 @@ export const CampaignEdit = ({ staticContext, ...props }) => {
   return (
     <Edit
       {...props}
-      mutationMode="optimistic"
+      mutationMode="pessimistic"
       actions={<CampaignActions redirect={redirect} />}
     >
-      <EditCampaignFields edit redirect={redirect} />
+      <EditCampaignFields redirect={redirect} />
     </Edit>
   );
 };

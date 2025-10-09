@@ -9,7 +9,7 @@ const EditDataLayerForm = PreventPartialData('description', DataLayerForm);
 
 export const DataLayerEdit = props => (
   <Edit
-    mutationMode="optimistic"
+    mutationMode="pessimistic"
     {...props}
     actions={<DefaultActions />}
   >

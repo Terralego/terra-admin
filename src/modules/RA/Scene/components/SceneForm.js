@@ -10,7 +10,6 @@ import {
   ImageField,
   NumberInput,
   SelectInput,
-  SimpleForm,
   TextInput,
   FormDataConsumer,
   required,
@@ -27,6 +26,7 @@ import SceneFormNameField from './SceneFormNameField';
 import { RES_BASELAYER } from '../../ra-modules';
 
 import MapExtentInput from './MapExtentInput';
+import ServerSideSimpleForm from '../../../../components/react-admin/ServerSideSimpleForm';
 
 const styles = {
   inline: {
@@ -51,14 +51,14 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
   );
 };
 
-const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
+const SceneForm = ({ translate: t, classes, ...props }) => {
   const { record } = props;
-
+  const edit = record.id !== undefined;
   /* sanitizeEmptyValues is false for this form to prevent
    * this issue with the layer tree https://github.com/marmelab/react-admin/issues/5427
    */
   return (
-    <SimpleForm {...props} sanitizeEmptyValues={false}>
+    <ServerSideSimpleForm {...props} sanitizeEmptyValues={false}>
       {edit && <TextInput disabled source="id" />}
 
       {isObjectEmpty(record) && (
@@ -111,7 +111,7 @@ const SceneForm = ({ edit = false, translate: t, classes, ...props }) => {
           (<ReportField label={t('view.form.import-report')} source="config.report" {...rest} />)}
       </FormDataConsumer>
 
-    </SimpleForm>
+    </ServerSideSimpleForm>
   );
 };
 

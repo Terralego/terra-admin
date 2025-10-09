@@ -7,7 +7,6 @@ import {
   NumberInput,
   ReferenceInput,
   SelectInput,
-  TabbedForm,
   TextInput,
   required,
   ReferenceField,
@@ -29,6 +28,7 @@ import PictureState from './PictureState';
 import { ISODateFormat } from '../../../../utils/date';
 
 import PictureInput from './PictureInput';
+import ServerSideTabbedForm from '../../../../components/react-admin/ServerSideTabbedForm';
 
 const useStyles = makeStyles({
   inline: {
@@ -56,7 +56,7 @@ const PictureFields = ({ edit, mapConfig, location, ...props }) => {
   const { record: { state } } = props;
 
   return (
-    <TabbedForm {...props} toolbar={<CustomToolbar />} initialValues={{ state: 'draft' }}>
+    <ServerSideTabbedForm {...props} toolbar={<CustomToolbar />} initialValues={{ state: 'draft' }}>
       <FormTab label="resources.picture.tabs.metadata">
 
         <PictureInput />
@@ -167,7 +167,7 @@ const PictureFields = ({ edit, mapConfig, location, ...props }) => {
           style={{ width: '50%' }}
         />
       </FormTab>
-    </TabbedForm>
+    </ServerSideTabbedForm>
   );
 };
 

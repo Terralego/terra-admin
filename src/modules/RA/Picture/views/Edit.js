@@ -14,10 +14,10 @@ export const PictureEdit = ({ staticContext, ...props }) => {
   return (
     <Edit
       {...props}
-      mutationMode="optimistic"
+      mutationMode="pessimistic"
       actions={<DefaultActions redirect={redirect} />}
     >
-      <PictureFields edit redirect={redirect} />
+      <PictureFields redirect={redirect} />
     </Edit>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ArrayInput, FormTab, SimpleFormIterator, TabbedForm, TabbedFormTabs } from 'react-admin';
+import { ArrayInput, FormTab, SimpleFormIterator, TabbedFormTabs } from 'react-admin';
 
 import CustomFormTab from '../../../../components/react-admin/CustomFormTab';
 
@@ -15,6 +15,7 @@ import ReportingTab from './tabs/ReportingTab';
 import StyleTab from './tabs/StyleTab';
 import TableTab from './tabs/TableTab';
 import WidgetsTab from './tabs/WidgetsTab/WidgetsTab';
+import ServerSideTabbedForm from '../../../../components/react-admin/ServerSideTabbedForm';
 
 const initialErrorState = {
   definition: false,
@@ -154,7 +155,7 @@ const DataLayerForm = React.memo(props => {
   }, []);
 
   return (
-    <TabbedForm
+    <ServerSideTabbedForm
       tabs={<TabbedFormTabs variant="scrollable" scrollButtons="auto" />}
       sanitizeEmptyValues={false}
       {...props}
@@ -258,7 +259,7 @@ const DataLayerForm = React.memo(props => {
       >
         <ReportingTab />
       </CustomFormTab>
-    </TabbedForm>
+    </ServerSideTabbedForm>
   );
 });
 

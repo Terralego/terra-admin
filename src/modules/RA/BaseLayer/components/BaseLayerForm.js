@@ -9,7 +9,6 @@ import {
   required,
   NumberInput,
   SelectInput,
-  SimpleForm,
   TextInput,
   SimpleFormIterator,
   translate,
@@ -21,6 +20,7 @@ import ZoomInput from '../../../../components/react-admin/ZoomInput';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
 import compose from '../../../../utils/compose';
+import ServerSideSimpleForm from '../../../../components/react-admin/ServerSideSimpleForm';
 
 const styles = {
   inline: {
@@ -93,7 +93,7 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
   }, [t, validateURL]);
 
   return (
-    <SimpleForm sanitizeEmptyValues={false} {...props}>
+    <ServerSideSimpleForm sanitizeEmptyValues={false} {...props}>
       <TextInput source="name" label="baseLayer.form.name" validate={required()} />
 
       <BaseLayerType
@@ -165,7 +165,7 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
         </FieldGroup>
       )}
 
-    </SimpleForm>
+    </ServerSideSimpleForm>
   );
 };
 export default compose(

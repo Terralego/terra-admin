@@ -23,7 +23,6 @@ import {
   ReferenceArrayField,
   required,
   SimpleFormIterator,
-  TabbedForm,
   TextField,
   SelectInput,
   TextInput,
@@ -45,6 +44,7 @@ import { useGetListAllPages } from '../../../../utils/react-admin/hooks';
 import useAppSettings from '../../../../hooks/useAppSettings';
 
 import themeRenderer from './themeRenderer';
+import ServerSideTabbedForm from '../../../../components/react-admin/ServerSideTabbedForm';
 
 const styles = {
   inline: {
@@ -162,7 +162,7 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
   }, [getRemoteData]);
 
   return (
-    <TabbedForm
+    <ServerSideTabbedForm
       defaultValue={{
         point: {
           coordinates: undefined,
@@ -322,7 +322,7 @@ const ViewpointFields = ({ translate: t, edit, classes, mapConfig, record, ...pr
           </ReferenceArrayField>
         </FormTab>
       )}
-    </TabbedForm>
+    </ServerSideTabbedForm>
   );
 };
 

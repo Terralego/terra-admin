@@ -2,12 +2,12 @@ import React from 'react';
 import {
   TextInput,
   SelectInput,
-  SimpleForm,
 } from 'react-admin';
 
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import useAppSettings from '../../../../hooks/useAppSettings';
 import optionRenderer from './categoryRenderer';
+import ServerSideSimpleForm from '../../../../components/react-admin/ServerSideSimpleForm';
 
 const UserFields = props => {
   const { modules:
@@ -17,7 +17,7 @@ const UserFields = props => {
       } = {},
     } = {} } = useAppSettings();
   return (
-    <SimpleForm {...props}>
+    <ServerSideSimpleForm {...props}>
       <TextInput
         source="label"
       />
@@ -26,7 +26,7 @@ const UserFields = props => {
         choices={themeCategories}
         optionText={optionRenderer}
       />
-    </SimpleForm>
+    </ServerSideSimpleForm>
   );
 };
 

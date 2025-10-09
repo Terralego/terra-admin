@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  TabbedForm,
   TextInput,
   BooleanInput,
   SelectInput,
@@ -18,6 +17,7 @@ import { fieldTypeChoices } from '..';
 import MainTab from './MainTab';
 import ReportTab from './ReportTab';
 import GeneralInfoTab from './GeneralInfoTab';
+import ServerSideTabbedForm from '../../../../components/react-admin/ServerSideTabbedForm';
 
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => {
@@ -25,7 +25,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => {
   // report is null when a source has been created and no refresh has been done
   const errors = report?.errors ?? [];
   return (
-    <TabbedForm {...props}>
+    <ServerSideTabbedForm {...props}>
       <FormTab label="datasource.form.definition">
         <MainTab />
       </FormTab>
@@ -59,7 +59,7 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => {
       <FormTab label="datasource.form.infos.title">
         <GeneralInfoTab translate={t} />
       </FormTab>
-    </TabbedForm>
+    </ServerSideTabbedForm>
   );
 };
 

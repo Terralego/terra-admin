@@ -10,7 +10,7 @@ export const ViewpointEdit = props => (
     mutationMode="pessimistic"
     actions={<DefaultActions />}
   >
-    <CityFields edit />
+    <CityFields />
   </Edit>
 );
 

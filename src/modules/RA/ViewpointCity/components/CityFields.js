@@ -1,17 +1,17 @@
 import React from 'react';
 import {
   TextInput,
-  SimpleForm,
 } from 'react-admin';
 
 import { connectAuthProvider } from '@terralego/core/modules/Auth';
+import ServerSideSimpleForm from '../../../../components/react-admin/ServerSideSimpleForm';
 
 const UserFields = props => (
-  <SimpleForm {...props}>
+  <ServerSideSimpleForm {...props}>
     <TextInput
       source="label"
     />
-  </SimpleForm>
+  </ServerSideSimpleForm>
 );
 
 export default connectAuthProvider('user')(UserFields);

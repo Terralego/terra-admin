@@ -10,6 +10,11 @@ const httpClient = (url, options = {}) =>
       token: `JWT ${auth.getToken()}`,
     },
     ...options,
+  }).catch(e => {
+    if (e.body !== undefined) {
+      e.message = `Error: ${JSON.stringify(e.body)}`;
+    }
+    throw e;
   });
 
 export default (...args) => drfProvider(Api.host, httpClient)(...args);

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   TextInput,
-  SimpleForm,
   BooleanInput,
   ReferenceArrayInput,
   SelectArrayInput,
@@ -22,6 +21,7 @@ import UserFieldsHelp from './UserFieldsHelp';
 
 import { RES_USERGROUP } from '../../ra-modules';
 import UserPasswordInput from './UserPasswordInput';
+import ServerSideSimpleForm from '../../../../components/react-admin/ServerSideSimpleForm';
 
 const useStyles = makeStyles({
   inline: {
@@ -43,7 +43,7 @@ const UserFields = ({ user: { is_superuser: isSuperUser } = {}, ...props }) => {
   };
 
   return (
-    <SimpleForm {...props}>
+    <ServerSideSimpleForm {...props}>
       <TextInput
         source="properties.first_name"
         label="user.form.firstname"
@@ -120,7 +120,7 @@ const UserFields = ({ user: { is_superuser: isSuperUser } = {}, ...props }) => {
       </>
 
       <UserFieldsHelp />
-    </SimpleForm>
+    </ServerSideSimpleForm>
   );
 };
 

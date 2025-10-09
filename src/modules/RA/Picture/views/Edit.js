@@ -17,7 +17,7 @@ export const PictureEdit = ({ staticContext, ...props }) => {
       mutationMode="pessimistic"
       actions={<DefaultActions redirect={redirect} />}
     >
-      <PictureFields edit redirect={redirect} />
+      <PictureFields redirect={redirect} />
     </Edit>
   );
 };

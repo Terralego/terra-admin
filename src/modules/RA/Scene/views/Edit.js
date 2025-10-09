@@ -14,7 +14,7 @@ export const SceneEdit = props => (
     actions={<DefaultActions />}
 
   >
-    <EditSceneForm edit />
+    <EditSceneForm />
   </Edit>
 );
 

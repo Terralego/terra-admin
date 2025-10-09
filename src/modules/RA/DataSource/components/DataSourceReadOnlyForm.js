@@ -2,14 +2,14 @@ import React from 'react';
 import {
   TextInput,
   Labeled,
-  SimpleForm,
   translate,
 } from 'react-admin';
 
 import DataSourceMainFields from './DataSourceMainFields';
+import ServerSideSimpleForm from '../../../../components/react-admin/ServerSideSimpleForm';
 
 const DataSourceReadOnlyForm = ({ translate: t, ...props }) => (
-  <SimpleForm {...props} toolbar={null}>
+  <ServerSideSimpleForm {...props} toolbar={null}>
     <Labeled label="datasource.form.read-only" fullWidth />
 
     <DataSourceMainFields disabled />
@@ -22,7 +22,7 @@ const DataSourceReadOnlyForm = ({ translate: t, ...props }) => (
       helperText={t('datasource.form.uid-field-help')}
       fullWidth
     />
-  </SimpleForm>
+  </ServerSideSimpleForm>
 );
 
 export default translate(DataSourceReadOnlyForm);

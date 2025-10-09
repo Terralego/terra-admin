@@ -5,7 +5,6 @@ import {
   FormTab,
   ReferenceInput,
   SelectInput,
-  TabbedForm,
   TextInput,
 } from 'react-admin';
 
@@ -23,6 +22,7 @@ import CampaignState from './CampaignState';
 
 import UserNameField from '../../User/components/UserNameField';
 import StatsBar from './StatsBar';
+import ServerSideTabbedForm from '../../../../components/react-admin/ServerSideTabbedForm';
 
 const useStyles = makeStyles({
   inline: {
@@ -47,7 +47,7 @@ const CampaignFields = ({ edit, location, ...props }) => {
   const isEditable = edit && state  !== 'draft';
 
   return (
-    <TabbedForm
+    <ServerSideTabbedForm
       {...props}
       toolbar={<CustomToolbar />}
       initialValues={{ viewpoints: [], state: 'draft' }}
@@ -95,7 +95,7 @@ const CampaignFields = ({ edit, location, ...props }) => {
 
         <ViewpointGrid />
       </FormTab>
-    </TabbedForm>
+    </ServerSideTabbedForm>
   );
 };
 

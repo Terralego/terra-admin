@@ -2,6 +2,7 @@
 =======================
 
   * Allow to change user passwords
+  * Added server side form validation
 
 5.1.0-rc.3 / 2023-04-18
 =======================
@@ -1119,4 +1120,3 @@
 ==================
 
   * First major release
-

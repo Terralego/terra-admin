@@ -630,6 +630,18 @@
         "label": "File",
         "picker": "Choose an icon",
         "compose": "Compose",
+        "library": {
+          "button": "Select from library",
+          "dialog": {
+            "title": "Select from an icon library",
+            "categories": "Categories",
+            "icons": "Icons",
+            "selected": "Selected",
+            "error": "An error occured while fetching the icons",
+            "errorImage": "An error occured while fetching the image",
+            "cancel": "Cancel"
+          }
+        },
         "upload": "Upload"
       }
     }

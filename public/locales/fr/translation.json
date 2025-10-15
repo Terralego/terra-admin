@@ -682,6 +682,18 @@
         "label": "Fichier",
         "picker": "Choisir une icône",
         "compose": "Composer",
+        "library": {
+          "button": "Choisir depuis une bibliothèque",
+          "dialog": {
+            "title": "Choisir depuis une bibliothèque",
+            "categories": "Catégories",
+            "icons": "Icônes",
+            "selected": "Sélectionnées",
+            "error": "Une erreur est survenue lors de la récupération des icônes",
+            "errorImage": "Une erreur est survenue lors de la récupération de l'image",
+            "cancel": "Annuler"
+          }
+        },
         "upload": "Envoyer"
       }
     }

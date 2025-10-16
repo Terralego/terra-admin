@@ -388,31 +388,31 @@
       "error": "Error"
     },
     "tooltip": {
-     "times": "Times",
-     "started": "Started on",
-     "finished": "Finished on",
-     "notStarted": "Not started yet",
-     "notFinished": "Not finished yet",
-     "lines": {
-       "singular": "line",
-       "plural": "lines"
-     },
-     "added": {
-       "singular": "line added",
-       "plural": "lines added"
-     },
-     "modified": {
-       "singular": "line modified",
-       "plural": "lines modified"
-     },
-     "deleted": {
-       "singular": "line deleted",
-       "plural": "lines deleted"
-     },
-     "errors": {
-       "singular": "error",
-       "plural": "errors"
-     }
+      "times": "Times",
+      "started": "Started on",
+      "finished": "Finished on",
+      "notStarted": "Not started yet",
+      "notFinished": "Not finished yet",
+      "lines": {
+        "singular": "line",
+        "plural": "lines"
+      },
+      "added": {
+        "singular": "line added",
+        "plural": "lines added"
+      },
+      "modified": {
+        "singular": "line modified",
+        "plural": "lines modified"
+      },
+      "deleted": {
+        "singular": "line deleted",
+        "plural": "lines deleted"
+      },
+      "errors": {
+        "singular": "error",
+        "plural": "errors"
+      }
     }
   },
   "datalayer": {
@@ -425,7 +425,7 @@
       "data-source": "Data source",
       "definition": "Definition",
       "source-filter": {
-        "label":"Source filter",
+        "label": "Source filter",
         "helper": "You can use an expression to filter the source data. ex: « name == \"john\" and age > 18 »",
         "error": "Your input can't be parsed, please fix it.",
         "error-invalid": "Your input is invalid, see error below.",
@@ -592,12 +592,6 @@
         "no-source": "Please select a source before configuring style",
         "secondarylabels": "Secondary styles"
       },
-      "style-images": {
-        "tab": "Icons",
-        "name": "Name",
-        "compose": "Compose",
-        "upload": "Upload"
-      },
       "embed": {
         "tab": "Embed",
         "no-embed": "To add an embed, click on",
@@ -626,6 +620,29 @@
         "field-source": "Source field",
         "field-required": "Required",
         "field-helptext": "Help text"
+      }
+    }
+  },
+  "icon": {
+    "form": {
+      "name": "Name",
+      "file": {
+        "label": "File",
+        "picker": "Choose an icon",
+        "compose": "Compose",
+        "library": {
+          "button": "Select from library",
+          "dialog": {
+            "title": "Select from an icon library",
+            "categories": "Categories",
+            "icons": "Icons",
+            "selected": "Selected",
+            "error": "An error occured while fetching the icons",
+            "errorImage": "An error occured while fetching the image",
+            "cancel": "Cancel"
+          }
+        },
+        "upload": "Upload"
       }
     }
   },
@@ -679,6 +696,7 @@
     "nav": {
       "baselayer_list": "Base layer list",
       "user_list": "User list",
+      "icon_list": "Icon list",
       "usergroup_list": "User group list",
       "datalayer_list": "Layer list",
       "datasource_list": "Data source list",
@@ -715,7 +733,7 @@
       "start": "Start",
       "close": "Close",
       "submit": "Submit",
-      "validate": "Vaidate",
+      "validate": "Validate",
       "refuse": "Refuse",
       "unselect": "Unselect"
     },

@@ -1,59 +1,20 @@
 import React from 'react';
 
 import { useTranslate, RadioButtonGroupInput } from 'react-admin';
-import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import SizeStyleField from './SizeStyleField';
 import IconStyleField from './IconStyleField';
 
-import useSprites from '../../../../../../../hooks/useSprites';
-import useCustomStyleImages from '../../../../../../../hooks/useCustomStyleImages';
-
 import styles from './styles';
+import useStyleImagesOptions from '../../../../../../../hooks/useStyleImagesOptions';
 
 const useStyles = makeStyles(styles);
 
 const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
   const classes = useStyles();
   const translate = useTranslate();
-  const defaultSprites = useSprites();
-  const customStyleImages = useCustomStyleImages();
-
-  const customStyleImagesChoices = React.useMemo(
-    () => customStyleImages.map(customImage => ({
-      id: customImage.slug,
-      name: (
-        <>
-          {customImage.name}
-          <Box
-            component="img"
-            src={customImage.file}
-            sx={{ maxWidth: 24, maxHeight: 24, ml: 'auto' }}
-          />
-        </>
-      ),
-    })),
-    [customStyleImages],
-  );
-
-  const iconChoices = React.useMemo(
-    () => [
-      {
-        id: 'separator-custom',
-        name: translate('style-editor.icon.icon-image-custom'),
-        disabled: true,
-      },
-      ...customStyleImagesChoices,
-      {
-        id: 'separator-native',
-        name: translate('style-editor.icon.icon-image-native'),
-        disabled: true,
-      },
-      ...defaultSprites,
-    ],
-    [translate, customStyleImagesChoices, defaultSprites],
-  );
+  const iconChoices = useStyleImagesOptions();
 
   return (
     <>

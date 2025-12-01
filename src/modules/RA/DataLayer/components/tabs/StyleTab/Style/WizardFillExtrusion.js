@@ -77,6 +77,7 @@ const WizardFillExtrusion = ({ path, fields, getValuesOfProperty }) => {
             choices={[
               { id: 'none', name: translate('style-editor.style-type.none') },
               { id: 'fixed', name: translate('style-editor.style-type.fixed') },
+              { id: 'variable', name: translate('style-editor.style-type.variable') },
             ]}
             helperText={false}
             initialValue="none"

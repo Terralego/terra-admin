@@ -63,6 +63,7 @@ const WizardFillExtrusion = ({ path, fields, getValuesOfProperty }) => {
           path={`${path}.style.fill_extrusion_height`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          canGenerateLegend={false}
         />
       </div>
 
@@ -88,6 +89,7 @@ const WizardFillExtrusion = ({ path, fields, getValuesOfProperty }) => {
           path={`${path}.style.fill_extrusion_base`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          canGenerateLegend={false}
         />
       </div>
 

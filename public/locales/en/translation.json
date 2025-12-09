@@ -1020,7 +1020,14 @@
         "json-editor": "JSON editor",
         "label": "Label",
         "type": "Type",
-        "graph-type": "Graph type",
+        "graph": {
+          "type": "Graph type",
+          "field": {
+            "categoric": "String category field",
+            "value": "Integer value field"
+          },
+          "aggregation_type": "Aggregation Type"
+        },
         "field": {
           "integer": "Integer Field",
           "string": "String Field"

@@ -5,6 +5,100 @@ import { useField } from 'react-final-form';
 import { fieldTypes } from '../../../../DataSource';
 import DataFieldInput from './DataFieldInput';
 
+const AVAILABLE_GRAPHS = [
+  { id: 'bar', name: 'Bar' },
+  { id: 'pie', name: 'Pie' },
+];
+
+function DetailsInputs ({ source, type }) {
+  const { input: { value: fields } } = useField('fields');
+
+  const integerFields = useMemo(() => fields.filter(f => fieldTypes[f.data_type] === 'Integer'), [fields]);
+  const stringFields = useMemo(() => fields.filter(f => fieldTypes[f.data_type] === 'String'), [fields]);
+
+  switch (type) {
+    case 'distribution':
+      return (
+        <>
+          <DataFieldInput
+            fields={stringFields}
+            label="resources.datalayer.widgets-editor.field.string"
+            required
+            source={`${source}.field`}
+            translateChoice={false}
+          />
+          <SelectInput
+            required
+            source={`${source}.graph.type`}
+            label="resources.datalayer.widgets-editor.graph.type"
+            choices={AVAILABLE_GRAPHS}
+            defaultValue="bar"
+            translateChoice={false}
+            helperText={false}
+          />
+        </>
+      );
+    case 'categoric':
+      return (
+        <>
+          <DataFieldInput
+            fields={stringFields}
+            label="resources.datalayer.widgets-editor.graph.field.categoric"
+            required
+            source={`${source}.field`}
+            translateChoice={false}
+          />
+          <DataFieldInput
+            fields={integerFields}
+            label="resources.datalayer.widgets-editor.graph.field.value"
+            required
+            source={`${source}.graph.value_field`}
+            translateChoice={false}
+          />
+          <SelectInput
+            required
+            source={`${source}.graph.aggregation_type`}
+            label="resources.datalayer.widgets-editor.graph.aggregation_type"
+            choices={[
+              { id: 'sum', name: 'Sum' },
+              { id: 'avg', name: 'Average' },
+              { id: 'value_count', name: 'Count' },
+            ]}
+            translateChoice={false}
+            helperText={false}
+          />
+          <SelectInput
+            required
+            source={`${source}.graph.type`}
+            label="resources.datalayer.widgets-editor.graph.type"
+            choices={AVAILABLE_GRAPHS}
+            defaultValue="bar"
+            translateChoice={false}
+            helperText={false}
+          />
+        </>
+      );
+    default:
+      return (
+        <>
+          <DataFieldInput
+            fields={integerFields}
+            label="resources.datalayer.widgets-editor.field.integer"
+            required
+            source={`${source}.field`}
+            translateChoice={false}
+          />
+          <TextInput
+            label="resources.datalayer.widgets-editor.template"
+            required
+            defaultValue="{{value}}"
+            source={`${source}.template`}
+          />
+        </>
+      );
+  }
+}
+
 const WidgetItemInput = ({ source }) => {
   const {
     input: { onChange: onChangeName },
@@ -13,17 +107,6 @@ const WidgetItemInput = ({ source }) => {
   const {
     input: { value: typeValue },
   } = useInput({ source: `${source}.type` });
-
-  const { input: { value: fields } } = useField('fields');
-
-  const isStringFieldNeeded = typeValue === 'terms';
-
-  const filteredFields = useMemo(() => {
-    if (isStringFieldNeeded) {
-      return fields.filter(f => fieldTypes[f.data_type] === 'String');
-    }
-    return fields.filter(f => fieldTypes[f.data_type] === 'Integer');
-  }, [fields, isStringFieldNeeded]);
 
   return (
     <div
@@ -51,39 +134,13 @@ const WidgetItemInput = ({ source }) => {
           { id: 'sum', name: 'Sum' },
           { id: 'avg', name: 'Average' },
           { id: 'value_count', name: 'Count' },
-          { id: 'terms', name: 'Distribution' },
+          { id: 'distribution', name: 'Distribution' },
+          { id: 'categoric', name: 'Categoric' },
         ]}
         translateChoice={false}
         helperText={false}
       />
-      <DataFieldInput
-        fields={filteredFields}
-        label={`resources.datalayer.widgets-editor.field.${isStringFieldNeeded ? 'string' : 'integer'}`}
-        required
-        source={`${source}.field`}
-        translateChoice={false}
-      />
-      {typeValue !== 'terms' ? (
-        <TextInput
-          label="resources.datalayer.widgets-editor.template"
-          required
-          defaultValue="{{value}}"
-          source={`${source}.template`}
-        />
-      ) : (
-        <SelectInput
-          required
-          source={`${source}.graph.type`}
-          label="resources.datalayer.widgets-editor.graph-type"
-          choices={[
-            { id: 'bar', name: 'Bar' },
-            { id: 'pie', name: 'Pie' },
-          ]}
-          defaultValue="bar"
-          translateChoice={false}
-          helperText={false}
-        />
-      )}
+      <DetailsInputs source={source} type={typeValue} />
     </div>
   );
 };

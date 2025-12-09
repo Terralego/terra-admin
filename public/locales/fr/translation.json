@@ -1074,7 +1074,14 @@
         "json-editor": "Éditeur JSON",
         "label": "Label",
         "type": "Type",
-        "graph-type": "Type de graphique",
+        "graph": {
+          "type": "Type de graphique",
+          "field": {
+            "categoric": "Champ de catégorie textuel",
+            "value": "Champ de valeur numérique"
+          },
+          "aggregation_type": "Aggregation Type"
+        },
         "field": {
           "integer": "Champ numérique",
           "string": "Champ textuel"

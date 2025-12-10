@@ -11,6 +11,27 @@ const AVAILABLE_GRAPHS = [
   { id: 'pie', name: 'Pie' },
 ];
 
+function UnitsInputs ({ source }) {
+  const {
+    input: { value: percentValue },
+  } = useInput({ source: `${source}.graph.percent` });
+
+  return (
+    <>
+      <BooleanInput
+        label="resources.datalayer.widgets-editor.graph.percent"
+        source={`${source}.graph.percent`}
+      />
+      {!percentValue && (
+        <TextInput
+          label="resources.datalayer.widgets-editor.graph.unit"
+          source={`${source}.graph.unit`}
+        />
+      )}
+    </>
+  );
+}
+
 function DetailsInputs ({ source, type }) {
   const { input: { value: fields } } = useField('fields');
 
@@ -37,9 +58,8 @@ function DetailsInputs ({ source, type }) {
             translateChoice={false}
             helperText={false}
           />
-          <BooleanInput
-            label="resources.datalayer.widgets-editor.graph.percent"
-            source={`${source}.graph.percent`}
+          <UnitsInputs
+            source={source}
           />
         </>
       );
@@ -81,9 +101,8 @@ function DetailsInputs ({ source, type }) {
             translateChoice={false}
             helperText={false}
           />
-          <BooleanInput
-            label="resources.datalayer.widgets-editor.graph.percent"
-            source={`${source}.graph.percent`}
+          <UnitsInputs
+            source={source}
           />
         </>
       );
@@ -119,9 +138,8 @@ function DetailsInputs ({ source, type }) {
             translateChoice={false}
             helperText={false}
           />
-          <BooleanInput
-            label="resources.datalayer.widgets-editor.graph.percent"
-            source={`${source}.graph.percent`}
+          <UnitsInputs
+            source={source}
           />
         </>
       );

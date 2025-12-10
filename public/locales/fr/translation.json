@@ -1077,6 +1077,7 @@
         "graph": {
           "type": "Type de graphique",
           "percent": "Afficher en pourcentage",
+          "unit": "Unité",
           "field": {
             "categoric": "Champ de catégorie textuel",
             "numeric": "Champs numériques",

@@ -1023,6 +1023,7 @@
         "graph": {
           "type": "Graph type",
           "percent": "Display as percents",
+          "unit": "Unit",
           "field": {
             "categoric": "String category field",
             "numeric": "Integer fields",

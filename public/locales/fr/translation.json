@@ -1074,6 +1074,7 @@
         "json-editor": "Éditeur JSON",
         "label": "Label",
         "type": "Type",
+        "decimals": "Nombre de chiffres après la virgule",
         "graph": {
           "type": "Type de graphique",
           "percent": "Afficher en pourcentage",

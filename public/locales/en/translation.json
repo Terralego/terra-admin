@@ -1020,6 +1020,7 @@
         "json-editor": "JSON editor",
         "label": "Label",
         "type": "Type",
+        "decimals": "Number of decimal digits",
         "graph": {
           "type": "Graph type",
           "percent": "Display as percents",

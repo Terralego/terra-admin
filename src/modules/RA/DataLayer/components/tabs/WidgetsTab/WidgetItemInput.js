@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { BooleanInput, SelectInput, TextInput, useInput } from 'react-admin';
+import { BooleanInput, NumberInput, SelectInput, TextInput, useInput } from 'react-admin';
 import { useField } from 'react-final-form';
 import { fieldTypes } from '../../../../DataSource';
 import DataFieldInput from './DataFieldInput';
@@ -205,6 +205,10 @@ const WidgetItemInput = ({ source }) => {
         ]}
         translateChoice={false}
         helperText={false}
+      />
+      <NumberInput
+        label="resources.datalayer.widgets-editor.decimals"
+        source={`${source}.decimals`}
       />
       <DetailsInputs source={source} type={typeValue} />
     </div>

@@ -6,7 +6,8 @@ import { fieldTypes } from '../../../../DataSource';
 import DataFieldInput from './DataFieldInput';
 
 const AVAILABLE_GRAPHS = [
-  { id: 'bar', name: 'Bar' },
+  { id: 'bars', name: 'Bars' },
+  { id: 'stacked-bars', name: 'Stacked Bars' },
   { id: 'pie', name: 'Pie' },
 ];
 

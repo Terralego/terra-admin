@@ -1078,6 +1078,7 @@
           "type": "Type de graphique",
           "field": {
             "categoric": "Champ de catégorie textuel",
+            "numeric": "Champs numériques",
             "value": "Champ de valeur numérique"
           },
           "aggregation_type": "Aggregation Type"

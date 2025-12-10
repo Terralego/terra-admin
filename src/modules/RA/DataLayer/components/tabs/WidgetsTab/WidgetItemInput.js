@@ -78,6 +78,40 @@ function DetailsInputs ({ source, type }) {
           />
         </>
       );
+    case 'numeric':
+      return (
+        <>
+          <DataFieldInput
+            fields={integerFields}
+            label="resources.datalayer.widgets-editor.graph.field.numeric"
+            required
+            source={`${source}.graph.value_field`}
+            translateChoice={false}
+            multiple
+          />
+          <SelectInput
+            required
+            source={`${source}.graph.aggregation_type`}
+            label="resources.datalayer.widgets-editor.graph.aggregation_type"
+            choices={[
+              { id: 'sum', name: 'Sum' },
+              { id: 'avg', name: 'Average' },
+              { id: 'value_count', name: 'Count' },
+            ]}
+            translateChoice={false}
+            helperText={false}
+          />
+          <SelectInput
+            required
+            source={`${source}.graph.type`}
+            label="resources.datalayer.widgets-editor.graph.type"
+            choices={AVAILABLE_GRAPHS}
+            defaultValue="bar"
+            translateChoice={false}
+            helperText={false}
+          />
+        </>
+      );
     default:
       return (
         <>
@@ -136,6 +170,7 @@ const WidgetItemInput = ({ source }) => {
           { id: 'value_count', name: 'Count' },
           { id: 'distribution', name: 'Distribution' },
           { id: 'categoric', name: 'Categoric' },
+          { id: 'numeric', name: 'Numeric' },
         ]}
         translateChoice={false}
         helperText={false}

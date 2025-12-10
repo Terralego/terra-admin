@@ -1024,6 +1024,7 @@
           "type": "Graph type",
           "field": {
             "categoric": "String category field",
+            "numeric": "Integer fields",
             "value": "Integer value field"
           },
           "aggregation_type": "Aggregation Type"

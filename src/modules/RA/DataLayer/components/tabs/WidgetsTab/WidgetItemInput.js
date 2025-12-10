@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { SelectInput, TextInput, useInput } from 'react-admin';
+import { BooleanInput, SelectInput, TextInput, useInput } from 'react-admin';
 import { useField } from 'react-final-form';
 import { fieldTypes } from '../../../../DataSource';
 import DataFieldInput from './DataFieldInput';
@@ -36,6 +36,10 @@ function DetailsInputs ({ source, type }) {
             defaultValue="bar"
             translateChoice={false}
             helperText={false}
+          />
+          <BooleanInput
+            label="resources.datalayer.widgets-editor.graph.percent"
+            source={`${source}.graph.percent`}
           />
         </>
       );
@@ -77,6 +81,10 @@ function DetailsInputs ({ source, type }) {
             translateChoice={false}
             helperText={false}
           />
+          <BooleanInput
+            label="resources.datalayer.widgets-editor.graph.percent"
+            source={`${source}.graph.percent`}
+          />
         </>
       );
     case 'numeric':
@@ -110,6 +118,10 @@ function DetailsInputs ({ source, type }) {
             defaultValue="bar"
             translateChoice={false}
             helperText={false}
+          />
+          <BooleanInput
+            label="resources.datalayer.widgets-editor.graph.percent"
+            source={`${source}.graph.percent`}
           />
         </>
       );

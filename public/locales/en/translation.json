@@ -1025,6 +1025,11 @@
           "type": "Graph type",
           "percent": "Display as percents",
           "unit": "Unit",
+          "orientation": {
+            "label": "Orientation",
+            "vertical": "Vertical",
+            "horizontal": "Horizontal"
+          },
           "field": {
             "categoric": "String category field",
             "numeric": "Integer fields",

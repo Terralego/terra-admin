@@ -32,6 +32,39 @@ function UnitsInputs ({ source }) {
   );
 }
 
+function GraphTypeInputs ({ source }) {
+  const {
+    input: { value: graphTypeValue },
+  } = useInput({ source: `${source}.graph.type` });
+
+  return (
+    <>
+      <SelectInput
+        required
+        source={`${source}.graph.type`}
+        label="resources.datalayer.widgets-editor.graph.type"
+        choices={AVAILABLE_GRAPHS}
+        defaultValue="bar"
+        translateChoice={false}
+        helperText={false}
+      />
+      {graphTypeValue !== 'pie' && (
+        <SelectInput
+          required
+          source={`${source}.graph.orientation`}
+          label="resources.datalayer.widgets-editor.graph.orientation.label"
+          choices={[
+            { id: 'vertical', name: 'resources.datalayer.widgets-editor.graph.orientation.vertical' },
+            { id: 'horizontal', name: 'resources.datalayer.widgets-editor.graph.orientation.horizontal' },
+          ]}
+          defaultValue="vertical"
+          helperText={false}
+        />
+      )}
+    </>
+  );
+}
+
 function DetailsInputs ({ source, type }) {
   const { input: { value: fields } } = useField('fields');
 
@@ -49,15 +82,7 @@ function DetailsInputs ({ source, type }) {
             source={`${source}.field`}
             translateChoice={false}
           />
-          <SelectInput
-            required
-            source={`${source}.graph.type`}
-            label="resources.datalayer.widgets-editor.graph.type"
-            choices={AVAILABLE_GRAPHS}
-            defaultValue="bar"
-            translateChoice={false}
-            helperText={false}
-          />
+          <GraphTypeInputs source={source} />
           <UnitsInputs
             source={source}
           />
@@ -92,15 +117,7 @@ function DetailsInputs ({ source, type }) {
             translateChoice={false}
             helperText={false}
           />
-          <SelectInput
-            required
-            source={`${source}.graph.type`}
-            label="resources.datalayer.widgets-editor.graph.type"
-            choices={AVAILABLE_GRAPHS}
-            defaultValue="bar"
-            translateChoice={false}
-            helperText={false}
-          />
+          <GraphTypeInputs source={source} />
           <UnitsInputs
             source={source}
           />
@@ -129,15 +146,7 @@ function DetailsInputs ({ source, type }) {
             translateChoice={false}
             helperText={false}
           />
-          <SelectInput
-            required
-            source={`${source}.graph.type`}
-            label="resources.datalayer.widgets-editor.graph.type"
-            choices={AVAILABLE_GRAPHS}
-            defaultValue="bar"
-            translateChoice={false}
-            helperText={false}
-          />
+          <GraphTypeInputs source={source} />
           <UnitsInputs
             source={source}
           />

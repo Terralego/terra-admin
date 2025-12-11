@@ -1079,6 +1079,11 @@
           "type": "Type de graphique",
           "percent": "Afficher en pourcentage",
           "unit": "Unité",
+          "orientation": {
+            "label": "Orientation",
+            "vertical": "Vertical",
+            "horizontal": "Horizontal"
+          },
           "field": {
             "categoric": "Champ de catégorie textuel",
             "numeric": "Champs numériques",

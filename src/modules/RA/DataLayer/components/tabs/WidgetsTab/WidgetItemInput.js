@@ -1,190 +1,12 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import { BooleanInput, NumberInput, SelectInput, TextInput, useInput } from 'react-admin';
-import { useField } from 'react-final-form';
-import { fieldTypes } from '../../../../DataSource';
-import DataFieldInput from './DataFieldInput';
-import WidgetGraphPreview from './WidgetGraphPreview';
-
-const AVAILABLE_GRAPHS = [
-  { id: 'bars', name: 'Bars' },
-  { id: 'stacked-bars', name: 'Stacked Bars' },
-  { id: 'pie', name: 'Pie' },
-];
-
-function UnitsInputs ({ source }) {
-  const {
-    input: { value: percentValue },
-  } = useInput({ source: `${source}.graph.percent` });
-
-  return (
-    <>
-      <BooleanInput
-        label="resources.datalayer.widgets-editor.graph.percent"
-        source={`${source}.graph.percent`}
-      />
-      {!percentValue && (
-        <TextInput
-          label="resources.datalayer.widgets-editor.graph.unit"
-          source={`${source}.graph.unit`}
-        />
-      )}
-    </>
-  );
-}
-
-function GraphTypeInputs ({ source }) {
-  const {
-    input: { value: graphTypeValue },
-  } = useInput({ source: `${source}.graph.type` });
-
-  return (
-    <>
-      <SelectInput
-        required
-        source={`${source}.graph.type`}
-        label="resources.datalayer.widgets-editor.graph.type"
-        choices={AVAILABLE_GRAPHS}
-        defaultValue="bar"
-        translateChoice={false}
-        helperText={false}
-      />
-      {graphTypeValue !== 'pie' && (
-        <SelectInput
-          required
-          source={`${source}.graph.orientation`}
-          label="resources.datalayer.widgets-editor.graph.orientation.label"
-          choices={[
-            { id: 'vertical', name: 'resources.datalayer.widgets-editor.graph.orientation.vertical' },
-            { id: 'horizontal', name: 'resources.datalayer.widgets-editor.graph.orientation.horizontal' },
-          ]}
-          defaultValue="vertical"
-          helperText={false}
-        />
-      )}
-    </>
-  );
-}
-
-function DetailsInputs ({ source, type }) {
-  const { input: { value: fields } } = useField('fields');
-
-  const integerFields = useMemo(() => fields.filter(f => fieldTypes[f.data_type] === 'Integer'), [fields]);
-  const stringFields = useMemo(() => fields.filter(f => fieldTypes[f.data_type] === 'String'), [fields]);
-
-  switch (type) {
-    case 'distribution':
-      return (
-        <>
-          <DataFieldInput
-            fields={stringFields}
-            label="resources.datalayer.widgets-editor.field.string"
-            required
-            source={`${source}.field`}
-            translateChoice={false}
-          />
-          <GraphTypeInputs source={source} />
-          <UnitsInputs
-            source={source}
-          />
-          <WidgetGraphPreview source={source} />
-        </>
-      );
-    case 'categoric':
-      return (
-        <>
-          <DataFieldInput
-            fields={stringFields}
-            label="resources.datalayer.widgets-editor.graph.field.categoric"
-            required
-            source={`${source}.field`}
-            translateChoice={false}
-          />
-          <DataFieldInput
-            fields={integerFields}
-            label="resources.datalayer.widgets-editor.graph.field.value"
-            required
-            source={`${source}.graph.value_field`}
-            translateChoice={false}
-          />
-          <SelectInput
-            required
-            source={`${source}.graph.aggregation_type`}
-            label="resources.datalayer.widgets-editor.graph.aggregation_type"
-            choices={[
-              { id: 'sum', name: 'Sum' },
-              { id: 'avg', name: 'Average' },
-              { id: 'value_count', name: 'Count' },
-            ]}
-            translateChoice={false}
-            helperText={false}
-          />
-          <GraphTypeInputs source={source} />
-          <UnitsInputs
-            source={source}
-          />
-          <WidgetGraphPreview source={source} />
-        </>
-      );
-    case 'numeric':
-      return (
-        <>
-          <DataFieldInput
-            fields={integerFields}
-            label="resources.datalayer.widgets-editor.graph.field.numeric"
-            required
-            source={`${source}.graph.value_field`}
-            translateChoice={false}
-            multiple
-          />
-          <SelectInput
-            required
-            source={`${source}.graph.aggregation_type`}
-            label="resources.datalayer.widgets-editor.graph.aggregation_type"
-            choices={[
-              { id: 'sum', name: 'Sum' },
-              { id: 'avg', name: 'Average' },
-              { id: 'value_count', name: 'Count' },
-            ]}
-            translateChoice={false}
-            helperText={false}
-          />
-          <GraphTypeInputs source={source} />
-          <UnitsInputs
-            source={source}
-          />
-          <WidgetGraphPreview source={source} />
-        </>
-      );
-    default:
-      return (
-        <>
-          <DataFieldInput
-            fields={integerFields}
-            label="resources.datalayer.widgets-editor.field.integer"
-            required
-            source={`${source}.field`}
-            translateChoice={false}
-          />
-          <TextInput
-            label="resources.datalayer.widgets-editor.template"
-            required
-            defaultValue="{{value}}"
-            source={`${source}.template`}
-          />
-        </>
-      );
-  }
-}
+import {  NumberInput, SelectInput, TextInput, useInput } from 'react-admin';
+import WidgetDetailsInputs from './WidgetDetails/WidgetDetailsInputs';
 
 const WidgetItemInput = ({ source }) => {
   const {
     input: { onChange: onChangeName },
   } = useInput({ source: `${source}.name` });
-
-  const {
-    input: { value: typeValue },
-  } = useInput({ source: `${source}.type` });
 
   return (
     <div
@@ -223,7 +45,7 @@ const WidgetItemInput = ({ source }) => {
         label="resources.datalayer.widgets-editor.decimals"
         source={`${source}.decimals`}
       />
-      <DetailsInputs source={source} type={typeValue} />
+      <WidgetDetailsInputs source={source} />
     </div>
   );
 };

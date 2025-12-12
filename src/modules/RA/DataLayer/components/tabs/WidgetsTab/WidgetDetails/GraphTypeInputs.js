@@ -1,0 +1,44 @@
+import { useInput } from 'ra-core';
+import React from 'react';
+import { SelectInput } from 'react-admin';
+
+const AVAILABLE_GRAPHS = [
+  { id: 'bars', name: 'Bars' },
+  { id: 'stacked-bars', name: 'Stacked Bars' },
+  { id: 'pie', name: 'Pie' },
+];
+
+function GraphTypeInputs ({ source }) {
+  const {
+    input: { value: graphTypeValue },
+  } = useInput({ source: `${source}.graph.type` });
+
+  return (
+    <>
+      <SelectInput
+        required
+        source={`${source}.graph.type`}
+        label="resources.datalayer.widgets-editor.graph.type"
+        choices={AVAILABLE_GRAPHS}
+        defaultValue="bar"
+        translateChoice={false}
+        helperText={false}
+      />
+      {graphTypeValue !== 'pie' && (
+        <SelectInput
+          required
+          source={`${source}.graph.orientation`}
+          label="resources.datalayer.widgets-editor.graph.orientation.label"
+          choices={[
+            { id: 'vertical', name: 'resources.datalayer.widgets-editor.graph.orientation.vertical' },
+            { id: 'horizontal', name: 'resources.datalayer.widgets-editor.graph.orientation.horizontal' },
+          ]}
+          defaultValue="vertical"
+          helperText={false}
+        />
+      )}
+    </>
+  );
+}
+
+export default GraphTypeInputs;

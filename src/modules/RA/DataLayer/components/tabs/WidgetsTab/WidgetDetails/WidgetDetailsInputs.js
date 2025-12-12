@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { SelectInput, TextInput, useInput } from 'react-admin';
 import { useField } from 'react-final-form';
-import WidgetGraphPreview from './WidgetGraphPreview';
+import WidgetGraphPreviewAccordion from './WidgetGraphPreviewAccordion';
 import { fieldTypes } from '../../../../../DataSource';
 import DataFieldInput from '../DataFieldInput';
 import UnitsInputs from './UnitsInputs';
@@ -32,7 +32,7 @@ function WidgetDetailsInputs ({ source }) {
           <UnitsInputs
             source={source}
           />
-          <WidgetGraphPreview source={source} />
+          <WidgetGraphPreviewAccordion source={source} />
         </>
       );
     case 'categoric':
@@ -68,7 +68,7 @@ function WidgetDetailsInputs ({ source }) {
           <UnitsInputs
             source={source}
           />
-          <WidgetGraphPreview source={source} />
+          <WidgetGraphPreviewAccordion source={source} />
         </>
       );
     case 'numeric':
@@ -98,7 +98,7 @@ function WidgetDetailsInputs ({ source }) {
           <UnitsInputs
             source={source}
           />
-          <WidgetGraphPreview source={source} />
+          <WidgetGraphPreviewAccordion source={source} />
         </>
       );
     default:

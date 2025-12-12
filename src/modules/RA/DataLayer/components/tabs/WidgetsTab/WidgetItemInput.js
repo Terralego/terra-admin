@@ -4,6 +4,7 @@ import { BooleanInput, NumberInput, SelectInput, TextInput, useInput } from 'rea
 import { useField } from 'react-final-form';
 import { fieldTypes } from '../../../../DataSource';
 import DataFieldInput from './DataFieldInput';
+import WidgetGraphPreview from './WidgetGraphPreview';
 
 const AVAILABLE_GRAPHS = [
   { id: 'bars', name: 'Bars' },
@@ -86,6 +87,7 @@ function DetailsInputs ({ source, type }) {
           <UnitsInputs
             source={source}
           />
+          <WidgetGraphPreview source={source} />
         </>
       );
     case 'categoric':
@@ -121,6 +123,7 @@ function DetailsInputs ({ source, type }) {
           <UnitsInputs
             source={source}
           />
+          <WidgetGraphPreview source={source} />
         </>
       );
     case 'numeric':
@@ -150,6 +153,7 @@ function DetailsInputs ({ source, type }) {
           <UnitsInputs
             source={source}
           />
+          <WidgetGraphPreview source={source} />
         </>
       );
     default:

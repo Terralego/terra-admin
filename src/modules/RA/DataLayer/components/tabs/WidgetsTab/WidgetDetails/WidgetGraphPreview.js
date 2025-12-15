@@ -5,7 +5,7 @@ import { blueberryTwilightPalette } from '@mui/x-charts/colorPalettes';
 import { PieChart } from '@mui/x-charts';
 
 const GRAPH_HEIGHT = 280;
-const GRAPH_WIDTH = 280;
+export const GRAPH_WIDTH = 280;
 const GRAPH_HORIZONAL_MARGIN = 30;
 const GRAPH_VERTICAL_MARGIN = 10;
 

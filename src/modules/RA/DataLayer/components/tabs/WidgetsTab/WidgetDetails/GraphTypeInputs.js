@@ -14,7 +14,13 @@ function GraphTypeInputs ({ source }) {
   } = useInput({ source: `${source}.graph.type` });
 
   return (
-    <>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '1em',
+      }}
+    >
       <SelectInput
         required
         source={`${source}.graph.type`}
@@ -23,6 +29,7 @@ function GraphTypeInputs ({ source }) {
         defaultValue="bar"
         translateChoice={false}
         helperText={false}
+        style={{ flex: 1 }}
       />
       {graphTypeValue !== 'pie' && (
         <SelectInput
@@ -35,9 +42,10 @@ function GraphTypeInputs ({ source }) {
           ]}
           defaultValue="vertical"
           helperText={false}
+          style={{ flex: 1 }}
         />
       )}
-    </>
+    </div>
   );
 }
 

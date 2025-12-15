@@ -1017,11 +1017,22 @@
       "forcedCaseName": "Layer",
       "widgets-editor": {
         "title": "Widgets configuration",
+        "settings": "Widget settings",
         "json-editor": "JSON editor",
         "label": "Label",
         "type": "Type",
         "decimals": "Number of decimal digits",
+        "data": "Data configuration",
+        "description": {
+          "sum": "Total sum of all values in the dataset.",
+          "avg": "Arithmetic mean of the values.",
+          "value_count": "Total number of recorded values.",
+          "distribution": "Statistical distribution graph of values.",
+          "categoric": "Categorical breakdown graph of values.",
+          "numeric": "Graph of numeric values used for quantitative analysis."
+        },
         "graph": {
+          "title": "Graph configuration",
           "type": "Graph type",
           "percent": "Display as percents",
           "unit": "Unit",

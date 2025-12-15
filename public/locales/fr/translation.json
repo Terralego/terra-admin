@@ -1071,11 +1071,22 @@
       "forcedCaseName": "Couche",
       "widgets-editor": {
         "title": "Configuration des widgets",
+        "settings": "Paramètres du widget",
         "json-editor": "Éditeur JSON",
         "label": "Label",
         "type": "Type",
         "decimals": "Nombre de chiffres après la virgule",
+        "data": "Configuration des données",
+        "description": {
+          "sum": "Somme totale de toutes les valeurs.",
+          "avg": "Moyenne de toutes les valeurs.",
+          "value_count": "Nombre total d'occurences de la valeur.",
+          "distribution": "Graphique de la distribution statistique des valeurs.",
+          "categoric": "Graphique par catégories des valeurs.",
+          "numeric": "Graphique de valeurs numériques utilisées pour une analyse quantitative."
+        },
         "graph": {
+          "title": "Configuration du graphique",
           "type": "Type de graphique",
           "percent": "Afficher en pourcentage",
           "unit": "Unité",

@@ -25,7 +25,7 @@ const DataFieldInput = ({ fields, multiple, ...selectProps }) => {
       <SelectArrayInput
         {...selectProps}
         choices={fields.map(f => ({ id: f.name, name: f.label && f.label !== f.name ? `${f.name} (${f.label})` : f.name }))}
-        style={{ minWidth: 150, maxWidth: 500 }}
+        style={{ minWidth: 200, maxWidth: 500, ...selectProps.style }}
       />
     );
   }
@@ -34,7 +34,7 @@ const DataFieldInput = ({ fields, multiple, ...selectProps }) => {
     <SelectInput
       {...selectProps}
       choices={fields.map(f => ({ id: f.name, name: f.label && f.label !== f.name ? `${f.name} (${f.label})` : f.name }))}
-      style={{ minWidth: 150 }}
+      style={{ minWidth: 200, ...selectProps.style }}
     />
   );
 };

@@ -19,8 +19,7 @@ import {
   sourceStatusChoices,
   reportStatusChoices,
 } from '..';
-import CommonBulkActionButtons
-  from '../../../../components/react-admin/CommonBulkActionButtons';
+import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
 import CustomCloneButton from '../../../../components/react-admin/CustomCloneButton';
 import { RES_DATASOURCE } from '../../ra-modules';

@@ -1021,6 +1021,14 @@
         "json-editor": "JSON editor",
         "label": "Label",
         "type": "Type",
+        "type-value": {
+          "sum": "Sum",
+          "avg": "Average",
+          "value_count": "Count",
+          "distribution": "Distribution",
+          "categoric": "Categoric",
+          "numeric": "Numeric"
+        },
         "decimals": "Number of decimal digits",
         "data": "Data configuration",
         "description": {
@@ -1034,6 +1042,11 @@
         "graph": {
           "title": "Graph configuration",
           "type": "Graph type",
+          "type-value": {
+            "bars": "Bars",
+            "stacked-bars": "Stacked Bars",
+            "pie": "Donut"
+          },
           "percent": "Display as percents",
           "unit": "Unit",
           "orientation": {
@@ -1042,15 +1055,21 @@
             "horizontal": "Horizontal"
           },
           "field": {
-            "categoric": "String category field",
+            "categoric": "String field",
             "numeric": "Integer fields",
             "value": "Integer value field"
           },
-          "aggregation_type": "Aggregation Type"
+          "aggregation_type": "Aggregation Type",
+          "aggregation_type_value": {
+            "sum": "Sum",
+            "avg": "Average",
+            "value_count": "Count"
+          }
         },
         "field": {
           "integer": "Integer Field",
-          "string": "String Field"
+          "string": "String Field",
+          "keyword": "Keyword field"
         },
         "template": "Template",
         "name": "Name",

@@ -3,9 +3,9 @@ import React from 'react';
 import { SelectInput } from 'react-admin';
 
 const AVAILABLE_GRAPHS = [
-  { id: 'bars', name: 'Bars' },
-  { id: 'stacked-bars', name: 'Stacked Bars' },
-  { id: 'pie', name: 'Pie' },
+  { id: 'bars', name: 'resources.datalayer.widgets-editor.graph.type-value.bars' },
+  { id: 'stacked-bars', name: 'resources.datalayer.widgets-editor.graph.type-value.stacked-bars' },
+  { id: 'pie', name: 'resources.datalayer.widgets-editor.graph.type-value.pie' },
 ];
 
 function GraphTypeInputs ({ source }) {
@@ -27,7 +27,6 @@ function GraphTypeInputs ({ source }) {
         label="resources.datalayer.widgets-editor.graph.type"
         choices={AVAILABLE_GRAPHS}
         defaultValue="bar"
-        translateChoice={false}
         helperText={false}
         style={{ flex: 1 }}
       />

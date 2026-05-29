@@ -6,12 +6,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import WidgetDetailsInputs from './WidgetDetails/WidgetDetailsInputs';
 
 const WIDGET_TYPE_CHOICES = [
-  { id: 'sum', name: 'Sum' },
-  { id: 'avg', name: 'Average' },
-  { id: 'value_count', name: 'Count' },
-  { id: 'distribution', name: 'Distribution' },
-  { id: 'categoric', name: 'Categoric' },
-  { id: 'numeric', name: 'Numeric' },
+  { id: 'sum', name: 'resources.datalayer.widgets-editor.type-value.sum' },
+  { id: 'avg', name: 'resources.datalayer.widgets-editor.type-value.avg' },
+  { id: 'value_count', name: 'resources.datalayer.widgets-editor.type-value.value_count' },
+  { id: 'distribution', name: 'resources.datalayer.widgets-editor.type-value.distribution' },
+  { id: 'categoric', name: 'resources.datalayer.widgets-editor.type-value.categoric' },
+  { id: 'numeric', name: 'resources.datalayer.widgets-editor.type-value.numeric' },
 ];
 
 const WidgetItemInput = ({ source }) => {
@@ -25,7 +25,10 @@ const WidgetItemInput = ({ source }) => {
     input: { value: typeValue },
   } = useInput({ source: `${source}.type` });
 
-  const typeValuePrettyName = WIDGET_TYPE_CHOICES.find(c => c.id === typeValue)?.name ?? '';
+  const typeValuePrettyName = translate(
+    WIDGET_TYPE_CHOICES.find(c => c.id === typeValue)?.name,
+    { _: typeValue },
+  );
 
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }} style={{ marginTop: 5, marginBottom: 5 }}>
@@ -61,9 +64,8 @@ const WidgetItemInput = ({ source }) => {
             <SelectInput
               required
               source={`${source}.type`}
-              label="Type"
+              label="resources.datalayer.widgets-editor.type"
               choices={WIDGET_TYPE_CHOICES}
-              translateChoice={false}
               helperText={false}
             />
             <NumberInput

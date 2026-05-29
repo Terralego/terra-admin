@@ -1075,6 +1075,14 @@
         "json-editor": "Éditeur JSON",
         "label": "Label",
         "type": "Type",
+        "type-value": {
+          "sum": "Somme",
+          "avg": "Moyenne",
+          "value_count": "Compte",
+          "distribution": "Distribution",
+          "categoric": "Catégorique",
+          "numeric": "Numérique"
+        },
         "decimals": "Nombre de chiffres après la virgule",
         "data": "Configuration des données",
         "description": {
@@ -1088,6 +1096,11 @@
         "graph": {
           "title": "Configuration du graphique",
           "type": "Type de graphique",
+          "type-value": {
+            "bars": "Barres",
+            "stacked-bars": "Barres empilées",
+            "pie": "Donut"
+          },
           "percent": "Afficher en pourcentage",
           "unit": "Unité",
           "orientation": {
@@ -1096,15 +1109,21 @@
             "horizontal": "Horizontal"
           },
           "field": {
-            "categoric": "Champ de catégorie textuel",
+            "categoric": "Champ textuel",
             "numeric": "Champs numériques",
             "value": "Champ de valeur numérique"
           },
-          "aggregation_type": "Aggregation Type"
+          "aggregation_type": "Type d'agrégation",
+          "aggregation_type_value": {
+            "sum": "Somme",
+            "avg": "Moyenne",
+            "value_count": "Comptage"
+          }
         },
         "field": {
           "integer": "Champ numérique",
-          "string": "Champ textuel"
+          "string": "Champ textuel",
+          "keyword": "Champ keyword"
         },
         "template": "Modèle",
         "name": "Nom",

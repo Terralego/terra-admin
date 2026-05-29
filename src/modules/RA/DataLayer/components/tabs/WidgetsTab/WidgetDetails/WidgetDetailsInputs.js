@@ -10,6 +10,12 @@ import GraphTypeInputs from './GraphTypeInputs';
 import GraphSettingsTitle from './GraphSettingsTitle';
 import DataSettingsTitle from './DataSettingsTitle';
 
+const AGGREGATION_TYPE_CHOICES = [
+  { id: 'sum', name: 'resources.datalayer.widgets-editor.graph.aggregation_type_value.sum' },
+  { id: 'avg', name: 'resources.datalayer.widgets-editor.graph.aggregation_type_value.avg' },
+  { id: 'value_count', name: 'resources.datalayer.widgets-editor.graph.aggregation_type_value.value_count' },
+];
+
 
 function WidgetDetailsInputs ({ source }) {
   const translate = useTranslate();
@@ -101,12 +107,7 @@ function WidgetDetailsInputs ({ source }) {
                 required
                 source={`${source}.graph.aggregation_type`}
                 label="resources.datalayer.widgets-editor.graph.aggregation_type"
-                choices={[
-                  { id: 'sum', name: 'Sum' },
-                  { id: 'avg', name: 'Average' },
-                  { id: 'value_count', name: 'Count' },
-                ]}
-                translateChoice={false}
+                choices={AGGREGATION_TYPE_CHOICES}
                 helperText={false}
               />
             </div>
@@ -157,12 +158,7 @@ function WidgetDetailsInputs ({ source }) {
                 required
                 source={`${source}.graph.aggregation_type`}
                 label="resources.datalayer.widgets-editor.graph.aggregation_type"
-                choices={[
-                  { id: 'sum', name: 'Sum' },
-                  { id: 'avg', name: 'Average' },
-                  { id: 'value_count', name: 'Count' },
-                ]}
-                translateChoice={false}
+                choices={AGGREGATION_TYPE_CHOICES}
                 helperText={false}
                 style={{ flex: 1 }}
               />

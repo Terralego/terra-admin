@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 
-import { SelectArrayInput, SelectInput, useInput } from 'react-admin';
+import { SelectArrayInput, SelectInput, useInput, useTranslate } from 'react-admin';
 
 const KEYWORD_SUFFIX = '.keyword';
 
@@ -27,9 +27,10 @@ const DataFieldInput = ({
   fields,
   multiple,
   allowKeywordSuffix = false,
-  keywordSuffixLabel = 'Use .keyword',
+  keywordSuffixLabel = 'resources.datalayer.widgets-editor.field.keyword',
   ...selectProps
 }) => {
+  const translate = useTranslate();
   const { input: { value, onChange } } = useInput({ source: selectProps.source });
   const [lastValue, setLastValue] = useState(value);
   const [withKeyword, setWithKeyword] = useState(typeof value === 'string' && value.endsWith(KEYWORD_SUFFIX));
@@ -91,7 +92,7 @@ const DataFieldInput = ({
     >
       {selectInput}
       <FormControlLabel
-        label={keywordSuffixLabel}
+        label={translate(keywordSuffixLabel, { _: keywordSuffixLabel })}
         control={(
           <Checkbox
             checked={withKeyword}

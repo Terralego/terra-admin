@@ -45,6 +45,7 @@ function WidgetDetailsInputs ({ source }) {
               label="resources.datalayer.widgets-editor.field.string"
               required
               source={`${source}.field`}
+              allowKeywordSuffix
               translateChoice={false}
             />
             <GraphSettingsTitle />
@@ -86,6 +87,7 @@ function WidgetDetailsInputs ({ source }) {
                 label="resources.datalayer.widgets-editor.graph.field.categoric"
                 required
                 source={`${source}.field`}
+                allowKeywordSuffix
                 translateChoice={false}
               />
               <DataFieldInput
@@ -196,6 +198,7 @@ function WidgetDetailsInputs ({ source }) {
               label="resources.datalayer.widgets-editor.field.integer"
               required
               source={`${source}.field`}
+              allowKeywordSuffix
               translateChoice={false}
             />
             <TextInput

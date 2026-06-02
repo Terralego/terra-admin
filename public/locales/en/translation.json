@@ -1029,6 +1029,10 @@
           "categoric": "Categoric",
           "numeric": "Numeric"
         },
+        "type-group": {
+          "numeric": "Numeric",
+          "graph": "Graph"
+        },
         "decimals": "Number of decimal digits",
         "data": "Data configuration",
         "description": {
@@ -1069,7 +1073,7 @@
         "field": {
           "integer": "Integer Field",
           "string": "String Field",
-          "keyword": "Keyword field"
+          "warning-non-numeric": "This field is not a numeric type. The result may be unexpected."
         },
         "template": "Template",
         "name": "Name",

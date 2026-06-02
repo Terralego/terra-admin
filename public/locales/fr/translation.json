@@ -1083,6 +1083,10 @@
           "categoric": "Catégorique",
           "numeric": "Numérique"
         },
+        "type-group": {
+          "numeric": "Numérique",
+          "graph": "Graphique"
+        },
         "decimals": "Nombre de chiffres après la virgule",
         "data": "Configuration des données",
         "description": {
@@ -1123,7 +1127,7 @@
         "field": {
           "integer": "Champ numérique",
           "string": "Champ textuel",
-          "keyword": "Champ keyword"
+          "warning-non-numeric": "Ce champ n'est pas de type numérique. Le résultat pourrait être inattendu."
         },
         "template": "Modèle",
         "name": "Nom",

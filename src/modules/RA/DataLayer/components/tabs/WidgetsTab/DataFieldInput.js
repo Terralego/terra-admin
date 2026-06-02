@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 
 import { SelectArrayInput, SelectInput, useInput, useTranslate } from 'react-admin';
 
@@ -26,19 +26,21 @@ const applyKeywordSuffix = (fieldName, withKeyword) => {
 const DataFieldInput = ({
   fields,
   multiple,
-  allowKeywordSuffix = false,
-  keywordSuffixLabel = 'resources.datalayer.widgets-editor.field.keyword',
+  keywordSuffixEnabled = false,
+  warning,
   ...selectProps
 }) => {
   const translate = useTranslate();
+  const theme = useTheme();
   const { input: { value, onChange } } = useInput({ source: selectProps.source });
   const [lastValue, setLastValue] = useState(value);
-  const [withKeyword, setWithKeyword] = useState(typeof value === 'string' && value.endsWith(KEYWORD_SUFFIX));
-
   useEffect(() => {
-    setWithKeyword(typeof value === 'string' && value.endsWith(KEYWORD_SUFFIX));
-  }, [value]);
-
+    if (typeof value !== 'string' || value === '') return;
+    const target = applyKeywordSuffix(normalizeFieldName(value), keywordSuffixEnabled);
+    if (target !== value) {
+      onChange(target);
+    }
+  }, [keywordSuffixEnabled, value, onChange]);
 
   useEffect(() => {
     if (!multiple) {
@@ -53,6 +55,12 @@ const DataFieldInput = ({
       }
     }
   }, [fields, lastValue, onChange, value, multiple]);
+
+  const warningNode = warning && value ? (
+    <p style={{ margin: '4px 14px 0', fontSize: '0.75rem', color: theme.palette.warning.main }}>
+      {translate(warning, { _: warning })}
+    </p>
+  ) : null;
 
   if (multiple) {
     return (
@@ -69,44 +77,16 @@ const DataFieldInput = ({
       {...selectProps}
       choices={fields.map(f => ({ id: f.name, name: f.label && f.label !== f.name ? `${f.name} (${f.label})` : f.name }))}
       style={{ minWidth: 200, ...selectProps.style }}
-      format={allowKeywordSuffix ? normalizeFieldName : selectProps.format}
+      format={keywordSuffixEnabled ? normalizeFieldName : selectProps.format}
       parse={
-        allowKeywordSuffix
-          ? selectedValue => applyKeywordSuffix(selectedValue, withKeyword)
+        keywordSuffixEnabled
+          ? selectedValue => applyKeywordSuffix(selectedValue, keywordSuffixEnabled)
           : selectProps.parse
       }
     />
   );
 
-  if (!allowKeywordSuffix) {
-    return selectInput;
-  }
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '1em',
-      }}
-    >
-      {selectInput}
-      <FormControlLabel
-        label={translate(keywordSuffixLabel, { _: keywordSuffixLabel })}
-        control={(
-          <Checkbox
-            checked={withKeyword}
-            color="primary"
-            onChange={(event, checked) => {
-              const nextChecked = !!checked;
-              setWithKeyword(nextChecked);
-              onChange(applyKeywordSuffix(normalizeFieldName(value), nextChecked));
-            }}
-          />
-        )}
-      />
-    </div>
-  );
+  return <>{selectInput}{warningNode}</>;
 };
 
 export default DataFieldInput;

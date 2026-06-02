@@ -27,6 +27,16 @@ function WidgetDetailsInputs ({ source }) {
   const integerFields = useMemo(() => fields.filter(f => fieldTypes[f.data_type] === 'Integer'), [fields]);
   const stringFields = useMemo(() => fields.filter(f => fieldTypes[f.data_type] === 'String'), [fields]);
 
+  const { input: { value: fieldValue } } = useInput({ source: `${source}.field` });
+  const normalizedFieldValue = typeof fieldValue === 'string' ? fieldValue.replace(/\.keyword$/, '') : fieldValue;
+  const selectedField = Array.isArray(fields)
+    ? fields.find(f => f.name === normalizedFieldValue)
+    : undefined;
+  const isNonNumericField = !!selectedField
+    && fieldTypes[selectedField.data_type] !== 'Integer'
+    && fieldTypes[selectedField.data_type] !== 'Float';
+  const isStringField = !!selectedField && fieldTypes[selectedField.data_type] === 'String';
+
   switch (type) {
     case 'distribution':
       return (
@@ -51,7 +61,6 @@ function WidgetDetailsInputs ({ source }) {
               label="resources.datalayer.widgets-editor.field.string"
               required
               source={`${source}.field`}
-              allowKeywordSuffix
               translateChoice={false}
             />
             <GraphSettingsTitle />
@@ -93,7 +102,6 @@ function WidgetDetailsInputs ({ source }) {
                 label="resources.datalayer.widgets-editor.graph.field.categoric"
                 required
                 source={`${source}.field`}
-                allowKeywordSuffix
                 translateChoice={false}
               />
               <DataFieldInput
@@ -194,8 +202,13 @@ function WidgetDetailsInputs ({ source }) {
               label="resources.datalayer.widgets-editor.field.integer"
               required
               source={`${source}.field`}
-              allowKeywordSuffix
               translateChoice={false}
+              warning={
+                isNonNumericField && type !== 'value_count'
+                  ? 'resources.datalayer.widgets-editor.field.warning-non-numeric'
+                  : undefined
+              }
+              keywordSuffixEnabled={type === 'value_count' && isStringField}
             />
             <TextInput
               label="resources.datalayer.widgets-editor.template"

@@ -14,6 +14,27 @@ const WIDGET_TYPE_CHOICES = [
   { id: 'numeric', name: 'resources.datalayer.widgets-editor.type-value.numeric' },
 ];
 
+const WIDGET_TYPE_GROUPED_CHOICES = [
+  {
+    id: '__group_numeric',
+    name: 'resources.datalayer.widgets-editor.type-group.numeric',
+    disabled: true,
+    isGroup: true,
+  },
+  WIDGET_TYPE_CHOICES[0],
+  WIDGET_TYPE_CHOICES[1],
+  WIDGET_TYPE_CHOICES[2],
+  {
+    id: '__group_graph',
+    name: 'resources.datalayer.widgets-editor.type-group.graph',
+    disabled: true,
+    isGroup: true,
+  },
+  WIDGET_TYPE_CHOICES[3],
+  WIDGET_TYPE_CHOICES[4],
+  WIDGET_TYPE_CHOICES[5],
+];
+
 const WidgetItemInput = ({ source }) => {
   const translate = useTranslate();
 
@@ -65,7 +86,16 @@ const WidgetItemInput = ({ source }) => {
               required
               source={`${source}.type`}
               label="resources.datalayer.widgets-editor.type"
-              choices={WIDGET_TYPE_CHOICES}
+              choices={WIDGET_TYPE_GROUPED_CHOICES}
+              disableValue="disabled"
+              translateChoice={false}
+              optionText={choice => {
+                if (choice.isGroup) {
+                  return translate(choice.name);
+                }
+
+                return `  ${translate(choice.name, { _: choice.id })}`;
+              }}
               helperText={false}
             />
             <NumberInput

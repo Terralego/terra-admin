@@ -28,7 +28,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty, layerName }) => {
   const translate = useTranslate();
 
   const [defaultSeed] = React.useState(() => Math.floor((Math.random() * 100000) + 1));
-  const [defaultValue] = React.useState(() => randomColor({ seed: defaultSeed, count: 3 }));
+  const [defaultValue] = React.useState(() => randomColor({ seed: defaultSeed, count: 5 }));
 
   const { input: { value: type } } = useField(`${path}.type`);
 

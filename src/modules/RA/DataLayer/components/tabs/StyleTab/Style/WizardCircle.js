@@ -13,7 +13,7 @@ import MapLabelField from './MapLabelField';
 
 const useStyles = makeStyles(styles);
 
-const WizardCircle = ({ path, fields, getValuesOfProperty, shouldDisplayLabels }) => {
+const WizardCircle = ({ path, fields, getValuesOfProperty, shouldDisplayLabels, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -48,6 +48,7 @@ const WizardCircle = ({ path, fields, getValuesOfProperty, shouldDisplayLabels }
           path={`${path}.style.circle_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
 

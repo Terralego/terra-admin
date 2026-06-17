@@ -11,7 +11,7 @@ import MapLabelField from './MapLabelField';
 
 const useStyles = makeStyles(styles);
 
-const WizardPolygon = ({ path, fields, getValuesOfProperty, shouldDisplayLabels }) => {
+const WizardPolygon = ({ path, fields, getValuesOfProperty, shouldDisplayLabels, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -49,6 +49,7 @@ const WizardPolygon = ({ path, fields, getValuesOfProperty, shouldDisplayLabels 
           path={`${path}.style.fill_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
 

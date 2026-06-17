@@ -40,7 +40,7 @@ const parseFontValue = val => [val];
 const formatFieldValue = val => val?.slice(1, -1);
 const parseFieldValue = val => `{${val}}`;
 
-const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
+const WizardText = ({ path, fields, getValuesOfProperty, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const { fontList = defaultFontList } = useAppSettings();
@@ -125,6 +125,7 @@ const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
           path={`${path}.style.text_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
       <div className={classes.configLine}>
@@ -172,6 +173,7 @@ const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
           path={`${path}.style.text_halo_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
       <div className={classes.configLine}>
@@ -199,4 +201,4 @@ const WizardCircle = ({ path, fields, getValuesOfProperty }) => {
   );
 };
 
-export default WizardCircle;
+export default WizardText;

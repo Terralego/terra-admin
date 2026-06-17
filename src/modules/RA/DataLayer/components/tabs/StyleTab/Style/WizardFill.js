@@ -76,6 +76,7 @@ const WizardPolygon = ({ path, fields, getValuesOfProperty, shouldDisplayLabels,
           path={`${path}.style.fill_outline_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
 

@@ -15,7 +15,7 @@ import StyleEditor from './StyleEditor';
 
 const isRequired = [required()];
 
-export const CustomLayer = ({ source }) => {
+export const CustomLayer = ({ source, layerName }) => {
   const dataProvider = useDataProvider();
   const { geom_type: geomType, id: sourceId, fields } = useSourceData(`${source}.source`);
 
@@ -44,6 +44,7 @@ export const CustomLayer = ({ source }) => {
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
           isExtraStyles
+          layerName={layerName}
         />
       )}
     </FieldGroup>

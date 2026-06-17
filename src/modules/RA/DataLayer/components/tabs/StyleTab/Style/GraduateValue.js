@@ -8,6 +8,7 @@ import { Field } from 'react-final-form';
 import ValueListField from './ValueListField';
 
 import StatsPreview from './StatsPreview';
+import DistribPreview from './DistribPreview';
 
 import styles from './styles';
 
@@ -46,7 +47,14 @@ const GraduateValue = ({ path, Component = ValueListField,
         )}
       </Field>
 
-      <StatsPreview layerName={layerName} path={path} />
+      <div style={{ display: 'flex', gap: 16 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <StatsPreview layerName={layerName} path={path} />
+        </div>
+        <div style={{ flex: 2, display: 'flex', flexDirection: 'column' }}>
+          <DistribPreview layerName={layerName} path={path} />
+        </div>
+      </div>
     </>
   );
 };

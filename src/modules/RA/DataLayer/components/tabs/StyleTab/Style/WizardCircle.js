@@ -95,6 +95,7 @@ const WizardCircle = ({ path, fields, getValuesOfProperty, shouldDisplayLabels, 
           path={`${path}.style.circle_stroke_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
 

@@ -12,11 +12,23 @@ const useStyles = makeStyles({
     marginTop: 8,
     fontSize: '0.9em',
   },
-  grid: {
-    margin: '4px 0',
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '2px 12px',
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    '& td': {
+      padding: '4px 8px',
+      borderBottom: '1px solid #ccc',
+    },
+    '& td:first-child': {
+      borderRight: '1px solid #ccc',
+      fontWeight: 500,
+    },
+    '& td:last-child': {
+      textAlign: 'right',
+    },
+    '& tr:last-child td': {
+      borderBottom: 'none',
+    },
   },
 });
 
@@ -35,6 +47,7 @@ const StatsPreview = ({ layerName, path }) => {
     let cancelled = false;
 
     if (layerName && selectedField) {
+      setStats(null);
       setLoading(true);
 
       Api.request(`geo-api/${layerName}/feature/stats/${selectedField}/`)
@@ -61,20 +74,24 @@ const StatsPreview = ({ layerName, path }) => {
 
   // rendu conditionnel
   if (!selectedField) return null;
-  if (loading) return <div>Chargement du résumé...</div>;
   if (!stats) return null;
+  if (loading) return <div>Chargement du résumé...</div>;
 
   return (
-    <div className={classes.statsPreview}>
+    <div className={classes.statsPreview} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <strong>Résumé statistiques</strong>
-      <dl className={classes.grid}>
-        <dt>Population</dt><dd>{stats.count}</dd>
-        <dt>Minimum</dt><dd>{stats.min}</dd>
-        <dt>Maximum</dt><dd>{stats.max}</dd>
-        <dt>Moyenne</dt><dd>{stats.avg?.toFixed(2)}</dd>
-        <dt>Médiane</dt><dd>{stats.median?.toFixed(2)}</dd>
-        <dt>Ecart type</dt><dd>{stats.std_dev?.toFixed(2)}</dd>
-      </dl>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+        <table className={classes.table}>
+          <tbody>
+            <tr><td>Population</td><td>{stats.count}</td></tr>
+            <tr><td>Minimum</td><td>{stats.min}</td></tr>
+            <tr><td>Maximum</td><td>{stats.max}</td></tr>
+            <tr><td>Moyenne</td><td>{stats.avg}</td></tr>
+            <tr><td>Médiane</td><td>{stats.median}</td></tr>
+            <tr><td>Ecart type</td><td>{stats.std_dev}</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

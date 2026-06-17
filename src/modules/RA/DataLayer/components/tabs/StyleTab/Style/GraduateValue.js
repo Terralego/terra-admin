@@ -7,6 +7,8 @@ import { Field } from 'react-final-form';
 
 import ValueListField from './ValueListField';
 
+import StatsPreview from './StatsPreview';
+
 import styles from './styles';
 
 const isRequired = [required()];
@@ -15,7 +17,9 @@ const useStyles = makeStyles(styles);
 
 const defValue = [1, 2, 3];
 
-const GraduateValue = ({ path, Component = ValueListField, defaultValue = defValue }) => {
+const GraduateValue = ({ path, Component = ValueListField,
+  defaultValue = defValue,
+  layerName }) => {
   const translate = useTranslate();
   const classes = useStyles();
 
@@ -41,6 +45,8 @@ const GraduateValue = ({ path, Component = ValueListField, defaultValue = defVal
           <Component value={value} onChange={onChange} />
         )}
       </Field>
+
+      <StatsPreview layerName={layerName} path={path} />
     </>
   );
 };

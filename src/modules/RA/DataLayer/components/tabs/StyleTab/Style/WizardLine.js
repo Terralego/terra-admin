@@ -12,7 +12,7 @@ import MapLabelField from './MapLabelField';
 
 const useStyles = makeStyles(styles);
 
-const WizardLine = ({ path, fields, getValuesOfProperty, shouldDisplayLabels }) => {
+const WizardLine = ({ path, fields, getValuesOfProperty, shouldDisplayLabels, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -49,6 +49,7 @@ const WizardLine = ({ path, fields, getValuesOfProperty, shouldDisplayLabels }) 
           path={`${path}.style.line_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
 

@@ -23,7 +23,7 @@ const useStyles = makeStyles(styles);
 
 const defaultValueGenerator = val => (val ? randomColor() : '#CCC');
 
-const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
+const ColorStyleField = ({ path, fields, getValuesOfProperty, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -96,6 +96,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                   <Condition when={`${path}.analysis`} is="graduated">
                     <GraduateValue
                       path={path}
+                      layerName={layerName}
                       Component={ColorListField}
                       defaultValue={defaultValue}
                     />

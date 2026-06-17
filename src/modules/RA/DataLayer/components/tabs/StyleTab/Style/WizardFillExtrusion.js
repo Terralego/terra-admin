@@ -11,7 +11,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const WizardFillExtrusion = ({ path, fields, getValuesOfProperty }) => {
+const WizardFillExtrusion = ({ path, fields, getValuesOfProperty, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -38,6 +38,7 @@ const WizardFillExtrusion = ({ path, fields, getValuesOfProperty }) => {
           path={`${path}.style.fill_extrusion_color`}
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
 

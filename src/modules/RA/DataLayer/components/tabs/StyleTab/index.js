@@ -22,7 +22,7 @@ const StyleTab = ({ external, ...rest }) => {
 
   const dataProvider = useDataProvider();
 
-  const { geom_type: geomType, id: sourceId } = useSourceData('source');
+  const { geom_type: geomType, id: sourceId, slug } = useSourceData('source');
 
   const {
     input: { value: fields },
@@ -57,7 +57,7 @@ const StyleTab = ({ external, ...rest }) => {
   return (
     <> {/* Protect div element */}
       <div>
-        <StyleEditor path="main_style" geomType={geomType} fields={fields} getValuesOfProperty={getValuesOfProperty} />
+        <StyleEditor path="main_style" geomType={geomType} fields={fields} getValuesOfProperty={getValuesOfProperty} layerName={slug} />
 
         <ArrayInput source="extra_styles" label="datalayer.form.styles.secondarylabels" fullWidth>
           <SimpleFormIterator>

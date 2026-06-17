@@ -1249,5 +1249,14 @@
     "compare": {
       "placeholder": "Picture not found."
     }
+  },
+  "discret": {
+    "preview": "Distribution by class",
+    "toggle": {
+      "rug": "Population",
+      "mean": "Mean",
+      "median": "Median",
+      "stddev": "Std Dev"
+    }
   }
 }

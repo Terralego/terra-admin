@@ -9,6 +9,7 @@ import ValueListField from './ValueListField';
 
 import StatsPreview from './StatsPreview';
 import DistribPreview from './DistribPreview';
+import DiscretPreview from './DiscretPreview';
 
 import styles from './styles';
 
@@ -54,6 +55,10 @@ const GraduateValue = ({ path, Component = ValueListField,
         <div style={{ flex: 2, display: 'flex', flexDirection: 'column' }}>
           <DistribPreview layerName={layerName} path={path} />
         </div>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', marginTop: 16 }}>
+        <DiscretPreview layerName={layerName} path={path} />
       </div>
     </>
   );

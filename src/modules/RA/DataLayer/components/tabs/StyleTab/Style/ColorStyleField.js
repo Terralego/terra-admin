@@ -14,8 +14,12 @@ import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
 
 import ColorListField from './ColorListField';
+import DicopalField from './DicopalField';
 
 import styles from './styles';
+
+const USE_DICOPAL = true;
+const ColorComponent = USE_DICOPAL ? DicopalField : ColorListField;
 
 const isRequired = [required()];
 
@@ -97,7 +101,7 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty, layerName }) => {
                     <GraduateValue
                       path={path}
                       layerName={layerName}
-                      Component={ColorListField}
+                      Component={ColorComponent}
                       defaultValue={defaultValue}
                     />
                     <BooleanInput

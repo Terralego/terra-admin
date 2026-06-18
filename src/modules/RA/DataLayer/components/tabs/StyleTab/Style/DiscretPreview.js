@@ -107,6 +107,9 @@ const DiscretPreview = ({ layerName, path }) => {
     const { breaks, entitiesByClass, stats } = data;
     if (!breaks || breaks.length < 2 || !entitiesByClass) return;
 
+    // attend que les couleurs soient synchronisées avec les données API
+    if (values && values.length !== breaks.length - 1) return;
+
     const isColor = typeof values?.[0] === 'string';
     const palette = isColor ? values : undefined;
 
@@ -187,6 +190,9 @@ const DiscretPreview = ({ layerName, path }) => {
 
     const { breaks, entitiesByClass } = data;
     if (!breaks || breaks.length < 2 || !entitiesByClass) return;
+
+    // attend que les couleurs soient synchronisées avec les données API
+    if (values && values.length !== breaks.length - 1) return;
 
     const isColor = typeof values?.[0] === 'string';
     const palette = isColor ? values : undefined;

@@ -1,0 +1,35 @@
+TerraVisu Admin - Notices de tierces parties
+
+dicopal
+
+Copyright (c) Matthieu Viry / CNRS
+Licensed under Apache License, Version 2.0.
+https://github.com/mthh/dicopal
+
+Ce logiciel utilise dicopal qui agrège des palettes depuis les sources
+suivantes :
+
+  ColorBrewer
+    Copyright (c) 2002 Cynthia Brewer, Mark Harrower,
+    and The Pennsylvania State University
+    http://colorbrewer2.org
+    This product includes color specifications and designs developed by
+    Cynthia Brewer (http://colorbrewer.org/).
+
+  CARTOColors
+    Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)
+    https://carto.com/carto-colors
+
+  Scientific Colour Maps
+    Copyright (c) 2023, Fabio Crameri
+    Licensed under MIT License
+    https://www.fabiocrameri.ch/colourmaps
+
+  cmocean
+    Copyright (c) 2015 Kristen M. Thyng
+    Licensed under MIT License
+    https://matplotlib.org/cmocean
+
+  Color Universal Design
+    Masataka Okabe (Jikei Medical School) and Kei Ito (University of Tokyo)
+    https://jfly.uni-koeln.de/color

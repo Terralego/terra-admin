@@ -1,23 +1,33 @@
+/*
+ * dicopal (Apache-2.0) - palette interpolation
+ * (c) Matthieu Viry / CNRS
+ * https://github.com/mthh/dicopal
+ *
+ * Palettes incluses via dicopal :
+ *   ColorBrewer - Cynthia Brewer, Penn State (colorbrewer2.org)
+ *   CARTOColors - CARTO (carto.com/carto-colors) - CC BY 4.0
+ *   Scientific Colour Maps - Fabio Crameri (fabiocrameri.ch/colourmaps)
+ *   cmocean - Kristen M. Thyng (matplotlib.org/cmocean)
+ *   Color Universal Design - Masataka Okabe & Kei Ito
+ *   Voir : https://github.com/mthh/dicopal
+ */
+
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { getPalettes, getSequentialColors, getAsymmetricDivergingColors } from 'dicopal';
 
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Select,
-  MenuItem,
-  Checkbox,
-} from '@material-ui/core';
 
-import ColorListField from './ColorListField';
+import ColorListField, { DEFAULT_MAX_CLASSES } from './ColorListField';
 
 import styles from './styles';
+import PaletteSelect from './PaletteSelect';
 
 const useStyles = makeStyles(styles);
 
-const DicopalField = ({ value = [], onChange = () => {}, maxClasses = 10 }) => {
+const DicopalField = ({
+  value = [], onChange = () => {}, maxClasses = DEFAULT_MAX_CLASSES,
+  showAddRemove = true,
+}) => {
   const classes = useStyles();
   const applyingRef = useRef(false);
 
@@ -52,6 +62,18 @@ const DicopalField = ({ value = [], onChange = () => {}, maxClasses = 10 }) => {
     }
   };
 
+  const prevCountRef = useRef(value.length);
+
+  useEffect(() => {
+    const prev = prevCountRef.current;
+    prevCountRef.current = value.length;
+    if (prev === 0 || prev === value.length || value.length === 0) return;
+    if (selectedPalette && paletteType !== 'custom') {
+      interpolate(selectedPalette, value.length, reversed);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value.length]);
+
   const handleTypeChange = e => {
     const newType = e.target.value;
     setPaletteType(newType);
@@ -69,7 +91,51 @@ const DicopalField = ({ value = [], onChange = () => {}, maxClasses = 10 }) => {
     setReversed(newReversed);
     if (selectedPalette && paletteType !== 'custom') {
       interpolate(selectedPalette, value.length, newReversed);
+    } else if (paletteType === 'custom') {
+      onChange([...value].reverse());
     }
+  };
+
+  const parsePalette = text => {
+    if (!text) return [];
+
+    try {
+      const parsed = JSON.parse(text.replace(/'/g, '"'));
+      if (Array.isArray(parsed) && parsed.length) {
+        const colors = parsed.filter(c => /^#[0-9a-fA-F]{6}$/.test(String(c).trim()));
+        if (colors.length) return colors;
+      }
+    } catch { /* not JSON */ }
+
+    let result;
+    [' - ', ', ', ',', ' ', '\n', '\t'].some(sep => {
+      const parts = text.split(sep).map(s => s.trim()).filter(Boolean);
+      if (parts.length > 1) {
+        const colors = [];
+        parts.forEach(c => {
+          const cleaned = c.replace(/['"[\]]/g, '').trim();
+          if (/^#[0-9a-fA-F]{6}$/.test(cleaned)) colors.push(cleaned);
+        });
+        if (colors.length > 1) {
+          result = colors;
+          return true;
+        }
+      }
+      return false;
+    });
+    return result || [];
+  };
+
+  const handlePastePalette = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      const colors = parsePalette(text);
+      if (colors.length) {
+        setPaletteType('custom');
+        setSelectedPalette(null);
+        onChange(colors);
+      }
+    } catch { /* clipboard non disponible */ }
   };
 
   const handleColorListChange = newValue => {
@@ -90,83 +156,25 @@ const DicopalField = ({ value = [], onChange = () => {}, maxClasses = 10 }) => {
     onChange(newValue);
   };
 
-  const paletteTypeOptions = [
-    { id: 'sequential', name: 'Séquentielle' },
-    { id: 'diverging', name: 'Divergente' },
-    { id: 'custom', name: 'Personnalisée' },
-  ];
-
   return (
     <div className={classes.styleField}>
-      <RadioGroup
-        row
-        value={paletteType}
-        onChange={handleTypeChange}
-      >
-        {paletteTypeOptions.map(opt => (
-          <FormControlLabel
-            key={opt.id}
-            value={opt.id}
-            control={<Radio size="small" />}
-            label={opt.name}
-          />
-        ))}
-      </RadioGroup>
-
-      {paletteType !== 'custom' && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
-          <Select
-            value={selectedPalette || ''}
-            onChange={handlePaletteSelect}
-            displayEmpty
-            style={{ minWidth: 160 }}
-          >
-            <MenuItem value="" disabled>
-              Choisir une palette
-            </MenuItem>
-            {palettes.map(p => (
-              <MenuItem key={p.id} value={p.name}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      height: 16,
-                      width: 64,
-                      borderRadius: 2,
-                      overflow: 'hidden',
-                      border: '1px solid #ccc',
-                    }}
-                  >
-                    {p.colors.map((c, i) => (
-                      <div
-                        key={`${p.id}-${i + 1}`}
-                        style={{ flex: 1, backgroundColor: c }}
-                      />
-                    ))}
-                  </div>
-                  <span>{p.name}</span>
-                </div>
-              </MenuItem>
-            ))}
-          </Select>
-
-          <FormControlLabel
-            control={(
-              <Checkbox
-                size="small"
-                checked={reversed}
-                onChange={handleReverse}
-              />
-            )}
-            label="Inverser"
-          />
-        </div>
-      )}
+      <PaletteSelect
+        paletteType={paletteType}
+        palettes={palettes}
+        selectedPalette={selectedPalette}
+        reversed={reversed}
+        onTypeChange={handleTypeChange}
+        onPaletteSelect={handlePaletteSelect}
+        onReverseToggle={handleReverse}
+        onCopyPalette={() => navigator.clipboard.writeText(value.join(' - '))}
+        onPastePalette={handlePastePalette}
+      />
 
       <ColorListField
         value={value}
         onChange={handleColorListChange}
         maxClasses={maxClasses}
+        showAddRemove={showAddRemove}
       />
     </div>
   );

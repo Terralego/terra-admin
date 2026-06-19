@@ -1,11 +1,14 @@
 import React from 'react';
 
+import randomColor from 'randomcolor';
 import { useTranslate, SelectInput, required } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
-import { Field } from 'react-final-form';
+import TextField from '@material-ui/core/TextField';
+import { Field, useField } from 'react-final-form';
 
 import ValueListField from './ValueListField';
+import { DEFAULT_MAX_CLASSES } from './ColorListField';
 
 import StatsPreview from './StatsPreview';
 import DistribPreview from './DistribPreview';
@@ -25,26 +28,58 @@ const GraduateValue = ({ path, Component = ValueListField,
   const translate = useTranslate();
   const classes = useStyles();
 
+  const { input: { value: values, onChange: onValuesChange } }
+    = useField(`${path}.values`, { subscription: { value: true } });
+  const v = Array.isArray(values) && values.length > 0 ? values : defaultValue;
+
+  const handleCountChange = e => {
+    let newCount = parseInt(e.target.value, 10);
+    if (Number.isNaN(newCount)) return;
+    newCount = Math.max(2, Math.min(newCount, DEFAULT_MAX_CLASSES));
+    const old = v;
+    if (newCount > old.length) {
+      const added = Array.from(
+        { length: newCount - old.length },
+        () => randomColor(),
+      );
+      onValuesChange([...old, ...added]);
+    } else if (newCount < old.length) {
+      onValuesChange(old.slice(0, newCount));
+    }
+  };
+
   return (
     <>
       <div className={classes.graduateConfig}>
-        <SelectInput
-          source={`${path}.method`}
-          label="style-editor.graduate.method.input"
-          validate={isRequired}
-          choices={[
-            { id: 'jenks', name: translate('style-editor.graduate.method.jenks') },
-            { id: 'quantile', name: translate('style-editor.graduate.method.quantiles') },
-            { id: 'equal_interval', name: translate('style-editor.graduate.method.equal-interval') },
-            /* { id: 'manual', name: translate('style-editor.graduate.method.manual') }, */
-          ]}
-        />
+        <div className="method">
+          <SelectInput
+            source={`${path}.method`}
+            label="style-editor.graduate.method.input"
+            validate={isRequired}
+            choices={[
+              { id: 'jenks', name: translate('style-editor.graduate.method.jenks') },
+              { id: 'quantile', name: translate('style-editor.graduate.method.quantiles') },
+              { id: 'equal_interval', name: translate('style-editor.graduate.method.equal-interval') },
+              /* { id: 'manual', name: translate('style-editor.graduate.method.manual') }, */
+            ]}
+          />
+        </div>
+        <div className="count">
+          <TextField
+            type="number"
+            label="Classes"
+            value={v.length}
+            onChange={handleCountChange}
+            inputProps={{ min: 2, max: DEFAULT_MAX_CLASSES, step: 1 }}
+            margin="dense"
+          />
+        </div>
       </div>
 
       <FormLabel>{translate('style-editor.graduate.steps')}</FormLabel>
       <Field name={`${path}.values`} defaultValue={defaultValue}>
         {({ input: { value, onChange } }) => (
-          <Component value={value} onChange={onChange} />
+          <Component value={value} onChange={onChange} showAddRemove={false} />
         )}
       </Field>
 

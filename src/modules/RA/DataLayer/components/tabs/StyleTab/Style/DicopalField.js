@@ -98,32 +98,13 @@ const DicopalField = ({
 
   const parsePalette = text => {
     if (!text) return [];
-
     try {
       const parsed = JSON.parse(text.replace(/'/g, '"'));
       if (Array.isArray(parsed) && parsed.length) {
-        const colors = parsed.filter(c => /^#[0-9a-fA-F]{6}$/.test(String(c).trim()));
-        if (colors.length) return colors;
+        return parsed.filter(c => /^#[0-9a-fA-F]{6}$/.test(String(c).trim()));
       }
     } catch { /* not JSON */ }
-
-    let result;
-    [' - ', ', ', ',', ' ', '\n', '\t'].some(sep => {
-      const parts = text.split(sep).map(s => s.trim()).filter(Boolean);
-      if (parts.length > 1) {
-        const colors = [];
-        parts.forEach(c => {
-          const cleaned = c.replace(/['"[\]]/g, '').trim();
-          if (/^#[0-9a-fA-F]{6}$/.test(cleaned)) colors.push(cleaned);
-        });
-        if (colors.length > 1) {
-          result = colors;
-          return true;
-        }
-      }
-      return false;
-    });
-    return result || [];
+    return [];
   };
 
   const handlePastePalette = async () => {
@@ -166,7 +147,7 @@ const DicopalField = ({
         onTypeChange={handleTypeChange}
         onPaletteSelect={handlePaletteSelect}
         onReverseToggle={handleReverse}
-        onCopyPalette={() => navigator.clipboard.writeText(value.join(' - '))}
+        onCopyPalette={() => navigator.clipboard.writeText(`['${value.join("','")}']`)}
         onPastePalette={handlePastePalette}
       />
 

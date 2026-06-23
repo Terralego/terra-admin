@@ -7,6 +7,7 @@ import {
   MenuItem,
   Checkbox,
   IconButton,
+  Tooltip,
 } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
@@ -33,12 +34,16 @@ const PaletteSelect = ({
         control={<Checkbox size="small" checked={reversed} onChange={onReverseToggle} />}
         label="Inverser"
       />
-      <IconButton onClick={onCopyPalette} title="Copier la palette" size="small">
-        <FileCopyIcon fontSize="small" />
-      </IconButton>
-      <IconButton onClick={onPastePalette} title="Coller la palette" size="small">
-        <NoteAddIcon fontSize="small" />
-      </IconButton>
+      <Tooltip title="Copie au format ['#hex','#hex',…]" placement="top">
+        <IconButton onClick={onCopyPalette} title="Copier la palette" size="small">
+          <FileCopyIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Importer un format : ['#hex','#hex',…]" placement="top">
+        <IconButton onClick={onPastePalette} title="Coller la palette" size="small">
+          <NoteAddIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
     </div>
 
     {paletteType !== 'custom' && (

@@ -60,7 +60,6 @@ const GraduateValue = ({ path, Component = ValueListField,
               { id: 'jenks', name: translate('style-editor.graduate.method.jenks') },
               { id: 'quantile', name: translate('style-editor.graduate.method.quantiles') },
               { id: 'equal_interval', name: translate('style-editor.graduate.method.equal-interval') },
-              /* { id: 'manual', name: translate('style-editor.graduate.method.manual') }, */
             ]}
           />
         </div>

@@ -4,11 +4,11 @@ import Api from '@terralego/core/modules/Api';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import Loading from '../../../../../../../components/Loading';
 import styles from './styles';
-import ClassifGraph from './ClassifGraph';
+import ClassifGraph, { MEAN_COLOR, MEDIAN_COLOR, STDDEV_COLOR } from './ClassifGraph';
 import ClassifBucket from './ClassifBucket';
 import ClassifBornes from './ClassifBornes';
-import ClassifToggles from './ClassifToggles';
 
 const useStyles = makeStyles(styles);
 
@@ -28,19 +28,6 @@ const DiscretPreview = ({ layerName, path }) => {
     { subscription: { value: true } });
 
   const [data, setData] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
-  const chartRef = React.useRef(null);
-  const bucketRef = React.useRef(null);
-
-  const [showOptions, setShowOptions] = React.useState({
-    mean: false,
-    median: false,
-    stddev: false,
-  });
-
-  const toggle = key => () => {
-    setShowOptions(prev => ({ ...prev, [key]: !prev[key] }));
-  };
 
   const classCount = values?.length || 0;
 
@@ -71,7 +58,6 @@ const DiscretPreview = ({ layerName, path }) => {
 
     if (layerName && selectedField && method && classCount >= 2) {
       setData(null);
-      setLoading(true);
       Api.request(
         `geo-api/${layerName}/feature/discretize/${selectedField}/`
         + `?method=${method}&classes=${classCount}`,
@@ -79,13 +65,11 @@ const DiscretPreview = ({ layerName, path }) => {
         .then(resp => {
           if (!cancelled) {
             setData(resp);
-            setLoading(false);
           }
         })
         .catch(() => {
           if (!cancelled) {
             setData(null);
-            setLoading(false);
           }
         });
     } else {
@@ -96,32 +80,47 @@ const DiscretPreview = ({ layerName, path }) => {
   }, [layerName, selectedField, method, classCount]);
 
   if (!selectedField) return null;
-  if (!data) return null;
 
   return (
-    <div className={classes.discretContainer} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      {loading && <div>Chargement de la distribution par classe...</div>}
-      <div style={{ display: 'flex', gap: 16 }}>
+    <div className={classes.discretContainer} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minHeight: 334 }}>
+      <div style={{ display: 'flex', gap: 16, visibility: data ? 'visible' : 'hidden' }}>
         <strong style={{ flex: 1 }}>Distribution par classe</strong>
         <strong style={{ minWidth: 160, paddingLeft: 12 }}>Bornes des classes</strong>
       </div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: 16 }}>
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-          <ClassifGraph
-            chartRef={chartRef}
-            breaksData={breaksData}
-            showOptions={showOptions}
-            stats={data.stats}
-          />
+      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: 16, minHeight: 250 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ height: 190, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {data ? (
+              <ClassifGraph
+                breaksData={breaksData}
+                stats={data.stats}
+              />
+            ) : (
+              <Loading spinner />
+            )}
+          </div>
+          <div style={{ display: 'flex', gap: 24, fontSize: 12, color: '#666', marginTop: 20, visibility: data ? 'visible' : 'hidden' }}>
+            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEAN_COLOR} strokeWidth="2.5" /></svg> Moyenne</span>
+            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEDIAN_COLOR} strokeWidth="2.5" /></svg> Médiane</span>
+            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={STDDEV_COLOR} strokeWidth="2.5" strokeDasharray="4,4" /></svg> Écart-type</span>
+          </div>
         </div>
-        <ClassifBornes breaksData={breaksData} />
+        {data ? (
+          <ClassifBornes breaksData={breaksData} />
+        ) : (
+          <div style={{ minWidth: 160 }} />
+        )}
       </div>
-      <ClassifToggles showOptions={showOptions} onToggle={toggle} />
-      <ClassifBucket
-        bucketRef={bucketRef}
-        breaksData={breaksData}
-        entitiesByClass={data.entitiesByClass}
-      />
+      <div style={{ height: 48 }}>
+        {data ? (
+          <ClassifBucket
+            breaksData={breaksData}
+            entitiesByClass={data.entitiesByClass}
+          />
+        ) : (
+          <div style={{ height: 48 }} />
+        )}
+      </div>
     </div>
   );
 };

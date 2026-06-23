@@ -1,57 +1,46 @@
 import React from 'react';
 import * as Plot from '@observablehq/plot';
 
-const ClassifBucket = ({ bucketRef, breaksData, entitiesByClass }) => {
-  React.useEffect(() => {
-    if (!entitiesByClass) {
-      if (bucketRef.current) {
-        bucketRef.current.replaceChildren();
-      }
-      return;
-    }
+import PlotChart from './PlotChart';
 
-    if (!bucketRef.current) return;
+const ClassifBucket = ({ breaksData, entitiesByClass }) => {
+  const options = React.useMemo(() => {
+    if (!entitiesByClass) return null;
 
     const colorNbIndiv = breaksData.length > 0
       ? breaksData.map(d => ({ color: d.color, nb: d.count }))
       : entitiesByClass.map(count => ({ color: '#ccc', nb: count }));
 
-    try {
-      const bucket = Plot.plot({
-        x: { ticks: false },
-        y: { axis: false },
-        margin: 10,
-        height: 60,
-        marks: [
-          Plot.rect(colorNbIndiv, {
-            fill: 'color',
-            x1: (d, i) => i * 10,
-            x2: (d, i) => i * 10 + 10,
-            y1: 0,
-            y2: 10,
-            stroke: 'silver',
-          }),
-          Plot.text(colorNbIndiv, {
-            text: d => d.nb.toLocaleString(),
-            x: (d, i) => i * 10 + 5,
-            textAnchor: 'middle',
-            frameAnchor: 'middle',
-            fontSize: 16,
-            fontWeight: 'bold',
-            fill: 'white',
-            stroke: 'black',
-            strokeWidth: 1.5,
-          }),
-        ],
-      });
+    return {
+      height: 48,
+      margin: 3,
+      x: { axis: false, padding: 0.06 },
+      y: { axis: false, domain: [0, 1] },
+      marks: [
+        Plot.rect(colorNbIndiv, {
+          x: (d, i) => i,
+          y: 0,
+          y2: 1,
+          fill: 'color',
+        }),
+        Plot.text(colorNbIndiv, {
+          text: d => d.nb.toLocaleString(),
+          x: (d, i) => i,
+          y: 0.5,
+          frameAnchor: 'middle',
+          fill: 'white',
+          stroke: 'black',
+          strokeWidth: 1.2,
+          fontSize: 13,
+          fontWeight: 'bold',
+        }),
+      ],
+    };
+  }, [breaksData, entitiesByClass]);
 
-      bucketRef.current.replaceChildren(bucket);
-    } catch (err) {
-      // ignore
-    }
-  }, [bucketRef, breaksData, entitiesByClass]);
+  if (!options) return null;
 
-  return <div ref={bucketRef} />;
+  return <PlotChart options={options} />;
 };
 
 export default ClassifBucket;

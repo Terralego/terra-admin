@@ -1,96 +1,95 @@
 import React from 'react';
 import * as Plot from '@observablehq/plot';
 
-const DistribGraph = ({ chartRef, data }) => {
-  React.useEffect(() => {
-    if (!data) {
-      if (chartRef.current) {
-        chartRef.current.replaceChildren();
-      }
-      return;
-    }
+import PlotChart from './PlotChart';
 
-    if (!chartRef.current) return;
+const DistribGraph = ({ data }) => {
+  const { bins, boxplot, sample } = data || {};
 
-    const { bins, boxplot, sample } = data;
-    if (!bins || bins.length === 0) return;
+  const aspect = React.useMemo(() => {
+    if (!bins || bins.length === 0) return null;
 
     const maxCount = bins.reduce((max, b) => Math.max(max, b.count), 0);
-    const jitterHeight = maxCount * 0.35;
-    const boxY1 = -jitterHeight;
-    const boxY2 = -jitterHeight * 0.15;
-    const whiskerY = (boxY1 + boxY2) / 2;
+    const baseline = maxCount * -0.28;
+    const boxFloor = baseline;
+    const boxCeiling = baseline * 0.18;
+    const whiskerPos = (boxFloor + boxCeiling) / 2;
 
-    try {
-      const chart = Plot.plot({
-        height: 260,
-        marginLeft: 30,
-        marginBottom: 20,
-        marginTop: 10,
-        marginRight: 15,
-        insetLeft: 10,
-        marks: [
-          Plot.ruleY([0]),
+    const jitterPositions = sample?.length
+      ? sample.map(() => boxFloor + Math.random() * (boxCeiling - boxFloor))
+      : [];
 
-          Plot.rectY(bins, {
-            x1: 'x0',
-            x2: 'x1',
-            y: 'count',
-            fill: '#ccc',
-            stroke: '#999',
-          }),
+    return { boxFloor, boxCeiling, whiskerPos, jitterPositions, maxCount };
+  }, [bins, sample]);
 
-          ...(sample?.length
-            ? [Plot.dot(sample, {
-              x: d => d,
-              y: () => boxY1 + Math.random() * (boxY2 - boxY1),
-              stroke: '#ff3434',
-              fill: '#f1ebeb',
-              r: 2,
-            })]
-            : []),
+  const options = React.useMemo(() => {
+    if (!aspect) return null;
 
-          Plot.ruleX([boxplot.median], {
-            stroke: 'black',
-            strokeWidth: 3,
-            y1: boxY1,
-            y2: boxY2,
-          }),
-          Plot.rectX([boxplot], {
-            x1: 'q1',
-            x2: 'q3',
-            y1: boxY1,
-            y2: boxY2,
-            fill: 'none',
-            stroke: 'black',
-            strokeWidth: 1.5,
-          }),
-          Plot.ruleY([boxplot], {
-            x1: 'min',
-            x2: 'q1',
-            y: whiskerY,
-            stroke: 'black',
-            strokeWidth: 1.5,
-          }),
-          Plot.ruleY([boxplot], {
-            x1: 'q3',
-            x2: 'max',
-            y: whiskerY,
-            stroke: 'black',
-            strokeWidth: 1.5,
-          }),
-        ],
-        y: { ticks: 4, label: null },
-        x: { tickFormat: d => d.toLocaleString(), label: null },
-      });
+    const { boxFloor, boxCeiling, whiskerPos, jitterPositions } = aspect;
 
-      chartRef.current.replaceChildren(chart);
-    } catch (err) {
-      // ignore
-    }
-  }, [chartRef, data]);
+    return {
+      height: 250,
+      marginLeft: 35,
+      marginBottom: 22,
+      marginTop: 12,
+      marginRight: 18,
+      insetLeft: 8,
+      marks: [
+        Plot.ruleY([0]),
+        Plot.rectY(bins, {
+          x1: 'x0',
+          x2: 'x1',
+          y: 'count',
+          fill: '#d4d4d4',
+          stroke: '#b0b0b0',
+        }),
+        ...(jitterPositions.length > 0
+          ? [Plot.dot(sample, {
+            x: d => d,
+            y: (d, i) => jitterPositions[i],
+            stroke: '#cc4444',
+            fill: '#f5f0f0',
+            r: 1.8,
+          })]
+          : []),
+        Plot.ruleX([boxplot.median], {
+          stroke: '#2c2c2c',
+          strokeWidth: 2.5,
+          y1: boxFloor,
+          y2: boxCeiling,
+        }),
+        Plot.rectX([boxplot], {
+          x1: 'q1',
+          x2: 'q3',
+          y1: boxFloor,
+          y2: boxCeiling,
+          fill: 'none',
+          stroke: '#2c2c2c',
+          strokeWidth: 1.2,
+        }),
+        Plot.ruleY([boxplot], {
+          x1: 'min',
+          x2: 'q1',
+          y: whiskerPos,
+          stroke: '#2c2c2c',
+          strokeWidth: 1.2,
+        }),
+        Plot.ruleY([boxplot], {
+          x1: 'q3',
+          x2: 'max',
+          y: whiskerPos,
+          stroke: '#2c2c2c',
+          strokeWidth: 1.2,
+        }),
+      ],
+      y: { ticks: 5, label: null },
+      x: { tickFormat: d => d.toLocaleString('fr'), label: null },
+    };
+  }, [aspect, bins, boxplot, sample]);
 
-  return <div ref={chartRef} />;
+  if (!options) return null;
+
+  return <PlotChart options={options} />;
 };
 
 export default DistribGraph;

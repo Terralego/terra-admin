@@ -12,7 +12,7 @@ const PlotChart = ({ options }) => {
         const chart = ObservablePlot.plot(options);
         el.replaceChildren(chart);
       } catch (err) {
-        // ignore
+        console.error(err); // eslint-disable-line no-console
       }
     }
 

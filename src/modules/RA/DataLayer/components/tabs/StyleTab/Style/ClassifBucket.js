@@ -17,12 +17,14 @@ const ClassifBucket = ({ breaksData, entitiesByClass }) => {
       x: { axis: false, padding: 0.06 },
       y: { axis: false, domain: [0, 1] },
       marks: [
+        // Barres de couleur par classe
         Plot.rect(colorNbIndiv, {
           x: (d, i) => i,
           y: 0,
           y2: 1,
           fill: 'color',
         }),
+        // Effectif par classe
         Plot.text(colorNbIndiv, {
           text: d => d.nb.toLocaleString(),
           x: (d, i) => i,

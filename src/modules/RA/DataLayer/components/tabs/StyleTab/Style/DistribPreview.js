@@ -1,5 +1,6 @@
 import React from 'react';
 import { useField } from 'react-final-form';
+import { useTranslate } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import DistribGraph from './DistribGraph';
 const useStyles = makeStyles(styles);
 
 const DistribPreview = ({ layerName, path }) => {
+  const translate = useTranslate();
   const classes = useStyles();
 
   const fieldName = `${path}.field`;
@@ -46,7 +48,7 @@ const DistribPreview = ({ layerName, path }) => {
 
   return (
     <div className={classes.discretContainer} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <strong style={{ visibility: data ? 'visible' : 'hidden' }}>Distribution</strong>
+      <strong style={{ visibility: data ? 'visible' : 'hidden' }}>{translate('discret.distribution')}</strong>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', minHeight: 250 }}>
         {data ? (
           <DistribGraph data={data} />

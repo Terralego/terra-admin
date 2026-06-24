@@ -1,5 +1,6 @@
 import React from 'react';
 import { useField } from 'react-final-form';
+import { useTranslate } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,6 +14,7 @@ import ClassifBornes from './ClassifBornes';
 const useStyles = makeStyles(styles);
 
 const DiscretPreview = ({ layerName, path }) => {
+  const translate = useTranslate();
   const classes = useStyles();
 
   const fieldName = `${path}.field`;
@@ -53,6 +55,17 @@ const DiscretPreview = ({ layerName, path }) => {
     return result;
   }, [data, values]);
 
+  const graphContent = React.useMemo(() => {
+    if (!data) return <Loading spinner />;
+    if (data.stats?.min == null) return <div style={{ color: '#999' }}>{translate('discret.not-numeric')}</div>;
+    return (
+      <ClassifGraph
+        breaksData={breaksData}
+        stats={data.stats}
+      />
+    );
+  }, [data, breaksData, translate]);
+
   React.useEffect(() => {
     let cancelled = false;
 
@@ -80,29 +93,23 @@ const DiscretPreview = ({ layerName, path }) => {
   }, [layerName, selectedField, method, classCount]);
 
   if (!selectedField) return null;
+  if (!method) return <div style={{ color: '#999', padding: 24, textAlign: 'center' }}>{translate('discret.choose-method')}</div>;
 
   return (
     <div className={classes.discretContainer} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minHeight: 334 }}>
       <div style={{ display: 'flex', gap: 16, visibility: data ? 'visible' : 'hidden' }}>
-        <strong style={{ flex: 1 }}>Distribution par classe</strong>
-        <strong style={{ minWidth: 160, paddingLeft: 12 }}>Bornes des classes</strong>
+        <strong style={{ flex: 1, maxWidth: 640 }}>{translate('discret.preview')}</strong>
+        <strong style={{ paddingLeft: 12 }}>{translate('discret.class-bounds')}</strong>
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: 16, minHeight: 250 }}>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ height: 190, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {data ? (
-              <ClassifGraph
-                breaksData={breaksData}
-                stats={data.stats}
-              />
-            ) : (
-              <Loading spinner />
-            )}
+            {graphContent}
           </div>
           <div style={{ display: 'flex', gap: 24, fontSize: 12, color: '#666', marginTop: 20, visibility: data ? 'visible' : 'hidden' }}>
-            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEAN_COLOR} strokeWidth="2.5" /></svg> Moyenne</span>
-            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEDIAN_COLOR} strokeWidth="2.5" /></svg> Médiane</span>
-            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={STDDEV_COLOR} strokeWidth="2.5" strokeDasharray="4,4" /></svg> Écart-type</span>
+            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEAN_COLOR} strokeWidth="2.5" /></svg> {translate('discret.toggle.mean')}</span>
+            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEDIAN_COLOR} strokeWidth="2.5" /></svg> {translate('discret.toggle.median')}</span>
+            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={STDDEV_COLOR} strokeWidth="2.5" strokeDasharray="4,4" /></svg> {translate('discret.toggle.stddev')}</span>
           </div>
         </div>
         {data ? (

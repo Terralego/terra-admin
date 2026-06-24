@@ -5,7 +5,7 @@ import { useTranslate, SelectInput, required } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
-import { Field, useField } from 'react-final-form';
+import { Field, useField, useForm } from 'react-final-form';
 
 import ValueListField from './ValueListField';
 import { DEFAULT_MAX_CLASSES } from './ColorListField';
@@ -31,6 +31,18 @@ const GraduateValue = ({ path, Component = ValueListField,
   const { input: { value: values, onChange: onValuesChange } }
     = useField(`${path}.values`, { subscription: { value: true } });
   const v = Array.isArray(values) && values.length > 0 ? values : defaultValue;
+
+  const form = useForm();
+  const { input: { value: paletteType } } = useField(`${path}.palette_type`, { subscription: { value: true } });
+  const { input: { value: paletteName } } = useField(`${path}.palette_name`, { subscription: { value: true } });
+  const { input: { value: reversed } } = useField(`${path}.palette_reversed`, { subscription: { value: true } });
+
+  const handlePaletteTypeChange = val => {
+    form.change(`${path}.palette_type`, val);
+    form.change(`${path}.palette_name`, null);
+  };
+  const handlePaletteNameChange = val => form.change(`${path}.palette_name`, val);
+  const handleReversedChange = val => form.change(`${path}.palette_reversed`, val);
 
   const handleCountChange = e => {
     let newCount = parseInt(e.target.value, 10);
@@ -66,7 +78,7 @@ const GraduateValue = ({ path, Component = ValueListField,
         <div className="count">
           <TextField
             type="number"
-            label="Classes"
+            label={translate('style-editor.graduate.classes')}
             value={v.length}
             onChange={handleCountChange}
             inputProps={{ min: 2, max: DEFAULT_MAX_CLASSES, step: 1 }}
@@ -78,7 +90,17 @@ const GraduateValue = ({ path, Component = ValueListField,
       <FormLabel>{translate('style-editor.graduate.steps')}</FormLabel>
       <Field name={`${path}.values`} defaultValue={defaultValue}>
         {({ input: { value, onChange } }) => (
-          <Component value={value} onChange={onChange} showAddRemove={false} />
+          <Component
+            value={value}
+            onChange={onChange}
+            showAddRemove={false}
+            paletteType={['sequential', 'diverging', 'custom'].includes(paletteType) ? paletteType : 'custom'}
+            selectedPalette={paletteName || null}
+            reversed={reversed || false}
+            onTypeChange={handlePaletteTypeChange}
+            onPaletteSelect={handlePaletteNameChange}
+            onReverseToggle={handleReversedChange}
+          />
         )}
       </Field>
 

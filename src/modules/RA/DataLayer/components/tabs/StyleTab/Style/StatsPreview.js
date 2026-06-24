@@ -1,5 +1,6 @@
 import React from 'react';
 import { useField } from 'react-final-form';
+import { useTranslate } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,6 +36,7 @@ const useStyles = makeStyles({
 });
 
 const StatsPreview = ({ layerName, path }) => {
+  const translate = useTranslate();
   const classes = useStyles();
   // champs sélectionné
   const fieldName = `${path}.field`;
@@ -76,16 +78,16 @@ const StatsPreview = ({ layerName, path }) => {
   // juste une table/tableau avec les valeurs
   return (
     <div className={classes.statsPreview} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <strong style={{ visibility: stats ? 'visible' : 'hidden' }}>Résumé statistiques</strong>
+      <strong style={{ visibility: stats ? 'visible' : 'hidden' }}>{translate('discret.summary')}</strong>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', position: 'relative' }}>
         <table className={classes.table} style={{ visibility: stats ? 'visible' : 'hidden' }}>
           <tbody>
-            <tr><td>Population</td><td>{stats?.count ?? ''}</td></tr>
-            <tr><td>Minimum</td><td>{stats?.min ?? ''}</td></tr>
-            <tr><td>Maximum</td><td>{stats?.max ?? ''}</td></tr>
-            <tr><td>Moyenne</td><td>{stats?.avg ?? ''}</td></tr>
-            <tr><td>Médiane</td><td>{stats?.median ?? ''}</td></tr>
-            <tr><td>Ecart type</td><td>{stats?.std_dev ?? ''}</td></tr>
+            <tr><td>{translate('discret.toggle.rug')}</td><td>{stats?.count ?? ''}</td></tr>
+            <tr><td>{translate('discret.minimum')}</td><td>{stats?.min ?? ''}</td></tr>
+            <tr><td>{translate('discret.maximum')}</td><td>{stats?.max ?? ''}</td></tr>
+            <tr><td>{translate('discret.toggle.mean')}</td><td>{stats?.avg ?? ''}</td></tr>
+            <tr><td>{translate('discret.toggle.median')}</td><td>{stats?.median ?? ''}</td></tr>
+            <tr><td>{translate('discret.toggle.stddev')}</td><td>{stats?.std_dev ?? ''}</td></tr>
           </tbody>
         </table>
         {!stats && (

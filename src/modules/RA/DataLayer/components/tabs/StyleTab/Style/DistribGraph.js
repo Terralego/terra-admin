@@ -35,6 +35,7 @@ const DistribGraph = ({ data }) => {
       marginRight: 18,
       insetLeft: 8,
       marks: [
+        // Histogramme de distribution
         Plot.ruleY([0]),
         Plot.rectY(bins, {
           x1: 'x0',
@@ -43,6 +44,7 @@ const DistribGraph = ({ data }) => {
           fill: '#d4d4d4',
           stroke: '#b0b0b0',
         }),
+        // Échantillon (jitter)
         ...(jitterPositions.length > 0
           ? [Plot.dot(sample, {
             x: d => d,
@@ -52,12 +54,14 @@ const DistribGraph = ({ data }) => {
             r: 1.8,
           })]
           : []),
+        // Médiane
         Plot.ruleX([boxplot.median], {
           stroke: '#2c2c2c',
           strokeWidth: 2.5,
           y1: boxFloor,
           y2: boxCeiling,
         }),
+        // Boîte (Q1→Q3)
         Plot.rectX([boxplot], {
           x1: 'q1',
           x2: 'q3',
@@ -67,6 +71,7 @@ const DistribGraph = ({ data }) => {
           stroke: '#2c2c2c',
           strokeWidth: 1.2,
         }),
+        // Moustache inférieure (Q1→min)
         Plot.ruleY([boxplot], {
           x1: 'min',
           x2: 'q1',
@@ -74,6 +79,7 @@ const DistribGraph = ({ data }) => {
           stroke: '#2c2c2c',
           strokeWidth: 1.2,
         }),
+        // Moustache supérieure (Q3→max)
         Plot.ruleY([boxplot], {
           x1: 'q3',
           x2: 'max',

@@ -12,7 +12,7 @@
  *   Voir : https://github.com/mthh/dicopal
  */
 
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { getPalettes, getSequentialColors, getAsymmetricDivergingColors } from 'dicopal';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,13 +27,15 @@ const useStyles = makeStyles(styles);
 const DicopalField = ({
   value = [], onChange = () => {}, maxClasses = DEFAULT_MAX_CLASSES,
   showAddRemove = true,
+  paletteType = 'custom',
+  selectedPalette = null,
+  reversed = false,
+  onTypeChange,
+  onPaletteSelect,
+  onReverseToggle,
 }) => {
   const classes = useStyles();
   const applyingRef = useRef(false);
-
-  const [paletteType, setPaletteType] = useState('custom');
-  const [selectedPalette, setSelectedPalette] = useState(null);
-  const [reversed, setReversed] = useState(false);
 
   const palettes = useMemo(
     () => getPalettes({ type: paletteType, number: value.length || 5 }),
@@ -75,20 +77,18 @@ const DicopalField = ({
   }, [value.length]);
 
   const handleTypeChange = e => {
-    const newType = e.target.value;
-    setPaletteType(newType);
-    setSelectedPalette(null);
+    onTypeChange?.(e.target.value);
   };
 
   const handlePaletteSelect = e => {
     const name = e.target.value;
-    setSelectedPalette(name);
+    onPaletteSelect?.(name);
     interpolate(name, value.length, reversed);
   };
 
   const handleReverse = () => {
     const newReversed = !reversed;
-    setReversed(newReversed);
+    onReverseToggle?.(newReversed);
     if (selectedPalette && paletteType !== 'custom') {
       interpolate(selectedPalette, value.length, newReversed);
     } else if (paletteType === 'custom') {
@@ -112,8 +112,8 @@ const DicopalField = ({
       const text = await navigator.clipboard.readText();
       const colors = parsePalette(text);
       if (colors.length) {
-        setPaletteType('custom');
-        setSelectedPalette(null);
+        onTypeChange?.('custom');
+        onPaletteSelect?.(null);
         onChange(colors);
       }
     } catch { /* clipboard non disponible */ }
@@ -131,8 +131,8 @@ const DicopalField = ({
         return;
       }
     } else {
-      setPaletteType('custom');
-      setSelectedPalette(null);
+      onTypeChange?.('custom');
+      onPaletteSelect?.(null);
     }
     onChange(newValue);
   };

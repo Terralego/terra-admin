@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import { useTranslate } from 'react-admin';
 
 const PaletteSelect = ({
   paletteType,
@@ -22,55 +23,77 @@ const PaletteSelect = ({
   onReverseToggle,
   onCopyPalette,
   onPastePalette,
-}) => (
-  <>
-    <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-      <RadioGroup row value={paletteType} onChange={onTypeChange}>
-        <FormControlLabel value="sequential" control={<Radio size="small" />} label="Séquentielle" />
-        <FormControlLabel value="diverging" control={<Radio size="small" />} label="Divergente" />
-        <FormControlLabel value="custom" control={<Radio size="small" />} label="Personnalisée" />
-      </RadioGroup>
-      <FormControlLabel
-        control={<Checkbox size="small" checked={reversed} onChange={onReverseToggle} />}
-        label="Inverser"
-      />
-      <Tooltip title="Copie au format ['#hex','#hex',…]" placement="top">
-        <IconButton onClick={onCopyPalette} title="Copier la palette" size="small">
-          <FileCopyIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Importer un format : ['#hex','#hex',…]" placement="top">
-        <IconButton onClick={onPastePalette} title="Coller la palette" size="small">
-          <NoteAddIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
-    </div>
+}) => {
+  const translate = useTranslate();
+  const isInterpolated = selectedPalette && !palettes.some(p => p.name === selectedPalette);
 
-    {paletteType !== 'custom' && (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
-        <Select
-          value={selectedPalette || ''}
-          onChange={onPaletteSelect}
-          displayEmpty
-          style={{ minWidth: 160 }}
-        >
-          <MenuItem value="" disabled>Choisir une palette</MenuItem>
-          {palettes.map(p => (
-            <MenuItem key={p.id} value={p.name}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div style={{ display: 'flex', height: 16, width: 64, borderRadius: 2, overflow: 'hidden', border: '1px solid #ccc' }}>
-                  {p.colors.map((c, i) => (
-                    <div key={`${p.id}-${i + 1}`} style={{ flex: 1, backgroundColor: c }} />
-                  ))}
-                </div>
-                <span>{p.name}</span>
-              </div>
-            </MenuItem>
-          ))}
-        </Select>
+  return (
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+        <RadioGroup row value={paletteType} onChange={onTypeChange}>
+          <FormControlLabel value="sequential" control={<Radio size="small" />} label={translate('style-editor.palette.sequential')} />
+          <FormControlLabel value="diverging" control={<Radio size="small" />} label={translate('style-editor.palette.diverging')} />
+          <FormControlLabel value="custom" control={<Radio size="small" />} label={translate('style-editor.palette.custom')} />
+        </RadioGroup>
+        <FormControlLabel
+          control={<Checkbox size="small" checked={reversed} onChange={onReverseToggle} />}
+          label={translate('style-editor.palette.reverse')}
+        />
+        <Tooltip title={translate('style-editor.palette.copy-format')} placement="top">
+          <IconButton onClick={onCopyPalette} size="small">
+            <FileCopyIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title={translate('style-editor.palette.paste-format')} placement="top">
+          <IconButton onClick={onPastePalette} size="small">
+            <NoteAddIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
       </div>
-    )}
-  </>
-);
+
+      {paletteType !== 'custom' && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
+          <Select
+            value={selectedPalette || ''}
+            onChange={onPaletteSelect}
+            displayEmpty
+            style={{ minWidth: 160 }}
+            renderValue={v => {
+              if (!v) return translate('style-editor.palette.choose');
+              const p = palettes.find(pal => pal.name === v);
+              if (!p) {
+                return `${v}${isInterpolated ? ` ${translate('style-editor.palette.interpolated')}` : ''}`;
+              }
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <div style={{ display: 'flex', height: 16, width: 64, borderRadius: 2, overflow: 'hidden', border: '1px solid #ccc' }}>
+                    {p.colors.map(c => (
+                      <div key={c} style={{ flex: 1, backgroundColor: c }} />
+                    ))}
+                  </div>
+                  <span>{p.name}</span>
+                </div>
+              );
+            }}
+          >
+            <MenuItem value="" disabled>{translate('style-editor.palette.choose')}</MenuItem>
+            {palettes.map(p => (
+              <MenuItem key={p.id} value={p.name}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <div style={{ display: 'flex', height: 16, width: 64, borderRadius: 2, overflow: 'hidden', border: '1px solid #ccc' }}>
+                    {p.colors.map((c, i) => (
+                      <div key={`${p.id}-${i + 1}`} style={{ flex: 1, backgroundColor: c }} />
+                    ))}
+                  </div>
+                  <span>{p.name}</span>
+                </div>
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+      )}
+    </>
+  );
+};
 
 export default PaletteSelect;

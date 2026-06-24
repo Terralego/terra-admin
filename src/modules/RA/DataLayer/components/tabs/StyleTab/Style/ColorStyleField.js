@@ -40,10 +40,10 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty, layerName }) => {
   const isNumber = selectedField && ['Integer', 'Float'].includes(fieldTypes[selectedField.data_type]);
 
   React.useEffect(() => {
-    if (fields && fields.length > 0 && selectedFieldName && !isNumber) {
+    if (selectedField && !isNumber) {
       form.change(`${path}.analysis`, 'categorized');
     }
-  }, [selectedFieldName, isNumber, path, form, fields]);
+  }, [selectedField, isNumber, path, form]);
 
   const { input: { value: type } } = useField(`${path}.type`);
 

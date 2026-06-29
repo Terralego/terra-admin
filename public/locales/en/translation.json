@@ -1239,8 +1239,13 @@
       "method": {
         "input": "Method",
         "jenks": "Jenks",
+        "jenks-kmeans1d": "Jenks (k-means 1D)",
         "equal-interval": "Equal intervals",
+        "equal-interval-mapclassify": "Equal intervals (mapclassify)",
+        "fisherjenkssampled": "FisherJenks (sampled)",
+        "prettybreaks": "Pretty Breaks",
         "quantiles": "Quantiles",
+        "quantiles-mapclassify": "Quantiles (mapclassify)",
         "manual": "Manual"
       },
       "classes": "Classes"

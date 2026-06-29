@@ -61,7 +61,7 @@ const DistribGraph = ({ data }) => {
           y1: boxFloor,
           y2: boxCeiling,
         }),
-        // Boîte (Q1→Q3)
+        // Boîte (Q1-Q3)
         Plot.rectX([boxplot], {
           x1: 'q1',
           x2: 'q3',
@@ -71,7 +71,7 @@ const DistribGraph = ({ data }) => {
           stroke: '#2c2c2c',
           strokeWidth: 1.2,
         }),
-        // Moustache inférieure (Q1→min)
+        // Moustache inférieure (Q1-min)
         Plot.ruleY([boxplot], {
           x1: 'min',
           x2: 'q1',
@@ -79,7 +79,7 @@ const DistribGraph = ({ data }) => {
           stroke: '#2c2c2c',
           strokeWidth: 1.2,
         }),
-        // Moustache supérieure (Q3→max)
+        // Moustache supérieure (Q3-max)
         Plot.ruleY([boxplot], {
           x1: 'q3',
           x2: 'max',

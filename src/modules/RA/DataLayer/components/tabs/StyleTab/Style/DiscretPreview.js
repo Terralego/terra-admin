@@ -1,5 +1,5 @@
 import React from 'react';
-import { useField } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 import { useTranslate } from 'react-admin';
 import Api from '@terralego/core/modules/Api';
 
@@ -28,6 +28,12 @@ const DiscretPreview = ({ layerName, path }) => {
   const valuesName = `${path}.values`;
   const { input: { value: values } } = useField(valuesName,
     { subscription: { value: true } });
+
+  const boundariesName = `${path}.boundaries`;
+  const { input: { value: boundaries } } = useField(boundariesName,
+    { subscription: { value: true } });
+
+  const form = useForm();
 
   const [data, setData] = React.useState(null);
 
@@ -66,15 +72,40 @@ const DiscretPreview = ({ layerName, path }) => {
     );
   }, [data, breaksData, translate]);
 
+  const dataRef = React.useRef(data);
+  dataRef.current = data;
+
   React.useEffect(() => {
     let cancelled = false;
 
-    if (layerName && selectedField && method && classCount >= 2) {
+    if (!layerName || !selectedField || !method || classCount < 2) {
       setData(null);
-      Api.request(
-        `geo-api/${layerName}/feature/discretize/${selectedField}/`
-        + `?method=${method}&classes=${classCount}`,
-      )
+      return () => { cancelled = true; };
+    }
+
+    const r2 = x => Math.round(x * 100) / 100;
+
+    if (method === 'manual') {
+      if (boundaries && boundaries.some(b => typeof b === 'string')) {
+        return () => { cancelled = true; };
+      }
+      if (!boundaries || boundaries.length < 2) {
+        if (dataRef.current?.breaks?.length >= 2) {
+          form.change(`${path}.boundaries`, dataRef.current.breaks.map(r2));
+        }
+        return () => { cancelled = true; };
+      }
+      if (dataRef.current?.breaks?.length >= 2) {
+        const cached = dataRef.current.breaks.map(r2);
+        if (boundaries.length === cached.length
+          && boundaries.every((b, i) => Number(b) === cached[i])) {
+          return () => { cancelled = true; };
+        }
+      }
+      setData(null);
+      Api.request(`geo-api/${layerName}/feature/discretize/${selectedField}/`
+        + `?method=manual&classes=${classCount}`
+        + `&breaks=${encodeURIComponent(boundaries.join(','))}`)
         .then(resp => {
           if (!cancelled) {
             setData(resp);
@@ -85,12 +116,25 @@ const DiscretPreview = ({ layerName, path }) => {
             setData(null);
           }
         });
-    } else {
-      setData(null);
+      return () => { cancelled = true; };
     }
 
+    setData(null);
+    Api.request(`geo-api/${layerName}/feature/discretize/${selectedField}/`
+      + `?method=${method}&classes=${classCount}`)
+      .then(resp => {
+        if (!cancelled) {
+          setData(resp);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setData(null);
+        }
+      });
+
     return () => { cancelled = true; };
-  }, [layerName, selectedField, method, classCount]);
+  }, [layerName, selectedField, method, classCount, boundaries, form, path]);
 
   if (!selectedField) return null;
   if (!method) return <div style={{ color: '#999', padding: 24, textAlign: 'center' }}>{translate('discret.choose-method')}</div>;

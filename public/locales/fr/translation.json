@@ -1293,8 +1293,13 @@
       "method": {
         "input": "Méthode",
         "jenks": "Jenks",
+        "jenks-kmeans1d": "Jenks (k-means 1D)",
         "equal-interval": "Intervalles égaux",
+        "equal-interval-mapclassify": "Intervalles égaux (mapclassify)",
+        "fisherjenkssampled": "Fisher-Jenks (échantillonné)",
+        "prettybreaks": "Jolies ruptures",
         "quantiles": "Quantiles",
+        "quantiles-mapclassify": "Quantiles (mapclassify)",
         "manual": "Manuelle"
       },
       "classes": "Classes"

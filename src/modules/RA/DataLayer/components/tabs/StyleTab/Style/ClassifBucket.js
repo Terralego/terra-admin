@@ -3,13 +3,11 @@ import * as Plot from '@observablehq/plot';
 
 import PlotChart from './PlotChart';
 
-const ClassifBucket = ({ breaksData, entitiesByClass }) => {
+const ClassifBucket = ({ breaksData }) => {
   const options = React.useMemo(() => {
-    if (!entitiesByClass) return null;
+    if (!breaksData || breaksData.length === 0) return null;
 
-    const colorNbIndiv = breaksData.length > 0
-      ? breaksData.map(d => ({ color: d.color, nb: d.count }))
-      : entitiesByClass.map(count => ({ color: '#ccc', nb: count }));
+    const colorNbIndiv = breaksData.map(d => ({ color: d.color, nb: d.count }));
 
     return {
       height: 48,
@@ -38,7 +36,7 @@ const ClassifBucket = ({ breaksData, entitiesByClass }) => {
         }),
       ],
     };
-  }, [breaksData, entitiesByClass]);
+  }, [breaksData]);
 
   if (!options) return null;
 

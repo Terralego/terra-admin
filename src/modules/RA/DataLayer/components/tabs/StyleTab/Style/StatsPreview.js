@@ -19,6 +19,7 @@ const useStyles = makeStyles({
     },
     '& th': {
       textAlign: 'left',
+      paddingLeft: 0,
     },
   },
 });

@@ -139,28 +139,22 @@ const DiscretPreview = ({ layerName, path }) => {
   if (!method) return <div style={{ color: '#999', padding: 24, textAlign: 'center' }}>{translate('discret.choose-method')}</div>;
 
   return (
-    <div className={classes.discretContainer} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minHeight: 334 }}>
-      <div style={{ display: 'flex', gap: 16, visibility: data ? 'visible' : 'hidden' }}>
-        <strong style={{ flex: 1, maxWidth: 640 }} />
-        <strong style={{ paddingLeft: 12 }}>{translate('discret.class-bounds')}</strong>
-      </div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: 16, minHeight: 250 }}>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{ height: 190, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {graphContent}
-          </div>
-          <div style={{ display: 'flex', gap: 24, fontSize: 12, color: '#666', marginTop: 20, visibility: data ? 'visible' : 'hidden' }}>
-            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEAN_COLOR} strokeWidth="2.5" /></svg> {translate('discret.toggle.mean')}</span>
-            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEDIAN_COLOR} strokeWidth="2.5" /></svg> {translate('discret.toggle.median')}</span>
-            <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={STDDEV_COLOR} strokeWidth="2.5" strokeDasharray="4,4" /></svg> {translate('discret.toggle.stddev')}</span>
-          </div>
+    <div className={classes.discretContainer} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, minHeight: 334 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: 250, paddingTop: 4 }}>
+        <div style={{ height: 190, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {graphContent}
         </div>
-        {data ? (
-          <ClassifBornes breaksData={breaksData} />
-        ) : (
-          <div style={{ minWidth: 160 }} />
-        )}
+        <div style={{ display: 'flex', gap: 24, fontSize: 12, color: '#666', marginTop: 20, visibility: data ? 'visible' : 'hidden' }}>
+          <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEAN_COLOR} strokeWidth="2.5" /></svg> {translate('discret.toggle.mean')}</span>
+          <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={MEDIAN_COLOR} strokeWidth="2.5" /></svg> {translate('discret.toggle.median')}</span>
+          <span><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke={STDDEV_COLOR} strokeWidth="2.5" strokeDasharray="4,4" /></svg> {translate('discret.toggle.stddev')}</span>
+        </div>
       </div>
+      {data ? (
+        <ClassifBornes breaksData={breaksData} />
+      ) : (
+        <div style={{ minWidth: 160 }} />
+      )}
       <div style={{ height: 48 }}>
         {data ? (
           <ClassifBucket

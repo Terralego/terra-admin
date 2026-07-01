@@ -9,9 +9,14 @@ import {
   IconButton,
   Tooltip,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import { useTranslate } from 'react-admin';
+
+import styles from './styles';
+
+const useStyles = makeStyles(styles);
 
 const PaletteSelect = ({
   paletteType,
@@ -25,18 +30,19 @@ const PaletteSelect = ({
   onPastePalette,
 }) => {
   const translate = useTranslate();
+  const classes = useStyles();
   const isInterpolated = selectedPalette && !palettes.some(p => p.name === selectedPalette);
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-        <RadioGroup row value={paletteType} onChange={onTypeChange}>
-          <FormControlLabel value="sequential" control={<Radio size="small" />} label={translate('style-editor.palette.sequential')} />
-          <FormControlLabel value="diverging" control={<Radio size="small" />} label={translate('style-editor.palette.diverging')} />
-          <FormControlLabel value="custom" control={<Radio size="small" />} label={translate('style-editor.palette.custom')} />
+      <div className={classes.paletteRow}>
+        <RadioGroup className="palette-type" row value={paletteType} onChange={onTypeChange}>
+          <FormControlLabel value="sequential" control={<Radio size="small" color="primary" />} label={translate('style-editor.palette.sequential')} />
+          <FormControlLabel value="diverging" control={<Radio size="small" color="primary" />} label={translate('style-editor.palette.diverging')} />
+          <FormControlLabel value="custom" control={<Radio size="small" color="primary" />} label={translate('style-editor.palette.custom')} />
         </RadioGroup>
         <FormControlLabel
-          control={<Checkbox size="small" checked={reversed} onChange={onReverseToggle} />}
+          control={<Checkbox size="small" color="primary" checked={reversed} onChange={onReverseToggle} />}
           label={translate('style-editor.palette.reverse')}
         />
         <Tooltip title={translate('style-editor.palette.copy-format')} placement="top">
@@ -52,7 +58,7 @@ const PaletteSelect = ({
       </div>
 
       {paletteType !== 'custom' && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
+        <div className={classes.paletteSelectRow}>
           <Select
             value={selectedPalette || ''}
             onChange={onPaletteSelect}

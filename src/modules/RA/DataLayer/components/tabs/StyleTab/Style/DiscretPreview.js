@@ -6,6 +6,7 @@ import Api from '@terralego/core/modules/Api';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Loading from '../../../../../../../components/Loading';
+import { roundTo } from './ManualBreaks';
 import styles from './styles';
 import ClassifGraph, { MEAN_COLOR, MEDIAN_COLOR, STDDEV_COLOR } from './ClassifGraph';
 import ClassifBucket from './ClassifBucket';
@@ -83,20 +84,18 @@ const DiscretPreview = ({ layerName, path }) => {
       return () => { cancelled = true; };
     }
 
-    const r2 = x => Math.round(x * 100) / 100;
-
     if (method === 'manual') {
       if (boundaries && boundaries.some(b => typeof b === 'string')) {
         return () => { cancelled = true; };
       }
       if (!boundaries || boundaries.length < 2) {
         if (dataRef.current?.breaks?.length >= 2) {
-          form.change(`${path}.boundaries`, dataRef.current.breaks.map(r2));
+          form.change(`${path}.boundaries`, dataRef.current.breaks.map(roundTo));
         }
         return () => { cancelled = true; };
       }
       if (dataRef.current?.breaks?.length >= 2) {
-        const cached = dataRef.current.breaks.map(r2);
+        const cached = dataRef.current.breaks.map(roundTo);
         if (boundaries.length === cached.length
           && boundaries.every((b, i) => Number(b) === cached[i])) {
           return () => { cancelled = true; };
@@ -142,7 +141,7 @@ const DiscretPreview = ({ layerName, path }) => {
   return (
     <div className={classes.discretContainer} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minHeight: 334 }}>
       <div style={{ display: 'flex', gap: 16, visibility: data ? 'visible' : 'hidden' }}>
-        <strong style={{ flex: 1, maxWidth: 640 }}>{translate('discret.preview')}</strong>
+        <strong style={{ flex: 1, maxWidth: 640 }} />
         <strong style={{ paddingLeft: 12 }}>{translate('discret.class-bounds')}</strong>
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: 16, minHeight: 250 }}>

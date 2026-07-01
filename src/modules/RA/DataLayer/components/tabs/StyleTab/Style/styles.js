@@ -76,10 +76,22 @@ const styles = {
     marginRight: '2em',
   },
   discretContainer: {
-    padding: '8px 12px',
-    background: '#f5f5f5',
-    borderRadius: 4,
     marginTop: 8,
+  },
+  paletteRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 16,
+    flexWrap: 'wrap',
+    '& .palette-type': {
+      display: 'inline-flex',
+    },
+  },
+  paletteSelectRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 16,
+    marginBottom: 8,
   },
   toggles: {
     display: 'flex',

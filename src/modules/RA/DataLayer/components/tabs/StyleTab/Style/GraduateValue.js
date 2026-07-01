@@ -177,7 +177,7 @@ const GraduateValue = ({ path, Component = ValueListField,
       <div ref={rowRef} style={{ display: 'flex', gap: 16, marginTop: 16 }}>
         <div style={{ flex: 1 }}>
           <Accordion defaultExpanded style={{ margin: 0 }}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />} style={{ paddingLeft: 32 }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography style={{ fontWeight: 'bold' }}>{translate('discret.summary')}</Typography>
             </AccordionSummary>
             <AccordionDetails>

@@ -157,10 +157,7 @@ const DiscretPreview = ({ layerName, path }) => {
       )}
       <div style={{ height: 48 }}>
         {data ? (
-          <ClassifBucket
-            breaksData={breaksData}
-            entitiesByClass={data.entitiesByClass}
-          />
+          <ClassifBucket breaksData={breaksData} />
         ) : (
           <div style={{ height: 48 }} />
         )}

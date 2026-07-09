@@ -6,7 +6,8 @@ export const roundTo = (n, decimals = 2) => {
   return Math.round(n * factor) / factor;
 };
 
-const CLAMP_MARGIN = 0.01;
+const CLAMP_MARGIN = 0.01; // bloquer à 0.01 au dessus ou en dessous de la borne inf ou sup
+// ex : borne A à 5.67, borne B à 7.2, si on augmente A on sera plafonné à 7.19
 
 const ManualBreaks = ({ boundaries, setBoundaries }) => {
   const [localDraft, setLocalDraft] = React.useState(null);

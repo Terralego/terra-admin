@@ -10,8 +10,8 @@ const DistribGraph = ({ data }) => {
     if (!bins || bins.length === 0) return null;
 
     const maxCount = bins.reduce((max, b) => Math.max(max, b.count), 0);
-    const boxFloor = maxCount * -0.28;
-    const boxCeiling = boxFloor * 0.18;
+    const boxFloor = maxCount * -0.28; // le 0.28 est purement arbitraire
+    const boxCeiling = boxFloor * 0.18; // pareil
     const whiskerPos = (boxFloor + boxCeiling) / 2;
 
     const jitterPositions = sample?.length

@@ -270,6 +270,8 @@
       "geom-field-help": "Set geometry field (ex. : geom, the_geom, geometry, etc.).",
       "uid-field": "Unique ID field",
       "uid-field-help": "Set field representing unique field id (ex: gid, id..).",
+      "layer-name": "Layer name",
+      "layer-name-help": "Leave empty to auto-select the only layer. Required if the GeoPackage contains multiple layers.",
       "use-by": "Used by",
       "data": "Data",
       "label": "Label",
@@ -278,7 +280,7 @@
       "layers": "associated layers",
       "file": {
         "related-files": "Linked files",
-        "placeholder": "Drop here GeoJSON or zipped shapefile.",
+        "placeholder": "Drop here GeoJSON, zipped shapefile or GeoPackage.",
         "placeholderCSV": "Drop here CSV file."
       },
       "coordinates": {

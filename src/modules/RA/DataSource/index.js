@@ -13,6 +13,7 @@ export const SQL = 'PostGISSource';
 export const WMTS = 'WMTSSource';
 export const SHP = 'ShapefileSource';
 export const CSV = 'CSVSource';
+export const GPKG = 'GeoPackageSource';
 export const UTF8 = 'UTF8';
 export const LATIN1 = 'LATIN1';
 export const EPSG4326 = 'EPSG_4326';
@@ -24,6 +25,7 @@ const typesToChoices = types => Object.entries(types)
 
 export const sourceTypes = {
   [GEOJSON]: 'GeoJSON',
+  [GPKG]: 'GeoPackage',
   [SHP]: 'Shapefile',
   [SQL]: 'PostGIS',
   [WMTS]: 'WMTS',

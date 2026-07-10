@@ -322,6 +322,8 @@
       "geom-field-help": "Indiquer le champ de la géométrie de la donnée (ex. : geom, the_geom, geometry, etc.).",
       "uid-field": "Champ de l'identifiant unique",
       "uid-field-help": "Indiquer le champs correspondant à l'identifiant unique de la donnée (ex: gid, id..).",
+      "layer-name": "Nom de la couche",
+      "layer-name-help": "Laisser vide pour sélectionner automatiquement la seule couche. Obligatoire si le GeoPackage contient plusieurs couches.",
       "use-by": "Utilisé par",
       "data": "Données",
       "label": "Libellé",
@@ -330,7 +332,7 @@
       "layers": "Couches associées",
       "file": {
         "related-files": "Fichiers associés",
-        "placeholder": "Déposez ici le GeoJSON ou un zip des fichiers Shapefile",
+        "placeholder": "Déposez ici le GeoJSON, un zip des fichiers Shapefile ou un GeoPackage.",
         "placeholderCSV": "Déposez ici le fichier CSV"
       },
       "coordinates": {

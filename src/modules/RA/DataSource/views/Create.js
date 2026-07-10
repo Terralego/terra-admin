@@ -16,6 +16,7 @@ import DefaultActions from '../../../../components/react-admin/DefaultActions';
 import {
   SQL,
   GEOJSON,
+  GPKG,
   SHP,
   WMTS,
   CSV,
@@ -51,7 +52,7 @@ export const DataSourceCreate = props => (
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          [SHP, GEOJSON].includes(type) && <DataSourceFileFields {...rest} type={type} />}
+          [SHP, GEOJSON, GPKG].includes(type) && <DataSourceFileFields {...rest} type={type} />}
       </FormDataConsumer>
 
       <FormDataConsumer>

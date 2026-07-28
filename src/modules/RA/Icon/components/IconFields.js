@@ -13,7 +13,6 @@ import { Box, Button, FormHelperText } from '@material-ui/core';
 import transparency from './transparency-pattern.png';
 import PatternPicker from '../../../../components/react-admin/PatternPicker';
 import { required } from '../../../../utils/react-admin/validate';
-import IconLibraryPicker from '../../../../components/react-admin/IconLibraryPicker';
 
 
 const readFile = file => new Promise((resolve, reject) => {
@@ -43,7 +42,6 @@ function IconsFields (props) {
 function ImageInput ({ source, label }) {
   const translate = useTranslate();
 
-  const { input: { onChange: onNameChange } } = useInput({ source: 'name' });
   const { input: { onChange: onSourceChange } } = useInput({ source: 'source' });
 
 
@@ -98,16 +96,6 @@ function ImageInput ({ source, label }) {
         >
           {translate('icon.form.file.compose')}
         </PatternPicker>
-        {' ou '}
-        <IconLibraryPicker
-          onChange={({ value: v, name, source: s }) => {
-            onChange(v);
-            onNameChange(name);
-            onSourceChange(s);
-          }}
-        >
-          {translate('icon.form.file.library.button')}
-        </IconLibraryPicker>
       </Box>
       {error && submitFailed ?
         <FormHelperText error>{error}</FormHelperText> : null}

@@ -5,11 +5,13 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { SketchPicker } from 'react-color';
 import tinycolor from 'tinycolor2';
+import { Input, Stack } from '@mui/material';
 
 const useStyles = makeStyles({
   color: props => ({
     // Image also available from </public>/media/background-colopicker.png
-    backgroundImage: "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAIAAABLbSncAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBTuIdMhQnSyIijhqFYpQIdQKrTqYXPoFTRqSFBdHwbXg4Mdi1cHFWVcHV0EQ/ABxcnRSdJES/5cUWsR4cNyPd/ced+8AoVFhmtU1Dmi6baaTCTGbWxVDrwgjiAGEEJWZZcxJUgq+4+seAb7exXmW/7k/R5+atxgQEIlnmWHaxBvE05u2wXmfOMJKskp8Tjxm0gWJH7muePzGueiywDMjZiY9TxwhFosdrHQwK5ka8RRxTNV0yheyHquctzhrlRpr3ZO/MJzXV5a5TjOKJBaxBAkiFNRQRgU24rTqpFhI037Cxz/s+iVyKeQqg5FjAVVokF0/+B/87tYqTE54SeEE0P3iOB8jQGgXaNYd5/vYcZonQPAZuNLb/moDmPkkvd7WYkdA/zZwcd3WlD3gcgcYejJkU3alIE2hUADez+ibcsDgLdC75vXW2sfpA5ChrlI3wMEhMFqk7HWfd/d09vbvmVZ/Pw8Zcn9EiiAkAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH5AwDEAsEbvsPeQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAlSURBVAjXY2xvb2eAgYqKCjibiQEHIF2C8f///3BOR0cHLewAAPOJB6FOujfKAAAAAElFTkSuQmCC')",
+    backgroundImage:
+      "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAIAAABLbSncAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBTuIdMhQnSyIijhqFYpQIdQKrTqYXPoFTRqSFBdHwbXg4Mdi1cHFWVcHV0EQ/ABxcnRSdJES/5cUWsR4cNyPd/ced+8AoVFhmtU1Dmi6baaTCTGbWxVDrwgjiAGEEJWZZcxJUgq+4+seAb7exXmW/7k/R5+atxgQEIlnmWHaxBvE05u2wXmfOMJKskp8Tjxm0gWJH7muePzGueiywDMjZiY9TxwhFosdrHQwK5ka8RRxTNV0yheyHquctzhrlRpr3ZO/MJzXV5a5TjOKJBaxBAkiFNRQRgU24rTqpFhI037Cxz/s+iVyKeQqg5FjAVVokF0/+B/87tYqTE54SeEE0P3iOB8jQGgXaNYd5/vYcZonQPAZuNLb/moDmPkkvd7WYkdA/zZwcd3WlD3gcgcYejJkU3alIE2hUADez+ibcsDgLdC75vXW2sfpA5ChrlI3wMEhMFqk7HWfd/d09vbvmVZ/Pw8Zcn9EiiAkAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH5AwDEAsEbvsPeQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAlSURBVAjXY2xvb2eAgYqKCjibiQEHIF2C8f///3BOR0cHLewAAPOJB6FOujfKAAAAAElFTkSuQmCC')",
     width: '25px',
     height: '25px',
     '& > div': {
@@ -37,7 +39,6 @@ const useStyles = makeStyles({
   }),
 });
 
-
 const popover = {
   position: 'fixed',
   top: '50%',
@@ -58,7 +59,14 @@ const cover = {
 
 const presetColors = [];
 
-const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled, style = {}, ...props }) => {
+const ColorPicker = ({
+  value = '#ccccccff',
+  onChange = () => {},
+  disabled,
+  showInput = false,
+  style = {},
+  ...props
+}) => {
   const classes = useStyles({ value, disabled });
 
   const [currentColor, setCurrentColor] = React.useState(value);
@@ -78,24 +86,27 @@ const ColorPicker = ({ value = '#ccccccff', onChange = () => {}, disabled, style
 
   return (
     <div style={{ position: 'relative', display: 'inline', ...style }} {...props}>
-      <div
-        className={classes.color}
-        onClick={() => !disabled && setShowPicker(prevShowPicker => !prevShowPicker)}
-      >
-        <div />
-      </div>
-      {showPicker && (
-      <>
-        <div style={cover} onClick={() => setShowPicker(false)} />
-        <div style={popover} className="popover">
-          <SketchPicker
-            color={currentColor}
-            presetColors={presetColors}
-            onChange={handleChange}
-            onChangeComplete={handleChangeComplete}
-          />
+      <Stack direction="row" spacing={1} alignItems="center">
+        <div
+          className={classes.color}
+          onClick={() => !disabled && setShowPicker(prevShowPicker => !prevShowPicker)}
+        >
+          <div />
         </div>
-      </>
+        {showInput && <Input value={value} onChange={e => onChange(e.target.value)} />}
+      </Stack>
+      {showPicker && (
+        <>
+          <div style={cover} onClick={() => setShowPicker(false)} />
+          <div style={popover} className="popover">
+            <SketchPicker
+              color={currentColor}
+              presetColors={presetColors}
+              onChange={handleChange}
+              onChangeComplete={handleChangeComplete}
+            />
+          </div>
+        </>
       )}
     </div>
   );

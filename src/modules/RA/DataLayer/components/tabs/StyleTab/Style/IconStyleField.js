@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { MenuItem, TextField } from '@material-ui/core';
-import { Field, useField } from 'react-final-form';
+import { Box, Button, MenuItem, TextField } from '@material-ui/core';
+import { Field, useField, useForm } from 'react-final-form';
 import {
   SelectInput,
   RadioButtonGroupInput,
@@ -12,6 +12,7 @@ import {
 
 import { fieldTypes } from '../../../../../DataSource';
 import Condition from '../../../../../../../components/react-admin/Condition';
+import IconPicker, { IconSvg } from '../../../../../../../components/react-admin/IconPicker';
 
 import CategorizeValue from './CategorizeValue';
 
@@ -20,6 +21,71 @@ import styles from './styles';
 const isRequired = [required()];
 
 const useStyles = makeStyles(styles);
+
+const CUSTOM_PREFIX = 'custom:';
+
+const hashPayload = payload => {
+  const str = JSON.stringify(payload);
+  let hash = 5381;
+  for (let i = 0; i < str.length; i += 1) {
+    hash = (hash * 33 + str.charCodeAt(i)) % 2147483647;
+  }
+  return hash.toString(36);
+};
+
+const FixedIconValue = ({ source, choices }) => {
+  const translate = useTranslate();
+  const form = useForm();
+  const {
+    input: { value, onChange },
+  } = useField(source);
+  const {
+    input: { value: rawAdvancedStyle },
+  } = useField('advanced_style');
+
+  const advancedStyle =
+    rawAdvancedStyle && typeof rawAdvancedStyle === 'object' ? rawAdvancedStyle : {};
+  const customIcons =
+    advancedStyle.custom_icons && typeof advancedStyle.custom_icons === 'object'
+      ? advancedStyle.custom_icons
+      : {};
+  const customId =
+    typeof value === 'string' && value.startsWith(CUSTOM_PREFIX) ? value : null;
+  const customIcon = customId ? customIcons[customId] : null;
+
+  const handlePick = payload => {
+    const id = `${CUSTOM_PREFIX}${payload.name}-${hashPayload(payload)}`;
+    form.change('advanced_style', {
+      ...advancedStyle,
+      custom_icons: { ...customIcons, [id]: { id, ...payload } },
+    });
+    onChange(id);
+  };
+
+  return (
+    <Box display="flex" alignItems="center" style={{ gap: '1em' }}>
+      {customIcon ? (
+        <>
+          <IconSvg item={customIcon} customization={customIcon.customization} size={40} />
+          <span>{customIcon.name}</span>
+          <Button onClick={() => onChange('')}>
+            {translate('ra.action.remove')}
+          </Button>
+        </>
+      ) : (
+        <SelectInput
+          source={source}
+          label="style-editor.fixed.value"
+          choices={choices}
+          validate={isRequired}
+        />
+      )}
+      <IconPicker onChange={handlePick} initialValue={customIcon}>
+        {translate('icon.form.file.iconPicker.button')}
+      </IconPicker>
+    </Box>
+  );
+};
 
 const IconStyleField = ({
   path,
@@ -64,12 +130,7 @@ const IconStyleField = ({
   return (
     <div className={classes.styleField}>
       <Condition when={`${path}.type`} is="fixed">
-        <SelectInput
-          source={`${path}.value`}
-          label="style-editor.fixed.value"
-          choices={choices}
-          validate={required()}
-        />
+        <FixedIconValue source={`${path}.value`} choices={choices} />
       </Condition>
 
       <Condition when={`${path}.type`} is="variable">

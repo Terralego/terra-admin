@@ -5,14 +5,10 @@ import { RES_ICON } from '../modules/RA/ra-modules';
 const useCustomStyleImages = () => {
   const { data, ids } = useGetList(RES_ICON);
 
-  const customImages = React.useMemo(
-    () => {
-      const styleImages = ids.map(i => data[i]);
-      return styleImages
-      ?.filter(({ name, slug, file } = {}) => Boolean(name && slug && file));
-    },
-    [data, ids],
-  );
+  const customImages = React.useMemo(() => {
+    const styleImages = ids.map(i => data[i]);
+    return styleImages?.filter(({ name, slug, file } = {}) => Boolean(name && slug && file));
+  }, [data, ids]);
 
   return customImages || [];
 };

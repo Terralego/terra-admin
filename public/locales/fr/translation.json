@@ -684,6 +684,7 @@
         "compose": "Composer",
         "iconPicker": {
           "button": "Choisir une icône",
+          "empty": "Aucune icône disponible",
           "dialog": {
             "title": "Choisir une icône",
             "categories": "Catégories",

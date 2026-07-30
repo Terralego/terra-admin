@@ -1,74 +1,131 @@
 import React from 'react';
 
-import { SelectInput, TextInput, useInput } from 'react-admin';
+import {  NumberInput, SelectInput, TextInput, useInput, useTranslate } from 'react-admin';
+import { Accordion, AccordionDetails, AccordionSummary, Card, CardContent, Typography } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import WidgetDetailsInputs from './WidgetDetails/WidgetDetailsInputs';
+
+const WIDGET_TYPE_CHOICES = [
+  { id: 'sum', name: 'resources.datalayer.widgets-editor.type-value.sum' },
+  { id: 'avg', name: 'resources.datalayer.widgets-editor.type-value.avg' },
+  { id: 'value_count', name: 'resources.datalayer.widgets-editor.type-value.value_count' },
+  { id: 'distribution', name: 'resources.datalayer.widgets-editor.type-value.distribution' },
+  { id: 'categoric', name: 'resources.datalayer.widgets-editor.type-value.categoric' },
+  { id: 'numeric', name: 'resources.datalayer.widgets-editor.type-value.numeric' },
+];
+
+const WIDGET_TYPE_GROUPED_CHOICES = [
+  {
+    id: '__group_numeric',
+    name: 'resources.datalayer.widgets-editor.type-group.numeric',
+    disabled: true,
+    isGroup: true,
+  },
+  WIDGET_TYPE_CHOICES[0],
+  WIDGET_TYPE_CHOICES[1],
+  WIDGET_TYPE_CHOICES[2],
+  {
+    id: '__group_graph',
+    name: 'resources.datalayer.widgets-editor.type-group.graph',
+    disabled: true,
+    isGroup: true,
+  },
+  WIDGET_TYPE_CHOICES[3],
+  WIDGET_TYPE_CHOICES[4],
+  WIDGET_TYPE_CHOICES[5],
+];
 
 const WidgetItemInput = ({ source }) => {
+  const translate = useTranslate();
+
   const {
-    input: { onChange: onChangeName },
+    input: { value: nameValue, onChange: onChangeName },
   } = useInput({ source: `${source}.name` });
 
   const {
     input: { value: typeValue },
   } = useInput({ source: `${source}.type` });
 
+  const typeValuePrettyName = translate(
+    WIDGET_TYPE_CHOICES.find(c => c.id === typeValue)?.name,
+    { _: typeValue },
+  );
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '1em',
-        width: '100%',
-        '@media (max-width: 600px)': {
-          flexDirection: 'column',
-        },
-      }}
-    >
-      <TextInput
-        required
-        label="resources.datalayer.widgets-editor.label"
-        source={`${source}.label`}
-        onChange={e => onChangeName(e.target.value)}
-      />
-      <SelectInput
-        required
-        source={`${source}.type`}
-        label="Type"
-        choices={[
-          { id: 'sum', name: 'Sum' },
-          { id: 'avg', name: 'Average' },
-          { id: 'value_count', name: 'Count' },
-          { id: 'terms', name: 'Distribution' },
-        ]}
-        translateChoice={false}
-        helperText={false}
-      />
-      <TextInput
-        label="resources.datalayer.widgets-editor.field"
-        required
-        source={`${source}.field`}
-      />
-      {typeValue !== 'terms' ? (
-        <TextInput
-          label="resources.datalayer.widgets-editor.template"
-          required
-          defaultValue="{{value}}"
-          source={`${source}.template`}
-        />
-      ) : (
-        <SelectInput
-          required
-          source={`${source}.graph.type`}
-          label="resources.datalayer.widgets-editor.graph-type"
-          choices={[
-            { id: 'bar', name: 'Bar' },
-            { id: 'pie', name: 'Pie' },
-          ]}
-          defaultValue="bar"
-          translateChoice={false}
-          helperText={false}
-        />
-      )}
-    </div>
+    <Accordion TransitionProps={{ unmountOnExit: true }} style={{ marginTop: 5, marginBottom: 5 }}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+      >
+        <Typography style={{ fontWeight: 'bold' }}>{nameValue} ({typeValuePrettyName})</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5em',
+            flexWrap: 'wrap',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '0.5em',
+              flexWrap: 'wrap',
+              flexShrink: 1,
+            }}
+          >
+            <TextInput
+              required
+              label="resources.datalayer.widgets-editor.label"
+              source={`${source}.label`}
+              onChange={e => onChangeName(e.target.value)}
+            />
+            <SelectInput
+              required
+              source={`${source}.type`}
+              label="resources.datalayer.widgets-editor.type"
+              choices={WIDGET_TYPE_GROUPED_CHOICES}
+              disableValue="disabled"
+              translateChoice={false}
+              optionText={choice => {
+                if (choice.isGroup) {
+                  return translate(choice.name);
+                }
+
+                return `  ${translate(choice.name, { _: choice.id })}`;
+              }}
+              helperText={false}
+            />
+            <NumberInput
+              label="resources.datalayer.widgets-editor.decimals"
+              source={`${source}.decimals`}
+            />
+          </div>
+          <div style={{ paddingTop: 10, paddingBottom: 10 }}>
+            <Card>
+              <CardContent>
+                <Typography gutterBottom>
+                  <span style={{ fontWeight: 'bold' }}>{typeValuePrettyName}</span>{' '}
+                  {translate('resources.datalayer.widgets-editor.settings')}
+                </Typography>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '1em',
+                    width: '100%',
+                  }}
+                >
+                  <WidgetDetailsInputs source={source} />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 

@@ -1017,11 +1017,64 @@
       "forcedCaseName": "Layer",
       "widgets-editor": {
         "title": "Widgets configuration",
+        "settings": "Widget settings",
         "json-editor": "JSON editor",
         "label": "Label",
         "type": "Type",
-        "graph-type": "Graph type",
-        "field": "Field",
+        "type-value": {
+          "sum": "Sum",
+          "avg": "Average",
+          "value_count": "Count",
+          "distribution": "Distribution",
+          "categoric": "Categoric",
+          "numeric": "Numeric"
+        },
+        "type-group": {
+          "numeric": "Numeric",
+          "graph": "Graph"
+        },
+        "decimals": "Number of decimal digits",
+        "data": "Data configuration",
+        "description": {
+          "sum": "Total sum of all values in the dataset.",
+          "avg": "Arithmetic mean of the values.",
+          "value_count": "Total number of recorded values.",
+          "distribution": "Statistical distribution graph of values.",
+          "categoric": "Categorical breakdown graph of values.",
+          "numeric": "Graph of numeric values used for quantitative analysis."
+        },
+        "graph": {
+          "title": "Graph configuration",
+          "type": "Graph type",
+          "type-value": {
+            "bars": "Bars",
+            "stacked-bars": "Stacked Bars",
+            "pie": "Donut"
+          },
+          "percent": "Display as percents",
+          "unit": "Unit",
+          "orientation": {
+            "label": "Orientation",
+            "vertical": "Vertical",
+            "horizontal": "Horizontal"
+          },
+          "field": {
+            "categoric": "String field",
+            "numeric": "Integer fields",
+            "value": "Integer value field"
+          },
+          "aggregation_type": "Aggregation Type",
+          "aggregation_type_value": {
+            "sum": "Sum",
+            "avg": "Average",
+            "value_count": "Count"
+          }
+        },
+        "field": {
+          "integer": "Integer Field",
+          "string": "String Field",
+          "warning-non-numeric": "This field is not a numeric type. The result may be unexpected."
+        },
         "template": "Template",
         "name": "Name",
         "icon": "Icon",

@@ -632,6 +632,7 @@
         "compose": "Compose",
         "iconPicker": {
           "button": "Choose an icon",
+          "empty": "No icon available",
           "dialog": {
             "title": "Choose an icon",
             "categories": "Categories",

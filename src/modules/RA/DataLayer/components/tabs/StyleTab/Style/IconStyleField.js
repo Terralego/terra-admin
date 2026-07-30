@@ -33,12 +33,21 @@ const hashPayload = payload => {
   return hash.toString(36);
 };
 
-const FixedIconValue = ({ source, choices }) => {
-  const translate = useTranslate();
+const collectCustomIds = (node, acc) => {
+  if (typeof node === 'string') {
+    if (node.startsWith(CUSTOM_PREFIX)) {
+      acc.add(node);
+    }
+  } else if (Array.isArray(node)) {
+    node.forEach(item => collectCustomIds(item, acc));
+  } else if (node && typeof node === 'object') {
+    Object.values(node).forEach(item => collectCustomIds(item, acc));
+  }
+  return acc;
+};
+
+const useCustomIcons = () => {
   const form = useForm();
-  const {
-    input: { value, onChange },
-  } = useField(source);
   const {
     input: { value: rawAdvancedStyle },
   } = useField('advanced_style');
@@ -49,17 +58,54 @@ const FixedIconValue = ({ source, choices }) => {
     advancedStyle.custom_icons && typeof advancedStyle.custom_icons === 'object'
       ? advancedStyle.custom_icons
       : {};
-  const customId =
-    typeof value === 'string' && value.startsWith(CUSTOM_PREFIX) ? value : null;
-  const customIcon = customId ? customIcons[customId] : null;
 
-  const handlePick = payload => {
+  const storeCustomIcon = payload => {
     const id = `${CUSTOM_PREFIX}${payload.name}-${hashPayload(payload)}`;
     form.change('advanced_style', {
       ...advancedStyle,
       custom_icons: { ...customIcons, [id]: { id, ...payload } },
     });
-    onChange(id);
+    return id;
+  };
+
+  const pruneCustomIcons = () => {
+    const { values } = form.getState();
+    const advanced =
+      values.advanced_style && typeof values.advanced_style === 'object'
+        ? values.advanced_style
+        : {};
+    const icons =
+      advanced.custom_icons && typeof advanced.custom_icons === 'object'
+        ? advanced.custom_icons
+        : {};
+    const used = collectCustomIds(
+      { ...values, advanced_style: { ...advanced, custom_icons: undefined } },
+      new Set(),
+    );
+    const pruned = Object.fromEntries(
+      Object.entries(icons).filter(([id]) => used.has(id)),
+    );
+    form.change('advanced_style', { ...advanced, custom_icons: pruned });
+  };
+
+  return { customIcons, storeCustomIcon, pruneCustomIcons };
+};
+
+const IconValue = ({ value, onChange, children }) => {
+  const translate = useTranslate();
+  const { customIcons, storeCustomIcon, pruneCustomIcons } = useCustomIcons();
+  const customId =
+    typeof value === 'string' && value.startsWith(CUSTOM_PREFIX) ? value : null;
+  const customIcon = customId ? customIcons[customId] : null;
+
+  const handlePick = payload => {
+    onChange(storeCustomIcon(payload));
+    pruneCustomIcons();
+  };
+
+  const handleRemove = () => {
+    onChange('');
+    pruneCustomIcons();
   };
 
   return (
@@ -68,22 +114,55 @@ const FixedIconValue = ({ source, choices }) => {
         <>
           <IconSvg item={customIcon} customization={customIcon.customization} size={40} />
           <span>{customIcon.name}</span>
-          <Button onClick={() => onChange('')}>
+          <Button onClick={handleRemove}>
             {translate('ra.action.remove')}
           </Button>
         </>
       ) : (
+        children
+      )}
+      <IconPicker
+        onChange={handlePick}
+        initialValue={customIcon}
+      >
+        {translate('icon.form.file.iconPicker.button')}
+      </IconPicker>
+    </Box>
+  );
+};
+
+const hasSelectableChoices = choices => choices.some(choice => !choice.disabled);
+
+const NoIconChoices = () => {
+  const classes = useStyles();
+  const translate = useTranslate();
+  return (
+    <TextField select disabled value="empty" className={classes.iconSelect}>
+      <MenuItem value="empty">
+        {translate('icon.form.file.iconPicker.empty')}
+      </MenuItem>
+    </TextField>
+  );
+};
+
+const FixedIconValue = ({ source, choices }) => {
+  const {
+    input: { value, onChange },
+  } = useField(source);
+
+  return (
+    <IconValue value={value} onChange={onChange}>
+      {hasSelectableChoices(choices) ? (
         <SelectInput
           source={source}
           label="style-editor.fixed.value"
           choices={choices}
           validate={isRequired}
         />
+      ) : (
+        <NoIconChoices />
       )}
-      <IconPicker onChange={handlePick} initialValue={customIcon}>
-        {translate('icon.form.file.iconPicker.button')}
-      </IconPicker>
-    </Box>
+    </IconValue>
   );
 };
 
@@ -97,24 +176,30 @@ const IconStyleField = ({
   const translate = useTranslate();
 
   const genDefaultValue = React.useCallback(
-    () => choices.find(e => !e.disabled).id,
+    () => choices.find(e => !e.disabled)?.id ?? '',
     [choices],
   );
 
   const Component = React.useCallback(
     ({ value: fieldValue, onChange }) => (
-      <TextField
-        value={fieldValue}
-        onChange={onChange}
-        select
-        className={classes.iconSelect}
-      >
-        {choices.map(option => (
-          <MenuItem key={option.id} value={option.id} disabled={option.disabled}>
-            {option.name}
-          </MenuItem>
-        ))}
-      </TextField>
+      <IconValue value={fieldValue} onChange={onChange}>
+        {hasSelectableChoices(choices) ? (
+          <TextField
+            value={fieldValue}
+            onChange={onChange}
+            select
+            className={classes.iconSelect}
+          >
+            {choices.map(option => (
+              <MenuItem key={option.id} value={option.id} disabled={option.disabled}>
+                {option.name}
+              </MenuItem>
+            ))}
+          </TextField>
+        ) : (
+          <NoIconChoices />
+        )}
+      </IconValue>
     ),
     [choices, classes],
   );

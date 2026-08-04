@@ -15,6 +15,7 @@ import {
   FormDataConsumer,
   required,
   translate,
+  useDataProvider,
   ReferenceArrayInput,
   SelectArrayInput,
 } from 'react-admin';
@@ -24,6 +25,7 @@ import compose from '../../../../utils/compose';
 
 import TreeInput from './TreeInput';
 import SceneFormNameField from './SceneFormNameField';
+import { fetchLayerNames, getLayerIdsFromTree, withoutRedundantLabels } from '../utils';
 import { RES_BASELAYER } from '../../ra-modules';
 
 import MapExtentInput from './MapExtentInput';
@@ -86,8 +88,20 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
 
 const SceneForm = ({ translate: t, classes, ...props }) => {
   const { treeColumn } = useLayoutStyles();
+  const dataProvider = useDataProvider();
   const { record } = props;
   const edit = record.id !== undefined;
+
+  const transform = React.useCallback(
+    async values => {
+      const ids = getLayerIdsFromTree(values.tree);
+      const layerNames = await fetchLayerNames(dataProvider, ids);
+
+      return { ...values, tree: withoutRedundantLabels(values.tree, layerNames) };
+    },
+    [dataProvider],
+  );
+
   /* sanitizeEmptyValues is false for this form to prevent
    * this issue with the layer tree https://github.com/marmelab/react-admin/issues/5427
    */
@@ -96,6 +110,7 @@ const SceneForm = ({ translate: t, classes, ...props }) => {
       {...props}
       sanitizeEmptyValues={false}
       component={FormContent}
+      transform={transform}
       warnWhenUnsavedChanges
     >
       {edit && <TextInput disabled source="id" />}

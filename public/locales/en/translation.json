@@ -703,6 +703,7 @@
       "open-by-default": "Open by default in the viewer",
       "closed-by-default": "Closed by default in the viewer",
       "layer-label": "Label",
+      "reset-label": "Back to the layer name",
       "selection-mode": "Layer selection mode",
       "inclusive": "Inclusive",
       "exclusive": "Exclusive",

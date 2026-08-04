@@ -755,6 +755,7 @@
       "open-by-default": "Ouvert par défaut dans le visualiseur",
       "closed-by-default": "Fermé par défaut dans le visualiseur",
       "layer-label": "Libellé",
+      "reset-label": "Revenir au nom de la couche",
       "selection-mode": "Mode de sélection des couches",
       "inclusive": "Inclusif",
       "exclusive": "Exclusif",

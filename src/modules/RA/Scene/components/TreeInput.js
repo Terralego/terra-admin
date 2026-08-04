@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import SortableTree, { getFlatDataFromTree, getVisibleNodeCount } from 'react-sortable-tree';
+import SortableTree, { getVisibleNodeCount } from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 
 import { addField, Labeled, useDataProvider, useTranslate } from 'react-admin';
@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 import TreeNodeToolbar from './TreeNodeToolbar';
 import TreeNodeLabelInput from './TreeNodeLabelInput';
-import { RES_DATALAYER } from '../../ra-modules';
+import { fetchLayerNames, getLayerIdsFromTree } from '../utils';
 
 import './TreeInput.scss';
 
@@ -42,22 +42,6 @@ const generateNodeProps = (treeData, setTreeData, includeIds, layerNames) =>
       buttons: [<TreeNodeToolbar {...menuProps} />],
     };
   };
-
-/**
- * Return an array of layer ids in given treeData
- */
-const getLayerIdsFromTree = treeData => {
-  const flatNodes = getFlatDataFromTree({
-    treeData,
-    ignoreCollapsed: false,
-    getNodeKey: ({ treeIndex }) => treeIndex,
-  });
-
-  return Array.from(flatNodes.reduce(
-    (set, { node: { geolayer } = {} }) => set.add(geolayer),
-    new Set(),
-  )).filter(Boolean);
-};
 
 /**
  * <TreeInput /> component
@@ -102,11 +86,8 @@ const TreeInput = ({ input: { value, onChange }, ...props }) => {
 
     const mounted = { current: true };
 
-    dataProvider.getMany(RES_DATALAYER, { ids: layerIds.split(',') })
-      .then(({ data }) => mounted.current && setLayerNames(data.reduce(
-        (names, { id, name }) => ({ ...names, [id]: name }),
-        {},
-      )))
+    fetchLayerNames(dataProvider, layerIds.split(','))
+      .then(names => mounted.current && setLayerNames(names))
       .catch(() => {});
 
     return () => { mounted.current = false; };

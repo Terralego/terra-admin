@@ -67,11 +67,7 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
   const translate = useTranslate();
   const [geolayers, setGeolayers] = React.useState(null);
 
-  const handleChoice = ({ target: { value } }) =>
-    onChange({
-      geolayer: Number(value),
-      label: geolayers.find(({ id }) => (Number(value) === id)).name,
-    });
+  const handleChoice = ({ target: { value } }) => onChange({ geolayer: Number(value) });
 
   React.useEffect(() => {
     const mounted = { current: true };

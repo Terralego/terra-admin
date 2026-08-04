@@ -45,7 +45,7 @@ const NodeLabel = ({ treeData, setTreeData, path, node, layerNames = {} }) => {
     return (
       <>
         <Box component="span" style={{ display: 'inline-flex', alignItems: 'center' }}>
-          {node.label}
+          {node.label || layerName}
 
           {Boolean(node.geolayer) && (
             <Tooltip title={translate('view.tree.open-layer')}>
@@ -62,7 +62,7 @@ const NodeLabel = ({ treeData, setTreeData, path, node, layerNames = {} }) => {
           )}
         </Box>
 
-        {Boolean(layerName) && layerName !== node.label && (
+        {Boolean(node.label) && Boolean(layerName) && layerName !== node.label && (
           <Box style={secondaryLine}>
             {translate('view.tree.layer-name', { name: layerName })}
           </Box>

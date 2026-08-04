@@ -29,6 +29,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
+import ClearIcon from '@material-ui/icons/Clear';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
@@ -48,7 +49,10 @@ const style = {
   modalButtons: {
     marginTop: '1em',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
+  },
+  modalSubmit: {
+    marginLeft: '.5em',
   },
   groupModeSwitch: {
     display: 'flex',
@@ -61,7 +65,7 @@ const style = {
 /**
  * <TreeNodeToolbar /> component
  */
-const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
+const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds, layerNames = {} }) => {
   const translate = useTranslate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [displayLayerModal, setDisplayLayerModal] = React.useState(false);
@@ -89,6 +93,8 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
   const isGroup = !!node.group;
 
   const isPlainGroup = isGroup && !node.exclusive && !node.byVariable;
+
+  const layerName = layerNames[node.geolayer];
 
   /**
    * Create a new node as child of current node
@@ -163,7 +169,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
 
   const openEditLayerModal = editNode => {
     closeMenu();
-    setNewLayerProps(editNode);
+    setNewLayerProps({ ...editNode, label: editNode.label || layerName });
     setDisplayLayerModal(editNode);
   };
 
@@ -174,11 +180,17 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     if (save && !edit && newLayerProps.geolayer) {
       newSubItem(newLayerProps)();
     } else if (save && edit) {
+      const newNode = { ...node, ...newLayerProps };
+
+      if (!newNode.label || newNode.label === layerName) {
+        delete newNode.label;
+      }
+
       setTreeData(changeNodeAtPath({
         treeData,
         path,
         getNodeKey: ({ treeIndex }) => treeIndex,
-        newNode: { ...node, ...newLayerProps },
+        newNode,
       }));
     }
     /* Close modal */
@@ -325,8 +337,22 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
             <TextField
               label={translate('view.tree.layer-label')}
               fullWidth
-              value={newLayerProps.label}
+              value={newLayerProps.label || ''}
+              placeholder={layerName}
               style={{ marginTop: 10 }}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                endAdornment: newLayerProps.label && newLayerProps.label !== layerName && (
+                  <Tooltip title={translate('view.tree.reset-label')}>
+                    <IconButton
+                      size="small"
+                      onClick={() => setNewLayerProps(prevProps => ({ ...prevProps, label: '' }))}
+                    >
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                ),
+              }}
               onChange={event => {
                 const label = event?.target?.value;
                 setNewLayerProps(prevProps => ({ ...prevProps, label }));
@@ -357,8 +383,15 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
           )}
 
           <div style={style.modalButtons}>
-            <Button variant="outlined" color="secondary" onClick={closeLayerModal(false)}>{translate('ra.action.cancel')}</Button>
-            <Button variant="outlined" color="primary" onClick={closeLayerModal(true, Boolean(displayLayerModal.geolayer))}>{translate('ra.action.validate')}</Button>
+            <Button onClick={closeLayerModal(false)}>{translate('ra.action.cancel')}</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={style.modalSubmit}
+              onClick={closeLayerModal(true, Boolean(displayLayerModal.geolayer))}
+            >
+              {translate('ra.action.validate')}
+            </Button>
           </div>
         </div>
       </Modal>
@@ -471,8 +504,15 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
           </Box>
 
           <div style={style.modalButtons}>
-            <Button variant="outlined" color="secondary" onClick={closeSettingsModal(false)}>{translate('ra.action.cancel')}</Button>
-            <Button variant="outlined" color="primary" onClick={closeSettingsModal(true)}>{translate('ra.action.validate')}</Button>
+            <Button onClick={closeSettingsModal(false)}>{translate('ra.action.cancel')}</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={style.modalSubmit}
+              onClick={closeSettingsModal(true)}
+            >
+              {translate('ra.action.validate')}
+            </Button>
           </div>
         </div>
       </Modal>

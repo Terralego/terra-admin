@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useRef, useCallback, useMemo } from 'react';
 import { useField, useForm } from 'react-final-form';
-import { useTranslate } from 'react-admin';
+import { useGetList, useTranslate } from 'react-admin';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import ReactMapboxGl from 'react-mapbox-gl';
 import DrawControl from 'react-mapbox-gl-draw';
@@ -14,6 +14,8 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import DrawRectangle from '../../../../components/DrawRectangle';
 import useAppSettings from '../../../../hooks/useAppSettings';
+import getBaseLayerStyle from '../../../../utils/baseLayerStyle';
+import { RES_BASELAYER } from '../../ra-modules';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
@@ -25,20 +27,27 @@ const Map = ({ accessToken, ...rest }) => {
 };
 
 const MapInput = () => {
-  const [loaded, setLoaded] = useState(false);
   const { input: { value: mapSettings } } = useField('config.map_settings');
 
   const form = useForm();
   const mapRef = useRef(null);
   const drawRef = useRef(null);
   const translate = useTranslate();
-  const { map: mapConfig } = useAppSettings();
+  const { map: mapConfig } = useAppSettings() || {};
 
-  useEffect(() => {
-    if (mapConfig?.accessToken) {
-      setLoaded(true);
-    }
-  }, [mapConfig]);
+  const zoom = useMemo(() => [mapConfig?.zoom], [mapConfig]);
+
+  const {
+    data: baseLayers = {},
+    ids: baseLayerIds = [],
+  } = useGetList(RES_BASELAYER, { page: 1, perPage: 1 }, { field: 'order', order: 'ASC' });
+
+  const style = useMemo(
+    () => (mapConfig?.accessToken
+      ? MAPBOX_STYLE
+      : getBaseLayerStyle(baseLayers[baseLayerIds[0]])),
+    [baseLayers, baseLayerIds, mapConfig],
+  );
 
   const loadBbox = useCallback(map => {
     mapRef.current = map;
@@ -107,10 +116,9 @@ const MapInput = () => {
     map.setZoom(mapConfig.zoom);
   }, [mapConfig.center, mapConfig.zoom]);
 
-  if (!loaded) {
+  if (!mapConfig || !style) {
     return null;
   }
-
 
   const modes = { ...MapboxDraw.modes, draw_rectangle: DrawRectangle };
 
@@ -119,10 +127,10 @@ const MapInput = () => {
       <Typography variant="body1">{translate('view.form.extent-label')}</Typography>
       <Map
         accessToken={mapConfig.accessToken}
-        style={MAPBOX_STYLE} // eslint-disable-line react/style-prop-object
-        containerStyle={{ height: '300px', width: '600px' }}
+        style={style} // eslint-disable-line react/style-prop-object
+        containerStyle={{ height: '300px', width: '100%', maxWidth: '600px' }}
         center={mapConfig.center}
-        zoom={[mapConfig.zoom]}
+        zoom={zoom}
         onStyleLoad={loadBbox}
       >
         <DrawControl

@@ -743,6 +743,25 @@
       "latitude": "latitude",
       "zoom": "zoom",
       "extent-label": "Définissez la zone à afficher"
+    },
+    "tree": {
+      "add-group": "Créer un groupe",
+      "new-group": "Nouveau groupe",
+      "add-layer": "Ajouter une couche",
+      "add-subgroup": "Ajouter un sous-groupe",
+      "settings": "Paramètres",
+      "open-layer": "Ouvrir la couche dans un nouvel onglet",
+      "layer-name": "Couche : %{name}",
+      "open-by-default": "Ouvert par défaut dans le visualiseur",
+      "closed-by-default": "Fermé par défaut dans le visualiseur",
+      "layer-label": "Libellé",
+      "selection-mode": "Mode de sélection des couches",
+      "inclusive": "Inclusif",
+      "exclusive": "Exclusif",
+      "by-variable": "Par variables",
+      "add-variable": "Ajouter une variable",
+      "layer": "Couche",
+      "no-layer-available": "Toutes les couches existantes sont déjà associées."
     }
   },
   "ra": {
@@ -838,6 +857,7 @@
       "loading": "La page est en cours de chargement, merci de bien vouloir patienter.",
       "no": "Non",
       "not_found": "L'URL saisie est incorrecte, ou vous avez suivi un mauvais lien.",
+      "unsaved_changes": "Certains changements n'ont pas été enregistrés. Êtes-vous sûr(e) de vouloir quitter cette page ?",
       "yes": "Oui"
     },
     "navigation": {

@@ -1,9 +1,10 @@
 import React from 'react';
 import get from 'lodash.get';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import {
+  CardContentInner,
   FileField,
   FileInput,
   ImageInput,
@@ -35,6 +36,38 @@ const styles = {
   },
 };
 
+const useLayoutStyles = makeStyles(theme => ({
+  content: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
+    columnGap: theme.spacing(4),
+    '& > *': {
+      minWidth: 0,
+    },
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
+  },
+  treeColumn: {
+    gridColumn: 2,
+    gridRow: '1 / span 40',
+    paddingLeft: theme.spacing(4),
+    borderLeft: `1px solid ${theme.palette.divider}`,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(3),
+      paddingLeft: 0,
+      paddingTop: theme.spacing(3),
+      borderLeft: 'none',
+      borderTop: `1px solid ${theme.palette.divider}`,
+    },
+  },
+}));
+
+const FormContent = ({ children }) => {
+  const classes = useLayoutStyles();
+  return <CardContentInner className={classes.content}>{children}</CardContentInner>;
+};
+
 const sanitizeProps = ({ dispatch, basePath, formClassName, ...rest }) => rest;
 
 const ReportField = ({ record, source, className, label, ...rest }) => {
@@ -52,13 +85,19 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
 };
 
 const SceneForm = ({ translate: t, classes, ...props }) => {
+  const { treeColumn } = useLayoutStyles();
   const { record } = props;
   const edit = record.id !== undefined;
   /* sanitizeEmptyValues is false for this form to prevent
    * this issue with the layer tree https://github.com/marmelab/react-admin/issues/5427
    */
   return (
-    <ServerSideSimpleForm {...props} sanitizeEmptyValues={false}>
+    <ServerSideSimpleForm
+      {...props}
+      sanitizeEmptyValues={false}
+      component={FormContent}
+      warnWhenUnsavedChanges
+    >
       {edit && <TextInput disabled source="id" />}
 
       {isObjectEmpty(record) && (
@@ -91,7 +130,7 @@ const SceneForm = ({ translate: t, classes, ...props }) => {
         <SelectArrayInput />
       </ReferenceArrayInput>
 
-      <TreeInput source="tree" fullWidth initialValue={[]} />
+      <TreeInput source="tree" fullWidth initialValue={[]} formClassName={treeColumn} />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
       <ImageInput source="custom_icon" label="view.form.icon">

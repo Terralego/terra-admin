@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LinearProgress, withDataProvider, GET_LIST } from 'react-admin';
+import { LinearProgress, withDataProvider, GET_LIST, useTranslate } from 'react-admin';
 
 import debounce from 'lodash.debounce';
 import uniqBy from 'lodash.uniqby';
@@ -64,6 +64,7 @@ const getAllPaginatedLayer = async (dataProvider, mounted, filter = {}) => {
 };
 
 const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = [], ...props }) => {
+  const translate = useTranslate();
   const [geolayers, setGeolayers] = React.useState(null);
 
   const handleChoice = ({ target: { value } }) =>
@@ -131,14 +132,14 @@ const GeolayerSelect = ({ dataProvider, onChange, excludeIds = [], includeIds = 
   if (!geolayers.length) {
     return (
       <div>
-        Toutes les couches existantes sont déjà associées.
+        {translate('view.tree.no-layer-available')}
       </div>
     );
   }
 
   return (
     <FormControl fullWidth>
-      <InputLabel htmlFor="geolayer">Couche</InputLabel>
+      <InputLabel htmlFor="geolayer">{translate('view.tree.layer')}</InputLabel>
 
       {/* Do we have too many element to have perf issues ? */}
       { (geolayers.length > MAX_NON_NATIVE_SELECT) && (

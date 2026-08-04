@@ -1,17 +1,19 @@
 import React from 'react';
 import classnames from 'classnames';
-import SortableTree, { getFlatDataFromTree } from 'react-sortable-tree';
+import SortableTree, { getFlatDataFromTree, getVisibleNodeCount } from 'react-sortable-tree';
 import 'react-sortable-tree/style.css';
 
-import { addField, Labeled } from 'react-admin';
+import { addField, Labeled, useDataProvider, useTranslate } from 'react-admin';
 
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 
 import TreeNodeToolbar from './TreeNodeToolbar';
 import TreeNodeLabelInput from './TreeNodeLabelInput';
+import { RES_DATALAYER } from '../../ra-modules';
 
 import './TreeInput.scss';
+
+const ROW_HEIGHT = 56;
 
 /**
  * Determine if node can have children or not
@@ -26,9 +28,9 @@ const canNodeHaveChildren = ({ group = false }) => group;
 /**
  * Function generating object used by react-sortable-tree to draw tree nodes
  */
-const generateNodeProps = (treeData, setTreeData, includeIds) =>
+const generateNodeProps = (treeData, setTreeData, includeIds, layerNames) =>
   ({ node, path }) => {
-    const menuProps = { treeData, setTreeData, path, node, includeIds };
+    const menuProps = { treeData, setTreeData, path, node, includeIds, layerNames };
 
     return {
       title: <TreeNodeLabelInput {...menuProps} />,
@@ -61,6 +63,8 @@ const getLayerIdsFromTree = treeData => {
  * <TreeInput /> component
  */
 const TreeInput = ({ input: { value, onChange }, ...props }) => {
+  const translate = useTranslate();
+
   /* Array of geolayer ids in tree before any user modification */
   const [initialIdList, setInitialIdList] = React.useState();
 
@@ -87,36 +91,57 @@ const TreeInput = ({ input: { value, onChange }, ...props }) => {
     setRemovedIdList(initialIdList.filter(id => !currentIdList.includes(id)));
   }, [initialIdList, currentIdList]);
 
+  const dataProvider = useDataProvider();
+  const [layerNames, setLayerNames] = React.useState({});
+  const layerIds = (currentIdList || []).join(',');
+
+  React.useEffect(() => {
+    if (!layerIds) {
+      return undefined;
+    }
+
+    const mounted = { current: true };
+
+    dataProvider.getMany(RES_DATALAYER, { ids: layerIds.split(',') })
+      .then(({ data }) => mounted.current && setLayerNames(data.reduce(
+        (names, { id, name }) => ({ ...names, [id]: name }),
+        {},
+      )))
+      .catch(() => {});
+
+    return () => { mounted.current = false; };
+  }, [dataProvider, layerIds]);
+
   /**
    * Create a new group node
    */
   const addGroup = () => onChange([
     ...value,
-    { label: 'New group name', group: true, children: [], expanded: true },
+    { label: translate('view.tree.new-group'), group: true, children: [], expanded: true },
   ]);
 
   if (!value) {
     return null;
   }
 
+  const visibleNodes = getVisibleNodeCount({ treeData: value });
+
   return (
     <Labeled {...props}>
-      <>
-        <Paper className="rst__customWrapper">
-          <SortableTree
-            treeData={value}
-            onChange={onChange}
-            canNodeHaveChildren={canNodeHaveChildren}
-            generateNodeProps={generateNodeProps(value, onChange, removedIdList)}
-            style={{ minHeight: 400 }}
-            rowHeight={52}
-          />
+      <div>
+        <div className="rst__customToolbar">
+          <Button onClick={addGroup}>{translate('view.tree.add-group')}</Button>
+        </div>
 
-          <div>
-            <Button onClick={addGroup}>Créer un groupe</Button>
-          </div>
-        </Paper>
-      </>
+        <SortableTree
+          treeData={value}
+          onChange={onChange}
+          canNodeHaveChildren={canNodeHaveChildren}
+          generateNodeProps={generateNodeProps(value, onChange, removedIdList, layerNames)}
+          style={visibleNodes ? { height: visibleNodes * ROW_HEIGHT + 10 } : undefined}
+          rowHeight={ROW_HEIGHT}
+        />
+      </div>
     </Labeled>
   );
 };

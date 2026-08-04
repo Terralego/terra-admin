@@ -1,15 +1,14 @@
-.rst__customWrapper {
-  min-width: '35em';
-  min-height: 400;
-  padding: 1em;
-}
-
 .rst__rowWrapper {
   padding: .25em .25em .25em 0;
 }
 
-.rst__tree {
+.rst__nodeContent {
+  right: 0;
+}
+
+.rst__customToolbar {
   margin-bottom: .5em;
+  text-align: right;
 }
 
 .treeGroup {

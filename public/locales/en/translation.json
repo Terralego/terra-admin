@@ -689,6 +689,25 @@
       "latitude": "latitude",
       "zoom": "zoom",
       "extent-label": "Define map extent"
+    },
+    "tree": {
+      "add-group": "Create a group",
+      "new-group": "New group",
+      "add-layer": "Add a layer",
+      "add-subgroup": "Add a sub-group",
+      "settings": "Settings",
+      "open-layer": "Open layer in a new tab",
+      "layer-name": "Layer: %{name}",
+      "open-by-default": "Open by default in the viewer",
+      "closed-by-default": "Closed by default in the viewer",
+      "layer-label": "Label",
+      "selection-mode": "Layer selection mode",
+      "inclusive": "Inclusive",
+      "exclusive": "Exclusive",
+      "by-variable": "By variables",
+      "add-variable": "Add a variable",
+      "layer": "Layer",
+      "no-layer-available": "Every existing layer is already bound to a view."
     }
   },
   "ra": {
@@ -784,6 +803,7 @@
       "loading": "Page is loading, thanks for waiting",
       "no": "No",
       "not_found": "URL seems to be invalid or link is broken.",
+      "unsaved_changes": "Some of your changes were not saved. Are you sure you want to leave this page?",
       "yes": "Yes"
     },
     "navigation": {

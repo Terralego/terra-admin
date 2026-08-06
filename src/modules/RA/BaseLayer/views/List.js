@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-  Datagrid,
   List,
   TextField,
 } from 'react-admin';
+
+import Datagrid from '../../../../components/react-admin/Datagrid';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 

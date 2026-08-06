@@ -626,8 +626,6 @@
     },
     "filters": {
       "table": "Data table",
-      "popup": "Popup",
-      "minisheet": "Mini sheet",
       "refine": "%{smart_count} more source, refine your search |||| %{smart_count} more sources, refine your search",
       "active_by_default": "Enabled by default"
     }

@@ -1,73 +1,31 @@
 import React from 'react';
-import {
-  List,
-  Datagrid,
-  TextField,
-  useRecordContext,
-  TextInput,
-  useTranslate,
-} from 'react-admin';
-import { CircularProgress } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { List, TextInput } from 'react-admin';
+
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 import useFetchIconLibraryIndex from '../../../../hooks/useFetchIconLibraryIndex';
-
-
-const ImageTextField = ({ source }) => {
-  const record = useRecordContext();
-  return (
-    <img
-      src={record[source]}
-      style={{
-        maxWidth: 64,
-        maxHeight: 64,
-        border: '1px solid rgba(0 0 0 / 0.25)',
-      }}
-      alt=""
-    />
-  );
-};
-
-const SourceTextField = ({ source, libraryIndex }) => {
-  const translate = useTranslate();
-  const record = useRecordContext();
-
-  const id = record && record[source];
-
-  if (!id || libraryIndex.status === 'idle') {
-    return null;
-  }
-  if (libraryIndex.status === 'loading') {
-    return <CircularProgress size={20} />;
-  }
-  if (libraryIndex.status === 'error') {
-    return <Alert severity="error">{translate('ra.page.error')}</Alert>;
-  }
-
-  const matchingIndex = libraryIndex.data.find(item => item.id === id);
-
-  return (<span>{matchingIndex ? matchingIndex.name : id}</span>);
-};
+import IconGrid from '../components/IconGrid';
 
 const iconFilters = [
-  <TextInput label="Search" source="search" alwaysOn />,
+  <TextInput label="ra.action.search" source="search" alwaysOn />,
 ];
 
+/**
+ * A datagrid made a poor job of showing what an icon actually looks like, so
+ * the rows are replaced by a grid of previews (see IconGrid). <List> still
+ * provides the search, the pagination and the bulk delete.
+ */
 export const IconsList = props => {
   const libraryIndex = useFetchIconLibraryIndex();
 
   return (
     <List
       {...props}
+      sort={{ field: 'name', order: 'ASC' }}
+      exporter={false}
       bulkActionButtons={<CommonBulkActionButtons />}
       filters={iconFilters}
     >
-      <Datagrid>
-        <TextField source="id" />
-        <TextField source="name" />
-        <SourceTextField source="source" libraryIndex={libraryIndex} />
-        <ImageTextField source="file" />
-      </Datagrid>
+      <IconGrid libraryIndex={libraryIndex} />
     </List>
   );
 };

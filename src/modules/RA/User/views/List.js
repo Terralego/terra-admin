@@ -1,10 +1,11 @@
 import React from 'react';
 import {
   List,
-  Datagrid,
   TextField,
   BooleanField,
 } from 'react-admin';
+
+import Datagrid from '../../../../components/react-admin/Datagrid';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 
 import UserNameField from '../components/UserNameField';

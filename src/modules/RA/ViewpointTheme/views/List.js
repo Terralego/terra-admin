@@ -1,11 +1,12 @@
 import React from 'react';
 import {
   List,
-  Datagrid,
   TextField,
   SelectField,
   EditButton,
 } from 'react-admin';
+
+import Datagrid from '../../../../components/react-admin/Datagrid';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 import useAppSettings from '../../../../hooks/useAppSettings';
 import ListFilters from './ListFilters';

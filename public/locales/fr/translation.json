@@ -678,8 +678,6 @@
     },
     "filters": {
       "table": "Tableau de données",
-      "popup": "Fenêtre contextuelle",
-      "minisheet": "Minifiche",
       "refine": "%{smart_count} autre source, affinez la recherche |||| %{smart_count} autres sources, affinez la recherche",
       "active_by_default": "Affichage par défaut"
     }

@@ -2,9 +2,10 @@ import React from 'react';
 import {
   List,
   // Filter,
-  Datagrid,
   TextField,
 } from 'react-admin';
+
+import Datagrid from '../../../../components/react-admin/Datagrid';
 import ArrayCountField from '../../../../components/react-admin/ArrayCountField';
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Datagrid,
   DateField,
   EditButton,
   List,
@@ -9,6 +8,8 @@ import {
   Filter,
   TextInput,
 } from 'react-admin';
+
+import Datagrid from '../../../../components/react-admin/Datagrid';
 
 import CommonBulkActionButtons from '../../../../components/react-admin/CommonBulkActionButtons';
 import CustomCloneButton from '../../../../components/react-admin/CustomCloneButton';

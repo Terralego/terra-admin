@@ -2,12 +2,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-jest.mock('jsoneditor-react', () => ({}));
-jest.mock('react-mapbox-gl', () => ({
-  __esModule: true, // this property makes it work
-  default: () => ({}),
-  Marker: () => ({}),
-}));
+// jsdom n'a ni TextDecoder ni WebGL : importer maplibre suffit à faire échouer
+// la suite, il faut donc le remplacer entièrement.
+jest.mock('maplibre-gl', () => {
+  function Map () {
+    this.addControl = () => {};
+    this.once = () => {};
+    this.on = () => {};
+    this.off = () => {};
+    this.setStyle = () => {};
+    this.setCenter = () => {};
+    this.setZoom = () => {};
+    this.fitBounds = () => {};
+    this.resize = () => {};
+    this.remove = () => {};
+  }
+  function Marker () {
+    this.setLngLat = () => this;
+    this.addTo = () => this;
+    this.remove = () => {};
+  }
+  function NavigationControl () {}
+
+  return { __esModule: true, default: { Map, Marker, NavigationControl } };
+});
 
 jest.mock('@terralego/core/modules/Map', () => ({}));
 

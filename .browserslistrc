@@ -1,0 +1,27 @@
+# Cible de compilation (Babel via @babel/preset-env, et autoprefixer).
+#
+# ATTENTION — ce plafond n'est pas un choix produit, il est imposé par
+# l'outillage : webpack 4 (react-scripts 4) embarque acorn 6, qui ne sait pas
+# parser l'optional chaining. Il faut donc que la cible reste sous le seuil de
+# support de `?.` (chrome 80 / firefox 74 / safari 13.1) pour que Babel
+# continue de l'abaisser. Monter d'un cran fait échouer le build sur un
+# « Module parse failed: Unexpected token » peu explicite.
+#
+# À l'inverse, descendre la cible force Babel à abaisser les classes ES2015 et
+# à injecter ses helpers dans `node_modules` — ce qui casse maplibre, dont le
+# worker est fabriqué en sérialisant des fonctions du bundle : les helpers
+# restent en portée externe et le worker meurt sur un ReferenceError (plus
+# aucune tuile vectorielle n'est décodée).
+#
+# Ces deux contraintes disparaissent avec un bundler moderne (webpack 5 / Vite).
+#
+# IMPORTANT — après toute modification de ce fichier : `rm -rf node_modules/.cache`.
+# Le `cacheIdentifier` de babel-loader dans CRA est construit sur les versions de
+# paquets et NODE_ENV, pas sur la browserslist : sans purge, l'ancienne sortie
+# transpilée est resservie telle quelle et le changement semble sans effet.
+
+chrome >= 79
+firefox >= 72
+safari >= 13
+edge >= 79
+not dead

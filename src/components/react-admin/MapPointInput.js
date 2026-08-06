@@ -1,22 +1,25 @@
 import React from 'react';
-import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
 import { addField } from 'react-admin';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { withStyles } from '@material-ui/core/styles';
 
 import compose from '../../utils/compose';
-import { withMapConfig } from '../../hoc/withAppSettings';
-
-let Map = null; // For the mapbox gl component
+import useMaplibreMap from '../Map/useMaplibreMap';
+import useMapMarker from '../Map/useMapMarker';
 
 const styles = theme => ({
+  map: {
+    height: 300,
+    width:  600,
+    maxWidth: '100%',
+  },
   marker: {
-    display: 'block',
+    display:      'block',
     borderRadius: '50%',
-    width: '1em',
-    height: '1em',
-    border: `.25em solid ${theme.palette.primary.main}`,
+    width:        '1em',
+    height:       '1em',
+    border:       `.25em solid ${theme.palette.primary.main}`,
   },
 });
 
@@ -24,47 +27,38 @@ const sanitizeRestProps = ({
   basePath, isRequired, record, meta, ressource, ...rest
 }) => rest;
 
-const MapPointInput = ({ classes, input, center, mapConfig, ...rest }) => {
-  const [loaded, setLoaded] = React.useState(false);
-  const handleMapClick = (map, { lngLat }) => {
-    const coords = Object.values(lngLat).map(value => Number(value.toFixed(7)));
-    input.onChange(coords);
-  };
+const MapPointInput = ({ classes, input, center, ...rest }) => {
+  const { value, onChange } = input;
 
-  const customProps = {};
+  const onChangeRef = React.useRef(onChange);
+  onChangeRef.current = onChange;
 
-  if (input.value && input.value[0] && input.value[1]) {
-    customProps.center = input.value;
-  }
+  const handleClick = React.useCallback(({ lngLat }) => {
+    onChangeRef.current(
+      [lngLat.lng, lngLat.lat].map(coord => Number(coord.toFixed(7))),
+    );
+  }, []);
 
+  const hasValue = Boolean(value && value[0] && value[1]);
+
+  const { containerRef, mapRef } = useMaplibreMap({
+    center:  hasValue ? value : center,
+    onClick: handleClick,
+  });
+
+  useMapMarker({ mapRef, coordinates: value, className: classes.marker });
+
+  // La carte suit la valeur, qu'elle vienne d'un clic ou d'ailleurs dans le
+  // formulaire — c'est ce que faisait la prop `center` de react-mapbox-gl.
   React.useEffect(() => {
-    if (mapConfig.accessToken) {
-      Map = ReactMapboxGl({
-        accessToken: mapConfig.accessToken,
-      });
-      setLoaded(true);
+    if (mapRef.current && hasValue) {
+      mapRef.current.setCenter(value);
     }
-  }, [mapConfig.accessToken]);
-
-  if (!loaded) {
-    return null;
-  }
+  }, [mapRef, hasValue, value]);
 
   return (
     <div {...sanitizeRestProps(rest)}>
-      <Map
-        style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
-        containerStyle={{ height: '300px', width: '600px' }}
-        center={center}
-        onClick={handleMapClick}
-        {...customProps}
-      >
-        {!!input.value && (
-        <Marker coordinates={input.value} anchor="center">
-          <span className={classes.marker} />
-        </Marker>
-        )}
-      </Map>
+      <div ref={containerRef} className={classes.map} />
     </div>
   );
 };
@@ -72,5 +66,4 @@ const MapPointInput = ({ classes, input, center, mapConfig, ...rest }) => {
 export default compose(
   addField,
   withStyles(styles),
-  withMapConfig,
 )(MapPointInput);

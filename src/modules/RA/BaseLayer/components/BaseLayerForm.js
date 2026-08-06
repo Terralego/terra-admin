@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { FormSpy } from 'react-final-form';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import ZoomOut from '@material-ui/icons/ZoomOut';
@@ -27,6 +28,13 @@ const styles = {
     display: 'inline-block',
     marginRight: '1em',
   },
+  // react-admin inputs default to 256px, which is cramped for a name and far
+  // too narrow for a tiles URL. One width for every field of the form, capped
+  // so a line stays readable.
+  field: {
+    width: '100%',
+    maxWidth: 640,
+  },
 };
 
 const getTileSizeChoices = ({ min = 256, max = 4096 } = {}) => {
@@ -42,7 +50,7 @@ const getTileSizeChoices = ({ min = 256, max = 4096 } = {}) => {
 };
 
 
-const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
+const BaseLayerForm = ({ basePath, classes, translate: t, onValuesChange, ...props }) => {
   const { record: { base_layer_type: layerType } } = props;
 
   const [currentLayerType, setLayerType] = useState(layerType);
@@ -94,7 +102,21 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
 
   return (
     <ServerSideSimpleForm sanitizeEmptyValues={false} {...props}>
-      <TextInput source="name" label="baseLayer.form.name" validate={required()} />
+      {/* Feeds the live preview rendered in the aside (see views/Edit) */}
+      {onValuesChange && (
+        <FormSpy
+          subscription={{ values: true }}
+          onChange={({ values }) => onValuesChange(values)}
+        />
+      )}
+
+      <TextInput
+        source="name"
+        label="baseLayer.form.name"
+        validate={required()}
+        fullWidth
+        formClassName={classes.field}
+      />
 
       <BaseLayerType
         choices={[
@@ -107,6 +129,8 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
         onChange={handleTypeChange}
         source="base_layer_type"
         validate={required()}
+        fullWidth
+        formClassName={classes.field}
       />
 
       {currentLayerType && (
@@ -118,6 +142,8 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
             source="tile_size"
             translateChoice={false}
             validate={required()}
+            fullWidth
+            formClassName={classes.field}
           />
 
           {currentLayerType === 'mapbox' && (
@@ -126,6 +152,8 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
               source="map_box_url"
               type="url"
               validate={[required(), validateURL]}
+              fullWidth
+              formClassName={classes.field}
             />
           )}
 
@@ -135,9 +163,11 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
               initialValue={['']}
               source="tiles"
               validate={required()}
+              fullWidth
+              formClassName={classes.field}
             >
               <SimpleFormIterator>
-                <TextInput label="URL" validate={[required(), validateTiles]} />
+                <TextInput label="URL" validate={[required(), validateTiles]} fullWidth />
               </SimpleFormIterator>
             </ArrayInput>
           )}
@@ -156,10 +186,22 @@ const BaseLayerForm = ({ basePath, classes, translate: t, ...props }) => {
             initialValue={[0, 20]}
           />
 
-          <TextInput source="sprite" type="url" validate={[validateURL]} />
-          <TextInput source="glyphs" type="url" validate={[validateGlyphs]} />
+          <TextInput
+            source="sprite"
+            type="url"
+            validate={[validateURL]}
+            fullWidth
+            formClassName={classes.field}
+          />
+          <TextInput
+            source="glyphs"
+            type="url"
+            validate={[validateGlyphs]}
+            fullWidth
+            formClassName={classes.field}
+          />
 
-          <TextInput source="attribution" />
+          <TextInput source="attribution" fullWidth formClassName={classes.field} />
 
           <NumberInput source="order" label="baseLayer.form.order" min={0} step={1} />
         </FieldGroup>

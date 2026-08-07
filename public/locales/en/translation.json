@@ -270,6 +270,8 @@
       "geom-field-help": "Set geometry field (ex. : geom, the_geom, geometry, etc.).",
       "uid-field": "Unique ID field",
       "uid-field-help": "Set field representing unique field id (ex: gid, id..).",
+      "layer-name": "Layer name",
+      "layer-name-help": "Leave empty to auto-select the only layer. Required if the GeoPackage contains multiple layers.",
       "use-by": "Used by",
       "data": "Data",
       "label": "Label",
@@ -278,7 +280,7 @@
       "layers": "associated layers",
       "file": {
         "related-files": "Linked files",
-        "placeholder": "Drop here GeoJSON or zipped shapefile.",
+        "placeholder": "Drop here GeoJSON, zipped shapefile or GeoPackage.",
         "placeholderCSV": "Drop here CSV file."
       },
       "coordinates": {
@@ -689,6 +691,26 @@
       "latitude": "latitude",
       "zoom": "zoom",
       "extent-label": "Define map extent"
+    },
+    "tree": {
+      "add-group": "Create a group",
+      "new-group": "New group",
+      "add-layer": "Add a layer",
+      "add-subgroup": "Add a sub-group",
+      "settings": "Settings",
+      "open-layer": "Open layer in a new tab",
+      "layer-name": "Layer: %{name}",
+      "open-by-default": "Open by default in the viewer",
+      "closed-by-default": "Closed by default in the viewer",
+      "layer-label": "Label",
+      "reset-label": "Back to the layer name",
+      "selection-mode": "Layer selection mode",
+      "inclusive": "Inclusive",
+      "exclusive": "Exclusive",
+      "by-variable": "By variables",
+      "add-variable": "Add a variable",
+      "layer": "Layer",
+      "no-layer-available": "Every existing layer is already bound to a view."
     }
   },
   "ra": {

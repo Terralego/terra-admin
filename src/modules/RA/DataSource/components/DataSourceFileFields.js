@@ -8,7 +8,7 @@ import {
   required,
 } from 'react-admin';
 
-import { geomTypeChoices } from '..';
+import { geomTypeChoices, GPKG } from '..';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 
 const DataSourceFileFields = ({ translate: t, type, ...props }) => (
@@ -21,6 +21,15 @@ const DataSourceFileFields = ({ translate: t, type, ...props }) => (
       format={v => `${v}`}
       parse={v => +v}
     />
+
+    {type === GPKG && (
+      <TextInput
+        type="text"
+        source="layer_name"
+        label="datasource.form.layer-name"
+        helperText={t('datasource.form.layer-name-help')}
+      />
+    )}
 
     <FileInput
       source="file"

@@ -806,6 +806,7 @@
       "loading": "Page is loading, thanks for waiting",
       "no": "No",
       "not_found": "URL seems to be invalid or link is broken.",
+      "unsaved_changes": "Some of your changes were not saved. Are you sure you want to leave this page?",
       "yes": "Yes"
     },
     "navigation": {

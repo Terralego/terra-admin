@@ -858,6 +858,7 @@
       "loading": "La page est en cours de chargement, merci de bien vouloir patienter.",
       "no": "Non",
       "not_found": "L'URL saisie est incorrecte, ou vous avez suivi un mauvais lien.",
+      "unsaved_changes": "Certains changements n'ont pas été enregistrés. Êtes-vous sûr(e) de vouloir quitter cette page ?",
       "yes": "Oui"
     },
     "navigation": {

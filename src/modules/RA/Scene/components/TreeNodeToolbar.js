@@ -8,6 +8,7 @@ import {
   getFlatDataFromTree,
 } from 'react-sortable-tree';
 
+import { useTranslate } from 'react-admin';
 import { v4 as uuid } from 'uuid';
 
 import Box from '@material-ui/core/Box';
@@ -25,8 +26,13 @@ import Modal from '@material-ui/core/Modal';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import Tooltip from '@material-ui/core/Tooltip';
+import ClearIcon from '@material-ui/icons/Clear';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import UnfoldLessIcon from '@material-ui/icons/UnfoldLess';
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 
 import GeolayerSelect from './GeolayerSelect';
 
@@ -43,7 +49,10 @@ const style = {
   modalButtons: {
     marginTop: '1em',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
+  },
+  modalSubmit: {
+    marginLeft: '.5em',
   },
   groupModeSwitch: {
     display: 'flex',
@@ -56,7 +65,8 @@ const style = {
 /**
  * <TreeNodeToolbar /> component
  */
-const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
+const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds, layerNames = {} }) => {
+  const translate = useTranslate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [displayLayerModal, setDisplayLayerModal] = React.useState(false);
   const [displaySettingsModal, setDisplaySettingsModal] = React.useState(false);
@@ -70,6 +80,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
           exclusive: Boolean(displaySettingsModal.node.exclusive),
           byVariable: Boolean(displaySettingsModal.node.byVariable),
           variables: displaySettingsModal.node.variables || [],
+          closedByDefault: Boolean(displaySettingsModal.node.closedByDefault),
         });
       }
     },
@@ -80,6 +91,10 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
   const closeMenu = () => setAnchorEl(null);
 
   const isGroup = !!node.group;
+
+  const isPlainGroup = isGroup && !node.exclusive && !node.byVariable;
+
+  const layerName = layerNames[node.geolayer];
 
   /**
    * Create a new node as child of current node
@@ -107,6 +122,13 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     }));
   };
 
+  const toggleClosedByDefault = () => setTreeData(changeNodeAtPath({
+    treeData,
+    path,
+    getNodeKey: ({ treeIndex }) => treeIndex,
+    newNode: { ...node, closedByDefault: !node.closedByDefault },
+  }));
+
   /**
    * Edit current node by merging newProps with existing properties
    */
@@ -118,7 +140,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
       variable => !newProps.variables.includes(variable),
     );
 
-    const newChildren = JSON.parse(JSON.stringify(node.children));
+    const newChildren = node.children && JSON.parse(JSON.stringify(node.children));
     newChildren?.forEach(child => {
       removedVariables?.forEach(removedVariable => {
         delete child[removedVariable.id]; // eslint-disable-line no-param-reassign
@@ -147,7 +169,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
 
   const openEditLayerModal = editNode => {
     closeMenu();
-    setNewLayerProps(editNode);
+    setNewLayerProps({ ...editNode, label: editNode.label || layerName });
     setDisplayLayerModal(editNode);
   };
 
@@ -158,11 +180,17 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
     if (save && !edit && newLayerProps.geolayer) {
       newSubItem(newLayerProps)();
     } else if (save && edit) {
+      const newNode = { ...node, ...newLayerProps };
+
+      if (!newNode.label || newNode.label === layerName) {
+        delete newNode.label;
+      }
+
       setTreeData(changeNodeAtPath({
         treeData,
         path,
         getNodeKey: ({ treeIndex }) => treeIndex,
-        newNode: { ...node, ...newLayerProps },
+        newNode,
       }));
     }
     /* Close modal */
@@ -258,6 +286,20 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
   return (
     <>
       {isGroup && <IconButton onClick={openNewLayerModal}><AddIcon /></IconButton>}
+      {isPlainGroup && (
+        <Tooltip
+          title={translate(node.closedByDefault
+            ? 'view.tree.closed-by-default'
+            : 'view.tree.open-by-default')}
+        >
+          <IconButton
+            onClick={toggleClosedByDefault}
+            color={node.closedByDefault ? 'primary' : 'default'}
+          >
+            {node.closedByDefault ? <UnfoldLessIcon /> : <UnfoldMoreIcon />}
+          </IconButton>
+        </Tooltip>
+      )}
       {isGroup && <IconButton onClick={handleClick}><MoreVertIcon /></IconButton>}
       {!isGroup && (
         <IconButton size="small" onClick={() => openEditLayerModal(node)}>
@@ -267,12 +309,14 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
       {!isGroup && <IconButton size="small" onClick={deleteItem}><DeleteIcon /></IconButton>}
 
       <Menu anchorEl={anchorEl} onClose={closeMenu} open={!!anchorEl}>
-        {isGroup && <MenuItem onClick={openNewLayerModal}>Ajouter une couche</MenuItem>}
-        {isGroup && !node.byVariable && (
-          <MenuItem onClick={newSubItem({ label: 'Groupe', group: true })}>Ajouter un sous-groupe</MenuItem>
+        {isGroup && <MenuItem onClick={openNewLayerModal}>{translate('view.tree.add-layer')}</MenuItem>}
+        {isPlainGroup && (
+          <MenuItem onClick={newSubItem({ label: translate('view.tree.new-group'), group: true })}>
+            {translate('view.tree.add-subgroup')}
+          </MenuItem>
         )}
-        {isGroup && <MenuItem onClick={openSettingsModal}>Paramètres</MenuItem>}
-        <MenuItem onClick={deleteItem}>Supprimer</MenuItem>
+        {isGroup && <MenuItem onClick={openSettingsModal}>{translate('view.tree.settings')}</MenuItem>}
+        <MenuItem onClick={deleteItem}>{translate('ra.action.delete')}</MenuItem>
       </Menu>
 
       <Modal open={Boolean(displayLayerModal)} onClose={closeLayerModal()}>
@@ -291,10 +335,24 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
 
           {Boolean(displayLayerModal.geolayer) && (
             <TextField
-              label="Label"
+              label={translate('view.tree.layer-label')}
               fullWidth
-              value={newLayerProps.label}
+              value={newLayerProps.label || ''}
+              placeholder={layerName}
               style={{ marginTop: 10 }}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                endAdornment: newLayerProps.label && newLayerProps.label !== layerName && (
+                  <Tooltip title={translate('view.tree.reset-label')}>
+                    <IconButton
+                      size="small"
+                      onClick={() => setNewLayerProps(prevProps => ({ ...prevProps, label: '' }))}
+                    >
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                ),
+              }}
               onChange={event => {
                 const label = event?.target?.value;
                 setNewLayerProps(prevProps => ({ ...prevProps, label }));
@@ -325,8 +383,15 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
           )}
 
           <div style={style.modalButtons}>
-            <Button variant="outlined" color="secondary" onClick={closeLayerModal(false)}>Annuler</Button>
-            <Button variant="outlined" color="primary" onClick={closeLayerModal(true, Boolean(displayLayerModal.geolayer))}>Valider</Button>
+            <Button onClick={closeLayerModal(false)}>{translate('ra.action.cancel')}</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={style.modalSubmit}
+              onClick={closeLayerModal(true, Boolean(displayLayerModal.geolayer))}
+            >
+              {translate('ra.action.validate')}
+            </Button>
           </div>
         </div>
       </Modal>
@@ -334,7 +399,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
       <Modal open={Boolean(displaySettingsModal)} onClose={closeSettingsModal()}>
         <div style={style.modal}>
           <FormControl component="fieldset">
-            <FormLabel component="legend">Mode de sélection des couches</FormLabel>
+            <FormLabel component="legend">{translate('view.tree.selection-mode')}</FormLabel>
             <RadioGroup
               name="groupMode"
               value={radioValue}
@@ -347,23 +412,48 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
                     break;
                   case 'exclusive':
                     setGroupNewSettings(
-                      { ...groupNewSettings, exclusive: true, byVariable: false },
+                      {
+                        ...groupNewSettings,
+                        exclusive: true,
+                        byVariable: false,
+                        closedByDefault: undefined,
+                      },
                     );
                     break;
                   case 'byVariable':
                     setGroupNewSettings(
-                      { ...groupNewSettings, exclusive: true, byVariable: true },
+                      {
+                        ...groupNewSettings,
+                        exclusive: true,
+                        byVariable: true,
+                        closedByDefault: undefined,
+                      },
                     );
                     break;
                   default:
                 }
               }}
             >
-              <FormControlLabel value="inclusive" control={<Radio />} label="Inclusif" />
-              <FormControlLabel value="exclusive" control={<Radio />} label="Exclusif" />
-              <FormControlLabel value="byVariable" control={<Radio />} label="Par variables" />
+              <FormControlLabel value="inclusive" control={<Radio />} label={translate('view.tree.inclusive')} />
+              <FormControlLabel value="exclusive" control={<Radio />} label={translate('view.tree.exclusive')} />
+              <FormControlLabel value="byVariable" control={<Radio />} label={translate('view.tree.by-variable')} />
             </RadioGroup>
           </FormControl>
+
+          {radioValue === 'inclusive' && (
+            <Box>
+              <FormControlLabel
+                control={(
+                  <Switch
+                    checked={!groupNewSettings.closedByDefault}
+                    onChange={(event, checked) =>
+                      setGroupNewSettings({ ...groupNewSettings, closedByDefault: !checked })}
+                  />
+                )}
+                label={translate('view.tree.open-by-default')}
+              />
+            </Box>
+          )}
 
           <Box
             style={{
@@ -377,7 +467,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
               <TextField
                 disabled={!groupNewSettings.byVariable}
                 variant="outlined"
-                label="Ajouter une variable"
+                label={translate('view.tree.add-variable')}
                 size="small"
                 inputRef={newVariableFieldRef}
                 InputProps={{
@@ -388,7 +478,7 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
                       style={{ marginRight: '-12px' }}
                       onClick={handleVariableAdd}
                     >
-                      Ajouter
+                      {translate('ra.action.add')}
                     </Button>
                   ),
                 }}
@@ -414,8 +504,15 @@ const TreeNodeToolbar = ({ treeData, setTreeData, path, node, includeIds }) => {
           </Box>
 
           <div style={style.modalButtons}>
-            <Button variant="outlined" color="secondary" onClick={closeSettingsModal(false)}>Annuler</Button>
-            <Button variant="outlined" color="primary" onClick={closeSettingsModal(true)}>Valider</Button>
+            <Button onClick={closeSettingsModal(false)}>{translate('ra.action.cancel')}</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={style.modalSubmit}
+              onClick={closeSettingsModal(true)}
+            >
+              {translate('ra.action.validate')}
+            </Button>
           </div>
         </div>
       </Modal>

@@ -1,9 +1,10 @@
 import React from 'react';
 import get from 'lodash.get';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import {
+  CardContentInner,
   FileField,
   FileInput,
   ImageInput,
@@ -14,6 +15,7 @@ import {
   FormDataConsumer,
   required,
   translate,
+  useDataProvider,
   ReferenceArrayInput,
   SelectArrayInput,
 } from 'react-admin';
@@ -23,6 +25,7 @@ import compose from '../../../../utils/compose';
 
 import TreeInput from './TreeInput';
 import SceneFormNameField from './SceneFormNameField';
+import { fetchLayerNames, getLayerIdsFromTree, withoutRedundantLabels } from '../utils';
 import { RES_BASELAYER } from '../../ra-modules';
 
 import MapExtentInput from './MapExtentInput';
@@ -33,6 +36,38 @@ const styles = {
     display: 'inline-block',
     marginRight: '1em',
   },
+};
+
+const useLayoutStyles = makeStyles(theme => ({
+  content: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
+    columnGap: theme.spacing(4),
+    '& > *': {
+      minWidth: 0,
+    },
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
+  },
+  treeColumn: {
+    gridColumn: 2,
+    gridRow: '1 / span 40',
+    paddingLeft: theme.spacing(4),
+    borderLeft: `1px solid ${theme.palette.divider}`,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(3),
+      paddingLeft: 0,
+      paddingTop: theme.spacing(3),
+      borderLeft: 'none',
+      borderTop: `1px solid ${theme.palette.divider}`,
+    },
+  },
+}));
+
+const FormContent = ({ children }) => {
+  const classes = useLayoutStyles();
+  return <CardContentInner className={classes.content}>{children}</CardContentInner>;
 };
 
 const sanitizeProps = ({ dispatch, basePath, formClassName, ...rest }) => rest;
@@ -52,13 +87,32 @@ const ReportField = ({ record, source, className, label, ...rest }) => {
 };
 
 const SceneForm = ({ translate: t, classes, ...props }) => {
+  const { treeColumn } = useLayoutStyles();
+  const dataProvider = useDataProvider();
   const { record } = props;
   const edit = record.id !== undefined;
+
+  const transform = React.useCallback(
+    async values => {
+      const ids = getLayerIdsFromTree(values.tree);
+      const layerNames = await fetchLayerNames(dataProvider, ids);
+
+      return { ...values, tree: withoutRedundantLabels(values.tree, layerNames) };
+    },
+    [dataProvider],
+  );
+
   /* sanitizeEmptyValues is false for this form to prevent
    * this issue with the layer tree https://github.com/marmelab/react-admin/issues/5427
    */
   return (
-    <ServerSideSimpleForm {...props} sanitizeEmptyValues={false}>
+    <ServerSideSimpleForm
+      {...props}
+      sanitizeEmptyValues={false}
+      component={FormContent}
+      transform={transform}
+      warnWhenUnsavedChanges
+    >
       {edit && <TextInput disabled source="id" />}
 
       {isObjectEmpty(record) && (
@@ -91,7 +145,7 @@ const SceneForm = ({ translate: t, classes, ...props }) => {
         <SelectArrayInput />
       </ReferenceArrayInput>
 
-      <TreeInput source="tree" fullWidth initialValue={[]} />
+      <TreeInput source="tree" fullWidth initialValue={[]} formClassName={treeColumn} />
       {/* <TreeInput source="config.tree" defaultValue={[]} fullWidth /> */}
 
       <ImageInput source="custom_icon" label="view.form.icon">

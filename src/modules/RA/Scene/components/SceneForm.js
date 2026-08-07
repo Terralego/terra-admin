@@ -95,7 +95,9 @@ const SceneForm = ({ translate: t, classes, ...props }) => {
   const transform = React.useCallback(
     async values => {
       const ids = getLayerIdsFromTree(values.tree);
-      const layerNames = await fetchLayerNames(dataProvider, ids);
+      // Cosmetic only: the DRF provider fetches the layers one by one, so a
+      // single deleted layer would reject the batch and block the save.
+      const layerNames = await fetchLayerNames(dataProvider, ids).catch(() => ({}));
 
       return { ...values, tree: withoutRedundantLabels(values.tree, layerNames) };
     },

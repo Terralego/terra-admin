@@ -1239,15 +1239,45 @@
       "method": {
         "input": "Method",
         "jenks": "Jenks",
+        "jenks-kmeans1d": "Jenks (k-means 1D)",
         "equal-interval": "Equal intervals",
         "quantiles": "Quantiles",
         "manual": "Manual"
-      }
+      },
+      "classes": "Classes"
+    },
+    "palette": {
+      "sequential": "Sequential",
+      "diverging": "Diverging",
+      "custom": "Custom",
+      "reverse": "Reverse",
+      "choose": "Choose a palette",
+      "interpolated": "(interpolated)",
+      "copy": "Copy the palette",
+      "copy-format": "Copy with format ['#hex','#hex',…]",
+      "paste": "Paste the palette",
+      "paste-format": "Import with format : ['#hex','#hex',…]"
     }
   },
   "pictures": {
     "compare": {
       "placeholder": "Picture not found."
     }
+  },
+  "discret": {
+    "preview": "Distribution by class",
+    "toggle": {
+      "rug": "Population",
+      "mean": "Mean",
+      "median": "Median",
+      "stddev": "Std Dev"
+    },
+    "not-numeric": "This field is not numeric",
+    "choose-method": "Choose a discretization method",
+    "distribution": "Distribution",
+    "summary": "Statistical summary",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "class-bounds": "Class bounds"
   }
 }

@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ValueListField = ({ value, onChange }) => {
+const ValueListField = ({ value, onChange, showAddRemove = true }) => {
   const classes = useStyles();
 
   const handleValueChange = index => event => {
@@ -58,12 +58,16 @@ const ValueListField = ({ value, onChange }) => {
           onChange={handleValueChange(index)}
         />
       ))}
-      <button type="button" className="action" onClick={removeValue(value.length - 1)}>
-        -
-      </button>
-      <button type="button" className="action" onClick={addValue}>
-        +
-      </button>
+      {showAddRemove && (
+        <>
+          <button type="button" className="action" onClick={removeValue(value.length - 1)}>
+            -
+          </button>
+          <button type="button" className="action" onClick={addValue}>
+            +
+          </button>
+        </>
+      )}
     </div>
   );
 };

@@ -11,7 +11,7 @@ import useStyleImagesOptions from '../../../../../../../hooks/useStyleImagesOpti
 
 const useStyles = makeStyles(styles);
 
-const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
+const WizardIcon = ({ path, fields, getValuesOfProperty, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const iconChoices = useStyleImagesOptions();
@@ -63,6 +63,7 @@ const WizardIcon = ({ path, fields, getValuesOfProperty }) => {
           step="0.1"
           canGenerateLegend={false}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
       <div className={classes.configLine}>

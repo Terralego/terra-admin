@@ -30,6 +30,7 @@ const SizeStyleField = ({
   path,
   fields,
   getValuesOfProperty,
+  layerName,
   choices,
   translateChoice = true,
   format = val => val,
@@ -126,7 +127,7 @@ const SizeStyleField = ({
                       initialValue="categorized"
                     />
                     <Condition when={`${path}.analysis`} is="graduated">
-                      <GraduateValue path={path} />
+                      <GraduateValue path={path} layerName={layerName} />
                       <BooleanInput
                         source={`${path}.generate_legend`}
                         label="style-editor.generate-legend"

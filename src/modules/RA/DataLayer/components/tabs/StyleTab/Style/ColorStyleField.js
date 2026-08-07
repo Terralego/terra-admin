@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Field, useField } from 'react-final-form';
+import { Field, useField, useForm } from 'react-final-form';
 import { SelectInput, RadioButtonGroupInput, BooleanInput, useTranslate, required } from 'react-admin';
 import randomColor from 'randomcolor';
 
@@ -13,7 +13,7 @@ import FieldOption from '../../FieldOption';
 import GraduateValue from './GraduateValue';
 import CategorizeValue from './CategorizeValue';
 
-import ColorListField from './ColorListField';
+import DicopalField from './DicopalField';
 
 import styles from './styles';
 
@@ -23,12 +23,23 @@ const useStyles = makeStyles(styles);
 
 const defaultValueGenerator = val => (val ? randomColor() : '#CCC');
 
-const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
+const ColorStyleField = ({ path, fields, getValuesOfProperty, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
   const [defaultSeed] = React.useState(() => Math.floor((Math.random() * 100000) + 1));
-  const [defaultValue] = React.useState(() => randomColor({ seed: defaultSeed, count: 3 }));
+  const [defaultValue] = React.useState(() => randomColor({ seed: defaultSeed, count: 5 }));
+
+  const form = useForm();
+  const { input: { value: selectedFieldName } } = useField(`${path}.field`, { subscription: { value: true } });
+  const selectedField = fields?.find(f => f.name === selectedFieldName);
+  const isNumber = selectedField && ['Integer', 'Float'].includes(fieldTypes[selectedField.data_type]);
+
+  React.useEffect(() => {
+    if (selectedField && !isNumber) {
+      form.change(`${path}.analysis`, 'categorized');
+    }
+  }, [selectedField, isNumber, path, form]);
 
   const { input: { value: type } } = useField(`${path}.type`);
 
@@ -74,10 +85,8 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
           />
 
           <Field name={`${path}.field`} subscription={{ value: true }}>
-            {({ input: { value } }) => {
-              const selectedField = fields.find(({ name }) => name === value);
+            {() => {
               if (!selectedField) return null;
-              const isNumber =  ['Integer', 'Float'].includes(fieldTypes[selectedField.data_type]);
               const analysisChoices = isNumber ? [
                 { id: 'graduated', name: translate('style-editor.analysis.graduate') },
                 { id: 'categorized', name: translate('style-editor.analysis.categorize') },
@@ -93,18 +102,21 @@ const ColorStyleField = ({ path, fields, getValuesOfProperty }) => {
                     choices={analysisChoices}
                     initialValue={isNumber ? 'graduated' : 'categorized'}
                   />
-                  <Condition when={`${path}.analysis`} is="graduated">
-                    <GraduateValue
-                      path={path}
-                      Component={ColorListField}
-                      defaultValue={defaultValue}
-                    />
-                    <BooleanInput
-                      source={`${path}.generate_legend`}
-                      label="style-editor.generate-legend"
-                      className="generate-legend"
-                    />
-                  </Condition>
+                  {isNumber && (
+                    <Condition when={`${path}.analysis`} is="graduated">
+                      <GraduateValue
+                        path={path}
+                        layerName={layerName}
+                        Component={DicopalField}
+                        defaultValue={defaultValue}
+                      />
+                      <BooleanInput
+                        source={`${path}.generate_legend`}
+                        label="style-editor.generate-legend"
+                        className="generate-legend"
+                      />
+                    </Condition>
+                  )}
 
                   <Condition when={`${path}.analysis`} is="categorized">
                     <CategorizeValue

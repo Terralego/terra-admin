@@ -26,7 +26,7 @@ import styles from './Style/styles';
 
 const useStyles = makeStyles(styles);
 
-const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyles }) => {
+const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyles, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const [defaultUid] = React.useState(`${uuid()}`);
@@ -146,6 +146,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
             shouldDisplayLabels={shouldDisplayLabels}
+            layerName={layerName}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="fill-extrusion">
@@ -153,6 +154,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             path={path}
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
+            layerName={layerName}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="line">
@@ -161,6 +163,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
             shouldDisplayLabels={shouldDisplayLabels}
+            layerName={layerName}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="circle">
@@ -169,6 +172,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
             shouldDisplayLabels={shouldDisplayLabels}
+            layerName={layerName}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="icon">
@@ -176,6 +180,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             path={path}
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
+            layerName={layerName}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="text">
@@ -183,6 +188,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             path={path}
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
+            layerName={layerName}
           />
         </Condition>
         <Condition when={`${path}.map_style_type`} is="heatmap">
@@ -193,6 +199,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
             path=""
             fields={fields}
             getValuesOfProperty={getValuesOfProperty}
+            layerName={layerName}
           />
         </Condition>
       </Condition>

@@ -1293,15 +1293,45 @@
       "method": {
         "input": "Méthode",
         "jenks": "Jenks",
+        "jenks-kmeans1d": "Jenks (k-means 1D)",
         "equal-interval": "Intervalles égaux",
         "quantiles": "Quantiles",
         "manual": "Manuelle"
-      }
+      },
+      "classes": "Classes"
+    },
+    "palette": {
+      "sequential": "Séquentielle",
+      "diverging": "Divergente",
+      "custom": "Personnalisée",
+      "reverse": "Inverser",
+      "choose": "Choisir une palette",
+      "interpolated": "(interpolée)",
+      "copy": "Copier la palette",
+      "copy-format": "Copie au format ['#hex','#hex',…]",
+      "paste": "Coller la palette",
+      "paste-format": "Importer un format : ['#hex','#hex',…]"
     }
   },
   "pictures": {
     "compare": {
       "placeholder": "Image est introuvable."
     }
+  },
+  "discret": {
+    "preview": "Distribution par classe",
+    "toggle": {
+      "rug": "Population",
+      "mean": "Moyenne",
+      "median": "Médiane",
+      "stddev": "Écart-type"
+    },
+    "not-numeric": "Ce champ n'est pas numérique",
+    "choose-method": "Choisissez une méthode de discrétisation",
+    "distribution": "Distribution",
+    "summary": "Résumé statistiques",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "class-bounds": "Bornes des classes"
   }
 }

@@ -24,6 +24,7 @@ const SizeStyleField = ({
   path,
   fields,
   getValuesOfProperty,
+  layerName,
   canGenerateLegend = true,
   step = 'any',
 }) => {
@@ -112,7 +113,7 @@ const SizeStyleField = ({
                     )}
                   </Condition>
                   <Condition when={`${path}.analysis`} is="graduated">
-                    <GraduateValue path={path} />
+                    <GraduateValue path={path} layerName={layerName} />
                     {canGenerateLegend && (
                       <BooleanInput
                         source={`${path}.generate_legend`}

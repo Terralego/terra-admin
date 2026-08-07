@@ -64,6 +64,7 @@ const ColorPicker = ({
   onChange = () => {},
   disabled,
   showInput = false,
+  format = 'hsl',
   style = {},
   ...props
 }) => {
@@ -79,9 +80,13 @@ const ColorPicker = ({
   const handleChangeComplete = React.useCallback(
     newColor => {
       setCurrentColor(newColor.hsl);
-      onChange(tinycolor(newColor.rgb).toHslString());
+      const color = tinycolor(newColor.rgb);
+      // Saved styles are historically `hsl()`. Only the graduated palettes
+      // ask for hex, to match what dicopal emits and what the palette
+      // copy/paste parses (see DicopalField).
+      onChange(format === 'hex' ? color.toHexString() : color.toHslString());
     },
-    [onChange],
+    [onChange, format],
   );
 
   return (

@@ -11,7 +11,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const WizardPiechart = ({ path, fields, getValuesOfProperty }) => {
+const WizardPiechart = ({ path, fields, getValuesOfProperty, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -50,6 +50,7 @@ const WizardPiechart = ({ path, fields, getValuesOfProperty }) => {
           path="main_style.style.piechart_radius"
           fields={fields}
           getValuesOfProperty={getValuesOfProperty}
+          layerName={layerName}
         />
       </div>
 

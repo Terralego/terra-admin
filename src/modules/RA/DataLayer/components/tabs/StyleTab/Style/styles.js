@@ -46,12 +46,13 @@ const styles = {
   },
   graduateConfig: {
     display: 'flex',
+    alignItems: 'flex-start',
+    gap: 16,
     '& .method': {
-      width: '20em',
-      marginRight: '3em',
+      flex: 1,
     },
     '& .count': {
-      flex: '1',
+      width: 120,
     },
   },
   colorList: {
@@ -73,6 +74,24 @@ const styles = {
   iconSelect: {
     width: '10em',
     marginRight: '2em',
+  },
+  discretContainer: {
+    marginTop: 8,
+  },
+  paletteRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 16,
+    flexWrap: 'wrap',
+    '& .palette-type': {
+      display: 'inline-flex',
+    },
+  },
+  paletteSelectRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 16,
+    marginBottom: 8,
   },
 };
 

@@ -20,7 +20,7 @@ const useStyles = makeStyles(styles);
 
 const genDefaultValue = () => 0;
 
-const RadiusStyleField = ({ path, fields, getValuesOfProperty }) => {
+const RadiusStyleField = ({ path, fields, getValuesOfProperty, layerName }) => {
   const classes = useStyles();
   const translate = useTranslate();
 
@@ -102,7 +102,7 @@ const RadiusStyleField = ({ path, fields, getValuesOfProperty }) => {
                     />
                   </Condition>
                   <Condition when={`${path}.analysis`} is="graduated">
-                    <GraduateValue path={path} fields={fields} />
+                    <GraduateValue path={path} fields={fields} layerName={layerName} />
 
                     <BooleanInput
                       source={`${path}.generate_legend`}

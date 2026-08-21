@@ -14,6 +14,7 @@ const toMultipart = nextDataProvider => async (...args) => {
 
   const modules = [RES_DATASOURCE, RES_PICTURE, RES_VIEW];
   const filenameProperties = ['file', 'custom_icon'];
+  const multiValueProperties = ['extra_extents'];
 
   /**
    * Manage file upload by converting query content to FormData()
@@ -25,6 +26,11 @@ const toMultipart = nextDataProvider => async (...args) => {
       if (filenameProperties.includes(key)) { return; }
 
       let value = params.data[key];
+
+      if (multiValueProperties.includes(key)) {
+        (Array.isArray(value) ? value : []).forEach(item => body.append(key, item));
+        return;
+      }
 
       if (typeof value === 'object') {
         value = JSON.stringify(value, null, 2);

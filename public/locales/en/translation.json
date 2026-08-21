@@ -690,7 +690,27 @@
       "longitude": "longitude",
       "latitude": "latitude",
       "zoom": "zoom",
-      "extent-label": "Define map extent"
+      "extent-label": "Define map extent",
+      "extent": {
+        "list-title": "View areas",
+        "main": "Main area",
+        "empty": "No area",
+        "unknown": "Unknown area (#%{id})",
+        "loading": "Loading…",
+        "mode-single": "A single area",
+        "mode-multiple": "Several areas (territory selector)",
+        "add": "Add",
+        "add-category": "Add the area |||| Add the %{smart_count} areas",
+        "uncategorised": "Uncategorised",
+        "delete": "Remove from the view",
+        "move-up": "Move up",
+        "move-down": "Move down",
+        "bbox": "Bounding box",
+        "bbox-hint": "minX, minY, maxX, maxY — draw on the map or type the coordinates",
+        "bbox-invalid": "Four coordinates expected: minX, minY, maxX, maxY",
+        "no-area": "This area has no bounding box",
+        "error-empty": "Add at least one area, or go back to a single area"
+      }
     },
     "tree": {
       "add-group": "Create a group",

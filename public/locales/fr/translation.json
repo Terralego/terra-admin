@@ -742,7 +742,27 @@
       "longitude": "longitude",
       "latitude": "latitude",
       "zoom": "zoom",
-      "extent-label": "Définissez la zone à afficher"
+      "extent-label": "Définissez la zone à afficher",
+      "extent": {
+        "list-title": "Zones de la vue",
+        "main": "Zone principale",
+        "empty": "Aucune zone",
+        "unknown": "Zone introuvable (#%{id})",
+        "loading": "Chargement…",
+        "mode-single": "Une seule zone",
+        "mode-multiple": "Plusieurs zones (sélecteur de territoires)",
+        "add": "Ajouter",
+        "add-category": "Ajouter la zone |||| Ajouter les %{smart_count} zones",
+        "uncategorised": "Sans catégorie",
+        "delete": "Retirer de la vue",
+        "move-up": "Monter",
+        "move-down": "Descendre",
+        "bbox": "Emprise",
+        "bbox-hint": "minX, minY, maxX, maxY — dessinez sur la carte ou saisissez les coordonnées",
+        "bbox-invalid": "Quatre coordonnées attendues : minX, minY, maxX, maxY",
+        "no-area": "Cette zone n'a pas d'emprise définie",
+        "error-empty": "Ajoutez au moins une zone, ou revenez à une zone unique"
+      }
     },
     "tree": {
       "add-group": "Créer un groupe",

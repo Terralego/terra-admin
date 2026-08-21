@@ -38,6 +38,7 @@ export const RES_PERMISSION = 'permissions';
 export const RES_ICON = 'icon';
 
 // Visu
+export const RES_EXTENT = 'extent';
 export const RES_DATASOURCE = 'datasource';
 export const RES_DATALAYER = 'datalayer';
 export const RES_VIEW = 'view';
@@ -93,6 +94,12 @@ export const resources = [
     moduleName: 'DataLayer',
     endpoint: 'geolayer/scene',
     ...sceneViews,
+  },
+  {
+    // read-only, no views
+    name: RES_EXTENT,
+    moduleName: 'DataLayer',
+    endpoint: 'extent',
   },
   {
     name: RES_VIEWPOINT,

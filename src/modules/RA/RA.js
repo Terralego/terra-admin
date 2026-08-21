@@ -11,6 +11,7 @@ import dataProvider from '../../services/react-admin/dataProvider';
 import withResourceEndpoint from '../../services/react-admin/withResourceEndpoint';
 import enhanceViewpointDataProvider from '../../services/react-admin/enhanceViewpointDataProvider';
 import sourceDataProvider from '../../services/react-admin/sourceDataProvider';
+import patchExtentDataProvider from '../../services/react-admin/patchExtentDataProvider';
 import patchLayerDataProvider from '../../services/react-admin/patchLayerDataProvider';
 import patchPictureDataProvider from '../../services/react-admin/patchPictureDataProvider';
 import patchNullValueProvider from '../../services/react-admin/patchNullValueProvider';
@@ -30,6 +31,7 @@ const sanitizeProps = ({ enpoint, moduleName, requiredPermissions, ...rest }) =>
 
 const customDataProvider = compose(
   withResourceEndpoint,
+  patchExtentDataProvider,
   patchPictureDataProvider,
   patchLayerDataProvider,
   patchNullValueProvider,

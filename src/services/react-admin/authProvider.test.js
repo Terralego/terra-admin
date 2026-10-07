@@ -3,20 +3,20 @@ import { AUTH_CHECK, AUTH_ERROR, AUTH_LOGOUT } from 'react-admin';
 import authProvider from './authProvider';
 import { getToken, invalidToken } from '../../terra-front/Auth/auth';
 
-jest.mock('react-admin', () => ({
+vi.mock('react-admin', () => ({
   AUTH_LOGIN:  'AUTH_LOGIN',
   AUTH_LOGOUT: 'AUTH_LOGOUT',
   AUTH_ERROR:  'AUTH_ERROR',
   AUTH_CHECK:  'AUTH_CHECK',
 }));
 
-jest.mock('../../terra-front/Auth/auth', () => ({
-  getToken:     jest.fn(),
-  invalidToken: jest.fn(),
-  obtainToken:  jest.fn(),
+vi.mock('../../terra-front/Auth/auth', () => ({
+  getToken:     vi.fn(),
+  invalidToken: vi.fn(),
+  obtainToken:  vi.fn(),
 }));
 
-beforeEach(() => jest.clearAllMocks());
+beforeEach(() => vi.clearAllMocks());
 
 it('drops the token on logout', async () => {
   await expect(authProvider(AUTH_LOGOUT)).resolves.toBeUndefined();

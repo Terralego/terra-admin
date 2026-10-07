@@ -1,0 +1,39 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "import", "vitest", "jsx-a11y", "promise", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn",
+    "pedantic": "off",
+    "style": "off"
+  },
+  "env": { "browser": true, "es2024": true, "node": true },
+  "globals": { "vi": "readonly" },
+  "ignorePatterns": ["build/**", "coverage/**", "public/**"],
+  "rules": {
+    "eslint/no-unused-vars": ["error", { "args": "none", "ignoreRestSiblings": true, "caughtErrors": "none" }],
+    "eslint/no-unused-expressions": "warn",
+    "react/set-state-in-effect": "warn",
+    "react/no-did-mount-set-state": "warn",
+    "react/refs": "warn",
+    "react/purity": "warn",
+    "react/jsx-key": "warn",
+    "jsx-a11y/prefer-tag-over-role": "warn",
+    "unicorn/no-invalid-fetch-options": "warn",
+    "import/no-unassigned-import": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "eslint/no-underscore-dangle": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.js", "**/*.test.jsx"],
+      "rules": {
+        "eslint/no-unused-expressions": "off",
+        "react/no-this-in-sfc": "off",
+        "vitest/expect-expect": "warn"
+      }
+    }
+  ]
+}

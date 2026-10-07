@@ -1,11 +1,7 @@
 import React from 'react';
 
-// L'eslint intégré au build de CRA voit maplibre comme absent du package.json
-// sur les recompilations incrémentales, alors qu'il y figure bien.
-/* eslint-disable import/no-extraneous-dependencies */
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-/* eslint-enable import/no-extraneous-dependencies */
 
 import DEFAULT_MAP_STYLE from '../../config/mapStyle';
 

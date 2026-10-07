@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import mime from 'mime-types';
 import get from 'lodash.get';
 import { v4 as uuid } from 'uuid';
 
@@ -57,6 +56,11 @@ const Br = () => <br />;
 
 const isRequired = [required()];
 
+// Déduit de l'extension, comme le faisait `mime-types` (qui dépend de `path`
+// et ne tourne pas dans le navigateur)
+const IMAGE_EXTENSION = /\.(avif|bmp|gif|heic|heif|ico|jpe?g|png|svg|tiff?|webp)$/i;
+const isImageName = name => IMAGE_EXTENSION.test((name || '').split(/[?#]/)[0]);
+
 const FilePreview = props => {
   const { source } = props;
   const record = useRecordContext(props);
@@ -64,9 +68,9 @@ const FilePreview = props => {
   let isImage = false;
 
   if (record.rawFile) {
-    isImage = (mime.lookup(record.rawFile.name) || []).includes('image');
+    isImage = isImageName(record.rawFile.name);
   } else {
-    isImage = (mime.lookup(sourceValue) || []).includes('image');
+    isImage = isImageName(sourceValue);
   }
   if (isImage) {
     return <ImageField {...props} />;

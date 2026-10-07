@@ -2,7 +2,7 @@ import { GET_LIST, GET_ONE, UPDATE } from 'react-admin';
 
 import patchExtentDataProvider, { fromApi } from './patchExtentDataProvider';
 
-jest.mock('../../modules/RA/ra-modules', () => ({ RES_EXTENT: 'extent' }));
+vi.mock('../../modules/RA/ra-modules', () => ({ RES_EXTENT: 'extent' }));
 
 const REUNION = {
   id: 3,

@@ -4,7 +4,7 @@ import App from './App';
 
 // jsdom n'a ni TextDecoder ni WebGL : importer maplibre suffit à faire échouer
 // la suite, il faut donc le remplacer entièrement.
-jest.mock('maplibre-gl', () => {
+vi.mock('maplibre-gl', () => {
   function Map () {
     this.addControl = () => {};
     this.once = () => {};

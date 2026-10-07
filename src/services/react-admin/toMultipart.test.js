@@ -3,8 +3,8 @@ import { UPDATE } from 'react-admin';
 import Api from '../../terra-front/Api';
 import toMultipart from './toMultipart';
 
-jest.mock('../../terra-front/Api', () => ({ request: jest.fn() }));
-jest.mock('../../modules/RA/ra-modules', () => ({
+vi.mock('../../terra-front/Api', () => ({ default: { request: vi.fn() } }));
+vi.mock('../../modules/RA/ra-modules', () => ({
   RES_DATASOURCE: 'datasource',
   RES_PICTURE: 'picture',
   RES_VIEW: 'view',
@@ -12,7 +12,7 @@ jest.mock('../../modules/RA/ra-modules', () => ({
 
 const save = async data => {
   Api.request.mockResolvedValue({ id: 1 });
-  await toMultipart(jest.fn())(UPDATE, 'view', { id: 1, data });
+  await toMultipart(vi.fn())(UPDATE, 'view', { id: 1, data });
 
   const [, { body }] = Api.request.mock.calls[0];
   return body;

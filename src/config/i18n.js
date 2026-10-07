@@ -3,15 +3,13 @@ import XHR from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-const { PUBLIC_URL } = process.env;
-
 i18n
   .use(XHR)
   .use(LanguageDetector)
   .use(initReactI18next) // if not using I18nextProvider
   .init({
     backend: {
-      loadPath: `${PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
+      loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
     },
     fallbackLng: 'en',
     debug: false,

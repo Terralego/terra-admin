@@ -31,7 +31,6 @@
     "lodash.uniqby": "^4.7.0",
     "maplibre-gl": "^5.24.0",
     "material-ui-chip-input": "^1.1.0",
-    "mime-types": "^2.1.35",
     "normalize.css": "^8.0.1",
     "pivotql": "github:jrmi/pivotql#1b8a2393641deb976dd92be2e9f4d5b6fc674446",
     "pivotql-compiler-elasticsearch": "^0.4.1",
@@ -43,7 +42,6 @@
     "randomcolor": "^0.6.2",
     "react": "^16.14.0",
     "react-admin": "^3.19.12",
-    "react-app-polyfill": "^3.0.0",
     "react-color": "^2.19.3",
     "react-ctx-connect": "^1.0.3",
     "react-dom": "^16.14.0",
@@ -52,12 +50,11 @@
     "react-i18next": "^11.18.6",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
-    "react-scripts": "^4.0.3",
     "react-sortable-hoc": "^1.11.0",
     "react-sortable-tree": "^2.8.0",
     "react-test-renderer": "^16.14.0",
     "react-window": "^1.8.11",
-    "sass": "^1.58.3",
+    "sass": "^1.105.1",
     "terra-draw": "^1.37.0",
     "terra-draw-maplibre-gl-adapter": "^1.5.0",
     "tinycolor2": "^1.6.0",
@@ -65,40 +62,29 @@
     "uuid": "^9.0.1"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "start": "vite",
+    "build": "vite build",
     "postbuild": "echo $npm_package_version > build/build.txt && git describe --tags >> build/build.txt && date -R >> build/build.txt",
-    "test": "react-scripts --openssl-legacy-provider test",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
     "version": "git changelog -n -t $npm_package_version && git add CHANGELOG.md",
-    "lint": "eslint src"
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "~2.30.0",
-    "@typescript-eslint/parser": "~2.30.0",
+    "@testing-library/react": "^12.1.5",
+    "@vitejs/plugin-react": "^5.2.0",
+    "@vitest/coverage-v8": "^5.0.3",
     "@welldone-software/why-did-you-render": "^4.3.2",
-    "babel-eslint": "~10.1.0",
-    "enzyme": "~3.11.0",
-    "enzyme-adapter-react-16": "^1.15.7",
-    "eslint": "^7.32.0",
-    "eslint-config-makina": "~3.0.0",
-    "eslint-config-react-app": "~5.2.1",
-    "eslint-plugin-flowtype": "^4.7.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^2.5.1",
-    "http-proxy-middleware": "^2.0.10"
-  },
-  "overrides": {
-    "react-error-overlay": "6.0.9"
+    "jsdom": "^29.1.1",
+    "oxlint": "^1.87.0",
+    "vite": "^7.3.7",
+    "vitest": "^5.0.3"
   },
   "peerDependencies": {
     "@material-ui/core": "*",
     "@material-ui/icons": "*"
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\](?!dnd-core|react-dnd|unist-util-.*|pivotql|@observablehq|d3-.*|d3|internmap|isoformat|interval-tree-1d|binary-search-bounds|delaunator|robust-predicates|kmeans1d).+\\.(js|jsx|ts|tsx)$"
-    ]
   }
 }

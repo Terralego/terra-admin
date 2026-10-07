@@ -3,10 +3,10 @@ import renderer from 'react-test-renderer';
 
 import Header from  './Header';
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   NavLink: ({ children }) => <div>{children}</div>,
 }));
-jest.mock('@blueprintjs/core', () => ({
+vi.mock('@blueprintjs/core', () => ({
   Navbar: props => <div {...props} />,
   NavbarGroup: props => <div {...props} />,
   NavbarHeading: props => <div {...props} />,
@@ -14,9 +14,9 @@ jest.mock('@blueprintjs/core', () => ({
     DARK: 'DARK',
   },
 }));
-jest.mock('../UserDropdown', () => props => <div {...props} />);
-jest.mock('../MenuDropdown', () => props => <div {...props} />);
-jest.mock('../LangDropdown', () => props => <div {...props} />);
+vi.mock('../UserDropdown', () => ({ default: props => <div {...props} /> }));
+vi.mock('../MenuDropdown', () => ({ default: props => <div {...props} /> }));
+vi.mock('../LangDropdown', () => ({ default: props => <div {...props} /> }));
 
 
 describe('should display text or logo', () => {

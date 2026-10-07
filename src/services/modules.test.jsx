@@ -1,15 +1,17 @@
 import React from 'react';
 import { getComponentsByEnabledModules } from './modules';
 
-jest.mock('../modules', () => {
+vi.mock('../modules', () => {
   function Foo () { return <p>Foo</p>; }
   function Bar () { return <p>Bar</p>; }
   return {
-    Foo: {
-      default: Foo,
-    },
-    Bar: {
-      default: Bar,
+    default: {
+      Foo: {
+        default: Foo,
+      },
+      Bar: {
+        default: Bar,
+      },
     },
   };
 });

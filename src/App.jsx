@@ -13,10 +13,9 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import { BetaProvider } from './hooks/useBeta';
 
-const { PUBLIC_URL } = process.env;
 
 const App = () => (
-  <BrowserRouter basename={PUBLIC_URL}>
+  <BrowserRouter basename={import.meta.env.BASE_URL}>
     <ApiProvider host="/api">
       <AppProvider>
         <SearchProvider host="/elasticsearch">

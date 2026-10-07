@@ -1,10 +1,3 @@
-/* eslint-disable */
-
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-Enzyme.configure({ adapter: new Adapter() });
-
 // jsdom n'implémente pas la mesure des Range : sans ces deux méthodes,
 // CodeMirror échoue dès qu'il tente de positionner son curseur.
 const emptyRect = {

@@ -6,7 +6,7 @@ const respond = (body, { ok = true, status = 200, statusText = 'OK' } = {}) =>
   Promise.resolve({ ok, status, statusText, json: () => Promise.resolve(body) });
 
 beforeEach(() => {
-  global.fetch = jest.fn();
+  global.fetch = vi.fn();
 });
 
 afterEach(() => {

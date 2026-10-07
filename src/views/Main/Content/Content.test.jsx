@@ -3,12 +3,12 @@ import renderer from 'react-test-renderer';
 import { Content } from './Content';
 
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   Route: ({ children }) => children,
   Switch: ({ children }) => children,
 }));
-jest.mock('../../Summary', () => () => <div>Summary</div>);
-jest.mock('../../../components/Loading', () => () => <div>Loading</div>);
+vi.mock('../../Summary', () => ({ default: () => <div>Summary</div> }));
+vi.mock('../../../components/Loading', () => ({ default: () => <div>Loading</div> }));
 
 function Foo () { return <p>Module Foo</p>; }
 Foo.config = {

@@ -33,8 +33,8 @@ it('stopPropagation en capture neutralise le onClick du meme element', () => {
   const div = document.createElement('div');
   document.body.appendChild(div);
 
-  const onClick = jest.fn();
-  const onClickCapture = jest.fn(event => event.stopPropagation());
+  const onClick = vi.fn();
+  const onClickCapture = vi.fn(event => event.stopPropagation());
 
   act(() => {
     ReactDOM.render(

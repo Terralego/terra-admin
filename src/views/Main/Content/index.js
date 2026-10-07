@@ -1,4 +1,4 @@
-import { connectAuthProvider } from '@terralego/core/modules/Auth';
+import { connectAuthProvider } from '../../../terra-front/Auth';
 import { connectAppProvider } from '../../../components/AppProvider';
 
 import { Content } from './Content';

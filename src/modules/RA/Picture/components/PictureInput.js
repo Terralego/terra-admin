@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import SideBySideImages from '@terralego/core/modules/Picture/compare/SideBySideImages';
 
 import {
   useDataProvider,
@@ -14,6 +13,7 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {  makeStyles } from '@material-ui/core/styles';
+import SideBySideImages from '../../../../terra-front/Picture/SideBySideImages';
 
 import { RES_VIEWPOINT } from '../../ra-modules';
 import { toLocaleDateString } from '../../../../utils/date';

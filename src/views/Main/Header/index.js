@@ -1,5 +1,5 @@
-import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { withTranslation } from 'react-i18next';
+import { connectAuthProvider } from '../../../terra-front/Auth';
 import { connectAppProvider } from '../../../components/AppProvider';
 
 import Header from './Header';

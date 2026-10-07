@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Api from '@terralego/core/modules/Api';
 import mime from 'mime-types';
 import get from 'lodash.get';
 import { v4 as uuid } from 'uuid';
@@ -33,6 +32,7 @@ import RichTextInput from 'ra-input-rich-text';
 
 import { remove } from 'diacritics';
 import { withStyles } from '@material-ui/core/styles';
+import Api from '../../../../terra-front/Api';
 
 import { RES_PICTURE, RES_THEME } from '../../ra-modules';
 

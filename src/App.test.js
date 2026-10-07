@@ -27,7 +27,6 @@ jest.mock('maplibre-gl', () => {
   return { __esModule: true, default: { Map, Marker, NavigationControl } };
 });
 
-jest.mock('@terralego/core/modules/Map', () => ({}));
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

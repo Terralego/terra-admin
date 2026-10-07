@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { ApiProvider } from '@terralego/core/modules/Api';
-import AuthProvider from '@terralego/core/modules/Auth';
+import { ApiProvider } from './terra-front/Api';
+import AuthProvider from './terra-front/Auth';
 
 import './config/i18n';
 import AppProvider from './components/AppProvider';

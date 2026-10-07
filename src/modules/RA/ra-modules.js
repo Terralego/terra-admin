@@ -1,5 +1,4 @@
 // import { ListGuesser, EditGuesser } from 'react-admin';
-import Api from '@terralego/core/modules/Api';
 /* eslint-disable import/no-extraneous-dependencies */
 import CollectionsIcon from '@material-ui/icons/CollectionsOutlined';
 import AppsIcon from '@material-ui/icons/AppsOutlined';
@@ -13,6 +12,7 @@ import PersonIcon from '@material-ui/icons/PersonOutlined';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCameraOutlined';
 import PlaceIcon from '@material-ui/icons/PlaceOutlined';
 import StorageIcon from '@material-ui/icons/StorageOutlined';
+import Api from '../../terra-front/Api';
 /* eslint-enable */
 
 // User

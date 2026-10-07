@@ -13,7 +13,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
-import { connectAuthProvider } from '@terralego/core/modules/Auth';
+import { connectAuthProvider } from '../../../../terra-front/Auth';
 
 import JSONInput from '../../../../components/react-admin/JSONInput';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';

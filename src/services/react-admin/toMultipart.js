@@ -1,5 +1,5 @@
 import { CREATE, UPDATE, HttpError, GET_ONE  } from 'react-admin';
-import Api from '@terralego/core/modules/Api';
+import Api from '../../terra-front/Api';
 
 import {
   RES_DATASOURCE,

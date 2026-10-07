@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
-import { LoginForm } from '@terralego/core/modules/Auth';
-import { context as AuthContext } from '@terralego/core/modules/Auth/services/context';
-import SSOLoginFormRenderer from '@terralego/core/modules/Auth/components/LoginForm/SSOLoginFormRenderer';
-
 import { useTranslation } from 'react-i18next';
 import Helmet from 'react-helmet';
+import { LoginForm } from '../../terra-front/Auth';
+import { context as AuthContext } from '../../terra-front/Auth/context';
+import SSOLoginFormRenderer from '../../terra-front/Auth/LoginForm/SSOLoginFormRenderer';
+
 
 import { AppContext } from '../../components/AppProvider';
 

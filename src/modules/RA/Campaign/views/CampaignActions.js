@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import IconArrowBack from '@material-ui/icons/ArrowBack'; // eslint-disable-line import/no-extraneous-dependencies
 import IconList from '@material-ui/icons/List'; // eslint-disable-line import/no-extraneous-dependencies
 import FileCopy from '@material-ui/icons/FileCopy'; // eslint-disable-line import/no-extraneous-dependencies
-import Api from '@terralego/core/modules/Api';
+import Api from '../../../../terra-front/Api';
 
 import useUserSettings from '../../../../hooks/useUserSettings';
 

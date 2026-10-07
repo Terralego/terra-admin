@@ -3,7 +3,7 @@ import {
   TextInput,
 } from 'react-admin';
 
-import { connectAuthProvider } from '@terralego/core/modules/Auth';
+import { connectAuthProvider } from '../../../../terra-front/Auth';
 import ServerSideSimpleForm from '../../../../components/react-admin/ServerSideSimpleForm';
 
 const UserFields = props => (

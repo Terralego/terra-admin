@@ -4,7 +4,7 @@ import {
   SelectInput,
 } from 'react-admin';
 
-import { connectAuthProvider } from '@terralego/core/modules/Auth';
+import { connectAuthProvider } from '../../../../terra-front/Auth';
 import useAppSettings from '../../../../hooks/useAppSettings';
 import optionRenderer from './categoryRenderer';
 import ServerSideSimpleForm from '../../../../components/react-admin/ServerSideSimpleForm';

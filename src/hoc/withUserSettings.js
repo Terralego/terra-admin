@@ -1,4 +1,4 @@
-import { connectAuthProvider } from '@terralego/core/modules/Auth';
+import { connectAuthProvider } from '../terra-front/Auth';
 import compose from '../utils/compose';
 // eslint-disable-next-line camelcase
 import { withEnabledModules_DEPRECATED } from './withAppSettings';

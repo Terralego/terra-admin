@@ -1,5 +1,5 @@
 import React from 'react';
-import { context } from '@terralego/core/modules/Auth/services/context';
+import { context } from '../terra-front/Auth/context';
 
 
 const useUserSettings = () => {

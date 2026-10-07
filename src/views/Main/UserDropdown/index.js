@@ -7,8 +7,8 @@ import {
   MenuItem,
   Position,
 } from '@blueprintjs/core';
-import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { withTranslation } from 'react-i18next';
+import { connectAuthProvider } from '../../../terra-front/Auth';
 import { AppContext } from '../../../components/AppProvider';
 
 export const UserDropdown = ({ user: { email } = {}, logoutAction, t }) => {

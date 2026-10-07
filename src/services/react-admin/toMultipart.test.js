@@ -1,9 +1,9 @@
 import { UPDATE } from 'react-admin';
 
-import Api from '@terralego/core/modules/Api';
+import Api from '../../terra-front/Api';
 import toMultipart from './toMultipart';
 
-jest.mock('@terralego/core/modules/Api', () => ({ request: jest.fn() }));
+jest.mock('../../terra-front/Api', () => ({ request: jest.fn() }));
 jest.mock('../../modules/RA/ra-modules', () => ({
   RES_DATASOURCE: 'datasource',
   RES_PICTURE: 'picture',

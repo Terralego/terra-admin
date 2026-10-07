@@ -1,10 +1,10 @@
 import React from 'react';
 import { useField } from 'react-final-form';
 import { useTranslate } from 'react-admin';
-import Api from '@terralego/core/modules/Api';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
+import Api from '../../../../../../../terra-front/Api';
 
 import Loading from '../../../../../../../components/Loading';
 

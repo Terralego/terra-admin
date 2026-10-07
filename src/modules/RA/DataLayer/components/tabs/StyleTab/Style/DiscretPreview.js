@@ -1,9 +1,9 @@
 import React from 'react';
 import { useField, useForm } from 'react-final-form';
 import { useTranslate } from 'react-admin';
-import Api from '@terralego/core/modules/Api';
-
 import { makeStyles } from '@material-ui/core/styles';
+import Api from '../../../../../../../terra-front/Api';
+
 
 import Loading from '../../../../../../../components/Loading';
 import { roundTo } from './ManualBreaks';

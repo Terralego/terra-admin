@@ -8,7 +8,6 @@ import { useField } from 'react-final-form';
 import { visit } from 'unist-util-visit';
 import debounce  from 'lodash.debounce';
 
-import searchService from '@terralego/core/modules/Visualizer/services/search';
 
 import parser from 'pivotql/packages/pivotql-parser-expression/src';
 import compilerEs from 'pivotql-compiler-elasticsearch';
@@ -23,6 +22,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import ListIcon from '@material-ui/icons/FormatListBulleted';
+import searchService from '../../../../terra-front/search';
 
 import FieldOption from './tabs/FieldOption';
 import useSourceData from './useSourceData';

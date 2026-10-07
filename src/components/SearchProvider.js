@@ -1,5 +1,5 @@
-import searchService from '@terralego/core/modules/Visualizer/services/search';
 import PropTypes from 'prop-types';
+import searchService from '../terra-front/search';
 
 /**
  * Set host to elasticsearch client

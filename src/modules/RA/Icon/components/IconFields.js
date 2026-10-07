@@ -8,8 +8,8 @@ import {
 } from 'react-admin';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import FormatPaintIcon from '@material-ui/icons/FormatPaint';
-import { connectAuthProvider } from '@terralego/core/modules/Auth';
 import { Box, Button, FormHelperText } from '@material-ui/core';
+import { connectAuthProvider } from '../../../../terra-front/Auth';
 import transparency from './transparency-pattern.png';
 import PatternPicker from '../../../../components/react-admin/PatternPicker';
 import { required } from '../../../../utils/react-admin/validate';

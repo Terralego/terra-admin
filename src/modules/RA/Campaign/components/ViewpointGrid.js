@@ -2,13 +2,13 @@ import React from 'react';
 
 import { TextField, Datagrid, useGetMany, CreateButton, ShowButton, useTranslate } from 'react-admin';
 
-import Api from '@terralego/core/modules/Api';
 
 import { useHistory } from 'react-router';
 import { useField } from 'react-final-form';
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Api from '../../../../terra-front/Api';
 
 import { RES_PICTURE } from '../../ra-modules';
 import useUserSettings from '../../../../hooks/useUserSettings';

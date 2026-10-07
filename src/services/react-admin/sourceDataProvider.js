@@ -1,5 +1,5 @@
 import { CREATE } from 'react-admin';
-import Api from '@terralego/core/modules/Api';
+import Api from '../../terra-front/Api';
 import { WMTS } from '../../modules/RA/DataSource';
 
 import { RES_DATASOURCE } from '../../modules/RA/ra-modules';

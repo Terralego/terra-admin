@@ -1,5 +1,5 @@
-import Api from '@terralego/core/modules/Api';
 import { GET_ONE  } from 'react-admin';
+import Api from '../../terra-front/Api';
 import { RES_DATALAYER } from '../../modules/RA/ra-modules';
 
 // Patch legend from old standard to new one.

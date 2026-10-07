@@ -1,7 +1,7 @@
 import React from 'react';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
 
 /**
  * Maintient un unique marqueur sur une carte maplibre.

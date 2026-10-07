@@ -29,7 +29,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "lodash.uniqby": "^4.7.0",
-    "maplibre-gl": "^5.24.0",
+    "maplibre-gl": "^6.13.0",
     "material-ui-chip-input": "^1.1.0",
     "normalize.css": "^8.0.1",
     "pivotql": "github:jrmi/pivotql#1b8a2393641deb976dd92be2e9f4d5b6fc674446",

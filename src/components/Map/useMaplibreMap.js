@@ -1,9 +1,14 @@
 import React from 'react';
 
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import DEFAULT_MAP_STYLE from '../../config/mapStyle';
+
+// maplibre 6 cherche son worker à côté de son propre module, chemin qui
+// n'existe plus une fois bundlé : Vite émet le fichier et en donne l'URL
+maplibregl.setWorkerUrl(workerUrl);
 
 /**
  * Crée et pilote une carte maplibre de façon impérative.

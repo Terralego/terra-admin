@@ -24,7 +24,7 @@ vi.mock('maplibre-gl', () => {
   }
   function NavigationControl () {}
 
-  return { __esModule: true, default: { Map, Marker, NavigationControl } };
+  return { Map, Marker, NavigationControl, setWorkerUrl: () => {} };
 });
 
 

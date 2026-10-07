@@ -21,6 +21,13 @@ export default defineConfig(({ mode }) => {
   return {
     base,
     plugins: [react()],
+    resolve: {
+      alias: {
+        // Le build ES de react-virtualized (via react-sortable-tree) importe un
+        // export qui n'existe pas : le pré-bundle du serveur de dev échoue dessus
+        'react-virtualized': 'react-virtualized/dist/commonjs',
+      },
+    },
     envPrefix: 'REACT_APP_',
     define: {
       // Des dépendances écrites pour webpack 4 lisent encore ces globales Node
@@ -28,7 +35,19 @@ export default defineConfig(({ mode }) => {
     },
     server: { port: 3000, proxy },
     preview: { proxy },
-    build: { outDir: 'build' },
+    build: {
+      outDir: 'build',
+      rollupOptions: {
+        output: {
+          // Le worker de maplibre est un `.mjs`, extension que le `mime.types`
+          // de nginx ignore : servi en application/octet-stream, le navigateur
+          // refuse de le lancer et les couches vectorielles ne s'affichent pas
+          assetFileNames: ({ names }) => (names?.[0]?.endsWith('.mjs')
+            ? 'assets/[name]-[hash].js'
+            : 'assets/[name]-[hash][extname]'),
+        },
+      },
+    },
     test: {
       environment: 'jsdom',
       environmentOptions: {

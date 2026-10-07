@@ -1,12 +1,13 @@
 .main {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  // Not `height`: 100vh includes the horizontal scrollbar gutter, which turns
+  // any horizontal overflow into a few pixels of pointless vertical scroll.
+  min-height: 100vh;
   flex: 1 0 auto;
 
   &-content {
     max-width: calc(100vw - 15px);
-    min-height: 100%;
     display: flex;
     flex-direction: column;
     > * {
@@ -39,10 +40,7 @@
   }
 }
 
-.layout {
-  min-width: unset !important;
-}
-
-#main-content {
-  width: 100%;
-}
+// `#main-content` is react-admin's own content div. It is already
+// `flex-grow: 1; flex-basis: 0` and carries a 24px padding; forcing a
+// `width: 100%` on top of that overflowed by the padding (react-admin 3 ships
+// no CssBaseline, so box-sizing is content-box) and produced a scrollbar.

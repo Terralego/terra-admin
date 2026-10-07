@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import CampaignActions from './CampaignActions';
 import CampaignFields from '../components/CampaignFields';
 import PreventPartialData from '../../../../components/react-admin/PreventPartialData';
+import RecordTitle from '../../../../components/react-admin/RecordTitle';
 
 const EditCampaignFields = PreventPartialData('viewpoints', CampaignFields);
 
@@ -14,6 +15,7 @@ export const CampaignEdit = ({ staticContext, ...props }) => {
 
   return (
     <Edit
+      title={<RecordTitle source="label" />}
       {...props}
       mutationMode="pessimistic"
       actions={<CampaignActions redirect={redirect} />}

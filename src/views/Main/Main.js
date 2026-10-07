@@ -50,7 +50,8 @@ export const Main = ({ locale }) => {
           <link rel="shortcut icon" href={favicon} />
         )}
       </Helmet>
-      <Header />
+      {/* Once authenticated, the react-admin AppBar takes over (see RAAppBar) */}
+      {!authenticated && <Header />}
       <div className="main-container">
         {authenticated
           ? <Content />

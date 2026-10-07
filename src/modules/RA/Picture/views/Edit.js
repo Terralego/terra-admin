@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 
 import PictureFields from '../components/PictureFields';
 import DefaultActions from '../../../../components/react-admin/DefaultActions';
+import RecordTitle from '../../../../components/react-admin/RecordTitle';
 
 export const PictureEdit = ({ staticContext, ...props }) => {
   const {
@@ -13,6 +14,7 @@ export const PictureEdit = ({ staticContext, ...props }) => {
 
   return (
     <Edit
+      title={<RecordTitle source="label" />}
       {...props}
       mutationMode="pessimistic"
       actions={<DefaultActions redirect={redirect} />}

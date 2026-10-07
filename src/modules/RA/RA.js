@@ -21,8 +21,10 @@ import i18nProviderLegacy from '../../services/react-admin/i18nProvider';
 
 import { withLocale } from '../../components/Locale';
 import RALayout from '../../components/react-admin/Layout';
+import RADashboard from './Dashboard';
+import raTheme from '../../components/react-admin/theme';
 
-import { resources } from './ra-modules';
+import { resources, config } from './ra-modules';
 import { withPermissions, withEnabledModules } from '../../hoc/withUserSettings';
 
 const sanitizeProps = ({ enpoint, moduleName, requiredPermissions, ...rest }) =>
@@ -64,13 +66,30 @@ export const CustomAdmin = ({ locale, permissions, enabledModules = [] }) => {
     [enabledModules, permissions],
   );
 
+  // <Admin> instanciates the layout and the dashboard itself, so the menu tree
+  // and the enabled resources have to be bound here. Keep the identity stable,
+  // or the whole layout remounts on every render.
+  const layout = React.useMemo(
+    () => layoutProps => (
+      <RALayout {...layoutProps} menu={config.menu} resources={enabledResources} />
+    ),
+    [enabledResources],
+  );
+
+  const dashboard = React.useMemo(
+    () => () => <RADashboard menu={config.menu} resources={enabledResources} />,
+    [enabledResources],
+  );
+
   if (!enabledResources.length) {
     return null;
   }
 
   return (
     <Admin
-      layout={RALayout}
+      layout={layout}
+      dashboard={dashboard}
+      theme={raTheme}
       history={history}
       dataProvider={customDataProvider}
       authProvider={authProvider}

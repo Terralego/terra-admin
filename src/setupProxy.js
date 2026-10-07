@@ -9,6 +9,6 @@ module.exports = app => {
   }
   app.use(
     ['/api', '/static_dj', '/media', '/elasticsearch'],
-    createProxyMiddleware({ target: API_HOST, changeOrigin: true }),
+    createProxyMiddleware({ target: API_HOST, secure: false, changeOrigin: true }),
   );
 };

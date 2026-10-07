@@ -18,5 +18,6 @@ module.exports = {
     'react/no-access-state-in-setstate': [error],
     'react/no-unknown-property':         [error, { ignore: ['prefix'] }],
     'import/no-cycle':                   [off],
-  }
+    'no-multiple-empty-lines':           [warn],
+  },
 };

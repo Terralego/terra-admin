@@ -623,6 +623,13 @@
         "field-required": "Required",
         "field-helptext": "Help text"
       }
+    },
+    "filters": {
+      "table": "Data table",
+      "popup": "Popup",
+      "minisheet": "Mini sheet",
+      "refine": "%{smart_count} more source, refine your search |||| %{smart_count} more sources, refine your search",
+      "active_by_default": "Enabled by default"
     }
   },
   "icon": {
@@ -671,6 +678,13 @@
           "vector": "Vector"
         },
         "select": "Base map type"
+      },
+      "preview": {
+        "title": "Preview",
+        "unavailable": "No preview: vector tiles carry no styling, and a raster base layer needs at least one tiles URL.",
+        "show": "Show preview",
+        "hide": "Hide preview",
+        "mapboxUnsupported": "This base layer points to a Mapbox style (mapbox://), which maplibre cannot render: the preview falls back to the default base map."
       }
     }
   },
@@ -791,6 +805,9 @@
       "style_field": {
         "empty_object": "Object should not be empty.",
         "missing_property": "Property \"%{property}\" is missing."
+      },
+      "json": {
+        "invalid": "Invalid JSON: fix the syntax before saving."
       }
     },
     "message": {
@@ -919,13 +936,15 @@
         "more-2-year": "More than 2 years",
         "more-3-year": "More than 3 years",
         "more-5-year": "More than 5 years"
-      }
+      },
+      "name": "Viewpoint |||| Viewpoints"
     },
     "theme": {
       "fields": {
         "label": "Label",
         "category": "Category"
-      }
+      },
+      "name": "Theme |||| Themes"
     },
     "campaign": {
       "forcedCaseName": "Campaign",
@@ -963,7 +982,8 @@
         "started": "Started",
         "closed": "Closed",
         "draft": "Draft"
-      }
+      },
+      "name": "Campaign |||| Campaigns"
     },
     "picture": {
       "forcedCaseName": "Picture",
@@ -1014,10 +1034,11 @@
         "compare-selected": "Photography selected from the gallery",
         "gallery-image": "Photography %{index} from viewpoint"
       },
-      "name": "Picture"
+      "name": "Picture |||| Pictures"
     },
     "city": {
-      "forcedCaseName": "City"
+      "forcedCaseName": "City",
+      "name": "City |||| Cities"
     },
     "user": {
       "forcedCaseName": "User",
@@ -1033,7 +1054,8 @@
         "is_declaration_manager": "Declarations manager",
         "permissions": "Permissions",
         "fullname": "Fullname"
-      }
+      },
+      "name": "User |||| Users"
     },
     "usergroup": {
       "forcedCaseName": "Group",
@@ -1042,7 +1064,8 @@
         "name": "Group name",
         "permissions": "Permissions",
         "users": "Users in group"
-      }
+      },
+      "name": "User group |||| User groups"
     },
     "datasource": {
       "forcedCaseName": "Source",
@@ -1051,7 +1074,8 @@
         "name": "Name",
         "groups": "User groups",
         "credit": "Data credit"
-      }
+      },
+      "name": "Data source |||| Data sources"
     },
     "datalayer": {
       "forcedCaseName": "Layer",
@@ -1136,7 +1160,8 @@
       },
       "notification": {
         "duplication_success": "Layer has been correctly duplicated"
-      }
+      },
+      "name": "Layer |||| Layers"
     },
     "view": {
       "forcedCaseName": "View",
@@ -1148,7 +1173,14 @@
         "config.tree": "Layer tree",
         "file": "Generate tree from Excel file",
         "file-placeholder": "Drop here Excel file to generate tree (Existing tree will be replaced)."
-      }
+      },
+      "name": "View |||| Views"
+    },
+    "baselayer": {
+      "name": "Base layer |||| Base layers"
+    },
+    "icon": {
+      "name": "Icon |||| Icons"
     }
   },
   "style-editor": {

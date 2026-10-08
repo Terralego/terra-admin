@@ -13,7 +13,7 @@ import { fileAcceptByType, geomTypeChoices, GPKG } from '..';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import DownloadSourceFileButton from './DownloadSourceFileButton';
 import GpkgLayerNameSelect from './GpkgLayerNameSelect';
-import FilePreview from './FilePreview';
+import { PreviewPublisher } from './usePreviewAside';
 import IdFieldSelect from './IdFieldSelect';
 import RestrictedFileInput from './RestrictedFileInput';
 import useFilePreview from './useFilePreview';
@@ -77,7 +77,7 @@ const DataSourceFileFields = ({ translate: t, type, ...props }) => {
 
       {isGpkg && <GpkgLayerNameSelect />}
 
-      <FilePreview {...filePreview} />
+      <PreviewPublisher {...filePreview} />
 
       <SelectInput
         source="geom_type"

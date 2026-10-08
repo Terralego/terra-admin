@@ -336,7 +336,10 @@
         "crs": "Projection :",
         "no-geodata": "Aperçu cartographique indisponible, veuillez renseigner le nom du champ de coordonnées.",
         "extent-hint": "Aperçu de l'emprise uniquement, les données ne sont pas affichées.",
-        "no-layer": "Sélectionnez un layer à prévisualiser"
+        "no-layer": "Sélectionnez une couche à prévisualiser",
+        "empty": "Déposez un fichier pour en voir l'aperçu.",
+        "show": "Afficher l'aperçu",
+        "hide": "Masquer l'aperçu"
       },
       "use-by": "Utilisé par",
       "data": "Données",

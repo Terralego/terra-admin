@@ -35,6 +35,11 @@ export const sourceTypes = {
 };
 export const sourceTypeChoices = typesToChoices(sourceTypes);
 
+// Les sources GeoPackage et Shapefile se créent désormais en « Fichier géo » :
+// leurs noms restent pour l'affichage des anciennes, pas pour le filtre
+export const filterSourceTypeChoices = sourceTypeChoices
+  .filter(({ id }) => ![GPKG, SHP].includes(id));
+
 export const createSourceTypes = {
   [GEOFILE]: 'Fichier géo',
   [SQL]: 'PostGIS',

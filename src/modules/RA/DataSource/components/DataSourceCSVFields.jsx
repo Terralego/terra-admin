@@ -22,7 +22,7 @@ import {
 
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
 import DownloadSourceFileButton from './DownloadSourceFileButton';
-import FilePreview from './FilePreview';
+import { PreviewPublisher } from './usePreviewAside';
 import IdFieldSelect from './IdFieldSelect';
 import RestrictedFileInput from './RestrictedFileInput';
 import useFilePreview from './useFilePreview';
@@ -65,7 +65,7 @@ const DataSourceCSVFields = ({ translate: t, type, ...props }) => {
         <FileField source="file_data" title="title" />
       </RestrictedFileInput>
 
-      <FilePreview {...filePreview} />
+      <PreviewPublisher {...filePreview} />
 
       <SelectInput
         source="encoding"

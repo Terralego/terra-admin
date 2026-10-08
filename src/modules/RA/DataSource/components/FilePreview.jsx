@@ -1,17 +1,12 @@
 import React from 'react';
-import { useField } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Divider,
   LinearProgress,
   TableContainer,
   Typography,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MapIcon from '@material-ui/icons/Map';
 import { Alert, Skeleton } from '@material-ui/lab';
 import getBboxPolygon from '@turf/bbox-polygon';
@@ -31,10 +26,6 @@ const useStyles = makeStyles(theme => ({
     '& strong': {
       color: theme.palette.text.primary,
     },
-  },
-  previewBody: {
-    height: 469,
-    overflow: 'auto',
   },
   oldContent: {
     opacity: 0.4,
@@ -58,7 +49,6 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary,
   },
   table: {
-    minWidth: 650,
     borderCollapse: 'collapse',
     '& th, & td': {
       padding: theme.spacing(0.5, 1),
@@ -86,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const formatSize = bytes => {
+export const formatSize = bytes => {
   if (bytes == null) return '';
   if (bytes < 1024) return `${bytes} o`;
   if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} Ko`;
@@ -157,15 +147,24 @@ const BBoxMap = ({ bbox }) => {
   );
 };
 
+/**
+ * Contenu de l'aperçu des données : métadonnées, premières lignes et emprise.
+ * Rendu dans l'aside des vues (voir PreviewAside), d'où des props plutôt que
+ * des champs du formulaire, auquel l'aside n'a pas accès.
+ */
 const FilePreview = ({
-  preview, loading, error, bbox, isEditMode,
+  preview, loading, error, bbox, isEditMode, hasFile, fileName, layerName,
 }) => {
   const classes = useStyles();
-  const { input: { value: fileValue } } = useField('file');
-  const { input: { value: layerName } } = useField('layer_name');
   const { t } = useTranslation();
 
-  if (!isEditMode && !fileValue?.rawFile) return null;
+  if (!isEditMode && !hasFile) {
+    return (
+      <Typography variant="body2" className={classes.metaItem}>
+        {t('datasource.form.preview.empty')}
+      </Typography>
+    );
+  }
 
   const {
     record_count: recordCount,
@@ -173,141 +172,129 @@ const FilePreview = ({
     geometry_types: geomTypes,
     mixed_geometries: mixedGeometries,
     crs, fields, features,
-    file_size: fileSize,
     column_count: columnCount,
   } = preview ?? {};
 
   const hasMore = recordCount > MAX_DISPLAY;
   const hasGeom = !!geomName || !!geomTypes?.length;
   const geomLabel = mixedGeometries ? geomTypes?.join(', ') : geomName;
-  const fileSizeLabel = formatSize(fileValue?.rawFile?.size ?? fileSize);
-  const isGpkgFile = fileValue?.rawFile?.name?.toLowerCase().endsWith('.gpkg');
+  const isGpkgFile = fileName?.toLowerCase().endsWith('.gpkg');
 
   return (
-    <Accordion defaultExpanded style={{ marginTop: 8, marginBottom: 8 }}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography style={{ fontWeight: 'bold' }}>
-          {t('datasource.form.preview.title')}
-          {fileSizeLabel && ` (${fileSizeLabel})`}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails style={{ flexDirection: 'column', padding: '0 16px 12px' }}>
-        <div className={classes.previewBody}>
-          {loading && preview && <LinearProgress style={{ marginBottom: 8 }} />}
-          {error ? (
-            <Typography color="error" style={{ padding: 8 }}>{error}</Typography>
+    <div>
+      {loading && preview && <LinearProgress style={{ marginBottom: 8 }} />}
+      {error ? (
+        <Typography color="error" style={{ padding: 8 }}>{error}</Typography>
+      ) : (
+        <div className={loading && preview ? classes.oldContent : undefined}>
+          {loading && !preview ? (
+            <>
+              <Skeleton variant="rect" width="70%" height={20} style={{ marginBottom: 8 }} />
+              <Skeleton variant="rect" height={180} style={{ marginBottom: 8 }} />
+              <Skeleton variant="rect" height={240} style={{ marginTop: 8, borderRadius: 4 }} />
+            </>
           ) : (
-            <div className={loading && preview ? classes.oldContent : undefined}>
-              {loading && !preview ? (
+            <>
+              {preview && (
                 <>
-                  <Skeleton variant="rect" width="70%" height={20} style={{ marginBottom: 8 }} />
-                  <Skeleton variant="rect" height={180} style={{ marginBottom: 8 }} />
-                  <Skeleton variant="rect" height={240} style={{ marginTop: 8, borderRadius: 4 }} />
-                </>
-              ) : (
-                <>
-                  {preview && (
-                    <>
-                      <div className={classes.meta}>
-                        <Typography variant="body2" className={classes.metaItem}>
-                          {t('datasource.form.preview.row-count')}{' '}
-                          <strong>{recordCount.toLocaleString()}</strong>
-                        </Typography>
-                        {columnCount > 0 && (
-                        <Typography variant="body2" className={classes.metaItem}>
-                          {t('datasource.form.preview.column-count')}{' '}
-                          <strong>{columnCount}</strong>
-                        </Typography>
-                        )}
-                        {hasGeom && (
-                        <Typography variant="body2" className={classes.metaItem}>
-                          {t('datasource.form.preview.geom-type')}{' '}
-                          <strong>{geomLabel}</strong>
-                        </Typography>
-                        )}
-                        {crs && (
-                        <Typography variant="body2" className={classes.metaItem}>
-                          {t('datasource.form.preview.crs')}{' '}
-                          <strong>{crs}</strong>
-                        </Typography>
-                        )}
-                      </div>
+                  <div className={classes.meta}>
+                    <Typography variant="body2" className={classes.metaItem}>
+                      {t('datasource.form.preview.row-count')}{' '}
+                      <strong>{recordCount.toLocaleString()}</strong>
+                    </Typography>
+                    {columnCount > 0 && (
+                    <Typography variant="body2" className={classes.metaItem}>
+                      {t('datasource.form.preview.column-count')}{' '}
+                      <strong>{columnCount}</strong>
+                    </Typography>
+                    )}
+                    {hasGeom && (
+                    <Typography variant="body2" className={classes.metaItem}>
+                      {t('datasource.form.preview.geom-type')}{' '}
+                      <strong>{geomLabel}</strong>
+                    </Typography>
+                    )}
+                    {crs && (
+                    <Typography variant="body2" className={classes.metaItem}>
+                      {t('datasource.form.preview.crs')}{' '}
+                      <strong>{crs}</strong>
+                    </Typography>
+                    )}
+                  </div>
 
-                      {mixedGeometries && (
-                      <Alert severity="warning" style={{ marginBottom: 8 }}>
-                        {t('datasource.form.preview.mixed-geometries-warning')}
-                      </Alert>
-                      )}
-
-                      <Divider style={{ marginBottom: 8 }} />
-
-                      {(fields ?? []).length > 0 && (
-                      <TableContainer>
-                        <table className={classes.table}>
-                          <thead>
-                            <tr>
-                              {fields.map(field => (
-                                <th
-                                  key={field.name}
-                                  style={field.type === 'int' || field.type === 'float' ? { textAlign: 'right' } : undefined}
-                                >
-                                  {field.name} ({field.type})
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {features.map((row, i) => (
-                              // eslint-disable-next-line react/no-array-index-key
-                              <tr key={i}>
-                                {fields.map(field => (
-                                  <td
-                                    key={field.name}
-                                    style={field.type === 'int' || field.type === 'float' ? { textAlign: 'right' } : undefined}
-                                  >
-                                    {row[field.name] != null
-                                      ? String(row[field.name])
-                                      : <span className={classes.nullValue}>null</span>}
-                                  </td>
-                                ))}
-                              </tr>
-                            ))}
-                            {hasMore && (
-                            <tr>
-                              <td
-                                colSpan={fields.length}
-                                className={classes.moreRow}
-                              >
-                                + {recordCount - MAX_DISPLAY}{' '}
-                                {t('datasource.form.preview.rows')}
-                              </td>
-                            </tr>
-                            )}
-                          </tbody>
-                        </table>
-                      </TableContainer>
-                      )}
-
-                      <BBoxMap bbox={bbox} />
-                      {bbox && (
-                      <Typography variant="caption" className={classes.moreRow} style={{ paddingLeft: 4 }}>
-                        {t('datasource.form.preview.extent-hint')}
-                      </Typography>
-                      )}
-                    </>
+                  {mixedGeometries && (
+                  <Alert severity="warning" style={{ marginBottom: 8 }}>
+                    {t('datasource.form.preview.mixed-geometries-warning')}
+                  </Alert>
                   )}
-                  {!preview && !loading && !error && isGpkgFile && !layerName && (
-                  <Typography variant="body2" className={classes.metaItem}>
-                    {t('datasource.form.preview.no-layer')}
+
+                  <Divider style={{ marginBottom: 8 }} />
+
+                  {(fields ?? []).length > 0 && (
+                  <TableContainer>
+                    <table className={classes.table}>
+                      <thead>
+                        <tr>
+                          {fields.map(field => (
+                            <th
+                              key={field.name}
+                              style={field.type === 'int' || field.type === 'float' ? { textAlign: 'right' } : undefined}
+                            >
+                              {field.name} ({field.type})
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {features.map((row, i) => (
+                          // eslint-disable-next-line react/no-array-index-key
+                          <tr key={i}>
+                            {fields.map(field => (
+                              <td
+                                key={field.name}
+                                style={field.type === 'int' || field.type === 'float' ? { textAlign: 'right' } : undefined}
+                              >
+                                {row[field.name] != null
+                                  ? String(row[field.name])
+                                  : <span className={classes.nullValue}>null</span>}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                        {hasMore && (
+                        <tr>
+                          <td
+                            colSpan={fields.length}
+                            className={classes.moreRow}
+                          >
+                            + {recordCount - MAX_DISPLAY}{' '}
+                            {t('datasource.form.preview.rows')}
+                          </td>
+                        </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </TableContainer>
+                  )}
+
+                  <BBoxMap bbox={bbox} />
+                  {bbox && (
+                  <Typography variant="caption" className={classes.moreRow} style={{ paddingLeft: 4 }}>
+                    {t('datasource.form.preview.extent-hint')}
                   </Typography>
                   )}
                 </>
               )}
-            </div>
+              {!preview && !loading && !error && isGpkgFile && !layerName && (
+              <Typography variant="body2" className={classes.metaItem}>
+                {t('datasource.form.preview.no-layer')}
+              </Typography>
+              )}
+            </>
           )}
         </div>
-      </AccordionDetails>
-    </Accordion>
+      )}
+    </div>
   );
 };
 

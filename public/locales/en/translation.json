@@ -284,7 +284,10 @@
         "crs": "Projection:",
         "no-geodata": "Map preview unavailable, please fill in the coordinate field name.",
         "extent-hint": "Extent preview only, data is not displayed.",
-        "no-layer": "Select a layer to preview"
+        "no-layer": "Select a layer to preview",
+        "empty": "Drop a file to preview its data.",
+        "show": "Show preview",
+        "hide": "Hide preview"
       },
       "use-by": "Used by",
       "data": "Data",

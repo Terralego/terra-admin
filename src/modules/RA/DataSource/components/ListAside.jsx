@@ -11,10 +11,10 @@ import SyncIcon from '@material-ui/icons/Sync';
 import FilterAside from '../../../../components/react-admin/FilterAside';
 
 import {
+  filterSourceTypeChoices,
   geomTypeChoices,
   reportStatusChoices,
   sourceStatusChoices,
-  sourceTypeChoices,
 } from '..';
 
 /**
@@ -28,7 +28,7 @@ export const FILTER_STATUS = 'status';
 export const FILTER_REPORT_STATUS = 'report__status';
 
 // The API matches the content type in lower case
-const typeChoices = sourceTypeChoices.map(({ id, name }) => ({
+const typeChoices = filterSourceTypeChoices.map(({ id, name }) => ({
   id: id.toLowerCase(),
   name,
 }));

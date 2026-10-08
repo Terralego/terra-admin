@@ -19,7 +19,7 @@ import {
   geomTypes,
   geomTypeChoices,
   sourceTypes,
-  sourceTypeChoices,
+  filterSourceTypeChoices,
   sourceStatusChoices,
   reportStatusChoices,
 } from '..';
@@ -45,7 +45,7 @@ const ListFilters = props => (
     <SelectInput
       source={FILTER_TYPE}
       label="datasource.form.data-type"
-      choices={sourceTypeChoices.map(({ id, name }) => ({
+      choices={filterSourceTypeChoices.map(({ id, name }) => ({
         id: id.toLowerCase(),
         name,
       }))}

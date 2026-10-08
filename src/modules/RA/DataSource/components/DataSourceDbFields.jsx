@@ -10,7 +10,7 @@ import {
 
 import { geomTypeChoices } from '..';
 import FieldGroup from '../../../../components/react-admin/FieldGroup';
-import FilePreview from './FilePreview';
+import { PreviewPublisher } from './usePreviewAside';
 import IdFieldSelect from './IdFieldSelect';
 import useSqlPreview from './useSqlPreview';
 
@@ -19,7 +19,8 @@ const DataSourceDbFields = ({ translate: t, ...props }) => {
 
   return (
     <FieldGroup {...props}>
-      <FilePreview {...sqlPreview} />
+      {/* Une requête ne se prévisualise qu'une fois la source enregistrée */}
+      {sqlPreview.isEditMode && <PreviewPublisher {...sqlPreview} />}
 
       <SelectInput
         source="geom_type"

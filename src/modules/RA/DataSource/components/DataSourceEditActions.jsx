@@ -11,6 +11,7 @@ import {
 
 import { withStyles } from '@material-ui/core/styles';
 
+import PreviewToggleButton from './PreviewToggleButton';
 import StatusChip from './StatusChip';
 import { sourceStatus } from './DataSourceStatus';
 import { RES_DATASOURCE } from '../../ra-modules';
@@ -27,6 +28,9 @@ const DataSourceEditActions = ({
   data: { id, report, _type, status } = {},
   basePath,
   classes,
+  previewAvailable,
+  previewOpen,
+  onTogglePreview,
 }) => {
   const [pending, setPending] = React.useState(null);
   const [forceRefresh, setForceRefresh] = React.useState(false);
@@ -61,6 +65,11 @@ const DataSourceEditActions = ({
 
   return (
     <TopToolbar>
+      <PreviewToggleButton
+        available={previewAvailable}
+        open={previewOpen}
+        onToggle={onTogglePreview}
+      />
       <ListButton
         basePath={basePath}
         variant="outlined"

@@ -24,6 +24,10 @@ import PaletteSelect from './PaletteSelect';
 
 const useStyles = makeStyles(styles);
 
+const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
+// Couleurs transparentes, écrites ainsi par le sélecteur (voir ColorPicker)
+const RGBA_COLOR = /^rgba\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*(0|1|0?\.\d+)\s*\)$/;
+
 const DicopalField = ({
   value = [], onChange = () => {}, maxClasses = DEFAULT_MAX_CLASSES,
   showAddRemove = true,
@@ -95,7 +99,7 @@ const DicopalField = ({
     try {
       const parsed = JSON.parse(text.replace(/'/g, '"'));
       if (Array.isArray(parsed) && parsed.length) {
-        return parsed.filter(c => /^#[0-9a-fA-F]{6}$/.test(String(c).trim()));
+        return parsed.filter(c => HEX_COLOR.test(String(c).trim()) || RGBA_COLOR.test(String(c).trim()));
       }
     } catch { /* not JSON */ }
     return [];

@@ -16,6 +16,15 @@
     background-color: rgba(black, .1);
   }
 
+  // Le libellé d'un groupe est un champ : il occupe la place laissée par la barre d'outils
+  .rst__rowLabel {
+    flex: 1 1 auto;
+  }
+
+  .rst__rowTitle {
+    display: block;
+  }
+
   .rst__moveHandle {
     background-image: url(../assets/CheckBox.svg);
     background-color: white;

@@ -79,7 +79,7 @@ const NodeLabel = ({ treeData, setTreeData, path, node, layerNames = {} }) => {
     );
   }
 
-  return <TextField onChange={handleChange} value={node.label} />;
+  return <TextField onChange={handleChange} value={node.label} fullWidth />;
 };
 
 export default NodeLabel;

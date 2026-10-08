@@ -59,6 +59,20 @@ const cover = {
 
 const presetColors = [];
 
+/**
+ * Saved styles are historically `hsl()`. Only the graduated palettes ask for
+ * hex, to match what dicopal emits and what the palette copy/paste parses (see
+ * DicopalField). Hex has no room for transparency: a translucent colour is
+ * written `rgba()` instead, which every map renderer reads, where `#rrggbbaa`
+ * is unknown to the mapbox-gl 1 of the front-office.
+ */
+export const formatColor = (color, format) => {
+  if (format !== 'hex') {
+    return color.toHslString();
+  }
+  return color.getAlpha() < 1 ? color.toRgbString() : color.toHexString();
+};
+
 const ColorPicker = ({
   value = '#ccccccff',
   onChange = () => {},
@@ -80,11 +94,7 @@ const ColorPicker = ({
   const handleChangeComplete = React.useCallback(
     newColor => {
       setCurrentColor(newColor.hsl);
-      const color = tinycolor(newColor.rgb);
-      // Saved styles are historically `hsl()`. Only the graduated palettes
-      // ask for hex, to match what dicopal emits and what the palette
-      // copy/paste parses (see DicopalField).
-      onChange(format === 'hex' ? color.toHexString() : color.toHslString());
+      onChange(formatColor(tinycolor(newColor.rgb), format));
     },
     [onChange, format],
   );

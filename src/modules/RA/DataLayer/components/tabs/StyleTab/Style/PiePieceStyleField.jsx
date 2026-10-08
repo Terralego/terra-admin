@@ -20,6 +20,10 @@ const FieldRow = ({ field, onChange, path }) => {
     onChange({ ...field, use: e.target.checked }),
   [field, onChange]);
 
+  // Tirée une seule fois : une valeur par défaut qui change à chaque rendu fait
+  // réenregistrer le champ par react-final-form, qui relance un rendu, sans fin
+  const [defaultColor] = React.useState(() => randomColor());
+
   return (
     <TableRow>
       <TableCell scope="row">
@@ -29,7 +33,7 @@ const FieldRow = ({ field, onChange, path }) => {
         {field.name}
       </TableCell>
       <TableCell>
-        <Field name={`${path}.color`} defaultValue={randomColor({ seed: Math.floor((Math.random() * 100000) + 1) })}>
+        <Field name={`${path}.color`} defaultValue={defaultColor}>
           {({ input: { onChange: inputChange, value } }) => (
             <ColorPicker value={value || '#000000'} onChange={inputChange} />
           )}

@@ -1,44 +1,37 @@
 import React from 'react';
-import { Button, Classes, Popover, Menu, MenuItem, Position } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
+
+/* eslint-disable import/no-extraneous-dependencies */
+import MenuItem from '@material-ui/core/MenuItem';
+import TranslateIcon from '@material-ui/icons/Translate';
+/* eslint-enable */
+
+import AppBarMenu from '../AppBarMenu';
+
+const LANGUAGES = [
+  { code: 'en', label: 'English' },
+  { code: 'fr', label: 'Français' },
+];
 
 const LangDropdown = () => {
   const { i18n, t } = useTranslation();
-  const changeLanguage = lng => {
-    i18n.changeLanguage(lng);
-  };
-  const languages = [
-    { en: 'English' },
-    { fr: 'Français' },
-  ];
+
   return (
-    <Popover
-      content={(
-        <Menu>
-          {languages.map(lang => {
-            const [[key, value]] = Object.entries(lang);
-            return (
-              <MenuItem
-                active={i18n.language === key}
-                className={Classes.MINIMAL}
-                key={key}
-                onClick={() => changeLanguage(key)}
-                lang={key}
-                text={value}
-              />
-            );
-          })}
-        </Menu>
-      )}
-      position={Position.BOTTOM_RIGHT}
-    >
-      <Button
-        className={Classes.MINIMAL}
-        icon="translate"
-        rightIcon="caret-down"
-        text={t('common.languages')}
-      />
-    </Popover>
+    <AppBarMenu icon={<TranslateIcon />} label={t('common.languages')}>
+      {close => LANGUAGES.map(({ code, label }) => (
+        <MenuItem
+          key={code}
+          lang={code}
+          selected={i18n.language === code}
+          onClick={() => {
+            i18n.changeLanguage(code);
+            close();
+          }}
+        >
+          {label}
+        </MenuItem>
+      ))}
+    </AppBarMenu>
   );
 };
 

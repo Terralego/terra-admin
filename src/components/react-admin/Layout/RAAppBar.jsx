@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom';
 import { AppBar, useGetResourceLabel, useTranslate } from 'react-admin';
-import { Classes } from '@blueprintjs/core';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
@@ -132,14 +131,14 @@ const Breadcrumb = ({ resources }) => {
 };
 
 /**
- * Fills the `userMenu` slot of the app bar with the app-level Blueprint menus.
+ * Fills the `userMenu` slot of the app bar with the app-level menus.
  * react-admin clones it with a `logout` prop, which they do not need.
  */
 const AppBarMenus = () => {
   const classes = useStyles();
 
   return (
-    <div className={`${Classes.DARK} ${classes.menus}`}>
+    <div className={classes.menus}>
       <LangDropdown />
       <UserDropdown />
     </div>

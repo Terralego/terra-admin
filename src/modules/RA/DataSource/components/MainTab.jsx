@@ -12,6 +12,7 @@ import {
   GEOJSON,
   GPKG,
   SHP,
+  GEOFILE,
   WMTS,
   CSV,
 } from '..';
@@ -24,7 +25,7 @@ const MainTab = props => {
       <DataSourceMainFields {...props} fullWidth />
 
       {type === WMTS && <DataSourceWMTSField />}
-      {[SHP, GEOJSON, GPKG].includes(type) && <DataSourceFileFields type={type} />}
+      {[GEOJSON, GPKG, SHP, GEOFILE].includes(type) && <DataSourceFileFields type={type} />}
       {type === SQL && <DataSourceDbFields {...props} fullWidth />}
       {type === CSV && <DataSourceCSVFields type={type} />}
     </>

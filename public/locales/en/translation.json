@@ -272,6 +272,20 @@
       "uid-field-help": "Set field representing unique field id (ex: gid, id..).",
       "layer-name": "Layer name",
       "layer-name-help": "Leave empty to auto-select the only layer. Required if the GeoPackage contains multiple layers.",
+      "gpkg-layers-error": "Error detecting layers.",
+      "preview": {
+        "title": "Data preview",
+        "rows": "rows",
+        "row-count": "Row count:",
+        "columns": "columns",
+        "column-count": "Columns:",
+        "geom-type": "Geometry type:",
+        "mixed-geometries-warning": "Warning: this file contains mixed geometry types.",
+        "crs": "Projection:",
+        "no-geodata": "Map preview unavailable, please fill in the coordinate field name.",
+        "extent-hint": "Extent preview only, data is not displayed.",
+        "no-layer": "Select a layer to preview"
+      },
       "use-by": "Used by",
       "data": "Data",
       "label": "Label",
@@ -280,8 +294,14 @@
       "layers": "associated layers",
       "file": {
         "related-files": "Linked files",
+        "replace": "Replace file",
+        "current": "Current file",
+        "download": "Download the linked file",
+        "downloaded": "File downloaded",
+        "downloadError": "File download failed",
         "placeholder": "Drop here GeoJSON, zipped shapefile or GeoPackage.",
-        "placeholderCSV": "Drop here CSV file."
+        "placeholderCSV": "Drop here CSV file.",
+        "unsupported": "This file type is not supported, please try again."
       },
       "coordinates": {
         "coordinatesField": "Coordinates field name",
@@ -350,7 +370,9 @@
         "ended": "Ended at",
         "total": "Total lines processed",
         "errors-detail": "Detailed errors by line",
-        "no-error": "No error found"
+        "no-error": "No error found",
+        "sync-progress": "%{processed} / %{total} features indexed",
+        "sync-progress-waiting": "Preparing the synchronization…"
       },
       "refresh": {
         "accepted": "Refresh accepted",

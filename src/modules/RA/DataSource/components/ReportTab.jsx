@@ -1,7 +1,9 @@
 import React from 'react';
 import { FixedSizeList } from 'react-window';
+import { useDataProvider } from 'react-admin';
 import {
   Divider,
+  LinearProgress,
   List,
   ListItem,
   ListItemIcon,
@@ -64,8 +66,71 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const ReportTab = ({ report, translate }) => {
+const SyncProgress = ({ report, translate }) => {
+  const processed = (report.added_lines || 0) + (report.modified_lines || 0);
+  const total = report.total || 0;
+  const percent =
+    total > 0 ? Math.min(100, Math.round((processed / total) * 100)) : 0;
+
+  return (
+    <div style={{ marginBottom: 16 }}>
+      {total > 0 ? (
+        <>
+          <Typography variant="body2" style={{ marginBottom: 4 }}>
+            {translate('datasource.form.report.sync-progress', {
+              processed: processed.toLocaleString(),
+              total: total.toLocaleString(),
+            })}
+            {` (${percent}%)`}
+          </Typography>
+          <LinearProgress variant="determinate" value={percent} />
+        </>
+      ) : (
+        <>
+          <Typography variant="body2" style={{ marginBottom: 4 }}>
+            {translate('datasource.form.report.sync-progress-waiting')}
+          </Typography>
+          <LinearProgress variant="indeterminate" />
+        </>
+      )}
+    </div>
+  );
+};
+
+const REFRESHING_STATUSES = [1, 3];
+
+const ReportTab = ({ report, translate, sourceId, status }) => {
   const classes = useStyles();
+  const dataProviderRef = React.useRef(useDataProvider());
+  const [liveReport, setLiveReport] = React.useState(report);
+  const [refreshing, setRefreshing] = React.useState(
+    REFRESHING_STATUSES.includes(status),
+  );
+
+  React.useEffect(() => {
+    setLiveReport(report);
+  }, [report]);
+
+  React.useEffect(() => {
+    setRefreshing(REFRESHING_STATUSES.includes(status));
+  }, [status]);
+
+  // Le serveur n'est interrogé que pendant une synchronisation
+  React.useEffect(() => {
+    if (!sourceId || !refreshing) return undefined;
+
+    const dataProvider = dataProviderRef.current;
+    const poll = setInterval(() => {
+      dataProvider
+        .getOne('geosource', { id: sourceId })
+        .then(({ data }) => {
+          if (data.report) setLiveReport(data.report);
+          setRefreshing(REFRESHING_STATUSES.includes(data.status));
+        });
+    }, 2000);
+
+    return () => clearInterval(poll);
+  }, [sourceId, refreshing]);
 
   const renderRow = React.useCallback(({ index, style }) => (
     <ListItem
@@ -73,15 +138,18 @@ const ReportTab = ({ report, translate }) => {
       style={style}
       key={index}
     >
-      <ListItemText primary={report.errors[index]} />
+      <ListItemText primary={liveReport.errors[index]} />
     </ListItem>
-  ), [report, classes.errorItemEven, classes.errorItemOdd]);
+  ), [liveReport, classes.errorItemEven, classes.errorItemOdd]);
 
-  const status = React.useMemo(() => reportStatus[report.status], [report.status]);
-  const statusKey = STATUS[status];
+  const reportState = React.useMemo(() => reportStatus[liveReport.status], [liveReport.status]);
+  const statusKey = STATUS[reportState];
 
   return (
     <div>
+      {(refreshing && liveReport && (
+        <SyncProgress report={liveReport} translate={translate} />
+      ))}
       <List>
         <List className={classes.container}>
           <ListItem>
@@ -89,7 +157,7 @@ const ReportTab = ({ report, translate }) => {
               <FlashOnOutlinedIcon />
             </ListItemIcon>
             <ListItemText
-              classes={{ secondary: classes[status] }}
+              classes={{ secondary: classes[reportState] }}
               primary={translate('datasource.form.status')}
               secondary={translate(statusKey)}
             />
@@ -102,8 +170,8 @@ const ReportTab = ({ report, translate }) => {
             <ListItemText
               primary={translate('datasource.form.report.started')}
               secondary={(
-                report.started
-                  ? new Date(report.started).toLocaleString()
+                liveReport.started
+                  ? new Date(liveReport.started).toLocaleString()
                   : translate('datasource.tooltip.notStarted')
               )}
             />
@@ -115,8 +183,8 @@ const ReportTab = ({ report, translate }) => {
             <ListItemText
               primary={translate('datasource.form.report.ended')}
               secondary={(
-                report.ended
-                  ? new Date(report.ended).toLocaleString()
+                liveReport.ended
+                  ? new Date(liveReport.ended).toLocaleString()
                   : translate('datasource.tooltip.notFinished')
               )}
             />
@@ -133,7 +201,7 @@ const ReportTab = ({ report, translate }) => {
                 </ListItemIcon>
                 <ListItemText
                   primary={translate('datasource.form.report.message')}
-                  secondary={report.message}
+                  secondary={liveReport.message}
                 />
               </ListItem>
             </List>
@@ -147,7 +215,7 @@ const ReportTab = ({ report, translate }) => {
                 </ListItemIcon>
                 <ListItemText
                   primary={translate('datasource.form.report.total')}
-                  secondary={report.total}
+                  secondary={liveReport.total}
                 />
               </ListItem>
               <List>
@@ -157,7 +225,7 @@ const ReportTab = ({ report, translate }) => {
                   </ListItemIcon>
                   <ListItemText
                     primary={translate('datasource.form.report.errors')}
-                    secondary={report.errors.length}
+                    secondary={liveReport.errors.length}
                   />
                 </ListItem>
 
@@ -167,7 +235,7 @@ const ReportTab = ({ report, translate }) => {
                   </ListItemIcon>
                   <ListItemText
                     primary={translate('datasource.form.report.added')}
-                    secondary={report.added_lines}
+                    secondary={liveReport.added_lines}
                   />
                 </ListItem>
 
@@ -177,7 +245,7 @@ const ReportTab = ({ report, translate }) => {
                   </ListItemIcon>
                   <ListItemText
                     primary={translate('datasource.form.report.modified')}
-                    secondary={report.modified_lines}
+                    secondary={liveReport.modified_lines}
                   />
                 </ListItem>
 
@@ -187,14 +255,14 @@ const ReportTab = ({ report, translate }) => {
                   </ListItemIcon>
                   <ListItemText
                     primary={translate('datasource.form.report.deleted')}
-                    secondary={report.deleted_lines}
+                    secondary={liveReport.deleted_lines}
                   />
                 </ListItem>
               </List>
             </List>
           </div>
 
-          {report.errors.length > 0 && (
+          {liveReport.errors.length > 0 && (
             <>
               <Divider variant="middle" />
               <List className={classes.errorPanel}>
@@ -207,7 +275,7 @@ const ReportTab = ({ report, translate }) => {
                 <FixedSizeList
                   height={500}
                   width="100%"
-                  itemCount={report.errors.length}
+                  itemCount={liveReport.errors.length}
                   itemSize={100}
                 >
                   {renderRow}
@@ -215,7 +283,7 @@ const ReportTab = ({ report, translate }) => {
               </List>
             </>
           )}
-          {report.errors.length === 0 && (
+          {liveReport.errors.length === 0 && (
             <List className={`${classes.centered} ${classes.errorPanel}`}>
               <ListItem>
                 <ListItemText

@@ -7,7 +7,6 @@ import {
   SimpleFormIterator,
   FormTab,
   translate,
-  useRecordContext,
 } from 'react-admin';
 
 import FieldSample from '../../../../components/react-admin/FieldSample';
@@ -21,7 +20,8 @@ import ServerSideTabbedForm from '../../../../components/react-admin/ServerSideT
 
 
 const DataSourceTabbedForm = ({ translate: t, ...props }) => {
-  const { report } = useRecordContext();
+  const { record } = props;
+  const report = record?.report;
   // report is null when a source has been created and no refresh has been done
   const errors = report?.errors ?? [];
   return (
@@ -53,7 +53,13 @@ const DataSourceTabbedForm = ({ translate: t, ...props }) => {
 
       {report?.status >= 0 && (
         <FormTab label="datasource.form.report.title" path="report">
-          <ReportTab report={report} errors={errors} translate={t} />
+          <ReportTab
+            report={report}
+            errors={errors}
+            translate={t}
+            sourceId={record?.id}
+            status={record?.status}
+          />
         </FormTab>
       )}
       <FormTab label="datasource.form.infos.title">

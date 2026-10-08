@@ -323,7 +323,21 @@
       "uid-field": "Champ de l'identifiant unique",
       "uid-field-help": "Indiquer le champs correspondant à l'identifiant unique de la donnée (ex: gid, id..).",
       "layer-name": "Nom de la couche",
-      "layer-name-help": "Laisser vide pour sélectionner automatiquement la seule couche. Obligatoire si le GeoPackage contient plusieurs couches.",
+      "layer-name-help": "Choisir la couche à importer si plusieurs sont disponibles.",
+      "gpkg-layers-error": "Erreur lors de la détection des couches.",
+      "preview": {
+        "title": "Aperçu des données",
+        "rows": "lignes",
+        "row-count": "Nombre de lignes :",
+        "columns": "colonnes",
+        "column-count": "Nombre de colonnes :",
+        "geom-type": "Type de géométrie :",
+        "mixed-geometries-warning": "Attention : ce fichier comporte des géométries différentes.",
+        "crs": "Projection :",
+        "no-geodata": "Aperçu cartographique indisponible, veuillez renseigner le nom du champ de coordonnées.",
+        "extent-hint": "Aperçu de l'emprise uniquement, les données ne sont pas affichées.",
+        "no-layer": "Sélectionnez un layer à prévisualiser"
+      },
       "use-by": "Utilisé par",
       "data": "Données",
       "label": "Libellé",
@@ -332,8 +346,14 @@
       "layers": "Couches associées",
       "file": {
         "related-files": "Fichiers associés",
+        "replace": "Remplacer le fichier",
+        "current": "Fichier actuel",
+        "download": "Téléchargez le fichier lié",
+        "downloaded": "Fichier téléchargé",
+        "downloadError": "Le téléchargement du fichier a échoué",
         "placeholder": "Déposez ici le GeoJSON, un zip des fichiers Shapefile ou un GeoPackage.",
-        "placeholderCSV": "Déposez ici le fichier CSV"
+        "placeholderCSV": "Déposez ici le fichier CSV",
+        "unsupported": "Ce fichier n'est pas supporté, veuillez réessayer."
       },
       "coordinates": {
         "coordinatesField": "Nom du champ de coordonnées",
@@ -402,7 +422,9 @@
         "ended": "Finie à",
         "total": "Nombre total de lignes traitées",
         "errors-detail": "Erreurs détaillées des lignes concernées",
-        "no-error": "Aucune erreur détectée"
+        "no-error": "Aucune erreur détectée",
+        "sync-progress": "%{processed} / %{total} features indexées",
+        "sync-progress-waiting": "Préparation de la synchronisation…"
       },
       "refresh": {
         "accepted": "Actualisation acceptée",

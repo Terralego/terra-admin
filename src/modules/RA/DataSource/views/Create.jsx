@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Create,
   SimpleForm,
-  RadioButtonGroupInput,
   FormDataConsumer,
 } from 'react-admin';
 
@@ -11,6 +10,7 @@ import DataSourceFileFields from '../components/DataSourceFileFields';
 import DataSourceDbFields from '../components/DataSourceDbFields';
 import DataSourceWMTSField from '../components/DataSourceWMTSField';
 import DataSourceCSVFields from '../components/DataSourceCSVFields';
+import DataSourceTypeInput from '../components/DataSourceTypeInput';
 import DefaultActions from '../../../../components/react-admin/DefaultActions';
 
 import {
@@ -18,9 +18,10 @@ import {
   GEOJSON,
   GPKG,
   SHP,
+  GEOFILE,
   WMTS,
   CSV,
-  sourceTypeChoices,
+  createSourceTypeChoices,
 } from '..';
 
 import DataSourceHelp from '../components/DataSourceHelp';
@@ -36,11 +37,11 @@ export const DataSourceCreate = props => (
     <SimpleForm>
       <DataSourceMainFields />
 
-      <RadioButtonGroupInput
+      <DataSourceTypeInput
         source="_type"
         label="datasource.form.data-type"
         validate={defaultRequired}
-        choices={sourceTypeChoices}
+        choices={createSourceTypeChoices}
       />
 
       <DataSourceHelp />
@@ -52,7 +53,8 @@ export const DataSourceCreate = props => (
 
       <FormDataConsumer>
         {({ formData: { _type: type } = {}, ...rest }) =>
-          [SHP, GEOJSON, GPKG].includes(type) && <DataSourceFileFields {...rest} type={type} />}
+          [GEOFILE, GEOJSON, SHP, GPKG].includes(type)
+          && <DataSourceFileFields {...rest} type={type} />}
       </FormDataConsumer>
 
       <FormDataConsumer>

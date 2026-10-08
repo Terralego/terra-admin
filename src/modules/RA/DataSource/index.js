@@ -14,6 +14,7 @@ export const WMTS = 'WMTSSource';
 export const SHP = 'ShapefileSource';
 export const CSV = 'CSVSource';
 export const GPKG = 'GeoPackageSource';
+export const GEOFILE = 'GeoFileSource';
 export const UTF8 = 'UTF8';
 export const LATIN1 = 'LATIN1';
 export const EPSG4326 = 'EPSG_4326';
@@ -24,6 +25,7 @@ const typesToChoices = types => Object.entries(types)
   .map(([id, name]) => ({ id, name }));
 
 export const sourceTypes = {
+  [GEOFILE]: 'Fichier géo',
   [GEOJSON]: 'GeoJSON',
   [GPKG]: 'GeoPackage',
   [SHP]: 'Shapefile',
@@ -32,6 +34,21 @@ export const sourceTypes = {
   [CSV]: 'CSV',
 };
 export const sourceTypeChoices = typesToChoices(sourceTypes);
+
+export const createSourceTypes = {
+  [GEOFILE]: 'Fichier géo',
+  [SQL]: 'PostGIS',
+  [WMTS]: 'WMTS',
+  [CSV]: 'CSV',
+};
+export const createSourceTypeChoices = typesToChoices(createSourceTypes);
+
+export const fileAcceptByType = {
+  [GEOJSON]: '.geojson,.json',
+  [GPKG]: '.gpkg',
+  [SHP]: '.zip,.shp',
+  [GEOFILE]: '.gpkg,.zip,.shp,.geojson,.json',
+};
 
 export const geomTypes = {
   [POINT]: 'Point',

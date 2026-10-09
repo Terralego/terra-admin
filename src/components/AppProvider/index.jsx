@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/react';
 
 import { useLocation } from 'react-router-dom';
 import { getSettings } from '../../services/settings';
+import { clearToken, isSessionToken, storeSessionToken } from '../../terra-front/Auth/auth';
 import Loading from '../Loading';
 
 export const AppContext = React.createContext({});
@@ -24,7 +25,10 @@ export class AppProvider extends React.Component {
       const settings = await getSettings();
       result.settings = settings;
       if (settings.token && !localStorage.getItem('tf:auth:token')) {
-        localStorage.setItem('tf:auth:token', settings.token);
+        storeSessionToken(settings.token);
+      } else if (settings.token === null && isSessionToken()) {
+        // La session Django a été fermée (déconnexion de /config) : son token aussi
+        clearToken();
       }
 
       if (settings.sentry?.dsn !== '') {

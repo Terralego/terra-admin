@@ -5,6 +5,7 @@ import {
   obtainToken,
   refreshToken,
   clearToken,
+  closeServerSession,
 } from './auth';
 import context from './context';
 import { getTokenPayload } from '../jwt';
@@ -43,16 +44,8 @@ export class AuthProvider extends React.Component {
     this.setState({ authenticated: true, user });
   };
 
-  logoutAction = async (ssoLink = null) => {
-    if (ssoLink) {
-      try {
-        const ssoUrl = new URL(ssoLink, window.location);
-        await fetch(ssoUrl);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-      }
-    }
+  logoutAction = async () => {
+    await closeServerSession();
     clearToken();
     this.setState({ authenticated: false, user: null });
   }

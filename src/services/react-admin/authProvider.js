@@ -1,5 +1,5 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
-import { getToken, invalidToken, obtainToken } from '../../terra-front/Auth/auth';
+import { closeServerSession, getToken, invalidToken, obtainToken } from '../../terra-front/Auth/auth';
 
 export default (type, params) => {
   // called when the user attempts to log in
@@ -10,8 +10,7 @@ export default (type, params) => {
   }
   // called when the user clicks on the logout button
   if (type === AUTH_LOGOUT) {
-    invalidToken();
-    return Promise.resolve();
+    return closeServerSession().then(() => invalidToken());
   }
   // called when the API returns an error
   if (type === AUTH_ERROR) {

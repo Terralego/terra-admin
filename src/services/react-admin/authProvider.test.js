@@ -1,7 +1,7 @@
 import { AUTH_CHECK, AUTH_ERROR, AUTH_LOGOUT } from 'react-admin';
 
 import authProvider from './authProvider';
-import { getToken, invalidToken } from '../../terra-front/Auth/auth';
+import { closeServerSession, getToken, invalidToken } from '../../terra-front/Auth/auth';
 
 vi.mock('react-admin', () => ({
   AUTH_LOGIN:  'AUTH_LOGIN',
@@ -11,6 +11,7 @@ vi.mock('react-admin', () => ({
 }));
 
 vi.mock('../../terra-front/Auth/auth', () => ({
+  closeServerSession: vi.fn(() => Promise.resolve()),
   getToken:     vi.fn(),
   invalidToken: vi.fn(),
   obtainToken:  vi.fn(),
@@ -18,8 +19,9 @@ vi.mock('../../terra-front/Auth/auth', () => ({
 
 beforeEach(() => vi.clearAllMocks());
 
-it('drops the token on logout', async () => {
+it('closes the Django session then drops the token on logout', async () => {
   await expect(authProvider(AUTH_LOGOUT)).resolves.toBeUndefined();
+  expect(closeServerSession).toHaveBeenCalled();
   expect(invalidToken).toHaveBeenCalled();
 });
 
@@ -31,6 +33,7 @@ it('logs out when the API refuses the token', async () => {
 it('keeps the session on a missing permission', async () => {
   await expect(authProvider(AUTH_ERROR, { status: 403 })).resolves.toBeUndefined();
   expect(invalidToken).not.toHaveBeenCalled();
+  expect(closeServerSession).not.toHaveBeenCalled();
 });
 
 it('checks for a valid token', async () => {

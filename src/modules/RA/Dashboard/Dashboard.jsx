@@ -34,6 +34,8 @@ const FIVE = { page: 1, perPage: 5 };
 const COUNT_ONLY = { page: 1, perPage: 1 };
 const BY_NAME = { field: 'name', order: 'ASC' };
 const BY_UPDATED = { field: 'updated_at', order: 'DESC' };
+// The layer API neither exposes nor sorts on `updated_at`
+const BY_ORDER = { field: 'order', order: 'ASC' };
 const NO_FILTER = {};
 
 const listWithFilter = (resource, filter) => ({
@@ -162,19 +164,17 @@ const CountTile = ({ name, label, href, icon: Icon, hasCreate }) => {
 };
 
 /**
- * The latest records of a resource, most recently updated first.
- *
- * The date is always rendered, never hidden behind a fallback: an empty second
- * line is the signal that the API does not expose `updated_at` there.
+ * The first records of a resource in the given order. With `subheader`, the
+ * update date is shown under each name.
  */
-const RecentlyUpdated = ({ resource, icon: Icon }) => {
+const RecordsPanel = ({ resource, icon: Icon, sort, subheader }) => {
   const classes = useStyles();
   const translate = useTranslate();
   const getResourceLabel = useGetResourceLabel();
   const { data = {}, ids = [], loaded } = useGetList(
     resource,
     FIVE,
-    BY_UPDATED,
+    sort,
     NO_FILTER,
   );
 
@@ -187,7 +187,7 @@ const RecentlyUpdated = ({ resource, icon: Icon }) => {
       <CardHeader
         avatar={Icon ? <Icon color="disabled" /> : null}
         title={getResourceLabel(resource, 2)}
-        subheader={translate('dashboard.recently_updated')}
+        subheader={subheader && translate(subheader)}
         titleTypographyProps={{ variant: 'subtitle1' }}
       />
       <Divider />
@@ -196,7 +196,7 @@ const RecentlyUpdated = ({ resource, icon: Icon }) => {
           <ListItem button key={id} component={Link} to={`/${resource}/${id}`}>
             <ListItemText
               primary={data[id].name}
-              secondary={data[id].updated_at
+              secondary={subheader && data[id].updated_at
                 ? new Date(data[id].updated_at).toLocaleString()
                 : null}
             />
@@ -290,15 +290,18 @@ export const Dashboard = ({ menu = [], resources = [] }) => {
 
       <div className={classes.panels}>
         {registered.has(RES_DATALAYER) && (
-          <RecentlyUpdated
+          <RecordsPanel
             resource={RES_DATALAYER}
             icon={RESOURCE_ICONS[RES_DATALAYER]}
+            sort={BY_ORDER}
           />
         )}
         {registered.has(RES_DATASOURCE) && (
-          <RecentlyUpdated
+          <RecordsPanel
             resource={RES_DATASOURCE}
             icon={RESOURCE_ICONS[RES_DATASOURCE]}
+            sort={BY_UPDATED}
+            subheader="dashboard.recently_updated"
           />
         )}
         {registered.has(RES_DATASOURCE) && <SourceStatuses />}

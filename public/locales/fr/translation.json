@@ -1,4 +1,11 @@
 {
+  "block-editor": {
+    "add": "Ajouter un bloc",
+    "move": "Déplacer le bloc",
+    "expand": "Afficher les réglages",
+    "collapse": "Masquer les réglages",
+    "remove": "Supprimer le bloc"
+  },
   "common": {
     "add": "Ajouter",
     "cancel": "Annuler",
@@ -579,6 +586,31 @@
       },
       "minisheet": {
         "tab": "Mini-fiche",
+        "blocks": {
+          "title": "Titre",
+          "add-title": "Ajouter un titre",
+          "field": "Champ",
+          "icon": "Icône (lien vers une image)",
+          "icon-help": "png, svg…, facultatif",
+          "legacy-field": "Champ (historique)",
+          "legacy-section": "Section (historique)",
+          "expert": "Expert",
+          "expert-help": "Modèle Nunjucks rendu avec les propriétés de l'objet. Ctrl-Espace propose les champs.",
+          "to-expert": "Convertir en bloc Expert"
+        },
+        "preview": {
+          "title": "Prévisualisation",
+          "show": "Afficher la prévisualisation",
+          "hide": "Masquer la prévisualisation",
+          "render": "Aperçu",
+          "data": "Données d'exemple",
+          "json": "JSON",
+          "data-help": "Propriétés de l'objet utilisées pour l'aperçu ; collez-y un objet réel au besoin.",
+          "data-invalid": "JSON invalide : l'aperçu utilise les données générées.",
+          "data-reset": "Réinitialiser",
+          "render-error": "Erreur dans le modèle :",
+          "unsupported": "Aperçu à venir pour le bloc « {{type}} »."
+        },
         "display-on-click": "Afficher la minifiche",
         "card-message": "Pour activer une mini-fiche, cliquer sur",
         "template": "Modèle de la minifiche",

@@ -1,4 +1,11 @@
 {
+  "block-editor": {
+    "add": "Add a block",
+    "move": "Move the block",
+    "expand": "Show settings",
+    "collapse": "Hide settings",
+    "remove": "Remove the block"
+  },
   "common": {
     "add": "Add",
     "cancel": "Cancel",
@@ -527,6 +534,31 @@
       },
       "minisheet": {
         "tab": "Mini-sheet",
+        "blocks": {
+          "title": "Title",
+          "add-title": "Add a title",
+          "field": "Field",
+          "icon": "Icon (link to an image)",
+          "icon-help": "png, svg…, optional",
+          "legacy-field": "Field (legacy)",
+          "legacy-section": "Section (legacy)",
+          "expert": "Expert",
+          "expert-help": "Nunjucks template rendered with the object properties. Ctrl-Space suggests the fields.",
+          "to-expert": "Convert to an Expert block"
+        },
+        "preview": {
+          "title": "Preview",
+          "show": "Show preview",
+          "hide": "Hide preview",
+          "render": "Preview",
+          "data": "Example data",
+          "json": "JSON",
+          "data-help": "Object properties used by the preview; paste a real object if needed.",
+          "data-invalid": "Invalid JSON: the preview uses the generated data.",
+          "data-reset": "Reset",
+          "render-error": "Template error:",
+          "unsupported": "Preview of the \"{{type}}\" block to come."
+        },
         "display-on-click": "Show mini-sheet",
         "card-message": "To activate a minisheet, click on:",
         "template": "Mini-sheet template",

@@ -15,7 +15,7 @@ const withoutTitle = html => html.replace(/<h2 class="details__title">[\s\S]*?<\
 
 describe('createSampleData', () => {
   it('gives every field a value of its type', () => {
-    expect(createSampleData(fields)).toEqual({ nom_site: 'Nom', altitude: 1234.5678, ouvert: true });
+    expect(createSampleData(fields)).toEqual({ nom_site: 'Nom', altitude: 246.9134, ouvert: true });
   });
 });
 

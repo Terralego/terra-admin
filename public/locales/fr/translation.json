@@ -596,7 +596,8 @@
           "legacy-section": "Section (historique)",
           "expert": "Expert",
           "expert-help": "Modèle Nunjucks rendu avec les propriétés de l'objet. Ctrl-Espace propose les champs.",
-          "to-expert": "Convertir en bloc Expert"
+          "to-expert": "Convertir en bloc Expert",
+          "chart": "Graphique"
         },
         "preview": {
           "title": "Prévisualisation",
@@ -609,7 +610,7 @@
           "data-invalid": "JSON invalide : l'aperçu utilise les données générées.",
           "data-reset": "Réinitialiser",
           "render-error": "Erreur dans le modèle :",
-          "unsupported": "Aperçu à venir pour le bloc « {{type}} »."
+          "unsupported": "Aperçu à venir pour le bloc « %{type} »."
         },
         "display-on-click": "Afficher la minifiche",
         "card-message": "Pour activer une mini-fiche, cliquer sur",
@@ -640,7 +641,21 @@
         "true": "Oui",
         "false": "Non",
         "color-label": "Sélectionnez une couleur de surlignement",
-        "no-source": "Veuillez choisir une source de données avant de configurer la mini-fiche"
+        "no-source": "Veuillez choisir une source de données avant de configurer la mini-fiche",
+        "chart": {
+          "label": "Titre du graphique (facultatif)",
+          "decimals": "Décimales",
+          "series": "Séries",
+          "series-help": "Une barre ou une part par série : un champ numérique de l'objet ou une valeur fixe. Une valeur vide est ignorée.",
+          "series-label": "Libellé",
+          "color": "Couleur",
+          "remove-series": "Retirer la série",
+          "add-series": "Ajouter un champ",
+          "series-count": "%{smart_count} série |||| %{smart_count} séries",
+          "no-data": "Aucune valeur numérique à afficher.",
+          "add-fixed-series": "Ajouter une valeur fixe",
+          "fixed-value": "Valeur fixe"
+        }
       },
       "filter": {
         "tab": "Filtre",

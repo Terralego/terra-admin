@@ -544,7 +544,8 @@
           "legacy-section": "Section (legacy)",
           "expert": "Expert",
           "expert-help": "Nunjucks template rendered with the object properties. Ctrl-Space suggests the fields.",
-          "to-expert": "Convert to an Expert block"
+          "to-expert": "Convert to an Expert block",
+          "chart": "Chart"
         },
         "preview": {
           "title": "Preview",
@@ -557,7 +558,7 @@
           "data-invalid": "Invalid JSON: the preview uses the generated data.",
           "data-reset": "Reset",
           "render-error": "Template error:",
-          "unsupported": "Preview of the \"{{type}}\" block to come."
+          "unsupported": "Preview of the \"%{type}\" block to come."
         },
         "display-on-click": "Show mini-sheet",
         "card-message": "To activate a minisheet, click on:",
@@ -588,7 +589,21 @@
         "true": "Yes",
         "false": "No",
         "color-label": "Select a highlight color",
-        "no-source": "Please select a source before configuring the minisheet"
+        "no-source": "Please select a source before configuring the minisheet",
+        "chart": {
+          "label": "Chart title (optional)",
+          "decimals": "Decimals",
+          "series": "Series",
+          "series-help": "One bar or slice per series: a numeric field of the object or a fixed value. An empty value is left out.",
+          "series-label": "Label",
+          "color": "Color",
+          "remove-series": "Remove the series",
+          "add-series": "Add a field",
+          "series-count": "%{smart_count} series |||| %{smart_count} series",
+          "no-data": "No numeric value to show.",
+          "add-fixed-series": "Add a fixed value",
+          "fixed-value": "Fixed value"
+        }
       },
       "filter": {
         "tab": "Filter",

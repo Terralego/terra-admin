@@ -67,7 +67,7 @@ const endZoneId = ({ parentId, branch }) => `end:${parentId ?? 'root'}:${branch 
 
 const AddBlockMenu = ({ place }) => {
   const translate = useTranslate();
-  const { registry, blocks, rules, context, createId, onChange } = React.useContext(EditorContext);
+  const { registry, blocks, rules, context, createId, onChange, toggle } = React.useContext(EditorContext);
   const [anchor, setAnchor] = React.useState(null);
 
   const newBlock = type => {
@@ -94,7 +94,11 @@ const AddBlockMenu = ({ place }) => {
             key={type}
             onClick={() => {
               setAnchor(null);
-              onChange(insertBlock(registry, blocks, place, newBlock(type)));
+              const block = newBlock(type);
+              onChange(insertBlock(registry, blocks, place, block));
+              if (registry[type].Settings) {
+                toggle(block.id);
+              }
             }}
           >
             {translate(registry[type].label)}

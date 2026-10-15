@@ -1,3 +1,4 @@
+import chart from './chart';
 import expert from './expert';
 import legacyField from './legacyField';
 import legacySection from './legacySection';
@@ -10,6 +11,7 @@ export const minisheetRegistry = {
   'legacy-section': legacySection,
   'legacy-field': legacyField,
   expert,
+  chart,
 };
 
 export const rootAccepts = () => true;

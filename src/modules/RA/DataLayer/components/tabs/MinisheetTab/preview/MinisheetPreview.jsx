@@ -4,6 +4,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import blockComponents from './blocks';
 import renderTemplate from './renderTemplate';
 import toPreviewParts from './previewParts';
 
@@ -43,6 +44,16 @@ const Title = ({ title, properties }) => {
   );
 };
 
+const BlockPart = ({ block, properties }) => {
+  const translate = useTranslate();
+  const Component = blockComponents[block.type];
+
+  if (!Component) {
+    return <Alert severity="info">{translate('datalayer.form.minisheet.preview.unsupported', { type: block.type })}</Alert>;
+  }
+  return <Component block={block} properties={properties} />;
+};
+
 const NunjucksPart = ({ template, properties }) => {
   const translate = useTranslate();
   let html;
@@ -65,7 +76,6 @@ const NunjucksPart = ({ template, properties }) => {
  * the title, then each block in order.
  */
 export const MinisheetPreview = ({ config, properties }) => {
-  const translate = useTranslate();
   const parts = toPreviewParts(config?.blocks);
 
   return (
@@ -73,11 +83,7 @@ export const MinisheetPreview = ({ config, properties }) => {
       <Title title={config?.title} properties={properties} />
       {parts.map(part => (part.kind === 'nunjucks'
         ? <NunjucksPart key={part.key} template={part.template} properties={properties} />
-        : (
-          <Alert key={part.key} severity="info">
-            {translate('datalayer.form.minisheet.preview.unsupported', { type: part.block.type })}
-          </Alert>
-        )))}
+        : <BlockPart key={part.key} block={part.block} properties={properties} />))}
     </Box>
   );
 };

@@ -7,7 +7,7 @@ import { ColorSettings, IconSettings, InterpolatedTextField, SelectField } from 
 
 const I18N = 'datalayer.form.minisheet.button';
 
-const ButtonSettings = ({ block, onChange, context: { fields } }) => {
+const ButtonSettings = ({ block, onChange, context }) => {
   const translate = useTranslate();
 
   return (
@@ -22,7 +22,7 @@ const ButtonSettings = ({ block, onChange, context: { fields } }) => {
       <InterpolatedTextField
         label={`${I18N}.href`}
         value={block.href}
-        fields={fields}
+        context={context}
         onChange={href => onChange({ href })}
       />
       <Stack direction="row" spacing={2}>

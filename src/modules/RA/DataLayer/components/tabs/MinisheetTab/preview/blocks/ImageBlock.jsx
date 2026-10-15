@@ -11,7 +11,7 @@ const MARGINS = { left: '0 auto 0 0', center: '0 auto', right: '0 0 0 auto' };
  * whole. Nothing without a valid link, as a field may be empty.
  */
 export const ImageBlock = ({ block, properties }) => {
-  const { src, alt = '', caption, width = 100, align = 'center', rounded = false } = block;
+  const { src, alt = '', caption, width = 100, widthUnit = 'percent', align = 'center', rounded = false } = block;
   const link = interpolateHref(src, properties);
   if (!link) {
     return null;
@@ -19,7 +19,10 @@ export const ImageBlock = ({ block, properties }) => {
   const captionText = interpolate(caption, properties);
 
   return (
-    <Box component="figure" sx={{ m: MARGINS[align] ?? MARGINS.center, width: `${width}%` }}>
+    <Box
+      component="figure"
+      sx={{ m: MARGINS[align] ?? MARGINS.center, width: widthUnit === 'px' ? width : `${width}%`, maxWidth: '100%' }}
+    >
       <Box
         component="img"
         src={link}

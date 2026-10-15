@@ -24,31 +24,27 @@ const ALIGNS = [
   { value: 'right', icon: AlignRightIcon },
 ];
 
-const ImageSettings = ({ block, onChange, context: { fields } }) => {
+const DEFAULT_WIDTHS = { percent: 100, px: 120 };
+
+const UNITS = [{ value: 'percent', text: '%' }, { value: 'px', text: 'px' }];
+
+const WidthSettings = ({ block, onChange }) => {
   const translate = useTranslate();
+  const unit = block.widthUnit ?? 'percent';
 
   return (
-    <Stack spacing={2} sx={{ pt: 1 }}>
-      <InterpolatedTextField
-        label={`${I18N}.src`}
-        value={block.src}
-        fields={fields}
-        onChange={src => onChange({ src })}
-      />
-      <TextField
-        size="small"
-        fullWidth
-        label={translate(`${I18N}.alt`)}
-        value={block.alt ?? ''}
-        onChange={event => onChange({ alt: event.target.value })}
-      />
-      <InterpolatedTextField
-        label={`${I18N}.caption`}
-        value={block.caption}
-        fields={fields}
-        onChange={caption => onChange({ caption })}
-      />
-      <Stack direction="row" spacing={3} alignItems="flex-end">
+    <Stack direction="row" spacing={2} alignItems="flex-end" sx={{ flex: 1 }}>
+      {unit === 'px' ? (
+        <TextField
+          size="small"
+          type="number"
+          fullWidth
+          label={translate(`${I18N}.width-px`)}
+          value={block.width ?? ''}
+          slotProps={{ htmlInput: { min: 1 } }}
+          onChange={event => onChange({ width: event.target.value === '' ? undefined : Number(event.target.value) })}
+        />
+      ) : (
         <Box sx={{ flex: 1 }}>
           <Typography variant="caption" color="text.secondary" component="div">
             {translate(`${I18N}.width`, { width: block.width ?? 100 })}
@@ -62,6 +58,44 @@ const ImageSettings = ({ block, onChange, context: { fields } }) => {
             onChange={(event, width) => onChange({ width })}
           />
         </Box>
+      )}
+      <ToggleSetting
+        label={`${I18N}.unit`}
+        value={unit}
+        options={UNITS}
+        prefix={`${I18N}.units`}
+        onChange={widthUnit => onChange({ widthUnit, width: DEFAULT_WIDTHS[widthUnit] })}
+      />
+    </Stack>
+  );
+};
+
+const ImageSettings = ({ block, onChange, context }) => {
+  const translate = useTranslate();
+
+  return (
+    <Stack spacing={2} sx={{ pt: 1 }}>
+      <InterpolatedTextField
+        label={`${I18N}.src`}
+        value={block.src}
+        context={context}
+        onChange={src => onChange({ src })}
+      />
+      <TextField
+        size="small"
+        fullWidth
+        label={translate(`${I18N}.alt`)}
+        value={block.alt ?? ''}
+        onChange={event => onChange({ alt: event.target.value })}
+      />
+      <InterpolatedTextField
+        label={`${I18N}.caption`}
+        value={block.caption}
+        context={context}
+        onChange={caption => onChange({ caption })}
+      />
+      <Stack direction="row" spacing={3} alignItems="flex-end">
+        <WidthSettings block={block} onChange={onChange} />
         <ToggleSetting
           label={`${I18N}.align`}
           value={block.align ?? 'center'}

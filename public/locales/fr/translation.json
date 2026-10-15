@@ -4,7 +4,8 @@
     "move": "Déplacer le bloc",
     "expand": "Afficher les réglages",
     "collapse": "Masquer les réglages",
-    "remove": "Supprimer le bloc"
+    "remove": "Supprimer le bloc",
+    "children": "Contenu"
   },
   "common": {
     "add": "Ajouter",
@@ -604,7 +605,8 @@
           "image": "Image",
           "accordion": "Accordéon",
           "iframe": "Page intégrée (iframe)",
-          "divider": "Séparateur"
+          "divider": "Séparateur",
+          "repeat": "Répéter"
         },
         "preview": {
           "title": "Prévisualisation",
@@ -760,7 +762,8 @@
           "true-text": "Texte si oui",
           "true-icon": "Icône si oui",
           "false-text": "Texte si non",
-          "false-icon": "Icône si non"
+          "false-icon": "Icône si non",
+          "repeated": "Champ courant"
         },
         "image": {
           "src": "Lien vers l'image",
@@ -773,7 +776,13 @@
             "center": "Centré",
             "right": "À droite"
           },
-          "rounded": "Coins arrondis"
+          "rounded": "Coins arrondis",
+          "width-px": "Largeur (px)",
+          "unit": "Unité",
+          "units": {
+            "percent": "Pourcentage",
+            "px": "Pixels"
+          }
         },
         "categories": {
           "text": "Texte",
@@ -796,6 +805,27 @@
             "no": "Jamais"
           },
           "border": "Bordure"
+        },
+        "repeat": {
+          "direction": "Disposition",
+          "directions": {
+            "vertical": "Verticale",
+            "horizontal": "Horizontale"
+          },
+          "fields": "Champs",
+          "add-field": "Ajouter un champ",
+          "remove-field": "Retirer le champ",
+          "count": "%{smart_count} champ |||| %{smart_count} champs",
+          "variables": {
+            "value": "Valeur courante",
+            "formatted_value": "Valeur courante formatée",
+            "icon": "Icône courante",
+            "label": "Libellé courant",
+            "field": "Nom du champ courant"
+          },
+          "model": "Modèle, répété pour chaque champ",
+          "columns": "Éléments par ligne",
+          "columns-auto": "Selon le contenu"
         }
       },
       "filter": {

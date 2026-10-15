@@ -27,12 +27,12 @@ const TRANSFORMS = [
 export const TYPOGRAPHY_VARIANTS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption'];
 
 /** Settings of a styled text, shared with the header of an Accordion. */
-export const TextSettings = ({ block, onChange, context: { fields } }) => (
+export const TextSettings = ({ block, onChange, context }) => (
   <Stack spacing={2} sx={{ pt: 1 }}>
     <InterpolatedTextField
       label={`${I18N}.text`}
       value={block.text}
-      fields={fields}
+      context={context}
       multiline
       onChange={text => onChange({ text })}
     />

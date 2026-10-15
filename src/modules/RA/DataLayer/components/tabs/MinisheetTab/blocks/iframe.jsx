@@ -12,7 +12,7 @@ import { InterpolatedTextField, SelectField } from './common';
 
 const I18N = 'datalayer.form.minisheet.iframe';
 
-const IframeSettings = ({ block, onChange, context: { fields } }) => {
+const IframeSettings = ({ block, onChange, context }) => {
   const translate = useTranslate();
 
   return (
@@ -20,7 +20,7 @@ const IframeSettings = ({ block, onChange, context: { fields } }) => {
       <InterpolatedTextField
         label={`${I18N}.src`}
         value={block.src}
-        fields={fields}
+        context={context}
         onChange={src => onChange({ src })}
       />
       <Stack direction="row" spacing={3} alignItems="flex-end">

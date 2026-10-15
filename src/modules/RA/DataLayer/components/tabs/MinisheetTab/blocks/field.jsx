@@ -19,11 +19,11 @@ const CUSTOM = 'custom';
 const EXAMPLE_DATE = new Date(2026, 9, 4, 14, 30, 5);
 const NO_FORMAT = {};
 
-const fieldType = (fields, sourceFieldId) =>
+export const fieldType = (fields, sourceFieldId) =>
   fieldTypes[fields.find(({ sourceFieldId: id }) => id === sourceFieldId)?.data_type];
 
 /** Format of a field when it is chosen, from its type in the layer. */
-const defaultFormat = (field, translate) => {
+export const defaultFormat = (field, translate) => {
   switch (fieldTypes[field?.data_type]) {
     case 'Integer':
       return { decimals: 0 };
@@ -103,7 +103,7 @@ const BooleanFormat = ({ format, onChange }) => {
   ));
 };
 
-const FormatSettings = ({ type, format = NO_FORMAT, onChange }) => {
+export const FormatSettings = ({ type, format = NO_FORMAT, onChange }) => {
   const translate = useTranslate();
 
   switch (type) {
@@ -129,7 +129,21 @@ const FormatSettings = ({ type, format = NO_FORMAT, onChange }) => {
   }
 };
 
-const FieldSettings = ({ block, onChange, context: { fields } }) => {
+/** Settings given to a field of the object when it is chosen in place of another. */
+export const chooseField = (fields, current, sourceFieldId, translate) => {
+  const field = fields.find(({ sourceFieldId: id }) => id === sourceFieldId);
+  const followsField = !current.label || current.label === getFieldLabel(fields, current.sourceFieldId);
+  return {
+    sourceFieldId,
+    field: field?.name,
+    format: defaultFormat(field, translate),
+    ...(followsField && { label: getFieldLabel(fields, sourceFieldId) }),
+  };
+};
+
+const inRepeat = (ancestors = []) => ancestors.includes('repeat');
+
+const FieldSettings = ({ block, onChange, context: { fields, ancestors } }) => {
   const translate = useTranslate();
   const text = key => ({
     size: 'small',
@@ -139,30 +153,43 @@ const FieldSettings = ({ block, onChange, context: { fields } }) => {
     onChange: event => onChange({ [key]: event.target.value }),
   });
   const type = fieldType(fields, block.sourceFieldId);
+  const model = inRepeat(ancestors);
 
   return (
     <Stack spacing={2} sx={{ pt: 1 }}>
-      <FieldSelect
-        fields={fields}
-        value={block.sourceFieldId}
-        onChange={sourceFieldId => {
-          const field = fields.find(({ sourceFieldId: id }) => id === sourceFieldId);
-          const followsField = !block.label || block.label === getFieldLabel(fields, block.sourceFieldId);
-          onChange({
-            sourceFieldId,
-            field: field?.name,
-            format: defaultFormat(field, translate),
-            ...(followsField && { label: getFieldLabel(fields, sourceFieldId) }),
-          });
-        }}
-      />
-      <TextField
-        size="small"
-        fullWidth
-        label={translate(`${I18N}.label`)}
-        value={block.label ?? ''}
-        onChange={event => onChange({ label: event.target.value })}
-      />
+      {model ? (
+        <>
+          <TextField
+            size="small"
+            fullWidth
+            disabled
+            label={translate('datalayer.form.minisheet.blocks.field')}
+            value={translate(`${I18N}.repeated`)}
+          />
+          <TextField
+            size="small"
+            fullWidth
+            disabled
+            label={translate(`${I18N}.label`)}
+            value={translate('datalayer.form.minisheet.repeat.variables.label')}
+          />
+        </>
+      ) : (
+        <>
+          <FieldSelect
+            fields={fields}
+            value={block.sourceFieldId}
+            onChange={sourceFieldId => onChange(chooseField(fields, block, sourceFieldId, translate))}
+          />
+          <TextField
+            size="small"
+            fullWidth
+            label={translate(`${I18N}.label`)}
+            value={block.label ?? ''}
+            onChange={event => onChange({ label: event.target.value })}
+          />
+        </>
+      )}
       <Stack direction="row" spacing={2}>
         <SelectField
           label={`${I18N}.style`}
@@ -177,9 +204,9 @@ const FieldSettings = ({ block, onChange, context: { fields } }) => {
       <Stack direction="row" spacing={2}>
         <TextField {...text('prefix')} />
         <TextField {...text('suffix')} />
-        <TextField {...text('default')} />
+        {!model && <TextField {...text('default')} />}
       </Stack>
-      {type && ['Integer', 'Float', 'Date', 'Boolean'].includes(type) && (
+      {!model && type && ['Integer', 'Float', 'Date', 'Boolean'].includes(type) && (
         <>
           <Typography variant="subtitle2">{translate(`${I18N}.format`)}</Typography>
           <FormatSettings type={type} format={block.format} onChange={format => onChange({ format })} />
@@ -195,7 +222,9 @@ export const field = {
   category: 'text',
   create: () => ({ sourceFieldId: undefined, field: undefined, label: '', style: 'simple', prefix: '', suffix: '', default: '', format: {} }),
   Settings: FieldSettings,
-  summary: (block, { fields }) => block.label || getFieldLabel(fields, block.sourceFieldId),
+  summary: (block, { fields, ancestors, translate }) => (inRepeat(ancestors)
+    ? translate(`${I18N}.repeated`)
+    : block.label || getFieldLabel(fields, block.sourceFieldId)),
 };
 
 export default field;

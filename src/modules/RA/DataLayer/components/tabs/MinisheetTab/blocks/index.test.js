@@ -27,6 +27,15 @@ describe('minisheet nesting rules', () => {
     expect(canGo(tree, block('new', 'legacy-field'), 'acc')).toBe(false);
   });
 
+  it('lets a repeat hold a card with a field and an image, but no Nunjucks block nor repeat', () => {
+    const tree = [block('rep', 'repeat', [block('card', 'card', [])])];
+    ['field', 'image'].forEach(type => expect(canGo(tree, block('new', type), 'card')).toBe(true));
+    ['expert', 'legacy-field', 'repeat'].forEach(type => {
+      expect(canGo(tree, block('new', type), 'rep')).toBe(false);
+    });
+    expect(canGo(tree, block('new', 'repeat'), 'card')).toBe(false);
+  });
+
   it('puts every type of block in a category of the menu', () => {
     const keys = CATEGORIES.map(({ key }) => key);
     Object.entries(minisheetRegistry).forEach(([, { category }]) => expect(keys).toContain(category));

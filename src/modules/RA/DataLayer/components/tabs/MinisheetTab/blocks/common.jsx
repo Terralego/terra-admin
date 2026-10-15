@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslate } from 'react-admin';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Menu from '@mui/material/Menu';
@@ -168,11 +169,16 @@ export const IconSettings = ({ icon, onChange }) => {
   );
 };
 
+const NONE = [];
+
+const TURN_VARIABLES = ['$value', '$formatted_value', '$icon', '$label', '$field'];
+
 /**
  * A text where `{{field}}` stands for the value of a field of the object,
- * with a menu inserting a field at the cursor.
+ * with a menu inserting a field at the cursor. Inside a Repeat block, the
+ * menu starts with the value, label and name of the field of the turn.
  */
-export const InterpolatedTextField = ({ label, value, onChange, fields, ...props }) => {
+export const InterpolatedTextField = ({ label, value, onChange, context: { fields = NONE, ancestors = NONE }, ...props }) => {
   const translate = useTranslate();
   const inputRef = React.useRef();
   const [anchor, setAnchor] = React.useState(null);
@@ -183,6 +189,17 @@ export const InterpolatedTextField = ({ label, value, onChange, fields, ...props
     const { selectionStart = text.length, selectionEnd = text.length } = inputRef.current ?? {};
     onChange(`${text.slice(0, selectionStart)}{{${name}}}${text.slice(selectionEnd)}`);
   };
+
+  const turnItems = ancestors.includes('repeat')
+    ? [
+      ...TURN_VARIABLES.map(name => (
+        <MenuItem key={name} onClick={() => insert(name)}>
+          {translate(`datalayer.form.minisheet.repeat.variables.${name.slice(1)}`)}
+        </MenuItem>
+      )),
+      <Divider key="divider" />,
+    ]
+    : [];
 
   return (
     <>
@@ -209,9 +226,12 @@ export const InterpolatedTextField = ({ label, value, onChange, fields, ...props
         {...props}
       />
       <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={() => setAnchor(null)}>
-        {fields.filter(({ name }) => name).map(({ sourceFieldId, name, label: fieldLabel }) => (
-          <MenuItem key={sourceFieldId ?? name} onClick={() => insert(name)}>{fieldLabel || name}</MenuItem>
-        ))}
+        {[
+          ...turnItems,
+          ...fields.filter(({ name }) => name).map(({ sourceFieldId, name, label: fieldLabel }) => (
+            <MenuItem key={sourceFieldId ?? name} onClick={() => insert(name)}>{fieldLabel || name}</MenuItem>
+          )),
+        ]}
       </Menu>
     </>
   );

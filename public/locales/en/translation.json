@@ -4,7 +4,8 @@
     "move": "Move the block",
     "expand": "Show settings",
     "collapse": "Hide settings",
-    "remove": "Remove the block"
+    "remove": "Remove the block",
+    "children": "Content"
   },
   "common": {
     "add": "Add",
@@ -552,7 +553,8 @@
           "image": "Image",
           "accordion": "Accordion",
           "iframe": "Embedded page (iframe)",
-          "divider": "Separator"
+          "divider": "Separator",
+          "repeat": "Repeat"
         },
         "preview": {
           "title": "Preview",
@@ -708,7 +710,8 @@
           "true-text": "Text if yes",
           "true-icon": "Icon if yes",
           "false-text": "Text if no",
-          "false-icon": "Icon if no"
+          "false-icon": "Icon if no",
+          "repeated": "Current field"
         },
         "image": {
           "src": "Link to the image",
@@ -721,7 +724,13 @@
             "center": "Center",
             "right": "Right"
           },
-          "rounded": "Rounded corners"
+          "rounded": "Rounded corners",
+          "width-px": "Width (px)",
+          "unit": "Unit",
+          "units": {
+            "percent": "Percentage",
+            "px": "Pixels"
+          }
         },
         "categories": {
           "text": "Text",
@@ -744,6 +753,27 @@
             "no": "Never"
           },
           "border": "Border"
+        },
+        "repeat": {
+          "direction": "Layout",
+          "directions": {
+            "vertical": "Vertical",
+            "horizontal": "Horizontal"
+          },
+          "fields": "Fields",
+          "add-field": "Add a field",
+          "remove-field": "Remove the field",
+          "count": "%{smart_count} field |||| %{smart_count} fields",
+          "variables": {
+            "value": "Current value",
+            "formatted_value": "Current formatted value",
+            "icon": "Current icon",
+            "label": "Current label",
+            "field": "Current field name"
+          },
+          "model": "Model, repeated for each field",
+          "columns": "Items per line",
+          "columns-auto": "From the content"
         }
       },
       "filter": {

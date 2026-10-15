@@ -5,7 +5,7 @@ import { InterpolatedTextField, SelectField } from './common';
 
 const I18N = 'datalayer.form.minisheet.alert';
 
-const AlertSettings = ({ block, onChange, context: { fields } }) => (
+const AlertSettings = ({ block, onChange, context }) => (
   <Stack spacing={2} sx={{ pt: 1 }}>
     <SelectField
       label={`${I18N}.severity`}
@@ -17,13 +17,13 @@ const AlertSettings = ({ block, onChange, context: { fields } }) => (
     <InterpolatedTextField
       label={`${I18N}.title`}
       value={block.title}
-      fields={fields}
+      context={context}
       onChange={title => onChange({ title })}
     />
     <InterpolatedTextField
       label={`${I18N}.text`}
       value={block.text}
-      fields={fields}
+      context={context}
       multiline
       onChange={text => onChange({ text })}
     />

@@ -10,6 +10,7 @@ import iframe from './iframe';
 import image from './image';
 import legacyField from './legacyField';
 import legacySection from './legacySection';
+import repeat from './repeat';
 import typography from './typography';
 
 /**
@@ -23,6 +24,7 @@ export const minisheetRegistry = {
   field,
   typography,
   card,
+  repeat,
   alert,
   button,
   image,

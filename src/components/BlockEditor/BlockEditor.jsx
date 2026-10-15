@@ -59,17 +59,29 @@ import {
  *   - create(context): settings of a new block
  *   - Settings: component editing the block ({ block, onChange, context })
  *   - summary(block, context): short text shown next to its name
- *   - branchLabels: translation keys naming its branches, when it has several
+ *   - branchLabels: translation keys naming its branches ("Content" by default)
  *   - actions: [{ label, icon, run(block, context) }], each turning the block
  *     into the one `run` returns; offered only where that one may stand
+ *
+ * create, Settings and summary find in `context.ancestors` the types of the
+ * blocks holding theirs, closest last.
  */
 const EditorContext = React.createContext();
+
+/** The context of the editor, with the types of the blocks holding the one at `place`. */
+const usePlaceContext = ({ parentId }) => {
+  const { registry, blocks, context } = React.useContext(EditorContext);
+  const parent = parentId ? findBlock(registry, blocks, parentId) : null;
+  const ancestors = parent ? [...parent.ancestors, parent.block.type].join() : '';
+  return React.useMemo(() => ({ ...context, ancestors: ancestors ? ancestors.split(',') : [] }), [context, ancestors]);
+};
 
 const endZoneId = ({ parentId, branch }) => `end:${parentId ?? 'root'}:${branch ?? ''}`;
 
 const AddBlockMenu = ({ place }) => {
   const translate = useTranslate();
-  const { registry, categories, blocks, rules, context, createId, onChange, toggle } = React.useContext(EditorContext);
+  const { registry, categories, blocks, rules, createId, onChange, toggle } = React.useContext(EditorContext);
+  const context = usePlaceContext(place);
   const [anchor, setAnchor] = React.useState(null);
 
   const newBlock = type => {
@@ -187,12 +199,13 @@ const BlockItem = ({ block, place }) => {
     isOver,
   } = useSortable({ id: block.id, data: { place } });
   const allowed = useCanDrop(place);
+  const placeContext = usePlaceContext(place);
 
   const definition = registry[block.type] ?? {};
   const { Settings } = definition;
   const branches = getBranches(registry, block);
   const open = expanded.has(block.id);
-  const summary = definition.summary?.(block, context);
+  const summary = definition.summary?.(block, placeContext);
 
   const handleChange = update => onChange(updateBlock(registry, blocks, block.id, update));
 
@@ -266,17 +279,15 @@ const BlockItem = ({ block, place }) => {
         {Settings && (
           <Collapse in={open} unmountOnExit>
             <Box sx={{ px: 2, pb: 2 }}>
-              <Settings block={block} onChange={handleChange} context={context} />
+              <Settings block={block} onChange={handleChange} context={placeContext} />
             </Box>
           </Collapse>
         )}
         {branches.map(branch => (
-          <Box key={branch} sx={{ pl: 4, pr: 1, pb: 1 }}>
-            {branches.length > 1 && (
-              <Typography variant="caption" color="text.secondary">
-                {translate(definition.branchLabels?.[branch] ?? branch)}
-              </Typography>
-            )}
+          <Box key={branch} sx={{ borderTop: 1, borderColor: 'divider', bgcolor: 'action.hover', pl: 2, pr: 1, pt: 0.5, pb: 1 }}>
+            <Typography variant="caption" color="text.secondary" component="div" sx={{ mb: 0.5 }}>
+              {translate(definition.branchLabels?.[branch] ?? 'block-editor.children')}
+            </Typography>
             <BlockList place={{ parentId: block.id, branch }} items={block[branch] ?? []} />
           </Box>
         ))}

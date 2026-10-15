@@ -4,21 +4,25 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import formatValue from '../formatValue';
-import { getColor } from './blockStyle';
+import { RepeatTurnContext } from '../repeatTurns';
+import { BlockIcon, getColor } from './blockStyle';
 
 const Value = ({ value: { text, icon }, color, variant = 'body2', align, sx }) => (
   <Typography variant={variant} component="span" sx={{ color, overflowWrap: 'anywhere', textAlign: align, ...sx }}>
-    {icon && <Box component="span" aria-hidden sx={{ mr: 0.5 }}>{icon}</Box>}
+    {icon && <Box component="span" sx={{ mr: 0.5 }}><BlockIcon icon={{ value: icon }} /></Box>}
     {text}
   </Typography>
 );
 
 /**
  * A Field block: the label and the formatted value of a field of the object,
- * nothing when the value is missing and there is no default text.
+ * nothing when the value is missing and there is no default text. Inside a
+ * Repeat block, the field, label and format are those of the turn.
  */
-export const FieldBlock = ({ block, properties }) => {
+export const FieldBlock = ({ block: model, properties }) => {
   const locale = useLocale();
+  const turn = React.useContext(RepeatTurnContext);
+  const block = turn ? { ...model, field: turn.field, label: turn.label, format: turn.format } : model;
   const value = formatValue(properties[block.field], block, locale);
   if (!value) {
     return null;

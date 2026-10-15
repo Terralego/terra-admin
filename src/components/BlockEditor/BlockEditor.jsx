@@ -2,7 +2,9 @@ import React from 'react';
 import { useTranslate } from 'react-admin';
 import {
   DndContext,
+  DragOverlay,
   KeyboardSensor,
+  MeasuringStrategy,
   PointerSensor,
   closestCenter,
   pointerWithin,
@@ -15,13 +17,12 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
-  verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
+import ListSubheader from '@mui/material/ListSubheader';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
@@ -54,6 +55,7 @@ import {
  *
  * Each type of the registry gives, on top of the nesting rules of blockTree:
  *   - label: translation key of its name
+ *   - category: key of its group in the menu adding a block (see `categories`)
  *   - create(context): settings of a new block
  *   - Settings: component editing the block ({ block, onChange, context })
  *   - summary(block, context): short text shown next to its name
@@ -67,7 +69,7 @@ const endZoneId = ({ parentId, branch }) => `end:${parentId ?? 'root'}:${branch 
 
 const AddBlockMenu = ({ place }) => {
   const translate = useTranslate();
-  const { registry, blocks, rules, context, createId, onChange, toggle } = React.useContext(EditorContext);
+  const { registry, categories, blocks, rules, context, createId, onChange, toggle } = React.useContext(EditorContext);
   const [anchor, setAnchor] = React.useState(null);
 
   const newBlock = type => {
@@ -83,27 +85,38 @@ const AddBlockMenu = ({ place }) => {
     return null;
   }
 
+  const known = new Set(categories.map(({ key }) => key));
+  const groups = [
+    ...categories.map(({ key, label }) => ({ key, label, types: types.filter(type => registry[type].category === key) })),
+    { key: '', types: types.filter(type => !known.has(registry[type].category)) },
+  ].filter(group => group.types.length);
+
+  const item = type => (
+    <MenuItem
+      key={type}
+      onClick={() => {
+        setAnchor(null);
+        const block = newBlock(type);
+        onChange(insertBlock(registry, blocks, place, block));
+        if (registry[type].Settings) {
+          toggle(block.id);
+        }
+      }}
+    >
+      {translate(registry[type].label)}
+    </MenuItem>
+  );
+
   return (
     <>
       <Button size="small" startIcon={<AddIcon />} onClick={event => setAnchor(event.currentTarget)}>
         {translate('block-editor.add')}
       </Button>
       <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={() => setAnchor(null)}>
-        {types.map(type => (
-          <MenuItem
-            key={type}
-            onClick={() => {
-              setAnchor(null);
-              const block = newBlock(type);
-              onChange(insertBlock(registry, blocks, place, block));
-              if (registry[type].Settings) {
-                toggle(block.id);
-              }
-            }}
-          >
-            {translate(registry[type].label)}
-          </MenuItem>
-        ))}
+        {groups.flatMap(({ key, label, types: groupTypes }) => [
+          label && <ListSubheader key={`category:${key}`} sx={{ lineHeight: '32px' }}>{translate(label)}</ListSubheader>,
+          ...groupTypes.map(item),
+        ].filter(Boolean))}
       </Menu>
     </>
   );
@@ -120,9 +133,21 @@ const useCanDrop = place => {
   return Boolean(dragged) && canPlace(registry, blocks, dragged, place, rules);
 };
 
-const DropIndicator = ({ visible }) => (
-  <Box sx={{ height: 2, my: '-1px', bgcolor: visible ? 'primary.main' : 'transparent' }} />
-);
+const DropPlaceholder = ({ visible }) => (visible ? (
+  <Box
+    sx={{
+      height: 40,
+      mb: 1,
+      border: 2,
+      borderStyle: 'dashed',
+      borderColor: 'primary.main',
+      borderRadius: 1,
+      bgcolor: 'action.hover',
+    }}
+  />
+) : null);
+
+const noShift = () => null;
 
 const EndZone = ({ place }) => {
   const { setNodeRef, isOver } = useDroppable({ id: endZoneId(place), data: { place } });
@@ -130,14 +155,14 @@ const EndZone = ({ place }) => {
 
   return (
     <Box ref={setNodeRef} sx={{ minHeight: 8 }}>
-      <DropIndicator visible={isOver && allowed} />
+      <DropPlaceholder visible={isOver && allowed} />
       <AddBlockMenu place={place} />
     </Box>
   );
 };
 
 const BlockList = ({ place, items }) => (
-  <SortableContext items={items.map(({ id }) => id)} strategy={verticalListSortingStrategy}>
+  <SortableContext items={items.map(({ id }) => id)} strategy={noShift}>
     <Stack spacing={1}>
       {items.map((block, index) => (
         // eslint-disable-next-line no-use-before-define
@@ -158,8 +183,6 @@ const BlockItem = ({ block, place }) => {
     listeners,
     setNodeRef,
     setActivatorNodeRef,
-    transform,
-    transition,
     isDragging,
     isOver,
   } = useSortable({ id: block.id, data: { place } });
@@ -178,12 +201,9 @@ const BlockItem = ({ block, place }) => {
     .filter(({ result }) => canPlace(registry, blocks, result, place, rules));
 
   return (
-    <Box
-      ref={setNodeRef}
-      sx={{ transform: CSS.Translate.toString(transform), transition, opacity: isDragging ? 0.5 : 1 }}
-    >
-      <DropIndicator visible={isOver && !isDragging && allowed} />
-      <Paper variant="outlined">
+    <Box ref={setNodeRef}>
+      <DropPlaceholder visible={isOver && !isDragging && allowed} />
+      <Paper variant="outlined" sx={isDragging ? { opacity: 0.4, borderStyle: 'dashed' } : undefined}>
         <Stack
           direction="row"
           alignItems="center"
@@ -265,7 +285,34 @@ const BlockItem = ({ block, place }) => {
   );
 };
 
+const DragPreview = ({ id }) => {
+  const translate = useTranslate();
+  const { registry, blocks, context } = React.useContext(EditorContext);
+  const block = findBlock(registry, blocks, id)?.block;
+  if (!block) {
+    return null;
+  }
+  const definition = registry[block.type] ?? {};
+
+  return (
+    <Paper elevation={6} sx={{ px: 1, py: 0.5, cursor: 'grabbing' }}>
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <DragIndicatorIcon fontSize="small" />
+        <Typography variant="subtitle2" sx={{ flexShrink: 0 }}>
+          {translate(definition.label ?? block.type)}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" noWrap sx={{ flex: 1, minWidth: 0 }}>
+          {definition.summary?.(block, context)}
+        </Typography>
+      </Stack>
+    </Paper>
+  );
+};
+
+const measuring = { droppable: { strategy: MeasuringStrategy.Always } };
+
 const NO_BLOCKS = [];
+const NO_CATEGORIES = [];
 
 const area = rect => (rect ? rect.width * rect.height : Infinity);
 
@@ -273,12 +320,14 @@ export const BlockEditor = ({
   blocks = NO_BLOCKS,
   onChange,
   registry,
+  categories = NO_CATEGORIES,
   rootAccepts,
   maxDepth,
   context,
   createId,
 }) => {
   const [expanded, setExpanded] = React.useState(() => new Set());
+  const [activeId, setActiveId] = React.useState(null);
   const toggle = React.useCallback(id => setExpanded(previous => {
     const next = new Set(previous);
     if (!next.delete(id)) {
@@ -307,6 +356,7 @@ export const BlockEditor = ({
   }, [registry, blocks]);
 
   const handleDragEnd = ({ active, over }) => {
+    setActiveId(null);
     const place = over?.data.current?.place;
     if (!place || over.id === active.id) {
       return;
@@ -319,6 +369,7 @@ export const BlockEditor = ({
 
   const value = React.useMemo(() => ({
     registry,
+    categories,
     blocks,
     rules,
     context,
@@ -326,12 +377,22 @@ export const BlockEditor = ({
     onChange,
     expanded,
     toggle,
-  }), [registry, blocks, rules, context, createId, onChange, expanded, toggle]);
+  }), [registry, categories, blocks, rules, context, createId, onChange, expanded, toggle]);
 
   return (
     <EditorContext.Provider value={value}>
-      <DndContext sensors={sensors} collisionDetection={collisionDetection} onDragEnd={handleDragEnd}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={collisionDetection}
+        measuring={measuring}
+        onDragStart={({ active }) => setActiveId(active.id)}
+        onDragEnd={handleDragEnd}
+        onDragCancel={() => setActiveId(null)}
+      >
         <BlockList place={ROOT} items={blocks} />
+        <DragOverlay dropAnimation={null}>
+          {activeId ? <DragPreview id={activeId} /> : null}
+        </DragOverlay>
       </DndContext>
     </EditorContext.Provider>
   );

@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import { v4 as uuid } from 'uuid';
 
 import BlockEditor from '../../../../../../components/BlockEditor/BlockEditor';
-import { MAX_DEPTH, minisheetRegistry, rootAccepts } from './blocks';
+import { CATEGORIES, MAX_DEPTH, minisheetRegistry, rootAccepts } from './blocks';
 import TitleBlock from './blocks/TitleBlock';
 import { isBlocksConfig, readMinisheetConfig } from './minisheetBlocks';
 
@@ -51,6 +51,7 @@ export const MinisheetEditor = () => {
         blocks={view.blocks}
         onChange={blocks => write({ title: view.title, blocks })}
         registry={minisheetRegistry}
+        categories={CATEGORIES}
         rootAccepts={rootAccepts}
         maxDepth={MAX_DEPTH}
         context={context}

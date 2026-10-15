@@ -21,6 +21,7 @@ const LegacySectionSettings = ({ block, onChange }) => {
 /** Section of the old wizard: a title and a list of Legacy fields. */
 export const legacySection = {
   label: 'datalayer.form.minisheet.blocks.legacy-section',
+  category: 'legacy',
   create: () => ({ name: '' }),
   branches: ['children'],
   accepts: type => type === 'legacy-field',

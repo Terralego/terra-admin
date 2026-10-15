@@ -68,7 +68,6 @@ export const TitleBlock = ({ title, onChange, fields }) => {
             fullWidth
             type="url"
             label={translate('datalayer.form.minisheet.blocks.icon')}
-            helperText={translate('datalayer.form.minisheet.blocks.icon-help')}
             value={title.icon ?? ''}
             onChange={event => change({ icon: event.target.value || undefined })}
           />

@@ -591,13 +591,20 @@
           "add-title": "Ajouter un titre",
           "field": "Champ",
           "icon": "Icône (lien vers une image)",
-          "icon-help": "png, svg…, facultatif",
           "legacy-field": "Champ (historique)",
           "legacy-section": "Section (historique)",
           "expert": "Expert",
-          "expert-help": "Modèle Nunjucks rendu avec les propriétés de l'objet. Ctrl-Espace propose les champs.",
           "to-expert": "Convertir en bloc Expert",
-          "chart": "Graphique"
+          "chart": "Graphique",
+          "typography": "Texte",
+          "card": "Carte",
+          "alert": "Alerte",
+          "button": "Bouton",
+          "field-block": "Champ",
+          "image": "Image",
+          "accordion": "Accordéon",
+          "iframe": "Page intégrée (iframe)",
+          "divider": "Séparateur"
         },
         "preview": {
           "title": "Prévisualisation",
@@ -646,7 +653,6 @@
           "label": "Titre du graphique (facultatif)",
           "decimals": "Décimales",
           "series": "Séries",
-          "series-help": "Une barre ou une part par série : un champ numérique de l'objet ou une valeur fixe. Une valeur vide est ignorée.",
           "series-label": "Libellé",
           "color": "Couleur",
           "remove-series": "Retirer la série",
@@ -655,6 +661,141 @@
           "no-data": "Aucune valeur numérique à afficher.",
           "add-fixed-series": "Ajouter une valeur fixe",
           "fixed-value": "Valeur fixe"
+        },
+        "style": {
+          "color": "Couleur",
+          "custom-color": "Personnalisée",
+          "colors": {
+            "default": "Par défaut",
+            "primary": "Principale",
+            "secondary": "Secondaire",
+            "error": "Danger",
+            "warning": "Avertissement",
+            "info": "Information",
+            "success": "Succès",
+            "custom": "Personnalisée"
+          },
+          "icon": "Icône (emoji ou lien vers une image)",
+          "icon-position": "Position de l'icône",
+          "icon-positions": {
+            "start": "Avant",
+            "end": "Après"
+          },
+          "insert-field": "Insérer un champ"
+        },
+        "typography": {
+          "text": "Texte",
+          "variant": "Niveau",
+          "variants": {
+            "h1": "Titre 1",
+            "h2": "Titre 2",
+            "h3": "Titre 3",
+            "h4": "Titre 4",
+            "h5": "Titre 5",
+            "h6": "Titre 6",
+            "subtitle1": "Sous-titre 1",
+            "subtitle2": "Sous-titre 2",
+            "body1": "Texte",
+            "body2": "Texte secondaire",
+            "caption": "Légende"
+          },
+          "align": "Alignement",
+          "aligns": {
+            "left": "À gauche",
+            "center": "Centré",
+            "right": "À droite",
+            "justify": "Justifié"
+          },
+          "transform": "Casse",
+          "transforms": {
+            "none": "Par défaut",
+            "capitalize": "Majuscule à chaque mot",
+            "uppercase": "Majuscules",
+            "lowercase": "Minuscules"
+          }
+        },
+        "card": {
+          "variant": "Style",
+          "variants": {
+            "outlined": "Bordure",
+            "plain": "Fond plein",
+            "alert": "Alerte"
+          }
+        },
+        "alert": {
+          "severity": "Type",
+          "severities": {
+            "info": "Information",
+            "success": "Succès",
+            "warning": "Avertissement",
+            "error": "Erreur"
+          },
+          "title": "Titre (facultatif)",
+          "text": "Texte"
+        },
+        "button": {
+          "label": "Libellé",
+          "href": "Lien",
+          "variant": "Style",
+          "variants": {
+            "text": "Lien",
+            "outlined": "Bordure",
+            "contained": "Plein"
+          }
+        },
+        "field-block": {
+          "label": "Libellé",
+          "style": "Style",
+          "styles": {
+            "simple": "Clé / valeur",
+            "stacked": "Libellé au-dessus",
+            "spread": "Espacé"
+          },
+          "format": "Format",
+          "decimals": "Décimales",
+          "date": "Format de date",
+          "date-custom": "Personnalisé…",
+          "date-pattern": "Motif",
+          "date-pattern-help": "yyyy, MM, MMMM, dd, d, EEEE, HH, mm, ss",
+          "true-text": "Texte si oui",
+          "true-icon": "Icône si oui",
+          "false-text": "Texte si non",
+          "false-icon": "Icône si non"
+        },
+        "image": {
+          "src": "Lien vers l'image",
+          "alt": "Texte alternatif",
+          "caption": "Légende (facultative)",
+          "width": "Largeur : %{width} %",
+          "align": "Alignement",
+          "aligns": {
+            "left": "À gauche",
+            "center": "Centré",
+            "right": "À droite"
+          },
+          "rounded": "Coins arrondis"
+        },
+        "categories": {
+          "text": "Texte",
+          "layout": "Mise en page",
+          "media": "Médias",
+          "advanced": "Avancé",
+          "legacy": "Historique"
+        },
+        "accordion": {
+          "expanded": "Déplié par défaut"
+        },
+        "iframe": {
+          "src": "Lien de la page",
+          "width": "Largeur : %{width} %",
+          "height": "Hauteur (px)",
+          "scrolling": "Défilement",
+          "scrollings": {
+            "auto": "Automatique",
+            "yes": "Toujours",
+            "no": "Jamais"
+          },
+          "border": "Bordure"
         }
       },
       "filter": {

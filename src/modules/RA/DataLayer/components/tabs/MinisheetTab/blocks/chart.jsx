@@ -166,9 +166,6 @@ const ChartSettings = ({ block, onChange, context: { fields } }) => {
       />
       <GraphSettings graph={block.graph} onChange={graph => onChange({ graph })} />
       <Typography variant="subtitle2">{translate(`${I18N}.series`)}</Typography>
-      <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: '0 !important' }}>
-        {translate(`${I18N}.series-help`)}
-      </Typography>
       {series.map((item, index) => (
         <SeriesRow
           // eslint-disable-next-line react/no-array-index-key
@@ -198,6 +195,7 @@ const ChartSettings = ({ block, onChange, context: { fields } }) => {
 /** A graph of fields of the object, one bar or slice per field. */
 export const chart = {
   label: 'datalayer.form.minisheet.blocks.chart',
+  category: 'media',
   create: () => ({
     label: '',
     graph: { type: 'bars', orientation: 'vertical', percent: false, unit: '' },

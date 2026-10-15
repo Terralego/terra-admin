@@ -27,16 +27,22 @@ const useStyles = makeStyles(theme => ({
       marginLeft: '1em',
       position:   'sticky',
       top:        theme.spacing(2),
+      display:       'flex',
+      flexDirection: 'column',
+      maxHeight:     `calc(100vh - ${theme.spacing(4)}px)`,
     },
     [theme.breakpoints.down('md')]: {
       marginTop: '1em',
     },
   },
-  json: {
-    margin:    0,
-    maxHeight: '75vh',
+  content: {
+    flex:      1,
+    minHeight: 0,
     overflow:  'auto',
-    fontSize:  '0.75rem',
+  },
+  json: {
+    margin:   0,
+    fontSize: '0.75rem',
   },
 }));
 
@@ -64,7 +70,7 @@ export const MinisheetPreviewAside = ({ preview: { config, fields, sampleText, s
   const properties = edited ?? generated;
 
   return (
-    <Card elevation={0} className={classes.root}>
+    <Card elevation={0} className={`${classes.root} sticky-aside`}>
       <CardHeader
         title={translate('datalayer.form.minisheet.preview.title')}
         titleTypographyProps={{ variant: 'subtitle1' }}
@@ -75,7 +81,7 @@ export const MinisheetPreviewAside = ({ preview: { config, fields, sampleText, s
         <Tab value="json" label={translate('datalayer.form.minisheet.preview.json')} />
       </Tabs>
       <Divider />
-      <CardContent>
+      <CardContent className={classes.content}>
         {tab === 'render' && <MinisheetPreview config={config} properties={properties} />}
         {tab === 'data' && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

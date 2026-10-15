@@ -34,6 +34,7 @@ const LegacyFieldSettings = ({ block, onChange, context: { fields } }) => {
 /** Field of the old wizard, rendered by the Nunjucks it generates. */
 export const legacyField = {
   label: 'datalayer.form.minisheet.blocks.legacy-field',
+  category: 'legacy',
   create: () => ({ sourceFieldId: undefined, prefix: '', suffix: '', default: '' }),
   actions: [toExpert],
   Settings: LegacyFieldSettings,

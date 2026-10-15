@@ -539,13 +539,20 @@
           "add-title": "Add a title",
           "field": "Field",
           "icon": "Icon (link to an image)",
-          "icon-help": "png, svg…, optional",
           "legacy-field": "Field (legacy)",
           "legacy-section": "Section (legacy)",
           "expert": "Expert",
-          "expert-help": "Nunjucks template rendered with the object properties. Ctrl-Space suggests the fields.",
           "to-expert": "Convert to an Expert block",
-          "chart": "Chart"
+          "chart": "Chart",
+          "typography": "Text",
+          "card": "Card",
+          "alert": "Alert",
+          "button": "Button",
+          "field-block": "Field",
+          "image": "Image",
+          "accordion": "Accordion",
+          "iframe": "Embedded page (iframe)",
+          "divider": "Separator"
         },
         "preview": {
           "title": "Preview",
@@ -594,7 +601,6 @@
           "label": "Chart title (optional)",
           "decimals": "Decimals",
           "series": "Series",
-          "series-help": "One bar or slice per series: a numeric field of the object or a fixed value. An empty value is left out.",
           "series-label": "Label",
           "color": "Color",
           "remove-series": "Remove the series",
@@ -603,6 +609,141 @@
           "no-data": "No numeric value to show.",
           "add-fixed-series": "Add a fixed value",
           "fixed-value": "Fixed value"
+        },
+        "style": {
+          "color": "Color",
+          "custom-color": "Custom",
+          "colors": {
+            "default": "Default",
+            "primary": "Primary",
+            "secondary": "Secondary",
+            "error": "Danger",
+            "warning": "Warning",
+            "info": "Information",
+            "success": "Success",
+            "custom": "Custom"
+          },
+          "icon": "Icon (emoji or link to an image)",
+          "icon-position": "Icon position",
+          "icon-positions": {
+            "start": "Before",
+            "end": "After"
+          },
+          "insert-field": "Insert a field"
+        },
+        "typography": {
+          "text": "Text",
+          "variant": "Level",
+          "variants": {
+            "h1": "Heading 1",
+            "h2": "Heading 2",
+            "h3": "Heading 3",
+            "h4": "Heading 4",
+            "h5": "Heading 5",
+            "h6": "Heading 6",
+            "subtitle1": "Subtitle 1",
+            "subtitle2": "Subtitle 2",
+            "body1": "Text",
+            "body2": "Secondary text",
+            "caption": "Caption"
+          },
+          "align": "Alignment",
+          "aligns": {
+            "left": "Left",
+            "center": "Center",
+            "right": "Right",
+            "justify": "Justify"
+          },
+          "transform": "Case",
+          "transforms": {
+            "none": "Default",
+            "capitalize": "Capitalize each word",
+            "uppercase": "Uppercase",
+            "lowercase": "Lowercase"
+          }
+        },
+        "card": {
+          "variant": "Style",
+          "variants": {
+            "outlined": "Outlined",
+            "plain": "Filled",
+            "alert": "Alert"
+          }
+        },
+        "alert": {
+          "severity": "Type",
+          "severities": {
+            "info": "Information",
+            "success": "Success",
+            "warning": "Warning",
+            "error": "Error"
+          },
+          "title": "Title (optional)",
+          "text": "Text"
+        },
+        "button": {
+          "label": "Label",
+          "href": "Link",
+          "variant": "Style",
+          "variants": {
+            "text": "Link",
+            "outlined": "Outlined",
+            "contained": "Filled"
+          }
+        },
+        "field-block": {
+          "label": "Label",
+          "style": "Style",
+          "styles": {
+            "simple": "Key / value",
+            "stacked": "Label above",
+            "spread": "Spaced"
+          },
+          "format": "Format",
+          "decimals": "Decimals",
+          "date": "Date format",
+          "date-custom": "Custom…",
+          "date-pattern": "Pattern",
+          "date-pattern-help": "yyyy, MM, MMMM, dd, d, EEEE, HH, mm, ss",
+          "true-text": "Text if yes",
+          "true-icon": "Icon if yes",
+          "false-text": "Text if no",
+          "false-icon": "Icon if no"
+        },
+        "image": {
+          "src": "Link to the image",
+          "alt": "Alternative text",
+          "caption": "Caption (optional)",
+          "width": "Width: %{width}%",
+          "align": "Alignment",
+          "aligns": {
+            "left": "Left",
+            "center": "Center",
+            "right": "Right"
+          },
+          "rounded": "Rounded corners"
+        },
+        "categories": {
+          "text": "Text",
+          "layout": "Layout",
+          "media": "Media",
+          "advanced": "Advanced",
+          "legacy": "Legacy"
+        },
+        "accordion": {
+          "expanded": "Expanded by default"
+        },
+        "iframe": {
+          "src": "Link to the page",
+          "width": "Width: %{width}%",
+          "height": "Height (px)",
+          "scrolling": "Scrolling",
+          "scrollings": {
+            "auto": "Automatic",
+            "yes": "Always",
+            "no": "Never"
+          },
+          "border": "Border"
         }
       },
       "filter": {

@@ -51,7 +51,8 @@ const BlockPart = ({ block, properties }) => {
   if (!Component) {
     return <Alert severity="info">{translate('datalayer.form.minisheet.preview.unsupported', { type: block.type })}</Alert>;
   }
-  return <Component block={block} properties={properties} />;
+  // eslint-disable-next-line no-use-before-define
+  return <Component block={block} properties={properties} Blocks={Blocks} />;
 };
 
 const NunjucksPart = ({ template, properties }) => {
@@ -71,21 +72,20 @@ const NunjucksPart = ({ template, properties }) => {
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
 };
 
+/** Blocks in order, at the top level or inside a container block. */
+const Blocks = ({ blocks, properties }) => toPreviewParts(blocks).map(part => (part.kind === 'nunjucks'
+  ? <NunjucksPart key={part.key} template={part.template} properties={properties} />
+  : <BlockPart key={part.key} block={part.block} properties={properties} />));
+
 /**
  * The minisheet as the front would show it, for given object properties:
  * the title, then each block in order.
  */
-export const MinisheetPreview = ({ config, properties }) => {
-  const parts = toPreviewParts(config?.blocks);
-
-  return (
-    <Box sx={{ ...detailsStyles, display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Title title={config?.title} properties={properties} />
-      {parts.map(part => (part.kind === 'nunjucks'
-        ? <NunjucksPart key={part.key} template={part.template} properties={properties} />
-        : <BlockPart key={part.key} block={part.block} properties={properties} />))}
-    </Box>
-  );
-};
+export const MinisheetPreview = ({ config, properties }) => (
+  <Box sx={{ ...detailsStyles, display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Title title={config?.title} properties={properties} />
+    <Blocks blocks={config?.blocks} properties={properties} />
+  </Box>
+);
 
 export default MinisheetPreview;

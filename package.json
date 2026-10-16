@@ -64,7 +64,6 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "postbuild": "echo $npm_package_version > build/build.txt && git describe --tags >> build/build.txt && date -R >> build/build.txt",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

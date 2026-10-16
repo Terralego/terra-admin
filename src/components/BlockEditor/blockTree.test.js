@@ -2,6 +2,7 @@
 import {
   ROOT,
   canPlace,
+  duplicateBlock,
   findBlock,
   getHeight,
   insertBlock,
@@ -139,5 +140,31 @@ describe('canPlace', () => {
 
   it('forbids a block inside itself', () => {
     expect(canPlace(registry, blocks, blocks[2], at('table'), options)).toBe(false);
+  });
+});
+
+describe('duplicateBlock', () => {
+  const createId = (() => {
+    let count = 0;
+    return () => {
+      count += 1;
+      return `new${count}`;
+    };
+  })();
+
+  it('puts a copy of a container, with new ids for all it holds, right below it', () => {
+    const { blocks: result, copy } = duplicateBlock(registry, blocks, 'if', createId);
+    expect(result.map(({ id }) => id)).toEqual([...blocks.map(({ id }) => id).slice(0, 3), copy.id, ...blocks.map(({ id }) => id).slice(3)]);
+    expect(copy).toEqual({
+      id: 'new1',
+      type: 'condition',
+      then: [{ id: 'new2', type: 'table', children: [{ id: 'new3', type: 'field' }] }],
+      else: [],
+    });
+  });
+
+  it('copies a block inside its container', () => {
+    const { blocks: result } = duplicateBlock(registry, blocks, 'a', createId);
+    expect(findBlock(registry, result, 'card').block.children.map(({ type }) => type)).toEqual(['field', 'field', 'text']);
   });
 });

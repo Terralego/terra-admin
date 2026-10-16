@@ -157,3 +157,22 @@ export const moveBlock = (registry, blocks, id, place) => {
   const removed = removeBlock(registry, blocks, id);
   return insertBlock(registry, removed, place, location.block);
 };
+
+/** A copy of a block and of every block it holds, each with a new id. */
+export const copyBlock = (registry, block, createId) => ({
+  ...block,
+  id: createId(),
+  ...Object.fromEntries(getBranches(registry, block)
+    .map(branch => [branch, (block[branch] ?? []).map(child => copyBlock(registry, child, createId))])),
+});
+
+/** Puts a copy of a block, with all it holds, right below it. */
+export const duplicateBlock = (registry, blocks, id, createId) => {
+  const location = findBlock(registry, blocks, id);
+  if (!location) {
+    return { blocks };
+  }
+  const copy = copyBlock(registry, location.block, createId);
+  const { parentId, branch, index } = location;
+  return { blocks: insertBlock(registry, blocks, { parentId, branch, index: index + 1 }, copy), copy };
+};

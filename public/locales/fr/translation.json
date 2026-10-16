@@ -5,7 +5,8 @@
     "expand": "Afficher les réglages",
     "collapse": "Masquer les réglages",
     "remove": "Supprimer le bloc",
-    "children": "Contenu"
+    "children": "Contenu",
+    "duplicate": "Dupliquer le bloc"
   },
   "common": {
     "add": "Ajouter",

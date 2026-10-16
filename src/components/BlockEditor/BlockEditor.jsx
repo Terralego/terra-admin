@@ -21,6 +21,7 @@ import {
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ListSubheader from '@mui/material/ListSubheader';
 import Menu from '@mui/material/Menu';
@@ -34,6 +35,7 @@ import Typography from '@mui/material/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import DuplicateIcon from '@material-ui/icons/FileCopyOutlined';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 /* eslint-enable */
@@ -41,6 +43,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   ROOT,
   canPlace,
+  duplicateBlock,
   findBlock,
   getBranches,
   insertBlock,
@@ -62,6 +65,8 @@ import {
  *   - branchLabels: translation keys naming its branches ("Content" by default)
  *   - actions: [{ label, icon, run(block, context) }], each turning the block
  *     into the one `run` returns; offered only where that one may stand
+ *
+ * Each block may be duplicated: the copy, with all it holds, comes right below.
  *
  * create, Settings and summary find in `context.ancestors` the types of the
  * blocks holding theirs, closest last.
@@ -106,6 +111,7 @@ const AddBlockMenu = ({ place }) => {
   const item = type => (
     <MenuItem
       key={type}
+      dense
       onClick={() => {
         setAnchor(null);
         const block = newBlock(type);
@@ -125,7 +131,8 @@ const AddBlockMenu = ({ place }) => {
         {translate('block-editor.add')}
       </Button>
       <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={() => setAnchor(null)}>
-        {groups.flatMap(({ key, label, types: groupTypes }) => [
+        {groups.flatMap(({ key, label, types: groupTypes }, index) => [
+          index > 0 && <Divider key={`divider:${key}`} />,
           label && <ListSubheader key={`category:${key}`} sx={{ lineHeight: '32px' }}>{translate(label)}</ListSubheader>,
           ...groupTypes.map(item),
         ].filter(Boolean))}
@@ -189,7 +196,7 @@ const stopPropagation = event => event.stopPropagation();
 
 const BlockItem = ({ block, place }) => {
   const translate = useTranslate();
-  const { registry, blocks, rules, context, onChange, expanded, toggle } = React.useContext(EditorContext);
+  const { registry, blocks, rules, context, createId, onChange, expanded, toggle } = React.useContext(EditorContext);
   const {
     attributes,
     listeners,
@@ -264,6 +271,17 @@ const BlockItem = ({ block, place }) => {
               </IconButton>
             </Tooltip>
           )}
+          <Tooltip title={translate('block-editor.duplicate')}>
+            <IconButton
+              size="small"
+              onClick={event => {
+                event.stopPropagation();
+                onChange(duplicateBlock(registry, blocks, block.id, createId).blocks);
+              }}
+            >
+              <DuplicateIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
           <Tooltip title={translate('block-editor.remove')}>
             <IconButton
               size="small"

@@ -5,7 +5,8 @@
     "expand": "Show settings",
     "collapse": "Hide settings",
     "remove": "Remove the block",
-    "children": "Content"
+    "children": "Content",
+    "duplicate": "Duplicate the block"
   },
   "common": {
     "add": "Add",

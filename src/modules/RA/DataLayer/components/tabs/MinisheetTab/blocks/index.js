@@ -3,6 +3,7 @@ import alert from './alert';
 import button from './button';
 import card from './card';
 import chart from './chart';
+import condition from './condition';
 import divider from './divider';
 import expert from './expert';
 import field from './field';
@@ -32,13 +33,12 @@ export const minisheetRegistry = {
   accordion,
   divider,
   chart,
+  condition,
 };
 
 export const rootAccepts = () => true;
 
-export const MAX_DEPTH = 3;
-
-export const CATEGORIES = ['text', 'layout', 'media', 'advanced', 'legacy']
+export const CATEGORIES = ['content', 'layout', 'media', 'advanced', 'legacy']
   .map(key => ({ key, label: `datalayer.form.minisheet.categories.${key}` }));
 
 export default minisheetRegistry;

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import { interpolateHref } from '../interpolate';
-import { BlockIcon } from './blockStyle';
+import { BlockIcon, useColorSetting } from './blockStyle';
 
 const customColorStyle = (variant, color) => {
   if (variant === 'contained') {
@@ -14,7 +14,8 @@ const customColorStyle = (variant, color) => {
 
 /** A Button block: a link opened in a new tab, with values of fields inserted. */
 export const ButtonBlock = ({ block, properties }) => {
-  const { label, href, variant = 'contained', color, customColor, icon } = block;
+  const { label, href, variant = 'contained', icon } = block;
+  const { color, customColor } = useColorSetting(block);
   const link = interpolateHref(href, properties);
   const custom = color === 'custom' && customColor;
   const iconElement = icon?.value ? <BlockIcon icon={icon} /> : undefined;

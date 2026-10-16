@@ -555,7 +555,8 @@
           "accordion": "Accordion",
           "iframe": "Embedded page (iframe)",
           "divider": "Separator",
-          "repeat": "Repeat"
+          "repeat": "Repeat",
+          "condition": "Condition"
         },
         "preview": {
           "title": "Preview",
@@ -624,7 +625,8 @@
             "warning": "Warning",
             "info": "Information",
             "success": "Success",
-            "custom": "Custom"
+            "custom": "Custom",
+            "inherit": "Inherit from parent"
           },
           "icon": "Icon (emoji or link to an image)",
           "icon-position": "Icon position",
@@ -666,12 +668,9 @@
           }
         },
         "card": {
-          "variant": "Style",
-          "variants": {
-            "outlined": "Outlined",
-            "plain": "Filled",
-            "alert": "Alert"
-          }
+          "border": "Border",
+          "background": "Background",
+          "accent": "Left bar"
         },
         "alert": {
           "severity": "Type",
@@ -700,7 +699,8 @@
           "styles": {
             "simple": "Key / value",
             "stacked": "Label above",
-            "spread": "Spaced"
+            "spread": "Spaced",
+            "highlight": "Highlighted value"
           },
           "format": "Format",
           "decimals": "Decimals",
@@ -712,7 +712,9 @@
           "true-icon": "Icon if yes",
           "false-text": "Text if no",
           "false-icon": "Icon if no",
-          "repeated": "Current field"
+          "repeated": "Current field",
+          "false-icon-borrowed": "Without “Icon if no”, the “Icon if yes” is shown dimmed.",
+          "icon-only": "With an icon, only the icon is shown."
         },
         "image": {
           "src": "Link to the image",
@@ -734,7 +736,7 @@
           }
         },
         "categories": {
-          "text": "Text",
+          "content": "Content",
           "layout": "Layout",
           "media": "Media",
           "advanced": "Advanced",
@@ -774,7 +776,25 @@
           },
           "model": "Model, repeated for each field",
           "columns": "Items per line",
-          "columns-auto": "From the content"
+          "columns-auto": "From the content",
+          "stretch": "Same height",
+          "field-options": "Format and default text"
+        },
+        "condition": {
+          "operator": "Condition",
+          "operators": {
+            "exists": "is set",
+            "not_exists": "is not set",
+            "eq": "equals",
+            "neq": "differs from",
+            "gt": "is greater than",
+            "lt": "is less than",
+            "truthy": "is true",
+            "falsy": "is false"
+          },
+          "value": "Value",
+          "then": "If the condition is met",
+          "else": "Otherwise"
         }
       },
       "filter": {

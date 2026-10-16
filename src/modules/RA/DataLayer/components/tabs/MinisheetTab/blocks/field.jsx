@@ -12,7 +12,7 @@ import FieldSelect, { getFieldLabel } from './FieldSelect';
 
 const I18N = 'datalayer.form.minisheet.field-block';
 
-export const FIELD_STYLES = ['simple', 'spread', 'stacked'];
+export const FIELD_STYLES = ['simple', 'spread', 'stacked', 'highlight'];
 
 export const DATE_PATTERNS = ['dd/MM/yyyy', 'dd/MM/yyyy HH:mm', 'd MMMM yyyy', 'EEEE d MMMM yyyy', 'MMMM yyyy', 'yyyy'];
 const CUSTOM = 'custom';
@@ -83,22 +83,32 @@ const BooleanFormat = ({ format, onChange }) => {
   const translate = useTranslate();
   const change = (key, update) => onChange({ ...format, [key]: { ...format[key], ...update } });
 
+  const hasIcon = Boolean(format.true?.icon || format.false?.icon);
+  const borrowed = Boolean(format.true?.icon) && !format.false?.icon;
+
   return ['true', 'false'].map(key => (
-    <Stack key={key} direction="row" spacing={2}>
-      <TextField
-        size="small"
-        fullWidth
-        label={translate(`${I18N}.${key}-text`)}
-        value={format[key]?.text ?? ''}
-        onChange={event => change(key, { text: event.target.value })}
-      />
-      <TextField
-        size="small"
-        sx={{ width: 160, flexShrink: 0 }}
-        label={translate(`${I18N}.${key}-icon`)}
-        value={format[key]?.icon ?? ''}
-        onChange={event => change(key, { icon: event.target.value })}
-      />
+    <Stack key={key} spacing={0.5}>
+      <Stack direction="row" spacing={2}>
+        <TextField
+          size="small"
+          fullWidth
+          label={translate(`${I18N}.${key}-text`)}
+          value={format[key]?.text ?? ''}
+          onChange={event => change(key, { text: event.target.value })}
+        />
+        <TextField
+          size="small"
+          sx={{ width: 160, flexShrink: 0 }}
+          label={translate(`${I18N}.${key}-icon`)}
+          value={format[key]?.icon ?? ''}
+          onChange={event => change(key, { icon: event.target.value })}
+        />
+      </Stack>
+      {key === 'false' && hasIcon && (
+        <Typography variant="caption" color="text.secondary">
+          {[`${I18N}.icon-only`, borrowed && `${I18N}.false-icon-borrowed`].filter(Boolean).map(translate).join(' ')}
+        </Typography>
+      )}
     </Stack>
   ));
 };
@@ -143,7 +153,8 @@ export const chooseField = (fields, current, sourceFieldId, translate) => {
 
 const inRepeat = (ancestors = []) => ancestors.includes('repeat');
 
-const FieldSettings = ({ block, onChange, context: { fields, ancestors } }) => {
+const FieldSettings = ({ block, onChange, context }) => {
+  const { fields, ancestors } = context;
   const translate = useTranslate();
   const text = key => ({
     size: 'small',
@@ -199,7 +210,7 @@ const FieldSettings = ({ block, onChange, context: { fields, ancestors } }) => {
           sx={{ width: 200, flexShrink: 0 }}
           onChange={style => onChange({ style })}
         />
-        <ColorSettings block={block} onChange={onChange} />
+        <ColorSettings block={block} onChange={onChange} context={context} />
       </Stack>
       <Stack direction="row" spacing={2}>
         <TextField {...text('prefix')} />
@@ -219,7 +230,7 @@ const FieldSettings = ({ block, onChange, context: { fields, ancestors } }) => {
 /** A field of the object: its label and its value, formatted by its type. */
 export const field = {
   label: 'datalayer.form.minisheet.blocks.field-block',
-  category: 'text',
+  category: 'content',
   create: () => ({ sourceFieldId: undefined, field: undefined, label: '', style: 'simple', prefix: '', suffix: '', default: '', format: {} }),
   Settings: FieldSettings,
   summary: (block, { fields, ancestors, translate }) => (inRepeat(ancestors)

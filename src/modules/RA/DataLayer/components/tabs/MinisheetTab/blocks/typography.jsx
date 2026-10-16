@@ -45,7 +45,7 @@ export const TextSettings = ({ block, onChange, context }) => (
         sx={{ width: 200, flexShrink: 0 }}
         onChange={variant => onChange({ variant })}
       />
-      <ColorSettings block={block} onChange={onChange} />
+      <ColorSettings block={block} onChange={onChange} context={context} />
     </Stack>
     <Stack direction="row" spacing={3}>
       <ToggleSetting
@@ -71,7 +71,7 @@ export const TextSettings = ({ block, onChange, context }) => (
 /** A text, with values of fields, a level of title or of text, an icon and a color. */
 export const typography = {
   label: 'datalayer.form.minisheet.blocks.typography',
-  category: 'text',
+  category: 'content',
   create: () => ({ variant: 'body1', text: '' }),
   Settings: TextSettings,
   summary: block => block.text,

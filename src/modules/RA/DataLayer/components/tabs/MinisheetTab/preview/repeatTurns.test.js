@@ -33,6 +33,11 @@ describe('repeatTurns', () => {
       .toEqual([['2\u202f058,0', ''], ['Non', '❌']]);
   });
 
+  it('keeps a field without value that has a default text, given as its formatted value', () => {
+    const turns = repeatTurns({ fields: [{ field: 'vide', label: 'Vide', default: '-' }] }, properties);
+    expect(turns.map(({ properties: { $value: value, $formatted_value: text } }) => [value, text])).toEqual([['', '-']]);
+  });
+
   it('gives no turn without fields', () => {
     expect(repeatTurns({}, properties)).toEqual([]);
   });

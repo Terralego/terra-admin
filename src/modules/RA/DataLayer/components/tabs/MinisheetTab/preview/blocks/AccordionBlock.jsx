@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 /* eslint-enable */
 
+import { ColorProvider, useColorSetting } from './blockStyle';
 import TypographyBlock from './TypographyBlock';
 
 /**
@@ -19,6 +20,7 @@ export const AccordionBlock = ({ block, properties, Blocks }) => {
   const translate = useTranslate();
   const [open, setOpen] = React.useState(Boolean(block.expanded));
   const [initial, setInitial] = React.useState(block.expanded);
+  const setting = useColorSetting(block);
   if (initial !== block.expanded) {
     setInitial(block.expanded);
     setOpen(Boolean(block.expanded));
@@ -49,7 +51,9 @@ export const AccordionBlock = ({ block, properties, Blocks }) => {
       </ButtonBase>
       <Collapse in={open}>
         <Stack spacing={2} sx={{ pt: 1 }}>
-          <Blocks blocks={block.children ?? []} properties={properties} />
+          <ColorProvider setting={setting}>
+            <Blocks blocks={block.children ?? []} properties={properties} />
+          </ColorProvider>
         </Stack>
       </Collapse>
     </div>

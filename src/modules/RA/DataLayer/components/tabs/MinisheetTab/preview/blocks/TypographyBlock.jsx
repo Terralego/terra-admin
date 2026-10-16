@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 
 import interpolate from '../interpolate';
-import { BlockIcon, getColor } from './blockStyle';
+import { BlockIcon, getColor, useColorSetting } from './blockStyle';
 
 const JUSTIFY = { left: 'flex-start', center: 'center', right: 'flex-end', justify: 'flex-start' };
 
@@ -13,12 +13,13 @@ const JUSTIFY = { left: 'flex-start', center: 'center', right: 'flex-end', justi
 export const TypographyBlock = ({ block, properties, sx }) => {
   const { variant = 'body1', text, icon, align = 'left', transform = 'none' } = block;
   const iconAtEnd = icon?.position === 'end';
+  const color = getColor(useColorSetting(block));
 
   return (
     <Typography
       variant={variant}
       sx={{
-        color: getColor(block),
+        color,
         display: 'flex',
         alignItems: 'center',
         justifyContent: JUSTIFY[align],

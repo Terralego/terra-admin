@@ -17,8 +17,13 @@ describe('formatValue', () => {
   it('gives the text and icon of a boolean, from a boolean or its text', () => {
     const format = { true: { text: 'Oui', icon: '✅' }, false: { text: 'Non', icon: '' } };
     expect(formatValue(true, { format })).toEqual({ text: 'Oui', icon: '✅' });
-    expect(formatValue('false', { format })).toEqual({ text: 'Non', icon: '' });
-    expect(formatValue(0, { format })).toEqual({ text: 'Non', icon: '' });
+    expect(formatValue('false', { format: { ...format, true: { text: 'Oui' } } })).toEqual({ text: 'Non', icon: '' });
+    expect(formatValue(0, { format: { ...format, false: { text: 'Non', icon: '❌' } } })).toEqual({ text: 'Non', icon: '❌' });
+  });
+
+  it('gives false the icon of true, dimmed, when it has none', () => {
+    const format = { true: { text: 'Oui', icon: '✅' }, false: { text: 'Non', icon: '' } };
+    expect(formatValue(false, { format })).toEqual({ text: 'Non', icon: '✅', dimmed: true });
   });
 
   it('adds the prefix and suffix around a value, not around the default', () => {

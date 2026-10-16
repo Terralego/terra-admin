@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import { v4 as uuid } from 'uuid';
 
 import BlockEditor from '../../../../../../components/BlockEditor/BlockEditor';
-import { CATEGORIES, MAX_DEPTH, minisheetRegistry, rootAccepts } from './blocks';
+import { CATEGORIES, minisheetRegistry, rootAccepts } from './blocks';
 import TitleBlock from './blocks/TitleBlock';
 import { isBlocksConfig, readMinisheetConfig } from './minisheetBlocks';
 
@@ -53,7 +53,6 @@ export const MinisheetEditor = () => {
         registry={minisheetRegistry}
         categories={CATEGORIES}
         rootAccepts={rootAccepts}
-        maxDepth={MAX_DEPTH}
         context={context}
         createId={createId}
       />

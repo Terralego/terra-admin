@@ -48,7 +48,8 @@ const formatNumber = (value, decimals, locale) => {
 };
 
 /**
- * `{ text, icon }` of a value, the icon only for a boolean. A missing value
+ * `{ text, icon, dimmed }` of a value, the icon only for a boolean, `dimmed`
+ * when false borrows the icon of true. A missing value
  * gives the `default` text (no prefix nor suffix), or null when there is none.
  */
 export const formatValue = (value, { format = {}, prefix = '', suffix = '', default: defaultText = '' } = {}, locale) => {
@@ -59,6 +60,10 @@ export const formatValue = (value, { format = {}, prefix = '', suffix = '', defa
   const boolean = 'true' in format || 'false' in format ? toBoolean(value) : undefined;
   if (boolean !== undefined) {
     const { text = '', icon = '' } = format[String(boolean)] ?? {};
+    const trueIcon = format.true?.icon ?? '';
+    if (!boolean && !icon && trueIcon) {
+      return { text: `${prefix}${text}${suffix}`, icon: trueIcon, dimmed: true };
+    }
     return { text: `${prefix}${text}${suffix}`, icon };
   }
 

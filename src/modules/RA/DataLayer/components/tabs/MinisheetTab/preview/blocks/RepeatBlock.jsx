@@ -12,11 +12,12 @@ const GAP = 16;
  * value, one below the other or side by side.
  */
 export const RepeatBlock = ({ block, properties, Blocks }) => {
-  const { direction = 'vertical', columns, children = [] } = block;
+  const { direction = 'vertical', columns, stretch = false, children = [] } = block;
   const horizontal = direction === 'horizontal';
   const turnSx = horizontal && columns
     ? { width: `calc((100% - ${columns - 1} * ${GAP}px) / ${columns})` }
     : { maxWidth: '100%' };
+  const stretchSx = horizontal && stretch ? { '& > :last-child': { flexGrow: 1 } } : {};
   const locale = useLocale();
   const turns = repeatTurns(block, properties, locale);
   if (!turns.length || !children.length) {
@@ -26,7 +27,7 @@ export const RepeatBlock = ({ block, properties, Blocks }) => {
   const items = turns.map(({ item, properties: turnProperties }, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <RepeatTurnContext.Provider key={index} value={item}>
-      <Stack spacing={1} sx={turnSx}>
+      <Stack spacing={1} sx={{ ...turnSx, ...stretchSx }}>
         <Blocks blocks={children} properties={turnProperties} />
       </Stack>
     </RepeatTurnContext.Provider>

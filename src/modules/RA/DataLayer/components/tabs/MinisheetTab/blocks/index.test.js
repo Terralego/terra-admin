@@ -1,7 +1,7 @@
 import { canPlace } from '../../../../../../../components/BlockEditor/blockTree';
-import { CATEGORIES, MAX_DEPTH, minisheetRegistry, rootAccepts } from '.';
+import { CATEGORIES, minisheetRegistry, rootAccepts } from '.';
 
-const rules = { rootAccepts, maxDepth: MAX_DEPTH };
+const rules = { rootAccepts };
 const block = (id, type, children) => ({ id, type, ...(children && { children }) });
 const canGo = (blocks, moved, parentId) => canPlace(minisheetRegistry, blocks, moved, { parentId }, rules);
 
@@ -14,8 +14,9 @@ describe('minisheet nesting rules', () => {
     });
   });
 
-  it('refuses a card or a Legacy block inside a card', () => {
-    ['card', 'legacy-section', 'legacy-field'].forEach(type => {
+  it('lets a card hold a card, but no Legacy block', () => {
+    expect(canGo(blocks, block('new', 'card'), 'card')).toBe(true);
+    ['legacy-section', 'legacy-field'].forEach(type => {
       expect(canGo(blocks, block('new', type), 'card')).toBe(false);
     });
   });
@@ -34,6 +35,27 @@ describe('minisheet nesting rules', () => {
       expect(canGo(tree, block('new', type), 'rep')).toBe(false);
     });
     expect(canGo(tree, block('new', 'repeat'), 'card')).toBe(false);
+  });
+
+  it('lets a condition hold what the top level holds, but a Legacy field only in a section', () => {
+    // eslint-disable-next-line unicorn/no-thenable
+    const tree = [{ id: 'cond', type: 'condition', then: [], else: [] }];
+    ['card', 'repeat', 'expert', 'legacy-section'].forEach(type => {
+      expect(canGo(tree, block('new', type), 'cond')).toBe(true);
+    });
+    expect(canGo(tree, block('new', 'legacy-field'), 'cond')).toBe(false);
+  });
+
+  it('keeps a condition inside a repeat free of what the repeat refuses', () => {
+    // eslint-disable-next-line unicorn/no-thenable
+    const tree = [block('rep', 'repeat', [{ id: 'cond', type: 'condition', then: [], else: [] }])];
+    expect(canGo(tree, block('new', 'field'), 'cond')).toBe(true);
+    ['expert', 'repeat', 'legacy-section'].forEach(type => expect(canGo(tree, block('new', type), 'cond')).toBe(false));
+  });
+
+  it('nests blocks without a limit of depth', () => {
+    const tree = [block('a', 'card', [block('r', 'repeat', [block('b', 'card', [block('c', 'card', [])])])])];
+    expect(canGo(tree, block('new', 'field'), 'c')).toBe(true);
   });
 
   it('puts every type of block in a category of the menu', () => {

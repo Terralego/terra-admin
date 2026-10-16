@@ -20,6 +20,8 @@ import InsertFieldIcon from '@material-ui/icons/PostAdd';
 
 const I18N = 'datalayer.form.minisheet.style';
 
+const NO_ANCESTORS = [];
+
 export const COLORS = ['primary', 'secondary', 'error', 'warning', 'info', 'success', 'custom'];
 
 /** A select whose options are translated under `prefix`, with an optional empty choice. */
@@ -95,14 +97,23 @@ export const ToggleSetting = ({ label, value, options, prefix, onChange, deselec
   );
 };
 
-/** `color` from the theme palette, or `custom` with its `customColor`. */
-export const ColorSettings = ({ block, onChange }) => {
+const COLOR_HOLDERS = new Set(['card', 'accordion']);
+const INHERIT = 'inherit';
+
+/**
+ * `color` from the theme palette, or `custom` with its `customColor`, or
+ * `inherit` (that of the closest Card or Accordion holding the block).
+ */
+export const ColorSettings = ({ block, onChange, context }) => {
+  const ancestors = context?.ancestors ?? NO_ANCESTORS;
   const translate = useTranslate();
   const theme = useTheme();
+  const inheritable = ancestors.some(type => COLOR_HOLDERS.has(type));
+  const colors = inheritable ? [INHERIT, ...COLORS] : COLORS;
   const swatch = color => (color === 'custom' ? block.customColor : `${color}.main`);
   const label = color => (
     <Box component="span" sx={{ display: 'flex', alignItems: 'center' }}>
-      {color && <Swatch color={swatch(color)} />}
+      {color && color !== INHERIT && <Swatch color={swatch(color)} />}
       {translate(`${I18N}.colors.${color || 'default'}`)}
     </Box>
   );
@@ -122,7 +133,7 @@ export const ColorSettings = ({ block, onChange }) => {
         })}
       >
         <MenuItem value="">{label('')}</MenuItem>
-        {COLORS.map(color => <MenuItem key={color} value={color}>{label(color)}</MenuItem>)}
+        {colors.map(color => <MenuItem key={color} value={color}>{label(color)}</MenuItem>)}
       </TextField>
       {block.color === 'custom' && (
         <TextField

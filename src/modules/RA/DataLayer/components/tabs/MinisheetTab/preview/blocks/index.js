@@ -3,6 +3,7 @@ import AlertBlock from './AlertBlock';
 import ButtonBlock from './ButtonBlock';
 import CardBlock from './CardBlock';
 import ChartBlock from './ChartBlock';
+import ConditionBlock from './ConditionBlock';
 import DividerBlock from './DividerBlock';
 import FieldBlock from './FieldBlock';
 import IframeBlock from './IframeBlock';
@@ -23,6 +24,7 @@ export const blockComponents = {
   divider: DividerBlock,
   chart: ChartBlock,
   repeat: RepeatBlock,
+  condition: ConditionBlock,
 };
 
 export default blockComponents;

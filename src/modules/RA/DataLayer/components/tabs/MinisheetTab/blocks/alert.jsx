@@ -33,7 +33,7 @@ const AlertSettings = ({ block, onChange, context }) => (
 /** A message in an alert, its title and text with values of fields. */
 export const alert = {
   label: 'datalayer.form.minisheet.blocks.alert',
-  category: 'text',
+  category: 'content',
   create: () => ({ severity: 'info', title: '', text: '' }),
   Settings: AlertSettings,
   summary: block => block.title || block.text,

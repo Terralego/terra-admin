@@ -3,10 +3,12 @@ import { useTranslate } from 'react-admin';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
@@ -34,6 +36,7 @@ const FieldRow = ({ item, fields, onChange, onRemove }) => {
   const [formatOpen, setFormatOpen] = React.useState(false);
   const type = fieldType(fields, item.sourceFieldId);
   const formatted = FORMATTED_TYPES.has(type);
+  const optionsLabel = translate(`${I18N}.field-options`);
 
   return (
     <Box>
@@ -50,18 +53,15 @@ const FieldRow = ({ item, fields, onChange, onRemove }) => {
           value={item.label ?? ''}
           onChange={event => onChange({ ...item, label: event.target.value })}
         />
-        <Tooltip title={translate('datalayer.form.minisheet.field-block.format')}>
-          <span>
-            <IconButton
-              size="small"
-              disabled={!formatted}
-              color={formatOpen && formatted ? 'primary' : 'default'}
-              aria-label={translate('datalayer.form.minisheet.field-block.format')}
-              onClick={() => setFormatOpen(open => !open)}
-            >
-              <FormatIcon fontSize="small" />
-            </IconButton>
-          </span>
+        <Tooltip title={optionsLabel}>
+          <IconButton
+            size="small"
+            color={formatOpen ? 'primary' : 'default'}
+            aria-label={optionsLabel}
+            onClick={() => setFormatOpen(open => !open)}
+          >
+            <FormatIcon fontSize="small" />
+          </IconButton>
         </Tooltip>
         <Tooltip title={translate(`${I18N}.remove-field`)}>
           <IconButton size="small" aria-label={translate(`${I18N}.remove-field`)} onClick={onRemove}>
@@ -69,13 +69,20 @@ const FieldRow = ({ item, fields, onChange, onRemove }) => {
           </IconButton>
         </Tooltip>
       </Stack>
-      {formatted && (
-        <Collapse in={formatOpen} unmountOnExit>
-          <Stack spacing={1.5} sx={{ pt: 1.5, pl: 2 }}>
+      <Collapse in={formatOpen} unmountOnExit>
+        <Stack spacing={1.5} sx={{ pt: 1.5, pl: 2 }}>
+          <TextField
+            size="small"
+            sx={{ width: 200 }}
+            label={translate('datalayer.form.minisheet.field.default')}
+            value={item.default ?? ''}
+            onChange={event => onChange({ ...item, default: event.target.value })}
+          />
+          {formatted && (
             <FormatSettings type={type} format={item.format} onChange={format => onChange({ ...item, format })} />
-          </Stack>
-        </Collapse>
-      )}
+          )}
+        </Stack>
+      </Collapse>
     </Box>
   );
 };
@@ -110,6 +117,12 @@ const RepeatSettings = ({ block, onChange, context: { fields } }) => {
             {COLUMNS.map(count => <MenuItem key={count} value={count}>{count}</MenuItem>)}
           </TextField>
         )}
+        {block.direction === 'horizontal' && (
+          <FormControlLabel
+            label={translate(`${I18N}.stretch`)}
+            control={<Switch checked={Boolean(block.stretch)} onChange={event => onChange({ stretch: event.target.checked })} />}
+          />
+        )}
       </Stack>
       <Paper variant="outlined" sx={{ p: 1.5, pt: 1 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5 }}>
@@ -138,7 +151,7 @@ const RepeatSettings = ({ block, onChange, context: { fields } }) => {
 /** Its blocks, once for each field of a list: a model filled by the field of the turn. */
 export const repeat = {
   label: 'datalayer.form.minisheet.blocks.repeat',
-  category: 'layout',
+  category: 'advanced',
   create: () => ({ direction: 'vertical', fields: [] }),
   branches: ['children'],
   branchLabels: { children: `${I18N}.model` },

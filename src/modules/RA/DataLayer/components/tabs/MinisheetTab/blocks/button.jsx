@@ -34,7 +34,7 @@ const ButtonSettings = ({ block, onChange, context }) => {
           sx={{ width: 200, flexShrink: 0 }}
           onChange={variant => onChange({ variant })}
         />
-        <ColorSettings block={block} onChange={onChange} />
+        <ColorSettings block={block} onChange={onChange} context={context} />
       </Stack>
       <IconSettings icon={block.icon} onChange={icon => onChange({ icon })} />
     </Stack>
@@ -44,7 +44,7 @@ const ButtonSettings = ({ block, onChange, context }) => {
 /** A link to a page, its address built with values of fields. */
 export const button = {
   label: 'datalayer.form.minisheet.blocks.button',
-  category: 'text',
+  category: 'content',
   create: () => ({ label: '', href: '', variant: 'contained' }),
   Settings: ButtonSettings,
   summary: block => block.label,

@@ -607,7 +607,8 @@
           "accordion": "Accordéon",
           "iframe": "Page intégrée (iframe)",
           "divider": "Séparateur",
-          "repeat": "Répéter"
+          "repeat": "Répéter",
+          "condition": "Condition"
         },
         "preview": {
           "title": "Prévisualisation",
@@ -645,7 +646,7 @@
           "field": "Champ sélectionné",
           "prefix": "Préfixe",
           "suffix": "Suffixe",
-          "default": "Texte par defaut",
+          "default": "Texte par défaut",
           "round": "Nombre de chiffres à arrondir"
         },
         "true": "Oui",
@@ -676,7 +677,8 @@
             "warning": "Avertissement",
             "info": "Information",
             "success": "Succès",
-            "custom": "Personnalisée"
+            "custom": "Personnalisée",
+            "inherit": "Hériter du parent"
           },
           "icon": "Icône (emoji ou lien vers une image)",
           "icon-position": "Position de l'icône",
@@ -718,12 +720,9 @@
           }
         },
         "card": {
-          "variant": "Style",
-          "variants": {
-            "outlined": "Bordure",
-            "plain": "Fond plein",
-            "alert": "Alerte"
-          }
+          "border": "Bordure",
+          "background": "Fond",
+          "accent": "Barre à gauche"
         },
         "alert": {
           "severity": "Type",
@@ -752,7 +751,8 @@
           "styles": {
             "simple": "Clé / valeur",
             "stacked": "Libellé au-dessus",
-            "spread": "Espacé"
+            "spread": "Espacé",
+            "highlight": "Valeur mise en avant"
           },
           "format": "Format",
           "decimals": "Décimales",
@@ -764,7 +764,9 @@
           "true-icon": "Icône si oui",
           "false-text": "Texte si non",
           "false-icon": "Icône si non",
-          "repeated": "Champ courant"
+          "repeated": "Champ courant",
+          "false-icon-borrowed": "Sans « Icône si non », l’« Icône si oui » est affichée atténuée.",
+          "icon-only": "Avec une icône, seule l’icône est affichée."
         },
         "image": {
           "src": "Lien vers l'image",
@@ -786,7 +788,7 @@
           }
         },
         "categories": {
-          "text": "Texte",
+          "content": "Contenu",
           "layout": "Mise en page",
           "media": "Médias",
           "advanced": "Avancé",
@@ -826,7 +828,25 @@
           },
           "model": "Modèle, répété pour chaque champ",
           "columns": "Éléments par ligne",
-          "columns-auto": "Selon le contenu"
+          "columns-auto": "Selon le contenu",
+          "stretch": "Même hauteur",
+          "field-options": "Format et texte par défaut"
+        },
+        "condition": {
+          "operator": "Condition",
+          "operators": {
+            "exists": "est renseigné",
+            "not_exists": "n’est pas renseigné",
+            "eq": "est égal à",
+            "neq": "est différent de",
+            "gt": "est supérieur à",
+            "lt": "est inférieur à",
+            "truthy": "est vrai",
+            "falsy": "est faux"
+          },
+          "value": "Valeur",
+          "then": "Si la condition est remplie",
+          "else": "Sinon"
         }
       },
       "filter": {

@@ -1,21 +1,18 @@
 import React from 'react';
 import { useTranslate } from 'react-admin';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import TextField from '@mui/material/TextField';
+import CircularProgress from '@mui/material/CircularProgress';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 /* eslint-enable */
 
+import EntityPicker, { useDefaultEntity, useSourceSlug } from './EntityPicker';
 import MinisheetPreview from './preview/MinisheetPreview';
-import createSampleData from './preview/sampleData';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,34 +37,18 @@ const useStyles = makeStyles(theme => ({
     minHeight: 0,
     overflow:  'auto',
   },
-  json: {
-    margin:   0,
-    fontSize: '0.75rem',
-  },
 }));
 
-const parse = text => {
-  try {
-    const value = JSON.parse(text);
-    return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
-  } catch {
-    return null;
-  }
-};
-
 /**
- * Aside of the minisheet tab: the minisheet rendered on example data, the
- * example data themselves, editable, and the config as it would be saved.
+ * Aside of the minisheet tab: the minisheet rendered on an entity of the
+ * source, the first one by default, or another one found by a search.
  */
-export const MinisheetPreviewAside = ({ preview: { config, fields, sampleText, setSampleText } }) => {
+export const MinisheetPreviewAside = ({ preview: { config, source, entity, setEntity } }) => {
   const classes = useStyles();
   const translate = useTranslate();
-  const [tab, setTab] = React.useState('render');
 
-  const generated = React.useMemo(() => createSampleData(fields), [fields]);
-  const text = sampleText ?? JSON.stringify(generated, null, 2);
-  const edited = sampleText === null ? generated : parse(sampleText);
-  const properties = edited ?? generated;
+  const slug = useSourceSlug(source);
+  useDefaultEntity(slug, entity, setEntity);
 
   return (
     <Card elevation={0} className={`${classes.root} sticky-aside`}>
@@ -75,40 +56,19 @@ export const MinisheetPreviewAside = ({ preview: { config, fields, sampleText, s
         title={translate('datalayer.form.minisheet.preview.title')}
         titleTypographyProps={{ variant: 'subtitle1' }}
       />
-      <Tabs value={tab} onChange={(event, value) => setTab(value)} variant="fullWidth">
-        <Tab value="render" label={translate('datalayer.form.minisheet.preview.render')} />
-        <Tab value="data" label={translate('datalayer.form.minisheet.preview.data')} />
-        <Tab value="json" label={translate('datalayer.form.minisheet.preview.json')} />
-      </Tabs>
-      <Divider />
+      {slug && (
+        <Box sx={{ px: 2 }}>
+          <EntityPicker slug={slug} entity={entity} setEntity={setEntity} titleField={config?.title?.field} />
+        </Box>
+      )}
       <CardContent className={classes.content}>
-        {tab === 'render' && <MinisheetPreview config={config} properties={properties} />}
-        {tab === 'data' && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <TextField
-              multiline
-              fullWidth
-              minRows={8}
-              maxRows={30}
-              value={text}
-              onChange={event => setSampleText(event.target.value)}
-              error={!edited}
-              helperText={translate(edited
-                ? 'datalayer.form.minisheet.preview.data-help'
-                : 'datalayer.form.minisheet.preview.data-invalid')}
-              sx={{ '& textarea': { fontFamily: 'monospace', fontSize: '0.75rem' } }}
-            />
-            <Button
-              size="small"
-              disabled={sampleText === null}
-              onClick={() => setSampleText(null)}
-              sx={{ alignSelf: 'flex-start' }}
-            >
-              {translate('datalayer.form.minisheet.preview.data-reset')}
-            </Button>
-          </Box>
+        {entity === undefined && slug !== null && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}><CircularProgress size={24} /></Box>
         )}
-        {tab === 'json' && <pre className={classes.json}>{JSON.stringify(config, null, 2)}</pre>}
+        {(entity === null || slug === null) && (
+          <Alert severity="info">{translate('datalayer.form.minisheet.preview.no-entity')}</Alert>
+        )}
+        {entity && <MinisheetPreview config={config} properties={entity.properties} />}
       </CardContent>
     </Card>
   );

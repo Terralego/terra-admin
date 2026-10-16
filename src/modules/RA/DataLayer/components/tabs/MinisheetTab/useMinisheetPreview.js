@@ -18,9 +18,10 @@ const MinisheetPreviewContext = React.createContext(() => {});
 export const MinisheetPreviewProvider = MinisheetPreviewContext.Provider;
 
 /**
- * View side: the published config and fields, and whether to show them.
- * Nothing published (another tab is open): no aside nor toggle. The example
- * data edited in the aside lives here, to outlast a switch of tab.
+ * View side: the published config and source, and whether to show them.
+ * Nothing published (another tab is open, or the minisheet is off): no aside
+ * nor toggle. The entity picked in the aside lives here, to outlast a switch of
+ * tab.
  */
 export const useMinisheetPreview = () => {
   const [preview, setPreview] = React.useState(null);
@@ -30,10 +31,13 @@ export const useMinisheetPreview = () => {
   const [open, setOpen] = React.useState(true);
   const toggle = React.useCallback(() => setOpen(previous => !previous), []);
 
-  const [sampleText, setSampleText] = React.useState(null);
+  const [picked, setPicked] = React.useState({});
+  const source = preview?.source;
+  const entity = picked.source === source ? picked.entity : undefined;
+  const setEntity = React.useCallback(value => setPicked({ source, entity: value }), [source]);
 
   return {
-    preview: preview && { ...preview, sampleText, setSampleText },
+    preview: preview && { ...preview, entity, setEntity },
     publish,
     open,
     toggle,
@@ -42,28 +46,28 @@ export const useMinisheetPreview = () => {
 };
 
 /**
- * Form side: publishes the config as it would be saved, with the fields, while the minisheet
- * tab is the one displayed. React-admin keeps every tab mounted, hence the
- * check on the route.
+ * Form side: publishes the config as it would be saved, with the source, while
+ * the minisheet tab is the one displayed and the minisheet is on. React-admin
+ * keeps every tab mounted, hence the check on the route.
  */
 export const MinisheetPreviewPublisher = () => {
   const publish = React.useContext(MinisheetPreviewContext);
   const translate = useTranslate();
   const { pathname } = useLocation();
   const active = pathname.endsWith('/minisheet');
-  const { values: { minisheet_config: config, fields = [] } } = useFormState({
+  const { values: { minisheet_config: config, fields = [], source } } = useFormState({
     subscription: { values: true },
   });
 
   React.useEffect(() => {
-    if (!active) {
+    if (!active || !config?.enable || !source) {
       publish(null);
       return;
     }
     let count = 0;
     const createId = () => `b-${(count += 1)}`;
-    publish({ config: writeMinisheetConfig(config, fields, { translate, createId }), fields });
-  }, [publish, active, config, fields, translate]);
+    publish({ config: writeMinisheetConfig(config, fields, { translate, createId }), source });
+  }, [publish, active, config, fields, source, translate]);
 
   React.useEffect(() => () => publish(null), [publish]);
 

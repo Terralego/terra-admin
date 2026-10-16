@@ -2,7 +2,6 @@ import createTemplate from '../minisheetTemplate';
 import { readMinisheetConfig } from '../minisheetBlocks';
 import renderTemplate from './renderTemplate';
 import toPreviewParts, { wrapLegacy } from './previewParts';
-import createSampleData from './sampleData';
 
 const fields = [
   { sourceFieldId: 1, name: 'nom_site', label: 'Nom', data_type: 1 },
@@ -12,12 +11,6 @@ const fields = [
 
 const legacy = id => ({ id, type: 'legacy-field', template: `<p>${id}</p>` });
 const withoutTitle = html => html.replace(/<h2 class="details__title">[\s\S]*?<\/h2>\n?/, '');
-
-describe('createSampleData', () => {
-  it('gives every field a value of its type', () => {
-    expect(createSampleData(fields)).toEqual({ nom_site: 'Nom', altitude: 246.9134, ouvert: true });
-  });
-});
 
 describe('renderTemplate', () => {
   it('renders Nunjucks with the filters of the front, escaping values', () => {
@@ -58,7 +51,7 @@ describe('toPreviewParts', () => {
     const { blocks } = readMinisheetConfig({ wizard }, fields);
     const [part] = toPreviewParts(blocks);
     const oldTemplate = createTemplate({ default: '' }, wizard.tree, fields);
-    const data = createSampleData(fields);
+    const data = { nom_site: 'Nom', altitude: 246.9134, ouvert: true };
 
     expect(renderTemplate(part.template, data)).toBe(withoutTitle(renderTemplate(oldTemplate, data)));
   });

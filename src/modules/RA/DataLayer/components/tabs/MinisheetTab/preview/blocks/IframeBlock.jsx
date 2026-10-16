@@ -11,13 +11,15 @@ export const IframeBlock = ({ block: { src, width = 100, height = 300, scrolling
   }
 
   return (
-    <Box
-      component="iframe"
-      src={link}
-      title={link}
-      scrolling={scrolling}
-      sx={{ display: 'block', mx: 'auto', width: `${width}%`, height, border: border ? 1 : 0, borderColor: 'divider' }}
-    />
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box
+        component="iframe"
+        src={link}
+        title={link}
+        scrolling={scrolling}
+        sx={{ display: 'block', width: `${width}%`, height, border: border ? 1 : 0, borderColor: 'divider' }}
+      />
+    </Box>
   );
 };
 

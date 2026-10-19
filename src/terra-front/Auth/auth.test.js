@@ -4,6 +4,7 @@ import {
   closeServerSession,
   isSessionToken,
   obtainToken,
+  onTokenCleared,
   storeSessionToken,
 } from './auth';
 
@@ -69,4 +70,15 @@ it('does not flag a token from the login form', async () => {
 
   expect(localStorage.getItem('tf:auth:token')).toBe('form-token');
   expect(isSessionToken()).toBe(false);
+});
+
+it('tells its listeners when a token is dropped, once', async () => {
+  const listener = vi.fn();
+  const unsubscribe = onTokenCleared(listener);
+  storeSessionToken('token');
+  clearToken();
+  clearToken();
+  await Promise.resolve();
+  expect(listener).toHaveBeenCalledTimes(1);
+  unsubscribe();
 });

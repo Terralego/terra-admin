@@ -10,7 +10,10 @@ export default (type, params) => {
   }
   // called when the user clicks on the logout button
   if (type === AUTH_LOGOUT) {
-    return closeServerSession().then(() => invalidToken());
+    return closeServerSession().then(() => {
+      invalidToken();
+      return false;
+    });
   }
   // called when the API returns an error
   if (type === AUTH_ERROR) {

@@ -1,9 +1,12 @@
 import React from 'react';
 import { useField } from 'react-final-form';
 import { useRecordContext } from 'react-admin';
+import { useTranslation } from 'react-i18next';
 import Api from '../../../../terra-front/Api';
+import getUploadErrorMessage from './getUploadErrorMessage';
 
 const useFilePreview = () => {
+  const { t } = useTranslation();
   const record = useRecordContext();
   const { input: { value: fileValue } } = useField('file');
   const { input: { value: layerName } } = useField('layer_name');
@@ -42,7 +45,7 @@ const useFilePreview = () => {
           .then(resp => {
             if (!cancelled) setPreview(resp);
           })
-          .catch(err => { if (!cancelled) setError(err?.message || String(err)); })
+          .catch(err => { if (!cancelled) setError(getUploadErrorMessage(err, t)); })
           .finally(() => { if (!cancelled) setLoading(false); });
         return;
       }
@@ -87,7 +90,7 @@ const useFilePreview = () => {
             setPreview(resp);
           }
         })
-        .catch(err => { if (!cancelled) setError(err?.message || String(err)); })
+        .catch(err => { if (!cancelled) setError(getUploadErrorMessage(err, t)); })
         .finally(() => { if (!cancelled) setLoading(false); });
     };
 

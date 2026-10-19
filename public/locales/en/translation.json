@@ -273,6 +273,7 @@
       "layer-name": "Layer name",
       "layer-name-help": "Leave empty to auto-select the only layer. Required if the GeoPackage contains multiple layers.",
       "gpkg-layers-error": "Error detecting layers.",
+      "file-too-large": "The file is too large to be sent to the server.",
       "preview": {
         "title": "Data preview",
         "rows": "rows",

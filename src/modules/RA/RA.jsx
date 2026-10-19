@@ -95,6 +95,7 @@ export const CustomAdmin = ({ locale, permissions, enabledModules = [] }) => {
       history={history}
       dataProvider={customDataProvider}
       authProvider={authProvider}
+      loginPage={false}
       i18nProvider={i18nProvider}
     >
       {enabledResources.map(resource => (

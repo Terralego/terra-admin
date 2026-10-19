@@ -6,9 +6,12 @@ import {
   refreshToken,
   clearToken,
   closeServerSession,
+  onTokenCleared,
 } from './auth';
 import context from './context';
 import { getTokenPayload } from '../jwt';
+
+const REFRESH_ON_FOCUS_MARGIN = 2 * 60 * 1000;
 
 // Les deux valeurs viennent du même payload JWT, sérialisé par le même backend
 const isSame = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -28,12 +31,33 @@ export class AuthProvider extends React.Component {
   }
 
   componentDidMount () {
+    this.unsubscribeTokenCleared = onTokenCleared(this.handleTokenCleared);
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
     this.refreshToken();
   }
 
   componentWillUnmount () {
     this.isUnmount = true;
+    this.unsubscribeTokenCleared();
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    clearTimeout(this.delayTimeout);
   }
+
+  handleTokenCleared = () => {
+    if (this.isUnmount) return;
+    clearTimeout(this.delayTimeout);
+    this.setState({ authenticated: false, user: null });
+  };
+
+  handleVisibilityChange = () => {
+    if (document.visibilityState !== 'visible' || !this.state.authenticated) return;
+    const token = getToken();
+    if (!token) return;
+    const { exp } = getTokenPayload(token);
+    if (exp * 1000 - Date.now() < REFRESH_ON_FOCUS_MARGIN) {
+      this.refreshToken();
+    }
+  };
 
   setAuthenticated = authenticated => this.setState({ authenticated });
 
@@ -73,6 +97,10 @@ export class AuthProvider extends React.Component {
     try {
       const token = await refreshToken();
       if (this.isUnmount) return;
+      if (!token) {
+        if (this.state.authenticated) this.setState({ authenticated: false, user: null });
+        return;
+      }
       const { user } = this.extractTokenData(token);
 
       if (user) {

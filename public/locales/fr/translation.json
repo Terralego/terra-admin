@@ -325,6 +325,7 @@
       "layer-name": "Nom de la couche",
       "layer-name-help": "Choisir la couche à importer si plusieurs sont disponibles.",
       "gpkg-layers-error": "Erreur lors de la détection des couches.",
+      "file-too-large": "Le fichier est trop volumineux pour être envoyé au serveur.",
       "preview": {
         "title": "Aperçu des données",
         "rows": "lignes",

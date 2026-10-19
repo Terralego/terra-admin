@@ -19,8 +19,8 @@ vi.mock('../../terra-front/Auth/auth', () => ({
 
 beforeEach(() => vi.clearAllMocks());
 
-it('closes the Django session then drops the token on logout', async () => {
-  await expect(authProvider(AUTH_LOGOUT)).resolves.toBeUndefined();
+it('closes the Django session then drops the token on logout, without redirecting', async () => {
+  await expect(authProvider(AUTH_LOGOUT)).resolves.toBe(false);
   expect(closeServerSession).toHaveBeenCalled();
   expect(invalidToken).toHaveBeenCalled();
 });

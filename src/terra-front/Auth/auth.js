@@ -20,9 +20,19 @@ export async function obtainToken (email, password) {
   return token;
 }
 
+const clearListeners = new Set();
+
+export const onTokenCleared = listener => {
+  clearListeners.add(listener);
+  return () => clearListeners.delete(listener);
+};
+
 export const clearToken = () => {
+  const hadToken = window.localStorage.getItem(TOKEN_KEY) !== null;
   window.localStorage.removeItem(TOKEN_KEY);
   window.localStorage.removeItem(SESSION_TOKEN_FLAG);
+  if (!hadToken) return;
+  Promise.resolve().then(() => clearListeners.forEach(listener => listener()));
 };
 
 export const storeSessionToken = token => {
@@ -98,6 +108,7 @@ export default {
   getToken,
   isSessionToken,
   obtainToken,
+  onTokenCleared,
   refreshToken,
   storeSessionToken,
 };

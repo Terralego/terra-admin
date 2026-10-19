@@ -1,33 +1,52 @@
 import React from 'react';
-import { useField } from 'react-final-form';
-import { SelectInput, required } from 'react-admin';
-import { useTranslation } from 'react-i18next';
+import { useInput, InputHelperText, required, useTranslate } from 'react-admin';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const IdFieldSelect = ({ fields, ...props }) => {
-  const { t } = useTranslation();
-  const { input: { value, onChange } } = useField('id_field');
+const validate = required();
 
-  const choices = React.useMemo(
-    () => (fields ?? []).map(field => ({ id: field.name, name: field.name })),
+const IdFieldSelect = ({ fields, fullWidth, ...props }) => {
+  const translate = useTranslate();
+  const {
+    input: { value, onChange, onBlur, onFocus },
+    meta: { touched, error },
+    isRequired,
+  } = useInput({ source: 'id_field', validate, ...props });
+
+  const options = React.useMemo(
+    () => (fields ?? []).map(field => field.name),
     [fields],
   );
 
-  React.useEffect(() => {
-    if (value && choices.length > 0 && !choices.some(choice => choice.id === value)) {
-      onChange('');
-    }
-  }, [value, choices, onChange]);
-
   return (
-    <SelectInput
-      source="id_field"
-      label="datasource.form.uid-field"
-      validate={required()}
-      helperText={t('datasource.form.uid-field-help')}
-      choices={choices}
-      translateChoice={false}
-      disabled={choices.length === 0}
-      {...props}
+    <Autocomplete
+      freeSolo
+      options={options}
+      value={value || null}
+      inputValue={value || ''}
+      onInputChange={(event, newValue) => onChange(newValue)}
+      onChange={(event, newValue) => onChange(newValue ?? '')}
+      fullWidth={fullWidth}
+      style={fullWidth ? undefined : { width: 256 }}
+      renderInput={params => (
+        <TextField
+          {...params}
+          label={translate('datasource.form.uid-field')}
+          required={isRequired}
+          variant="filled"
+          margin="dense"
+          onBlur={onBlur}
+          onFocus={onFocus}
+          error={Boolean(touched && error)}
+          helperText={(
+            <InputHelperText
+              touched={touched}
+              error={error}
+              helperText="datasource.form.uid-field-help"
+            />
+          )}
+        />
+      )}
     />
   );
 };

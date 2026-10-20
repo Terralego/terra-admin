@@ -566,6 +566,7 @@
           "entity-loading": "Loading…",
           "entity-none": "No entity",
           "no-entity": "The source has no entity.",
+          "theme-info": "The preview does not take into account the theme that may apply on the public site.",
           "render-error": "Template error:",
           "unsupported": "Preview of the \"%{type}\" block to come."
         },

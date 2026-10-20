@@ -618,6 +618,7 @@
           "entity-loading": "Chargement…",
           "entity-none": "Aucune entité",
           "no-entity": "La source ne contient aucune entité.",
+          "theme-info": "L’aperçu ne tient pas compte du thème qui peut s’appliquer sur le site public.",
           "render-error": "Erreur dans le modèle :",
           "unsupported": "Aperçu à venir pour le bloc « %{type} »."
         },

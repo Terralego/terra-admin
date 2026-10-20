@@ -3,12 +3,14 @@ import { useTranslate } from 'react-admin';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import Tooltip from '@mui/material/Tooltip';
 
 /* eslint-disable import/no-extraneous-dependencies */
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import { makeStyles } from '@material-ui/core/styles';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 /* eslint-enable */
 
 import EntityPicker, { useDefaultEntity, useSourceSlug } from './EntityPicker';
@@ -53,7 +55,16 @@ export const MinisheetPreviewAside = ({ preview: { config, source, entity, setEn
   return (
     <Card elevation={0} className={`${classes.root} sticky-aside`}>
       <CardHeader
-        title={translate('datalayer.form.minisheet.preview.title')}
+        title={(
+          <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}>
+            {translate('datalayer.form.minisheet.preview.title')}
+            <Tooltip title={translate('datalayer.form.minisheet.preview.theme-info')}>
+              <Box component="span" sx={{ display: 'inline-flex', color: 'text.secondary', cursor: 'help' }}>
+                <InfoOutlinedIcon fontSize="small" />
+              </Box>
+            </Tooltip>
+          </Box>
+        )}
         titleTypographyProps={{ variant: 'subtitle1' }}
       />
       {slug && (

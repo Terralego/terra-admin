@@ -621,23 +621,13 @@
           "render-error": "Erreur dans le modèle :",
           "unsupported": "Aperçu à venir pour le bloc « %{type} »."
         },
-        "display-on-click": "Afficher la minifiche",
         "disabled": "La mini-fiche n'est pas affichée.",
-        "template": "Modèle de la minifiche",
-        "pick-highlight-color": "Sélectionner une couleur de surbrillance",
-        "advanced": "Mode expert",
         "enable": "Activer la mini-fiche",
         "enabled": "Mini-fiche affichée",
         "section": "Titre de la section",
         "title-field": {
           "input": "Sélectionnez un champ pour le titre",
           "default": "Titre par defaut"
-        },
-        "select-field": "Sélectionnez un champ",
-        "add-field": "Ajouter un champ",
-        "add-section": {
-          "text": "Ajouter une section",
-          "label": "Ajouter une section"
         },
         "field": {
           "field": "Champ sélectionné",

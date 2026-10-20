@@ -569,23 +569,13 @@
           "render-error": "Template error:",
           "unsupported": "Preview of the \"%{type}\" block to come."
         },
-        "display-on-click": "Show mini-sheet",
         "disabled": "The minisheet is not shown.",
-        "template": "Mini-sheet template",
-        "pick-highlight-color": "Select over lighting color",
-        "advanced": "Advanced mode",
         "enable": "Enable the minisheet",
         "enabled": "Minisheet shown",
         "section": "Section title",
         "title-field": {
           "input": "Select a title field",
           "default": "Default title"
-        },
-        "select-field": "Select a field",
-        "add-field": "Add a field",
-        "add-section": {
-          "text": "Add a section",
-          "label": "Add a section"
         },
         "field": {
           "field": "Selected field",

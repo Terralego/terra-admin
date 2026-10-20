@@ -77,12 +77,14 @@ const Blocks = ({ blocks, properties }) => toPreviewParts(blocks).map(part => (p
   ? <NunjucksPart key={part.key} template={part.template} properties={properties} />
   : <BlockPart key={part.key} block={part.block} properties={properties} />));
 
+const FRONT_CONTENT_WIDTH = 350;
+
 /**
  * The minisheet as the front would show it, for given object properties:
  * the title, then each block in order.
  */
 export const MinisheetPreview = ({ config, properties }) => (
-  <Box sx={{ ...detailsStyles, display: 'flex', flexDirection: 'column', gap: 2 }}>
+  <Box sx={{ ...detailsStyles, display: 'flex', flexDirection: 'column', gap: 2, width: '100%', maxWidth: FRONT_CONTENT_WIDTH, mx: 'auto' }}>
     <Title title={config?.title} properties={properties} />
     <Blocks blocks={config?.blocks} properties={properties} />
   </Box>

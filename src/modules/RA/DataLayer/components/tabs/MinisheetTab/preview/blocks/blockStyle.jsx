@@ -39,6 +39,6 @@ export const BlockIcon = ({ icon }) => {
     return null;
   }
   return isImageLink(value)
-    ? <Box component="img" src={value} alt="" sx={{ height: '1.2em', verticalAlign: 'middle' }} />
+    ? <Box component="img" src={value} alt="" sx={{ height: '1.2em', maxWidth: '100%', objectFit: 'contain', verticalAlign: 'middle' }} />
     : <Box component="span" aria-hidden>{value}</Box>;
 };

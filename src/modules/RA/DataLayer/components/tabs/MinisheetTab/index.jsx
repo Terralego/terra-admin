@@ -1,49 +1,70 @@
 import React from 'react';
 
-import {
-  TextInput,
-  BooleanInput,
-  useTranslate,
-} from 'react-admin';
+import { useTranslate } from 'react-admin';
+import { useField } from 'react-final-form';
 
-import { Field } from 'react-final-form';
-
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@mui/material/Button';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 import Placeholder from '../../../../../../components/Placeholder';
-import ColorPicker from '../../../../../../components/react-admin/ColorPicker';
-import HelpContent from '../../../../../../components/react-admin/HelpContent';
-import FieldGroup from '../../../../../../components/react-admin/FieldGroup';
-import Condition from '../../../../../../components/react-admin/Condition';
 import useSourceData from '../../useSourceData';
 import MinisheetEditor from './MinisheetEditor';
 import { MinisheetPreviewPublisher } from './useMinisheetPreview';
 
-const useStyles = makeStyles({
-  placeholder: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  title: {
-    width: '100%',
-    borderBottom: 'thin solid grey',
-    marginBottom: '25px',
-  },
-  section: {
-    width: '100%',
-    marginBottom: '25px',
-  },
-});
+const I18N = 'datalayer.form.minisheet';
 
+const MinisheetSettings = () => {
+  const translate = useTranslate();
+  const { input: enable } = useField('minisheet_config.enable', { type: 'checkbox' });
+  const { input: color } = useField('minisheet_config.highlight_color', { defaultValue: '#cccccc' });
+
+  return (
+    <Stack spacing={2} sx={{ width: '100%' }}>
+      <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+        <FormControlLabel
+          control={<Switch checked={Boolean(enable.checked)} onChange={enable.onChange} />}
+          label={translate(`${I18N}.enabled`)}
+        />
+        <TextField
+          size="small"
+          type="color"
+          sx={{ width: 200, flexShrink: 0 }}
+          label={translate(`${I18N}.highlight-color`)}
+          value={color.value || '#cccccc'}
+          slotProps={{ inputLabel: { shrink: true } }}
+          onChange={color.onChange}
+        />
+      </Stack>
+      <MinisheetEditor />
+    </Stack>
+  );
+};
+
+const MinisheetDisabled = () => {
+  const translate = useTranslate();
+  const { input: { onChange } } = useField('minisheet_config.enable', { type: 'checkbox' });
+
+  return (
+    <Paper variant="outlined" sx={{ p: 4, width: '100%' }}>
+      <Stack spacing={2} alignItems="center">
+        <Typography color="text.secondary">{translate(`${I18N}.disabled`)}</Typography>
+        <Button variant="contained" onClick={() => onChange(true)}>
+          {translate(`${I18N}.enable`)}
+        </Button>
+      </Stack>
+    </Paper>
+  );
+};
 
 const MinisheetTab = () => {
-  const classes = useStyles();
   const translate = useTranslate();
   const { geom_type: geomType, id: sourceId } = useSourceData('source');
+  const { input: { value: enabled } } = useField('minisheet_config.enable', { subscription: { value: true } });
 
   if (geomType === undefined || !sourceId) {
     return (
@@ -51,7 +72,7 @@ const MinisheetTab = () => {
         <MinisheetPreviewPublisher />
         <Placeholder>
           <Typography variant="h5" component="h2">
-            {translate('datalayer.form.minisheet.no-source')}
+            {translate(`${I18N}.no-source`)}
           </Typography>
         </Placeholder>
       </>
@@ -61,47 +82,7 @@ const MinisheetTab = () => {
   return (
     <>
       <MinisheetPreviewPublisher />
-      <Condition when="minisheet_config.enable" is={v => !v}>
-        <Placeholder>
-          <div className={classes.placeholder}>
-            <Typography variant="h5" component="h2" style={{ paddingBottom: '1em' }}>
-              {translate('datalayer.form.minisheet.card-message')}
-            </Typography>
-            <BooleanInput
-              source="minisheet_config.enable"
-              label="datalayer.form.minisheet.enable"
-            />
-          </div>
-        </Placeholder>
-      </Condition>
-
-      <Condition when="minisheet_config.enable" is>
-        <BooleanInput source="minisheet_config.enable" label="datalayer.form.minisheet.disable" defaultValue={false} />
-        <FieldGroup>
-          <div className={classes.title}>
-            <h3>{translate('datalayer.form.minisheet.title')}</h3>
-          </div>
-          <div className={classes.section}>
-            <InputLabel>{translate('datalayer.form.minisheet.color-label')}</InputLabel>
-            <Field name="minisheet_config.highlight_color" defaultValue="#cccccc">
-              {({ input: { onChange, value } }) => (
-                <ColorPicker onChange={onChange} value={value} />
-              )}
-            </Field>
-          </div>
-          <div className={classes.section}>
-            <MinisheetEditor />
-          </div>
-          <TextInput
-            label="datalayer.form.compare-url.title"
-            source="settings.compare"
-          />
-          <HelpContent
-            title="datalayer.form.compare-url.help-title"
-            content="datalayer.form.compare-url.help-text"
-          />
-        </FieldGroup>
-      </Condition>
+      {enabled ? <MinisheetSettings /> : <MinisheetDisabled />}
     </>
   );
 };

@@ -622,14 +622,13 @@
           "unsupported": "Aperçu à venir pour le bloc « %{type} »."
         },
         "display-on-click": "Afficher la minifiche",
-        "card-message": "Pour activer une mini-fiche, cliquer sur",
+        "disabled": "La mini-fiche n'est pas affichée.",
         "template": "Modèle de la minifiche",
         "pick-highlight-color": "Sélectionner une couleur de surbrillance",
         "advanced": "Mode expert",
-        "enable": "Activer",
-        "disable": "Désactiver",
+        "enable": "Activer la mini-fiche",
+        "enabled": "Mini-fiche affichée",
         "section": "Titre de la section",
-        "title": "Modèle de mini fiche",
         "title-field": {
           "input": "Sélectionnez un champ pour le titre",
           "default": "Titre par defaut"
@@ -649,7 +648,7 @@
         },
         "true": "Oui",
         "false": "Non",
-        "color-label": "Sélectionnez une couleur de surlignement",
+        "highlight-color": "Couleur de surlignement",
         "no-source": "Veuillez choisir une source de données avant de configurer la mini-fiche",
         "chart": {
           "label": "Titre du graphique (facultatif)",

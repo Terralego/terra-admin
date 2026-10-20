@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { BooleanInput, useTranslate } from 'react-admin';
+import { BooleanInput, TextInput, useTranslate } from 'react-admin';
 import { useField } from 'react-final-form';
 
 import Typography from '@material-ui/core/Typography';
 import Placeholder from '../../../../../../components/Placeholder';
+import HelpContent from '../../../../../../components/react-admin/HelpContent';
 
 import TableConfigField from './TableConfigField';
 
@@ -86,6 +87,16 @@ const TableConfigTabContent = props => {
           {...props}
         />
       )}
+
+      <TextInput
+        label="datalayer.form.compare-url.title"
+        source="settings.compare"
+        fullWidth
+      />
+      <HelpContent
+        title="datalayer.form.compare-url.help-title"
+        content="datalayer.form.compare-url.help-text"
+      />
     </>
   );
 };

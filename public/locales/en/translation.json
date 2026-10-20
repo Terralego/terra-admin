@@ -570,14 +570,13 @@
           "unsupported": "Preview of the \"%{type}\" block to come."
         },
         "display-on-click": "Show mini-sheet",
-        "card-message": "To activate a minisheet, click on:",
+        "disabled": "The minisheet is not shown.",
         "template": "Mini-sheet template",
         "pick-highlight-color": "Select over lighting color",
         "advanced": "Advanced mode",
-        "enable": "Enable",
-        "disable": "Disable",
+        "enable": "Enable the minisheet",
+        "enabled": "Minisheet shown",
         "section": "Section title",
-        "title": "Minisheet model",
         "title-field": {
           "input": "Select a title field",
           "default": "Default title"
@@ -597,7 +596,7 @@
         },
         "true": "Yes",
         "false": "No",
-        "color-label": "Select a highlight color",
+        "highlight-color": "Highlight color",
         "no-source": "Please select a source before configuring the minisheet",
         "chart": {
           "label": "Chart title (optional)",

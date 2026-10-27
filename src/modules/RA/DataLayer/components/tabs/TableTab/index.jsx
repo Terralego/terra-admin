@@ -4,6 +4,9 @@ import { BooleanInput, useTranslate } from 'react-admin';
 import { useField } from 'react-final-form';
 
 import Typography from '@material-ui/core/Typography';
+import Paper from '@mui/material/Paper';
+import MuiTypography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import Placeholder from '../../../../../../components/Placeholder';
 
 import TableConfigField from './TableConfigField';
@@ -14,6 +17,33 @@ const validateTableFields = data => {
     return 'datalayer.form.table.row-in-error';
   }
   return undefined;
+};
+
+const CompareUrlCard = () => {
+  const translate = useTranslate();
+  const { input } = useField('settings.compare');
+
+  return (
+    <Paper variant="outlined" sx={{ p: 2, mt: 3 }}>
+      <MuiTypography variant="subtitle1" gutterBottom>
+        {translate('datalayer.form.compare-url.help-title')}
+      </MuiTypography>
+      <MuiTypography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mb: 2 }}
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: translate('datalayer.form.compare-url.help-text') }}
+      />
+      <TextField
+        size="small"
+        fullWidth
+        label={translate('datalayer.form.compare-url.title')}
+        value={input.value ?? ''}
+        onChange={input.onChange}
+      />
+    </Paper>
+  );
 };
 
 const TableConfigTabContent = props => {
@@ -86,6 +116,8 @@ const TableConfigTabContent = props => {
           {...props}
         />
       )}
+
+      <CompareUrlCard />
     </>
   );
 };

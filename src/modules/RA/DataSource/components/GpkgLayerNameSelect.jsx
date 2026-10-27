@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { FormHelperText } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import Api from '../../../../terra-front/Api';
+import getUploadErrorMessage from './getUploadErrorMessage';
 
 const GpkgLayerNameSelect = () => {
   const [layerNames, setLayerNames] = React.useState([]);
@@ -37,7 +38,11 @@ const GpkgLayerNameSelect = () => {
         setLayerNames(layers);
         if (layers.length > 0) setLayerNameRef.current(layers[0].name);
       })
-      .catch(() => { if (!cancelled) { setLayerNames([]); setError(t('datasource.form.gpkg-layers-error')); } })
+      .catch(err => {
+        if (cancelled) return;
+        setLayerNames([]);
+        setError(getUploadErrorMessage(err, t, t('datasource.form.gpkg-layers-error')));
+      })
       .finally(() => { if (!cancelled) setLoading(false); });
 
     return () => { cancelled = true; };

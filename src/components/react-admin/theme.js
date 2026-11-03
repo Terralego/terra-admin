@@ -56,6 +56,21 @@ export const theme = {
         // hauteur de ce bloc n'est jamais contrainte, elle suit son contenu.
         minWidth:  0,
         overflowX: 'auto',
+        '&:has(.sticky-aside)': {
+          overflowX: 'visible',
+        },
+      },
+    },
+    RaEdit: {
+      card: {
+        minWidth: 0,
+        '&&':     { overflowX: 'auto' },
+      },
+    },
+    RaCreate: {
+      card: {
+        minWidth: 0,
+        '&&':     { overflowX: 'auto' },
       },
     },
     RaList: {

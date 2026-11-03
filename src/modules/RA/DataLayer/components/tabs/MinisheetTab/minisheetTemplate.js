@@ -27,7 +27,7 @@ const getFieldMetaData = (fieldId, fields) => {
   return { fieldType, round, label, name };
 };
 
-const getFieldTemplate = (layerFields = [], translate) => ({
+export const getFieldTemplate = (layerFields = [], translate) => ({
   prefix,
   suffix,
   default: defaultText = '',
@@ -48,7 +48,7 @@ const getFieldTemplate = (layerFields = [], translate) => ({
     + '</li>\n';
 };
 
-const getTemplateNode = (fields, translate) => node => {
+export const getTemplateNode = (fields, translate) => node => {
   if (!node.group) {
     const { fieldType, round, label, name } = getFieldMetaData(node.sourceFieldId, fields);
     const fieldTemplate = getFieldNameTemplate(name, fieldType, round, translate);

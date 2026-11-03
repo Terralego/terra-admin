@@ -1,0 +1,430 @@
+import React from 'react';
+import { useTranslate } from 'react-admin';
+import {
+  DndContext,
+  DragOverlay,
+  KeyboardSensor,
+  MeasuringStrategy,
+  PointerSensor,
+  closestCenter,
+  pointerWithin,
+  useDndContext,
+  useDroppable,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+} from '@dnd-kit/sortable';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import ListSubheader from '@mui/material/ListSubheader';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+
+/* eslint-disable import/no-extraneous-dependencies */
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import DuplicateIcon from '@material-ui/icons/FileCopyOutlined';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+/* eslint-enable */
+
+import {
+  ROOT,
+  canPlace,
+  duplicateBlock,
+  findBlock,
+  getBranches,
+  insertBlock,
+  moveBlock,
+  removeBlock,
+  updateBlock,
+} from './blockTree';
+
+/**
+ * Generic editor of an ordered tree of blocks: add, remove, reorder and nest
+ * by drag and drop, with the settings of each block under its header.
+ *
+ * Each type of the registry gives, on top of the nesting rules of blockTree:
+ *   - label: translation key of its name
+ *   - category: key of its group in the menu adding a block (see `categories`)
+ *   - create(context): settings of a new block
+ *   - Settings: component editing the block ({ block, onChange, context })
+ *   - summary(block, context): short text shown next to its name
+ *   - branchLabels: translation keys naming its branches ("Content" by default)
+ *   - actions: [{ label, icon, run(block, context) }], each turning the block
+ *     into the one `run` returns; offered only where that one may stand
+ *
+ * Each block may be duplicated: the copy, with all it holds, comes right below.
+ *
+ * create, Settings and summary find in `context.ancestors` the types of the
+ * blocks holding theirs, closest last.
+ */
+const EditorContext = React.createContext();
+
+/** The context of the editor, with the types of the blocks holding the one at `place`. */
+const usePlaceContext = ({ parentId }) => {
+  const { registry, blocks, context } = React.useContext(EditorContext);
+  const parent = parentId ? findBlock(registry, blocks, parentId) : null;
+  const ancestors = parent ? [...parent.ancestors, parent.block.type].join() : '';
+  return React.useMemo(() => ({ ...context, ancestors: ancestors ? ancestors.split(',') : [] }), [context, ancestors]);
+};
+
+const endZoneId = ({ parentId, branch }) => `end:${parentId ?? 'root'}:${branch ?? ''}`;
+
+const AddBlockMenu = ({ place }) => {
+  const translate = useTranslate();
+  const { registry, categories, blocks, rules, createId, onChange, toggle } = React.useContext(EditorContext);
+  const context = usePlaceContext(place);
+  const [anchor, setAnchor] = React.useState(null);
+
+  const newBlock = type => {
+    const definition = registry[type];
+    const branches = Object.fromEntries((definition.branches ?? []).map(branch => [branch, []]));
+    return { id: createId(), type, ...branches, ...definition.create?.(context) };
+  };
+
+  const types = Object.keys(registry)
+    .filter(type => canPlace(registry, blocks, newBlock(type), place, rules));
+
+  if (!types.length) {
+    return null;
+  }
+
+  const known = new Set(categories.map(({ key }) => key));
+  const groups = [
+    ...categories.map(({ key, label }) => ({ key, label, types: types.filter(type => registry[type].category === key) })),
+    { key: '', types: types.filter(type => !known.has(registry[type].category)) },
+  ].filter(group => group.types.length);
+
+  const item = type => (
+    <MenuItem
+      key={type}
+      dense
+      onClick={() => {
+        setAnchor(null);
+        const block = newBlock(type);
+        onChange(insertBlock(registry, blocks, place, block));
+        if (registry[type].Settings) {
+          toggle(block.id);
+        }
+      }}
+    >
+      {translate(registry[type].label)}
+    </MenuItem>
+  );
+
+  return (
+    <>
+      <Button size="small" startIcon={<AddIcon />} onClick={event => setAnchor(event.currentTarget)}>
+        {translate('block-editor.add')}
+      </Button>
+      <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={() => setAnchor(null)}>
+        {groups.flatMap(({ key, label, types: groupTypes }, index) => [
+          index > 0 && <Divider key={`divider:${key}`} />,
+          label && <ListSubheader key={`category:${key}`} sx={{ lineHeight: '32px' }}>{translate(label)}</ListSubheader>,
+          ...groupTypes.map(item),
+        ].filter(Boolean))}
+      </Menu>
+    </>
+  );
+};
+
+/** Whether the block being dragged may be dropped at `place`. */
+const useCanDrop = place => {
+  const { active } = useDndContext();
+  const { registry, blocks, rules } = React.useContext(EditorContext);
+  if (!active) {
+    return false;
+  }
+  const dragged = findBlock(registry, blocks, active.id)?.block;
+  return Boolean(dragged) && canPlace(registry, blocks, dragged, place, rules);
+};
+
+const DropPlaceholder = ({ visible }) => (visible ? (
+  <Box
+    sx={{
+      height: 40,
+      mb: 1,
+      border: 2,
+      borderStyle: 'dashed',
+      borderColor: 'primary.main',
+      borderRadius: 1,
+      bgcolor: 'action.hover',
+    }}
+  />
+) : null);
+
+const noShift = () => null;
+
+const EndZone = ({ place }) => {
+  const { setNodeRef, isOver } = useDroppable({ id: endZoneId(place), data: { place } });
+  const allowed = useCanDrop(place);
+
+  return (
+    <Box ref={setNodeRef} sx={{ minHeight: 8 }}>
+      <DropPlaceholder visible={isOver && allowed} />
+      <AddBlockMenu place={place} />
+    </Box>
+  );
+};
+
+const BlockList = ({ place, items }) => (
+  <SortableContext items={items.map(({ id }) => id)} strategy={noShift}>
+    <Stack spacing={1}>
+      {items.map((block, index) => (
+        // eslint-disable-next-line no-use-before-define
+        <BlockItem key={block.id} block={block} place={{ ...place, index }} />
+      ))}
+    </Stack>
+    <EndZone place={place} />
+  </SortableContext>
+);
+
+const stopPropagation = event => event.stopPropagation();
+
+const BlockItem = ({ block, place }) => {
+  const translate = useTranslate();
+  const { registry, blocks, rules, context, createId, onChange, expanded, toggle } = React.useContext(EditorContext);
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    isDragging,
+    isOver,
+  } = useSortable({ id: block.id, data: { place } });
+  const allowed = useCanDrop(place);
+  const placeContext = usePlaceContext(place);
+
+  const definition = registry[block.type] ?? {};
+  const { Settings } = definition;
+  const branches = getBranches(registry, block);
+  const open = expanded.has(block.id);
+  const summary = definition.summary?.(block, placeContext);
+
+  const handleChange = update => onChange(updateBlock(registry, blocks, block.id, update));
+
+  const actions = (definition.actions ?? [])
+    .map(action => ({ ...action, result: action.run(block, context) }))
+    .filter(({ result }) => canPlace(registry, blocks, result, place, rules));
+
+  return (
+    <Box ref={setNodeRef}>
+      <DropPlaceholder visible={isOver && !isDragging && allowed} />
+      <Paper variant="outlined" sx={isDragging ? { opacity: 0.4, borderStyle: 'dashed' } : undefined}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={1}
+          onClick={Settings ? () => toggle(block.id) : undefined}
+          sx={{ px: 1, py: 0.5, cursor: Settings ? 'pointer' : 'default' }}
+        >
+          <IconButton
+            size="small"
+            ref={setActivatorNodeRef}
+            {...attributes}
+            {...listeners}
+            onClick={stopPropagation}
+            sx={{ cursor: 'grab' }}
+            aria-label={translate('block-editor.move')}
+          >
+            <DragIndicatorIcon fontSize="small" />
+          </IconButton>
+          <Typography variant="subtitle2" sx={{ flexShrink: 0 }}>
+            {translate(definition.label ?? block.type)}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" noWrap sx={{ flex: 1, minWidth: 0 }}>
+            {summary}
+          </Typography>
+          {actions.map(({ label, icon: Icon, result }) => (
+            <Tooltip key={label} title={translate(label)}>
+              <IconButton
+                size="small"
+                onClick={event => {
+                  event.stopPropagation();
+                  onChange(updateBlock(registry, blocks, block.id, () => result));
+                  if (!open && registry[result.type]?.Settings) {
+                    toggle(block.id);
+                  }
+                }}
+              >
+                <Icon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          ))}
+          {Settings && (
+            <Tooltip title={translate(open ? 'block-editor.collapse' : 'block-editor.expand')}>
+              <IconButton size="small">
+                {open ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
+              </IconButton>
+            </Tooltip>
+          )}
+          <Tooltip title={translate('block-editor.duplicate')}>
+            <IconButton
+              size="small"
+              onClick={event => {
+                event.stopPropagation();
+                onChange(duplicateBlock(registry, blocks, block.id, createId).blocks);
+              }}
+            >
+              <DuplicateIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={translate('block-editor.remove')}>
+            <IconButton
+              size="small"
+              onClick={event => {
+                event.stopPropagation();
+                onChange(removeBlock(registry, blocks, block.id));
+              }}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+        {Settings && (
+          <Collapse in={open} unmountOnExit>
+            <Box sx={{ px: 2, pb: 2 }}>
+              <Settings block={block} onChange={handleChange} context={placeContext} />
+            </Box>
+          </Collapse>
+        )}
+        {branches.map(branch => (
+          <Box key={branch} sx={{ borderTop: 1, borderColor: 'divider', bgcolor: 'action.hover', pl: 2, pr: 1, pt: 0.5, pb: 1 }}>
+            <Typography variant="caption" color="text.secondary" component="div" sx={{ mb: 0.5 }}>
+              {translate(definition.branchLabels?.[branch] ?? 'block-editor.children')}
+            </Typography>
+            <BlockList place={{ parentId: block.id, branch }} items={block[branch] ?? []} />
+          </Box>
+        ))}
+      </Paper>
+    </Box>
+  );
+};
+
+const DragPreview = ({ id }) => {
+  const translate = useTranslate();
+  const { registry, blocks, context } = React.useContext(EditorContext);
+  const block = findBlock(registry, blocks, id)?.block;
+  if (!block) {
+    return null;
+  }
+  const definition = registry[block.type] ?? {};
+
+  return (
+    <Paper elevation={6} sx={{ px: 1, py: 0.5, cursor: 'grabbing' }}>
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <DragIndicatorIcon fontSize="small" />
+        <Typography variant="subtitle2" sx={{ flexShrink: 0 }}>
+          {translate(definition.label ?? block.type)}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" noWrap sx={{ flex: 1, minWidth: 0 }}>
+          {definition.summary?.(block, context)}
+        </Typography>
+      </Stack>
+    </Paper>
+  );
+};
+
+const measuring = { droppable: { strategy: MeasuringStrategy.Always } };
+
+const NO_BLOCKS = [];
+const NO_CATEGORIES = [];
+
+const area = rect => (rect ? rect.width * rect.height : Infinity);
+
+export const BlockEditor = ({
+  blocks = NO_BLOCKS,
+  onChange,
+  registry,
+  categories = NO_CATEGORIES,
+  rootAccepts,
+  maxDepth,
+  context,
+  createId,
+}) => {
+  const [expanded, setExpanded] = React.useState(() => new Set());
+  const [activeId, setActiveId] = React.useState(null);
+  const toggle = React.useCallback(id => setExpanded(previous => {
+    const next = new Set(previous);
+    if (!next.delete(id)) {
+      next.add(id);
+    }
+    return next;
+  }), []);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
+
+  const rules = React.useMemo(() => ({ rootAccepts, maxDepth }), [rootAccepts, maxDepth]);
+
+  const collisionDetection = React.useCallback(args => {
+    const dragged = findBlock(registry, blocks, args.active.id)?.block;
+    const insideDragged = id => Boolean(dragged && id !== null && findBlock(registry, [dragged], id));
+    const hits = pointerWithin(args)
+      .filter(({ id, data }) => {
+        const place = data?.droppableContainer?.data.current?.place;
+        return !insideDragged(id) && !insideDragged(place?.parentId ?? null);
+      })
+      .toSorted((a, b) => area(args.droppableRects.get(a.id)) - area(args.droppableRects.get(b.id)));
+    return hits.length ? hits : closestCenter(args);
+  }, [registry, blocks]);
+
+  const handleDragEnd = ({ active, over }) => {
+    setActiveId(null);
+    const place = over?.data.current?.place;
+    if (!place || over.id === active.id) {
+      return;
+    }
+    const { block } = findBlock(registry, blocks, active.id) ?? {};
+    if (block && canPlace(registry, blocks, block, place, rules)) {
+      onChange(moveBlock(registry, blocks, active.id, place));
+    }
+  };
+
+  const value = React.useMemo(() => ({
+    registry,
+    categories,
+    blocks,
+    rules,
+    context,
+    createId,
+    onChange,
+    expanded,
+    toggle,
+  }), [registry, categories, blocks, rules, context, createId, onChange, expanded, toggle]);
+
+  return (
+    <EditorContext.Provider value={value}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={collisionDetection}
+        measuring={measuring}
+        onDragStart={({ active }) => setActiveId(active.id)}
+        onDragEnd={handleDragEnd}
+        onDragCancel={() => setActiveId(null)}
+      >
+        <BlockList place={ROOT} items={blocks} />
+        <DragOverlay dropAnimation={null}>
+          {activeId ? <DragPreview id={activeId} /> : null}
+        </DragOverlay>
+      </DndContext>
+    </EditorContext.Provider>
+  );
+};
+
+export default BlockEditor;

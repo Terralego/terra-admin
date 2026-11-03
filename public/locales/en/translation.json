@@ -1,4 +1,13 @@
 {
+  "block-editor": {
+    "add": "Add a block",
+    "move": "Move the block",
+    "expand": "Show settings",
+    "collapse": "Hide settings",
+    "remove": "Remove the block",
+    "children": "Content",
+    "duplicate": "Duplicate the block"
+  },
   "common": {
     "add": "Add",
     "cancel": "Cancel",
@@ -528,24 +537,47 @@
       },
       "minisheet": {
         "tab": "Mini-sheet",
-        "display-on-click": "Show mini-sheet",
-        "card-message": "To activate a minisheet, click on:",
-        "template": "Mini-sheet template",
-        "pick-highlight-color": "Select over lighting color",
-        "advanced": "Advanced mode",
-        "enable": "Enable",
-        "disable": "Disable",
+        "blocks": {
+          "title": "Title",
+          "add-title": "Add a title",
+          "field": "Field",
+          "icon": "Icon (link to an image)",
+          "legacy-field": "Field (legacy)",
+          "legacy-section": "Section (legacy)",
+          "expert": "Expert",
+          "to-expert": "Convert to an Expert block",
+          "chart": "Chart",
+          "typography": "Text",
+          "card": "Card",
+          "alert": "Alert",
+          "button": "Button",
+          "field-block": "Field",
+          "image": "Image",
+          "accordion": "Accordion",
+          "iframe": "Embedded page (iframe)",
+          "divider": "Separator",
+          "repeat": "Repeat",
+          "condition": "Condition"
+        },
+        "preview": {
+          "title": "Preview",
+          "show": "Show preview",
+          "hide": "Hide preview",
+          "entity": "Entity",
+          "entity-loading": "Loading…",
+          "entity-none": "No entity",
+          "no-entity": "The source has no entity.",
+          "theme-info": "The preview does not take into account the theme that may apply on the public site.",
+          "render-error": "Template error:",
+          "unsupported": "Preview of the \"%{type}\" block to come."
+        },
+        "disabled": "The minisheet is not shown.",
+        "enable": "Enable the minisheet",
+        "enabled": "Minisheet shown",
         "section": "Section title",
-        "title": "Minisheet model",
         "title-field": {
           "input": "Select a title field",
           "default": "Default title"
-        },
-        "select-field": "Select a field",
-        "add-field": "Add a field",
-        "add-section": {
-          "text": "Add a section",
-          "label": "Add a section"
         },
         "field": {
           "field": "Selected field",
@@ -556,8 +588,203 @@
         },
         "true": "Yes",
         "false": "No",
-        "color-label": "Select a highlight color",
-        "no-source": "Please select a source before configuring the minisheet"
+        "highlight-color": "Highlight color",
+        "no-source": "Please select a source before configuring the minisheet",
+        "chart": {
+          "label": "Chart title (optional)",
+          "decimals": "Decimals",
+          "series": "Series",
+          "series-label": "Label",
+          "color": "Color",
+          "remove-series": "Remove the series",
+          "add-series": "Add a field",
+          "series-count": "%{smart_count} series |||| %{smart_count} series",
+          "no-data": "No numeric value to show.",
+          "add-fixed-series": "Add a fixed value",
+          "fixed-value": "Fixed value"
+        },
+        "style": {
+          "color": "Color",
+          "custom-color": "Custom",
+          "colors": {
+            "default": "Default",
+            "primary": "Primary",
+            "secondary": "Secondary",
+            "error": "Danger",
+            "warning": "Warning",
+            "info": "Information",
+            "success": "Success",
+            "custom": "Custom",
+            "inherit": "Inherit from parent"
+          },
+          "icon": "Icon (emoji or link to an image)",
+          "icon-position": "Icon position",
+          "icon-positions": {
+            "start": "Before",
+            "end": "After"
+          },
+          "insert-field": "Insert a field"
+        },
+        "typography": {
+          "text": "Text",
+          "variant": "Level",
+          "variants": {
+            "h1": "Heading 1",
+            "h2": "Heading 2",
+            "h3": "Heading 3",
+            "h4": "Heading 4",
+            "h5": "Heading 5",
+            "h6": "Heading 6",
+            "subtitle1": "Subtitle 1",
+            "subtitle2": "Subtitle 2",
+            "body1": "Text",
+            "body2": "Secondary text",
+            "caption": "Caption"
+          },
+          "align": "Alignment",
+          "aligns": {
+            "left": "Left",
+            "center": "Center",
+            "right": "Right",
+            "justify": "Justify"
+          },
+          "transform": "Case",
+          "transforms": {
+            "none": "Default",
+            "capitalize": "Capitalize each word",
+            "uppercase": "Uppercase",
+            "lowercase": "Lowercase"
+          }
+        },
+        "card": {
+          "border": "Border",
+          "background": "Background",
+          "accent": "Left bar"
+        },
+        "alert": {
+          "severity": "Type",
+          "severities": {
+            "info": "Information",
+            "success": "Success",
+            "warning": "Warning",
+            "error": "Error"
+          },
+          "title": "Title (optional)",
+          "text": "Text"
+        },
+        "button": {
+          "label": "Label",
+          "href": "Link",
+          "variant": "Style",
+          "variants": {
+            "text": "Link",
+            "outlined": "Outlined",
+            "contained": "Filled"
+          }
+        },
+        "field-block": {
+          "label": "Label",
+          "style": "Style",
+          "styles": {
+            "simple": "Key / value",
+            "stacked": "Label above",
+            "spread": "Spaced",
+            "highlight": "Highlighted value"
+          },
+          "format": "Format",
+          "decimals": "Decimals",
+          "date": "Date format",
+          "date-custom": "Custom…",
+          "date-pattern": "Pattern",
+          "date-pattern-help": "yyyy, MM, MMMM, dd, d, EEEE, HH, mm, ss",
+          "true-text": "Text if yes",
+          "true-icon": "Icon if yes",
+          "false-text": "Text if no",
+          "false-icon": "Icon if no",
+          "repeated": "Current field",
+          "false-icon-borrowed": "Without “Icon if no”, the “Icon if yes” is shown dimmed.",
+          "icon-only": "With an icon, only the icon is shown."
+        },
+        "image": {
+          "src": "Link to the image",
+          "alt": "Alternative text",
+          "caption": "Caption (optional)",
+          "width": "Width: %{width}%",
+          "align": "Alignment",
+          "aligns": {
+            "left": "Left",
+            "center": "Center",
+            "right": "Right"
+          },
+          "rounded": "Rounded corners",
+          "width-px": "Width (px)",
+          "unit": "Unit",
+          "units": {
+            "percent": "Percentage",
+            "px": "Pixels"
+          }
+        },
+        "categories": {
+          "content": "Content",
+          "layout": "Layout",
+          "media": "Media",
+          "advanced": "Advanced",
+          "legacy": "Legacy"
+        },
+        "accordion": {
+          "expanded": "Expanded by default"
+        },
+        "iframe": {
+          "src": "Link to the page",
+          "width": "Width: %{width}%",
+          "height": "Height (px)",
+          "scrolling": "Scrolling",
+          "scrollings": {
+            "auto": "Automatic",
+            "yes": "Always",
+            "no": "Never"
+          },
+          "border": "Border"
+        },
+        "repeat": {
+          "direction": "Layout",
+          "directions": {
+            "vertical": "Vertical",
+            "horizontal": "Horizontal"
+          },
+          "fields": "Fields",
+          "add-field": "Add a field",
+          "remove-field": "Remove the field",
+          "count": "%{smart_count} field |||| %{smart_count} fields",
+          "variables": {
+            "value": "Current value",
+            "formatted_value": "Current formatted value",
+            "icon": "Current icon",
+            "label": "Current label",
+            "field": "Current field name"
+          },
+          "model": "Model, repeated for each field",
+          "columns": "Items per line",
+          "columns-auto": "From the content",
+          "stretch": "Same height",
+          "field-options": "Format and default text"
+        },
+        "condition": {
+          "operator": "Condition",
+          "operators": {
+            "exists": "is set",
+            "not_exists": "is not set",
+            "eq": "equals",
+            "neq": "differs from",
+            "gt": "is greater than",
+            "lt": "is less than",
+            "truthy": "is true",
+            "falsy": "is false"
+          },
+          "value": "Value",
+          "then": "If the condition is met",
+          "else": "Otherwise"
+        }
       },
       "filter": {
         "tab": "Filter",

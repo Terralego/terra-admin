@@ -216,6 +216,7 @@ const StyleEditor = ({ path, geomType, fields, getValuesOfProperty, isExtraStyle
               source="advanced_style"
               label="style-editor.expert-advanced-style"
               fullWidth
+              requireType={false}
             />
           </Condition>
         )}

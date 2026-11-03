@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormTab, TabbedFormTabs } from 'react-admin';
+import { FormTab, TabbedFormTabs, useTranslate } from 'react-admin';
 
 import CustomFormTab from '../../../../components/react-admin/CustomFormTab';
 
@@ -9,6 +9,7 @@ import EmbedTab from './tabs/EmbedTab';
 import FilterTab from './tabs/FilterTab';
 import LegendTab from './tabs/LegendTab';
 import MinisheetTab from './tabs/MinisheetTab';
+import { getUsedFieldIds, writeMinisheetConfig } from './tabs/MinisheetTab/minisheetBlocks';
 import PopupTab from './tabs/PopupTab';
 import ReportingTab from './tabs/ReportingTab';
 import StyleTab from './tabs/StyleTab';
@@ -41,6 +42,12 @@ const inErrorReducer = (state, { type, payload }) => {
 const DataLayerForm = React.memo(props => {
   const [external, setExternal] = React.useState(true);
   const [errorState, dispatch] = React.useReducer(inErrorReducer, initialErrorState);
+  const translate = useTranslate();
+
+  const transform = React.useCallback(values => ({
+    ...values,
+    minisheet_config: writeMinisheetConfig(values.minisheet_config ?? {}, values.fields ?? [], { translate }),
+  }), [translate]);
 
   const onPopupErrorChange = React.useCallback(
     ({
@@ -74,18 +81,12 @@ const DataLayerForm = React.memo(props => {
 
   const onMiniSheetErrorChange = React.useCallback(
     ({
-      values: { fields: sourcefields, minisheet_config: { wizard: { tree = [] } = {} } = {} },
+      values: { fields: sourcefields, minisheet_config: minisheetConfig },
       errors: { fields = [] },
     }) => {
-      const minisheetFieldIds = tree.flatMap(({ children, sourceFieldId }) => {
-        if (sourceFieldId) {
-          return sourceFieldId;
-        }
-        const ids = children.flatMap(({ sourceFieldId: id }) => id);
-        return ids;
-      });
+      const minisheetFieldIds = new Set(getUsedFieldIds(minisheetConfig));
       const fieldIndexes = sourcefields
-        .map((field, index) => (minisheetFieldIds.includes(field.sourceFieldId) ? index : null))
+        .map((field, index) => (minisheetFieldIds.has(field.sourceFieldId) ? index : null))
         .filter(Boolean);
       const fieldsInError = fields.filter((f, index) => f && fieldIndexes.includes(index));
 
@@ -159,6 +160,7 @@ const DataLayerForm = React.memo(props => {
       sanitizeEmptyValues={false}
       {...props}
       initialValues={{ fields: [] }}
+      transform={transform}
     >
       <CustomFormTab
         label="datalayer.form.definition"

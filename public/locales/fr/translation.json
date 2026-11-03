@@ -1,4 +1,13 @@
 {
+  "block-editor": {
+    "add": "Ajouter un bloc",
+    "move": "Déplacer le bloc",
+    "expand": "Afficher les réglages",
+    "collapse": "Masquer les réglages",
+    "remove": "Supprimer le bloc",
+    "children": "Contenu",
+    "duplicate": "Dupliquer le bloc"
+  },
   "common": {
     "add": "Ajouter",
     "cancel": "Annuler",
@@ -580,36 +589,254 @@
       },
       "minisheet": {
         "tab": "Mini-fiche",
-        "display-on-click": "Afficher la minifiche",
-        "card-message": "Pour activer une mini-fiche, cliquer sur",
-        "template": "Modèle de la minifiche",
-        "pick-highlight-color": "Sélectionner une couleur de surbrillance",
-        "advanced": "Mode expert",
-        "enable": "Activer",
-        "disable": "Désactiver",
+        "blocks": {
+          "title": "Titre",
+          "add-title": "Ajouter un titre",
+          "field": "Champ",
+          "icon": "Icône (lien vers une image)",
+          "legacy-field": "Champ (historique)",
+          "legacy-section": "Section (historique)",
+          "expert": "Expert",
+          "to-expert": "Convertir en bloc Expert",
+          "chart": "Graphique",
+          "typography": "Texte",
+          "card": "Carte",
+          "alert": "Alerte",
+          "button": "Bouton",
+          "field-block": "Champ",
+          "image": "Image",
+          "accordion": "Accordéon",
+          "iframe": "Page intégrée (iframe)",
+          "divider": "Séparateur",
+          "repeat": "Répéter",
+          "condition": "Condition"
+        },
+        "preview": {
+          "title": "Prévisualisation",
+          "show": "Afficher la prévisualisation",
+          "hide": "Masquer la prévisualisation",
+          "entity": "Entité",
+          "entity-loading": "Chargement…",
+          "entity-none": "Aucune entité",
+          "no-entity": "La source ne contient aucune entité.",
+          "theme-info": "L’aperçu ne tient pas compte du thème qui peut s’appliquer sur le site public.",
+          "render-error": "Erreur dans le modèle :",
+          "unsupported": "Aperçu à venir pour le bloc « %{type} »."
+        },
+        "disabled": "La mini-fiche n'est pas affichée.",
+        "enable": "Activer la mini-fiche",
+        "enabled": "Mini-fiche affichée",
         "section": "Titre de la section",
-        "title": "Modèle de mini fiche",
         "title-field": {
           "input": "Sélectionnez un champ pour le titre",
           "default": "Titre par defaut"
-        },
-        "select-field": "Sélectionnez un champ",
-        "add-field": "Ajouter un champ",
-        "add-section": {
-          "text": "Ajouter une section",
-          "label": "Ajouter une section"
         },
         "field": {
           "field": "Champ sélectionné",
           "prefix": "Préfixe",
           "suffix": "Suffixe",
-          "default": "Texte par defaut",
+          "default": "Texte par défaut",
           "round": "Nombre de chiffres à arrondir"
         },
         "true": "Oui",
         "false": "Non",
-        "color-label": "Sélectionnez une couleur de surlignement",
-        "no-source": "Veuillez choisir une source de données avant de configurer la mini-fiche"
+        "highlight-color": "Couleur de surlignement",
+        "no-source": "Veuillez choisir une source de données avant de configurer la mini-fiche",
+        "chart": {
+          "label": "Titre du graphique (facultatif)",
+          "decimals": "Décimales",
+          "series": "Séries",
+          "series-label": "Libellé",
+          "color": "Couleur",
+          "remove-series": "Retirer la série",
+          "add-series": "Ajouter un champ",
+          "series-count": "%{smart_count} série |||| %{smart_count} séries",
+          "no-data": "Aucune valeur numérique à afficher.",
+          "add-fixed-series": "Ajouter une valeur fixe",
+          "fixed-value": "Valeur fixe"
+        },
+        "style": {
+          "color": "Couleur",
+          "custom-color": "Personnalisée",
+          "colors": {
+            "default": "Par défaut",
+            "primary": "Principale",
+            "secondary": "Secondaire",
+            "error": "Danger",
+            "warning": "Avertissement",
+            "info": "Information",
+            "success": "Succès",
+            "custom": "Personnalisée",
+            "inherit": "Hériter du parent"
+          },
+          "icon": "Icône (emoji ou lien vers une image)",
+          "icon-position": "Position de l'icône",
+          "icon-positions": {
+            "start": "Avant",
+            "end": "Après"
+          },
+          "insert-field": "Insérer un champ"
+        },
+        "typography": {
+          "text": "Texte",
+          "variant": "Niveau",
+          "variants": {
+            "h1": "Titre 1",
+            "h2": "Titre 2",
+            "h3": "Titre 3",
+            "h4": "Titre 4",
+            "h5": "Titre 5",
+            "h6": "Titre 6",
+            "subtitle1": "Sous-titre 1",
+            "subtitle2": "Sous-titre 2",
+            "body1": "Texte",
+            "body2": "Texte secondaire",
+            "caption": "Légende"
+          },
+          "align": "Alignement",
+          "aligns": {
+            "left": "À gauche",
+            "center": "Centré",
+            "right": "À droite",
+            "justify": "Justifié"
+          },
+          "transform": "Casse",
+          "transforms": {
+            "none": "Par défaut",
+            "capitalize": "Majuscule à chaque mot",
+            "uppercase": "Majuscules",
+            "lowercase": "Minuscules"
+          }
+        },
+        "card": {
+          "border": "Bordure",
+          "background": "Fond",
+          "accent": "Barre à gauche"
+        },
+        "alert": {
+          "severity": "Type",
+          "severities": {
+            "info": "Information",
+            "success": "Succès",
+            "warning": "Avertissement",
+            "error": "Erreur"
+          },
+          "title": "Titre (facultatif)",
+          "text": "Texte"
+        },
+        "button": {
+          "label": "Libellé",
+          "href": "Lien",
+          "variant": "Style",
+          "variants": {
+            "text": "Lien",
+            "outlined": "Bordure",
+            "contained": "Plein"
+          }
+        },
+        "field-block": {
+          "label": "Libellé",
+          "style": "Style",
+          "styles": {
+            "simple": "Clé / valeur",
+            "stacked": "Libellé au-dessus",
+            "spread": "Espacé",
+            "highlight": "Valeur mise en avant"
+          },
+          "format": "Format",
+          "decimals": "Décimales",
+          "date": "Format de date",
+          "date-custom": "Personnalisé…",
+          "date-pattern": "Motif",
+          "date-pattern-help": "yyyy, MM, MMMM, dd, d, EEEE, HH, mm, ss",
+          "true-text": "Texte si oui",
+          "true-icon": "Icône si oui",
+          "false-text": "Texte si non",
+          "false-icon": "Icône si non",
+          "repeated": "Champ courant",
+          "false-icon-borrowed": "Sans « Icône si non », l’« Icône si oui » est affichée atténuée.",
+          "icon-only": "Avec une icône, seule l’icône est affichée."
+        },
+        "image": {
+          "src": "Lien vers l'image",
+          "alt": "Texte alternatif",
+          "caption": "Légende (facultative)",
+          "width": "Largeur : %{width} %",
+          "align": "Alignement",
+          "aligns": {
+            "left": "À gauche",
+            "center": "Centré",
+            "right": "À droite"
+          },
+          "rounded": "Coins arrondis",
+          "width-px": "Largeur (px)",
+          "unit": "Unité",
+          "units": {
+            "percent": "Pourcentage",
+            "px": "Pixels"
+          }
+        },
+        "categories": {
+          "content": "Contenu",
+          "layout": "Mise en page",
+          "media": "Médias",
+          "advanced": "Avancé",
+          "legacy": "Historique"
+        },
+        "accordion": {
+          "expanded": "Déplié par défaut"
+        },
+        "iframe": {
+          "src": "Lien de la page",
+          "width": "Largeur : %{width} %",
+          "height": "Hauteur (px)",
+          "scrolling": "Défilement",
+          "scrollings": {
+            "auto": "Automatique",
+            "yes": "Toujours",
+            "no": "Jamais"
+          },
+          "border": "Bordure"
+        },
+        "repeat": {
+          "direction": "Disposition",
+          "directions": {
+            "vertical": "Verticale",
+            "horizontal": "Horizontale"
+          },
+          "fields": "Champs",
+          "add-field": "Ajouter un champ",
+          "remove-field": "Retirer le champ",
+          "count": "%{smart_count} champ |||| %{smart_count} champs",
+          "variables": {
+            "value": "Valeur courante",
+            "formatted_value": "Valeur courante formatée",
+            "icon": "Icône courante",
+            "label": "Libellé courant",
+            "field": "Nom du champ courant"
+          },
+          "model": "Modèle, répété pour chaque champ",
+          "columns": "Éléments par ligne",
+          "columns-auto": "Selon le contenu",
+          "stretch": "Même hauteur",
+          "field-options": "Format et texte par défaut"
+        },
+        "condition": {
+          "operator": "Condition",
+          "operators": {
+            "exists": "est renseigné",
+            "not_exists": "n’est pas renseigné",
+            "eq": "est égal à",
+            "neq": "est différent de",
+            "gt": "est supérieur à",
+            "lt": "est inférieur à",
+            "truthy": "est vrai",
+            "falsy": "est faux"
+          },
+          "value": "Valeur",
+          "then": "Si la condition est remplie",
+          "else": "Sinon"
+        }
       },
       "filter": {
         "tab": "Filtre",

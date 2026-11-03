@@ -43,7 +43,7 @@ export const PreviewAside = ({ preview }) => {
   const size = formatSize(preview.fileSize ?? preview.preview?.file_size);
 
   return (
-    <Card elevation={0} className={classes.root}>
+    <Card elevation={0} className={`${classes.root} sticky-aside`}>
       <CardHeader
         title={translate('datasource.form.preview.title')}
         subheader={size || undefined}

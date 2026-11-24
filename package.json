@@ -33,7 +33,7 @@
     "lodash.get": "^4.4.2",
     "lodash.uniqby": "^4.7.0",
     "maplibre-gl": "^6.13.0",
-    "marked": "^0.7.0",
+    "marked": "^4.0.10",
     "material-ui-chip-input": "^1.1.0",
     "normalize.css": "^8.0.1",
     "nunjucks": "^3.2.4",
